@@ -6,6 +6,8 @@ QQ group: 15647305
 
 ##main feature
 
+static code generating, no reflection, no extra gc alloc, very fast
+
 above 90% UnityEngine interface exported ( remove flash, platform dependented interface )
 
 100% UnityEngine.UI interface ( require Unity4.6+ )
