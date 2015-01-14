@@ -79,8 +79,7 @@ namespace SLua
             LuaDLL.luaL_getmetatable(l, name);
             if (LuaDLL.lua_isnil(l, -1))
             {
-                LuaDLL.lua_pop(l,1);
-                LuaDLL.luaL_getmetatable(l, "__LuaGenericObject");
+				LuaDLL.luaL_error(l,string.Format("{0} not registerd, can't push to lua vm.",t.Name));
             }
 
             LuaDLL.lua_setmetatable(l, -2);

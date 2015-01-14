@@ -1,8 +1,9 @@
 
 local print=print
+local UnityEngine=UnityEngine
 
 module "foo"
 
 function test()
-	print("you")
+	
 end

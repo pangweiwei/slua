@@ -723,53 +723,53 @@ return index
             LuaDLL.lua_setmetatable(l, -2);
         }
 
-        public static void pushValue(IntPtr l, Vector2 o)
-        {
-            LuaDLL.lua_newtable(l);
-            LuaDLL.lua_pushnumber(l, o.x);
-            LuaDLL.lua_setfield(l, -2, "x");
-            LuaDLL.lua_pushnumber(l, o.y);
-            LuaDLL.lua_setfield(l, -2, "y");
-            LuaDLL.lua_pushstring(l, "Vector2");
-            LuaDLL.lua_setfield(l, -2, "__typename");
-
-            LuaDLL.lua_getglobal(l, "Vector2_mt");
-            LuaDLL.lua_setmetatable(l, -2);
-        }
-
-        public static void pushValue(IntPtr l, Vector3 o)
-        {
-            LuaDLL.lua_newtable(l);
-            LuaDLL.lua_pushnumber(l, o.x);
-            LuaDLL.lua_setfield(l, -2, "x");
-            LuaDLL.lua_pushnumber(l, o.y);
-            LuaDLL.lua_setfield(l, -2, "y");
-            LuaDLL.lua_pushnumber(l, o.z);
-            LuaDLL.lua_setfield(l, -2, "z");
-            LuaDLL.lua_pushstring(l, "Vector3");
-            LuaDLL.lua_setfield(l, -2, "__typename");
-
-            LuaDLL.lua_getglobal(l, "Vector3_mt");
-            LuaDLL.lua_setmetatable(l, -2);
-        }
-
-        public static void pushValue(IntPtr l, Vector4 o)
-        {
-            LuaDLL.lua_newtable(l);
-            LuaDLL.lua_pushnumber(l, o.x);
-            LuaDLL.lua_setfield(l, -2, "x");
-            LuaDLL.lua_pushnumber(l, o.y);
-            LuaDLL.lua_setfield(l, -2, "y");
-            LuaDLL.lua_pushnumber(l, o.z);
-            LuaDLL.lua_setfield(l, -2, "z");
-            LuaDLL.lua_pushnumber(l, o.w);
-            LuaDLL.lua_setfield(l, -2, "w");
-            LuaDLL.lua_pushstring(l, "Vector4");
-            LuaDLL.lua_setfield(l, -2, "__typename");
-
-            LuaDLL.lua_getglobal(l, "Vector4_mt");
-            LuaDLL.lua_setmetatable(l, -2);
-        }
+//        public static void pushValue(IntPtr l, Vector2 o)
+//        {
+//            LuaDLL.lua_newtable(l);
+//            LuaDLL.lua_pushnumber(l, o.x);
+//            LuaDLL.lua_setfield(l, -2, "x");
+//            LuaDLL.lua_pushnumber(l, o.y);
+//            LuaDLL.lua_setfield(l, -2, "y");
+//            LuaDLL.lua_pushstring(l, "Vector2");
+//            LuaDLL.lua_setfield(l, -2, "__typename");
+//
+//            LuaDLL.lua_getglobal(l, "Vector2_mt");
+//            LuaDLL.lua_setmetatable(l, -2);
+//        }
+//
+//        public static void pushValue(IntPtr l, Vector3 o)
+//        {
+//            LuaDLL.lua_newtable(l);
+//            LuaDLL.lua_pushnumber(l, o.x);
+//            LuaDLL.lua_setfield(l, -2, "x");
+//            LuaDLL.lua_pushnumber(l, o.y);
+//            LuaDLL.lua_setfield(l, -2, "y");
+//            LuaDLL.lua_pushnumber(l, o.z);
+//            LuaDLL.lua_setfield(l, -2, "z");
+//            LuaDLL.lua_pushstring(l, "Vector3");
+//            LuaDLL.lua_setfield(l, -2, "__typename");
+//
+//            LuaDLL.lua_getglobal(l, "Vector3_mt");
+//            LuaDLL.lua_setmetatable(l, -2);
+//        }
+//
+//        public static void pushValue(IntPtr l, Vector4 o)
+//        {
+//            LuaDLL.lua_newtable(l);
+//            LuaDLL.lua_pushnumber(l, o.x);
+//            LuaDLL.lua_setfield(l, -2, "x");
+//            LuaDLL.lua_pushnumber(l, o.y);
+//            LuaDLL.lua_setfield(l, -2, "y");
+//            LuaDLL.lua_pushnumber(l, o.z);
+//            LuaDLL.lua_setfield(l, -2, "z");
+//            LuaDLL.lua_pushnumber(l, o.w);
+//            LuaDLL.lua_setfield(l, -2, "w");
+//            LuaDLL.lua_pushstring(l, "Vector4");
+//            LuaDLL.lua_setfield(l, -2, "__typename");
+//
+//            LuaDLL.lua_getglobal(l, "Vector4_mt");
+//            LuaDLL.lua_setmetatable(l, -2);
+//        }
 
 
         public static T checkSelf<T>(IntPtr l)
