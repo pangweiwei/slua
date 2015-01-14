@@ -32,4 +32,8 @@ function main()
 
 
 	print(UnityEngine.PrimitiveType.Cube,type(UnityEngine.PrimitiveType.Cube))
+
+	-- custom export
+	local h=HelloWorld()
+	h:say()
 end

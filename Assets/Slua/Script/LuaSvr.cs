@@ -17,6 +17,7 @@ namespace SLua
             LuaObject.init(luaState.handle);
             LuaUnity.Bind(luaState.handle);
             LuaUnityUI.Bind(luaState.handle);
+			LuaCustom.Bind(luaState.handle);
 
             luaState.doFile("main.lua");
 

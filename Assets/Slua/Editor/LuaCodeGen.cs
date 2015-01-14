@@ -192,7 +192,9 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Make custom")]
     static public void Custom()
     {
-        List<Type> exports = new List<Type>();
+        List<Type> exports = new List<Type>{
+			typeof(HelloWorld),
+		};
 
         foreach (Type t in exports)
         {
