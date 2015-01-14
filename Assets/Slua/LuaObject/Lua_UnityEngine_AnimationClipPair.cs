@@ -1,0 +1,56 @@
+﻿using UnityEngine;
+using System;
+using LuaInterface;
+using SLua;
+using System.Collections.Generic;
+public class Lua_UnityEngine_AnimationClipPair : LuaObject {
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int constructor(IntPtr l) {
+		LuaDLL.lua_remove(l,1);
+		UnityEngine.AnimationClipPair o;
+		if(matchType(l,1)){
+			o=new UnityEngine.AnimationClipPair();
+			pushObject(l,o);
+			return 1;
+		}
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_originalClip(IntPtr l) {
+		UnityEngine.AnimationClipPair o = checkSelf<UnityEngine.AnimationClipPair>(l);
+		pushValue(l,o.originalClip);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_originalClip(IntPtr l) {
+		UnityEngine.AnimationClipPair o = checkSelf<UnityEngine.AnimationClipPair>(l);
+		UnityEngine.AnimationClip v;
+		checkType(l,2,out v);
+		o.originalClip=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_overrideClip(IntPtr l) {
+		UnityEngine.AnimationClipPair o = checkSelf<UnityEngine.AnimationClipPair>(l);
+		pushValue(l,o.overrideClip);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_overrideClip(IntPtr l) {
+		UnityEngine.AnimationClipPair o = checkSelf<UnityEngine.AnimationClipPair>(l);
+		UnityEngine.AnimationClip v;
+		checkType(l,2,out v);
+		o.overrideClip=v;
+		return 0;
+	}
+	static public void reg(IntPtr l) {
+		getTypeTable(l,"UnityEngine.AnimationClipPair");
+		addMember(l,get_originalClip, "get_originalClip");
+		addMember(l,set_originalClip, "set_originalClip");
+		addMember(l,get_overrideClip, "get_overrideClip");
+		addMember(l,set_overrideClip, "set_overrideClip");
+		newType(l, constructor);
+		createTypeMetatable(l, typeof(UnityEngine.AnimationClipPair));
+		LuaDLL.lua_pop(l, 1);
+	}
+}
