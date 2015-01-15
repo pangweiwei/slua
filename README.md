@@ -20,6 +20,8 @@ export enum as integer
 
 return array as lua table
 
+using raw lua library 5.1.5, can be replaced with luajit, link with slua.c
+
 #usage
 
 copy Assets/Plugins Assets/Slua to your $Project$/Assets folder, you will see Slua menu, 
