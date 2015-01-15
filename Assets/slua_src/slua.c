@@ -74,7 +74,7 @@ LUA_API int luaS_checkcallback(lua_State *L, int index)
 		lua_setfield(L, -2, funcinfo);
 	}
 	else {
-		r = lua_tointeger(L, -1);
+		r = (int) lua_tointeger(L, -1);
 		lua_pop(L, 1);
 	}
 	lua_pop(L, 1); // pop SLuaCallback table

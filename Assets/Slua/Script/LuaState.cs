@@ -74,7 +74,7 @@ namespace SLua
             int error = LuaDLL.lua_gettop(l);
 
             LuaDLL.lua_getref(l, valueref);
-            if (LuaDLL.lua_isfunction(l, -1)==0)
+            if (!LuaDLL.lua_isfunction(l, -1))
             {
                 LuaDLL.lua_pop(l, 1);
                 throw new Exception("Not a function");
@@ -122,7 +122,11 @@ namespace SLua
             int loaderFunc = LuaDLL.lua_gettop(L);
 
             LuaDLL.lua_getglobal(L, "package");
+#if LUA_5_3
+            LuaDLL.lua_getfield(L, -1, "searchers");
+#else
             LuaDLL.lua_getfield(L, -1, "loaders");
+#endif
             int loaderTable = LuaDLL.lua_gettop(L);
 
             // Shift table elements right

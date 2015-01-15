@@ -238,7 +238,12 @@ return index
         {
             string[] subt = t.Split(new Char[] { '.' });
 
+#if LUA_5_3
+            LuaDLL.lua_pushglobaltable(l);
+#else
             LuaDLL.lua_pushvalue(l, LuaIndexes.LUA_GLOBALSINDEX);
+#endif
+            
             for (int n = 0; n < subt.Length; n++)
             {
                 t = subt[n];
@@ -540,7 +545,7 @@ return index
 
         static public bool checkType(IntPtr l, int p, out int v)
         {
-            v = LuaDLL.luaL_checkinteger(l, p);
+            v = (int) LuaDLL.luaL_checkinteger(l, p);
             return true;
         }
 

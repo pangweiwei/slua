@@ -76,7 +76,7 @@ namespace SLua
             }
             index = add(o);
 
-            LuaDLL.luaS_newudata(l, index);
+            LuaDLL.luaS_newuserdata(l, index);
 
             Type t = o.GetType();
             string name = t.AssemblyQualifiedName;
