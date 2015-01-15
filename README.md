@@ -36,6 +36,8 @@ Clear , not complete yet
 
 Slua/LuaObject contain pre-generated file for exported interface.
 
+Precompiled slua library in Plugins only included x86 platform, you should compile other platform by youself, see build.txt for help.
+
 ###export custom class
 
 find code "static public void Custom()", add your custom class type into exports list, like HelloWorld, see below:
