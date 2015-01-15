@@ -4,7 +4,7 @@ Unity lua binding via static code generating.
 QQ group: 15647305
 
 
-##main feature
+#main feature
 
 static code generating, no reflection, no extra gc alloc, very fast
 
@@ -20,7 +20,7 @@ export enum as integer
 
 return array as lua table
 
-##usage
+#usage
 
 copy Assets/Plugins Assets/Slua to your $Project$/Assets folder, you will see Slua menu, 
 
@@ -32,7 +32,7 @@ click Make custom , generate custom class interface for lua
 
 Clear , not complete yet
 
-#export custom class
+###export custom class
 
 find code "static public void Custom()", add your custom class type into exports list, like HelloWorld, see below:
 
