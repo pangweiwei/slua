@@ -34,6 +34,8 @@ click Make custom , generate custom class interface for lua
 
 Clear , not complete yet
 
+Slua/LuaObject contain pre-generated file for exported interface.
+
 ###export custom class
 
 find code "static public void Custom()", add your custom class type into exports list, like HelloWorld, see below:
