@@ -20,7 +20,7 @@ export enum as integer
 
 return array as lua table
 
-using raw lua library 5.1.5, can be replaced with luajit, link with slua.c
+using raw lua 5.3, can be replaced with luajit/lua5.1, link with slua.c, if you switch to lua5.1/luajit, remove LUA_5_3 macro in build setting.
 
 #usage
 
