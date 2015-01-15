@@ -297,9 +297,8 @@ namespace LuaInterface
             LuaDLL.lua_settable(luaState, LuaIndexes.LUA_GLOBALSINDEX);
         }
 
-        public static void lua_insert(IntPtr luaState, int newTop) {
-            lua_rotate(luaState,newTop,1);
-        }
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void lua_insert(IntPtr luaState, int newTop);
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int lua_objlen(IntPtr luaState, int stackPos);
@@ -387,19 +386,8 @@ namespace LuaInterface
         }
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int luaL_ref(IntPtr luaState, int registryIndex);
-        public static int lua_ref(IntPtr luaState, int lockRef)
-        {
-            if (lockRef != 0)
-            {
-                return LuaDLL.luaL_ref(luaState, LuaIndexes.LUA_REGISTRYINDEX);
-            }
-            else return 0;
-        }
-        
-        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr lua_newuserdata(IntPtr luaState, int size);
-        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr lua_touserdata(IntPtr luaState, int index);
+       
+
         public static void lua_getref(IntPtr luaState, int reference)
         {
             LuaDLL.lua_rawgeti(luaState,LuaIndexes.LUA_REGISTRYINDEX, reference);
