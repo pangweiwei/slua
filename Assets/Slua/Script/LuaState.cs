@@ -97,7 +97,7 @@ namespace SLua
 
     class LuaState : IDisposable
     {
-        static string WorkPath="./lua/";
+        static string WorkPath="./Assets/lua/";
         IntPtr L;
 
         public IntPtr handle
