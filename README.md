@@ -36,7 +36,7 @@ Clear , not complete yet
 
 Slua/LuaObject contain pre-generated file for exported interface.
 
-Precompiled slua library in Plugins only included x86 platform, you should compile other platform by youself, see build.txt for help.
+Precompiled slua library in Plugins only included x86 platform using lua5.3, you should compile other platform/lua5.1/luajit by yourself, see build.txt for help.
 
 ###export custom class
 
