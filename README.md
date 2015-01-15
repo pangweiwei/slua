@@ -19,3 +19,36 @@ support custom class exported
 export enum as integer
 
 return array as lua table
+
+##usage
+
+copy Assets/Plugins Assets/Slua to your $Project$/Assets folder, you will see Slua menu, 
+
+click Make, regenerate UnityEngine interface for lua
+
+click Make UI, regenerate UnityEngine.UI interface for lua
+
+click Make custom , generate custom class interface for lua
+
+Clear , not complete yet
+
+#export custom class
+
+find code "static public void Custom()", add your custom class type into exports list, like HelloWorld, see below:
+
+    [MenuItem("SLua/Make custom")]
+    static public void Custom()
+    {
+        List<Type> exports = new List<Type>{
+			typeof(HelloWorld),
+			// your custom class here
+		};
+
+        foreach (Type t in exports)
+        {
+            Generate(t);
+        }
+
+        GenerateBind(exports,"LuaCustom");
+        AssetDatabase.Refresh();
+    }
