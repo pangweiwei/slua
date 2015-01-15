@@ -194,6 +194,7 @@ public class LuaCodeGen : MonoBehaviour
     {
         List<Type> exports = new List<Type>{
 			typeof(HelloWorld),
+			// your custom class here
 		};
 
         foreach (Type t in exports)

@@ -32,7 +32,7 @@ namespace SLua
 
         internal void gc(int index)
         {
-
+			cache.Remove(index);
         }
 
         internal int add(object o)
@@ -54,7 +54,11 @@ namespace SLua
 
         internal void setBack(IntPtr l, int p, object o)
         {
-
+			int index = LuaDLL.luaS_rawnetobj(l,p);
+			if (index != -1)
+			{
+				cache[index] = o;
+			}
         }
 
         internal void push(IntPtr l, object o)
