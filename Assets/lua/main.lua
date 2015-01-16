@@ -12,6 +12,10 @@ function main()
 		local go = GameObject.Find("Canvas/Text")
 		local label = go:GetComponent("Text")
 		label.text="hello world"
+
+		-- custom export
+		local h=HelloWorld()
+		h:say()
 	end)
 	
 
@@ -20,7 +24,7 @@ function main()
 
 
 	go.onValueChanged:AddListener(function(v)
-		print(v.x,v.y)
+		print("scroll value changed",v.x,v.y)
 	end)
 
 	local cube = GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube)
@@ -34,10 +38,10 @@ function main()
 	cube=nil
 	collectgarbage("collect")
 
-	-- custom export
-	local h=HelloWorld()
-	h:say()
-
+	
+	-- for performance test
+	-- Vector3 is value type, should implemented in lua via table
+	-- now it's ud
 	for i=1,10000 do
 		local a=Vector3(i,i,i)
 	end
