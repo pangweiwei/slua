@@ -9,7 +9,81 @@ namespace SLua
     {
         static Dictionary<IntPtr, ObjectCache> multiState = new Dictionary<IntPtr, ObjectCache>();
 
-        Dictionary<int, object> cache = new Dictionary<int, object>();
+        class ObjSlot
+        {
+            public int freeslot;
+            public object v;
+            public ObjSlot(int slot, object o)
+            {
+                freeslot = slot;
+                v = o;
+            }
+        }
+
+        class FreeList : List<ObjSlot>
+        {
+            public FreeList()
+            {
+                this.Add(new ObjSlot(0, null));
+            }
+
+            public int add(object o)
+            {
+                ObjSlot free = this[0];
+                if (free.freeslot == 0)
+                {
+                    Add(new ObjSlot(this.Count, o));
+                    return this.Count - 1;
+                }
+                else
+                {
+                    int slot = free.freeslot;
+                    free.freeslot = this[slot].freeslot;
+                    this[slot].v = o;
+                    this[slot].freeslot = slot;
+                    return slot;
+                }
+            }
+
+            public void del(int i)
+            {
+                ObjSlot free = this[0];
+                this[i].freeslot = free.freeslot;
+                this[i].v = null;
+                free.freeslot = i;
+            }
+
+            public bool get(int i, out object o)
+            {
+                if (i < 1 || i > this.Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                o = this[i].v;
+                return true;
+            }
+
+            public object get(int i)
+            {
+                object o;
+                if (get(i, out o))
+                    return o;
+                return null;
+            }
+
+            public void set(int i, object o)
+            {
+                if (i < 1 || i > this.Count)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                this[i].v = o;
+            }
+        }
+
+        FreeList cache = new FreeList();
         class ObjPair
         {
             public int index=0;
@@ -21,7 +95,6 @@ namespace SLua
             }
         }
         Dictionary<object, ObjPair> objMap = new Dictionary<object, ObjPair>();
-        int objIndex = 0;
         internal static ObjectCache get(IntPtr l)
         {
             ObjectCache oc;
@@ -44,7 +117,7 @@ namespace SLua
         internal void gc(int index)
         {
             object o;
-            if (cache.TryGetValue(index, out o))
+            if (cache.get(index, out o))
             {
                 if (isGcObject(o))
                 {
@@ -56,31 +129,31 @@ namespace SLua
                         System.Diagnostics.Debug.Assert(pair.count >= 0);
                         if (pair.count == 0)
                         {
-                            cache.Remove(index);       
+                            cache.del(index);       
                             objMap.Remove(o);
                         }
                     }
                 }
                 else
-                    cache.Remove(index);
+                    cache.del(index);
             }
         }
 
         internal int add(object o)
         {
-            cache[objIndex] = o;
+            int objIndex = cache.add(o);
             if (isGcObject(o))
             {
                 objMap[o] = new ObjPair(objIndex,1);
             }
-            return objIndex++;
+            return objIndex;
         }
 
         internal object get(IntPtr l,int p)
         {
             int index=LuaDLL.luaS_rawnetobj(l, p);
             object o;
-            if (index!=-1 && cache.TryGetValue(index, out o))
+            if (index!=-1 && cache.get(index, out o))
             {
                 return o;
             }
@@ -92,7 +165,7 @@ namespace SLua
 			int index = LuaDLL.luaS_rawnetobj(l,p);
 			if (index != -1)
 			{
-				cache[index] = o;
+				cache.set(index, o);
 			}
         }
 
