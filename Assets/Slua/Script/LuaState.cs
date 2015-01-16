@@ -142,7 +142,8 @@ namespace SLua
 
         ~LuaState()
         {
-            Close();
+            //Unity destructor not call in main thread, so gc some unity object refed by lua will cause error when lua closed.
+            //Close();
         }
 
         internal void Close()

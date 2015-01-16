@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LuaInterface;
+using UnityEngine;
 
 namespace SLua
 {
@@ -9,7 +10,17 @@ namespace SLua
         static Dictionary<IntPtr, ObjectCache> multiState = new Dictionary<IntPtr, ObjectCache>();
 
         Dictionary<int, object> cache = new Dictionary<int, object>();
-        Dictionary<object, int> objMap = new Dictionary<object, int>();
+        class ObjPair
+        {
+            public int index=0;
+            public int count=0;
+            public ObjPair(int i, int c)
+            {
+                this.index = i;
+                this.count = c;
+            }
+        }
+        Dictionary<object, ObjPair> objMap = new Dictionary<object, ObjPair>();
         int objIndex = 0;
         internal static ObjectCache get(IntPtr l)
         {
@@ -32,12 +43,36 @@ namespace SLua
 
         internal void gc(int index)
         {
-			cache.Remove(index);
+            object o;
+            if (cache.TryGetValue(index, out o))
+            {
+                if (isGcObject(o))
+                {
+                    ObjPair pair;
+                    if (objMap.TryGetValue(o, out pair))
+                    {
+                        System.Diagnostics.Debug.Assert(pair.index == index, "Cached object missed");
+                        pair.count--;
+                        System.Diagnostics.Debug.Assert(pair.count >= 0);
+                        if (pair.count == 0)
+                        {
+                            cache.Remove(index);       
+                            objMap.Remove(o);
+                        }
+                    }
+                }
+                else
+                    cache.Remove(index);
+            }
         }
 
         internal int add(object o)
         {
             cache[objIndex] = o;
+            if (isGcObject(o))
+            {
+                objMap[o] = new ObjPair(objIndex,1);
+            }
             return objIndex++;
         }
 
@@ -69,21 +104,23 @@ namespace SLua
                 return;
             }
             int index = -1;
-            bool found = isGcObject(o) && objMap.TryGetValue(o, out index);
-            if (found)
+            ObjPair pair=null;
+            bool found = isGcObject(o) && objMap.TryGetValue(o, out pair);
+            if (found && pair!=null)
             {
-                // TODO
+                index = pair.index;
+                pair.count++;
             }
-            index = add(o);
+            else
+                index = add(o);
 
             LuaDLL.luaS_newuserdata(l, index);
 
-            Type t = o.GetType();
-            string name = t.AssemblyQualifiedName;
-            LuaDLL.luaL_getmetatable(l, name);
+            
+            LuaDLL.luaL_getmetatable(l, getAQName(o));
             if (LuaDLL.lua_isnil(l, -1))
             {
-				LuaDLL.luaL_error(l,string.Format("{0} not registerd, can't push to lua vm.",t.Name));
+				LuaDLL.luaL_error(l,string.Format("{0} not registerd, can't push to lua vm.",o.GetType().Name));
             }
 
             LuaDLL.lua_setmetatable(l, -2);
@@ -91,9 +128,24 @@ namespace SLua
         }
 
 
+        Dictionary<Type, string> aqnameMap = new Dictionary<Type, string>();
+        string getAQName(object o)
+        {
+            Type t = o.GetType();
+            string name;
+            if (aqnameMap.TryGetValue(t, out name))
+            {
+                return name;
+            }
+            name = t.AssemblyQualifiedName;
+            aqnameMap[t] = name;
+            return name;
+        }
+
+
         bool isGcObject(object obj)
         {
-            return obj.GetType().IsValueType;
+            return obj.GetType().IsValueType==false;
         }
     }
 }

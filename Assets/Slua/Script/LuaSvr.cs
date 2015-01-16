@@ -19,10 +19,13 @@ namespace SLua
             LuaUnityUI.Bind(luaState.handle);
 			LuaCustom.Bind(luaState.handle);
 
+            
             luaState.doFile("main.lua");
 
             LuaFunction func = (LuaFunction)luaState["main"];
+            Profiler.BeginSample("call main");
             func.call();
+            Profiler.EndSample();
         }
     }
 }

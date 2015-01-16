@@ -113,14 +113,14 @@ return index
 
             if (LuaDLL.luaL_dostring(l, newindexfun) != 0)
             {
-                ThrowExceptionFromError(l);
+                throwLuaError(l);
                 return;
             }
             newindex_ref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
 
             if (LuaDLL.luaL_dostring(l, indexfun) != 0)
             {
-                ThrowExceptionFromError(l);
+                throwLuaError(l);
                 return;
             }
             index_ref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
@@ -132,8 +132,9 @@ return index
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaAdd(IntPtr l)
         {
+            int err = pushTry(l);
             checkLuaObject(l, 1);
-
+            
             LuaDLL.lua_getfield(l, -1, "op_Addition");
 
             if (LuaDLL.lua_isnil(l, -1))
@@ -143,18 +144,21 @@ return index
                 return 0;
             }
             LuaDLL.lua_remove(l, -2); // remove type table
+            
             LuaDLL.lua_pushvalue(l, 1);
             LuaDLL.lua_pushvalue(l, 2);
-            if (LuaDLL.lua_pcall(l, 2, 1, 0) != 0)
-                ThrowExceptionFromError(l);
+            if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
+                LuaDLL.lua_pop(l, 1);
+            LuaDLL.lua_remove(l, err);
             return 1;
         }
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaSub(IntPtr l)
         {
+            int err = pushTry(l);
             checkLuaObject(l, 1);
-
+            
             LuaDLL.lua_getfield(l, -1, "op_Subtraction");
 
             if (LuaDLL.lua_isnil(l, -1))
@@ -164,18 +168,21 @@ return index
                 return 0;
             }
             LuaDLL.lua_remove(l, -2); // remove type table
+            
             LuaDLL.lua_pushvalue(l, 1);
             LuaDLL.lua_pushvalue(l, 2);
-            if (LuaDLL.lua_pcall(l, 2, 1, 0) != 0)
-                ThrowExceptionFromError(l);
+            if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
+                LuaDLL.lua_pop(l, 1);
+            LuaDLL.lua_remove(l, err);
             return 1;
         }
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaMul(IntPtr l)
         {
+            int err = pushTry(l);
             checkLuaObject(l, 1);
-
+            
             LuaDLL.lua_getfield(l, -1, "op_Multiply");
 
             if (LuaDLL.lua_isnil(l, -1))
@@ -187,16 +194,18 @@ return index
             LuaDLL.lua_remove(l, -2); // remove type table
             LuaDLL.lua_pushvalue(l, 1);
             LuaDLL.lua_pushvalue(l, 2);
-            if (LuaDLL.lua_pcall(l, 2, 1, 0) != 0)
-                ThrowExceptionFromError(l);
+            if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
+                LuaDLL.lua_pop(l, 1);
+            LuaDLL.lua_remove(l, err);
             return 1;
         }
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaDiv(IntPtr l)
         {
+            int err = pushTry(l);
             checkLuaObject(l, 1);
-
+            
             LuaDLL.lua_getfield(l, -1, "op_Division");
 
             if (LuaDLL.lua_isnil(l, -1))
@@ -208,16 +217,18 @@ return index
             LuaDLL.lua_remove(l, -2); // remove type table
             LuaDLL.lua_pushvalue(l, 1);
             LuaDLL.lua_pushvalue(l, 2);
-            if (LuaDLL.lua_pcall(l, 2, 1, 0) != 0)
-                ThrowExceptionFromError(l);
+            if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
+                LuaDLL.lua_pop(l, 1);
+            LuaDLL.lua_remove(l, err);
             return 1;
         }
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaEq(IntPtr l)
         {
+            int err = pushTry(l);
             checkLuaObject(l, 1);
-
+            
             LuaDLL.lua_getfield(l, -1, "op_Equality");
 
             if (LuaDLL.lua_isnil(l, -1))
@@ -229,8 +240,9 @@ return index
             LuaDLL.lua_remove(l, -2); // remove type table
             LuaDLL.lua_pushvalue(l, 1);
             LuaDLL.lua_pushvalue(l, 2);
-            if (LuaDLL.lua_pcall(l, 2, 1, 0) != 0)
-                ThrowExceptionFromError(l);
+            if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
+                LuaDLL.lua_pop(l, 1);
+            LuaDLL.lua_remove(l, err);
             return 1;
         }
 
@@ -364,7 +376,7 @@ return index
             LuaDLL.lua_setmetatable(l, -2);
         }
 
-        static void ThrowExceptionFromError(IntPtr l)
+        static void throwLuaError(IntPtr l)
         {
             string err = LuaDLL.lua_tostring(l, -1);
             LuaDLL.lua_pop(l, 1);

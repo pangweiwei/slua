@@ -30,10 +30,15 @@ function main()
 	cube.transform.position = pos
 	cube.transform.localScale = Vector3(10,10,10)
 
-
 	print(UnityEngine.PrimitiveType.Cube,type(UnityEngine.PrimitiveType.Cube))
+	cube=nil
+	collectgarbage("collect")
 
 	-- custom export
 	local h=HelloWorld()
 	h:say()
+
+	for i=1,10000 do
+		local a=Vector3(i,i,i)
+	end
 end
