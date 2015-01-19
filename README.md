@@ -60,3 +60,7 @@ find code "static public void Custom()", add your custom class type into exports
         GenerateBind(exports,"LuaCustom");
         AssetDatabase.Refresh();
     }
+
+###help
+
+open helloworld.unity and run, see lua/main.lua.txt for simple tutorials.
