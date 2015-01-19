@@ -123,7 +123,7 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 	static public int set_type(IntPtr l) {
 		UnityEngine.UI.Image o = checkSelf<UnityEngine.UI.Image>(l);
 		UnityEngine.UI.Image.Type v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.type=v;
 		return 0;
 	}
@@ -165,7 +165,7 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 	static public int set_fillMethod(IntPtr l) {
 		UnityEngine.UI.Image o = checkSelf<UnityEngine.UI.Image>(l);
 		UnityEngine.UI.Image.FillMethod v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.fillMethod=v;
 		return 0;
 	}

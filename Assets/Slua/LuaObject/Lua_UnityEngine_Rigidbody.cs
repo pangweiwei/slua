@@ -37,7 +37,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
 				UnityEngine.ForceMode a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.AddForce(a1,a2);
 				return 0;
 			}
@@ -68,7 +68,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 				System.Single a3;
 				checkType(l,4,out a3);
 				UnityEngine.ForceMode a4;
-				checkType(l,5,out a4);
+				checkEnum(l,5,out a4);
 				self.AddForce(a1,a2,a3,a4);
 				return 0;
 			}
@@ -88,7 +88,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
 				UnityEngine.ForceMode a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.AddRelativeForce(a1,a2);
 				return 0;
 			}
@@ -119,7 +119,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 				System.Single a3;
 				checkType(l,4,out a3);
 				UnityEngine.ForceMode a4;
-				checkType(l,5,out a4);
+				checkEnum(l,5,out a4);
 				self.AddRelativeForce(a1,a2,a3,a4);
 				return 0;
 			}
@@ -139,7 +139,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
 				UnityEngine.ForceMode a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.AddTorque(a1,a2);
 				return 0;
 			}
@@ -170,7 +170,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 				System.Single a3;
 				checkType(l,4,out a3);
 				UnityEngine.ForceMode a4;
-				checkType(l,5,out a4);
+				checkEnum(l,5,out a4);
 				self.AddTorque(a1,a2,a3,a4);
 				return 0;
 			}
@@ -190,7 +190,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
 				UnityEngine.ForceMode a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.AddRelativeTorque(a1,a2);
 				return 0;
 			}
@@ -221,7 +221,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 				System.Single a3;
 				checkType(l,4,out a3);
 				UnityEngine.ForceMode a4;
-				checkType(l,5,out a4);
+				checkEnum(l,5,out a4);
 				self.AddRelativeTorque(a1,a2,a3,a4);
 				return 0;
 			}
@@ -243,7 +243,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 				UnityEngine.Vector3 a2;
 				checkType(l,3,out a2);
 				UnityEngine.ForceMode a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				self.AddForceAtPosition(a1,a2,a3);
 				return 0;
 			}
@@ -278,7 +278,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 				System.Single a4;
 				checkType(l,5,out a4);
 				UnityEngine.ForceMode a5;
-				checkType(l,6,out a5);
+				checkEnum(l,6,out a5);
 				self.AddExplosionForce(a1,a2,a3,a4,a5);
 				return 0;
 			}
@@ -608,7 +608,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	static public int set_constraints(IntPtr l) {
 		UnityEngine.Rigidbody o = checkSelf<UnityEngine.Rigidbody>(l);
 		UnityEngine.RigidbodyConstraints v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.constraints=v;
 		return 0;
 	}
@@ -622,7 +622,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	static public int set_collisionDetectionMode(IntPtr l) {
 		UnityEngine.Rigidbody o = checkSelf<UnityEngine.Rigidbody>(l);
 		UnityEngine.CollisionDetectionMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.collisionDetectionMode=v;
 		return 0;
 	}
@@ -740,7 +740,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	static public int set_interpolation(IntPtr l) {
 		UnityEngine.Rigidbody o = checkSelf<UnityEngine.Rigidbody>(l);
 		UnityEngine.RigidbodyInterpolation v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.interpolation=v;
 		return 0;
 	}

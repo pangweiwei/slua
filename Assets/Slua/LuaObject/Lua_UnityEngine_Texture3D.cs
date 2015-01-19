@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 			System.Int32 a3;
 			checkType(l,3,out a3);
 			UnityEngine.TextureFormat a4;
-			checkType(l,4,out a4);
+			checkEnum(l,4,out a4);
 			System.Boolean a5;
 			checkType(l,5,out a5);
 			o=new UnityEngine.Texture3D(a1,a2,a3,a4,a5);

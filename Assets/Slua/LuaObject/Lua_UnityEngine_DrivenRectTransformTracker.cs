@@ -17,7 +17,7 @@ public class Lua_UnityEngine_DrivenRectTransformTracker : LuaObject {
 			UnityEngine.RectTransform a2;
 			checkType(l,3,out a2);
 			UnityEngine.DrivenTransformProperties a3;
-			checkType(l,4,out a3);
+			checkEnum(l,4,out a3);
 			self.Add(a1,a2,a3);
 			setBack(l,self);
 			return 0;

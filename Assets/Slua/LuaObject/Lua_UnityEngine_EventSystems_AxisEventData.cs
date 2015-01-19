@@ -41,7 +41,7 @@ public class Lua_UnityEngine_EventSystems_AxisEventData : LuaObject {
 	static public int set_moveDir(IntPtr l) {
 		UnityEngine.EventSystems.AxisEventData o = checkSelf<UnityEngine.EventSystems.AxisEventData>(l);
 		UnityEngine.EventSystems.MoveDirection v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.moveDir=v;
 		return 0;
 	}

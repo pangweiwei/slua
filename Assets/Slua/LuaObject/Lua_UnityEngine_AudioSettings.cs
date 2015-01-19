@@ -58,7 +58,7 @@ public class Lua_UnityEngine_AudioSettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_speakerMode(IntPtr l) {
 		UnityEngine.AudioSpeakerMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		UnityEngine.AudioSettings.speakerMode=v;
 		return 0;
 	}

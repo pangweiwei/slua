@@ -296,7 +296,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.MeshTopology),typeof(System.Int32),typeof(System.Int32))){
 				UnityEngine.MeshTopology a1;
-				checkType(l,1,out a1);
+				checkEnum(l,1,out a1);
 				System.Int32 a2;
 				checkType(l,2,out a2);
 				System.Int32 a3;
@@ -306,7 +306,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 			}
 			else if(matchType(l,1,typeof(UnityEngine.MeshTopology),typeof(System.Int32))){
 				UnityEngine.MeshTopology a1;
-				checkType(l,1,out a1);
+				checkEnum(l,1,out a1);
 				System.Int32 a2;
 				checkType(l,2,out a2);
 				UnityEngine.Graphics.DrawProcedural(a1,a2);
@@ -325,7 +325,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.MeshTopology),typeof(UnityEngine.ComputeBuffer),typeof(System.Int32))){
 				UnityEngine.MeshTopology a1;
-				checkType(l,1,out a1);
+				checkEnum(l,1,out a1);
 				UnityEngine.ComputeBuffer a2;
 				checkType(l,2,out a2);
 				System.Int32 a3;
@@ -335,7 +335,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 			}
 			else if(matchType(l,1,typeof(UnityEngine.MeshTopology),typeof(UnityEngine.ComputeBuffer))){
 				UnityEngine.MeshTopology a1;
-				checkType(l,1,out a1);
+				checkEnum(l,1,out a1);
 				UnityEngine.ComputeBuffer a2;
 				checkType(l,2,out a2);
 				UnityEngine.Graphics.DrawProceduralIndirect(a1,a2);
@@ -593,7 +593,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				System.Int32 a2;
 				checkType(l,2,out a2);
 				UnityEngine.CubemapFace a3;
-				checkType(l,3,out a3);
+				checkEnum(l,3,out a3);
 				UnityEngine.Graphics.SetRenderTarget(a1,a2,a3);
 				return 0;
 			}

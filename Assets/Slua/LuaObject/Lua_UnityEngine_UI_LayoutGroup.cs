@@ -80,7 +80,7 @@ public class Lua_UnityEngine_UI_LayoutGroup : LuaObject {
 	static public int set_childAlignment(IntPtr l) {
 		UnityEngine.UI.LayoutGroup o = checkSelf<UnityEngine.UI.LayoutGroup>(l);
 		UnityEngine.TextAnchor v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.childAlignment=v;
 		return 0;
 	}

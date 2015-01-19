@@ -20,7 +20,7 @@ public class Lua_UnityEngine_Events_UnityEvent : LuaObject {
 		try{
 			UnityEngine.Events.UnityEvent self=checkSelf<UnityEngine.Events.UnityEvent>(l);
 			UnityEngine.Events.UnityAction a1;
-			checkType(l,2,out a1);
+			checkDelegate(l,2,out a1);
 			self.AddListener(a1);
 			return 0;
 		}
@@ -34,7 +34,7 @@ public class Lua_UnityEngine_Events_UnityEvent : LuaObject {
 		try{
 			UnityEngine.Events.UnityEvent self=checkSelf<UnityEngine.Events.UnityEvent>(l);
 			UnityEngine.Events.UnityAction a1;
-			checkType(l,2,out a1);
+			checkDelegate(l,2,out a1);
 			self.RemoveListener(a1);
 			return 0;
 		}

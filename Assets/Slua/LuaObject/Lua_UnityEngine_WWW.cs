@@ -146,7 +146,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 				System.Boolean a2;
 				checkType(l,3,out a2);
 				UnityEngine.AudioType a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				UnityEngine.AudioClip ret=self.GetAudioClip(a1,a2,a3);
 				pushValue(l,ret);
 				return 1;
@@ -310,7 +310,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	static public int set_threadPriority(IntPtr l) {
 		UnityEngine.WWW o = checkSelf<UnityEngine.WWW>(l);
 		UnityEngine.ThreadPriority v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.threadPriority=v;
 		return 0;
 	}

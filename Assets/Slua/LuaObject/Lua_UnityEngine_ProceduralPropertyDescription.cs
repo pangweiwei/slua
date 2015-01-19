@@ -67,7 +67,7 @@ public class Lua_UnityEngine_ProceduralPropertyDescription : LuaObject {
 	static public int set_type(IntPtr l) {
 		UnityEngine.ProceduralPropertyDescription o = checkSelf<UnityEngine.ProceduralPropertyDescription>(l);
 		UnityEngine.ProceduralPropertyType v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.type=v;
 		return 0;
 	}

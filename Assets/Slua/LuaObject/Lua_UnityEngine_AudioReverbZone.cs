@@ -53,7 +53,7 @@ public class Lua_UnityEngine_AudioReverbZone : LuaObject {
 	static public int set_reverbPreset(IntPtr l) {
 		UnityEngine.AudioReverbZone o = checkSelf<UnityEngine.AudioReverbZone>(l);
 		UnityEngine.AudioReverbPreset v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.reverbPreset=v;
 		return 0;
 	}

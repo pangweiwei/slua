@@ -81,7 +81,7 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 				System.Boolean a6;
 				checkType(l,6,out a6);
 				UnityEngine.AudioClip.PCMReaderCallback a7;
-				checkType(l,7,out a7);
+				checkDelegate(l,7,out a7);
 				UnityEngine.AudioClip ret=UnityEngine.AudioClip.Create(a1,a2,a3,a4,a5,a6,a7);
 				pushValue(l,ret);
 				return 1;
@@ -100,9 +100,9 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 				System.Boolean a6;
 				checkType(l,6,out a6);
 				UnityEngine.AudioClip.PCMReaderCallback a7;
-				checkType(l,7,out a7);
+				checkDelegate(l,7,out a7);
 				UnityEngine.AudioClip.PCMSetPositionCallback a8;
-				checkType(l,8,out a8);
+				checkDelegate(l,8,out a8);
 				UnityEngine.AudioClip ret=UnityEngine.AudioClip.Create(a1,a2,a3,a4,a5,a6,a7,a8);
 				pushValue(l,ret);
 				return 1;

@@ -25,7 +25,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	static public int set_reverbPreset(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = checkSelf<UnityEngine.AudioReverbFilter>(l);
 		UnityEngine.AudioReverbPreset v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.reverbPreset=v;
 		return 0;
 	}

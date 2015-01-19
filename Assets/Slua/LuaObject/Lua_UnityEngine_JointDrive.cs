@@ -18,7 +18,7 @@ public class Lua_UnityEngine_JointDrive : LuaObject {
 	static public int set_mode(IntPtr l) {
 		UnityEngine.JointDrive o = checkSelf<UnityEngine.JointDrive>(l);
 		UnityEngine.JointDriveMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.mode=v;
 		setBack(l,o);
 		return 0;

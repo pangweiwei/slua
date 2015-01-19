@@ -227,7 +227,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	static public int set_transition(IntPtr l) {
 		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
 		UnityEngine.UI.Selectable.Transition v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.transition=v;
 		return 0;
 	}

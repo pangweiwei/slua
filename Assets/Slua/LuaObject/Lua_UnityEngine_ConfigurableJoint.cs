@@ -39,7 +39,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	static public int set_xMotion(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = checkSelf<UnityEngine.ConfigurableJoint>(l);
 		UnityEngine.ConfigurableJointMotion v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.xMotion=v;
 		return 0;
 	}
@@ -53,7 +53,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	static public int set_yMotion(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = checkSelf<UnityEngine.ConfigurableJoint>(l);
 		UnityEngine.ConfigurableJointMotion v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.yMotion=v;
 		return 0;
 	}
@@ -67,7 +67,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	static public int set_zMotion(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = checkSelf<UnityEngine.ConfigurableJoint>(l);
 		UnityEngine.ConfigurableJointMotion v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.zMotion=v;
 		return 0;
 	}
@@ -81,7 +81,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	static public int set_angularXMotion(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = checkSelf<UnityEngine.ConfigurableJoint>(l);
 		UnityEngine.ConfigurableJointMotion v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.angularXMotion=v;
 		return 0;
 	}
@@ -95,7 +95,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	static public int set_angularYMotion(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = checkSelf<UnityEngine.ConfigurableJoint>(l);
 		UnityEngine.ConfigurableJointMotion v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.angularYMotion=v;
 		return 0;
 	}
@@ -109,7 +109,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	static public int set_angularZMotion(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = checkSelf<UnityEngine.ConfigurableJoint>(l);
 		UnityEngine.ConfigurableJointMotion v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.angularZMotion=v;
 		return 0;
 	}
@@ -291,7 +291,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	static public int set_rotationDriveMode(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = checkSelf<UnityEngine.ConfigurableJoint>(l);
 		UnityEngine.RotationDriveMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.rotationDriveMode=v;
 		return 0;
 	}
@@ -347,7 +347,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	static public int set_projectionMode(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = checkSelf<UnityEngine.ConfigurableJoint>(l);
 		UnityEngine.JointProjectionMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.projectionMode=v;
 		return 0;
 	}

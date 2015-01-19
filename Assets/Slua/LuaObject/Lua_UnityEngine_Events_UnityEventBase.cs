@@ -58,7 +58,7 @@ public class Lua_UnityEngine_Events_UnityEventBase : LuaObject {
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			UnityEngine.Events.UnityEventCallState a2;
-			checkType(l,3,out a2);
+			checkEnum(l,3,out a2);
 			self.SetPersistentListenerState(a1,a2);
 			return 0;
 		}

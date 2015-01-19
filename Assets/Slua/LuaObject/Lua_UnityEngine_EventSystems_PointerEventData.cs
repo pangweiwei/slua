@@ -297,7 +297,7 @@ public class Lua_UnityEngine_EventSystems_PointerEventData : LuaObject {
 	static public int set_button(IntPtr l) {
 		UnityEngine.EventSystems.PointerEventData o = checkSelf<UnityEngine.EventSystems.PointerEventData>(l);
 		UnityEngine.EventSystems.PointerEventData.InputButton v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.button=v;
 		return 0;
 	}

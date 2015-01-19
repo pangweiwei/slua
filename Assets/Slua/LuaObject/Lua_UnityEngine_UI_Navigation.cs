@@ -18,7 +18,7 @@ public class Lua_UnityEngine_UI_Navigation : LuaObject {
 	static public int set_mode(IntPtr l) {
 		UnityEngine.UI.Navigation o = checkSelf<UnityEngine.UI.Navigation>(l);
 		UnityEngine.UI.Navigation.Mode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.mode=v;
 		setBack(l,o);
 		return 0;

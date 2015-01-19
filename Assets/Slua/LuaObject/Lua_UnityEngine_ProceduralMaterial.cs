@@ -345,7 +345,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	static public int set_cacheSize(IntPtr l) {
 		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
 		UnityEngine.ProceduralCacheSize v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.cacheSize=v;
 		return 0;
 	}
@@ -408,7 +408,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_substanceProcessorUsage(IntPtr l) {
 		UnityEngine.ProceduralProcessorUsage v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		UnityEngine.ProceduralMaterial.substanceProcessorUsage=v;
 		return 0;
 	}

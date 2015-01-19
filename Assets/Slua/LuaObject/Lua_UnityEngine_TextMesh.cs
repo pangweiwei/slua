@@ -67,7 +67,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	static public int set_fontStyle(IntPtr l) {
 		UnityEngine.TextMesh o = checkSelf<UnityEngine.TextMesh>(l);
 		UnityEngine.FontStyle v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.fontStyle=v;
 		return 0;
 	}
@@ -95,7 +95,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	static public int set_alignment(IntPtr l) {
 		UnityEngine.TextMesh o = checkSelf<UnityEngine.TextMesh>(l);
 		UnityEngine.TextAlignment v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.alignment=v;
 		return 0;
 	}
@@ -109,7 +109,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	static public int set_anchor(IntPtr l) {
 		UnityEngine.TextMesh o = checkSelf<UnityEngine.TextMesh>(l);
 		UnityEngine.TextAnchor v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.anchor=v;
 		return 0;
 	}

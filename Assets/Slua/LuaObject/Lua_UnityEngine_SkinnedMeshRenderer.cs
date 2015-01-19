@@ -98,7 +98,7 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	static public int set_quality(IntPtr l) {
 		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
 		UnityEngine.SkinQuality v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.quality=v;
 		return 0;
 	}

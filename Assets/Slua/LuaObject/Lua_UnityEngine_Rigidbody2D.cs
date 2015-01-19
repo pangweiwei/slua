@@ -101,7 +101,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 				UnityEngine.Vector2 a1;
 				checkType(l,2,out a1);
 				UnityEngine.ForceMode2D a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.AddForce(a1,a2);
 				return 0;
 			}
@@ -128,7 +128,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 				UnityEngine.Vector2 a1;
 				checkType(l,2,out a1);
 				UnityEngine.ForceMode2D a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.AddRelativeForce(a1,a2);
 				return 0;
 			}
@@ -157,7 +157,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 				UnityEngine.Vector2 a2;
 				checkType(l,3,out a2);
 				UnityEngine.ForceMode2D a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				self.AddForceAtPosition(a1,a2,a3);
 				return 0;
 			}
@@ -186,7 +186,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 				System.Single a1;
 				checkType(l,2,out a1);
 				UnityEngine.ForceMode2D a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.AddTorque(a1,a2);
 				return 0;
 			}
@@ -493,7 +493,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	static public int set_interpolation(IntPtr l) {
 		UnityEngine.Rigidbody2D o = checkSelf<UnityEngine.Rigidbody2D>(l);
 		UnityEngine.RigidbodyInterpolation2D v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.interpolation=v;
 		return 0;
 	}
@@ -507,7 +507,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	static public int set_sleepMode(IntPtr l) {
 		UnityEngine.Rigidbody2D o = checkSelf<UnityEngine.Rigidbody2D>(l);
 		UnityEngine.RigidbodySleepMode2D v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.sleepMode=v;
 		return 0;
 	}
@@ -521,7 +521,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	static public int set_collisionDetectionMode(IntPtr l) {
 		UnityEngine.Rigidbody2D o = checkSelf<UnityEngine.Rigidbody2D>(l);
 		UnityEngine.CollisionDetectionMode2D v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.collisionDetectionMode=v;
 		return 0;
 	}

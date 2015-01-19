@@ -127,7 +127,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 			System.Int32[] a1;
 			checkType(l,2,out a1);
 			UnityEngine.MeshTopology a2;
-			checkType(l,3,out a2);
+			checkEnum(l,3,out a2);
 			System.Int32 a3;
 			checkType(l,4,out a3);
 			self.SetIndices(a1,a2,a3);

@@ -116,7 +116,7 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	static public int set_frictionCombine(IntPtr l) {
 		UnityEngine.PhysicMaterial o = checkSelf<UnityEngine.PhysicMaterial>(l);
 		UnityEngine.PhysicMaterialCombine v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.frictionCombine=v;
 		return 0;
 	}
@@ -130,7 +130,7 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	static public int set_bounceCombine(IntPtr l) {
 		UnityEngine.PhysicMaterial o = checkSelf<UnityEngine.PhysicMaterial>(l);
 		UnityEngine.PhysicMaterialCombine v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.bounceCombine=v;
 		return 0;
 	}

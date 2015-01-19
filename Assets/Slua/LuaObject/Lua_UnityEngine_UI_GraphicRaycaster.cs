@@ -48,7 +48,7 @@ public class Lua_UnityEngine_UI_GraphicRaycaster : LuaObject {
 	static public int set_blockingObjects(IntPtr l) {
 		UnityEngine.UI.GraphicRaycaster o = checkSelf<UnityEngine.UI.GraphicRaycaster>(l);
 		UnityEngine.UI.GraphicRaycaster.BlockingObjects v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.blockingObjects=v;
 		return 0;
 	}

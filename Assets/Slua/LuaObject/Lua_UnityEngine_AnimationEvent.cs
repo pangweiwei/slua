@@ -109,7 +109,7 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	static public int set_messageOptions(IntPtr l) {
 		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
 		UnityEngine.SendMessageOptions v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.messageOptions=v;
 		return 0;
 	}

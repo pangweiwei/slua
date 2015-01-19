@@ -12,7 +12,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 			System.Int32 a1;
 			checkType(l,1,out a1);
 			UnityEngine.TextureFormat a2;
-			checkType(l,2,out a2);
+			checkEnum(l,2,out a2);
 			System.Boolean a3;
 			checkType(l,3,out a3);
 			o=new UnityEngine.Cubemap(a1,a2,a3);
@@ -26,7 +26,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 		try{
 			UnityEngine.Cubemap self=checkSelf<UnityEngine.Cubemap>(l);
 			UnityEngine.CubemapFace a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			System.Int32 a2;
 			checkType(l,3,out a2);
 			System.Int32 a3;
@@ -46,7 +46,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 		try{
 			UnityEngine.Cubemap self=checkSelf<UnityEngine.Cubemap>(l);
 			UnityEngine.CubemapFace a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			System.Int32 a2;
 			checkType(l,3,out a2);
 			System.Int32 a3;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 			if(matchType(l,2,typeof(UnityEngine.CubemapFace),typeof(System.Int32))){
 				UnityEngine.Cubemap self=checkSelf<UnityEngine.Cubemap>(l);
 				UnityEngine.CubemapFace a1;
-				checkType(l,2,out a1);
+				checkEnum(l,2,out a1);
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				UnityEngine.Color[] ret=self.GetPixels(a1,a2);
@@ -76,7 +76,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 			else if(matchType(l,2,typeof(UnityEngine.CubemapFace))){
 				UnityEngine.Cubemap self=checkSelf<UnityEngine.Cubemap>(l);
 				UnityEngine.CubemapFace a1;
-				checkType(l,2,out a1);
+				checkEnum(l,2,out a1);
 				UnityEngine.Color[] ret=self.GetPixels(a1);
 				pushValue(l,ret);
 				return 1;
@@ -97,7 +97,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
 				UnityEngine.CubemapFace a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				System.Int32 a3;
 				checkType(l,4,out a3);
 				self.SetPixels(a1,a2,a3);
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
 				UnityEngine.CubemapFace a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.SetPixels(a1,a2);
 				return 0;
 			}

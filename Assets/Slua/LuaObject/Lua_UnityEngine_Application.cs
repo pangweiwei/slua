@@ -265,7 +265,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 	static public int RegisterLogCallback(IntPtr l) {
 		try{
 			UnityEngine.Application.LogCallback a1;
-			checkType(l,1,out a1);
+			checkDelegate(l,1,out a1);
 			UnityEngine.Application.RegisterLogCallback(a1);
 			return 0;
 		}
@@ -278,7 +278,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 	static public int RegisterLogCallbackThreaded(IntPtr l) {
 		try{
 			UnityEngine.Application.LogCallback a1;
-			checkType(l,1,out a1);
+			checkDelegate(l,1,out a1);
 			UnityEngine.Application.RegisterLogCallbackThreaded(a1);
 			return 0;
 		}
@@ -291,7 +291,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 	static public int RequestUserAuthorization(IntPtr l) {
 		try{
 			UnityEngine.UserAuthorization a1;
-			checkType(l,1,out a1);
+			checkEnum(l,1,out a1);
 			UnityEngine.AsyncOperation ret=UnityEngine.Application.RequestUserAuthorization(a1);
 			pushValue(l,ret);
 			return 1;
@@ -305,7 +305,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 	static public int HasUserAuthorization(IntPtr l) {
 		try{
 			UnityEngine.UserAuthorization a1;
-			checkType(l,1,out a1);
+			checkEnum(l,1,out a1);
 			System.Boolean ret=UnityEngine.Application.HasUserAuthorization(a1);
 			pushValue(l,ret);
 			return 1;
@@ -452,7 +452,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_backgroundLoadingPriority(IntPtr l) {
 		UnityEngine.ThreadPriority v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		UnityEngine.Application.backgroundLoadingPriority=v;
 		return 0;
 	}

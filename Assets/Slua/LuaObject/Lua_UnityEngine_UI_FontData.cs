@@ -53,7 +53,7 @@ public class Lua_UnityEngine_UI_FontData : LuaObject {
 	static public int set_fontStyle(IntPtr l) {
 		UnityEngine.UI.FontData o = checkSelf<UnityEngine.UI.FontData>(l);
 		UnityEngine.FontStyle v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.fontStyle=v;
 		setBack(l,o);
 		return 0;
@@ -113,7 +113,7 @@ public class Lua_UnityEngine_UI_FontData : LuaObject {
 	static public int set_alignment(IntPtr l) {
 		UnityEngine.UI.FontData o = checkSelf<UnityEngine.UI.FontData>(l);
 		UnityEngine.TextAnchor v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.alignment=v;
 		setBack(l,o);
 		return 0;
@@ -143,7 +143,7 @@ public class Lua_UnityEngine_UI_FontData : LuaObject {
 	static public int set_horizontalOverflow(IntPtr l) {
 		UnityEngine.UI.FontData o = checkSelf<UnityEngine.UI.FontData>(l);
 		UnityEngine.HorizontalWrapMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.horizontalOverflow=v;
 		setBack(l,o);
 		return 0;
@@ -158,7 +158,7 @@ public class Lua_UnityEngine_UI_FontData : LuaObject {
 	static public int set_verticalOverflow(IntPtr l) {
 		UnityEngine.UI.FontData o = checkSelf<UnityEngine.UI.FontData>(l);
 		UnityEngine.VerticalWrapMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.verticalOverflow=v;
 		setBack(l,o);
 		return 0;

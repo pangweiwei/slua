@@ -16,9 +16,9 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 			System.Int32 a3;
 			checkType(l,3,out a3);
 			UnityEngine.RenderTextureFormat a4;
-			checkType(l,4,out a4);
+			checkEnum(l,4,out a4);
 			UnityEngine.RenderTextureReadWrite a5;
-			checkType(l,5,out a5);
+			checkEnum(l,5,out a5);
 			o=new UnityEngine.RenderTexture(a1,a2,a3,a4,a5);
 			pushObject(l,o);
 			return 1;
@@ -31,7 +31,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 			System.Int32 a3;
 			checkType(l,3,out a3);
 			UnityEngine.RenderTextureFormat a4;
-			checkType(l,4,out a4);
+			checkEnum(l,4,out a4);
 			o=new UnityEngine.RenderTexture(a1,a2,a3,a4);
 			pushObject(l,o);
 			return 1;
@@ -60,9 +60,9 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				System.Int32 a3;
 				checkType(l,3,out a3);
 				UnityEngine.RenderTextureFormat a4;
-				checkType(l,4,out a4);
+				checkEnum(l,4,out a4);
 				UnityEngine.RenderTextureReadWrite a5;
-				checkType(l,5,out a5);
+				checkEnum(l,5,out a5);
 				System.Int32 a6;
 				checkType(l,6,out a6);
 				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2,a3,a4,a5,a6);
@@ -77,9 +77,9 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				System.Int32 a3;
 				checkType(l,3,out a3);
 				UnityEngine.RenderTextureFormat a4;
-				checkType(l,4,out a4);
+				checkEnum(l,4,out a4);
 				UnityEngine.RenderTextureReadWrite a5;
-				checkType(l,5,out a5);
+				checkEnum(l,5,out a5);
 				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2,a3,a4,a5);
 				pushValue(l,ret);
 				return 1;
@@ -92,7 +92,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				System.Int32 a3;
 				checkType(l,3,out a3);
 				UnityEngine.RenderTextureFormat a4;
-				checkType(l,4,out a4);
+				checkEnum(l,4,out a4);
 				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2,a3,a4);
 				pushValue(l,ret);
 				return 1;
@@ -326,7 +326,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	static public int set_format(IntPtr l) {
 		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
 		UnityEngine.RenderTextureFormat v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.format=v;
 		return 0;
 	}

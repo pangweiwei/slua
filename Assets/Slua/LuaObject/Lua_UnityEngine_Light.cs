@@ -19,7 +19,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	static public int GetLights(IntPtr l) {
 		try{
 			UnityEngine.LightType a1;
-			checkType(l,1,out a1);
+			checkEnum(l,1,out a1);
 			System.Int32 a2;
 			checkType(l,2,out a2);
 			UnityEngine.Light[] ret=UnityEngine.Light.GetLights(a1,a2);
@@ -41,7 +41,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	static public int set_type(IntPtr l) {
 		UnityEngine.Light o = checkSelf<UnityEngine.Light>(l);
 		UnityEngine.LightType v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.type=v;
 		return 0;
 	}
@@ -83,7 +83,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	static public int set_shadows(IntPtr l) {
 		UnityEngine.Light o = checkSelf<UnityEngine.Light>(l);
 		UnityEngine.LightShadows v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.shadows=v;
 		return 0;
 	}
@@ -223,7 +223,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	static public int set_renderMode(IntPtr l) {
 		UnityEngine.Light o = checkSelf<UnityEngine.Light>(l);
 		UnityEngine.LightRenderMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.renderMode=v;
 		return 0;
 	}

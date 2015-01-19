@@ -97,7 +97,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 			}
 			else if(matchType(l,1,typeof(UnityEngine.KeyCode))){
 				UnityEngine.KeyCode a1;
-				checkType(l,1,out a1);
+				checkEnum(l,1,out a1);
 				System.Boolean ret=UnityEngine.Input.GetKey(a1);
 				pushValue(l,ret);
 				return 1;
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 			}
 			else if(matchType(l,1,typeof(UnityEngine.KeyCode))){
 				UnityEngine.KeyCode a1;
-				checkType(l,1,out a1);
+				checkEnum(l,1,out a1);
 				System.Boolean ret=UnityEngine.Input.GetKeyDown(a1);
 				pushValue(l,ret);
 				return 1;
@@ -147,7 +147,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 			}
 			else if(matchType(l,1,typeof(UnityEngine.KeyCode))){
 				UnityEngine.KeyCode a1;
-				checkType(l,1,out a1);
+				checkEnum(l,1,out a1);
 				System.Boolean ret=UnityEngine.Input.GetKeyUp(a1);
 				pushValue(l,ret);
 				return 1;
@@ -377,7 +377,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_imeCompositionMode(IntPtr l) {
 		UnityEngine.IMECompositionMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		UnityEngine.Input.imeCompositionMode=v;
 		return 0;
 	}

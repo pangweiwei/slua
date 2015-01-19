@@ -183,7 +183,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	static public int set_preWrapMode(IntPtr l) {
 		UnityEngine.AnimationCurve o = checkSelf<UnityEngine.AnimationCurve>(l);
 		UnityEngine.WrapMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.preWrapMode=v;
 		return 0;
 	}
@@ -197,7 +197,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	static public int set_postWrapMode(IntPtr l) {
 		UnityEngine.AnimationCurve o = checkSelf<UnityEngine.AnimationCurve>(l);
 		UnityEngine.WrapMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.postWrapMode=v;
 		return 0;
 	}

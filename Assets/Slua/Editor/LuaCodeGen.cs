@@ -131,13 +131,11 @@ public class LuaCodeGen : MonoBehaviour
                     export = false;
             }
 
-            if (export &&!t.IsGenericType && t.BaseType != typeof(System.MulticastDelegate) &&
-                !typeof(YieldInstruction).IsAssignableFrom(t) && !IsObsolete(t))
+            if (export &&!t.IsGenericType && !typeof(YieldInstruction).IsAssignableFrom(t) && !IsObsolete(t))
             {
                 if(Generate(t))
                     exports.Add(t);
             }
-            
         }
 
         GenerateBind(exports,"LuaUnity");
@@ -218,8 +216,7 @@ public class LuaCodeGen : MonoBehaviour
             return false;
 
         CodeGenerator cg = new CodeGenerator();
-        cg.Generate(t);
-        return true;
+        return cg.Generate(t);
     }
 
     static void GenerateBind(List<Type> list,string name)
@@ -284,7 +281,7 @@ class CodeGenerator
     }
 
 
-    public void Generate(Type t)
+    public bool Generate(Type t)
     {
         if (t.IsEnum)
         {
@@ -293,6 +290,14 @@ class CodeGenerator
             WriteEnumToInt(t, file);
             RegEnumFunction(t, file);
             End(file);
+        }
+        else if(t.BaseType==typeof(System.MulticastDelegate)) {
+            string clsname = ExportName(t);
+            string f = LuaCodeGen.path + "LuaDelegate_" + t.Name + ".cs";
+            StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
+            WriteDelegate(t, file);
+            file.Close();
+            return false;
         }
         else
         {
@@ -315,6 +320,73 @@ class CodeGenerator
                 file.Close();
             }
         }
+
+        return true;
+    }
+
+    void WriteDelegate(Type t, StreamWriter file)
+    {
+        string temp = @"
+using System;
+using System.Collections.Generic;
+using LuaInterface;
+using UnityEngine;
+
+namespace SLua
+{
+    public partial class LuaObject
+    {
+
+        static internal bool checkDelegate(IntPtr l,int p,out $FN ua) {
+            LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
+            int r = LuaDLL.luaS_checkcallback(l, p);
+            ua = ($ARGS) =>
+            {
+                int error = pushTry(l);
+                LuaDLL.lua_getref(l, r);
+";
+        temp = temp.Replace("$TN", t.Name);
+        temp = temp.Replace("$FN", FullName(t));
+        MethodInfo mi = t.GetMethod("Invoke");
+        temp = temp.Replace("$ARGS", ArgsList(mi));
+        Write(file, temp);
+
+        for (int n = 0; n < mi.GetParameters().Length; n++)
+        {
+            Write(file, "                pushValue(l,a{0});",n+1);
+        }
+
+        Write(file, "                if (LuaDLL.lua_pcall(l, {0}, 0, error) != 0)", mi.GetParameters().Length);
+
+
+        temp=@"
+                {
+                    LuaDLL.lua_pop(l, 1); // pop error msg
+                }
+                LuaDLL.lua_pop(l, 1); // pop error function
+            };
+            return true;
+        }   
+    }
+}
+";
+        Write(file, temp);
+    }
+
+    string ArgsList(MethodInfo m)
+    {
+		string str = "";
+        ParameterInfo[] pars = m.GetParameters();
+        for (int n = 0; n < pars.Length; n++)
+        {
+            string t=SimpleType(pars[n].ParameterType);
+            if(pars[n].ParameterType.IsArray)
+                t+="[]";
+            str += string.Format("{0} a{1}", t, n + 1);
+            if (n < pars.Length - 1)
+                str += ",";
+        }
+        return str;
     }
 
     void WriteEvent(Type t, StreamWriter file)
@@ -673,7 +745,12 @@ namespace SLua
 
     void WriteCheckType(Type t, StreamWriter file, int n)
     {
-        Write(file, "checkType(l,{0},out v);", n);
+        if(t.IsEnum)
+            Write(file, "checkEnum(l,{0},out v);", n);
+        else if(t.BaseType==typeof(System.MulticastDelegate))
+            Write(file, "checkDelegate(l,{0},out v);", n);
+        else
+            Write(file, "checkType(l,{0},out v);", n);
     }
 
     private void WriteFunctionAttr(StreamWriter file)
@@ -955,7 +1032,7 @@ namespace SLua
         
     }
 
-    bool IsSimpleType(Type t)
+    string SimpleType(Type t)
     {
 
         string tn = RemoveRef(t.Name);
@@ -963,29 +1040,23 @@ namespace SLua
         switch (tn)
         {
             case "Single":
-            case "Double":
+                return "float";
             case "String":
+                return "string";
+            case "Double":
+                return "double";
             case "Boolean":
+                return "bool";
             case "Int32":
-            case "UInt32":
-            case "Int16":
-            case "UInt16":
-            case "Int64":
-            case "UInt64":
-            case "Void":
-            case "IntPtr":
-            case "SByte":
-            case "Byte":
-            case "Char":
-            case "Type":
-            case "Array":
-                return true;
-            case "Object":
-                return t.FullName == "System.Object" || t.FullName == "System.Object[]";
+                return "int";
             default:
-                if (t.IsEnum)
-                    return true;
-                return false;
+                
+                string fn = FullName(t);
+                if (fn.StartsWith("UnityEngine."))
+                    return fn.Substring(12);
+                else if (fn.StartsWith("System."))
+                    return fn.Substring(7);
+                return fn;
         }
     }
 
@@ -1024,7 +1095,14 @@ namespace SLua
         Write(file, "{0} a{1};", TypeDecl(t), n + 1);
 
         if (!isout)
-            Write(file, "checkType(l,{0},out a{1});",n+argstart, n + 1);
+        {
+            if (t.IsEnum)
+                Write(file, "checkEnum(l,{0},out a{1});", n + argstart, n + 1);
+            else if (t.BaseType == typeof(System.MulticastDelegate))
+                Write(file, "checkDelegate(l,{0},out a{1});", n + argstart, n + 1);
+            else
+                Write(file, "checkType(l,{0},out a{1});", n + argstart, n + 1);
+        }
     }
 
     string FullName(string str)

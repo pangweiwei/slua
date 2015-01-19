@@ -170,7 +170,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_orientation(IntPtr l) {
 		UnityEngine.ScreenOrientation v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		UnityEngine.Screen.orientation=v;
 		return 0;
 	}

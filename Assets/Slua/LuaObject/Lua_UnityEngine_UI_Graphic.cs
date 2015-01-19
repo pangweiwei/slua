@@ -61,7 +61,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		try{
 			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
 			UnityEngine.UI.CanvasUpdate a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			self.Rebuild(a1);
 			return 0;
 		}
@@ -182,7 +182,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		try{
 			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
 			UnityEngine.Events.UnityAction a1;
-			checkType(l,2,out a1);
+			checkDelegate(l,2,out a1);
 			self.RegisterDirtyLayoutCallback(a1);
 			return 0;
 		}
@@ -196,7 +196,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		try{
 			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
 			UnityEngine.Events.UnityAction a1;
-			checkType(l,2,out a1);
+			checkDelegate(l,2,out a1);
 			self.UnregisterDirtyLayoutCallback(a1);
 			return 0;
 		}
@@ -210,7 +210,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		try{
 			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
 			UnityEngine.Events.UnityAction a1;
-			checkType(l,2,out a1);
+			checkDelegate(l,2,out a1);
 			self.RegisterDirtyVerticesCallback(a1);
 			return 0;
 		}
@@ -224,7 +224,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		try{
 			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
 			UnityEngine.Events.UnityAction a1;
-			checkType(l,2,out a1);
+			checkDelegate(l,2,out a1);
 			self.UnregisterDirtyVerticesCallback(a1);
 			return 0;
 		}
@@ -238,7 +238,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		try{
 			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
 			UnityEngine.Events.UnityAction a1;
-			checkType(l,2,out a1);
+			checkDelegate(l,2,out a1);
 			self.RegisterDirtyMaterialCallback(a1);
 			return 0;
 		}
@@ -252,7 +252,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		try{
 			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
 			UnityEngine.Events.UnityAction a1;
-			checkType(l,2,out a1);
+			checkDelegate(l,2,out a1);
 			self.UnregisterDirtyMaterialCallback(a1);
 			return 0;
 		}

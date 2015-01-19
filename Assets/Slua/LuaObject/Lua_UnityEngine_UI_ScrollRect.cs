@@ -13,7 +13,7 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 		try{
 			UnityEngine.UI.ScrollRect self=checkSelf<UnityEngine.UI.ScrollRect>(l);
 			UnityEngine.UI.CanvasUpdate a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			self.Rebuild(a1);
 			return 0;
 		}
@@ -169,7 +169,7 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 	static public int set_movementType(IntPtr l) {
 		UnityEngine.UI.ScrollRect o = checkSelf<UnityEngine.UI.ScrollRect>(l);
 		UnityEngine.UI.ScrollRect.MovementType v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.movementType=v;
 		return 0;
 	}

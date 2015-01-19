@@ -119,7 +119,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_shadowProjection(IntPtr l) {
 		UnityEngine.ShadowProjection v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		UnityEngine.QualitySettings.shadowProjection=v;
 		return 0;
 	}
@@ -167,7 +167,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_anisotropicFiltering(IntPtr l) {
 		UnityEngine.AnisotropicFiltering v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		UnityEngine.QualitySettings.anisotropicFiltering=v;
 		return 0;
 	}
@@ -273,7 +273,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_blendWeights(IntPtr l) {
 		UnityEngine.BlendWeights v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		UnityEngine.QualitySettings.blendWeights=v;
 		return 0;
 	}

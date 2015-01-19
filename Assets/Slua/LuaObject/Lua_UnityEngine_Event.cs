@@ -105,7 +105,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	static public int set_type(IntPtr l) {
 		UnityEngine.Event o = checkSelf<UnityEngine.Event>(l);
 		UnityEngine.EventType v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.type=v;
 		return 0;
 	}
@@ -161,7 +161,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	static public int set_modifiers(IntPtr l) {
 		UnityEngine.Event o = checkSelf<UnityEngine.Event>(l);
 		UnityEngine.EventModifiers v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.modifiers=v;
 		return 0;
 	}
@@ -231,7 +231,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	static public int set_keyCode(IntPtr l) {
 		UnityEngine.Event o = checkSelf<UnityEngine.Event>(l);
 		UnityEngine.KeyCode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.keyCode=v;
 		return 0;
 	}

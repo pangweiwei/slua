@@ -30,7 +30,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				System.UInt32 a5;
 				checkType(l,5,out a5);
 				UnityEngine.SpriteMeshType a6;
-				checkType(l,6,out a6);
+				checkEnum(l,6,out a6);
 				UnityEngine.Vector4 a7;
 				checkType(l,7,out a7);
 				UnityEngine.Sprite ret=UnityEngine.Sprite.Create(a1,a2,a3,a4,a5,a6,a7);
@@ -49,7 +49,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				System.UInt32 a5;
 				checkType(l,5,out a5);
 				UnityEngine.SpriteMeshType a6;
-				checkType(l,6,out a6);
+				checkEnum(l,6,out a6);
 				UnityEngine.Sprite ret=UnityEngine.Sprite.Create(a1,a2,a3,a4,a5,a6);
 				pushValue(l,ret);
 				return 1;

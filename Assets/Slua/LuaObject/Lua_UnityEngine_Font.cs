@@ -47,7 +47,7 @@ public class Lua_UnityEngine_Font : LuaObject {
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				UnityEngine.FontStyle a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				self.RequestCharactersInTexture(a1,a2,a3);
 				return 0;
 			}
@@ -100,7 +100,7 @@ public class Lua_UnityEngine_Font : LuaObject {
 				System.Int32 a3;
 				checkType(l,4,out a3);
 				UnityEngine.FontStyle a4;
-				checkType(l,5,out a4);
+				checkEnum(l,5,out a4);
 				System.Boolean ret=self.GetCharacterInfo(a1,out a2,a3,a4);
 				pushValue(l,ret);
 				pushValue(l,a2);

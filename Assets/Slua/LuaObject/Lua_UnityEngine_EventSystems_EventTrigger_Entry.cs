@@ -25,7 +25,7 @@ public class Lua_UnityEngine_EventSystems_EventTrigger_Entry : LuaObject {
 	static public int set_eventID(IntPtr l) {
 		UnityEngine.EventSystems.EventTrigger.Entry o = checkSelf<UnityEngine.EventSystems.EventTrigger.Entry>(l);
 		UnityEngine.EventSystems.EventTriggerType v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.eventID=v;
 		return 0;
 	}

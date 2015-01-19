@@ -423,7 +423,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	static public int set_renderingPath(IntPtr l) {
 		UnityEngine.Camera o = checkSelf<UnityEngine.Camera>(l);
 		UnityEngine.RenderingPath v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.renderingPath=v;
 		return 0;
 	}
@@ -485,7 +485,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	static public int set_transparencySortMode(IntPtr l) {
 		UnityEngine.Camera o = checkSelf<UnityEngine.Camera>(l);
 		UnityEngine.TransparencySortMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.transparencySortMode=v;
 		return 0;
 	}
@@ -677,7 +677,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	static public int set_clearFlags(IntPtr l) {
 		UnityEngine.Camera o = checkSelf<UnityEngine.Camera>(l);
 		UnityEngine.CameraClearFlags v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.clearFlags=v;
 		return 0;
 	}
@@ -787,7 +787,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	static public int set_depthTextureMode(IntPtr l) {
 		UnityEngine.Camera o = checkSelf<UnityEngine.Camera>(l);
 		UnityEngine.DepthTextureMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.depthTextureMode=v;
 		return 0;
 	}

@@ -103,7 +103,7 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 	static public int set_wrapMode(IntPtr l) {
 		UnityEngine.AnimationClip o = checkSelf<UnityEngine.AnimationClip>(l);
 		UnityEngine.WrapMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.wrapMode=v;
 		return 0;
 	}

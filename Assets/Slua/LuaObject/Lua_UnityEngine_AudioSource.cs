@@ -214,7 +214,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				UnityEngine.FFTWindow a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				System.Single[] ret=self.GetSpectrumData(a1,a2,a3);
 				pushValue(l,ret);
 				return 1;
@@ -226,7 +226,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				UnityEngine.FFTWindow a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				self.GetSpectrumData(a1,a2,a3);
 				return 0;
 			}
@@ -380,7 +380,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	static public int set_velocityUpdateMode(IntPtr l) {
 		UnityEngine.AudioSource o = checkSelf<UnityEngine.AudioSource>(l);
 		UnityEngine.AudioVelocityUpdateMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.velocityUpdateMode=v;
 		return 0;
 	}
@@ -548,7 +548,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	static public int set_rolloffMode(IntPtr l) {
 		UnityEngine.AudioSource o = checkSelf<UnityEngine.AudioSource>(l);
 		UnityEngine.AudioRolloffMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.rolloffMode=v;
 		return 0;
 	}

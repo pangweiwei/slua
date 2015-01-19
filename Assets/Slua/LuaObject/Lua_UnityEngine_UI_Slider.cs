@@ -13,7 +13,7 @@ public class Lua_UnityEngine_UI_Slider : LuaObject {
 		try{
 			UnityEngine.UI.Slider self=checkSelf<UnityEngine.UI.Slider>(l);
 			UnityEngine.UI.CanvasUpdate a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			self.Rebuild(a1);
 			return 0;
 		}
@@ -135,7 +135,7 @@ public class Lua_UnityEngine_UI_Slider : LuaObject {
 		try{
 			UnityEngine.UI.Slider self=checkSelf<UnityEngine.UI.Slider>(l);
 			UnityEngine.UI.Slider.Direction a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			System.Boolean a2;
 			checkType(l,3,out a2);
 			self.SetDirection(a1,a2);
@@ -184,7 +184,7 @@ public class Lua_UnityEngine_UI_Slider : LuaObject {
 	static public int set_direction(IntPtr l) {
 		UnityEngine.UI.Slider o = checkSelf<UnityEngine.UI.Slider>(l);
 		UnityEngine.UI.Slider.Direction v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.direction=v;
 		return 0;
 	}

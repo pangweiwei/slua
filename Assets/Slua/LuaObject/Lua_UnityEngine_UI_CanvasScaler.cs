@@ -18,7 +18,7 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	static public int set_uiScaleMode(IntPtr l) {
 		UnityEngine.UI.CanvasScaler o = checkSelf<UnityEngine.UI.CanvasScaler>(l);
 		UnityEngine.UI.CanvasScaler.ScaleMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.uiScaleMode=v;
 		return 0;
 	}
@@ -74,7 +74,7 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	static public int set_screenMatchMode(IntPtr l) {
 		UnityEngine.UI.CanvasScaler o = checkSelf<UnityEngine.UI.CanvasScaler>(l);
 		UnityEngine.UI.CanvasScaler.ScreenMatchMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.screenMatchMode=v;
 		return 0;
 	}
@@ -102,7 +102,7 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	static public int set_physicalUnit(IntPtr l) {
 		UnityEngine.UI.CanvasScaler o = checkSelf<UnityEngine.UI.CanvasScaler>(l);
 		UnityEngine.UI.CanvasScaler.Unit v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.physicalUnit=v;
 		return 0;
 	}

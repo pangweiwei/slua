@@ -291,7 +291,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		try{
 			UnityEngine.Animator self=checkSelf<UnityEngine.Animator>(l);
 			UnityEngine.AvatarIKGoal a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			UnityEngine.Vector3 ret=self.GetIKPosition(a1);
 			pushValue(l,ret);
 			return 1;
@@ -306,7 +306,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		try{
 			UnityEngine.Animator self=checkSelf<UnityEngine.Animator>(l);
 			UnityEngine.AvatarIKGoal a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			UnityEngine.Vector3 a2;
 			checkType(l,3,out a2);
 			self.SetIKPosition(a1,a2);
@@ -322,7 +322,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		try{
 			UnityEngine.Animator self=checkSelf<UnityEngine.Animator>(l);
 			UnityEngine.AvatarIKGoal a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			UnityEngine.Quaternion ret=self.GetIKRotation(a1);
 			pushValue(l,ret);
 			return 1;
@@ -337,7 +337,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		try{
 			UnityEngine.Animator self=checkSelf<UnityEngine.Animator>(l);
 			UnityEngine.AvatarIKGoal a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			UnityEngine.Quaternion a2;
 			checkType(l,3,out a2);
 			self.SetIKRotation(a1,a2);
@@ -353,7 +353,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		try{
 			UnityEngine.Animator self=checkSelf<UnityEngine.Animator>(l);
 			UnityEngine.AvatarIKGoal a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			System.Single ret=self.GetIKPositionWeight(a1);
 			pushValue(l,ret);
 			return 1;
@@ -368,7 +368,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		try{
 			UnityEngine.Animator self=checkSelf<UnityEngine.Animator>(l);
 			UnityEngine.AvatarIKGoal a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			System.Single a2;
 			checkType(l,3,out a2);
 			self.SetIKPositionWeight(a1,a2);
@@ -384,7 +384,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		try{
 			UnityEngine.Animator self=checkSelf<UnityEngine.Animator>(l);
 			UnityEngine.AvatarIKGoal a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			System.Single ret=self.GetIKRotationWeight(a1);
 			pushValue(l,ret);
 			return 1;
@@ -399,7 +399,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		try{
 			UnityEngine.Animator self=checkSelf<UnityEngine.Animator>(l);
 			UnityEngine.AvatarIKGoal a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			System.Single a2;
 			checkType(l,3,out a2);
 			self.SetIKRotationWeight(a1,a2);
@@ -636,7 +636,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 				UnityEngine.Quaternion a2;
 				checkType(l,3,out a2);
 				UnityEngine.AvatarTarget a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				UnityEngine.MatchTargetWeightMask a4;
 				checkType(l,5,out a4);
 				System.Single a5;
@@ -653,7 +653,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 				UnityEngine.Quaternion a2;
 				checkType(l,3,out a2);
 				UnityEngine.AvatarTarget a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				UnityEngine.MatchTargetWeightMask a4;
 				checkType(l,5,out a4);
 				System.Single a5;
@@ -839,7 +839,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		try{
 			UnityEngine.Animator self=checkSelf<UnityEngine.Animator>(l);
 			UnityEngine.AvatarTarget a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			System.Single a2;
 			checkType(l,3,out a2);
 			self.SetTarget(a1,a2);
@@ -855,7 +855,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		try{
 			UnityEngine.Animator self=checkSelf<UnityEngine.Animator>(l);
 			UnityEngine.HumanBodyBones a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			UnityEngine.Transform ret=self.GetBoneTransform(a1);
 			pushValue(l,ret);
 			return 1;
@@ -1043,7 +1043,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	static public int set_updateMode(IntPtr l) {
 		UnityEngine.Animator o = checkSelf<UnityEngine.Animator>(l);
 		UnityEngine.AnimatorUpdateMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.updateMode=v;
 		return 0;
 	}
@@ -1175,7 +1175,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	static public int set_cullingMode(IntPtr l) {
 		UnityEngine.Animator o = checkSelf<UnityEngine.Animator>(l);
 		UnityEngine.AnimatorCullingMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.cullingMode=v;
 		return 0;
 	}

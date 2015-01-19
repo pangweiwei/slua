@@ -23,7 +23,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 			System.Int32 a2;
 			checkType(l,2,out a2);
 			UnityEngine.TextureFormat a3;
-			checkType(l,3,out a3);
+			checkEnum(l,3,out a3);
 			System.Boolean a4;
 			checkType(l,4,out a4);
 			o=new UnityEngine.Texture2D(a1,a2,a3,a4);
@@ -36,7 +36,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 			System.Int32 a2;
 			checkType(l,2,out a2);
 			UnityEngine.TextureFormat a3;
-			checkType(l,3,out a3);
+			checkEnum(l,3,out a3);
 			System.Boolean a4;
 			checkType(l,4,out a4);
 			System.Boolean a5;
@@ -55,7 +55,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 			System.Int32 a2;
 			checkType(l,2,out a2);
 			UnityEngine.TextureFormat a3;
-			checkType(l,3,out a3);
+			checkEnum(l,3,out a3);
 			System.Boolean a4;
 			checkType(l,4,out a4);
 			System.Boolean a5;
@@ -374,7 +374,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				System.Int32 a2;
 				checkType(l,3,out a2);
 				UnityEngine.TextureFormat a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				System.Boolean a4;
 				checkType(l,5,out a4);
 				System.Boolean ret=self.Resize(a1,a2,a3,a4);

@@ -140,7 +140,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 		try{
 			UnityEngine.UI.InputField self=checkSelf<UnityEngine.UI.InputField>(l);
 			UnityEngine.UI.CanvasUpdate a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			self.Rebuild(a1);
 			return 0;
 		}
@@ -381,7 +381,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	static public int set_contentType(IntPtr l) {
 		UnityEngine.UI.InputField o = checkSelf<UnityEngine.UI.InputField>(l);
 		UnityEngine.UI.InputField.ContentType v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.contentType=v;
 		return 0;
 	}
@@ -395,7 +395,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	static public int set_lineType(IntPtr l) {
 		UnityEngine.UI.InputField o = checkSelf<UnityEngine.UI.InputField>(l);
 		UnityEngine.UI.InputField.LineType v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.lineType=v;
 		return 0;
 	}
@@ -409,7 +409,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	static public int set_inputType(IntPtr l) {
 		UnityEngine.UI.InputField o = checkSelf<UnityEngine.UI.InputField>(l);
 		UnityEngine.UI.InputField.InputType v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.inputType=v;
 		return 0;
 	}
@@ -423,7 +423,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	static public int set_keyboardType(IntPtr l) {
 		UnityEngine.UI.InputField o = checkSelf<UnityEngine.UI.InputField>(l);
 		UnityEngine.TouchScreenKeyboardType v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.keyboardType=v;
 		return 0;
 	}
@@ -437,7 +437,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	static public int set_characterValidation(IntPtr l) {
 		UnityEngine.UI.InputField o = checkSelf<UnityEngine.UI.InputField>(l);
 		UnityEngine.UI.InputField.CharacterValidation v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.characterValidation=v;
 		return 0;
 	}

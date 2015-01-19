@@ -25,7 +25,7 @@ public class Lua_UnityEngine_ParticleSystemRenderer : LuaObject {
 	static public int set_renderMode(IntPtr l) {
 		UnityEngine.ParticleSystemRenderer o = checkSelf<UnityEngine.ParticleSystemRenderer>(l);
 		UnityEngine.ParticleSystemRenderMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.renderMode=v;
 		return 0;
 	}

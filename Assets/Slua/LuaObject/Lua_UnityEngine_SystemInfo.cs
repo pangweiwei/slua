@@ -19,7 +19,7 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 	static public int SupportsRenderTextureFormat(IntPtr l) {
 		try{
 			UnityEngine.RenderTextureFormat a1;
-			checkType(l,1,out a1);
+			checkEnum(l,1,out a1);
 			System.Boolean ret=UnityEngine.SystemInfo.SupportsRenderTextureFormat(a1);
 			pushValue(l,ret);
 			return 1;

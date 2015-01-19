@@ -42,7 +42,7 @@ public class Lua_UnityEngine_UI_ContentSizeFitter : LuaObject {
 	static public int set_horizontalFit(IntPtr l) {
 		UnityEngine.UI.ContentSizeFitter o = checkSelf<UnityEngine.UI.ContentSizeFitter>(l);
 		UnityEngine.UI.ContentSizeFitter.FitMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.horizontalFit=v;
 		return 0;
 	}
@@ -56,7 +56,7 @@ public class Lua_UnityEngine_UI_ContentSizeFitter : LuaObject {
 	static public int set_verticalFit(IntPtr l) {
 		UnityEngine.UI.ContentSizeFitter o = checkSelf<UnityEngine.UI.ContentSizeFitter>(l);
 		UnityEngine.UI.ContentSizeFitter.FitMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.verticalFit=v;
 		return 0;
 	}

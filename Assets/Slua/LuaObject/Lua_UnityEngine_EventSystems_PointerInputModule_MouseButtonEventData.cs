@@ -51,7 +51,7 @@ public class Lua_UnityEngine_EventSystems_PointerInputModule_MouseButtonEventDat
 	static public int set_buttonState(IntPtr l) {
 		UnityEngine.EventSystems.PointerInputModule.MouseButtonEventData o = checkSelf<UnityEngine.EventSystems.PointerInputModule.MouseButtonEventData>(l);
 		UnityEngine.EventSystems.PointerEventData.FramePressState v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.buttonState=v;
 		return 0;
 	}

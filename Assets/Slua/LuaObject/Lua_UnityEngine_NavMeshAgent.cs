@@ -560,7 +560,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	static public int set_obstacleAvoidanceType(IntPtr l) {
 		UnityEngine.NavMeshAgent o = checkSelf<UnityEngine.NavMeshAgent>(l);
 		UnityEngine.ObstacleAvoidanceType v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.obstacleAvoidanceType=v;
 		return 0;
 	}

@@ -460,13 +460,13 @@ return index
             return true;
         }
 
-        static public bool checkType(IntPtr l, int p, out float v)
+        static internal bool checkType(IntPtr l, int p, out float v)
         {
             v = (float)LuaDLL.luaL_checknumber(l, p);
             return true;
         }
 
-        static public bool checkType(IntPtr l, int p, out float[] v)
+        static internal bool checkType(IntPtr l, int p, out float[] v)
         {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
             int n = LuaDLL.lua_rawlen(l, p);
@@ -482,14 +482,14 @@ return index
             return true;
         }
 
-        static public bool checkType(IntPtr l, int p, out string v)
+        static internal bool checkType(IntPtr l, int p, out string v)
         {
             //LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TSTRING);
             v = LuaDLL.lua_tostring(l, p);
             return true;
         }
 
-        static public bool luaTypeCheck(IntPtr l, int p, string t)
+        static internal bool luaTypeCheck(IntPtr l, int p, string t)
         {
             if (LuaDLL.lua_type(l, p) != LuaTypes.LUA_TTABLE)
                 return false;
@@ -506,7 +506,7 @@ return index
         }
 
         /*
-        static public bool checkType(IntPtr l, int p, out Vector3 v)
+        static internal bool checkType(IntPtr l, int p, out Vector3 v)
         {
             v = Vector3.zero;
             if (!luaTypeCheck(l, p, "Vector3"))
@@ -522,7 +522,7 @@ return index
             return true;
         }
 
-        static public bool checkType(IntPtr l, int p, out Vector2 v)
+        static internal bool checkType(IntPtr l, int p, out Vector2 v)
         {
             v = Vector3.zero;
             if (!luaTypeCheck(l, p, "Vector2"))
@@ -536,7 +536,7 @@ return index
             return true;
         }
 
-        static public bool checkType(IntPtr l, int p, out Quaternion q)
+        static internal bool checkType(IntPtr l, int p, out Quaternion q)
         {
             q = Quaternion.identity;
             if (!luaTypeCheck(l, p, "Quaternion"))
@@ -555,26 +555,26 @@ return index
         }
         */
 
-        static public bool checkType(IntPtr l, int p, out int v)
+        static internal bool checkType(IntPtr l, int p, out int v)
         {
             v = (int) LuaDLL.luaL_checkinteger(l, p);
             return true;
         }
 
-        static public bool checkType(IntPtr l, int p, out Int64 v)
+        static internal bool checkType(IntPtr l, int p, out Int64 v)
         {
             v = LuaDLL.luaL_checkinteger(l, p);
             return true;
         }
 
-        static public bool checkType(IntPtr l, int p, out bool v)
+        static internal bool checkType(IntPtr l, int p, out bool v)
         {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TBOOLEAN);
             v = LuaDLL.lua_toboolean(l, p);
             return true;
         }
 
-        static public bool checkType(IntPtr l, int p, out LuaFunction f)
+        static internal bool checkType(IntPtr l, int p, out LuaFunction f)
         {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
             int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
@@ -582,43 +582,13 @@ return index
             return true;
         }
 
-        static public bool checkType(IntPtr l, int p, out UnityEngine.Events.UnityAction ua)
-        {
-            LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
-            int r = LuaDLL.luaS_checkcallback(l, p);
-            ua = () =>
-            {
-                LuaDLL.lua_pushstdcallcfunction(l, LuaState.errorReport);
-                LuaDLL.lua_getref(l,r);
-                if (LuaDLL.lua_pcall(l, 0, 0, -2) != 0)
-                {
-                    LuaDLL.lua_pop(l, 1);
-                }
-                LuaDLL.lua_pop(l, 1);
-            };
-            
+        static internal bool checkType<T>(IntPtr l, int p, out T o) {
+            ObjectCache oc = ObjectCache.get(l);
+            o = (T) oc.get(l, p);
             return true;
         }
 
-        static public bool checkType<T>(IntPtr l, int p, out T o)
-        {
-            if (typeof(T).IsEnum)
-            {
-                LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TNUMBER);
-                int i = LuaDLL.lua_tointeger(l, p);
-                o = (T)Enum.ToObject(typeof(T), i);
-                return true;
-            }
-            else
-            {
-                ObjectCache oc = ObjectCache.get(l);
-                object obj = oc.get(l, p);
-                o = (T)obj;
-                return true;
-            }
-        }
-
-        static public bool checkType(IntPtr l, int p, out object o)
+        static internal bool checkVar(IntPtr l, int p, out object o)
         {
             LuaTypes t = LuaDLL.lua_type(l, p);
             switch (t)
@@ -638,22 +608,22 @@ return index
             return false;
         }
 
-        static public bool checkType(IntPtr l, int p, out object[] o)
+        static internal bool checkType(IntPtr l, int p, out object[] o)
         {
             throw new NotSupportedException();
         }
 
-        static public bool checkType(IntPtr l, int p, out Type[] t)
+        static internal bool checkType(IntPtr l, int p, out Type[] t)
         {
             throw new NotSupportedException();
         }
 
-        static public bool checkType(IntPtr l, int p, out Array t)
+        static internal bool checkType(IntPtr l, int p, out Array t)
         {
             throw new NotSupportedException();
         }
 
-        static public bool checkType(IntPtr l, int p, out string[] t)
+        static internal bool checkType(IntPtr l, int p, out string[] t)
         {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
             int n = LuaDLL.lua_rawlen(l, p);
@@ -669,37 +639,55 @@ return index
             return true;
         }
 
-        public static void pushValue(IntPtr l, float o)
+        static internal bool checkEnum<T>(IntPtr l, int p, out T o) where T:struct
+        {
+            LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TNUMBER);
+            int i = LuaDLL.lua_tointeger(l, p);
+            o = (T)Enum.ToObject(typeof(T), i);
+            return true;
+        }
+
+        internal static void pushValue(IntPtr l, float o)
         {
             LuaDLL.lua_pushnumber(l, o);
         }
 
-        public static void pushValue(IntPtr l, bool b)
+        internal static void pushValue(IntPtr l, float[] o)
+        {
+            LuaDLL.lua_newtable(l);
+            for (int n = 0; n < o.Length; n++)
+            {
+                pushValue(l, o[n]);
+                LuaDLL.lua_rawseti(l, -2, n+1);
+            }
+        }
+
+        internal static void pushValue(IntPtr l, bool b)
         {
             LuaDLL.lua_pushboolean(l, b);
         }
 
-        public static void pushValue(IntPtr l, string s)
+        internal static void pushValue(IntPtr l, string s)
         {
             LuaDLL.lua_pushstring(l, s);
         }
 
-        public static void pushValue(IntPtr l, int i)
+        internal static void pushValue(IntPtr l, int i)
         {
             LuaDLL.lua_pushinteger(l, i);
         }
 
-        public static void pushValue(IntPtr l, double d)
+        internal static void pushValue(IntPtr l, double d)
         {
             LuaDLL.lua_pushnumber(l, d);
         }
 
-        public static void pushValue(IntPtr l, UnityEngine.Object o)
+        internal static void pushValue(IntPtr l, UnityEngine.Object o)
         {
             pushObject(l, o);
         }
 
-        public static void pushValue(IntPtr l, object o)
+        internal static void pushValue(IntPtr l, object o)
         {
             Type t = o.GetType();
             if (t.IsEnum)
@@ -712,7 +700,7 @@ return index
             }
         }
 
-        public static void pushValue(IntPtr l, object[] o)
+        internal static void pushValue(IntPtr l, object[] o)
         {
             LuaDLL.lua_newtable(l);
             for (int n = 0; n < o.Length; n++)
@@ -722,7 +710,7 @@ return index
             }
         }
 
-        public static void pushValue(IntPtr l, Quaternion o)
+        internal static void pushValue(IntPtr l, Quaternion o)
         {
             LuaDLL.lua_newtable(l);
             LuaDLL.lua_pushnumber(l, o.x);
@@ -740,7 +728,7 @@ return index
             LuaDLL.lua_setmetatable(l, -2);
         }
 
-//        public static void pushValue(IntPtr l, Vector2 o)
+//        internal static void pushValue(IntPtr l, Vector2 o)
 //        {
 //            LuaDLL.lua_newtable(l);
 //            LuaDLL.lua_pushnumber(l, o.x);
@@ -754,7 +742,7 @@ return index
 //            LuaDLL.lua_setmetatable(l, -2);
 //        }
 //
-//        public static void pushValue(IntPtr l, Vector3 o)
+//        internal static void pushValue(IntPtr l, Vector3 o)
 //        {
 //            LuaDLL.lua_newtable(l);
 //            LuaDLL.lua_pushnumber(l, o.x);
@@ -770,7 +758,7 @@ return index
 //            LuaDLL.lua_setmetatable(l, -2);
 //        }
 //
-//        public static void pushValue(IntPtr l, Vector4 o)
+//        internal static void pushValue(IntPtr l, Vector4 o)
 //        {
 //            LuaDLL.lua_newtable(l);
 //            LuaDLL.lua_pushnumber(l, o.x);
@@ -802,7 +790,7 @@ return index
             return default(T);
         }
 
-        public static void setBack(IntPtr l, object o)
+        internal static void setBack(IntPtr l, object o)
         {
             ObjectCache t = ObjectCache.get(l);
             t.setBack(l, 1, o);

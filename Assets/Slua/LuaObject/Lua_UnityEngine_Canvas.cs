@@ -60,7 +60,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	static public int set_renderMode(IntPtr l) {
 		UnityEngine.Canvas o = checkSelf<UnityEngine.Canvas>(l);
 		UnityEngine.RenderMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.renderMode=v;
 		return 0;
 	}

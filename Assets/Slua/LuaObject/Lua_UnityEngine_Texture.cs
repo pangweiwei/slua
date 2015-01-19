@@ -76,7 +76,7 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_anisotropicFiltering(IntPtr l) {
 		UnityEngine.AnisotropicFiltering v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		UnityEngine.Texture.anisotropicFiltering=v;
 		return 0;
 	}
@@ -118,7 +118,7 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	static public int set_filterMode(IntPtr l) {
 		UnityEngine.Texture o = checkSelf<UnityEngine.Texture>(l);
 		UnityEngine.FilterMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.filterMode=v;
 		return 0;
 	}
@@ -146,7 +146,7 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	static public int set_wrapMode(IntPtr l) {
 		UnityEngine.Texture o = checkSelf<UnityEngine.Texture>(l);
 		UnityEngine.TextureWrapMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.wrapMode=v;
 		return 0;
 	}

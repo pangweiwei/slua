@@ -93,7 +93,7 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 	static public int set_fontStyle(IntPtr l) {
 		UnityEngine.TextGenerationSettings o = checkSelf<UnityEngine.TextGenerationSettings>(l);
 		UnityEngine.FontStyle v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.fontStyle=v;
 		setBack(l,o);
 		return 0;
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 	static public int set_textAnchor(IntPtr l) {
 		UnityEngine.TextGenerationSettings o = checkSelf<UnityEngine.TextGenerationSettings>(l);
 		UnityEngine.TextAnchor v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.textAnchor=v;
 		setBack(l,o);
 		return 0;
@@ -183,7 +183,7 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 	static public int set_verticalOverflow(IntPtr l) {
 		UnityEngine.TextGenerationSettings o = checkSelf<UnityEngine.TextGenerationSettings>(l);
 		UnityEngine.VerticalWrapMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.verticalOverflow=v;
 		setBack(l,o);
 		return 0;
@@ -198,7 +198,7 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 	static public int set_horizontalOverflow(IntPtr l) {
 		UnityEngine.TextGenerationSettings o = checkSelf<UnityEngine.TextGenerationSettings>(l);
 		UnityEngine.HorizontalWrapMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.horizontalOverflow=v;
 		setBack(l,o);
 		return 0;

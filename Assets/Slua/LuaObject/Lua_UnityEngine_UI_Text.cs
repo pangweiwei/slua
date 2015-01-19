@@ -39,7 +39,7 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	static public int GetTextAnchorPivot(IntPtr l) {
 		try{
 			UnityEngine.TextAnchor a1;
-			checkType(l,1,out a1);
+			checkEnum(l,1,out a1);
 			UnityEngine.Vector2 ret=UnityEngine.UI.Text.GetTextAnchorPivot(a1);
 			pushValue(l,ret);
 			return 1;
@@ -203,7 +203,7 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	static public int set_alignment(IntPtr l) {
 		UnityEngine.UI.Text o = checkSelf<UnityEngine.UI.Text>(l);
 		UnityEngine.TextAnchor v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.alignment=v;
 		return 0;
 	}
@@ -231,7 +231,7 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	static public int set_horizontalOverflow(IntPtr l) {
 		UnityEngine.UI.Text o = checkSelf<UnityEngine.UI.Text>(l);
 		UnityEngine.HorizontalWrapMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.horizontalOverflow=v;
 		return 0;
 	}
@@ -245,7 +245,7 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	static public int set_verticalOverflow(IntPtr l) {
 		UnityEngine.UI.Text o = checkSelf<UnityEngine.UI.Text>(l);
 		UnityEngine.VerticalWrapMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.verticalOverflow=v;
 		return 0;
 	}
@@ -273,7 +273,7 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	static public int set_fontStyle(IntPtr l) {
 		UnityEngine.UI.Text o = checkSelf<UnityEngine.UI.Text>(l);
 		UnityEngine.FontStyle v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.fontStyle=v;
 		return 0;
 	}

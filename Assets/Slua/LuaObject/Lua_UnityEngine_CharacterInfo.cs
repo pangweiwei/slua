@@ -93,7 +93,7 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 	static public int set_style(IntPtr l) {
 		UnityEngine.CharacterInfo o = checkSelf<UnityEngine.CharacterInfo>(l);
 		UnityEngine.FontStyle v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.style=v;
 		setBack(l,o);
 		return 0;

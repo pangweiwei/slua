@@ -13,7 +13,7 @@ public class Lua_UnityEngine_UI_Scrollbar : LuaObject {
 		try{
 			UnityEngine.UI.Scrollbar self=checkSelf<UnityEngine.UI.Scrollbar>(l);
 			UnityEngine.UI.CanvasUpdate a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			self.Rebuild(a1);
 			return 0;
 		}
@@ -163,7 +163,7 @@ public class Lua_UnityEngine_UI_Scrollbar : LuaObject {
 		try{
 			UnityEngine.UI.Scrollbar self=checkSelf<UnityEngine.UI.Scrollbar>(l);
 			UnityEngine.UI.Scrollbar.Direction a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			System.Boolean a2;
 			checkType(l,3,out a2);
 			self.SetDirection(a1,a2);
@@ -198,7 +198,7 @@ public class Lua_UnityEngine_UI_Scrollbar : LuaObject {
 	static public int set_direction(IntPtr l) {
 		UnityEngine.UI.Scrollbar o = checkSelf<UnityEngine.UI.Scrollbar>(l);
 		UnityEngine.UI.Scrollbar.Direction v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.direction=v;
 		return 0;
 	}

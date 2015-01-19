@@ -237,7 +237,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 	static public int set_hideFlags(IntPtr l) {
 		UnityEngine.Object o = checkSelf<UnityEngine.Object>(l);
 		UnityEngine.HideFlags v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.hideFlags=v;
 		return 0;
 	}

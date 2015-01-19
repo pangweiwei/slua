@@ -13,7 +13,7 @@ public class Lua_UnityEngine_UI_Toggle : LuaObject {
 		try{
 			UnityEngine.UI.Toggle self=checkSelf<UnityEngine.UI.Toggle>(l);
 			UnityEngine.UI.CanvasUpdate a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			self.Rebuild(a1);
 			return 0;
 		}
@@ -60,7 +60,7 @@ public class Lua_UnityEngine_UI_Toggle : LuaObject {
 	static public int set_toggleTransition(IntPtr l) {
 		UnityEngine.UI.Toggle o = checkSelf<UnityEngine.UI.Toggle>(l);
 		UnityEngine.UI.Toggle.ToggleTransition v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.toggleTransition=v;
 		return 0;
 	}

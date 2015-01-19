@@ -50,7 +50,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
 				UnityEngine.Space a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.Translate(a1,a2);
 				return 0;
 			}
@@ -74,7 +74,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				System.Single a3;
 				checkType(l,4,out a3);
 				UnityEngine.Space a4;
-				checkType(l,5,out a4);
+				checkEnum(l,5,out a4);
 				self.Translate(a1,a2,a3,a4);
 				return 0;
 			}
@@ -123,7 +123,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
 				UnityEngine.Space a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.Rotate(a1,a2);
 				return 0;
 			}
@@ -147,7 +147,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				System.Single a3;
 				checkType(l,4,out a3);
 				UnityEngine.Space a4;
-				checkType(l,5,out a4);
+				checkEnum(l,5,out a4);
 				self.Rotate(a1,a2,a3,a4);
 				return 0;
 			}
@@ -167,7 +167,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				System.Single a2;
 				checkType(l,3,out a2);
 				UnityEngine.Space a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				self.Rotate(a1,a2,a3);
 				return 0;
 			}

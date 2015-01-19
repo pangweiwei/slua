@@ -48,7 +48,7 @@ public class Lua_UnityEngine_RectTransform : LuaObject {
 		try{
 			UnityEngine.RectTransform self=checkSelf<UnityEngine.RectTransform>(l);
 			UnityEngine.RectTransform.Edge a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			System.Single a2;
 			checkType(l,3,out a2);
 			System.Single a3;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_RectTransform : LuaObject {
 		try{
 			UnityEngine.RectTransform self=checkSelf<UnityEngine.RectTransform>(l);
 			UnityEngine.RectTransform.Axis a1;
-			checkType(l,2,out a1);
+			checkEnum(l,2,out a1);
 			System.Single a2;
 			checkType(l,3,out a2);
 			self.SetSizeWithCurrentAnchors(a1,a2);

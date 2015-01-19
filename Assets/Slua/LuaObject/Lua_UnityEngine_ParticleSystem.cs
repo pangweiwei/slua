@@ -500,7 +500,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	static public int set_simulationSpace(IntPtr l) {
 		UnityEngine.ParticleSystem o = checkSelf<UnityEngine.ParticleSystem>(l);
 		UnityEngine.ParticleSystemSimulationSpace v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.simulationSpace=v;
 		return 0;
 	}

@@ -42,7 +42,7 @@ public class Lua_UnityEngine_UI_AspectRatioFitter : LuaObject {
 	static public int set_aspectMode(IntPtr l) {
 		UnityEngine.UI.AspectRatioFitter o = checkSelf<UnityEngine.UI.AspectRatioFitter>(l);
 		UnityEngine.UI.AspectRatioFitter.AspectMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.aspectMode=v;
 		return 0;
 	}

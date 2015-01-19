@@ -223,7 +223,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 			System.String a1;
 			checkType(l,1,out a1);
 			UnityEngine.TexGenMode a2;
-			checkType(l,2,out a2);
+			checkEnum(l,2,out a2);
 			UnityEngine.Shader.SetGlobalTexGenMode(a1,a2);
 			return 0;
 		}

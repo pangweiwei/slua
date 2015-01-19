@@ -182,7 +182,7 @@ public class Lua_UnityEngine_Component : LuaObject {
 				System.Object a2;
 				checkType(l,3,out a2);
 				UnityEngine.SendMessageOptions a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				self.SendMessageUpwards(a1,a2,a3);
 				return 0;
 			}
@@ -207,7 +207,7 @@ public class Lua_UnityEngine_Component : LuaObject {
 				System.String a1;
 				checkType(l,2,out a1);
 				UnityEngine.SendMessageOptions a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.SendMessageUpwards(a1,a2);
 				return 0;
 			}
@@ -229,7 +229,7 @@ public class Lua_UnityEngine_Component : LuaObject {
 				System.Object a2;
 				checkType(l,3,out a2);
 				UnityEngine.SendMessageOptions a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				self.SendMessage(a1,a2,a3);
 				return 0;
 			}
@@ -254,7 +254,7 @@ public class Lua_UnityEngine_Component : LuaObject {
 				System.String a1;
 				checkType(l,2,out a1);
 				UnityEngine.SendMessageOptions a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.SendMessage(a1,a2);
 				return 0;
 			}
@@ -276,7 +276,7 @@ public class Lua_UnityEngine_Component : LuaObject {
 				System.Object a2;
 				checkType(l,3,out a2);
 				UnityEngine.SendMessageOptions a3;
-				checkType(l,4,out a3);
+				checkEnum(l,4,out a3);
 				self.BroadcastMessage(a1,a2,a3);
 				return 0;
 			}
@@ -301,7 +301,7 @@ public class Lua_UnityEngine_Component : LuaObject {
 				System.String a1;
 				checkType(l,2,out a1);
 				UnityEngine.SendMessageOptions a2;
-				checkType(l,3,out a2);
+				checkEnum(l,3,out a2);
 				self.BroadcastMessage(a1,a2);
 				return 0;
 			}

@@ -94,7 +94,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	static public int set_wrapMode(IntPtr l) {
 		UnityEngine.AnimationState o = checkSelf<UnityEngine.AnimationState>(l);
 		UnityEngine.WrapMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.wrapMode=v;
 		return 0;
 	}
@@ -204,7 +204,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	static public int set_blendMode(IntPtr l) {
 		UnityEngine.AnimationState o = checkSelf<UnityEngine.AnimationState>(l);
 		UnityEngine.AnimationBlendMode v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.blendMode=v;
 		return 0;
 	}

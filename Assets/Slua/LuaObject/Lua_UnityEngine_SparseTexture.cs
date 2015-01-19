@@ -14,7 +14,7 @@ public class Lua_UnityEngine_SparseTexture : LuaObject {
 			System.Int32 a2;
 			checkType(l,2,out a2);
 			UnityEngine.TextureFormat a3;
-			checkType(l,3,out a3);
+			checkEnum(l,3,out a3);
 			System.Int32 a4;
 			checkType(l,4,out a4);
 			o=new UnityEngine.SparseTexture(a1,a2,a3,a4);
@@ -27,7 +27,7 @@ public class Lua_UnityEngine_SparseTexture : LuaObject {
 			System.Int32 a2;
 			checkType(l,2,out a2);
 			UnityEngine.TextureFormat a3;
-			checkType(l,3,out a3);
+			checkEnum(l,3,out a3);
 			System.Int32 a4;
 			checkType(l,4,out a4);
 			System.Boolean a5;

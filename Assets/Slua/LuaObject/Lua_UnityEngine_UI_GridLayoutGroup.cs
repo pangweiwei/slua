@@ -66,7 +66,7 @@ public class Lua_UnityEngine_UI_GridLayoutGroup : LuaObject {
 	static public int set_startCorner(IntPtr l) {
 		UnityEngine.UI.GridLayoutGroup o = checkSelf<UnityEngine.UI.GridLayoutGroup>(l);
 		UnityEngine.UI.GridLayoutGroup.Corner v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.startCorner=v;
 		return 0;
 	}
@@ -80,7 +80,7 @@ public class Lua_UnityEngine_UI_GridLayoutGroup : LuaObject {
 	static public int set_startAxis(IntPtr l) {
 		UnityEngine.UI.GridLayoutGroup o = checkSelf<UnityEngine.UI.GridLayoutGroup>(l);
 		UnityEngine.UI.GridLayoutGroup.Axis v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.startAxis=v;
 		return 0;
 	}
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_UI_GridLayoutGroup : LuaObject {
 	static public int set_constraint(IntPtr l) {
 		UnityEngine.UI.GridLayoutGroup o = checkSelf<UnityEngine.UI.GridLayoutGroup>(l);
 		UnityEngine.UI.GridLayoutGroup.Constraint v;
-		checkType(l,2,out v);
+		checkEnum(l,2,out v);
 		o.constraint=v;
 		return 0;
 	}

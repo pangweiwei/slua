@@ -27,7 +27,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 				System.Single a3;
 				checkType(l,4,out a3);
 				UnityEngine.ForceMode a4;
-				checkType(l,5,out a4);
+				checkEnum(l,5,out a4);
 				self.AddForceAtPosition(a1,a2,a3,a4);
 				return 0;
 			}
