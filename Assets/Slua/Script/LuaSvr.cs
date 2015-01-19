@@ -15,12 +15,14 @@ namespace SLua
             luaState = new LuaState();
 
             LuaObject.init(luaState.handle);
+            // if compiler report can't find these symbols, 
+            // you should click SMenu=>Make, Make UI, Make custom to regenrate them.
             LuaUnity.Bind(luaState.handle);
             LuaUnityUI.Bind(luaState.handle);
 			LuaCustom.Bind(luaState.handle);
 
             
-            luaState.doFile("main.lua");
+            luaState.doFile("main.lua.txt");
 
             LuaFunction func = (LuaFunction)luaState["main"];
             Profiler.BeginSample("call main");

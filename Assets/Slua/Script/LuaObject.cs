@@ -250,7 +250,7 @@ return index
         {
             string[] subt = t.Split(new Char[] { '.' });
 
-#if LUA_5_3
+#if !LUA_5_1
             LuaDLL.lua_pushglobaltable(l);
 #else
             LuaDLL.lua_pushvalue(l, LuaIndexes.LUA_GLOBALSINDEX);
