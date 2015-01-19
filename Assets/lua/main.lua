@@ -4,6 +4,13 @@ GameObject = UnityEngine.GameObject
 
 function main()
 
+	local n=0
+	-- delegate test
+	UnityEngine.Application.RegisterLogCallback(function(cond,traceback,t)
+		-- don't use print, it's caused dead loop
+		n=n+1
+	end)
+
 	local go = GameObject.Find("Canvas/Button")
 	local btn = go:GetComponent("Button")
 	
@@ -38,7 +45,12 @@ function main()
 	local h=HelloWorld()
 	h:say()
 
-	for i=1,10000 do
+	for i=1,100000 do
 		local a=Vector3(i,i,i)
+		a=nil
 	end
+
+	
+
+	print("LogCallback occured",n)
 end
