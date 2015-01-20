@@ -193,7 +193,8 @@ namespace SLua
             LuaDLL.luaL_getmetatable(l, getAQName(o));
             if (LuaDLL.lua_isnil(l, -1))
             {
-				LuaDLL.luaL_error(l,string.Format("{0} not registerd, can't push to lua vm.",o.GetType().Name));
+                LuaDLL.lua_pop(l, 1);
+                LuaDLL.luaL_getmetatable(l, "LuaVarObject");
             }
 
             LuaDLL.lua_setmetatable(l, -2);
@@ -201,10 +202,15 @@ namespace SLua
         }
 
 
-        Dictionary<Type, string> aqnameMap = new Dictionary<Type, string>();
-        string getAQName(object o)
+        static Dictionary<Type, string> aqnameMap = new Dictionary<Type, string>();
+        static string getAQName(object o)
         {
             Type t = o.GetType();
+            return getAQName(t);
+        }
+
+        internal static string getAQName(Type t)
+        {
             string name;
             if (aqnameMap.TryGetValue(t, out name))
             {

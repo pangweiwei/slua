@@ -292,7 +292,6 @@ class CodeGenerator
             End(file);
         }
         else if(t.BaseType==typeof(System.MulticastDelegate)) {
-            string clsname = ExportName(t);
             string f = LuaCodeGen.path + "LuaDelegate_" + t.Name + ".cs";
             StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
             WriteDelegate(t, file);
@@ -313,7 +312,6 @@ class CodeGenerator
 
             if (t.BaseType!=null && t.BaseType.Name=="UnityEvent`1")
             {
-                string clsname = ExportName(t);
                 string f = LuaCodeGen.path + "LuaUnityEvent_" + GenericName(t.BaseType) + ".cs";
                 file = new StreamWriter(f, false, Encoding.UTF8);
                 WriteEvent(t, file);

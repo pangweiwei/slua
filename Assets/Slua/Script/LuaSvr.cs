@@ -16,7 +16,7 @@ namespace SLua
 
             LuaObject.init(luaState.handle);
             // if compiler report can't find these symbols, 
-            // you should click SMenu=>Make, Make UI, Make custom to regenrate them.
+            // you should click SLua=>Make, Make UI, Make custom to regenrate them.
             LuaUnity.Bind(luaState.handle);
             LuaUnityUI.Bind(luaState.handle);
 			LuaCustom.Bind(luaState.handle);

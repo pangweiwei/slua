@@ -140,6 +140,12 @@ namespace LuaInterface
             LuaDLL.lua_error(luaState);
         }
 
+        public static void luaL_error(IntPtr luaState, string fmt, params object[] args)
+        {
+            string str = string.Format(fmt, args);
+            luaL_error(luaState, str);
+        }
+
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern string luaL_gsub(IntPtr luaState, string str, string pattern, string replacement);
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
