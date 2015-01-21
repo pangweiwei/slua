@@ -18,7 +18,7 @@ public class Lua_UnityEngine_Collider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ClosestPointOnBounds(IntPtr l) {
 		try{
-			UnityEngine.Collider self=checkSelf<UnityEngine.Collider>(l);
+			UnityEngine.Collider self=(UnityEngine.Collider)checkSelf(l);
 			UnityEngine.Vector3 a1;
 			checkType(l,2,out a1);
 			UnityEngine.Vector3 ret=self.ClosestPointOnBounds(a1);
@@ -33,7 +33,7 @@ public class Lua_UnityEngine_Collider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Raycast(IntPtr l) {
 		try{
-			UnityEngine.Collider self=checkSelf<UnityEngine.Collider>(l);
+			UnityEngine.Collider self=(UnityEngine.Collider)checkSelf(l);
 			UnityEngine.Ray a1;
 			checkType(l,2,out a1);
 			UnityEngine.RaycastHit a2;
@@ -51,13 +51,13 @@ public class Lua_UnityEngine_Collider : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_enabled(IntPtr l) {
-		UnityEngine.Collider o = checkSelf<UnityEngine.Collider>(l);
+		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
 		pushValue(l,o.enabled);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enabled(IntPtr l) {
-		UnityEngine.Collider o = checkSelf<UnityEngine.Collider>(l);
+		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.enabled=v;
@@ -65,19 +65,19 @@ public class Lua_UnityEngine_Collider : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_attachedRigidbody(IntPtr l) {
-		UnityEngine.Collider o = checkSelf<UnityEngine.Collider>(l);
+		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
 		pushValue(l,o.attachedRigidbody);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isTrigger(IntPtr l) {
-		UnityEngine.Collider o = checkSelf<UnityEngine.Collider>(l);
+		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
 		pushValue(l,o.isTrigger);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isTrigger(IntPtr l) {
-		UnityEngine.Collider o = checkSelf<UnityEngine.Collider>(l);
+		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.isTrigger=v;
@@ -85,13 +85,13 @@ public class Lua_UnityEngine_Collider : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_material(IntPtr l) {
-		UnityEngine.Collider o = checkSelf<UnityEngine.Collider>(l);
+		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
 		pushValue(l,o.material);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_material(IntPtr l) {
-		UnityEngine.Collider o = checkSelf<UnityEngine.Collider>(l);
+		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
 		UnityEngine.PhysicMaterial v;
 		checkType(l,2,out v);
 		o.material=v;
@@ -99,13 +99,13 @@ public class Lua_UnityEngine_Collider : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_sharedMaterial(IntPtr l) {
-		UnityEngine.Collider o = checkSelf<UnityEngine.Collider>(l);
+		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
 		pushValue(l,o.sharedMaterial);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sharedMaterial(IntPtr l) {
-		UnityEngine.Collider o = checkSelf<UnityEngine.Collider>(l);
+		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
 		UnityEngine.PhysicMaterial v;
 		checkType(l,2,out v);
 		o.sharedMaterial=v;
@@ -113,26 +113,20 @@ public class Lua_UnityEngine_Collider : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_bounds(IntPtr l) {
-		UnityEngine.Collider o = checkSelf<UnityEngine.Collider>(l);
+		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
 		pushValue(l,o.bounds);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Collider");
-		addMember(l,ClosestPointOnBounds, "ClosestPointOnBounds");
-		addMember(l,Raycast, "Raycast");
-		addMember(l,get_enabled, "get_enabled");
-		addMember(l,set_enabled, "set_enabled");
-		addMember(l,get_attachedRigidbody, "get_attachedRigidbody");
-		addMember(l,get_isTrigger, "get_isTrigger");
-		addMember(l,set_isTrigger, "set_isTrigger");
-		addMember(l,get_material, "get_material");
-		addMember(l,set_material, "set_material");
-		addMember(l,get_sharedMaterial, "get_sharedMaterial");
-		addMember(l,set_sharedMaterial, "set_sharedMaterial");
-		addMember(l,get_bounds, "get_bounds");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Collider),typeof(UnityEngine.Component));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,ClosestPointOnBounds);
+		addMember(l,Raycast);
+		addMember(l,"enabled",get_enabled,set_enabled);
+		addMember(l,"attachedRigidbody",get_attachedRigidbody,null);
+		addMember(l,"isTrigger",get_isTrigger,set_isTrigger);
+		addMember(l,"material",get_material,set_material);
+		addMember(l,"sharedMaterial",get_sharedMaterial,set_sharedMaterial);
+		addMember(l,"bounds",get_bounds,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Collider),typeof(UnityEngine.Component));
 	}
 }

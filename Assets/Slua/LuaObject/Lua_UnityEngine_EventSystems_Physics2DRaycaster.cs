@@ -11,7 +11,7 @@ public class Lua_UnityEngine_EventSystems_Physics2DRaycaster : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Raycast(IntPtr l) {
 		try{
-			UnityEngine.EventSystems.Physics2DRaycaster self=checkSelf<UnityEngine.EventSystems.Physics2DRaycaster>(l);
+			UnityEngine.EventSystems.Physics2DRaycaster self=(UnityEngine.EventSystems.Physics2DRaycaster)checkSelf(l);
 			UnityEngine.EventSystems.PointerEventData a1;
 			checkType(l,2,out a1);
 			List<UnityEngine.EventSystems.RaycastResult> a2;
@@ -26,9 +26,7 @@ public class Lua_UnityEngine_EventSystems_Physics2DRaycaster : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.Physics2DRaycaster");
-		addMember(l,Raycast, "Raycast");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.EventSystems.Physics2DRaycaster),typeof(UnityEngine.EventSystems.PhysicsRaycaster));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Raycast);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.Physics2DRaycaster),typeof(UnityEngine.EventSystems.PhysicsRaycaster));
 	}
 }

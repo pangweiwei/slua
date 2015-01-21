@@ -172,13 +172,13 @@ public class Lua_UnityEngine_Color : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_r(IntPtr l) {
-		UnityEngine.Color o = checkSelf<UnityEngine.Color>(l);
+		UnityEngine.Color o = (UnityEngine.Color)checkSelf(l);
 		pushValue(l,o.r);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_r(IntPtr l) {
-		UnityEngine.Color o = checkSelf<UnityEngine.Color>(l);
+		UnityEngine.Color o = (UnityEngine.Color)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.r=v;
@@ -187,13 +187,13 @@ public class Lua_UnityEngine_Color : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_g(IntPtr l) {
-		UnityEngine.Color o = checkSelf<UnityEngine.Color>(l);
+		UnityEngine.Color o = (UnityEngine.Color)checkSelf(l);
 		pushValue(l,o.g);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_g(IntPtr l) {
-		UnityEngine.Color o = checkSelf<UnityEngine.Color>(l);
+		UnityEngine.Color o = (UnityEngine.Color)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.g=v;
@@ -202,13 +202,13 @@ public class Lua_UnityEngine_Color : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_b(IntPtr l) {
-		UnityEngine.Color o = checkSelf<UnityEngine.Color>(l);
+		UnityEngine.Color o = (UnityEngine.Color)checkSelf(l);
 		pushValue(l,o.b);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_b(IntPtr l) {
-		UnityEngine.Color o = checkSelf<UnityEngine.Color>(l);
+		UnityEngine.Color o = (UnityEngine.Color)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.b=v;
@@ -217,13 +217,13 @@ public class Lua_UnityEngine_Color : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_a(IntPtr l) {
-		UnityEngine.Color o = checkSelf<UnityEngine.Color>(l);
+		UnityEngine.Color o = (UnityEngine.Color)checkSelf(l);
 		pushValue(l,o.a);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_a(IntPtr l) {
-		UnityEngine.Color o = checkSelf<UnityEngine.Color>(l);
+		UnityEngine.Color o = (UnityEngine.Color)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.a=v;
@@ -287,55 +287,49 @@ public class Lua_UnityEngine_Color : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_grayscale(IntPtr l) {
-		UnityEngine.Color o = checkSelf<UnityEngine.Color>(l);
+		UnityEngine.Color o = (UnityEngine.Color)checkSelf(l);
 		pushValue(l,o.grayscale);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_linear(IntPtr l) {
-		UnityEngine.Color o = checkSelf<UnityEngine.Color>(l);
+		UnityEngine.Color o = (UnityEngine.Color)checkSelf(l);
 		pushValue(l,o.linear);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_gamma(IntPtr l) {
-		UnityEngine.Color o = checkSelf<UnityEngine.Color>(l);
+		UnityEngine.Color o = (UnityEngine.Color)checkSelf(l);
 		pushValue(l,o.gamma);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Color");
-		addMember(l,Lerp, "Lerp");
-		addMember(l,op_Addition, "op_Addition");
-		addMember(l,op_Subtraction, "op_Subtraction");
-		addMember(l,op_Multiply, "op_Multiply");
-		addMember(l,op_Division, "op_Division");
-		addMember(l,op_Equality, "op_Equality");
-		addMember(l,op_Inequality, "op_Inequality");
-		addMember(l,get_r, "get_r");
-		addMember(l,set_r, "set_r");
-		addMember(l,get_g, "get_g");
-		addMember(l,set_g, "set_g");
-		addMember(l,get_b, "get_b");
-		addMember(l,set_b, "set_b");
-		addMember(l,get_a, "get_a");
-		addMember(l,set_a, "set_a");
-		addMember(l,get_red, "get_red");
-		addMember(l,get_green, "get_green");
-		addMember(l,get_blue, "get_blue");
-		addMember(l,get_white, "get_white");
-		addMember(l,get_black, "get_black");
-		addMember(l,get_yellow, "get_yellow");
-		addMember(l,get_cyan, "get_cyan");
-		addMember(l,get_magenta, "get_magenta");
-		addMember(l,get_gray, "get_gray");
-		addMember(l,get_grey, "get_grey");
-		addMember(l,get_clear, "get_clear");
-		addMember(l,get_grayscale, "get_grayscale");
-		addMember(l,get_linear, "get_linear");
-		addMember(l,get_gamma, "get_gamma");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Color));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Lerp);
+		addMember(l,op_Addition);
+		addMember(l,op_Subtraction);
+		addMember(l,op_Multiply);
+		addMember(l,op_Division);
+		addMember(l,op_Equality);
+		addMember(l,op_Inequality);
+		addMember(l,"r",get_r,set_r);
+		addMember(l,"g",get_g,set_g);
+		addMember(l,"b",get_b,set_b);
+		addMember(l,"a",get_a,set_a);
+		addMember(l,"red",get_red,null);
+		addMember(l,"green",get_green,null);
+		addMember(l,"blue",get_blue,null);
+		addMember(l,"white",get_white,null);
+		addMember(l,"black",get_black,null);
+		addMember(l,"yellow",get_yellow,null);
+		addMember(l,"cyan",get_cyan,null);
+		addMember(l,"magenta",get_magenta,null);
+		addMember(l,"gray",get_gray,null);
+		addMember(l,"grey",get_grey,null);
+		addMember(l,"clear",get_clear,null);
+		addMember(l,"grayscale",get_grayscale,null);
+		addMember(l,"linear",get_linear,null);
+		addMember(l,"gamma",get_gamma,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Color));
 	}
 }

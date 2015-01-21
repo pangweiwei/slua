@@ -29,7 +29,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 	static public int GetPixels(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.Int32))){
-				UnityEngine.Texture3D self=checkSelf<UnityEngine.Texture3D>(l);
+				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
 				UnityEngine.Color[] ret=self.GetPixels(a1);
@@ -37,7 +37,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2)){
-				UnityEngine.Texture3D self=checkSelf<UnityEngine.Texture3D>(l);
+				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				UnityEngine.Color[] ret=self.GetPixels();
 				pushValue(l,ret);
 				return 1;
@@ -54,7 +54,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 	static public int SetPixels(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(UnityEngine.Color),typeof(System.Int32))){
-				UnityEngine.Texture3D self=checkSelf<UnityEngine.Texture3D>(l);
+				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
 				System.Int32 a2;
@@ -63,7 +63,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 				return 0;
 			}
 			else if(matchType(l,2,typeof(UnityEngine.Color))){
-				UnityEngine.Texture3D self=checkSelf<UnityEngine.Texture3D>(l);
+				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
 				self.SetPixels(a1);
@@ -81,14 +81,14 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 	static public int Apply(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.Boolean))){
-				UnityEngine.Texture3D self=checkSelf<UnityEngine.Texture3D>(l);
+				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
 				self.Apply(a1);
 				return 0;
 			}
 			else if(matchType(l,2)){
-				UnityEngine.Texture3D self=checkSelf<UnityEngine.Texture3D>(l);
+				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				self.Apply();
 				return 0;
 			}
@@ -102,25 +102,23 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_depth(IntPtr l) {
-		UnityEngine.Texture3D o = checkSelf<UnityEngine.Texture3D>(l);
+		UnityEngine.Texture3D o = (UnityEngine.Texture3D)checkSelf(l);
 		pushValue(l,o.depth);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_format(IntPtr l) {
-		UnityEngine.Texture3D o = checkSelf<UnityEngine.Texture3D>(l);
+		UnityEngine.Texture3D o = (UnityEngine.Texture3D)checkSelf(l);
 		pushValue(l,o.format);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Texture3D");
-		addMember(l,GetPixels, "GetPixels");
-		addMember(l,SetPixels, "SetPixels");
-		addMember(l,Apply, "Apply");
-		addMember(l,get_depth, "get_depth");
-		addMember(l,get_format, "get_format");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Texture3D),typeof(UnityEngine.Texture));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,GetPixels);
+		addMember(l,SetPixels);
+		addMember(l,Apply);
+		addMember(l,"depth",get_depth,null);
+		addMember(l,"format",get_format,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Texture3D),typeof(UnityEngine.Texture));
 	}
 }

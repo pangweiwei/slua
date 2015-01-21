@@ -34,13 +34,13 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_time(IntPtr l) {
-		UnityEngine.Keyframe o = checkSelf<UnityEngine.Keyframe>(l);
+		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
 		pushValue(l,o.time);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_time(IntPtr l) {
-		UnityEngine.Keyframe o = checkSelf<UnityEngine.Keyframe>(l);
+		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.time=v;
@@ -49,13 +49,13 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_value(IntPtr l) {
-		UnityEngine.Keyframe o = checkSelf<UnityEngine.Keyframe>(l);
+		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
 		pushValue(l,o.value);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_value(IntPtr l) {
-		UnityEngine.Keyframe o = checkSelf<UnityEngine.Keyframe>(l);
+		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.value=v;
@@ -64,13 +64,13 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_inTangent(IntPtr l) {
-		UnityEngine.Keyframe o = checkSelf<UnityEngine.Keyframe>(l);
+		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
 		pushValue(l,o.inTangent);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_inTangent(IntPtr l) {
-		UnityEngine.Keyframe o = checkSelf<UnityEngine.Keyframe>(l);
+		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.inTangent=v;
@@ -79,13 +79,13 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_outTangent(IntPtr l) {
-		UnityEngine.Keyframe o = checkSelf<UnityEngine.Keyframe>(l);
+		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
 		pushValue(l,o.outTangent);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_outTangent(IntPtr l) {
-		UnityEngine.Keyframe o = checkSelf<UnityEngine.Keyframe>(l);
+		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.outTangent=v;
@@ -94,13 +94,13 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_tangentMode(IntPtr l) {
-		UnityEngine.Keyframe o = checkSelf<UnityEngine.Keyframe>(l);
+		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
 		pushValue(l,o.tangentMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_tangentMode(IntPtr l) {
-		UnityEngine.Keyframe o = checkSelf<UnityEngine.Keyframe>(l);
+		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
 		System.Int32 v;
 		checkType(l,2,out v);
 		o.tangentMode=v;
@@ -109,18 +109,11 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Keyframe");
-		addMember(l,get_time, "get_time");
-		addMember(l,set_time, "set_time");
-		addMember(l,get_value, "get_value");
-		addMember(l,set_value, "set_value");
-		addMember(l,get_inTangent, "get_inTangent");
-		addMember(l,set_inTangent, "set_inTangent");
-		addMember(l,get_outTangent, "get_outTangent");
-		addMember(l,set_outTangent, "set_outTangent");
-		addMember(l,get_tangentMode, "get_tangentMode");
-		addMember(l,set_tangentMode, "set_tangentMode");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Keyframe));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"time",get_time,set_time);
+		addMember(l,"value",get_value,set_value);
+		addMember(l,"inTangent",get_inTangent,set_inTangent);
+		addMember(l,"outTangent",get_outTangent,set_outTangent);
+		addMember(l,"tangentMode",get_tangentMode,set_tangentMode);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Keyframe));
 	}
 }

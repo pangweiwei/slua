@@ -59,12 +59,10 @@ public class Lua_UnityEngine_UI_GraphicRegistry : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.GraphicRegistry");
-		addMember(l,RegisterGraphicForCanvas, "RegisterGraphicForCanvas");
-		addMember(l,UnregisterGraphicForCanvas, "UnregisterGraphicForCanvas");
-		addMember(l,GetGraphicsForCanvas, "GetGraphicsForCanvas");
-		addMember(l,get_instance, "get_instance");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.GraphicRegistry));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,RegisterGraphicForCanvas);
+		addMember(l,UnregisterGraphicForCanvas);
+		addMember(l,GetGraphicsForCanvas);
+		addMember(l,"instance",get_instance,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.GraphicRegistry));
 	}
 }

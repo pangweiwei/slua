@@ -11,7 +11,7 @@ public class Lua_UnityEngine_UI_Mask : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int MaskEnabled(IntPtr l) {
 		try{
-			UnityEngine.UI.Mask self=checkSelf<UnityEngine.UI.Mask>(l);
+			UnityEngine.UI.Mask self=(UnityEngine.UI.Mask)checkSelf(l);
 			System.Boolean ret=self.MaskEnabled();
 			pushValue(l,ret);
 			return 1;
@@ -24,7 +24,7 @@ public class Lua_UnityEngine_UI_Mask : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnSiblingGraphicEnabledDisabled(IntPtr l) {
 		try{
-			UnityEngine.UI.Mask self=checkSelf<UnityEngine.UI.Mask>(l);
+			UnityEngine.UI.Mask self=(UnityEngine.UI.Mask)checkSelf(l);
 			self.OnSiblingGraphicEnabledDisabled();
 			return 0;
 		}
@@ -36,7 +36,7 @@ public class Lua_UnityEngine_UI_Mask : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsRaycastLocationValid(IntPtr l) {
 		try{
-			UnityEngine.UI.Mask self=checkSelf<UnityEngine.UI.Mask>(l);
+			UnityEngine.UI.Mask self=(UnityEngine.UI.Mask)checkSelf(l);
 			UnityEngine.Vector2 a1;
 			checkType(l,2,out a1);
 			UnityEngine.Camera a2;
@@ -53,7 +53,7 @@ public class Lua_UnityEngine_UI_Mask : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetModifiedMaterial(IntPtr l) {
 		try{
-			UnityEngine.UI.Mask self=checkSelf<UnityEngine.UI.Mask>(l);
+			UnityEngine.UI.Mask self=(UnityEngine.UI.Mask)checkSelf(l);
 			UnityEngine.Material a1;
 			checkType(l,2,out a1);
 			UnityEngine.Material ret=self.GetModifiedMaterial(a1);
@@ -67,13 +67,13 @@ public class Lua_UnityEngine_UI_Mask : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_showMaskGraphic(IntPtr l) {
-		UnityEngine.UI.Mask o = checkSelf<UnityEngine.UI.Mask>(l);
+		UnityEngine.UI.Mask o = (UnityEngine.UI.Mask)checkSelf(l);
 		pushValue(l,o.showMaskGraphic);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_showMaskGraphic(IntPtr l) {
-		UnityEngine.UI.Mask o = checkSelf<UnityEngine.UI.Mask>(l);
+		UnityEngine.UI.Mask o = (UnityEngine.UI.Mask)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.showMaskGraphic=v;
@@ -81,21 +81,18 @@ public class Lua_UnityEngine_UI_Mask : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rectTransform(IntPtr l) {
-		UnityEngine.UI.Mask o = checkSelf<UnityEngine.UI.Mask>(l);
+		UnityEngine.UI.Mask o = (UnityEngine.UI.Mask)checkSelf(l);
 		pushValue(l,o.rectTransform);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Mask");
-		addMember(l,MaskEnabled, "MaskEnabled");
-		addMember(l,OnSiblingGraphicEnabledDisabled, "OnSiblingGraphicEnabledDisabled");
-		addMember(l,IsRaycastLocationValid, "IsRaycastLocationValid");
-		addMember(l,GetModifiedMaterial, "GetModifiedMaterial");
-		addMember(l,get_showMaskGraphic, "get_showMaskGraphic");
-		addMember(l,set_showMaskGraphic, "set_showMaskGraphic");
-		addMember(l,get_rectTransform, "get_rectTransform");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.Mask),typeof(UnityEngine.EventSystems.UIBehaviour));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,MaskEnabled);
+		addMember(l,OnSiblingGraphicEnabledDisabled);
+		addMember(l,IsRaycastLocationValid);
+		addMember(l,GetModifiedMaterial);
+		addMember(l,"showMaskGraphic",get_showMaskGraphic,set_showMaskGraphic);
+		addMember(l,"rectTransform",get_rectTransform,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Mask),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

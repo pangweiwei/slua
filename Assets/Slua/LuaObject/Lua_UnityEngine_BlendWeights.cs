@@ -12,13 +12,10 @@ public class Lua_UnityEngine_BlendWeights : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.BlendWeights");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "OneBone");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "TwoBones");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "FourBones");
+		getEnumTable(l,"UnityEngine.BlendWeights");
+		addMember(l,1,"OneBone");
+		addMember(l,2,"TwoBones");
+		addMember(l,4,"FourBones");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

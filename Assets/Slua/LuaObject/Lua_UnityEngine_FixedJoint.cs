@@ -17,8 +17,6 @@ public class Lua_UnityEngine_FixedJoint : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.FixedJoint");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.FixedJoint),typeof(UnityEngine.Joint));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.FixedJoint),typeof(UnityEngine.Joint));
 	}
 }

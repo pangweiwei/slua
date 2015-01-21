@@ -10,13 +10,13 @@ public class Lua_UnityEngine_JointTranslationLimits2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_min(IntPtr l) {
-		UnityEngine.JointTranslationLimits2D o = checkSelf<UnityEngine.JointTranslationLimits2D>(l);
+		UnityEngine.JointTranslationLimits2D o = (UnityEngine.JointTranslationLimits2D)checkSelf(l);
 		pushValue(l,o.min);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_min(IntPtr l) {
-		UnityEngine.JointTranslationLimits2D o = checkSelf<UnityEngine.JointTranslationLimits2D>(l);
+		UnityEngine.JointTranslationLimits2D o = (UnityEngine.JointTranslationLimits2D)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.min=v;
@@ -25,13 +25,13 @@ public class Lua_UnityEngine_JointTranslationLimits2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_max(IntPtr l) {
-		UnityEngine.JointTranslationLimits2D o = checkSelf<UnityEngine.JointTranslationLimits2D>(l);
+		UnityEngine.JointTranslationLimits2D o = (UnityEngine.JointTranslationLimits2D)checkSelf(l);
 		pushValue(l,o.max);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_max(IntPtr l) {
-		UnityEngine.JointTranslationLimits2D o = checkSelf<UnityEngine.JointTranslationLimits2D>(l);
+		UnityEngine.JointTranslationLimits2D o = (UnityEngine.JointTranslationLimits2D)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.max=v;
@@ -40,12 +40,8 @@ public class Lua_UnityEngine_JointTranslationLimits2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.JointTranslationLimits2D");
-		addMember(l,get_min, "get_min");
-		addMember(l,set_min, "set_min");
-		addMember(l,get_max, "get_max");
-		addMember(l,set_max, "set_max");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.JointTranslationLimits2D));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"min",get_min,set_min);
+		addMember(l,"max",get_max,set_max);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.JointTranslationLimits2D));
 	}
 }

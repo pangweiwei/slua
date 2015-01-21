@@ -141,7 +141,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Create(IntPtr l) {
 		try{
-			UnityEngine.RenderTexture self=checkSelf<UnityEngine.RenderTexture>(l);
+			UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 			System.Boolean ret=self.Create();
 			pushValue(l,ret);
 			return 1;
@@ -154,7 +154,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Release(IntPtr l) {
 		try{
-			UnityEngine.RenderTexture self=checkSelf<UnityEngine.RenderTexture>(l);
+			UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 			self.Release();
 			return 0;
 		}
@@ -166,7 +166,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsCreated(IntPtr l) {
 		try{
-			UnityEngine.RenderTexture self=checkSelf<UnityEngine.RenderTexture>(l);
+			UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 			System.Boolean ret=self.IsCreated();
 			pushValue(l,ret);
 			return 1;
@@ -180,12 +180,12 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	static public int DiscardContents(IntPtr l) {
 		try{
 			if(matchType(l,2)){
-				UnityEngine.RenderTexture self=checkSelf<UnityEngine.RenderTexture>(l);
+				UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 				self.DiscardContents();
 				return 0;
 			}
 			else if(matchType(l,2,typeof(System.Boolean),typeof(System.Boolean))){
-				UnityEngine.RenderTexture self=checkSelf<UnityEngine.RenderTexture>(l);
+				UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
 				System.Boolean a2;
@@ -204,7 +204,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int MarkRestoreExpected(IntPtr l) {
 		try{
-			UnityEngine.RenderTexture self=checkSelf<UnityEngine.RenderTexture>(l);
+			UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 			self.MarkRestoreExpected();
 			return 0;
 		}
@@ -216,7 +216,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetGlobalShaderProperty(IntPtr l) {
 		try{
-			UnityEngine.RenderTexture self=checkSelf<UnityEngine.RenderTexture>(l);
+			UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			self.SetGlobalShaderProperty(a1);
@@ -230,7 +230,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetTexelOffset(IntPtr l) {
 		try{
-			UnityEngine.RenderTexture self=checkSelf<UnityEngine.RenderTexture>(l);
+			UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 			UnityEngine.Vector2 ret=self.GetTexelOffset();
 			pushValue(l,ret);
 			return 1;
@@ -256,13 +256,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_width(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.width);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_width(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		System.Int32 v;
 		checkType(l,2,out v);
 		o.width=v;
@@ -270,13 +270,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_height(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.height);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_height(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		System.Int32 v;
 		checkType(l,2,out v);
 		o.height=v;
@@ -284,13 +284,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_depth(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.depth);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_depth(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		System.Int32 v;
 		checkType(l,2,out v);
 		o.depth=v;
@@ -298,13 +298,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isPowerOfTwo(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.isPowerOfTwo);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isPowerOfTwo(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.isPowerOfTwo=v;
@@ -312,19 +312,19 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_sRGB(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.sRGB);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_format(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.format);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_format(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		UnityEngine.RenderTextureFormat v;
 		checkEnum(l,2,out v);
 		o.format=v;
@@ -332,13 +332,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_useMipMap(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.useMipMap);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useMipMap(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.useMipMap=v;
@@ -346,13 +346,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_generateMips(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.generateMips);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_generateMips(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.generateMips=v;
@@ -360,13 +360,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isCubemap(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.isCubemap);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isCubemap(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.isCubemap=v;
@@ -374,13 +374,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isVolume(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.isVolume);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isVolume(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.isVolume=v;
@@ -388,13 +388,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_volumeDepth(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.volumeDepth);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_volumeDepth(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		System.Int32 v;
 		checkType(l,2,out v);
 		o.volumeDepth=v;
@@ -402,13 +402,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_antiAliasing(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.antiAliasing);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_antiAliasing(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		System.Int32 v;
 		checkType(l,2,out v);
 		o.antiAliasing=v;
@@ -416,13 +416,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_enableRandomWrite(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.enableRandomWrite);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enableRandomWrite(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.enableRandomWrite=v;
@@ -430,13 +430,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_colorBuffer(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.colorBuffer);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_depthBuffer(IntPtr l) {
-		UnityEngine.RenderTexture o = checkSelf<UnityEngine.RenderTexture>(l);
+		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
 		pushValue(l,o.depthBuffer);
 		return 1;
 	}
@@ -454,47 +454,32 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.RenderTexture");
-		addMember(l,GetTemporary, "GetTemporary");
-		addMember(l,ReleaseTemporary, "ReleaseTemporary");
-		addMember(l,Create, "Create");
-		addMember(l,Release, "Release");
-		addMember(l,IsCreated, "IsCreated");
-		addMember(l,DiscardContents, "DiscardContents");
-		addMember(l,MarkRestoreExpected, "MarkRestoreExpected");
-		addMember(l,SetGlobalShaderProperty, "SetGlobalShaderProperty");
-		addMember(l,GetTexelOffset, "GetTexelOffset");
-		addMember(l,SupportsStencil, "SupportsStencil");
-		addMember(l,get_width, "get_width");
-		addMember(l,set_width, "set_width");
-		addMember(l,get_height, "get_height");
-		addMember(l,set_height, "set_height");
-		addMember(l,get_depth, "get_depth");
-		addMember(l,set_depth, "set_depth");
-		addMember(l,get_isPowerOfTwo, "get_isPowerOfTwo");
-		addMember(l,set_isPowerOfTwo, "set_isPowerOfTwo");
-		addMember(l,get_sRGB, "get_sRGB");
-		addMember(l,get_format, "get_format");
-		addMember(l,set_format, "set_format");
-		addMember(l,get_useMipMap, "get_useMipMap");
-		addMember(l,set_useMipMap, "set_useMipMap");
-		addMember(l,get_generateMips, "get_generateMips");
-		addMember(l,set_generateMips, "set_generateMips");
-		addMember(l,get_isCubemap, "get_isCubemap");
-		addMember(l,set_isCubemap, "set_isCubemap");
-		addMember(l,get_isVolume, "get_isVolume");
-		addMember(l,set_isVolume, "set_isVolume");
-		addMember(l,get_volumeDepth, "get_volumeDepth");
-		addMember(l,set_volumeDepth, "set_volumeDepth");
-		addMember(l,get_antiAliasing, "get_antiAliasing");
-		addMember(l,set_antiAliasing, "set_antiAliasing");
-		addMember(l,get_enableRandomWrite, "get_enableRandomWrite");
-		addMember(l,set_enableRandomWrite, "set_enableRandomWrite");
-		addMember(l,get_colorBuffer, "get_colorBuffer");
-		addMember(l,get_depthBuffer, "get_depthBuffer");
-		addMember(l,get_active, "get_active");
-		addMember(l,set_active, "set_active");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.RenderTexture),typeof(UnityEngine.Texture));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,GetTemporary);
+		addMember(l,ReleaseTemporary);
+		addMember(l,Create);
+		addMember(l,Release);
+		addMember(l,IsCreated);
+		addMember(l,DiscardContents);
+		addMember(l,MarkRestoreExpected);
+		addMember(l,SetGlobalShaderProperty);
+		addMember(l,GetTexelOffset);
+		addMember(l,SupportsStencil);
+		addMember(l,"width",get_width,set_width);
+		addMember(l,"height",get_height,set_height);
+		addMember(l,"depth",get_depth,set_depth);
+		addMember(l,"isPowerOfTwo",get_isPowerOfTwo,set_isPowerOfTwo);
+		addMember(l,"sRGB",get_sRGB,null);
+		addMember(l,"format",get_format,set_format);
+		addMember(l,"useMipMap",get_useMipMap,set_useMipMap);
+		addMember(l,"generateMips",get_generateMips,set_generateMips);
+		addMember(l,"isCubemap",get_isCubemap,set_isCubemap);
+		addMember(l,"isVolume",get_isVolume,set_isVolume);
+		addMember(l,"volumeDepth",get_volumeDepth,set_volumeDepth);
+		addMember(l,"antiAliasing",get_antiAliasing,set_antiAliasing);
+		addMember(l,"enableRandomWrite",get_enableRandomWrite,set_enableRandomWrite);
+		addMember(l,"colorBuffer",get_colorBuffer,null);
+		addMember(l,"depthBuffer",get_depthBuffer,null);
+		addMember(l,"active",get_active,set_active);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.RenderTexture),typeof(UnityEngine.Texture));
 	}
 }

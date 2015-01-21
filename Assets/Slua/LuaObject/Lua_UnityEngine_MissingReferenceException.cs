@@ -33,8 +33,6 @@ public class Lua_UnityEngine_MissingReferenceException : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.MissingReferenceException");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.MissingReferenceException));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.MissingReferenceException));
 	}
 }

@@ -18,7 +18,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetInstanceID(IntPtr l) {
 		try{
-			UnityEngine.Object self=checkSelf<UnityEngine.Object>(l);
+			UnityEngine.Object self=(UnityEngine.Object)checkSelf(l);
 			System.Int32 ret=self.GetInstanceID();
 			pushValue(l,ret);
 			return 1;
@@ -215,13 +215,13 @@ public class Lua_UnityEngine_Object : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_name(IntPtr l) {
-		UnityEngine.Object o = checkSelf<UnityEngine.Object>(l);
+		UnityEngine.Object o = (UnityEngine.Object)checkSelf(l);
 		pushValue(l,o.name);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_name(IntPtr l) {
-		UnityEngine.Object o = checkSelf<UnityEngine.Object>(l);
+		UnityEngine.Object o = (UnityEngine.Object)checkSelf(l);
 		System.String v;
 		checkType(l,2,out v);
 		o.name=v;
@@ -229,13 +229,13 @@ public class Lua_UnityEngine_Object : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_hideFlags(IntPtr l) {
-		UnityEngine.Object o = checkSelf<UnityEngine.Object>(l);
+		UnityEngine.Object o = (UnityEngine.Object)checkSelf(l);
 		pushValue(l,o.hideFlags);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_hideFlags(IntPtr l) {
-		UnityEngine.Object o = checkSelf<UnityEngine.Object>(l);
+		UnityEngine.Object o = (UnityEngine.Object)checkSelf(l);
 		UnityEngine.HideFlags v;
 		checkEnum(l,2,out v);
 		o.hideFlags=v;
@@ -243,22 +243,18 @@ public class Lua_UnityEngine_Object : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Object");
-		addMember(l,GetInstanceID, "GetInstanceID");
-		addMember(l,Instantiate, "Instantiate");
-		addMember(l,Destroy, "Destroy");
-		addMember(l,DestroyImmediate, "DestroyImmediate");
-		addMember(l,FindObjectsOfType, "FindObjectsOfType");
-		addMember(l,FindObjectOfType, "FindObjectOfType");
-		addMember(l,DontDestroyOnLoad, "DontDestroyOnLoad");
-		addMember(l,DestroyObject, "DestroyObject");
-		addMember(l,op_Equality, "op_Equality");
-		addMember(l,op_Inequality, "op_Inequality");
-		addMember(l,get_name, "get_name");
-		addMember(l,set_name, "set_name");
-		addMember(l,get_hideFlags, "get_hideFlags");
-		addMember(l,set_hideFlags, "set_hideFlags");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,GetInstanceID);
+		addMember(l,Instantiate);
+		addMember(l,Destroy);
+		addMember(l,DestroyImmediate);
+		addMember(l,FindObjectsOfType);
+		addMember(l,FindObjectOfType);
+		addMember(l,DontDestroyOnLoad);
+		addMember(l,DestroyObject);
+		addMember(l,op_Equality);
+		addMember(l,op_Inequality);
+		addMember(l,"name",get_name,set_name);
+		addMember(l,"hideFlags",get_hideFlags,set_hideFlags);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Object));
 	}
 }

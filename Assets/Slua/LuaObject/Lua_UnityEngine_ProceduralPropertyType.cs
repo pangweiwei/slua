@@ -12,25 +12,16 @@ public class Lua_UnityEngine_ProceduralPropertyType : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.ProceduralPropertyType");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Boolean");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Float");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Vector2");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Vector3");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Vector4");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "Color3");
-		LuaDLL.lua_pushinteger(l, 6);
-		LuaDLL.lua_setfield(l, -2, "Color4");
-		LuaDLL.lua_pushinteger(l, 7);
-		LuaDLL.lua_setfield(l, -2, "Enum");
-		LuaDLL.lua_pushinteger(l, 8);
-		LuaDLL.lua_setfield(l, -2, "Texture");
+		getEnumTable(l,"UnityEngine.ProceduralPropertyType");
+		addMember(l,0,"Boolean");
+		addMember(l,1,"Float");
+		addMember(l,2,"Vector2");
+		addMember(l,3,"Vector3");
+		addMember(l,4,"Vector4");
+		addMember(l,5,"Color3");
+		addMember(l,6,"Color4");
+		addMember(l,7,"Enum");
+		addMember(l,8,"Texture");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

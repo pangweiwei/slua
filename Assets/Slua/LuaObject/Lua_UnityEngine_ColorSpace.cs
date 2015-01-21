@@ -12,13 +12,10 @@ public class Lua_UnityEngine_ColorSpace : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.ColorSpace");
-		LuaDLL.lua_pushinteger(l, -1);
-		LuaDLL.lua_setfield(l, -2, "Uninitialized");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Gamma");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Linear");
+		getEnumTable(l,"UnityEngine.ColorSpace");
+		addMember(l,-1,"Uninitialized");
+		addMember(l,0,"Gamma");
+		addMember(l,1,"Linear");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

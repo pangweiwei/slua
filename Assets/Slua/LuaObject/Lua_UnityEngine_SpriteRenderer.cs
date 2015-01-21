@@ -17,13 +17,13 @@ public class Lua_UnityEngine_SpriteRenderer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_sprite(IntPtr l) {
-		UnityEngine.SpriteRenderer o = checkSelf<UnityEngine.SpriteRenderer>(l);
+		UnityEngine.SpriteRenderer o = (UnityEngine.SpriteRenderer)checkSelf(l);
 		pushValue(l,o.sprite);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sprite(IntPtr l) {
-		UnityEngine.SpriteRenderer o = checkSelf<UnityEngine.SpriteRenderer>(l);
+		UnityEngine.SpriteRenderer o = (UnityEngine.SpriteRenderer)checkSelf(l);
 		UnityEngine.Sprite v;
 		checkType(l,2,out v);
 		o.sprite=v;
@@ -31,13 +31,13 @@ public class Lua_UnityEngine_SpriteRenderer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_color(IntPtr l) {
-		UnityEngine.SpriteRenderer o = checkSelf<UnityEngine.SpriteRenderer>(l);
+		UnityEngine.SpriteRenderer o = (UnityEngine.SpriteRenderer)checkSelf(l);
 		pushValue(l,o.color);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_color(IntPtr l) {
-		UnityEngine.SpriteRenderer o = checkSelf<UnityEngine.SpriteRenderer>(l);
+		UnityEngine.SpriteRenderer o = (UnityEngine.SpriteRenderer)checkSelf(l);
 		UnityEngine.Color v;
 		checkType(l,2,out v);
 		o.color=v;
@@ -45,12 +45,8 @@ public class Lua_UnityEngine_SpriteRenderer : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SpriteRenderer");
-		addMember(l,get_sprite, "get_sprite");
-		addMember(l,set_sprite, "set_sprite");
-		addMember(l,get_color, "get_color");
-		addMember(l,set_color, "set_color");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.SpriteRenderer),typeof(UnityEngine.Renderer));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"sprite",get_sprite,set_sprite);
+		addMember(l,"color",get_color,set_color);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.SpriteRenderer),typeof(UnityEngine.Renderer));
 	}
 }

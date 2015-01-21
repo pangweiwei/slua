@@ -11,7 +11,7 @@ public class Lua_UnityEngine_UI_ToggleGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int NotifyToggleOn(IntPtr l) {
 		try{
-			UnityEngine.UI.ToggleGroup self=checkSelf<UnityEngine.UI.ToggleGroup>(l);
+			UnityEngine.UI.ToggleGroup self=(UnityEngine.UI.ToggleGroup)checkSelf(l);
 			UnityEngine.UI.Toggle a1;
 			checkType(l,2,out a1);
 			self.NotifyToggleOn(a1);
@@ -25,7 +25,7 @@ public class Lua_UnityEngine_UI_ToggleGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int UnregisterToggle(IntPtr l) {
 		try{
-			UnityEngine.UI.ToggleGroup self=checkSelf<UnityEngine.UI.ToggleGroup>(l);
+			UnityEngine.UI.ToggleGroup self=(UnityEngine.UI.ToggleGroup)checkSelf(l);
 			UnityEngine.UI.Toggle a1;
 			checkType(l,2,out a1);
 			self.UnregisterToggle(a1);
@@ -39,7 +39,7 @@ public class Lua_UnityEngine_UI_ToggleGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RegisterToggle(IntPtr l) {
 		try{
-			UnityEngine.UI.ToggleGroup self=checkSelf<UnityEngine.UI.ToggleGroup>(l);
+			UnityEngine.UI.ToggleGroup self=(UnityEngine.UI.ToggleGroup)checkSelf(l);
 			UnityEngine.UI.Toggle a1;
 			checkType(l,2,out a1);
 			self.RegisterToggle(a1);
@@ -53,7 +53,7 @@ public class Lua_UnityEngine_UI_ToggleGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AnyTogglesOn(IntPtr l) {
 		try{
-			UnityEngine.UI.ToggleGroup self=checkSelf<UnityEngine.UI.ToggleGroup>(l);
+			UnityEngine.UI.ToggleGroup self=(UnityEngine.UI.ToggleGroup)checkSelf(l);
 			System.Boolean ret=self.AnyTogglesOn();
 			pushValue(l,ret);
 			return 1;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_UI_ToggleGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ActiveToggles(IntPtr l) {
 		try{
-			UnityEngine.UI.ToggleGroup self=checkSelf<UnityEngine.UI.ToggleGroup>(l);
+			UnityEngine.UI.ToggleGroup self=(UnityEngine.UI.ToggleGroup)checkSelf(l);
 			IEnumerable<UnityEngine.UI.Toggle> ret=self.ActiveToggles();
 			pushValue(l,ret);
 			return 1;
@@ -79,7 +79,7 @@ public class Lua_UnityEngine_UI_ToggleGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetAllTogglesOff(IntPtr l) {
 		try{
-			UnityEngine.UI.ToggleGroup self=checkSelf<UnityEngine.UI.ToggleGroup>(l);
+			UnityEngine.UI.ToggleGroup self=(UnityEngine.UI.ToggleGroup)checkSelf(l);
 			self.SetAllTogglesOff();
 			return 0;
 		}
@@ -90,13 +90,13 @@ public class Lua_UnityEngine_UI_ToggleGroup : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_allowSwitchOff(IntPtr l) {
-		UnityEngine.UI.ToggleGroup o = checkSelf<UnityEngine.UI.ToggleGroup>(l);
+		UnityEngine.UI.ToggleGroup o = (UnityEngine.UI.ToggleGroup)checkSelf(l);
 		pushValue(l,o.allowSwitchOff);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_allowSwitchOff(IntPtr l) {
-		UnityEngine.UI.ToggleGroup o = checkSelf<UnityEngine.UI.ToggleGroup>(l);
+		UnityEngine.UI.ToggleGroup o = (UnityEngine.UI.ToggleGroup)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.allowSwitchOff=v;
@@ -104,16 +104,13 @@ public class Lua_UnityEngine_UI_ToggleGroup : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.ToggleGroup");
-		addMember(l,NotifyToggleOn, "NotifyToggleOn");
-		addMember(l,UnregisterToggle, "UnregisterToggle");
-		addMember(l,RegisterToggle, "RegisterToggle");
-		addMember(l,AnyTogglesOn, "AnyTogglesOn");
-		addMember(l,ActiveToggles, "ActiveToggles");
-		addMember(l,SetAllTogglesOff, "SetAllTogglesOff");
-		addMember(l,get_allowSwitchOff, "get_allowSwitchOff");
-		addMember(l,set_allowSwitchOff, "set_allowSwitchOff");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.ToggleGroup),typeof(UnityEngine.EventSystems.UIBehaviour));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,NotifyToggleOn);
+		addMember(l,UnregisterToggle);
+		addMember(l,RegisterToggle);
+		addMember(l,AnyTogglesOn);
+		addMember(l,ActiveToggles);
+		addMember(l,SetAllTogglesOff);
+		addMember(l,"allowSwitchOff",get_allowSwitchOff,set_allowSwitchOff);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.ToggleGroup),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

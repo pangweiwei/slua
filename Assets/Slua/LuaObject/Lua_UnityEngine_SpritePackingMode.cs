@@ -12,11 +12,9 @@ public class Lua_UnityEngine_SpritePackingMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.SpritePackingMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Tight");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Rectangle");
+		getEnumTable(l,"UnityEngine.SpritePackingMode");
+		addMember(l,0,"Tight");
+		addMember(l,1,"Rectangle");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

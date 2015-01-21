@@ -192,18 +192,16 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.PlayerPrefs");
-		addMember(l,SetInt, "SetInt");
-		addMember(l,GetInt, "GetInt");
-		addMember(l,SetFloat, "SetFloat");
-		addMember(l,GetFloat, "GetFloat");
-		addMember(l,SetString, "SetString");
-		addMember(l,GetString, "GetString");
-		addMember(l,HasKey, "HasKey");
-		addMember(l,DeleteKey, "DeleteKey");
-		addMember(l,DeleteAll, "DeleteAll");
-		addMember(l,Save, "Save");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.PlayerPrefs));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,SetInt);
+		addMember(l,GetInt);
+		addMember(l,SetFloat);
+		addMember(l,GetFloat);
+		addMember(l,SetString);
+		addMember(l,GetString);
+		addMember(l,HasKey);
+		addMember(l,DeleteKey);
+		addMember(l,DeleteAll);
+		addMember(l,Save);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.PlayerPrefs));
 	}
 }

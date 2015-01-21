@@ -17,13 +17,13 @@ public class Lua_UnityEngine_ClothRenderer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_pauseWhenNotVisible(IntPtr l) {
-		UnityEngine.ClothRenderer o = checkSelf<UnityEngine.ClothRenderer>(l);
+		UnityEngine.ClothRenderer o = (UnityEngine.ClothRenderer)checkSelf(l);
 		pushValue(l,o.pauseWhenNotVisible);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pauseWhenNotVisible(IntPtr l) {
-		UnityEngine.ClothRenderer o = checkSelf<UnityEngine.ClothRenderer>(l);
+		UnityEngine.ClothRenderer o = (UnityEngine.ClothRenderer)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.pauseWhenNotVisible=v;
@@ -31,10 +31,7 @@ public class Lua_UnityEngine_ClothRenderer : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ClothRenderer");
-		addMember(l,get_pauseWhenNotVisible, "get_pauseWhenNotVisible");
-		addMember(l,set_pauseWhenNotVisible, "set_pauseWhenNotVisible");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.ClothRenderer),typeof(UnityEngine.Renderer));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"pauseWhenNotVisible",get_pauseWhenNotVisible,set_pauseWhenNotVisible);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.ClothRenderer),typeof(UnityEngine.Renderer));
 	}
 }

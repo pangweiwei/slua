@@ -12,25 +12,16 @@ public class Lua_UnityEngine_Rendering_CompareFunction : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.Rendering.CompareFunction");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Disabled");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Never");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Less");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Equal");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "LessEqual");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "Greater");
-		LuaDLL.lua_pushinteger(l, 6);
-		LuaDLL.lua_setfield(l, -2, "NotEqual");
-		LuaDLL.lua_pushinteger(l, 7);
-		LuaDLL.lua_setfield(l, -2, "GreaterEqual");
-		LuaDLL.lua_pushinteger(l, 8);
-		LuaDLL.lua_setfield(l, -2, "Always");
+		getEnumTable(l,"UnityEngine.Rendering.CompareFunction");
+		addMember(l,0,"Disabled");
+		addMember(l,1,"Never");
+		addMember(l,2,"Less");
+		addMember(l,3,"Equal");
+		addMember(l,4,"LessEqual");
+		addMember(l,5,"Greater");
+		addMember(l,6,"NotEqual");
+		addMember(l,7,"GreaterEqual");
+		addMember(l,8,"Always");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

@@ -188,16 +188,14 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Resources");
-		addMember(l,FindObjectsOfTypeAll, "FindObjectsOfTypeAll");
-		addMember(l,Load, "Load");
-		addMember(l,LoadAsync, "LoadAsync");
-		addMember(l,LoadAll, "LoadAll");
-		addMember(l,GetBuiltinResource, "GetBuiltinResource");
-		addMember(l,LoadAssetAtPath, "LoadAssetAtPath");
-		addMember(l,UnloadAsset, "UnloadAsset");
-		addMember(l,UnloadUnusedAssets, "UnloadUnusedAssets");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Resources));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,FindObjectsOfTypeAll);
+		addMember(l,Load);
+		addMember(l,LoadAsync);
+		addMember(l,LoadAll);
+		addMember(l,GetBuiltinResource);
+		addMember(l,LoadAssetAtPath);
+		addMember(l,UnloadAsset);
+		addMember(l,UnloadUnusedAssets);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Resources));
 	}
 }

@@ -11,7 +11,7 @@ public class Lua_UnityEngine_UI_Shadow : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ModifyVertices(IntPtr l) {
 		try{
-			UnityEngine.UI.Shadow self=checkSelf<UnityEngine.UI.Shadow>(l);
+			UnityEngine.UI.Shadow self=(UnityEngine.UI.Shadow)checkSelf(l);
 			List<UnityEngine.UIVertex> a1;
 			checkType(l,2,out a1);
 			self.ModifyVertices(a1);
@@ -24,13 +24,13 @@ public class Lua_UnityEngine_UI_Shadow : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_effectColor(IntPtr l) {
-		UnityEngine.UI.Shadow o = checkSelf<UnityEngine.UI.Shadow>(l);
+		UnityEngine.UI.Shadow o = (UnityEngine.UI.Shadow)checkSelf(l);
 		pushValue(l,o.effectColor);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_effectColor(IntPtr l) {
-		UnityEngine.UI.Shadow o = checkSelf<UnityEngine.UI.Shadow>(l);
+		UnityEngine.UI.Shadow o = (UnityEngine.UI.Shadow)checkSelf(l);
 		UnityEngine.Color v;
 		checkType(l,2,out v);
 		o.effectColor=v;
@@ -38,13 +38,13 @@ public class Lua_UnityEngine_UI_Shadow : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_effectDistance(IntPtr l) {
-		UnityEngine.UI.Shadow o = checkSelf<UnityEngine.UI.Shadow>(l);
+		UnityEngine.UI.Shadow o = (UnityEngine.UI.Shadow)checkSelf(l);
 		pushValue(l,o.effectDistance);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_effectDistance(IntPtr l) {
-		UnityEngine.UI.Shadow o = checkSelf<UnityEngine.UI.Shadow>(l);
+		UnityEngine.UI.Shadow o = (UnityEngine.UI.Shadow)checkSelf(l);
 		UnityEngine.Vector2 v;
 		checkType(l,2,out v);
 		o.effectDistance=v;
@@ -52,13 +52,13 @@ public class Lua_UnityEngine_UI_Shadow : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_useGraphicAlpha(IntPtr l) {
-		UnityEngine.UI.Shadow o = checkSelf<UnityEngine.UI.Shadow>(l);
+		UnityEngine.UI.Shadow o = (UnityEngine.UI.Shadow)checkSelf(l);
 		pushValue(l,o.useGraphicAlpha);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useGraphicAlpha(IntPtr l) {
-		UnityEngine.UI.Shadow o = checkSelf<UnityEngine.UI.Shadow>(l);
+		UnityEngine.UI.Shadow o = (UnityEngine.UI.Shadow)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.useGraphicAlpha=v;
@@ -66,15 +66,10 @@ public class Lua_UnityEngine_UI_Shadow : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Shadow");
-		addMember(l,ModifyVertices, "ModifyVertices");
-		addMember(l,get_effectColor, "get_effectColor");
-		addMember(l,set_effectColor, "set_effectColor");
-		addMember(l,get_effectDistance, "get_effectDistance");
-		addMember(l,set_effectDistance, "set_effectDistance");
-		addMember(l,get_useGraphicAlpha, "get_useGraphicAlpha");
-		addMember(l,set_useGraphicAlpha, "set_useGraphicAlpha");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.Shadow),typeof(UnityEngine.UI.BaseVertexEffect));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,ModifyVertices);
+		addMember(l,"effectColor",get_effectColor,set_effectColor);
+		addMember(l,"effectDistance",get_effectDistance,set_effectDistance);
+		addMember(l,"useGraphicAlpha",get_useGraphicAlpha,set_useGraphicAlpha);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Shadow),typeof(UnityEngine.UI.BaseVertexEffect));
 	}
 }

@@ -18,7 +18,7 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetCurve(IntPtr l) {
 		try{
-			UnityEngine.AnimationClip self=checkSelf<UnityEngine.AnimationClip>(l);
+			UnityEngine.AnimationClip self=(UnityEngine.AnimationClip)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Type a2;
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int EnsureQuaternionContinuity(IntPtr l) {
 		try{
-			UnityEngine.AnimationClip self=checkSelf<UnityEngine.AnimationClip>(l);
+			UnityEngine.AnimationClip self=(UnityEngine.AnimationClip)checkSelf(l);
 			self.EnsureQuaternionContinuity();
 			return 0;
 		}
@@ -50,7 +50,7 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ClearCurves(IntPtr l) {
 		try{
-			UnityEngine.AnimationClip self=checkSelf<UnityEngine.AnimationClip>(l);
+			UnityEngine.AnimationClip self=(UnityEngine.AnimationClip)checkSelf(l);
 			self.ClearCurves();
 			return 0;
 		}
@@ -62,7 +62,7 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddEvent(IntPtr l) {
 		try{
-			UnityEngine.AnimationClip self=checkSelf<UnityEngine.AnimationClip>(l);
+			UnityEngine.AnimationClip self=(UnityEngine.AnimationClip)checkSelf(l);
 			UnityEngine.AnimationEvent a1;
 			checkType(l,2,out a1);
 			self.AddEvent(a1);
@@ -75,19 +75,19 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_length(IntPtr l) {
-		UnityEngine.AnimationClip o = checkSelf<UnityEngine.AnimationClip>(l);
+		UnityEngine.AnimationClip o = (UnityEngine.AnimationClip)checkSelf(l);
 		pushValue(l,o.length);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_frameRate(IntPtr l) {
-		UnityEngine.AnimationClip o = checkSelf<UnityEngine.AnimationClip>(l);
+		UnityEngine.AnimationClip o = (UnityEngine.AnimationClip)checkSelf(l);
 		pushValue(l,o.frameRate);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_frameRate(IntPtr l) {
-		UnityEngine.AnimationClip o = checkSelf<UnityEngine.AnimationClip>(l);
+		UnityEngine.AnimationClip o = (UnityEngine.AnimationClip)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.frameRate=v;
@@ -95,13 +95,13 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_wrapMode(IntPtr l) {
-		UnityEngine.AnimationClip o = checkSelf<UnityEngine.AnimationClip>(l);
+		UnityEngine.AnimationClip o = (UnityEngine.AnimationClip)checkSelf(l);
 		pushValue(l,o.wrapMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_wrapMode(IntPtr l) {
-		UnityEngine.AnimationClip o = checkSelf<UnityEngine.AnimationClip>(l);
+		UnityEngine.AnimationClip o = (UnityEngine.AnimationClip)checkSelf(l);
 		UnityEngine.WrapMode v;
 		checkEnum(l,2,out v);
 		o.wrapMode=v;
@@ -109,13 +109,13 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_localBounds(IntPtr l) {
-		UnityEngine.AnimationClip o = checkSelf<UnityEngine.AnimationClip>(l);
+		UnityEngine.AnimationClip o = (UnityEngine.AnimationClip)checkSelf(l);
 		pushValue(l,o.localBounds);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_localBounds(IntPtr l) {
-		UnityEngine.AnimationClip o = checkSelf<UnityEngine.AnimationClip>(l);
+		UnityEngine.AnimationClip o = (UnityEngine.AnimationClip)checkSelf(l);
 		UnityEngine.Bounds v;
 		checkType(l,2,out v);
 		o.localBounds=v;
@@ -123,19 +123,14 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimationClip");
-		addMember(l,SetCurve, "SetCurve");
-		addMember(l,EnsureQuaternionContinuity, "EnsureQuaternionContinuity");
-		addMember(l,ClearCurves, "ClearCurves");
-		addMember(l,AddEvent, "AddEvent");
-		addMember(l,get_length, "get_length");
-		addMember(l,get_frameRate, "get_frameRate");
-		addMember(l,set_frameRate, "set_frameRate");
-		addMember(l,get_wrapMode, "get_wrapMode");
-		addMember(l,set_wrapMode, "set_wrapMode");
-		addMember(l,get_localBounds, "get_localBounds");
-		addMember(l,set_localBounds, "set_localBounds");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AnimationClip),typeof(UnityEngine.Motion));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,SetCurve);
+		addMember(l,EnsureQuaternionContinuity);
+		addMember(l,ClearCurves);
+		addMember(l,AddEvent);
+		addMember(l,"length",get_length,null);
+		addMember(l,"frameRate",get_frameRate,set_frameRate);
+		addMember(l,"wrapMode",get_wrapMode,set_wrapMode);
+		addMember(l,"localBounds",get_localBounds,set_localBounds);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimationClip),typeof(UnityEngine.Motion));
 	}
 }

@@ -20,7 +20,7 @@ public class Lua_UnityEngine_EventSystems_BaseEventData : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Reset(IntPtr l) {
 		try{
-			UnityEngine.EventSystems.BaseEventData self=checkSelf<UnityEngine.EventSystems.BaseEventData>(l);
+			UnityEngine.EventSystems.BaseEventData self=(UnityEngine.EventSystems.BaseEventData)checkSelf(l);
 			self.Reset();
 			return 0;
 		}
@@ -32,7 +32,7 @@ public class Lua_UnityEngine_EventSystems_BaseEventData : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Use(IntPtr l) {
 		try{
-			UnityEngine.EventSystems.BaseEventData self=checkSelf<UnityEngine.EventSystems.BaseEventData>(l);
+			UnityEngine.EventSystems.BaseEventData self=(UnityEngine.EventSystems.BaseEventData)checkSelf(l);
 			self.Use();
 			return 0;
 		}
@@ -43,25 +43,25 @@ public class Lua_UnityEngine_EventSystems_BaseEventData : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_used(IntPtr l) {
-		UnityEngine.EventSystems.BaseEventData o = checkSelf<UnityEngine.EventSystems.BaseEventData>(l);
+		UnityEngine.EventSystems.BaseEventData o = (UnityEngine.EventSystems.BaseEventData)checkSelf(l);
 		pushValue(l,o.used);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_currentInputModule(IntPtr l) {
-		UnityEngine.EventSystems.BaseEventData o = checkSelf<UnityEngine.EventSystems.BaseEventData>(l);
+		UnityEngine.EventSystems.BaseEventData o = (UnityEngine.EventSystems.BaseEventData)checkSelf(l);
 		pushValue(l,o.currentInputModule);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_selectedObject(IntPtr l) {
-		UnityEngine.EventSystems.BaseEventData o = checkSelf<UnityEngine.EventSystems.BaseEventData>(l);
+		UnityEngine.EventSystems.BaseEventData o = (UnityEngine.EventSystems.BaseEventData)checkSelf(l);
 		pushValue(l,o.selectedObject);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_selectedObject(IntPtr l) {
-		UnityEngine.EventSystems.BaseEventData o = checkSelf<UnityEngine.EventSystems.BaseEventData>(l);
+		UnityEngine.EventSystems.BaseEventData o = (UnityEngine.EventSystems.BaseEventData)checkSelf(l);
 		UnityEngine.GameObject v;
 		checkType(l,2,out v);
 		o.selectedObject=v;
@@ -69,14 +69,11 @@ public class Lua_UnityEngine_EventSystems_BaseEventData : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.BaseEventData");
-		addMember(l,Reset, "Reset");
-		addMember(l,Use, "Use");
-		addMember(l,get_used, "get_used");
-		addMember(l,get_currentInputModule, "get_currentInputModule");
-		addMember(l,get_selectedObject, "get_selectedObject");
-		addMember(l,set_selectedObject, "set_selectedObject");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.EventSystems.BaseEventData));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Reset);
+		addMember(l,Use);
+		addMember(l,"used",get_used,null);
+		addMember(l,"currentInputModule",get_currentInputModule,null);
+		addMember(l,"selectedObject",get_selectedObject,set_selectedObject);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.BaseEventData));
 	}
 }

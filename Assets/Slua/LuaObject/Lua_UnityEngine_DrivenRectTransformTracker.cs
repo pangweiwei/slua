@@ -11,7 +11,7 @@ public class Lua_UnityEngine_DrivenRectTransformTracker : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Add(IntPtr l) {
 		try{
-			UnityEngine.DrivenRectTransformTracker self=checkSelf<UnityEngine.DrivenRectTransformTracker>(l);
+			UnityEngine.DrivenRectTransformTracker self=(UnityEngine.DrivenRectTransformTracker)checkSelf(l);
 			UnityEngine.Object a1;
 			checkType(l,2,out a1);
 			UnityEngine.RectTransform a2;
@@ -30,7 +30,7 @@ public class Lua_UnityEngine_DrivenRectTransformTracker : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Clear(IntPtr l) {
 		try{
-			UnityEngine.DrivenRectTransformTracker self=checkSelf<UnityEngine.DrivenRectTransformTracker>(l);
+			UnityEngine.DrivenRectTransformTracker self=(UnityEngine.DrivenRectTransformTracker)checkSelf(l);
 			self.Clear();
 			setBack(l,self);
 			return 0;
@@ -42,10 +42,8 @@ public class Lua_UnityEngine_DrivenRectTransformTracker : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.DrivenRectTransformTracker");
-		addMember(l,Add, "Add");
-		addMember(l,Clear, "Clear");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.DrivenRectTransformTracker));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Add);
+		addMember(l,Clear);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.DrivenRectTransformTracker));
 	}
 }

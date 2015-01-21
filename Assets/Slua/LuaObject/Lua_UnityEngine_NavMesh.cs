@@ -172,18 +172,16 @@ public class Lua_UnityEngine_NavMesh : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.NavMesh");
-		addMember(l,Raycast, "Raycast");
-		addMember(l,CalculatePath, "CalculatePath");
-		addMember(l,FindClosestEdge, "FindClosestEdge");
-		addMember(l,SamplePosition, "SamplePosition");
-		addMember(l,SetLayerCost, "SetLayerCost");
-		addMember(l,GetLayerCost, "GetLayerCost");
-		addMember(l,GetNavMeshLayerFromName, "GetNavMeshLayerFromName");
-		addMember(l,CalculateTriangulation, "CalculateTriangulation");
-		addMember(l,AddOffMeshLinks, "AddOffMeshLinks");
-		addMember(l,RestoreNavMesh, "RestoreNavMesh");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.NavMesh),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Raycast);
+		addMember(l,CalculatePath);
+		addMember(l,FindClosestEdge);
+		addMember(l,SamplePosition);
+		addMember(l,SetLayerCost);
+		addMember(l,GetLayerCost);
+		addMember(l,GetNavMeshLayerFromName);
+		addMember(l,CalculateTriangulation);
+		addMember(l,AddOffMeshLinks);
+		addMember(l,RestoreNavMesh);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.NavMesh),typeof(UnityEngine.Object));
 	}
 }

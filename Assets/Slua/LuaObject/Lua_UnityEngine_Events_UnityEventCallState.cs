@@ -12,13 +12,10 @@ public class Lua_UnityEngine_Events_UnityEventCallState : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.Events.UnityEventCallState");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Off");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "EditorAndRuntime");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "RuntimeOnly");
+		getEnumTable(l,"UnityEngine.Events.UnityEventCallState");
+		addMember(l,0,"Off");
+		addMember(l,1,"EditorAndRuntime");
+		addMember(l,2,"RuntimeOnly");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

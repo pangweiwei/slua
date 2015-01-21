@@ -12,15 +12,11 @@ public class Lua_UnityEngine_LightType : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.LightType");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Spot");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Directional");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Point");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Area");
+		getEnumTable(l,"UnityEngine.LightType");
+		addMember(l,0,"Spot");
+		addMember(l,1,"Directional");
+		addMember(l,2,"Point");
+		addMember(l,3,"Area");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

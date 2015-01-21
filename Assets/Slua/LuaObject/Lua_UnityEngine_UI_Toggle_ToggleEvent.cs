@@ -18,8 +18,6 @@ public class Lua_UnityEngine_UI_Toggle_ToggleEvent : LuaObject {
 	static public void reg(IntPtr l) {
 		LuaUnityEvent_Boolean.reg(l);
 		getTypeTable(l,"UnityEngine.UI.Toggle.ToggleEvent");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.Toggle.ToggleEvent));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Toggle.ToggleEvent));
 	}
 }

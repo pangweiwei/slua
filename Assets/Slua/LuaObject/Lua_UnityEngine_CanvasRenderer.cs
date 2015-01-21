@@ -18,7 +18,7 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetColor(IntPtr l) {
 		try{
-			UnityEngine.CanvasRenderer self=checkSelf<UnityEngine.CanvasRenderer>(l);
+			UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 			UnityEngine.Color a1;
 			checkType(l,2,out a1);
 			self.SetColor(a1);
@@ -32,7 +32,7 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetColor(IntPtr l) {
 		try{
-			UnityEngine.CanvasRenderer self=checkSelf<UnityEngine.CanvasRenderer>(l);
+			UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 			UnityEngine.Color ret=self.GetColor();
 			pushValue(l,ret);
 			return 1;
@@ -45,7 +45,7 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetAlpha(IntPtr l) {
 		try{
-			UnityEngine.CanvasRenderer self=checkSelf<UnityEngine.CanvasRenderer>(l);
+			UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 			System.Single ret=self.GetAlpha();
 			pushValue(l,ret);
 			return 1;
@@ -58,7 +58,7 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetAlpha(IntPtr l) {
 		try{
-			UnityEngine.CanvasRenderer self=checkSelf<UnityEngine.CanvasRenderer>(l);
+			UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 			System.Single a1;
 			checkType(l,2,out a1);
 			self.SetAlpha(a1);
@@ -72,7 +72,7 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetMaterial(IntPtr l) {
 		try{
-			UnityEngine.CanvasRenderer self=checkSelf<UnityEngine.CanvasRenderer>(l);
+			UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 			UnityEngine.Material a1;
 			checkType(l,2,out a1);
 			UnityEngine.Texture a2;
@@ -88,7 +88,7 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetMaterial(IntPtr l) {
 		try{
-			UnityEngine.CanvasRenderer self=checkSelf<UnityEngine.CanvasRenderer>(l);
+			UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 			UnityEngine.Material ret=self.GetMaterial();
 			pushValue(l,ret);
 			return 1;
@@ -102,7 +102,7 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	static public int SetVertices(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(UnityEngine.UIVertex),typeof(System.Int32))){
-				UnityEngine.CanvasRenderer self=checkSelf<UnityEngine.CanvasRenderer>(l);
+				UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 				UnityEngine.UIVertex[] a1;
 				checkType(l,2,out a1);
 				System.Int32 a2;
@@ -121,7 +121,7 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Clear(IntPtr l) {
 		try{
-			UnityEngine.CanvasRenderer self=checkSelf<UnityEngine.CanvasRenderer>(l);
+			UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 			self.Clear();
 			return 0;
 		}
@@ -132,13 +132,13 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isMask(IntPtr l) {
-		UnityEngine.CanvasRenderer o = checkSelf<UnityEngine.CanvasRenderer>(l);
+		UnityEngine.CanvasRenderer o = (UnityEngine.CanvasRenderer)checkSelf(l);
 		pushValue(l,o.isMask);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isMask(IntPtr l) {
-		UnityEngine.CanvasRenderer o = checkSelf<UnityEngine.CanvasRenderer>(l);
+		UnityEngine.CanvasRenderer o = (UnityEngine.CanvasRenderer)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.isMask=v;
@@ -146,32 +146,29 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_relativeDepth(IntPtr l) {
-		UnityEngine.CanvasRenderer o = checkSelf<UnityEngine.CanvasRenderer>(l);
+		UnityEngine.CanvasRenderer o = (UnityEngine.CanvasRenderer)checkSelf(l);
 		pushValue(l,o.relativeDepth);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_absoluteDepth(IntPtr l) {
-		UnityEngine.CanvasRenderer o = checkSelf<UnityEngine.CanvasRenderer>(l);
+		UnityEngine.CanvasRenderer o = (UnityEngine.CanvasRenderer)checkSelf(l);
 		pushValue(l,o.absoluteDepth);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.CanvasRenderer");
-		addMember(l,SetColor, "SetColor");
-		addMember(l,GetColor, "GetColor");
-		addMember(l,GetAlpha, "GetAlpha");
-		addMember(l,SetAlpha, "SetAlpha");
-		addMember(l,SetMaterial, "SetMaterial");
-		addMember(l,GetMaterial, "GetMaterial");
-		addMember(l,SetVertices, "SetVertices");
-		addMember(l,Clear, "Clear");
-		addMember(l,get_isMask, "get_isMask");
-		addMember(l,set_isMask, "set_isMask");
-		addMember(l,get_relativeDepth, "get_relativeDepth");
-		addMember(l,get_absoluteDepth, "get_absoluteDepth");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.CanvasRenderer),typeof(UnityEngine.Component));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,SetColor);
+		addMember(l,GetColor);
+		addMember(l,GetAlpha);
+		addMember(l,SetAlpha);
+		addMember(l,SetMaterial);
+		addMember(l,GetMaterial);
+		addMember(l,SetVertices);
+		addMember(l,Clear);
+		addMember(l,"isMask",get_isMask,set_isMask);
+		addMember(l,"relativeDepth",get_relativeDepth,null);
+		addMember(l,"absoluteDepth",get_absoluteDepth,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.CanvasRenderer),typeof(UnityEngine.Component));
 	}
 }

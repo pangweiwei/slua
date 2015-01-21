@@ -12,11 +12,9 @@ public class Lua_UnityEngine_UI_Image_OriginHorizontal : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.Image.OriginHorizontal");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Left");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Right");
+		getEnumTable(l,"UnityEngine.UI.Image.OriginHorizontal");
+		addMember(l,0,"Left");
+		addMember(l,1,"Right");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

@@ -21,13 +21,13 @@ public class Lua_UnityEngine_LOD : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_screenRelativeTransitionHeight(IntPtr l) {
-		UnityEngine.LOD o = checkSelf<UnityEngine.LOD>(l);
+		UnityEngine.LOD o = (UnityEngine.LOD)checkSelf(l);
 		pushValue(l,o.screenRelativeTransitionHeight);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_screenRelativeTransitionHeight(IntPtr l) {
-		UnityEngine.LOD o = checkSelf<UnityEngine.LOD>(l);
+		UnityEngine.LOD o = (UnityEngine.LOD)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.screenRelativeTransitionHeight=v;
@@ -36,13 +36,13 @@ public class Lua_UnityEngine_LOD : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_renderers(IntPtr l) {
-		UnityEngine.LOD o = checkSelf<UnityEngine.LOD>(l);
+		UnityEngine.LOD o = (UnityEngine.LOD)checkSelf(l);
 		pushValue(l,o.renderers);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_renderers(IntPtr l) {
-		UnityEngine.LOD o = checkSelf<UnityEngine.LOD>(l);
+		UnityEngine.LOD o = (UnityEngine.LOD)checkSelf(l);
 		UnityEngine.Renderer[] v;
 		checkType(l,2,out v);
 		o.renderers=v;
@@ -51,12 +51,8 @@ public class Lua_UnityEngine_LOD : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LOD");
-		addMember(l,get_screenRelativeTransitionHeight, "get_screenRelativeTransitionHeight");
-		addMember(l,set_screenRelativeTransitionHeight, "set_screenRelativeTransitionHeight");
-		addMember(l,get_renderers, "get_renderers");
-		addMember(l,set_renderers, "set_renderers");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.LOD));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"screenRelativeTransitionHeight",get_screenRelativeTransitionHeight,set_screenRelativeTransitionHeight);
+		addMember(l,"renderers",get_renderers,set_renderers);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.LOD));
 	}
 }

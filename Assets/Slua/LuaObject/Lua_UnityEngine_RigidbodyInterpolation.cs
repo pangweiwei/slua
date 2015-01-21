@@ -12,13 +12,10 @@ public class Lua_UnityEngine_RigidbodyInterpolation : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.RigidbodyInterpolation");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "None");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Interpolate");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Extrapolate");
+		getEnumTable(l,"UnityEngine.RigidbodyInterpolation");
+		addMember(l,0,"None");
+		addMember(l,1,"Interpolate");
+		addMember(l,2,"Extrapolate");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

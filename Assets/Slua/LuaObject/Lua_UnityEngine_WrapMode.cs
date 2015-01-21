@@ -12,19 +12,13 @@ public class Lua_UnityEngine_WrapMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.WrapMode");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Once");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Loop");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "PingPong");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Default");
-		LuaDLL.lua_pushinteger(l, 8);
-		LuaDLL.lua_setfield(l, -2, "ClampForever");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Clamp");
+		getEnumTable(l,"UnityEngine.WrapMode");
+		addMember(l,1,"Once");
+		addMember(l,2,"Loop");
+		addMember(l,4,"PingPong");
+		addMember(l,0,"Default");
+		addMember(l,8,"ClampForever");
+		addMember(l,1,"Clamp");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

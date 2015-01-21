@@ -17,22 +17,20 @@ public class Lua_UnityEngine_TextAsset : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_text(IntPtr l) {
-		UnityEngine.TextAsset o = checkSelf<UnityEngine.TextAsset>(l);
+		UnityEngine.TextAsset o = (UnityEngine.TextAsset)checkSelf(l);
 		pushValue(l,o.text);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_bytes(IntPtr l) {
-		UnityEngine.TextAsset o = checkSelf<UnityEngine.TextAsset>(l);
+		UnityEngine.TextAsset o = (UnityEngine.TextAsset)checkSelf(l);
 		pushValue(l,o.bytes);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.TextAsset");
-		addMember(l,get_text, "get_text");
-		addMember(l,get_bytes, "get_bytes");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.TextAsset),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"text",get_text,null);
+		addMember(l,"bytes",get_bytes,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.TextAsset),typeof(UnityEngine.Object));
 	}
 }

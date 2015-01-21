@@ -12,11 +12,9 @@ public class Lua_UnityEngine_AnimationBlendMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.AnimationBlendMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Blend");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Additive");
+		getEnumTable(l,"UnityEngine.AnimationBlendMode");
+		addMember(l,0,"Blend");
+		addMember(l,1,"Additive");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

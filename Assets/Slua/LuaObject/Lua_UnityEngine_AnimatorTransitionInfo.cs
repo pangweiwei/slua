@@ -11,7 +11,7 @@ public class Lua_UnityEngine_AnimatorTransitionInfo : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsName(IntPtr l) {
 		try{
-			UnityEngine.AnimatorTransitionInfo self=checkSelf<UnityEngine.AnimatorTransitionInfo>(l);
+			UnityEngine.AnimatorTransitionInfo self=(UnityEngine.AnimatorTransitionInfo)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Boolean ret=self.IsName(a1);
@@ -26,7 +26,7 @@ public class Lua_UnityEngine_AnimatorTransitionInfo : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsUserName(IntPtr l) {
 		try{
-			UnityEngine.AnimatorTransitionInfo self=checkSelf<UnityEngine.AnimatorTransitionInfo>(l);
+			UnityEngine.AnimatorTransitionInfo self=(UnityEngine.AnimatorTransitionInfo)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Boolean ret=self.IsUserName(a1);
@@ -40,31 +40,29 @@ public class Lua_UnityEngine_AnimatorTransitionInfo : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_nameHash(IntPtr l) {
-		UnityEngine.AnimatorTransitionInfo o = checkSelf<UnityEngine.AnimatorTransitionInfo>(l);
+		UnityEngine.AnimatorTransitionInfo o = (UnityEngine.AnimatorTransitionInfo)checkSelf(l);
 		pushValue(l,o.nameHash);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_userNameHash(IntPtr l) {
-		UnityEngine.AnimatorTransitionInfo o = checkSelf<UnityEngine.AnimatorTransitionInfo>(l);
+		UnityEngine.AnimatorTransitionInfo o = (UnityEngine.AnimatorTransitionInfo)checkSelf(l);
 		pushValue(l,o.userNameHash);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_normalizedTime(IntPtr l) {
-		UnityEngine.AnimatorTransitionInfo o = checkSelf<UnityEngine.AnimatorTransitionInfo>(l);
+		UnityEngine.AnimatorTransitionInfo o = (UnityEngine.AnimatorTransitionInfo)checkSelf(l);
 		pushValue(l,o.normalizedTime);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimatorTransitionInfo");
-		addMember(l,IsName, "IsName");
-		addMember(l,IsUserName, "IsUserName");
-		addMember(l,get_nameHash, "get_nameHash");
-		addMember(l,get_userNameHash, "get_userNameHash");
-		addMember(l,get_normalizedTime, "get_normalizedTime");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AnimatorTransitionInfo));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,IsName);
+		addMember(l,IsUserName);
+		addMember(l,"nameHash",get_nameHash,null);
+		addMember(l,"userNameHash",get_userNameHash,null);
+		addMember(l,"normalizedTime",get_normalizedTime,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimatorTransitionInfo));
 	}
 }

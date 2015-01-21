@@ -12,15 +12,11 @@ public class Lua_UnityEngine_EventSystems_PointerEventData_FramePressState : Lua
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.EventSystems.PointerEventData.FramePressState");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Pressed");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Released");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "PressedAndReleased");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "NotChanged");
+		getEnumTable(l,"UnityEngine.EventSystems.PointerEventData.FramePressState");
+		addMember(l,0,"Pressed");
+		addMember(l,1,"Released");
+		addMember(l,2,"PressedAndReleased");
+		addMember(l,3,"NotChanged");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

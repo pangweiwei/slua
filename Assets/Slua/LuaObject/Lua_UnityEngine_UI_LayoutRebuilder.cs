@@ -11,7 +11,7 @@ public class Lua_UnityEngine_UI_LayoutRebuilder : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsDestroyed(IntPtr l) {
 		try{
-			UnityEngine.UI.LayoutRebuilder self=checkSelf<UnityEngine.UI.LayoutRebuilder>(l);
+			UnityEngine.UI.LayoutRebuilder self=(UnityEngine.UI.LayoutRebuilder)checkSelf(l);
 			System.Boolean ret=self.IsDestroyed();
 			pushValue(l,ret);
 			return 1;
@@ -36,17 +36,15 @@ public class Lua_UnityEngine_UI_LayoutRebuilder : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_transform(IntPtr l) {
-		UnityEngine.UI.LayoutRebuilder o = checkSelf<UnityEngine.UI.LayoutRebuilder>(l);
+		UnityEngine.UI.LayoutRebuilder o = (UnityEngine.UI.LayoutRebuilder)checkSelf(l);
 		pushValue(l,o.transform);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.LayoutRebuilder");
-		addMember(l,IsDestroyed, "IsDestroyed");
-		addMember(l,MarkLayoutForRebuild, "MarkLayoutForRebuild");
-		addMember(l,get_transform, "get_transform");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.LayoutRebuilder));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,IsDestroyed);
+		addMember(l,MarkLayoutForRebuild);
+		addMember(l,"transform",get_transform,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.LayoutRebuilder));
 	}
 }

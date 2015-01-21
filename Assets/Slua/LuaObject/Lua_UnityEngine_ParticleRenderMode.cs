@@ -12,17 +12,12 @@ public class Lua_UnityEngine_ParticleRenderMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.ParticleRenderMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Billboard");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Stretch");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "SortedBillboard");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "HorizontalBillboard");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "VerticalBillboard");
+		getEnumTable(l,"UnityEngine.ParticleRenderMode");
+		addMember(l,0,"Billboard");
+		addMember(l,3,"Stretch");
+		addMember(l,2,"SortedBillboard");
+		addMember(l,4,"HorizontalBillboard");
+		addMember(l,5,"VerticalBillboard");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

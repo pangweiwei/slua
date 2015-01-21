@@ -43,13 +43,13 @@ public class Lua_UnityEngine_Color32 : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_r(IntPtr l) {
-		UnityEngine.Color32 o = checkSelf<UnityEngine.Color32>(l);
+		UnityEngine.Color32 o = (UnityEngine.Color32)checkSelf(l);
 		pushValue(l,o.r);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_r(IntPtr l) {
-		UnityEngine.Color32 o = checkSelf<UnityEngine.Color32>(l);
+		UnityEngine.Color32 o = (UnityEngine.Color32)checkSelf(l);
 		System.Byte v;
 		checkType(l,2,out v);
 		o.r=v;
@@ -58,13 +58,13 @@ public class Lua_UnityEngine_Color32 : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_g(IntPtr l) {
-		UnityEngine.Color32 o = checkSelf<UnityEngine.Color32>(l);
+		UnityEngine.Color32 o = (UnityEngine.Color32)checkSelf(l);
 		pushValue(l,o.g);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_g(IntPtr l) {
-		UnityEngine.Color32 o = checkSelf<UnityEngine.Color32>(l);
+		UnityEngine.Color32 o = (UnityEngine.Color32)checkSelf(l);
 		System.Byte v;
 		checkType(l,2,out v);
 		o.g=v;
@@ -73,13 +73,13 @@ public class Lua_UnityEngine_Color32 : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_b(IntPtr l) {
-		UnityEngine.Color32 o = checkSelf<UnityEngine.Color32>(l);
+		UnityEngine.Color32 o = (UnityEngine.Color32)checkSelf(l);
 		pushValue(l,o.b);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_b(IntPtr l) {
-		UnityEngine.Color32 o = checkSelf<UnityEngine.Color32>(l);
+		UnityEngine.Color32 o = (UnityEngine.Color32)checkSelf(l);
 		System.Byte v;
 		checkType(l,2,out v);
 		o.b=v;
@@ -88,13 +88,13 @@ public class Lua_UnityEngine_Color32 : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_a(IntPtr l) {
-		UnityEngine.Color32 o = checkSelf<UnityEngine.Color32>(l);
+		UnityEngine.Color32 o = (UnityEngine.Color32)checkSelf(l);
 		pushValue(l,o.a);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_a(IntPtr l) {
-		UnityEngine.Color32 o = checkSelf<UnityEngine.Color32>(l);
+		UnityEngine.Color32 o = (UnityEngine.Color32)checkSelf(l);
 		System.Byte v;
 		checkType(l,2,out v);
 		o.a=v;
@@ -103,17 +103,11 @@ public class Lua_UnityEngine_Color32 : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Color32");
-		addMember(l,Lerp, "Lerp");
-		addMember(l,get_r, "get_r");
-		addMember(l,set_r, "set_r");
-		addMember(l,get_g, "get_g");
-		addMember(l,set_g, "set_g");
-		addMember(l,get_b, "get_b");
-		addMember(l,set_b, "set_b");
-		addMember(l,get_a, "get_a");
-		addMember(l,set_a, "set_a");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Color32));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Lerp);
+		addMember(l,"r",get_r,set_r);
+		addMember(l,"g",get_g,set_g);
+		addMember(l,"b",get_b,set_b);
+		addMember(l,"a",get_a,set_a);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Color32));
 	}
 }

@@ -12,29 +12,18 @@ public class Lua_UnityEngine_Rendering_BlendMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.Rendering.BlendMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Zero");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "One");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "DstColor");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "SrcColor");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "OneMinusDstColor");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "SrcAlpha");
-		LuaDLL.lua_pushinteger(l, 6);
-		LuaDLL.lua_setfield(l, -2, "OneMinusSrcColor");
-		LuaDLL.lua_pushinteger(l, 7);
-		LuaDLL.lua_setfield(l, -2, "DstAlpha");
-		LuaDLL.lua_pushinteger(l, 8);
-		LuaDLL.lua_setfield(l, -2, "OneMinusDstAlpha");
-		LuaDLL.lua_pushinteger(l, 9);
-		LuaDLL.lua_setfield(l, -2, "SrcAlphaSaturate");
-		LuaDLL.lua_pushinteger(l, 10);
-		LuaDLL.lua_setfield(l, -2, "OneMinusSrcAlpha");
+		getEnumTable(l,"UnityEngine.Rendering.BlendMode");
+		addMember(l,0,"Zero");
+		addMember(l,1,"One");
+		addMember(l,2,"DstColor");
+		addMember(l,3,"SrcColor");
+		addMember(l,4,"OneMinusDstColor");
+		addMember(l,5,"SrcAlpha");
+		addMember(l,6,"OneMinusSrcColor");
+		addMember(l,7,"DstAlpha");
+		addMember(l,8,"OneMinusDstAlpha");
+		addMember(l,9,"SrcAlphaSaturate");
+		addMember(l,10,"OneMinusSrcAlpha");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

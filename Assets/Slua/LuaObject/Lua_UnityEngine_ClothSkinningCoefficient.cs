@@ -10,13 +10,13 @@ public class Lua_UnityEngine_ClothSkinningCoefficient : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_maxDistance(IntPtr l) {
-		UnityEngine.ClothSkinningCoefficient o = checkSelf<UnityEngine.ClothSkinningCoefficient>(l);
+		UnityEngine.ClothSkinningCoefficient o = (UnityEngine.ClothSkinningCoefficient)checkSelf(l);
 		pushValue(l,o.maxDistance);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxDistance(IntPtr l) {
-		UnityEngine.ClothSkinningCoefficient o = checkSelf<UnityEngine.ClothSkinningCoefficient>(l);
+		UnityEngine.ClothSkinningCoefficient o = (UnityEngine.ClothSkinningCoefficient)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.maxDistance=v;
@@ -25,13 +25,13 @@ public class Lua_UnityEngine_ClothSkinningCoefficient : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_maxDistanceBias(IntPtr l) {
-		UnityEngine.ClothSkinningCoefficient o = checkSelf<UnityEngine.ClothSkinningCoefficient>(l);
+		UnityEngine.ClothSkinningCoefficient o = (UnityEngine.ClothSkinningCoefficient)checkSelf(l);
 		pushValue(l,o.maxDistanceBias);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxDistanceBias(IntPtr l) {
-		UnityEngine.ClothSkinningCoefficient o = checkSelf<UnityEngine.ClothSkinningCoefficient>(l);
+		UnityEngine.ClothSkinningCoefficient o = (UnityEngine.ClothSkinningCoefficient)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.maxDistanceBias=v;
@@ -40,13 +40,13 @@ public class Lua_UnityEngine_ClothSkinningCoefficient : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_collisionSphereRadius(IntPtr l) {
-		UnityEngine.ClothSkinningCoefficient o = checkSelf<UnityEngine.ClothSkinningCoefficient>(l);
+		UnityEngine.ClothSkinningCoefficient o = (UnityEngine.ClothSkinningCoefficient)checkSelf(l);
 		pushValue(l,o.collisionSphereRadius);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_collisionSphereRadius(IntPtr l) {
-		UnityEngine.ClothSkinningCoefficient o = checkSelf<UnityEngine.ClothSkinningCoefficient>(l);
+		UnityEngine.ClothSkinningCoefficient o = (UnityEngine.ClothSkinningCoefficient)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.collisionSphereRadius=v;
@@ -55,13 +55,13 @@ public class Lua_UnityEngine_ClothSkinningCoefficient : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_collisionSphereDistance(IntPtr l) {
-		UnityEngine.ClothSkinningCoefficient o = checkSelf<UnityEngine.ClothSkinningCoefficient>(l);
+		UnityEngine.ClothSkinningCoefficient o = (UnityEngine.ClothSkinningCoefficient)checkSelf(l);
 		pushValue(l,o.collisionSphereDistance);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_collisionSphereDistance(IntPtr l) {
-		UnityEngine.ClothSkinningCoefficient o = checkSelf<UnityEngine.ClothSkinningCoefficient>(l);
+		UnityEngine.ClothSkinningCoefficient o = (UnityEngine.ClothSkinningCoefficient)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.collisionSphereDistance=v;
@@ -70,16 +70,10 @@ public class Lua_UnityEngine_ClothSkinningCoefficient : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ClothSkinningCoefficient");
-		addMember(l,get_maxDistance, "get_maxDistance");
-		addMember(l,set_maxDistance, "set_maxDistance");
-		addMember(l,get_maxDistanceBias, "get_maxDistanceBias");
-		addMember(l,set_maxDistanceBias, "set_maxDistanceBias");
-		addMember(l,get_collisionSphereRadius, "get_collisionSphereRadius");
-		addMember(l,set_collisionSphereRadius, "set_collisionSphereRadius");
-		addMember(l,get_collisionSphereDistance, "get_collisionSphereDistance");
-		addMember(l,set_collisionSphereDistance, "set_collisionSphereDistance");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.ClothSkinningCoefficient));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"maxDistance",get_maxDistance,set_maxDistance);
+		addMember(l,"maxDistanceBias",get_maxDistanceBias,set_maxDistanceBias);
+		addMember(l,"collisionSphereRadius",get_collisionSphereRadius,set_collisionSphereRadius);
+		addMember(l,"collisionSphereDistance",get_collisionSphereDistance,set_collisionSphereDistance);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.ClothSkinningCoefficient));
 	}
 }

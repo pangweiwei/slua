@@ -18,7 +18,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Invoke(IntPtr l) {
 		try{
-			UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+			UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Single a2;
@@ -34,7 +34,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int InvokeRepeating(IntPtr l) {
 		try{
-			UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+			UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Single a2;
@@ -53,12 +53,12 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	static public int CancelInvoke(IntPtr l) {
 		try{
 			if(matchType(l,2)){
-				UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				self.CancelInvoke();
 				return 0;
 			}
 			else if(matchType(l,2,typeof(System.String))){
-				UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				self.CancelInvoke(a1);
@@ -76,7 +76,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	static public int IsInvoking(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.String))){
-				UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				System.Boolean ret=self.IsInvoking(a1);
@@ -84,7 +84,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2)){
-				UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.Boolean ret=self.IsInvoking();
 				pushValue(l,ret);
 				return 1;
@@ -101,7 +101,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	static public int StartCoroutine(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.Collections.IEnumerator))){
-				UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.Collections.IEnumerator a1;
 				checkType(l,2,out a1);
 				UnityEngine.Coroutine ret=self.StartCoroutine(a1);
@@ -109,7 +109,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2,typeof(System.String),typeof(System.Object))){
-				UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				System.Object a2;
@@ -119,7 +119,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2,typeof(System.String))){
-				UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				UnityEngine.Coroutine ret=self.StartCoroutine(a1);
@@ -137,7 +137,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int StartCoroutine_Auto(IntPtr l) {
 		try{
-			UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+			UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 			System.Collections.IEnumerator a1;
 			checkType(l,2,out a1);
 			UnityEngine.Coroutine ret=self.StartCoroutine_Auto(a1);
@@ -153,21 +153,21 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	static public int StopCoroutine(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.String))){
-				UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				self.StopCoroutine(a1);
 				return 0;
 			}
 			else if(matchType(l,2,typeof(System.Collections.IEnumerator))){
-				UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.Collections.IEnumerator a1;
 				checkType(l,2,out a1);
 				self.StopCoroutine(a1);
 				return 0;
 			}
 			else if(matchType(l,2,typeof(UnityEngine.Coroutine))){
-				UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				UnityEngine.Coroutine a1;
 				checkType(l,2,out a1);
 				self.StopCoroutine(a1);
@@ -184,7 +184,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int StopAllCoroutines(IntPtr l) {
 		try{
-			UnityEngine.MonoBehaviour self=checkSelf<UnityEngine.MonoBehaviour>(l);
+			UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 			self.StopAllCoroutines();
 			return 0;
 		}
@@ -208,13 +208,13 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_useGUILayout(IntPtr l) {
-		UnityEngine.MonoBehaviour o = checkSelf<UnityEngine.MonoBehaviour>(l);
+		UnityEngine.MonoBehaviour o = (UnityEngine.MonoBehaviour)checkSelf(l);
 		pushValue(l,o.useGUILayout);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useGUILayout(IntPtr l) {
-		UnityEngine.MonoBehaviour o = checkSelf<UnityEngine.MonoBehaviour>(l);
+		UnityEngine.MonoBehaviour o = (UnityEngine.MonoBehaviour)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.useGUILayout=v;
@@ -222,19 +222,16 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.MonoBehaviour");
-		addMember(l,Invoke, "Invoke");
-		addMember(l,InvokeRepeating, "InvokeRepeating");
-		addMember(l,CancelInvoke, "CancelInvoke");
-		addMember(l,IsInvoking, "IsInvoking");
-		addMember(l,StartCoroutine, "StartCoroutine");
-		addMember(l,StartCoroutine_Auto, "StartCoroutine_Auto");
-		addMember(l,StopCoroutine, "StopCoroutine");
-		addMember(l,StopAllCoroutines, "StopAllCoroutines");
-		addMember(l,print, "print");
-		addMember(l,get_useGUILayout, "get_useGUILayout");
-		addMember(l,set_useGUILayout, "set_useGUILayout");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.MonoBehaviour),typeof(UnityEngine.Behaviour));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Invoke);
+		addMember(l,InvokeRepeating);
+		addMember(l,CancelInvoke);
+		addMember(l,IsInvoking);
+		addMember(l,StartCoroutine);
+		addMember(l,StartCoroutine_Auto);
+		addMember(l,StopCoroutine);
+		addMember(l,StopAllCoroutines);
+		addMember(l,print);
+		addMember(l,"useGUILayout",get_useGUILayout,set_useGUILayout);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.MonoBehaviour),typeof(UnityEngine.Behaviour));
 	}
 }

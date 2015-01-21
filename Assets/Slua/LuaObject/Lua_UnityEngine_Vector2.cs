@@ -22,7 +22,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Set(IntPtr l) {
 		try{
-			UnityEngine.Vector2 self=checkSelf<UnityEngine.Vector2>(l);
+			UnityEngine.Vector2 self=(UnityEngine.Vector2)checkSelf(l);
 			System.Single a1;
 			checkType(l,2,out a1);
 			System.Single a2;
@@ -85,7 +85,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2,typeof(UnityEngine.Vector2))){
-				UnityEngine.Vector2 self=checkSelf<UnityEngine.Vector2>(l);
+				UnityEngine.Vector2 self=(UnityEngine.Vector2)checkSelf(l);
 				UnityEngine.Vector2 a1;
 				checkType(l,2,out a1);
 				self.Scale(a1);
@@ -103,7 +103,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Normalize(IntPtr l) {
 		try{
-			UnityEngine.Vector2 self=checkSelf<UnityEngine.Vector2>(l);
+			UnityEngine.Vector2 self=(UnityEngine.Vector2)checkSelf(l);
 			self.Normalize();
 			setBack(l,self);
 			return 0;
@@ -188,7 +188,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2)){
-				UnityEngine.Vector2 self=checkSelf<UnityEngine.Vector2>(l);
+				UnityEngine.Vector2 self=(UnityEngine.Vector2)checkSelf(l);
 				System.Single ret=self.SqrMagnitude();
 				pushValue(l,ret);
 				return 1;
@@ -422,13 +422,13 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_x(IntPtr l) {
-		UnityEngine.Vector2 o = checkSelf<UnityEngine.Vector2>(l);
+		UnityEngine.Vector2 o = (UnityEngine.Vector2)checkSelf(l);
 		pushValue(l,o.x);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_x(IntPtr l) {
-		UnityEngine.Vector2 o = checkSelf<UnityEngine.Vector2>(l);
+		UnityEngine.Vector2 o = (UnityEngine.Vector2)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.x=v;
@@ -437,13 +437,13 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_y(IntPtr l) {
-		UnityEngine.Vector2 o = checkSelf<UnityEngine.Vector2>(l);
+		UnityEngine.Vector2 o = (UnityEngine.Vector2)checkSelf(l);
 		pushValue(l,o.y);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_y(IntPtr l) {
-		UnityEngine.Vector2 o = checkSelf<UnityEngine.Vector2>(l);
+		UnityEngine.Vector2 o = (UnityEngine.Vector2)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.y=v;
@@ -452,19 +452,19 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_normalized(IntPtr l) {
-		UnityEngine.Vector2 o = checkSelf<UnityEngine.Vector2>(l);
+		UnityEngine.Vector2 o = (UnityEngine.Vector2)checkSelf(l);
 		pushValue(l,o.normalized);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_magnitude(IntPtr l) {
-		UnityEngine.Vector2 o = checkSelf<UnityEngine.Vector2>(l);
+		UnityEngine.Vector2 o = (UnityEngine.Vector2)checkSelf(l);
 		pushValue(l,o.magnitude);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_sqrMagnitude(IntPtr l) {
-		UnityEngine.Vector2 o = checkSelf<UnityEngine.Vector2>(l);
+		UnityEngine.Vector2 o = (UnityEngine.Vector2)checkSelf(l);
 		pushValue(l,o.sqrMagnitude);
 		return 1;
 	}
@@ -490,40 +490,36 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Vector2");
-		addMember(l,Set, "Set");
-		addMember(l,Lerp, "Lerp");
-		addMember(l,MoveTowards, "MoveTowards");
-		addMember(l,Scale, "Scale");
-		addMember(l,Normalize, "Normalize");
-		addMember(l,Dot, "Dot");
-		addMember(l,Angle, "Angle");
-		addMember(l,Distance, "Distance");
-		addMember(l,ClampMagnitude, "ClampMagnitude");
-		addMember(l,SqrMagnitude, "SqrMagnitude");
-		addMember(l,Min, "Min");
-		addMember(l,Max, "Max");
-		addMember(l,SmoothDamp, "SmoothDamp");
-		addMember(l,op_Addition, "op_Addition");
-		addMember(l,op_Subtraction, "op_Subtraction");
-		addMember(l,op_UnaryNegation, "op_UnaryNegation");
-		addMember(l,op_Multiply, "op_Multiply");
-		addMember(l,op_Division, "op_Division");
-		addMember(l,op_Equality, "op_Equality");
-		addMember(l,op_Inequality, "op_Inequality");
-		addMember(l,get_kEpsilon, "get_kEpsilon");
-		addMember(l,get_x, "get_x");
-		addMember(l,set_x, "set_x");
-		addMember(l,get_y, "get_y");
-		addMember(l,set_y, "set_y");
-		addMember(l,get_normalized, "get_normalized");
-		addMember(l,get_magnitude, "get_magnitude");
-		addMember(l,get_sqrMagnitude, "get_sqrMagnitude");
-		addMember(l,get_zero, "get_zero");
-		addMember(l,get_one, "get_one");
-		addMember(l,get_up, "get_up");
-		addMember(l,get_right, "get_right");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Vector2));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Set);
+		addMember(l,Lerp);
+		addMember(l,MoveTowards);
+		addMember(l,Scale);
+		addMember(l,Normalize);
+		addMember(l,Dot);
+		addMember(l,Angle);
+		addMember(l,Distance);
+		addMember(l,ClampMagnitude);
+		addMember(l,SqrMagnitude);
+		addMember(l,Min);
+		addMember(l,Max);
+		addMember(l,SmoothDamp);
+		addMember(l,op_Addition);
+		addMember(l,op_Subtraction);
+		addMember(l,op_UnaryNegation);
+		addMember(l,op_Multiply);
+		addMember(l,op_Division);
+		addMember(l,op_Equality);
+		addMember(l,op_Inequality);
+		addMember(l,"kEpsilon",get_kEpsilon,null);
+		addMember(l,"x",get_x,set_x);
+		addMember(l,"y",get_y,set_y);
+		addMember(l,"normalized",get_normalized,null);
+		addMember(l,"magnitude",get_magnitude,null);
+		addMember(l,"sqrMagnitude",get_sqrMagnitude,null);
+		addMember(l,"zero",get_zero,null);
+		addMember(l,"one",get_one,null);
+		addMember(l,"up",get_up,null);
+		addMember(l,"right",get_right,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Vector2));
 	}
 }

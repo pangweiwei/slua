@@ -12,17 +12,12 @@ public class Lua_UnityEngine_TouchPhase : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.TouchPhase");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Began");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Moved");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Stationary");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Ended");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Canceled");
+		getEnumTable(l,"UnityEngine.TouchPhase");
+		addMember(l,0,"Began");
+		addMember(l,1,"Moved");
+		addMember(l,2,"Stationary");
+		addMember(l,3,"Ended");
+		addMember(l,4,"Canceled");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

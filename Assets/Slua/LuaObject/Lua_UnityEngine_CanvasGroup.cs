@@ -18,7 +18,7 @@ public class Lua_UnityEngine_CanvasGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsRaycastLocationValid(IntPtr l) {
 		try{
-			UnityEngine.CanvasGroup self=checkSelf<UnityEngine.CanvasGroup>(l);
+			UnityEngine.CanvasGroup self=(UnityEngine.CanvasGroup)checkSelf(l);
 			UnityEngine.Vector2 a1;
 			checkType(l,2,out a1);
 			UnityEngine.Camera a2;
@@ -34,13 +34,13 @@ public class Lua_UnityEngine_CanvasGroup : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_alpha(IntPtr l) {
-		UnityEngine.CanvasGroup o = checkSelf<UnityEngine.CanvasGroup>(l);
+		UnityEngine.CanvasGroup o = (UnityEngine.CanvasGroup)checkSelf(l);
 		pushValue(l,o.alpha);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_alpha(IntPtr l) {
-		UnityEngine.CanvasGroup o = checkSelf<UnityEngine.CanvasGroup>(l);
+		UnityEngine.CanvasGroup o = (UnityEngine.CanvasGroup)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.alpha=v;
@@ -48,13 +48,13 @@ public class Lua_UnityEngine_CanvasGroup : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_interactable(IntPtr l) {
-		UnityEngine.CanvasGroup o = checkSelf<UnityEngine.CanvasGroup>(l);
+		UnityEngine.CanvasGroup o = (UnityEngine.CanvasGroup)checkSelf(l);
 		pushValue(l,o.interactable);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_interactable(IntPtr l) {
-		UnityEngine.CanvasGroup o = checkSelf<UnityEngine.CanvasGroup>(l);
+		UnityEngine.CanvasGroup o = (UnityEngine.CanvasGroup)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.interactable=v;
@@ -62,13 +62,13 @@ public class Lua_UnityEngine_CanvasGroup : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_blocksRaycasts(IntPtr l) {
-		UnityEngine.CanvasGroup o = checkSelf<UnityEngine.CanvasGroup>(l);
+		UnityEngine.CanvasGroup o = (UnityEngine.CanvasGroup)checkSelf(l);
 		pushValue(l,o.blocksRaycasts);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_blocksRaycasts(IntPtr l) {
-		UnityEngine.CanvasGroup o = checkSelf<UnityEngine.CanvasGroup>(l);
+		UnityEngine.CanvasGroup o = (UnityEngine.CanvasGroup)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.blocksRaycasts=v;
@@ -76,13 +76,13 @@ public class Lua_UnityEngine_CanvasGroup : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_ignoreParentGroups(IntPtr l) {
-		UnityEngine.CanvasGroup o = checkSelf<UnityEngine.CanvasGroup>(l);
+		UnityEngine.CanvasGroup o = (UnityEngine.CanvasGroup)checkSelf(l);
 		pushValue(l,o.ignoreParentGroups);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_ignoreParentGroups(IntPtr l) {
-		UnityEngine.CanvasGroup o = checkSelf<UnityEngine.CanvasGroup>(l);
+		UnityEngine.CanvasGroup o = (UnityEngine.CanvasGroup)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.ignoreParentGroups=v;
@@ -90,17 +90,11 @@ public class Lua_UnityEngine_CanvasGroup : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.CanvasGroup");
-		addMember(l,IsRaycastLocationValid, "IsRaycastLocationValid");
-		addMember(l,get_alpha, "get_alpha");
-		addMember(l,set_alpha, "set_alpha");
-		addMember(l,get_interactable, "get_interactable");
-		addMember(l,set_interactable, "set_interactable");
-		addMember(l,get_blocksRaycasts, "get_blocksRaycasts");
-		addMember(l,set_blocksRaycasts, "set_blocksRaycasts");
-		addMember(l,get_ignoreParentGroups, "get_ignoreParentGroups");
-		addMember(l,set_ignoreParentGroups, "set_ignoreParentGroups");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.CanvasGroup),typeof(UnityEngine.Component));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,IsRaycastLocationValid);
+		addMember(l,"alpha",get_alpha,set_alpha);
+		addMember(l,"interactable",get_interactable,set_interactable);
+		addMember(l,"blocksRaycasts",get_blocksRaycasts,set_blocksRaycasts);
+		addMember(l,"ignoreParentGroups",get_ignoreParentGroups,set_ignoreParentGroups);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.CanvasGroup),typeof(UnityEngine.Component));
 	}
 }

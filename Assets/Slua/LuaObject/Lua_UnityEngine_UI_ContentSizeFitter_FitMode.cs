@@ -12,13 +12,10 @@ public class Lua_UnityEngine_UI_ContentSizeFitter_FitMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.ContentSizeFitter.FitMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Unconstrained");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "MinSize");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "PreferredSize");
+		getEnumTable(l,"UnityEngine.UI.ContentSizeFitter.FitMode");
+		addMember(l,0,"Unconstrained");
+		addMember(l,1,"MinSize");
+		addMember(l,2,"PreferredSize");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

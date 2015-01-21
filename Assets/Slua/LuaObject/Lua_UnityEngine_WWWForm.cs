@@ -19,7 +19,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 	static public int AddField(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.String),typeof(System.String))){
-				UnityEngine.WWWForm self=checkSelf<UnityEngine.WWWForm>(l);
+				UnityEngine.WWWForm self=(UnityEngine.WWWForm)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				System.String a2;
@@ -28,7 +28,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 				return 0;
 			}
 			else if(matchType(l,2,typeof(System.String),typeof(System.String),typeof(System.Text.Encoding))){
-				UnityEngine.WWWForm self=checkSelf<UnityEngine.WWWForm>(l);
+				UnityEngine.WWWForm self=(UnityEngine.WWWForm)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				System.String a2;
@@ -39,7 +39,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 				return 0;
 			}
 			else if(matchType(l,2,typeof(System.String),typeof(System.Int32))){
-				UnityEngine.WWWForm self=checkSelf<UnityEngine.WWWForm>(l);
+				UnityEngine.WWWForm self=(UnityEngine.WWWForm)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				System.Int32 a2;
@@ -59,7 +59,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 	static public int AddBinaryData(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.String),typeof(System.Byte),typeof(System.String))){
-				UnityEngine.WWWForm self=checkSelf<UnityEngine.WWWForm>(l);
+				UnityEngine.WWWForm self=(UnityEngine.WWWForm)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				System.Byte[] a2;
@@ -70,7 +70,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 				return 0;
 			}
 			else if(matchType(l,2,typeof(System.String),typeof(System.Byte))){
-				UnityEngine.WWWForm self=checkSelf<UnityEngine.WWWForm>(l);
+				UnityEngine.WWWForm self=(UnityEngine.WWWForm)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				System.Byte[] a2;
@@ -79,7 +79,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 				return 0;
 			}
 			else if(matchType(l,2,typeof(System.String),typeof(System.Byte),typeof(System.String),typeof(System.String))){
-				UnityEngine.WWWForm self=checkSelf<UnityEngine.WWWForm>(l);
+				UnityEngine.WWWForm self=(UnityEngine.WWWForm)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				System.Byte[] a2;
@@ -101,24 +101,22 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_headers(IntPtr l) {
-		UnityEngine.WWWForm o = checkSelf<UnityEngine.WWWForm>(l);
+		UnityEngine.WWWForm o = (UnityEngine.WWWForm)checkSelf(l);
 		pushValue(l,o.headers);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_data(IntPtr l) {
-		UnityEngine.WWWForm o = checkSelf<UnityEngine.WWWForm>(l);
+		UnityEngine.WWWForm o = (UnityEngine.WWWForm)checkSelf(l);
 		pushValue(l,o.data);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.WWWForm");
-		addMember(l,AddField, "AddField");
-		addMember(l,AddBinaryData, "AddBinaryData");
-		addMember(l,get_headers, "get_headers");
-		addMember(l,get_data, "get_data");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.WWWForm));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,AddField);
+		addMember(l,AddBinaryData);
+		addMember(l,"headers",get_headers,null);
+		addMember(l,"data",get_data,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.WWWForm));
 	}
 }

@@ -12,13 +12,10 @@ public class Lua_UnityEngine_TransparencySortMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.TransparencySortMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Default");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Perspective");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Orthographic");
+		getEnumTable(l,"UnityEngine.TransparencySortMode");
+		addMember(l,0,"Default");
+		addMember(l,1,"Perspective");
+		addMember(l,2,"Orthographic");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

@@ -12,13 +12,10 @@ public class Lua_UnityEngine_FogMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.FogMode");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Linear");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Exponential");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "ExponentialSquared");
+		getEnumTable(l,"UnityEngine.FogMode");
+		addMember(l,1,"Linear");
+		addMember(l,2,"Exponential");
+		addMember(l,3,"ExponentialSquared");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

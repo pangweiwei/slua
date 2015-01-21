@@ -12,17 +12,12 @@ public class Lua_UnityEngine_UI_Navigation_Mode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.Navigation.Mode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "None");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Horizontal");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Vertical");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Automatic");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Explicit");
+		getEnumTable(l,"UnityEngine.UI.Navigation.Mode");
+		addMember(l,0,"None");
+		addMember(l,1,"Horizontal");
+		addMember(l,2,"Vertical");
+		addMember(l,3,"Automatic");
+		addMember(l,4,"Explicit");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

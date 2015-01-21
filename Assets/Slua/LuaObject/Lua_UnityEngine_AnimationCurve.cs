@@ -25,7 +25,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Evaluate(IntPtr l) {
 		try{
-			UnityEngine.AnimationCurve self=checkSelf<UnityEngine.AnimationCurve>(l);
+			UnityEngine.AnimationCurve self=(UnityEngine.AnimationCurve)checkSelf(l);
 			System.Single a1;
 			checkType(l,2,out a1);
 			System.Single ret=self.Evaluate(a1);
@@ -41,7 +41,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	static public int AddKey(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.Single),typeof(System.Single))){
-				UnityEngine.AnimationCurve self=checkSelf<UnityEngine.AnimationCurve>(l);
+				UnityEngine.AnimationCurve self=(UnityEngine.AnimationCurve)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
 				System.Single a2;
@@ -51,7 +51,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2,typeof(UnityEngine.Keyframe))){
-				UnityEngine.AnimationCurve self=checkSelf<UnityEngine.AnimationCurve>(l);
+				UnityEngine.AnimationCurve self=(UnityEngine.AnimationCurve)checkSelf(l);
 				UnityEngine.Keyframe a1;
 				checkType(l,2,out a1);
 				System.Int32 ret=self.AddKey(a1);
@@ -69,7 +69,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int MoveKey(IntPtr l) {
 		try{
-			UnityEngine.AnimationCurve self=checkSelf<UnityEngine.AnimationCurve>(l);
+			UnityEngine.AnimationCurve self=(UnityEngine.AnimationCurve)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			UnityEngine.Keyframe a2;
@@ -86,7 +86,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RemoveKey(IntPtr l) {
 		try{
-			UnityEngine.AnimationCurve self=checkSelf<UnityEngine.AnimationCurve>(l);
+			UnityEngine.AnimationCurve self=(UnityEngine.AnimationCurve)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			self.RemoveKey(a1);
@@ -100,7 +100,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SmoothTangents(IntPtr l) {
 		try{
-			UnityEngine.AnimationCurve self=checkSelf<UnityEngine.AnimationCurve>(l);
+			UnityEngine.AnimationCurve self=(UnityEngine.AnimationCurve)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			System.Single a2;
@@ -155,13 +155,13 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_keys(IntPtr l) {
-		UnityEngine.AnimationCurve o = checkSelf<UnityEngine.AnimationCurve>(l);
+		UnityEngine.AnimationCurve o = (UnityEngine.AnimationCurve)checkSelf(l);
 		pushValue(l,o.keys);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_keys(IntPtr l) {
-		UnityEngine.AnimationCurve o = checkSelf<UnityEngine.AnimationCurve>(l);
+		UnityEngine.AnimationCurve o = (UnityEngine.AnimationCurve)checkSelf(l);
 		UnityEngine.Keyframe[] v;
 		checkType(l,2,out v);
 		o.keys=v;
@@ -169,19 +169,19 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_length(IntPtr l) {
-		UnityEngine.AnimationCurve o = checkSelf<UnityEngine.AnimationCurve>(l);
+		UnityEngine.AnimationCurve o = (UnityEngine.AnimationCurve)checkSelf(l);
 		pushValue(l,o.length);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_preWrapMode(IntPtr l) {
-		UnityEngine.AnimationCurve o = checkSelf<UnityEngine.AnimationCurve>(l);
+		UnityEngine.AnimationCurve o = (UnityEngine.AnimationCurve)checkSelf(l);
 		pushValue(l,o.preWrapMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_preWrapMode(IntPtr l) {
-		UnityEngine.AnimationCurve o = checkSelf<UnityEngine.AnimationCurve>(l);
+		UnityEngine.AnimationCurve o = (UnityEngine.AnimationCurve)checkSelf(l);
 		UnityEngine.WrapMode v;
 		checkEnum(l,2,out v);
 		o.preWrapMode=v;
@@ -189,13 +189,13 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_postWrapMode(IntPtr l) {
-		UnityEngine.AnimationCurve o = checkSelf<UnityEngine.AnimationCurve>(l);
+		UnityEngine.AnimationCurve o = (UnityEngine.AnimationCurve)checkSelf(l);
 		pushValue(l,o.postWrapMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_postWrapMode(IntPtr l) {
-		UnityEngine.AnimationCurve o = checkSelf<UnityEngine.AnimationCurve>(l);
+		UnityEngine.AnimationCurve o = (UnityEngine.AnimationCurve)checkSelf(l);
 		UnityEngine.WrapMode v;
 		checkEnum(l,2,out v);
 		o.postWrapMode=v;
@@ -203,22 +203,17 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimationCurve");
-		addMember(l,Evaluate, "Evaluate");
-		addMember(l,AddKey, "AddKey");
-		addMember(l,MoveKey, "MoveKey");
-		addMember(l,RemoveKey, "RemoveKey");
-		addMember(l,SmoothTangents, "SmoothTangents");
-		addMember(l,Linear, "Linear");
-		addMember(l,EaseInOut, "EaseInOut");
-		addMember(l,get_keys, "get_keys");
-		addMember(l,set_keys, "set_keys");
-		addMember(l,get_length, "get_length");
-		addMember(l,get_preWrapMode, "get_preWrapMode");
-		addMember(l,set_preWrapMode, "set_preWrapMode");
-		addMember(l,get_postWrapMode, "get_postWrapMode");
-		addMember(l,set_postWrapMode, "set_postWrapMode");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AnimationCurve));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Evaluate);
+		addMember(l,AddKey);
+		addMember(l,MoveKey);
+		addMember(l,RemoveKey);
+		addMember(l,SmoothTangents);
+		addMember(l,Linear);
+		addMember(l,EaseInOut);
+		addMember(l,"keys",get_keys,set_keys);
+		addMember(l,"length",get_length,null);
+		addMember(l,"preWrapMode",get_preWrapMode,set_preWrapMode);
+		addMember(l,"postWrapMode",get_postWrapMode,set_postWrapMode);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimationCurve));
 	}
 }

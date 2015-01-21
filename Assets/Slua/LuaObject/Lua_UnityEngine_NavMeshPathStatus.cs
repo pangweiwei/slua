@@ -12,13 +12,10 @@ public class Lua_UnityEngine_NavMeshPathStatus : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.NavMeshPathStatus");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "PathComplete");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "PathPartial");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "PathInvalid");
+		getEnumTable(l,"UnityEngine.NavMeshPathStatus");
+		addMember(l,0,"PathComplete");
+		addMember(l,1,"PathPartial");
+		addMember(l,2,"PathInvalid");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

@@ -12,13 +12,10 @@ public class Lua_UnityEngine_UI_CanvasScaler_ScaleMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.CanvasScaler.ScaleMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "ConstantPixelSize");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "ScaleWithScreenSize");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "ConstantPhysicalSize");
+		getEnumTable(l,"UnityEngine.UI.CanvasScaler.ScaleMode");
+		addMember(l,0,"ConstantPixelSize");
+		addMember(l,1,"ScaleWithScreenSize");
+		addMember(l,2,"ConstantPhysicalSize");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

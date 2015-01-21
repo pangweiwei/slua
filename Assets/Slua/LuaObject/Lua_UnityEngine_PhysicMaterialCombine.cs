@@ -12,15 +12,11 @@ public class Lua_UnityEngine_PhysicMaterialCombine : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.PhysicMaterialCombine");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Average");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Minimum");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Multiply");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Maximum");
+		getEnumTable(l,"UnityEngine.PhysicMaterialCombine");
+		addMember(l,0,"Average");
+		addMember(l,2,"Minimum");
+		addMember(l,1,"Multiply");
+		addMember(l,3,"Maximum");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

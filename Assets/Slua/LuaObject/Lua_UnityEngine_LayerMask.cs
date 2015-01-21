@@ -52,13 +52,13 @@ public class Lua_UnityEngine_LayerMask : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_value(IntPtr l) {
-		UnityEngine.LayerMask o = checkSelf<UnityEngine.LayerMask>(l);
+		UnityEngine.LayerMask o = (UnityEngine.LayerMask)checkSelf(l);
 		pushValue(l,o.value);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_value(IntPtr l) {
-		UnityEngine.LayerMask o = checkSelf<UnityEngine.LayerMask>(l);
+		UnityEngine.LayerMask o = (UnityEngine.LayerMask)checkSelf(l);
 		System.Int32 v;
 		checkType(l,2,out v);
 		o.value=v;
@@ -67,13 +67,10 @@ public class Lua_UnityEngine_LayerMask : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LayerMask");
-		addMember(l,LayerToName, "LayerToName");
-		addMember(l,NameToLayer, "NameToLayer");
-		addMember(l,GetMask, "GetMask");
-		addMember(l,get_value, "get_value");
-		addMember(l,set_value, "set_value");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.LayerMask));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,LayerToName);
+		addMember(l,NameToLayer);
+		addMember(l,GetMask);
+		addMember(l,"value",get_value,set_value);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.LayerMask));
 	}
 }

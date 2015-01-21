@@ -19,13 +19,13 @@ public class Lua_UnityEngine_EventSystems_AxisEventData : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_moveVector(IntPtr l) {
-		UnityEngine.EventSystems.AxisEventData o = checkSelf<UnityEngine.EventSystems.AxisEventData>(l);
+		UnityEngine.EventSystems.AxisEventData o = (UnityEngine.EventSystems.AxisEventData)checkSelf(l);
 		pushValue(l,o.moveVector);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_moveVector(IntPtr l) {
-		UnityEngine.EventSystems.AxisEventData o = checkSelf<UnityEngine.EventSystems.AxisEventData>(l);
+		UnityEngine.EventSystems.AxisEventData o = (UnityEngine.EventSystems.AxisEventData)checkSelf(l);
 		UnityEngine.Vector2 v;
 		checkType(l,2,out v);
 		o.moveVector=v;
@@ -33,13 +33,13 @@ public class Lua_UnityEngine_EventSystems_AxisEventData : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_moveDir(IntPtr l) {
-		UnityEngine.EventSystems.AxisEventData o = checkSelf<UnityEngine.EventSystems.AxisEventData>(l);
+		UnityEngine.EventSystems.AxisEventData o = (UnityEngine.EventSystems.AxisEventData)checkSelf(l);
 		pushValue(l,o.moveDir);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_moveDir(IntPtr l) {
-		UnityEngine.EventSystems.AxisEventData o = checkSelf<UnityEngine.EventSystems.AxisEventData>(l);
+		UnityEngine.EventSystems.AxisEventData o = (UnityEngine.EventSystems.AxisEventData)checkSelf(l);
 		UnityEngine.EventSystems.MoveDirection v;
 		checkEnum(l,2,out v);
 		o.moveDir=v;
@@ -47,12 +47,8 @@ public class Lua_UnityEngine_EventSystems_AxisEventData : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.AxisEventData");
-		addMember(l,get_moveVector, "get_moveVector");
-		addMember(l,set_moveVector, "set_moveVector");
-		addMember(l,get_moveDir, "get_moveDir");
-		addMember(l,set_moveDir, "set_moveDir");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.EventSystems.AxisEventData),typeof(UnityEngine.EventSystems.BaseEventData));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"moveVector",get_moveVector,set_moveVector);
+		addMember(l,"moveDir",get_moveDir,set_moveDir);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.AxisEventData),typeof(UnityEngine.EventSystems.BaseEventData));
 	}
 }

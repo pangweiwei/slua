@@ -18,7 +18,7 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetData(IntPtr l) {
 		try{
-			UnityEngine.AudioClip self=checkSelf<UnityEngine.AudioClip>(l);
+			UnityEngine.AudioClip self=(UnityEngine.AudioClip)checkSelf(l);
 			System.Single[] a1;
 			checkType(l,2,out a1);
 			System.Int32 a2;
@@ -34,7 +34,7 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetData(IntPtr l) {
 		try{
-			UnityEngine.AudioClip self=checkSelf<UnityEngine.AudioClip>(l);
+			UnityEngine.AudioClip self=(UnityEngine.AudioClip)checkSelf(l);
 			System.Single[] a1;
 			checkType(l,2,out a1);
 			System.Int32 a2;
@@ -117,46 +117,44 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_length(IntPtr l) {
-		UnityEngine.AudioClip o = checkSelf<UnityEngine.AudioClip>(l);
+		UnityEngine.AudioClip o = (UnityEngine.AudioClip)checkSelf(l);
 		pushValue(l,o.length);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_samples(IntPtr l) {
-		UnityEngine.AudioClip o = checkSelf<UnityEngine.AudioClip>(l);
+		UnityEngine.AudioClip o = (UnityEngine.AudioClip)checkSelf(l);
 		pushValue(l,o.samples);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_channels(IntPtr l) {
-		UnityEngine.AudioClip o = checkSelf<UnityEngine.AudioClip>(l);
+		UnityEngine.AudioClip o = (UnityEngine.AudioClip)checkSelf(l);
 		pushValue(l,o.channels);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_frequency(IntPtr l) {
-		UnityEngine.AudioClip o = checkSelf<UnityEngine.AudioClip>(l);
+		UnityEngine.AudioClip o = (UnityEngine.AudioClip)checkSelf(l);
 		pushValue(l,o.frequency);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isReadyToPlay(IntPtr l) {
-		UnityEngine.AudioClip o = checkSelf<UnityEngine.AudioClip>(l);
+		UnityEngine.AudioClip o = (UnityEngine.AudioClip)checkSelf(l);
 		pushValue(l,o.isReadyToPlay);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioClip");
-		addMember(l,GetData, "GetData");
-		addMember(l,SetData, "SetData");
-		addMember(l,Create, "Create");
-		addMember(l,get_length, "get_length");
-		addMember(l,get_samples, "get_samples");
-		addMember(l,get_channels, "get_channels");
-		addMember(l,get_frequency, "get_frequency");
-		addMember(l,get_isReadyToPlay, "get_isReadyToPlay");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AudioClip),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,GetData);
+		addMember(l,SetData);
+		addMember(l,Create);
+		addMember(l,"length",get_length,null);
+		addMember(l,"samples",get_samples,null);
+		addMember(l,"channels",get_channels,null);
+		addMember(l,"frequency",get_frequency,null);
+		addMember(l,"isReadyToPlay",get_isReadyToPlay,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioClip),typeof(UnityEngine.Object));
 	}
 }

@@ -12,13 +12,10 @@ public class Lua_UnityEngine_AudioRolloffMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.AudioRolloffMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Logarithmic");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Linear");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Custom");
+		getEnumTable(l,"UnityEngine.AudioRolloffMode");
+		addMember(l,0,"Logarithmic");
+		addMember(l,1,"Linear");
+		addMember(l,2,"Custom");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

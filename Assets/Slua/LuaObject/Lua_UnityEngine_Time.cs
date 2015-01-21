@@ -115,26 +115,20 @@ public class Lua_UnityEngine_Time : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Time");
-		addMember(l,get_time, "get_time");
-		addMember(l,get_timeSinceLevelLoad, "get_timeSinceLevelLoad");
-		addMember(l,get_deltaTime, "get_deltaTime");
-		addMember(l,get_fixedTime, "get_fixedTime");
-		addMember(l,get_unscaledTime, "get_unscaledTime");
-		addMember(l,get_unscaledDeltaTime, "get_unscaledDeltaTime");
-		addMember(l,get_fixedDeltaTime, "get_fixedDeltaTime");
-		addMember(l,set_fixedDeltaTime, "set_fixedDeltaTime");
-		addMember(l,get_maximumDeltaTime, "get_maximumDeltaTime");
-		addMember(l,set_maximumDeltaTime, "set_maximumDeltaTime");
-		addMember(l,get_smoothDeltaTime, "get_smoothDeltaTime");
-		addMember(l,get_timeScale, "get_timeScale");
-		addMember(l,set_timeScale, "set_timeScale");
-		addMember(l,get_frameCount, "get_frameCount");
-		addMember(l,get_renderedFrameCount, "get_renderedFrameCount");
-		addMember(l,get_realtimeSinceStartup, "get_realtimeSinceStartup");
-		addMember(l,get_captureFramerate, "get_captureFramerate");
-		addMember(l,set_captureFramerate, "set_captureFramerate");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Time));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"time",get_time,null);
+		addMember(l,"timeSinceLevelLoad",get_timeSinceLevelLoad,null);
+		addMember(l,"deltaTime",get_deltaTime,null);
+		addMember(l,"fixedTime",get_fixedTime,null);
+		addMember(l,"unscaledTime",get_unscaledTime,null);
+		addMember(l,"unscaledDeltaTime",get_unscaledDeltaTime,null);
+		addMember(l,"fixedDeltaTime",get_fixedDeltaTime,set_fixedDeltaTime);
+		addMember(l,"maximumDeltaTime",get_maximumDeltaTime,set_maximumDeltaTime);
+		addMember(l,"smoothDeltaTime",get_smoothDeltaTime,null);
+		addMember(l,"timeScale",get_timeScale,set_timeScale);
+		addMember(l,"frameCount",get_frameCount,null);
+		addMember(l,"renderedFrameCount",get_renderedFrameCount,null);
+		addMember(l,"realtimeSinceStartup",get_realtimeSinceStartup,null);
+		addMember(l,"captureFramerate",get_captureFramerate,set_captureFramerate);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Time));
 	}
 }

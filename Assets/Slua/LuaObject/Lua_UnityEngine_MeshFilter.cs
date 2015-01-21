@@ -17,13 +17,13 @@ public class Lua_UnityEngine_MeshFilter : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mesh(IntPtr l) {
-		UnityEngine.MeshFilter o = checkSelf<UnityEngine.MeshFilter>(l);
+		UnityEngine.MeshFilter o = (UnityEngine.MeshFilter)checkSelf(l);
 		pushValue(l,o.mesh);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_mesh(IntPtr l) {
-		UnityEngine.MeshFilter o = checkSelf<UnityEngine.MeshFilter>(l);
+		UnityEngine.MeshFilter o = (UnityEngine.MeshFilter)checkSelf(l);
 		UnityEngine.Mesh v;
 		checkType(l,2,out v);
 		o.mesh=v;
@@ -31,13 +31,13 @@ public class Lua_UnityEngine_MeshFilter : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_sharedMesh(IntPtr l) {
-		UnityEngine.MeshFilter o = checkSelf<UnityEngine.MeshFilter>(l);
+		UnityEngine.MeshFilter o = (UnityEngine.MeshFilter)checkSelf(l);
 		pushValue(l,o.sharedMesh);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sharedMesh(IntPtr l) {
-		UnityEngine.MeshFilter o = checkSelf<UnityEngine.MeshFilter>(l);
+		UnityEngine.MeshFilter o = (UnityEngine.MeshFilter)checkSelf(l);
 		UnityEngine.Mesh v;
 		checkType(l,2,out v);
 		o.sharedMesh=v;
@@ -45,12 +45,8 @@ public class Lua_UnityEngine_MeshFilter : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.MeshFilter");
-		addMember(l,get_mesh, "get_mesh");
-		addMember(l,set_mesh, "set_mesh");
-		addMember(l,get_sharedMesh, "get_sharedMesh");
-		addMember(l,set_sharedMesh, "set_sharedMesh");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.MeshFilter),typeof(UnityEngine.Component));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"mesh",get_mesh,set_mesh);
+		addMember(l,"sharedMesh",get_sharedMesh,set_sharedMesh);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.MeshFilter),typeof(UnityEngine.Component));
 	}
 }

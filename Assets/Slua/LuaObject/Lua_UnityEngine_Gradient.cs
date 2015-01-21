@@ -18,7 +18,7 @@ public class Lua_UnityEngine_Gradient : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Evaluate(IntPtr l) {
 		try{
-			UnityEngine.Gradient self=checkSelf<UnityEngine.Gradient>(l);
+			UnityEngine.Gradient self=(UnityEngine.Gradient)checkSelf(l);
 			System.Single a1;
 			checkType(l,2,out a1);
 			UnityEngine.Color ret=self.Evaluate(a1);
@@ -33,7 +33,7 @@ public class Lua_UnityEngine_Gradient : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetKeys(IntPtr l) {
 		try{
-			UnityEngine.Gradient self=checkSelf<UnityEngine.Gradient>(l);
+			UnityEngine.Gradient self=(UnityEngine.Gradient)checkSelf(l);
 			UnityEngine.GradientColorKey[] a1;
 			checkType(l,2,out a1);
 			UnityEngine.GradientAlphaKey[] a2;
@@ -48,13 +48,13 @@ public class Lua_UnityEngine_Gradient : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_colorKeys(IntPtr l) {
-		UnityEngine.Gradient o = checkSelf<UnityEngine.Gradient>(l);
+		UnityEngine.Gradient o = (UnityEngine.Gradient)checkSelf(l);
 		pushValue(l,o.colorKeys);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_colorKeys(IntPtr l) {
-		UnityEngine.Gradient o = checkSelf<UnityEngine.Gradient>(l);
+		UnityEngine.Gradient o = (UnityEngine.Gradient)checkSelf(l);
 		UnityEngine.GradientColorKey[] v;
 		checkType(l,2,out v);
 		o.colorKeys=v;
@@ -62,13 +62,13 @@ public class Lua_UnityEngine_Gradient : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_alphaKeys(IntPtr l) {
-		UnityEngine.Gradient o = checkSelf<UnityEngine.Gradient>(l);
+		UnityEngine.Gradient o = (UnityEngine.Gradient)checkSelf(l);
 		pushValue(l,o.alphaKeys);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_alphaKeys(IntPtr l) {
-		UnityEngine.Gradient o = checkSelf<UnityEngine.Gradient>(l);
+		UnityEngine.Gradient o = (UnityEngine.Gradient)checkSelf(l);
 		UnityEngine.GradientAlphaKey[] v;
 		checkType(l,2,out v);
 		o.alphaKeys=v;
@@ -76,14 +76,10 @@ public class Lua_UnityEngine_Gradient : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Gradient");
-		addMember(l,Evaluate, "Evaluate");
-		addMember(l,SetKeys, "SetKeys");
-		addMember(l,get_colorKeys, "get_colorKeys");
-		addMember(l,set_colorKeys, "set_colorKeys");
-		addMember(l,get_alphaKeys, "get_alphaKeys");
-		addMember(l,set_alphaKeys, "set_alphaKeys");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Gradient));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Evaluate);
+		addMember(l,SetKeys);
+		addMember(l,"colorKeys",get_colorKeys,set_colorKeys);
+		addMember(l,"alphaKeys",get_alphaKeys,set_alphaKeys);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Gradient));
 	}
 }

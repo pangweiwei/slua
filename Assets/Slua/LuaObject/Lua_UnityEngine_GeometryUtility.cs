@@ -58,10 +58,8 @@ public class Lua_UnityEngine_GeometryUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.GeometryUtility");
-		addMember(l,CalculateFrustumPlanes, "CalculateFrustumPlanes");
-		addMember(l,TestPlanesAABB, "TestPlanesAABB");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.GeometryUtility));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,CalculateFrustumPlanes);
+		addMember(l,TestPlanesAABB);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.GeometryUtility));
 	}
 }

@@ -18,7 +18,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetProceduralPropertyDescriptions(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			UnityEngine.ProceduralPropertyDescription[] ret=self.GetProceduralPropertyDescriptions();
 			pushValue(l,ret);
 			return 1;
@@ -31,7 +31,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int HasProceduralProperty(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Boolean ret=self.HasProceduralProperty(a1);
@@ -46,7 +46,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetProceduralBoolean(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Boolean ret=self.GetProceduralBoolean(a1);
@@ -61,7 +61,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetProceduralBoolean(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Boolean a2;
@@ -77,7 +77,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetProceduralFloat(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Single ret=self.GetProceduralFloat(a1);
@@ -92,7 +92,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetProceduralFloat(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Single a2;
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetProceduralVector(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			UnityEngine.Vector4 ret=self.GetProceduralVector(a1);
@@ -123,7 +123,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetProceduralVector(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			UnityEngine.Vector4 a2;
@@ -139,7 +139,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetProceduralColor(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			UnityEngine.Color ret=self.GetProceduralColor(a1);
@@ -154,7 +154,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetProceduralColor(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			UnityEngine.Color a2;
@@ -170,7 +170,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetProceduralEnum(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Int32 ret=self.GetProceduralEnum(a1);
@@ -185,7 +185,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetProceduralEnum(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Int32 a2;
@@ -201,7 +201,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetProceduralTexture(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			UnityEngine.Texture2D ret=self.GetProceduralTexture(a1);
@@ -216,7 +216,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetProceduralTexture(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			UnityEngine.Texture2D a2;
@@ -232,7 +232,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsProceduralPropertyCached(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Boolean ret=self.IsProceduralPropertyCached(a1);
@@ -247,7 +247,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CacheProceduralProperty(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Boolean a2;
@@ -263,7 +263,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ClearCache(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			self.ClearCache();
 			return 0;
 		}
@@ -275,7 +275,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RebuildTextures(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			self.RebuildTextures();
 			return 0;
 		}
@@ -287,7 +287,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RebuildTexturesImmediately(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			self.RebuildTexturesImmediately();
 			return 0;
 		}
@@ -310,7 +310,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetGeneratedTextures(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			UnityEngine.Texture[] ret=self.GetGeneratedTextures();
 			pushValue(l,ret);
 			return 1;
@@ -323,7 +323,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetGeneratedTexture(IntPtr l) {
 		try{
-			UnityEngine.ProceduralMaterial self=checkSelf<UnityEngine.ProceduralMaterial>(l);
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			UnityEngine.ProceduralTexture ret=self.GetGeneratedTexture(a1);
@@ -337,13 +337,13 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_cacheSize(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		pushValue(l,o.cacheSize);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_cacheSize(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		UnityEngine.ProceduralCacheSize v;
 		checkEnum(l,2,out v);
 		o.cacheSize=v;
@@ -351,13 +351,13 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_animationUpdateRate(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		pushValue(l,o.animationUpdateRate);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_animationUpdateRate(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		System.Int32 v;
 		checkType(l,2,out v);
 		o.animationUpdateRate=v;
@@ -365,25 +365,25 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isProcessing(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		pushValue(l,o.isProcessing);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isCachedDataAvailable(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		pushValue(l,o.isCachedDataAvailable);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isLoadTimeGenerated(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		pushValue(l,o.isLoadTimeGenerated);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isLoadTimeGenerated(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.isLoadTimeGenerated=v;
@@ -391,7 +391,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_loadingBehavior(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		pushValue(l,o.loadingBehavior);
 		return 1;
 	}
@@ -414,13 +414,13 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_preset(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		pushValue(l,o.preset);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_preset(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		System.String v;
 		checkType(l,2,out v);
 		o.preset=v;
@@ -428,13 +428,13 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isReadable(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		pushValue(l,o.isReadable);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isReadable(IntPtr l) {
-		UnityEngine.ProceduralMaterial o = checkSelf<UnityEngine.ProceduralMaterial>(l);
+		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.isReadable=v;
@@ -442,46 +442,38 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ProceduralMaterial");
-		addMember(l,GetProceduralPropertyDescriptions, "GetProceduralPropertyDescriptions");
-		addMember(l,HasProceduralProperty, "HasProceduralProperty");
-		addMember(l,GetProceduralBoolean, "GetProceduralBoolean");
-		addMember(l,SetProceduralBoolean, "SetProceduralBoolean");
-		addMember(l,GetProceduralFloat, "GetProceduralFloat");
-		addMember(l,SetProceduralFloat, "SetProceduralFloat");
-		addMember(l,GetProceduralVector, "GetProceduralVector");
-		addMember(l,SetProceduralVector, "SetProceduralVector");
-		addMember(l,GetProceduralColor, "GetProceduralColor");
-		addMember(l,SetProceduralColor, "SetProceduralColor");
-		addMember(l,GetProceduralEnum, "GetProceduralEnum");
-		addMember(l,SetProceduralEnum, "SetProceduralEnum");
-		addMember(l,GetProceduralTexture, "GetProceduralTexture");
-		addMember(l,SetProceduralTexture, "SetProceduralTexture");
-		addMember(l,IsProceduralPropertyCached, "IsProceduralPropertyCached");
-		addMember(l,CacheProceduralProperty, "CacheProceduralProperty");
-		addMember(l,ClearCache, "ClearCache");
-		addMember(l,RebuildTextures, "RebuildTextures");
-		addMember(l,RebuildTexturesImmediately, "RebuildTexturesImmediately");
-		addMember(l,StopRebuilds, "StopRebuilds");
-		addMember(l,GetGeneratedTextures, "GetGeneratedTextures");
-		addMember(l,GetGeneratedTexture, "GetGeneratedTexture");
-		addMember(l,get_cacheSize, "get_cacheSize");
-		addMember(l,set_cacheSize, "set_cacheSize");
-		addMember(l,get_animationUpdateRate, "get_animationUpdateRate");
-		addMember(l,set_animationUpdateRate, "set_animationUpdateRate");
-		addMember(l,get_isProcessing, "get_isProcessing");
-		addMember(l,get_isCachedDataAvailable, "get_isCachedDataAvailable");
-		addMember(l,get_isLoadTimeGenerated, "get_isLoadTimeGenerated");
-		addMember(l,set_isLoadTimeGenerated, "set_isLoadTimeGenerated");
-		addMember(l,get_loadingBehavior, "get_loadingBehavior");
-		addMember(l,get_isSupported, "get_isSupported");
-		addMember(l,get_substanceProcessorUsage, "get_substanceProcessorUsage");
-		addMember(l,set_substanceProcessorUsage, "set_substanceProcessorUsage");
-		addMember(l,get_preset, "get_preset");
-		addMember(l,set_preset, "set_preset");
-		addMember(l,get_isReadable, "get_isReadable");
-		addMember(l,set_isReadable, "set_isReadable");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.ProceduralMaterial),typeof(UnityEngine.Material));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,GetProceduralPropertyDescriptions);
+		addMember(l,HasProceduralProperty);
+		addMember(l,GetProceduralBoolean);
+		addMember(l,SetProceduralBoolean);
+		addMember(l,GetProceduralFloat);
+		addMember(l,SetProceduralFloat);
+		addMember(l,GetProceduralVector);
+		addMember(l,SetProceduralVector);
+		addMember(l,GetProceduralColor);
+		addMember(l,SetProceduralColor);
+		addMember(l,GetProceduralEnum);
+		addMember(l,SetProceduralEnum);
+		addMember(l,GetProceduralTexture);
+		addMember(l,SetProceduralTexture);
+		addMember(l,IsProceduralPropertyCached);
+		addMember(l,CacheProceduralProperty);
+		addMember(l,ClearCache);
+		addMember(l,RebuildTextures);
+		addMember(l,RebuildTexturesImmediately);
+		addMember(l,StopRebuilds);
+		addMember(l,GetGeneratedTextures);
+		addMember(l,GetGeneratedTexture);
+		addMember(l,"cacheSize",get_cacheSize,set_cacheSize);
+		addMember(l,"animationUpdateRate",get_animationUpdateRate,set_animationUpdateRate);
+		addMember(l,"isProcessing",get_isProcessing,null);
+		addMember(l,"isCachedDataAvailable",get_isCachedDataAvailable,null);
+		addMember(l,"isLoadTimeGenerated",get_isLoadTimeGenerated,set_isLoadTimeGenerated);
+		addMember(l,"loadingBehavior",get_loadingBehavior,null);
+		addMember(l,"isSupported",get_isSupported,null);
+		addMember(l,"substanceProcessorUsage",get_substanceProcessorUsage,set_substanceProcessorUsage);
+		addMember(l,"preset",get_preset,set_preset);
+		addMember(l,"isReadable",get_isReadable,set_isReadable);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.ProceduralMaterial),typeof(UnityEngine.Material));
 	}
 }

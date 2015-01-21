@@ -33,8 +33,6 @@ public class Lua_UnityEngine_MissingComponentException : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.MissingComponentException");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.MissingComponentException));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.MissingComponentException));
 	}
 }

@@ -36,10 +36,8 @@ public class Lua_UnityEngine_UI_GraphicRebuildTracker : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.GraphicRebuildTracker");
-		addMember(l,TrackGraphic, "TrackGraphic");
-		addMember(l,UnTrackGraphic, "UnTrackGraphic");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.GraphicRebuildTracker));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,TrackGraphic);
+		addMember(l,UnTrackGraphic);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.GraphicRebuildTracker));
 	}
 }

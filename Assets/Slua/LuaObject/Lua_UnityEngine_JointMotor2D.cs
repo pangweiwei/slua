@@ -10,13 +10,13 @@ public class Lua_UnityEngine_JointMotor2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_motorSpeed(IntPtr l) {
-		UnityEngine.JointMotor2D o = checkSelf<UnityEngine.JointMotor2D>(l);
+		UnityEngine.JointMotor2D o = (UnityEngine.JointMotor2D)checkSelf(l);
 		pushValue(l,o.motorSpeed);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_motorSpeed(IntPtr l) {
-		UnityEngine.JointMotor2D o = checkSelf<UnityEngine.JointMotor2D>(l);
+		UnityEngine.JointMotor2D o = (UnityEngine.JointMotor2D)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.motorSpeed=v;
@@ -25,13 +25,13 @@ public class Lua_UnityEngine_JointMotor2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_maxMotorTorque(IntPtr l) {
-		UnityEngine.JointMotor2D o = checkSelf<UnityEngine.JointMotor2D>(l);
+		UnityEngine.JointMotor2D o = (UnityEngine.JointMotor2D)checkSelf(l);
 		pushValue(l,o.maxMotorTorque);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxMotorTorque(IntPtr l) {
-		UnityEngine.JointMotor2D o = checkSelf<UnityEngine.JointMotor2D>(l);
+		UnityEngine.JointMotor2D o = (UnityEngine.JointMotor2D)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.maxMotorTorque=v;
@@ -40,12 +40,8 @@ public class Lua_UnityEngine_JointMotor2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.JointMotor2D");
-		addMember(l,get_motorSpeed, "get_motorSpeed");
-		addMember(l,set_motorSpeed, "set_motorSpeed");
-		addMember(l,get_maxMotorTorque, "get_maxMotorTorque");
-		addMember(l,set_maxMotorTorque, "set_maxMotorTorque");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.JointMotor2D));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"motorSpeed",get_motorSpeed,set_motorSpeed);
+		addMember(l,"maxMotorTorque",get_maxMotorTorque,set_maxMotorTorque);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.JointMotor2D));
 	}
 }

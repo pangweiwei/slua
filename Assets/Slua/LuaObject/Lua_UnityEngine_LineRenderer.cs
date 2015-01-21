@@ -18,7 +18,7 @@ public class Lua_UnityEngine_LineRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetWidth(IntPtr l) {
 		try{
-			UnityEngine.LineRenderer self=checkSelf<UnityEngine.LineRenderer>(l);
+			UnityEngine.LineRenderer self=(UnityEngine.LineRenderer)checkSelf(l);
 			System.Single a1;
 			checkType(l,2,out a1);
 			System.Single a2;
@@ -34,7 +34,7 @@ public class Lua_UnityEngine_LineRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetColors(IntPtr l) {
 		try{
-			UnityEngine.LineRenderer self=checkSelf<UnityEngine.LineRenderer>(l);
+			UnityEngine.LineRenderer self=(UnityEngine.LineRenderer)checkSelf(l);
 			UnityEngine.Color a1;
 			checkType(l,2,out a1);
 			UnityEngine.Color a2;
@@ -50,7 +50,7 @@ public class Lua_UnityEngine_LineRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetVertexCount(IntPtr l) {
 		try{
-			UnityEngine.LineRenderer self=checkSelf<UnityEngine.LineRenderer>(l);
+			UnityEngine.LineRenderer self=(UnityEngine.LineRenderer)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			self.SetVertexCount(a1);
@@ -64,7 +64,7 @@ public class Lua_UnityEngine_LineRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetPosition(IntPtr l) {
 		try{
-			UnityEngine.LineRenderer self=checkSelf<UnityEngine.LineRenderer>(l);
+			UnityEngine.LineRenderer self=(UnityEngine.LineRenderer)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			UnityEngine.Vector3 a2;
@@ -79,13 +79,13 @@ public class Lua_UnityEngine_LineRenderer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_useWorldSpace(IntPtr l) {
-		UnityEngine.LineRenderer o = checkSelf<UnityEngine.LineRenderer>(l);
+		UnityEngine.LineRenderer o = (UnityEngine.LineRenderer)checkSelf(l);
 		pushValue(l,o.useWorldSpace);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useWorldSpace(IntPtr l) {
-		UnityEngine.LineRenderer o = checkSelf<UnityEngine.LineRenderer>(l);
+		UnityEngine.LineRenderer o = (UnityEngine.LineRenderer)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.useWorldSpace=v;
@@ -93,14 +93,11 @@ public class Lua_UnityEngine_LineRenderer : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LineRenderer");
-		addMember(l,SetWidth, "SetWidth");
-		addMember(l,SetColors, "SetColors");
-		addMember(l,SetVertexCount, "SetVertexCount");
-		addMember(l,SetPosition, "SetPosition");
-		addMember(l,get_useWorldSpace, "get_useWorldSpace");
-		addMember(l,set_useWorldSpace, "set_useWorldSpace");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.LineRenderer),typeof(UnityEngine.Renderer));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,SetWidth);
+		addMember(l,SetColors);
+		addMember(l,SetVertexCount);
+		addMember(l,SetPosition);
+		addMember(l,"useWorldSpace",get_useWorldSpace,set_useWorldSpace);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.LineRenderer),typeof(UnityEngine.Renderer));
 	}
 }

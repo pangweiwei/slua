@@ -12,9 +12,8 @@ public class Lua_UnityEngine_WebCamFlags : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.WebCamFlags");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "FrontFacing");
+		getEnumTable(l,"UnityEngine.WebCamFlags");
+		addMember(l,1,"FrontFacing");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

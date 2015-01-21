@@ -19,8 +19,6 @@ public class Lua_UnityEngine_PlayerPrefsException : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.PlayerPrefsException");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.PlayerPrefsException));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.PlayerPrefsException));
 	}
 }

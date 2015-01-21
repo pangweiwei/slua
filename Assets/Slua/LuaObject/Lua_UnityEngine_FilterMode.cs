@@ -12,13 +12,10 @@ public class Lua_UnityEngine_FilterMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.FilterMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Point");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Bilinear");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Trilinear");
+		getEnumTable(l,"UnityEngine.FilterMode");
+		addMember(l,0,"Point");
+		addMember(l,1,"Bilinear");
+		addMember(l,2,"Trilinear");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

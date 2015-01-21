@@ -17,13 +17,13 @@ public class Lua_UnityEngine_Behaviour : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_enabled(IntPtr l) {
-		UnityEngine.Behaviour o = checkSelf<UnityEngine.Behaviour>(l);
+		UnityEngine.Behaviour o = (UnityEngine.Behaviour)checkSelf(l);
 		pushValue(l,o.enabled);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enabled(IntPtr l) {
-		UnityEngine.Behaviour o = checkSelf<UnityEngine.Behaviour>(l);
+		UnityEngine.Behaviour o = (UnityEngine.Behaviour)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.enabled=v;
@@ -31,10 +31,7 @@ public class Lua_UnityEngine_Behaviour : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Behaviour");
-		addMember(l,get_enabled, "get_enabled");
-		addMember(l,set_enabled, "set_enabled");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Behaviour),typeof(UnityEngine.Component));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"enabled",get_enabled,set_enabled);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Behaviour),typeof(UnityEngine.Component));
 	}
 }

@@ -12,21 +12,14 @@ public class Lua_UnityEngine_CollisionFlags : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.CollisionFlags");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "None");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Sides");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Above");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Below");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "CollidedSides");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "CollidedAbove");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "CollidedBelow");
+		getEnumTable(l,"UnityEngine.CollisionFlags");
+		addMember(l,0,"None");
+		addMember(l,1,"Sides");
+		addMember(l,2,"Above");
+		addMember(l,4,"Below");
+		addMember(l,1,"CollidedSides");
+		addMember(l,2,"CollidedAbove");
+		addMember(l,4,"CollidedBelow");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

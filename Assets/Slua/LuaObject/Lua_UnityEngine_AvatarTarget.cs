@@ -12,19 +12,13 @@ public class Lua_UnityEngine_AvatarTarget : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.AvatarTarget");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Root");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Body");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "LeftFoot");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "RightFoot");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "LeftHand");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "RightHand");
+		getEnumTable(l,"UnityEngine.AvatarTarget");
+		addMember(l,0,"Root");
+		addMember(l,1,"Body");
+		addMember(l,2,"LeftFoot");
+		addMember(l,3,"RightFoot");
+		addMember(l,4,"LeftHand");
+		addMember(l,5,"RightHand");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

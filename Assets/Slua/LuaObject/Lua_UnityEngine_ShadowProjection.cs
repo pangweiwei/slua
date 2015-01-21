@@ -12,11 +12,9 @@ public class Lua_UnityEngine_ShadowProjection : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.ShadowProjection");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "CloseFit");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "StableFit");
+		getEnumTable(l,"UnityEngine.ShadowProjection");
+		addMember(l,0,"CloseFit");
+		addMember(l,1,"StableFit");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

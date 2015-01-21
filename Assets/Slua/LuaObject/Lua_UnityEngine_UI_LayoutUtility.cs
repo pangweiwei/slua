@@ -153,18 +153,16 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.LayoutUtility");
-		addMember(l,GetMinSize, "GetMinSize");
-		addMember(l,GetPreferredSize, "GetPreferredSize");
-		addMember(l,GetFlexibleSize, "GetFlexibleSize");
-		addMember(l,GetMinWidth, "GetMinWidth");
-		addMember(l,GetPreferredWidth, "GetPreferredWidth");
-		addMember(l,GetFlexibleWidth, "GetFlexibleWidth");
-		addMember(l,GetMinHeight, "GetMinHeight");
-		addMember(l,GetPreferredHeight, "GetPreferredHeight");
-		addMember(l,GetFlexibleHeight, "GetFlexibleHeight");
-		addMember(l,GetLayoutProperty, "GetLayoutProperty");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.LayoutUtility));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,GetMinSize);
+		addMember(l,GetPreferredSize);
+		addMember(l,GetFlexibleSize);
+		addMember(l,GetMinWidth);
+		addMember(l,GetPreferredWidth);
+		addMember(l,GetFlexibleWidth);
+		addMember(l,GetMinHeight);
+		addMember(l,GetPreferredHeight);
+		addMember(l,GetFlexibleHeight);
+		addMember(l,GetLayoutProperty);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.LayoutUtility));
 	}
 }

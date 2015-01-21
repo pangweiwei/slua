@@ -12,15 +12,11 @@ public class Lua_UnityEngine_UI_Selectable_Transition : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.Selectable.Transition");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "None");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "ColorTint");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "SpriteSwap");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Animation");
+		getEnumTable(l,"UnityEngine.UI.Selectable.Transition");
+		addMember(l,0,"None");
+		addMember(l,1,"ColorTint");
+		addMember(l,2,"SpriteSwap");
+		addMember(l,3,"Animation");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

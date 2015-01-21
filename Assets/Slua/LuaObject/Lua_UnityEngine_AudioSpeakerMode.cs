@@ -12,23 +12,15 @@ public class Lua_UnityEngine_AudioSpeakerMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.AudioSpeakerMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Raw");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Mono");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Stereo");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Quad");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Surround");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "Mode5point1");
-		LuaDLL.lua_pushinteger(l, 6);
-		LuaDLL.lua_setfield(l, -2, "Mode7point1");
-		LuaDLL.lua_pushinteger(l, 7);
-		LuaDLL.lua_setfield(l, -2, "Prologic");
+		getEnumTable(l,"UnityEngine.AudioSpeakerMode");
+		addMember(l,0,"Raw");
+		addMember(l,1,"Mono");
+		addMember(l,2,"Stereo");
+		addMember(l,3,"Quad");
+		addMember(l,4,"Surround");
+		addMember(l,5,"Mode5point1");
+		addMember(l,6,"Mode7point1");
+		addMember(l,7,"Prologic");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

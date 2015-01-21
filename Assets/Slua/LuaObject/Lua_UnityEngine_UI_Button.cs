@@ -11,7 +11,7 @@ public class Lua_UnityEngine_UI_Button : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnPointerClick(IntPtr l) {
 		try{
-			UnityEngine.UI.Button self=checkSelf<UnityEngine.UI.Button>(l);
+			UnityEngine.UI.Button self=(UnityEngine.UI.Button)checkSelf(l);
 			UnityEngine.EventSystems.PointerEventData a1;
 			checkType(l,2,out a1);
 			self.OnPointerClick(a1);
@@ -25,7 +25,7 @@ public class Lua_UnityEngine_UI_Button : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnSubmit(IntPtr l) {
 		try{
-			UnityEngine.UI.Button self=checkSelf<UnityEngine.UI.Button>(l);
+			UnityEngine.UI.Button self=(UnityEngine.UI.Button)checkSelf(l);
 			UnityEngine.EventSystems.BaseEventData a1;
 			checkType(l,2,out a1);
 			self.OnSubmit(a1);
@@ -38,13 +38,13 @@ public class Lua_UnityEngine_UI_Button : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_onClick(IntPtr l) {
-		UnityEngine.UI.Button o = checkSelf<UnityEngine.UI.Button>(l);
+		UnityEngine.UI.Button o = (UnityEngine.UI.Button)checkSelf(l);
 		pushValue(l,o.onClick);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_onClick(IntPtr l) {
-		UnityEngine.UI.Button o = checkSelf<UnityEngine.UI.Button>(l);
+		UnityEngine.UI.Button o = (UnityEngine.UI.Button)checkSelf(l);
 		UnityEngine.UI.Button.ButtonClickedEvent v;
 		checkType(l,2,out v);
 		o.onClick=v;
@@ -52,12 +52,9 @@ public class Lua_UnityEngine_UI_Button : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Button");
-		addMember(l,OnPointerClick, "OnPointerClick");
-		addMember(l,OnSubmit, "OnSubmit");
-		addMember(l,get_onClick, "get_onClick");
-		addMember(l,set_onClick, "set_onClick");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.Button),typeof(UnityEngine.UI.Selectable));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,OnPointerClick);
+		addMember(l,OnSubmit);
+		addMember(l,"onClick",get_onClick,set_onClick);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Button),typeof(UnityEngine.UI.Selectable));
 	}
 }

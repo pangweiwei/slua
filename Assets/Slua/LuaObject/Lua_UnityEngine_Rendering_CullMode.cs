@@ -12,13 +12,10 @@ public class Lua_UnityEngine_Rendering_CullMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.Rendering.CullMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Off");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Front");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Back");
+		getEnumTable(l,"UnityEngine.Rendering.CullMode");
+		addMember(l,0,"Off");
+		addMember(l,1,"Front");
+		addMember(l,2,"Back");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

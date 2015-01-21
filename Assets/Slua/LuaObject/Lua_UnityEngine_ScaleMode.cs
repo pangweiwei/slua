@@ -12,13 +12,10 @@ public class Lua_UnityEngine_ScaleMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.ScaleMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "StretchToFill");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "ScaleAndCrop");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "ScaleToFit");
+		getEnumTable(l,"UnityEngine.ScaleMode");
+		addMember(l,0,"StretchToFill");
+		addMember(l,1,"ScaleAndCrop");
+		addMember(l,2,"ScaleToFit");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

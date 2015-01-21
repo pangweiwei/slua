@@ -17,13 +17,13 @@ public class Lua_UnityEngine_AudioDistortionFilter : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_distortionLevel(IntPtr l) {
-		UnityEngine.AudioDistortionFilter o = checkSelf<UnityEngine.AudioDistortionFilter>(l);
+		UnityEngine.AudioDistortionFilter o = (UnityEngine.AudioDistortionFilter)checkSelf(l);
 		pushValue(l,o.distortionLevel);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_distortionLevel(IntPtr l) {
-		UnityEngine.AudioDistortionFilter o = checkSelf<UnityEngine.AudioDistortionFilter>(l);
+		UnityEngine.AudioDistortionFilter o = (UnityEngine.AudioDistortionFilter)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.distortionLevel=v;
@@ -31,10 +31,7 @@ public class Lua_UnityEngine_AudioDistortionFilter : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioDistortionFilter");
-		addMember(l,get_distortionLevel, "get_distortionLevel");
-		addMember(l,set_distortionLevel, "set_distortionLevel");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AudioDistortionFilter),typeof(UnityEngine.Behaviour));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"distortionLevel",get_distortionLevel,set_distortionLevel);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioDistortionFilter),typeof(UnityEngine.Behaviour));
 	}
 }

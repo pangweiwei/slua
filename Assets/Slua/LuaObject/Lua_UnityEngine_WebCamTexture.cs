@@ -69,7 +69,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Play(IntPtr l) {
 		try{
-			UnityEngine.WebCamTexture self=checkSelf<UnityEngine.WebCamTexture>(l);
+			UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 			self.Play();
 			return 0;
 		}
@@ -81,7 +81,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Pause(IntPtr l) {
 		try{
-			UnityEngine.WebCamTexture self=checkSelf<UnityEngine.WebCamTexture>(l);
+			UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 			self.Pause();
 			return 0;
 		}
@@ -93,7 +93,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Stop(IntPtr l) {
 		try{
-			UnityEngine.WebCamTexture self=checkSelf<UnityEngine.WebCamTexture>(l);
+			UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 			self.Stop();
 			return 0;
 		}
@@ -105,7 +105,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetPixel(IntPtr l) {
 		try{
-			UnityEngine.WebCamTexture self=checkSelf<UnityEngine.WebCamTexture>(l);
+			UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			System.Int32 a2;
@@ -123,13 +123,13 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	static public int GetPixels(IntPtr l) {
 		try{
 			if(matchType(l,2)){
-				UnityEngine.WebCamTexture self=checkSelf<UnityEngine.WebCamTexture>(l);
+				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				UnityEngine.Color[] ret=self.GetPixels();
 				pushValue(l,ret);
 				return 1;
 			}
 			else if(matchType(l,2,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(System.Int32))){
-				UnityEngine.WebCamTexture self=checkSelf<UnityEngine.WebCamTexture>(l);
+				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
 				System.Int32 a2;
@@ -154,7 +154,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	static public int GetPixels32(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(UnityEngine.Color32))){
-				UnityEngine.WebCamTexture self=checkSelf<UnityEngine.WebCamTexture>(l);
+				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				UnityEngine.Color32[] a1;
 				checkType(l,2,out a1);
 				UnityEngine.Color32[] ret=self.GetPixels32(a1);
@@ -162,7 +162,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2)){
-				UnityEngine.WebCamTexture self=checkSelf<UnityEngine.WebCamTexture>(l);
+				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				UnityEngine.Color32[] ret=self.GetPixels32();
 				pushValue(l,ret);
 				return 1;
@@ -177,19 +177,19 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isPlaying(IntPtr l) {
-		UnityEngine.WebCamTexture o = checkSelf<UnityEngine.WebCamTexture>(l);
+		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
 		pushValue(l,o.isPlaying);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_deviceName(IntPtr l) {
-		UnityEngine.WebCamTexture o = checkSelf<UnityEngine.WebCamTexture>(l);
+		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
 		pushValue(l,o.deviceName);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_deviceName(IntPtr l) {
-		UnityEngine.WebCamTexture o = checkSelf<UnityEngine.WebCamTexture>(l);
+		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
 		System.String v;
 		checkType(l,2,out v);
 		o.deviceName=v;
@@ -197,13 +197,13 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_requestedFPS(IntPtr l) {
-		UnityEngine.WebCamTexture o = checkSelf<UnityEngine.WebCamTexture>(l);
+		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
 		pushValue(l,o.requestedFPS);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_requestedFPS(IntPtr l) {
-		UnityEngine.WebCamTexture o = checkSelf<UnityEngine.WebCamTexture>(l);
+		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.requestedFPS=v;
@@ -211,13 +211,13 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_requestedWidth(IntPtr l) {
-		UnityEngine.WebCamTexture o = checkSelf<UnityEngine.WebCamTexture>(l);
+		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
 		pushValue(l,o.requestedWidth);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_requestedWidth(IntPtr l) {
-		UnityEngine.WebCamTexture o = checkSelf<UnityEngine.WebCamTexture>(l);
+		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
 		System.Int32 v;
 		checkType(l,2,out v);
 		o.requestedWidth=v;
@@ -225,13 +225,13 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_requestedHeight(IntPtr l) {
-		UnityEngine.WebCamTexture o = checkSelf<UnityEngine.WebCamTexture>(l);
+		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
 		pushValue(l,o.requestedHeight);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_requestedHeight(IntPtr l) {
-		UnityEngine.WebCamTexture o = checkSelf<UnityEngine.WebCamTexture>(l);
+		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
 		System.Int32 v;
 		checkType(l,2,out v);
 		o.requestedHeight=v;
@@ -244,45 +244,39 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_videoRotationAngle(IntPtr l) {
-		UnityEngine.WebCamTexture o = checkSelf<UnityEngine.WebCamTexture>(l);
+		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
 		pushValue(l,o.videoRotationAngle);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_videoVerticallyMirrored(IntPtr l) {
-		UnityEngine.WebCamTexture o = checkSelf<UnityEngine.WebCamTexture>(l);
+		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
 		pushValue(l,o.videoVerticallyMirrored);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_didUpdateThisFrame(IntPtr l) {
-		UnityEngine.WebCamTexture o = checkSelf<UnityEngine.WebCamTexture>(l);
+		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
 		pushValue(l,o.didUpdateThisFrame);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.WebCamTexture");
-		addMember(l,Play, "Play");
-		addMember(l,Pause, "Pause");
-		addMember(l,Stop, "Stop");
-		addMember(l,GetPixel, "GetPixel");
-		addMember(l,GetPixels, "GetPixels");
-		addMember(l,GetPixels32, "GetPixels32");
-		addMember(l,get_isPlaying, "get_isPlaying");
-		addMember(l,get_deviceName, "get_deviceName");
-		addMember(l,set_deviceName, "set_deviceName");
-		addMember(l,get_requestedFPS, "get_requestedFPS");
-		addMember(l,set_requestedFPS, "set_requestedFPS");
-		addMember(l,get_requestedWidth, "get_requestedWidth");
-		addMember(l,set_requestedWidth, "set_requestedWidth");
-		addMember(l,get_requestedHeight, "get_requestedHeight");
-		addMember(l,set_requestedHeight, "set_requestedHeight");
-		addMember(l,get_devices, "get_devices");
-		addMember(l,get_videoRotationAngle, "get_videoRotationAngle");
-		addMember(l,get_videoVerticallyMirrored, "get_videoVerticallyMirrored");
-		addMember(l,get_didUpdateThisFrame, "get_didUpdateThisFrame");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.WebCamTexture),typeof(UnityEngine.Texture));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Play);
+		addMember(l,Pause);
+		addMember(l,Stop);
+		addMember(l,GetPixel);
+		addMember(l,GetPixels);
+		addMember(l,GetPixels32);
+		addMember(l,"isPlaying",get_isPlaying,null);
+		addMember(l,"deviceName",get_deviceName,set_deviceName);
+		addMember(l,"requestedFPS",get_requestedFPS,set_requestedFPS);
+		addMember(l,"requestedWidth",get_requestedWidth,set_requestedWidth);
+		addMember(l,"requestedHeight",get_requestedHeight,set_requestedHeight);
+		addMember(l,"devices",get_devices,null);
+		addMember(l,"videoRotationAngle",get_videoRotationAngle,null);
+		addMember(l,"videoVerticallyMirrored",get_videoVerticallyMirrored,null);
+		addMember(l,"didUpdateThisFrame",get_didUpdateThisFrame,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.WebCamTexture),typeof(UnityEngine.Texture));
 	}
 }

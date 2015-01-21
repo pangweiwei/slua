@@ -12,13 +12,10 @@ public class Lua_UnityEngine_UI_ScrollRect_MovementType : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.ScrollRect.MovementType");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Unrestricted");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Elastic");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Clamped");
+		getEnumTable(l,"UnityEngine.UI.ScrollRect.MovementType");
+		addMember(l,0,"Unrestricted");
+		addMember(l,1,"Elastic");
+		addMember(l,2,"Clamped");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

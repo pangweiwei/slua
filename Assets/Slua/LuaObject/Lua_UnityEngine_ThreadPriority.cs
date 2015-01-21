@@ -12,15 +12,11 @@ public class Lua_UnityEngine_ThreadPriority : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.ThreadPriority");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Low");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "BelowNormal");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Normal");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "High");
+		getEnumTable(l,"UnityEngine.ThreadPriority");
+		addMember(l,0,"Low");
+		addMember(l,1,"BelowNormal");
+		addMember(l,2,"Normal");
+		addMember(l,4,"High");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

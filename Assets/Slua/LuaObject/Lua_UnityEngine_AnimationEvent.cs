@@ -17,13 +17,13 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_stringParameter(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		pushValue(l,o.stringParameter);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_stringParameter(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		System.String v;
 		checkType(l,2,out v);
 		o.stringParameter=v;
@@ -31,13 +31,13 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_floatParameter(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		pushValue(l,o.floatParameter);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_floatParameter(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.floatParameter=v;
@@ -45,13 +45,13 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_intParameter(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		pushValue(l,o.intParameter);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_intParameter(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		System.Int32 v;
 		checkType(l,2,out v);
 		o.intParameter=v;
@@ -59,13 +59,13 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_objectReferenceParameter(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		pushValue(l,o.objectReferenceParameter);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_objectReferenceParameter(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		UnityEngine.Object v;
 		checkType(l,2,out v);
 		o.objectReferenceParameter=v;
@@ -73,13 +73,13 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_functionName(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		pushValue(l,o.functionName);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_functionName(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		System.String v;
 		checkType(l,2,out v);
 		o.functionName=v;
@@ -87,13 +87,13 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_time(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		pushValue(l,o.time);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_time(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.time=v;
@@ -101,13 +101,13 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_messageOptions(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		pushValue(l,o.messageOptions);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_messageOptions(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		UnityEngine.SendMessageOptions v;
 		checkEnum(l,2,out v);
 		o.messageOptions=v;
@@ -115,29 +115,20 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_animationState(IntPtr l) {
-		UnityEngine.AnimationEvent o = checkSelf<UnityEngine.AnimationEvent>(l);
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		pushValue(l,o.animationState);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimationEvent");
-		addMember(l,get_stringParameter, "get_stringParameter");
-		addMember(l,set_stringParameter, "set_stringParameter");
-		addMember(l,get_floatParameter, "get_floatParameter");
-		addMember(l,set_floatParameter, "set_floatParameter");
-		addMember(l,get_intParameter, "get_intParameter");
-		addMember(l,set_intParameter, "set_intParameter");
-		addMember(l,get_objectReferenceParameter, "get_objectReferenceParameter");
-		addMember(l,set_objectReferenceParameter, "set_objectReferenceParameter");
-		addMember(l,get_functionName, "get_functionName");
-		addMember(l,set_functionName, "set_functionName");
-		addMember(l,get_time, "get_time");
-		addMember(l,set_time, "set_time");
-		addMember(l,get_messageOptions, "get_messageOptions");
-		addMember(l,set_messageOptions, "set_messageOptions");
-		addMember(l,get_animationState, "get_animationState");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AnimationEvent));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"stringParameter",get_stringParameter,set_stringParameter);
+		addMember(l,"floatParameter",get_floatParameter,set_floatParameter);
+		addMember(l,"intParameter",get_intParameter,set_intParameter);
+		addMember(l,"objectReferenceParameter",get_objectReferenceParameter,set_objectReferenceParameter);
+		addMember(l,"functionName",get_functionName,set_functionName);
+		addMember(l,"time",get_time,set_time);
+		addMember(l,"messageOptions",get_messageOptions,set_messageOptions);
+		addMember(l,"animationState",get_animationState,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimationEvent));
 	}
 }

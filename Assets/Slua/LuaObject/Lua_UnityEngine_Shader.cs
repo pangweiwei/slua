@@ -289,19 +289,19 @@ public class Lua_UnityEngine_Shader : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isSupported(IntPtr l) {
-		UnityEngine.Shader o = checkSelf<UnityEngine.Shader>(l);
+		UnityEngine.Shader o = (UnityEngine.Shader)checkSelf(l);
 		pushValue(l,o.isSupported);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_maximumLOD(IntPtr l) {
-		UnityEngine.Shader o = checkSelf<UnityEngine.Shader>(l);
+		UnityEngine.Shader o = (UnityEngine.Shader)checkSelf(l);
 		pushValue(l,o.maximumLOD);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maximumLOD(IntPtr l) {
-		UnityEngine.Shader o = checkSelf<UnityEngine.Shader>(l);
+		UnityEngine.Shader o = (UnityEngine.Shader)checkSelf(l);
 		System.Int32 v;
 		checkType(l,2,out v);
 		o.maximumLOD=v;
@@ -321,34 +321,30 @@ public class Lua_UnityEngine_Shader : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_renderQueue(IntPtr l) {
-		UnityEngine.Shader o = checkSelf<UnityEngine.Shader>(l);
+		UnityEngine.Shader o = (UnityEngine.Shader)checkSelf(l);
 		pushValue(l,o.renderQueue);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Shader");
-		addMember(l,Find, "Find");
-		addMember(l,EnableKeyword, "EnableKeyword");
-		addMember(l,DisableKeyword, "DisableKeyword");
-		addMember(l,SetGlobalColor, "SetGlobalColor");
-		addMember(l,SetGlobalVector, "SetGlobalVector");
-		addMember(l,SetGlobalFloat, "SetGlobalFloat");
-		addMember(l,SetGlobalInt, "SetGlobalInt");
-		addMember(l,SetGlobalTexture, "SetGlobalTexture");
-		addMember(l,SetGlobalMatrix, "SetGlobalMatrix");
-		addMember(l,SetGlobalTexGenMode, "SetGlobalTexGenMode");
-		addMember(l,SetGlobalTextureMatrixName, "SetGlobalTextureMatrixName");
-		addMember(l,SetGlobalBuffer, "SetGlobalBuffer");
-		addMember(l,PropertyToID, "PropertyToID");
-		addMember(l,WarmupAllShaders, "WarmupAllShaders");
-		addMember(l,get_isSupported, "get_isSupported");
-		addMember(l,get_maximumLOD, "get_maximumLOD");
-		addMember(l,set_maximumLOD, "set_maximumLOD");
-		addMember(l,get_globalMaximumLOD, "get_globalMaximumLOD");
-		addMember(l,set_globalMaximumLOD, "set_globalMaximumLOD");
-		addMember(l,get_renderQueue, "get_renderQueue");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Shader),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Find);
+		addMember(l,EnableKeyword);
+		addMember(l,DisableKeyword);
+		addMember(l,SetGlobalColor);
+		addMember(l,SetGlobalVector);
+		addMember(l,SetGlobalFloat);
+		addMember(l,SetGlobalInt);
+		addMember(l,SetGlobalTexture);
+		addMember(l,SetGlobalMatrix);
+		addMember(l,SetGlobalTexGenMode);
+		addMember(l,SetGlobalTextureMatrixName);
+		addMember(l,SetGlobalBuffer);
+		addMember(l,PropertyToID);
+		addMember(l,WarmupAllShaders);
+		addMember(l,"isSupported",get_isSupported,null);
+		addMember(l,"maximumLOD",get_maximumLOD,set_maximumLOD);
+		addMember(l,"globalMaximumLOD",get_globalMaximumLOD,set_globalMaximumLOD);
+		addMember(l,"renderQueue",get_renderQueue,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Shader),typeof(UnityEngine.Object));
 	}
 }

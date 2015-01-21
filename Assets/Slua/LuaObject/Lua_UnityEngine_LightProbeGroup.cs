@@ -17,13 +17,13 @@ public class Lua_UnityEngine_LightProbeGroup : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_probePositions(IntPtr l) {
-		UnityEngine.LightProbeGroup o = checkSelf<UnityEngine.LightProbeGroup>(l);
+		UnityEngine.LightProbeGroup o = (UnityEngine.LightProbeGroup)checkSelf(l);
 		pushValue(l,o.probePositions);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_probePositions(IntPtr l) {
-		UnityEngine.LightProbeGroup o = checkSelf<UnityEngine.LightProbeGroup>(l);
+		UnityEngine.LightProbeGroup o = (UnityEngine.LightProbeGroup)checkSelf(l);
 		UnityEngine.Vector3[] v;
 		checkType(l,2,out v);
 		o.probePositions=v;
@@ -31,10 +31,7 @@ public class Lua_UnityEngine_LightProbeGroup : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LightProbeGroup");
-		addMember(l,get_probePositions, "get_probePositions");
-		addMember(l,set_probePositions, "set_probePositions");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.LightProbeGroup),typeof(UnityEngine.Component));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"probePositions",get_probePositions,set_probePositions);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.LightProbeGroup),typeof(UnityEngine.Component));
 	}
 }

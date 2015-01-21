@@ -12,11 +12,9 @@ public class Lua_UnityEngine_SendMessageOptions : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.SendMessageOptions");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "RequireReceiver");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "DontRequireReceiver");
+		getEnumTable(l,"UnityEngine.SendMessageOptions");
+		addMember(l,0,"RequireReceiver");
+		addMember(l,1,"DontRequireReceiver");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

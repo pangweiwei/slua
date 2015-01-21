@@ -149,30 +149,17 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.RenderSettings");
-		addMember(l,get_fog, "get_fog");
-		addMember(l,set_fog, "set_fog");
-		addMember(l,get_fogMode, "get_fogMode");
-		addMember(l,set_fogMode, "set_fogMode");
-		addMember(l,get_fogColor, "get_fogColor");
-		addMember(l,set_fogColor, "set_fogColor");
-		addMember(l,get_fogDensity, "get_fogDensity");
-		addMember(l,set_fogDensity, "set_fogDensity");
-		addMember(l,get_fogStartDistance, "get_fogStartDistance");
-		addMember(l,set_fogStartDistance, "set_fogStartDistance");
-		addMember(l,get_fogEndDistance, "get_fogEndDistance");
-		addMember(l,set_fogEndDistance, "set_fogEndDistance");
-		addMember(l,get_ambientLight, "get_ambientLight");
-		addMember(l,set_ambientLight, "set_ambientLight");
-		addMember(l,get_haloStrength, "get_haloStrength");
-		addMember(l,set_haloStrength, "set_haloStrength");
-		addMember(l,get_flareStrength, "get_flareStrength");
-		addMember(l,set_flareStrength, "set_flareStrength");
-		addMember(l,get_flareFadeSpeed, "get_flareFadeSpeed");
-		addMember(l,set_flareFadeSpeed, "set_flareFadeSpeed");
-		addMember(l,get_skybox, "get_skybox");
-		addMember(l,set_skybox, "set_skybox");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.RenderSettings),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"fog",get_fog,set_fog);
+		addMember(l,"fogMode",get_fogMode,set_fogMode);
+		addMember(l,"fogColor",get_fogColor,set_fogColor);
+		addMember(l,"fogDensity",get_fogDensity,set_fogDensity);
+		addMember(l,"fogStartDistance",get_fogStartDistance,set_fogStartDistance);
+		addMember(l,"fogEndDistance",get_fogEndDistance,set_fogEndDistance);
+		addMember(l,"ambientLight",get_ambientLight,set_ambientLight);
+		addMember(l,"haloStrength",get_haloStrength,set_haloStrength);
+		addMember(l,"flareStrength",get_flareStrength,set_flareStrength);
+		addMember(l,"flareFadeSpeed",get_flareFadeSpeed,set_flareFadeSpeed);
+		addMember(l,"skybox",get_skybox,set_skybox);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.RenderSettings),typeof(UnityEngine.Object));
 	}
 }

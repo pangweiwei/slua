@@ -68,7 +68,6 @@ namespace SLua
             addMember(l, RemoveListener);
             addMember(l, Invoke);
             createTypeMetatable(l, typeof(LuaUnityEvent_Boolean));
-            LuaDLL.lua_pop(l, 1);
         }
 
         static bool checkType(IntPtr l,int p,out UnityEngine.Events.UnityAction<Boolean> ua) {

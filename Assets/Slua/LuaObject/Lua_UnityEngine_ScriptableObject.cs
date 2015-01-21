@@ -42,9 +42,7 @@ public class Lua_UnityEngine_ScriptableObject : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ScriptableObject");
-		addMember(l,CreateInstance, "CreateInstance");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.ScriptableObject),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,CreateInstance);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.ScriptableObject),typeof(UnityEngine.Object));
 	}
 }

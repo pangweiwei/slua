@@ -60,7 +60,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Contains(IntPtr l) {
 		try{
-			UnityEngine.AssetBundle self=checkSelf<UnityEngine.AssetBundle>(l);
+			UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Boolean ret=self.Contains(a1);
@@ -76,7 +76,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 	static public int Load(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.String))){
-				UnityEngine.AssetBundle self=checkSelf<UnityEngine.AssetBundle>(l);
+				UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				UnityEngine.Object ret=self.Load(a1);
@@ -84,7 +84,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2,typeof(System.String),typeof(System.Type))){
-				UnityEngine.AssetBundle self=checkSelf<UnityEngine.AssetBundle>(l);
+				UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				System.Type a2;
@@ -104,7 +104,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadAsync(IntPtr l) {
 		try{
-			UnityEngine.AssetBundle self=checkSelf<UnityEngine.AssetBundle>(l);
+			UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Type a2;
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 	static public int LoadAll(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.Type))){
-				UnityEngine.AssetBundle self=checkSelf<UnityEngine.AssetBundle>(l);
+				UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 				System.Type a1;
 				checkType(l,2,out a1);
 				UnityEngine.Object[] ret=self.LoadAll(a1);
@@ -130,7 +130,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2)){
-				UnityEngine.AssetBundle self=checkSelf<UnityEngine.AssetBundle>(l);
+				UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 				UnityEngine.Object[] ret=self.LoadAll();
 				pushValue(l,ret);
 				return 1;
@@ -146,7 +146,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Unload(IntPtr l) {
 		try{
-			UnityEngine.AssetBundle self=checkSelf<UnityEngine.AssetBundle>(l);
+			UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 			System.Boolean a1;
 			checkType(l,2,out a1);
 			self.Unload(a1);
@@ -159,23 +159,21 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mainAsset(IntPtr l) {
-		UnityEngine.AssetBundle o = checkSelf<UnityEngine.AssetBundle>(l);
+		UnityEngine.AssetBundle o = (UnityEngine.AssetBundle)checkSelf(l);
 		pushValue(l,o.mainAsset);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AssetBundle");
-		addMember(l,CreateFromMemory, "CreateFromMemory");
-		addMember(l,CreateFromMemoryImmediate, "CreateFromMemoryImmediate");
-		addMember(l,CreateFromFile, "CreateFromFile");
-		addMember(l,Contains, "Contains");
-		addMember(l,Load, "Load");
-		addMember(l,LoadAsync, "LoadAsync");
-		addMember(l,LoadAll, "LoadAll");
-		addMember(l,Unload, "Unload");
-		addMember(l,get_mainAsset, "get_mainAsset");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AssetBundle),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,CreateFromMemory);
+		addMember(l,CreateFromMemoryImmediate);
+		addMember(l,CreateFromFile);
+		addMember(l,Contains);
+		addMember(l,Load);
+		addMember(l,LoadAsync);
+		addMember(l,LoadAll);
+		addMember(l,Unload);
+		addMember(l,"mainAsset",get_mainAsset,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AssetBundle),typeof(UnityEngine.Object));
 	}
 }

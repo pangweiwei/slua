@@ -103,79 +103,77 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_bounds(IntPtr l) {
-		UnityEngine.Sprite o = checkSelf<UnityEngine.Sprite>(l);
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
 		pushValue(l,o.bounds);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rect(IntPtr l) {
-		UnityEngine.Sprite o = checkSelf<UnityEngine.Sprite>(l);
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
 		pushValue(l,o.rect);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_pixelsPerUnit(IntPtr l) {
-		UnityEngine.Sprite o = checkSelf<UnityEngine.Sprite>(l);
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
 		pushValue(l,o.pixelsPerUnit);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_texture(IntPtr l) {
-		UnityEngine.Sprite o = checkSelf<UnityEngine.Sprite>(l);
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
 		pushValue(l,o.texture);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_textureRect(IntPtr l) {
-		UnityEngine.Sprite o = checkSelf<UnityEngine.Sprite>(l);
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
 		pushValue(l,o.textureRect);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_textureRectOffset(IntPtr l) {
-		UnityEngine.Sprite o = checkSelf<UnityEngine.Sprite>(l);
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
 		pushValue(l,o.textureRectOffset);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_packed(IntPtr l) {
-		UnityEngine.Sprite o = checkSelf<UnityEngine.Sprite>(l);
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
 		pushValue(l,o.packed);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_packingMode(IntPtr l) {
-		UnityEngine.Sprite o = checkSelf<UnityEngine.Sprite>(l);
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
 		pushValue(l,o.packingMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_packingRotation(IntPtr l) {
-		UnityEngine.Sprite o = checkSelf<UnityEngine.Sprite>(l);
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
 		pushValue(l,o.packingRotation);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_border(IntPtr l) {
-		UnityEngine.Sprite o = checkSelf<UnityEngine.Sprite>(l);
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
 		pushValue(l,o.border);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Sprite");
-		addMember(l,Create, "Create");
-		addMember(l,get_bounds, "get_bounds");
-		addMember(l,get_rect, "get_rect");
-		addMember(l,get_pixelsPerUnit, "get_pixelsPerUnit");
-		addMember(l,get_texture, "get_texture");
-		addMember(l,get_textureRect, "get_textureRect");
-		addMember(l,get_textureRectOffset, "get_textureRectOffset");
-		addMember(l,get_packed, "get_packed");
-		addMember(l,get_packingMode, "get_packingMode");
-		addMember(l,get_packingRotation, "get_packingRotation");
-		addMember(l,get_border, "get_border");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Sprite),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Create);
+		addMember(l,"bounds",get_bounds,null);
+		addMember(l,"rect",get_rect,null);
+		addMember(l,"pixelsPerUnit",get_pixelsPerUnit,null);
+		addMember(l,"texture",get_texture,null);
+		addMember(l,"textureRect",get_textureRect,null);
+		addMember(l,"textureRectOffset",get_textureRectOffset,null);
+		addMember(l,"packed",get_packed,null);
+		addMember(l,"packingMode",get_packingMode,null);
+		addMember(l,"packingRotation",get_packingRotation,null);
+		addMember(l,"border",get_border,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Sprite),typeof(UnityEngine.Object));
 	}
 }

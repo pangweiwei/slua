@@ -75,10 +75,8 @@ public class Lua_UnityEngine_Security : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Security");
-		addMember(l,LoadAndVerifyAssembly, "LoadAndVerifyAssembly");
-		addMember(l,PrefetchSocketPolicy, "PrefetchSocketPolicy");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Security));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,LoadAndVerifyAssembly);
+		addMember(l,PrefetchSocketPolicy);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Security));
 	}
 }

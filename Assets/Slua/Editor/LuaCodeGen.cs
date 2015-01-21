@@ -190,14 +190,18 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Make custom")]
     static public void Custom()
     {
-        List<Type> exports = new List<Type>{
+        List<Type> cust = new List<Type>{
 			typeof(HelloWorld),
 			// your custom class here
 		};
 
-        foreach (Type t in exports)
+
+        List<Type> exports = new List<Type>();
+
+        foreach (Type t in cust)
         {
-            Generate(t);
+            if (Generate(t))
+                exports.Add(t);
         }
 
         GenerateBind(exports,"LuaCustom");
@@ -251,6 +255,13 @@ class CodeGenerator
 
     public static HashSet<string> InnerTypes = new HashSet<string>();
     HashSet<string> funcname = new HashSet<string>();
+    class PropPair
+    {
+        public string get="null";
+        public string set="null";
+    }
+    Dictionary<string, PropPair> propname = new Dictionary<string, PropPair>();
+
     int indent = 0;
 
     public void GenerateBind(List<Type> list,string name)
@@ -301,6 +312,7 @@ class CodeGenerator
         else
         {
             funcname.Clear();
+            propname.Clear();
 
             StreamWriter file = Begin(t);
             WriteHead(t, file);
@@ -459,7 +471,6 @@ namespace SLua
             addMember(l, RemoveListener);
             addMember(l, Invoke);
             createTypeMetatable(l, typeof(LuaUnityEvent_$GN));
-            LuaDLL.lua_pop(l, 1);
         }
 
         static bool checkType(IntPtr l,int p,out UnityEngine.Events.UnityAction<$GN> ua) {
@@ -503,14 +514,13 @@ namespace SLua
     {
         // Write export function
         Write(file, "static public void reg(IntPtr l) {");
-        Write(file, "getTypeTable(l,\"{0}\");", FullName(t));
+        Write(file, "getEnumTable(l,\"{0}\");", FullName(t));
 
         FieldInfo[] fields = t.GetFields();
         foreach (FieldInfo f in fields)
         {
             if (f.Name == "value__") continue;
-            Write(file, "LuaDLL.lua_pushinteger(l, {0});", (int)f.GetValue(null));
-            Write(file, "LuaDLL.lua_setfield(l, -2, \"{0}\");",f.Name);
+            Write(file, "addMember(l,{0},\"{1}\");",(int)f.GetValue(null),f.Name);
         }
 
         Write(file, "addMember(l,IntToEnum, \"IntToEnum\");" );
@@ -599,19 +609,24 @@ namespace SLua
         Write(file, "getTypeTable(l,\"{0}\");", FullName(t));
         foreach (string f in funcname)
         {
-            Write(file, "addMember(l,{0}, \"{0}\");", f);
+            Write(file, "addMember(l,{0});", f);
         }
-        Write(file, "newType(l, constructor);");
+
+        foreach (string f in propname.Keys)
+        {
+            PropPair pp = propname[f];
+            Write(file, "addMember(l,\"{0}\",{1},{2});", f,pp.get,pp.set);
+        }
         if (t.BaseType != null && !CutBase(t.BaseType))
         {
             if(t.BaseType.Name=="UnityEvent`1")
-                Write(file, "createTypeMetatable(l, typeof({0}),typeof(LuaUnityEvent_{1}));", FullName(t),GenericName(t.BaseType));
+                Write(file, "createTypeMetatable(l,constructor, typeof({0}),typeof(LuaUnityEvent_{1}));", FullName(t), GenericName(t.BaseType));
             else
-                Write(file, "createTypeMetatable(l, typeof({0}),typeof({1}));", FullName(t), FullName(t.BaseType));
+                Write(file, "createTypeMetatable(l,constructor, typeof({0}),typeof({1}));", FullName(t), FullName(t.BaseType));
         }
         else
-            Write(file, "createTypeMetatable(l, typeof({0}));", FullName(t));
-        Write(file, "LuaDLL.lua_pop(l, 1);");
+            Write(file, "createTypeMetatable(l,constructor, typeof({0}));", FullName(t));
+        //Write(file, "LuaDLL.lua_pop(l, 1);");
         Write(file, "}");
     }
 
@@ -638,14 +653,16 @@ namespace SLua
             }
             else
             {
-                Write(file, "{0} o = checkSelf<{0}>(l);", FullName(t));
+                Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
                 WritePushValue(fi.FieldType, file, string.Format("o.{0}", fi.Name));
             }
 
             Write(file, "return 1;");
             Write(file, "}");
+            PropPair pp = new PropPair();
+            pp.get = "get_" + fi.Name;
 
-            funcname.Add("get_" + fi.Name);
+            
 
             if (!fi.IsLiteral && !fi.IsInitOnly)
             {
@@ -660,7 +677,7 @@ namespace SLua
                 }
                 else
                 {
-                    Write(file, "{0} o = checkSelf<{0}>(l);", FullName(t));
+                    Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
                     Write(file, "{0} v;", TypeDecl(fi.FieldType));
                     WriteCheckType(fi.FieldType, file, 2);
                     Write(file, "o.{0}=v;", fi.Name);
@@ -670,8 +687,11 @@ namespace SLua
                     Write(file, "setBack(l,o);");
                 Write(file, "return 0;");
                 Write(file, "}");
-                funcname.Add("set_" + fi.Name);
+
+                pp.set = "set_" + fi.Name;
             }
+
+            propname.Add(fi.Name, pp);
 
         }
 
@@ -682,6 +702,7 @@ namespace SLua
             if (fi.Name == "Item" || IsObsolete(fi) || MemberInFilter(t,fi))
                 continue;
 
+            PropPair pp = new PropPair();
             if (fi.CanRead)
             {
                 WriteFunctionAttr(file);
@@ -697,14 +718,14 @@ namespace SLua
                         WritePushValue(fi.PropertyType, file, string.Format("{0}.{1}", t.FullName, fi.Name));
                     else
                     {
-                        Write(file, "{0} o = checkSelf<{0}>(l);", FullName(t));
+                        Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
                         WritePushValue(fi.PropertyType, file, string.Format("o.{0}", fi.Name));
                     }
 
                     Write(file, "return 1;");
                 }
                 Write(file, "}");
-                funcname.Add("get_" + fi.Name);
+                pp.get = "get_" + fi.Name;
             }
 
             if (fi.CanWrite && fi.GetSetMethod()!=null)
@@ -724,7 +745,7 @@ namespace SLua
                     }
                     else
                     {
-                        Write(file, "{0} o = checkSelf<{0}>(l);", FullName(t));
+                        Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
                         Write(file, "{0} v;", TypeDecl(fi.PropertyType));
                         WriteCheckType(fi.PropertyType, file, 2);
                         Write(file, "o.{0}=v;", fi.Name);
@@ -736,8 +757,10 @@ namespace SLua
                     Write(file, "return 0;");
                 }
                 Write(file, "}");
-                funcname.Add("set_" + fi.Name);
+                pp.set = "set_" + fi.Name;
             }
+
+            propname.Add(fi.Name, pp);
         }
     }
 
@@ -953,7 +976,7 @@ namespace SLua
         int argIndex = 1;
         if (!m.IsStatic)
         {
-            Write(file, "{0} self=checkSelf<{0}>(l);", FullName(t));
+            Write(file, "{0} self=({0})checkSelf(l);", FullName(t));
             argIndex++;
         }
 

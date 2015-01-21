@@ -1,0 +1,56 @@
+
+local UVector3 = UnityEngine.Vector3
+local GameObject = UnityEngine.GameObject
+local Profiler = UnityEngine.Profiler
+local Time = UnityEngine.Time
+
+
+function main()
+	foo()
+end
+
+function foo()
+
+	local cube = GameObject("Script cube")
+
+	local Vector3=Vector3
+	local start = os.clock()
+	Profiler.BeginSample("create 100000 vector3/lua")
+	for i=1,100000 do
+		local a=Vector3(i,i,i) --vector3 is valuetype, implemented in pure lua, see luaValuetype
+		a:Normalize()
+	end
+	Profiler.EndSample()
+	print("create 100000 vector3/lua",os.clock()-start)
+
+	local start = os.clock()
+	Profiler.BeginSample("create 1000000 vector3/lua")
+	for i=1,100000 do
+		local a=UVector3(i,i,i)
+		a:Normalize()
+	end
+	Profiler.EndSample()
+	print("create 100000 vector3/cslua",os.clock()-start)
+
+	-- test in cs
+	local start = os.clock()
+	local h = HelloWorld()
+	h:perf()
+	print("create 100000 vector3/cs",os.clock()-start)
+
+
+	-- properset
+
+	local start = os.clock()
+	HelloWorld.testset(cube)
+	print("properset/cs",os.clock()-start)
+
+	local transform = cube.transform
+	local start = os.clock()
+	for i=1,200000 do
+		local v = UVector3(i,i,i)
+		transform.position=v
+	end
+	print("properset/lua " .. (os.clock() - start));
+
+end

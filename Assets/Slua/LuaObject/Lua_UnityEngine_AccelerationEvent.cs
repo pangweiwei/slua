@@ -10,22 +10,20 @@ public class Lua_UnityEngine_AccelerationEvent : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_acceleration(IntPtr l) {
-		UnityEngine.AccelerationEvent o = checkSelf<UnityEngine.AccelerationEvent>(l);
+		UnityEngine.AccelerationEvent o = (UnityEngine.AccelerationEvent)checkSelf(l);
 		pushValue(l,o.acceleration);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_deltaTime(IntPtr l) {
-		UnityEngine.AccelerationEvent o = checkSelf<UnityEngine.AccelerationEvent>(l);
+		UnityEngine.AccelerationEvent o = (UnityEngine.AccelerationEvent)checkSelf(l);
 		pushValue(l,o.deltaTime);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AccelerationEvent");
-		addMember(l,get_acceleration, "get_acceleration");
-		addMember(l,get_deltaTime, "get_deltaTime");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AccelerationEvent));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"acceleration",get_acceleration,null);
+		addMember(l,"deltaTime",get_deltaTime,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AccelerationEvent));
 	}
 }

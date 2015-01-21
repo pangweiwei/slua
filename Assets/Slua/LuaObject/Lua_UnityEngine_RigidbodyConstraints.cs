@@ -12,27 +12,17 @@ public class Lua_UnityEngine_RigidbodyConstraints : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.RigidbodyConstraints");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "None");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "FreezePositionX");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "FreezePositionY");
-		LuaDLL.lua_pushinteger(l, 8);
-		LuaDLL.lua_setfield(l, -2, "FreezePositionZ");
-		LuaDLL.lua_pushinteger(l, 16);
-		LuaDLL.lua_setfield(l, -2, "FreezeRotationX");
-		LuaDLL.lua_pushinteger(l, 32);
-		LuaDLL.lua_setfield(l, -2, "FreezeRotationY");
-		LuaDLL.lua_pushinteger(l, 64);
-		LuaDLL.lua_setfield(l, -2, "FreezeRotationZ");
-		LuaDLL.lua_pushinteger(l, 14);
-		LuaDLL.lua_setfield(l, -2, "FreezePosition");
-		LuaDLL.lua_pushinteger(l, 112);
-		LuaDLL.lua_setfield(l, -2, "FreezeRotation");
-		LuaDLL.lua_pushinteger(l, 126);
-		LuaDLL.lua_setfield(l, -2, "FreezeAll");
+		getEnumTable(l,"UnityEngine.RigidbodyConstraints");
+		addMember(l,0,"None");
+		addMember(l,2,"FreezePositionX");
+		addMember(l,4,"FreezePositionY");
+		addMember(l,8,"FreezePositionZ");
+		addMember(l,16,"FreezeRotationX");
+		addMember(l,32,"FreezeRotationY");
+		addMember(l,64,"FreezeRotationZ");
+		addMember(l,14,"FreezePosition");
+		addMember(l,112,"FreezeRotation");
+		addMember(l,126,"FreezeAll");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

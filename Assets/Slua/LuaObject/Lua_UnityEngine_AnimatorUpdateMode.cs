@@ -12,13 +12,10 @@ public class Lua_UnityEngine_AnimatorUpdateMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.AnimatorUpdateMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Normal");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "AnimatePhysics");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "UnscaledTime");
+		getEnumTable(l,"UnityEngine.AnimatorUpdateMode");
+		addMember(l,0,"Normal");
+		addMember(l,1,"AnimatePhysics");
+		addMember(l,2,"UnscaledTime");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

@@ -12,15 +12,11 @@ public class Lua_UnityEngine_UI_Image_Type : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.Image.Type");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Simple");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Sliced");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Tiled");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Filled");
+		getEnumTable(l,"UnityEngine.UI.Image.Type");
+		addMember(l,0,"Simple");
+		addMember(l,1,"Sliced");
+		addMember(l,2,"Tiled");
+		addMember(l,3,"Filled");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

@@ -17,22 +17,20 @@ public class Lua_UnityEngine_Avatar : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isValid(IntPtr l) {
-		UnityEngine.Avatar o = checkSelf<UnityEngine.Avatar>(l);
+		UnityEngine.Avatar o = (UnityEngine.Avatar)checkSelf(l);
 		pushValue(l,o.isValid);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isHuman(IntPtr l) {
-		UnityEngine.Avatar o = checkSelf<UnityEngine.Avatar>(l);
+		UnityEngine.Avatar o = (UnityEngine.Avatar)checkSelf(l);
 		pushValue(l,o.isHuman);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Avatar");
-		addMember(l,get_isValid, "get_isValid");
-		addMember(l,get_isHuman, "get_isHuman");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Avatar),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"isValid",get_isValid,null);
+		addMember(l,"isHuman",get_isHuman,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Avatar),typeof(UnityEngine.Object));
 	}
 }

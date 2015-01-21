@@ -21,13 +21,13 @@ public class Lua_UnityEngine_MatchTargetWeightMask : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_positionXYZWeight(IntPtr l) {
-		UnityEngine.MatchTargetWeightMask o = checkSelf<UnityEngine.MatchTargetWeightMask>(l);
+		UnityEngine.MatchTargetWeightMask o = (UnityEngine.MatchTargetWeightMask)checkSelf(l);
 		pushValue(l,o.positionXYZWeight);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_positionXYZWeight(IntPtr l) {
-		UnityEngine.MatchTargetWeightMask o = checkSelf<UnityEngine.MatchTargetWeightMask>(l);
+		UnityEngine.MatchTargetWeightMask o = (UnityEngine.MatchTargetWeightMask)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.positionXYZWeight=v;
@@ -36,13 +36,13 @@ public class Lua_UnityEngine_MatchTargetWeightMask : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rotationWeight(IntPtr l) {
-		UnityEngine.MatchTargetWeightMask o = checkSelf<UnityEngine.MatchTargetWeightMask>(l);
+		UnityEngine.MatchTargetWeightMask o = (UnityEngine.MatchTargetWeightMask)checkSelf(l);
 		pushValue(l,o.rotationWeight);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_rotationWeight(IntPtr l) {
-		UnityEngine.MatchTargetWeightMask o = checkSelf<UnityEngine.MatchTargetWeightMask>(l);
+		UnityEngine.MatchTargetWeightMask o = (UnityEngine.MatchTargetWeightMask)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.rotationWeight=v;
@@ -51,12 +51,8 @@ public class Lua_UnityEngine_MatchTargetWeightMask : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.MatchTargetWeightMask");
-		addMember(l,get_positionXYZWeight, "get_positionXYZWeight");
-		addMember(l,set_positionXYZWeight, "set_positionXYZWeight");
-		addMember(l,get_rotationWeight, "get_rotationWeight");
-		addMember(l,set_rotationWeight, "set_rotationWeight");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.MatchTargetWeightMask));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"positionXYZWeight",get_positionXYZWeight,set_positionXYZWeight);
+		addMember(l,"rotationWeight",get_rotationWeight,set_rotationWeight);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.MatchTargetWeightMask));
 	}
 }

@@ -6,11 +6,11 @@ using LuaInterface;
 namespace SLua
 {
 
-    class LuaSvr : MonoBehaviour
+    class LuaSvr
     {
-        LuaState luaState;
+        public LuaState luaState;
 
-        void Start()
+        public LuaSvr(string main)
         {
             luaState = new LuaState();
 
@@ -22,7 +22,7 @@ namespace SLua
 			LuaCustom.Bind(luaState.handle);
 
             
-            luaState.doFile("main.lua.txt");
+            luaState.doFile(main);
 
             LuaFunction func = (LuaFunction)luaState["main"];
             Profiler.BeginSample("call main");

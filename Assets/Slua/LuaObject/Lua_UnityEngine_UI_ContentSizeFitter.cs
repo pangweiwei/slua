@@ -11,7 +11,7 @@ public class Lua_UnityEngine_UI_ContentSizeFitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetLayoutHorizontal(IntPtr l) {
 		try{
-			UnityEngine.UI.ContentSizeFitter self=checkSelf<UnityEngine.UI.ContentSizeFitter>(l);
+			UnityEngine.UI.ContentSizeFitter self=(UnityEngine.UI.ContentSizeFitter)checkSelf(l);
 			self.SetLayoutHorizontal();
 			return 0;
 		}
@@ -23,7 +23,7 @@ public class Lua_UnityEngine_UI_ContentSizeFitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetLayoutVertical(IntPtr l) {
 		try{
-			UnityEngine.UI.ContentSizeFitter self=checkSelf<UnityEngine.UI.ContentSizeFitter>(l);
+			UnityEngine.UI.ContentSizeFitter self=(UnityEngine.UI.ContentSizeFitter)checkSelf(l);
 			self.SetLayoutVertical();
 			return 0;
 		}
@@ -34,13 +34,13 @@ public class Lua_UnityEngine_UI_ContentSizeFitter : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_horizontalFit(IntPtr l) {
-		UnityEngine.UI.ContentSizeFitter o = checkSelf<UnityEngine.UI.ContentSizeFitter>(l);
+		UnityEngine.UI.ContentSizeFitter o = (UnityEngine.UI.ContentSizeFitter)checkSelf(l);
 		pushValue(l,o.horizontalFit);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_horizontalFit(IntPtr l) {
-		UnityEngine.UI.ContentSizeFitter o = checkSelf<UnityEngine.UI.ContentSizeFitter>(l);
+		UnityEngine.UI.ContentSizeFitter o = (UnityEngine.UI.ContentSizeFitter)checkSelf(l);
 		UnityEngine.UI.ContentSizeFitter.FitMode v;
 		checkEnum(l,2,out v);
 		o.horizontalFit=v;
@@ -48,13 +48,13 @@ public class Lua_UnityEngine_UI_ContentSizeFitter : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_verticalFit(IntPtr l) {
-		UnityEngine.UI.ContentSizeFitter o = checkSelf<UnityEngine.UI.ContentSizeFitter>(l);
+		UnityEngine.UI.ContentSizeFitter o = (UnityEngine.UI.ContentSizeFitter)checkSelf(l);
 		pushValue(l,o.verticalFit);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_verticalFit(IntPtr l) {
-		UnityEngine.UI.ContentSizeFitter o = checkSelf<UnityEngine.UI.ContentSizeFitter>(l);
+		UnityEngine.UI.ContentSizeFitter o = (UnityEngine.UI.ContentSizeFitter)checkSelf(l);
 		UnityEngine.UI.ContentSizeFitter.FitMode v;
 		checkEnum(l,2,out v);
 		o.verticalFit=v;
@@ -62,14 +62,10 @@ public class Lua_UnityEngine_UI_ContentSizeFitter : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.ContentSizeFitter");
-		addMember(l,SetLayoutHorizontal, "SetLayoutHorizontal");
-		addMember(l,SetLayoutVertical, "SetLayoutVertical");
-		addMember(l,get_horizontalFit, "get_horizontalFit");
-		addMember(l,set_horizontalFit, "set_horizontalFit");
-		addMember(l,get_verticalFit, "get_verticalFit");
-		addMember(l,set_verticalFit, "set_verticalFit");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.ContentSizeFitter),typeof(UnityEngine.EventSystems.UIBehaviour));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,SetLayoutHorizontal);
+		addMember(l,SetLayoutVertical);
+		addMember(l,"horizontalFit",get_horizontalFit,set_horizontalFit);
+		addMember(l,"verticalFit",get_verticalFit,set_verticalFit);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.ContentSizeFitter),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

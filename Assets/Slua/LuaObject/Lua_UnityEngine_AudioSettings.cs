@@ -81,16 +81,12 @@ public class Lua_UnityEngine_AudioSettings : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioSettings");
-		addMember(l,SetDSPBufferSize, "SetDSPBufferSize");
-		addMember(l,GetDSPBufferSize, "GetDSPBufferSize");
-		addMember(l,get_driverCaps, "get_driverCaps");
-		addMember(l,get_speakerMode, "get_speakerMode");
-		addMember(l,set_speakerMode, "set_speakerMode");
-		addMember(l,get_dspTime, "get_dspTime");
-		addMember(l,get_outputSampleRate, "get_outputSampleRate");
-		addMember(l,set_outputSampleRate, "set_outputSampleRate");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AudioSettings));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,SetDSPBufferSize);
+		addMember(l,GetDSPBufferSize);
+		addMember(l,"driverCaps",get_driverCaps,null);
+		addMember(l,"speakerMode",get_speakerMode,set_speakerMode);
+		addMember(l,"dspTime",get_dspTime,null);
+		addMember(l,"outputSampleRate",get_outputSampleRate,set_outputSampleRate);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioSettings));
 	}
 }

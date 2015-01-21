@@ -12,13 +12,10 @@ public class Lua_UnityEngine_NPOTSupport : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.NPOTSupport");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "None");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Restricted");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Full");
+		getEnumTable(l,"UnityEngine.NPOTSupport");
+		addMember(l,0,"None");
+		addMember(l,1,"Restricted");
+		addMember(l,2,"Full");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

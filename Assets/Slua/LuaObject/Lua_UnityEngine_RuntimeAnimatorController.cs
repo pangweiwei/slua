@@ -17,8 +17,6 @@ public class Lua_UnityEngine_RuntimeAnimatorController : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.RuntimeAnimatorController");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.RuntimeAnimatorController),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.RuntimeAnimatorController),typeof(UnityEngine.Object));
 	}
 }

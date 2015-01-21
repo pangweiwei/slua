@@ -10,13 +10,13 @@ public class Lua_UnityEngine_UICharInfo : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_cursorPos(IntPtr l) {
-		UnityEngine.UICharInfo o = checkSelf<UnityEngine.UICharInfo>(l);
+		UnityEngine.UICharInfo o = (UnityEngine.UICharInfo)checkSelf(l);
 		pushValue(l,o.cursorPos);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_cursorPos(IntPtr l) {
-		UnityEngine.UICharInfo o = checkSelf<UnityEngine.UICharInfo>(l);
+		UnityEngine.UICharInfo o = (UnityEngine.UICharInfo)checkSelf(l);
 		UnityEngine.Vector2 v;
 		checkType(l,2,out v);
 		o.cursorPos=v;
@@ -25,13 +25,13 @@ public class Lua_UnityEngine_UICharInfo : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_charWidth(IntPtr l) {
-		UnityEngine.UICharInfo o = checkSelf<UnityEngine.UICharInfo>(l);
+		UnityEngine.UICharInfo o = (UnityEngine.UICharInfo)checkSelf(l);
 		pushValue(l,o.charWidth);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_charWidth(IntPtr l) {
-		UnityEngine.UICharInfo o = checkSelf<UnityEngine.UICharInfo>(l);
+		UnityEngine.UICharInfo o = (UnityEngine.UICharInfo)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.charWidth=v;
@@ -40,12 +40,8 @@ public class Lua_UnityEngine_UICharInfo : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UICharInfo");
-		addMember(l,get_cursorPos, "get_cursorPos");
-		addMember(l,set_cursorPos, "set_cursorPos");
-		addMember(l,get_charWidth, "get_charWidth");
-		addMember(l,set_charWidth, "set_charWidth");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UICharInfo));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"cursorPos",get_cursorPos,set_cursorPos);
+		addMember(l,"charWidth",get_charWidth,set_charWidth);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UICharInfo));
 	}
 }

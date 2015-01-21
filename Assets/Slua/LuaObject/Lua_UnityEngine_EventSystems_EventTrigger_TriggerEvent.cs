@@ -18,8 +18,6 @@ public class Lua_UnityEngine_EventSystems_EventTrigger_TriggerEvent : LuaObject 
 	static public void reg(IntPtr l) {
 		LuaUnityEvent_BaseEventData.reg(l);
 		getTypeTable(l,"UnityEngine.EventSystems.EventTrigger.TriggerEvent");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.EventSystems.EventTrigger.TriggerEvent),typeof(LuaUnityEvent_BaseEventData));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.EventTrigger.TriggerEvent),typeof(LuaUnityEvent_BaseEventData));
 	}
 }

@@ -18,7 +18,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindKernel(IntPtr l) {
 		try{
-			UnityEngine.ComputeShader self=checkSelf<UnityEngine.ComputeShader>(l);
+			UnityEngine.ComputeShader self=(UnityEngine.ComputeShader)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Int32 ret=self.FindKernel(a1);
@@ -33,7 +33,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetFloat(IntPtr l) {
 		try{
-			UnityEngine.ComputeShader self=checkSelf<UnityEngine.ComputeShader>(l);
+			UnityEngine.ComputeShader self=(UnityEngine.ComputeShader)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Single a2;
@@ -49,7 +49,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetInt(IntPtr l) {
 		try{
-			UnityEngine.ComputeShader self=checkSelf<UnityEngine.ComputeShader>(l);
+			UnityEngine.ComputeShader self=(UnityEngine.ComputeShader)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Int32 a2;
@@ -65,7 +65,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetVector(IntPtr l) {
 		try{
-			UnityEngine.ComputeShader self=checkSelf<UnityEngine.ComputeShader>(l);
+			UnityEngine.ComputeShader self=(UnityEngine.ComputeShader)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			UnityEngine.Vector4 a2;
@@ -81,7 +81,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetFloats(IntPtr l) {
 		try{
-			UnityEngine.ComputeShader self=checkSelf<UnityEngine.ComputeShader>(l);
+			UnityEngine.ComputeShader self=(UnityEngine.ComputeShader)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Single[] a2;
@@ -97,7 +97,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetInts(IntPtr l) {
 		try{
-			UnityEngine.ComputeShader self=checkSelf<UnityEngine.ComputeShader>(l);
+			UnityEngine.ComputeShader self=(UnityEngine.ComputeShader)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Int32[] a2;
@@ -113,7 +113,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetTexture(IntPtr l) {
 		try{
-			UnityEngine.ComputeShader self=checkSelf<UnityEngine.ComputeShader>(l);
+			UnityEngine.ComputeShader self=(UnityEngine.ComputeShader)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			System.String a2;
@@ -131,7 +131,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetBuffer(IntPtr l) {
 		try{
-			UnityEngine.ComputeShader self=checkSelf<UnityEngine.ComputeShader>(l);
+			UnityEngine.ComputeShader self=(UnityEngine.ComputeShader)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			System.String a2;
@@ -149,7 +149,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Dispatch(IntPtr l) {
 		try{
-			UnityEngine.ComputeShader self=checkSelf<UnityEngine.ComputeShader>(l);
+			UnityEngine.ComputeShader self=(UnityEngine.ComputeShader)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			System.Int32 a2;
@@ -168,17 +168,15 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ComputeShader");
-		addMember(l,FindKernel, "FindKernel");
-		addMember(l,SetFloat, "SetFloat");
-		addMember(l,SetInt, "SetInt");
-		addMember(l,SetVector, "SetVector");
-		addMember(l,SetFloats, "SetFloats");
-		addMember(l,SetInts, "SetInts");
-		addMember(l,SetTexture, "SetTexture");
-		addMember(l,SetBuffer, "SetBuffer");
-		addMember(l,Dispatch, "Dispatch");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.ComputeShader),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,FindKernel);
+		addMember(l,SetFloat);
+		addMember(l,SetInt);
+		addMember(l,SetVector);
+		addMember(l,SetFloats);
+		addMember(l,SetInts);
+		addMember(l,SetTexture);
+		addMember(l,SetBuffer);
+		addMember(l,Dispatch);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.ComputeShader),typeof(UnityEngine.Object));
 	}
 }

@@ -49,10 +49,8 @@ public class Lua_UnityEngine_AvatarBuilder : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AvatarBuilder");
-		addMember(l,BuildHumanAvatar, "BuildHumanAvatar");
-		addMember(l,BuildGenericAvatar, "BuildGenericAvatar");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AvatarBuilder));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,BuildHumanAvatar);
+		addMember(l,BuildGenericAvatar);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AvatarBuilder));
 	}
 }

@@ -12,11 +12,9 @@ public class Lua_UnityEngine_UI_Toggle_ToggleTransition : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.Toggle.ToggleTransition");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "None");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Fade");
+		getEnumTable(l,"UnityEngine.UI.Toggle.ToggleTransition");
+		addMember(l,0,"None");
+		addMember(l,1,"Fade");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

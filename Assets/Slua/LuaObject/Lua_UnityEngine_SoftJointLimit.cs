@@ -10,13 +10,13 @@ public class Lua_UnityEngine_SoftJointLimit : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_limit(IntPtr l) {
-		UnityEngine.SoftJointLimit o = checkSelf<UnityEngine.SoftJointLimit>(l);
+		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
 		pushValue(l,o.limit);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_limit(IntPtr l) {
-		UnityEngine.SoftJointLimit o = checkSelf<UnityEngine.SoftJointLimit>(l);
+		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.limit=v;
@@ -25,13 +25,13 @@ public class Lua_UnityEngine_SoftJointLimit : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_spring(IntPtr l) {
-		UnityEngine.SoftJointLimit o = checkSelf<UnityEngine.SoftJointLimit>(l);
+		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
 		pushValue(l,o.spring);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_spring(IntPtr l) {
-		UnityEngine.SoftJointLimit o = checkSelf<UnityEngine.SoftJointLimit>(l);
+		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.spring=v;
@@ -40,13 +40,13 @@ public class Lua_UnityEngine_SoftJointLimit : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_damper(IntPtr l) {
-		UnityEngine.SoftJointLimit o = checkSelf<UnityEngine.SoftJointLimit>(l);
+		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
 		pushValue(l,o.damper);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_damper(IntPtr l) {
-		UnityEngine.SoftJointLimit o = checkSelf<UnityEngine.SoftJointLimit>(l);
+		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.damper=v;
@@ -55,13 +55,13 @@ public class Lua_UnityEngine_SoftJointLimit : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_bounciness(IntPtr l) {
-		UnityEngine.SoftJointLimit o = checkSelf<UnityEngine.SoftJointLimit>(l);
+		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
 		pushValue(l,o.bounciness);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_bounciness(IntPtr l) {
-		UnityEngine.SoftJointLimit o = checkSelf<UnityEngine.SoftJointLimit>(l);
+		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.bounciness=v;
@@ -70,16 +70,10 @@ public class Lua_UnityEngine_SoftJointLimit : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SoftJointLimit");
-		addMember(l,get_limit, "get_limit");
-		addMember(l,set_limit, "set_limit");
-		addMember(l,get_spring, "get_spring");
-		addMember(l,set_spring, "set_spring");
-		addMember(l,get_damper, "get_damper");
-		addMember(l,set_damper, "set_damper");
-		addMember(l,get_bounciness, "get_bounciness");
-		addMember(l,set_bounciness, "set_bounciness");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.SoftJointLimit));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"limit",get_limit,set_limit);
+		addMember(l,"spring",get_spring,set_spring);
+		addMember(l,"damper",get_damper,set_damper);
+		addMember(l,"bounciness",get_bounciness,set_bounciness);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.SoftJointLimit));
 	}
 }

@@ -12,15 +12,11 @@ public class Lua_UnityEngine_SkinQuality : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.SkinQuality");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Auto");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Bone1");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Bone2");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Bone4");
+		getEnumTable(l,"UnityEngine.SkinQuality");
+		addMember(l,0,"Auto");
+		addMember(l,1,"Bone1");
+		addMember(l,2,"Bone2");
+		addMember(l,4,"Bone4");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

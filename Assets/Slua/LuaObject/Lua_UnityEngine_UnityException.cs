@@ -33,8 +33,6 @@ public class Lua_UnityEngine_UnityException : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UnityException");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UnityException));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UnityException));
 	}
 }

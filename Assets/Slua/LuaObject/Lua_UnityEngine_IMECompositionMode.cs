@@ -12,13 +12,10 @@ public class Lua_UnityEngine_IMECompositionMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.IMECompositionMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Auto");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "On");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Off");
+		getEnumTable(l,"UnityEngine.IMECompositionMode");
+		addMember(l,0,"Auto");
+		addMember(l,1,"On");
+		addMember(l,2,"Off");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

@@ -12,27 +12,17 @@ public class Lua_UnityEngine_SpriteAlignment : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.SpriteAlignment");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Center");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "TopLeft");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "TopCenter");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "TopRight");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "LeftCenter");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "RightCenter");
-		LuaDLL.lua_pushinteger(l, 6);
-		LuaDLL.lua_setfield(l, -2, "BottomLeft");
-		LuaDLL.lua_pushinteger(l, 7);
-		LuaDLL.lua_setfield(l, -2, "BottomCenter");
-		LuaDLL.lua_pushinteger(l, 8);
-		LuaDLL.lua_setfield(l, -2, "BottomRight");
-		LuaDLL.lua_pushinteger(l, 9);
-		LuaDLL.lua_setfield(l, -2, "Custom");
+		getEnumTable(l,"UnityEngine.SpriteAlignment");
+		addMember(l,0,"Center");
+		addMember(l,1,"TopLeft");
+		addMember(l,2,"TopCenter");
+		addMember(l,3,"TopRight");
+		addMember(l,4,"LeftCenter");
+		addMember(l,5,"RightCenter");
+		addMember(l,6,"BottomLeft");
+		addMember(l,7,"BottomCenter");
+		addMember(l,8,"BottomRight");
+		addMember(l,9,"Custom");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

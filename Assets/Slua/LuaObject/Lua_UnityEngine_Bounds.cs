@@ -22,7 +22,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetMinMax(IntPtr l) {
 		try{
-			UnityEngine.Bounds self=checkSelf<UnityEngine.Bounds>(l);
+			UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 			UnityEngine.Vector3 a1;
 			checkType(l,2,out a1);
 			UnityEngine.Vector3 a2;
@@ -40,7 +40,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	static public int Encapsulate(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(UnityEngine.Vector3))){
-				UnityEngine.Bounds self=checkSelf<UnityEngine.Bounds>(l);
+				UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
 				self.Encapsulate(a1);
@@ -48,7 +48,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 				return 0;
 			}
 			else if(matchType(l,2,typeof(UnityEngine.Bounds))){
-				UnityEngine.Bounds self=checkSelf<UnityEngine.Bounds>(l);
+				UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 				UnityEngine.Bounds a1;
 				checkType(l,2,out a1);
 				self.Encapsulate(a1);
@@ -67,7 +67,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	static public int Expand(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.Single))){
-				UnityEngine.Bounds self=checkSelf<UnityEngine.Bounds>(l);
+				UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
 				self.Expand(a1);
@@ -75,7 +75,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 				return 0;
 			}
 			else if(matchType(l,2,typeof(UnityEngine.Vector3))){
-				UnityEngine.Bounds self=checkSelf<UnityEngine.Bounds>(l);
+				UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
 				self.Expand(a1);
@@ -93,7 +93,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Intersects(IntPtr l) {
 		try{
-			UnityEngine.Bounds self=checkSelf<UnityEngine.Bounds>(l);
+			UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 			UnityEngine.Bounds a1;
 			checkType(l,2,out a1);
 			System.Boolean ret=self.Intersects(a1);
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Contains(IntPtr l) {
 		try{
-			UnityEngine.Bounds self=checkSelf<UnityEngine.Bounds>(l);
+			UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 			UnityEngine.Vector3 a1;
 			checkType(l,2,out a1);
 			System.Boolean ret=self.Contains(a1);
@@ -123,7 +123,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SqrDistance(IntPtr l) {
 		try{
-			UnityEngine.Bounds self=checkSelf<UnityEngine.Bounds>(l);
+			UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 			UnityEngine.Vector3 a1;
 			checkType(l,2,out a1);
 			System.Single ret=self.SqrDistance(a1);
@@ -139,7 +139,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	static public int IntersectRay(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(UnityEngine.Ray))){
-				UnityEngine.Bounds self=checkSelf<UnityEngine.Bounds>(l);
+				UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 				UnityEngine.Ray a1;
 				checkType(l,2,out a1);
 				System.Boolean ret=self.IntersectRay(a1);
@@ -147,7 +147,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2,typeof(UnityEngine.Ray),typeof(System.Single))){
-				UnityEngine.Bounds self=checkSelf<UnityEngine.Bounds>(l);
+				UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 				UnityEngine.Ray a1;
 				checkType(l,2,out a1);
 				System.Single a2;
@@ -198,13 +198,13 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_center(IntPtr l) {
-		UnityEngine.Bounds o = checkSelf<UnityEngine.Bounds>(l);
+		UnityEngine.Bounds o = (UnityEngine.Bounds)checkSelf(l);
 		pushValue(l,o.center);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_center(IntPtr l) {
-		UnityEngine.Bounds o = checkSelf<UnityEngine.Bounds>(l);
+		UnityEngine.Bounds o = (UnityEngine.Bounds)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.center=v;
@@ -213,13 +213,13 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_size(IntPtr l) {
-		UnityEngine.Bounds o = checkSelf<UnityEngine.Bounds>(l);
+		UnityEngine.Bounds o = (UnityEngine.Bounds)checkSelf(l);
 		pushValue(l,o.size);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_size(IntPtr l) {
-		UnityEngine.Bounds o = checkSelf<UnityEngine.Bounds>(l);
+		UnityEngine.Bounds o = (UnityEngine.Bounds)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.size=v;
@@ -228,13 +228,13 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_extents(IntPtr l) {
-		UnityEngine.Bounds o = checkSelf<UnityEngine.Bounds>(l);
+		UnityEngine.Bounds o = (UnityEngine.Bounds)checkSelf(l);
 		pushValue(l,o.extents);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_extents(IntPtr l) {
-		UnityEngine.Bounds o = checkSelf<UnityEngine.Bounds>(l);
+		UnityEngine.Bounds o = (UnityEngine.Bounds)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.extents=v;
@@ -243,13 +243,13 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_min(IntPtr l) {
-		UnityEngine.Bounds o = checkSelf<UnityEngine.Bounds>(l);
+		UnityEngine.Bounds o = (UnityEngine.Bounds)checkSelf(l);
 		pushValue(l,o.min);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_min(IntPtr l) {
-		UnityEngine.Bounds o = checkSelf<UnityEngine.Bounds>(l);
+		UnityEngine.Bounds o = (UnityEngine.Bounds)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.min=v;
@@ -258,13 +258,13 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_max(IntPtr l) {
-		UnityEngine.Bounds o = checkSelf<UnityEngine.Bounds>(l);
+		UnityEngine.Bounds o = (UnityEngine.Bounds)checkSelf(l);
 		pushValue(l,o.max);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_max(IntPtr l) {
-		UnityEngine.Bounds o = checkSelf<UnityEngine.Bounds>(l);
+		UnityEngine.Bounds o = (UnityEngine.Bounds)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.max=v;
@@ -273,27 +273,20 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Bounds");
-		addMember(l,SetMinMax, "SetMinMax");
-		addMember(l,Encapsulate, "Encapsulate");
-		addMember(l,Expand, "Expand");
-		addMember(l,Intersects, "Intersects");
-		addMember(l,Contains, "Contains");
-		addMember(l,SqrDistance, "SqrDistance");
-		addMember(l,IntersectRay, "IntersectRay");
-		addMember(l,op_Equality, "op_Equality");
-		addMember(l,op_Inequality, "op_Inequality");
-		addMember(l,get_center, "get_center");
-		addMember(l,set_center, "set_center");
-		addMember(l,get_size, "get_size");
-		addMember(l,set_size, "set_size");
-		addMember(l,get_extents, "get_extents");
-		addMember(l,set_extents, "set_extents");
-		addMember(l,get_min, "get_min");
-		addMember(l,set_min, "set_min");
-		addMember(l,get_max, "get_max");
-		addMember(l,set_max, "set_max");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Bounds));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,SetMinMax);
+		addMember(l,Encapsulate);
+		addMember(l,Expand);
+		addMember(l,Intersects);
+		addMember(l,Contains);
+		addMember(l,SqrDistance);
+		addMember(l,IntersectRay);
+		addMember(l,op_Equality);
+		addMember(l,op_Inequality);
+		addMember(l,"center",get_center,set_center);
+		addMember(l,"size",get_size,set_size);
+		addMember(l,"extents",get_extents,set_extents);
+		addMember(l,"min",get_min,set_min);
+		addMember(l,"max",get_max,set_max);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Bounds));
 	}
 }

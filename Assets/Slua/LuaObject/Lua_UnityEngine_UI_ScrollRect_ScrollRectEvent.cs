@@ -18,8 +18,6 @@ public class Lua_UnityEngine_UI_ScrollRect_ScrollRectEvent : LuaObject {
 	static public void reg(IntPtr l) {
 		LuaUnityEvent_Vector2.reg(l);
 		getTypeTable(l,"UnityEngine.UI.ScrollRect.ScrollRectEvent");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.ScrollRect.ScrollRectEvent),typeof(LuaUnityEvent_Vector2));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.ScrollRect.ScrollRectEvent),typeof(LuaUnityEvent_Vector2));
 	}
 }

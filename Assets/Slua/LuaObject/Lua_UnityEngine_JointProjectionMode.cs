@@ -12,13 +12,10 @@ public class Lua_UnityEngine_JointProjectionMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.JointProjectionMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "None");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "PositionAndRotation");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "PositionOnly");
+		getEnumTable(l,"UnityEngine.JointProjectionMode");
+		addMember(l,0,"None");
+		addMember(l,1,"PositionAndRotation");
+		addMember(l,2,"PositionOnly");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

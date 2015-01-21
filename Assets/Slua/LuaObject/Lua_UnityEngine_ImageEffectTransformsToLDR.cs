@@ -17,8 +17,6 @@ public class Lua_UnityEngine_ImageEffectTransformsToLDR : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ImageEffectTransformsToLDR");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.ImageEffectTransformsToLDR));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.ImageEffectTransformsToLDR));
 	}
 }

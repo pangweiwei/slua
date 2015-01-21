@@ -12,33 +12,20 @@ public class Lua_UnityEngine_AudioType : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.AudioType");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "UNKNOWN");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "ACC");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "AIFF");
-		LuaDLL.lua_pushinteger(l, 10);
-		LuaDLL.lua_setfield(l, -2, "IT");
-		LuaDLL.lua_pushinteger(l, 12);
-		LuaDLL.lua_setfield(l, -2, "MOD");
-		LuaDLL.lua_pushinteger(l, 13);
-		LuaDLL.lua_setfield(l, -2, "MPEG");
-		LuaDLL.lua_pushinteger(l, 14);
-		LuaDLL.lua_setfield(l, -2, "OGGVORBIS");
-		LuaDLL.lua_pushinteger(l, 17);
-		LuaDLL.lua_setfield(l, -2, "S3M");
-		LuaDLL.lua_pushinteger(l, 20);
-		LuaDLL.lua_setfield(l, -2, "WAV");
-		LuaDLL.lua_pushinteger(l, 21);
-		LuaDLL.lua_setfield(l, -2, "XM");
-		LuaDLL.lua_pushinteger(l, 22);
-		LuaDLL.lua_setfield(l, -2, "XMA");
-		LuaDLL.lua_pushinteger(l, 23);
-		LuaDLL.lua_setfield(l, -2, "VAG");
-		LuaDLL.lua_pushinteger(l, 24);
-		LuaDLL.lua_setfield(l, -2, "AUDIOQUEUE");
+		getEnumTable(l,"UnityEngine.AudioType");
+		addMember(l,0,"UNKNOWN");
+		addMember(l,1,"ACC");
+		addMember(l,2,"AIFF");
+		addMember(l,10,"IT");
+		addMember(l,12,"MOD");
+		addMember(l,13,"MPEG");
+		addMember(l,14,"OGGVORBIS");
+		addMember(l,17,"S3M");
+		addMember(l,20,"WAV");
+		addMember(l,21,"XM");
+		addMember(l,22,"XMA");
+		addMember(l,23,"VAG");
+		addMember(l,24,"AUDIOQUEUE");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

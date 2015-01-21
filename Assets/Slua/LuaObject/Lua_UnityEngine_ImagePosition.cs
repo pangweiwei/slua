@@ -12,15 +12,11 @@ public class Lua_UnityEngine_ImagePosition : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.ImagePosition");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "ImageLeft");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "ImageAbove");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "ImageOnly");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "TextOnly");
+		getEnumTable(l,"UnityEngine.ImagePosition");
+		addMember(l,0,"ImageLeft");
+		addMember(l,1,"ImageAbove");
+		addMember(l,2,"ImageOnly");
+		addMember(l,3,"TextOnly");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

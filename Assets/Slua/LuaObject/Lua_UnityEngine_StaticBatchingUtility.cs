@@ -42,9 +42,7 @@ public class Lua_UnityEngine_StaticBatchingUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.StaticBatchingUtility");
-		addMember(l,Combine, "Combine");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.StaticBatchingUtility));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Combine);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.StaticBatchingUtility));
 	}
 }

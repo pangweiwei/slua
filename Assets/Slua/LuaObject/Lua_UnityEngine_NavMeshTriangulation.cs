@@ -10,13 +10,13 @@ public class Lua_UnityEngine_NavMeshTriangulation : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_vertices(IntPtr l) {
-		UnityEngine.NavMeshTriangulation o = checkSelf<UnityEngine.NavMeshTriangulation>(l);
+		UnityEngine.NavMeshTriangulation o = (UnityEngine.NavMeshTriangulation)checkSelf(l);
 		pushValue(l,o.vertices);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_vertices(IntPtr l) {
-		UnityEngine.NavMeshTriangulation o = checkSelf<UnityEngine.NavMeshTriangulation>(l);
+		UnityEngine.NavMeshTriangulation o = (UnityEngine.NavMeshTriangulation)checkSelf(l);
 		UnityEngine.Vector3[] v;
 		checkType(l,2,out v);
 		o.vertices=v;
@@ -25,13 +25,13 @@ public class Lua_UnityEngine_NavMeshTriangulation : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_indices(IntPtr l) {
-		UnityEngine.NavMeshTriangulation o = checkSelf<UnityEngine.NavMeshTriangulation>(l);
+		UnityEngine.NavMeshTriangulation o = (UnityEngine.NavMeshTriangulation)checkSelf(l);
 		pushValue(l,o.indices);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_indices(IntPtr l) {
-		UnityEngine.NavMeshTriangulation o = checkSelf<UnityEngine.NavMeshTriangulation>(l);
+		UnityEngine.NavMeshTriangulation o = (UnityEngine.NavMeshTriangulation)checkSelf(l);
 		System.Int32[] v;
 		checkType(l,2,out v);
 		o.indices=v;
@@ -40,13 +40,13 @@ public class Lua_UnityEngine_NavMeshTriangulation : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_layers(IntPtr l) {
-		UnityEngine.NavMeshTriangulation o = checkSelf<UnityEngine.NavMeshTriangulation>(l);
+		UnityEngine.NavMeshTriangulation o = (UnityEngine.NavMeshTriangulation)checkSelf(l);
 		pushValue(l,o.layers);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_layers(IntPtr l) {
-		UnityEngine.NavMeshTriangulation o = checkSelf<UnityEngine.NavMeshTriangulation>(l);
+		UnityEngine.NavMeshTriangulation o = (UnityEngine.NavMeshTriangulation)checkSelf(l);
 		System.Int32[] v;
 		checkType(l,2,out v);
 		o.layers=v;
@@ -55,14 +55,9 @@ public class Lua_UnityEngine_NavMeshTriangulation : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.NavMeshTriangulation");
-		addMember(l,get_vertices, "get_vertices");
-		addMember(l,set_vertices, "set_vertices");
-		addMember(l,get_indices, "get_indices");
-		addMember(l,set_indices, "set_indices");
-		addMember(l,get_layers, "get_layers");
-		addMember(l,set_layers, "set_layers");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.NavMeshTriangulation));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"vertices",get_vertices,set_vertices);
+		addMember(l,"indices",get_indices,set_indices);
+		addMember(l,"layers",get_layers,set_layers);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.NavMeshTriangulation));
 	}
 }

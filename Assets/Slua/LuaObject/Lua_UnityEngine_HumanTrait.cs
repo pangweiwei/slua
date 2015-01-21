@@ -114,18 +114,16 @@ public class Lua_UnityEngine_HumanTrait : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.HumanTrait");
-		addMember(l,MuscleFromBone, "MuscleFromBone");
-		addMember(l,BoneFromMuscle, "BoneFromMuscle");
-		addMember(l,RequiredBone, "RequiredBone");
-		addMember(l,GetMuscleDefaultMin, "GetMuscleDefaultMin");
-		addMember(l,GetMuscleDefaultMax, "GetMuscleDefaultMax");
-		addMember(l,get_MuscleCount, "get_MuscleCount");
-		addMember(l,get_MuscleName, "get_MuscleName");
-		addMember(l,get_BoneCount, "get_BoneCount");
-		addMember(l,get_BoneName, "get_BoneName");
-		addMember(l,get_RequiredBoneCount, "get_RequiredBoneCount");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.HumanTrait),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,MuscleFromBone);
+		addMember(l,BoneFromMuscle);
+		addMember(l,RequiredBone);
+		addMember(l,GetMuscleDefaultMin);
+		addMember(l,GetMuscleDefaultMax);
+		addMember(l,"MuscleCount",get_MuscleCount,null);
+		addMember(l,"MuscleName",get_MuscleName,null);
+		addMember(l,"BoneCount",get_BoneCount,null);
+		addMember(l,"BoneName",get_BoneName,null);
+		addMember(l,"RequiredBoneCount",get_RequiredBoneCount,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.HumanTrait),typeof(UnityEngine.Object));
 	}
 }

@@ -12,11 +12,9 @@ public class Lua_UnityEngine_CollisionDetectionMode2D : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.CollisionDetectionMode2D");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "None");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Continuous");
+		getEnumTable(l,"UnityEngine.CollisionDetectionMode2D");
+		addMember(l,0,"None");
+		addMember(l,1,"Continuous");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

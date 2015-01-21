@@ -12,19 +12,13 @@ public class Lua_UnityEngine_UI_CanvasUpdate : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.CanvasUpdate");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Prelayout");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Layout");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "PostLayout");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "PreRender");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "LatePreRender");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "MaxUpdateValue");
+		getEnumTable(l,"UnityEngine.UI.CanvasUpdate");
+		addMember(l,0,"Prelayout");
+		addMember(l,1,"Layout");
+		addMember(l,2,"PostLayout");
+		addMember(l,3,"PreRender");
+		addMember(l,4,"LatePreRender");
+		addMember(l,5,"MaxUpdateValue");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

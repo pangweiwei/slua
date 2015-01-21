@@ -12,21 +12,14 @@ public class Lua_UnityEngine_ProceduralOutputType : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.ProceduralOutputType");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Unknown");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Diffuse");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Normal");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Height");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Emissive");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "Specular");
-		LuaDLL.lua_pushinteger(l, 6);
-		LuaDLL.lua_setfield(l, -2, "Opacity");
+		getEnumTable(l,"UnityEngine.ProceduralOutputType");
+		addMember(l,0,"Unknown");
+		addMember(l,1,"Diffuse");
+		addMember(l,2,"Normal");
+		addMember(l,3,"Height");
+		addMember(l,4,"Emissive");
+		addMember(l,5,"Specular");
+		addMember(l,6,"Opacity");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

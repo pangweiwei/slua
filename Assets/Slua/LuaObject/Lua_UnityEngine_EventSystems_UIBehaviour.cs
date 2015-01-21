@@ -11,7 +11,7 @@ public class Lua_UnityEngine_EventSystems_UIBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsActive(IntPtr l) {
 		try{
-			UnityEngine.EventSystems.UIBehaviour self=checkSelf<UnityEngine.EventSystems.UIBehaviour>(l);
+			UnityEngine.EventSystems.UIBehaviour self=(UnityEngine.EventSystems.UIBehaviour)checkSelf(l);
 			System.Boolean ret=self.IsActive();
 			pushValue(l,ret);
 			return 1;
@@ -24,7 +24,7 @@ public class Lua_UnityEngine_EventSystems_UIBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsDestroyed(IntPtr l) {
 		try{
-			UnityEngine.EventSystems.UIBehaviour self=checkSelf<UnityEngine.EventSystems.UIBehaviour>(l);
+			UnityEngine.EventSystems.UIBehaviour self=(UnityEngine.EventSystems.UIBehaviour)checkSelf(l);
 			System.Boolean ret=self.IsDestroyed();
 			pushValue(l,ret);
 			return 1;
@@ -36,10 +36,8 @@ public class Lua_UnityEngine_EventSystems_UIBehaviour : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.UIBehaviour");
-		addMember(l,IsActive, "IsActive");
-		addMember(l,IsDestroyed, "IsDestroyed");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.EventSystems.UIBehaviour),typeof(UnityEngine.MonoBehaviour));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,IsActive);
+		addMember(l,IsDestroyed);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.UIBehaviour),typeof(UnityEngine.MonoBehaviour));
 	}
 }

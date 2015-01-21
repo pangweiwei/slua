@@ -12,17 +12,12 @@ public class Lua_UnityEngine_CameraClearFlags : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.CameraClearFlags");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Skybox");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Color");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "SolidColor");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Depth");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Nothing");
+		getEnumTable(l,"UnityEngine.CameraClearFlags");
+		addMember(l,1,"Skybox");
+		addMember(l,2,"Color");
+		addMember(l,2,"SolidColor");
+		addMember(l,3,"Depth");
+		addMember(l,4,"Nothing");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

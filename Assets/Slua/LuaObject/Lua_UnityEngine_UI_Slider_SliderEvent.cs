@@ -18,8 +18,6 @@ public class Lua_UnityEngine_UI_Slider_SliderEvent : LuaObject {
 	static public void reg(IntPtr l) {
 		LuaUnityEvent_Single.reg(l);
 		getTypeTable(l,"UnityEngine.UI.Slider.SliderEvent");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.Slider.SliderEvent));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Slider.SliderEvent));
 	}
 }

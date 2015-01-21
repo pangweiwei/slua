@@ -17,13 +17,13 @@ public class Lua_UnityEngine_SphereCollider : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_center(IntPtr l) {
-		UnityEngine.SphereCollider o = checkSelf<UnityEngine.SphereCollider>(l);
+		UnityEngine.SphereCollider o = (UnityEngine.SphereCollider)checkSelf(l);
 		pushValue(l,o.center);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_center(IntPtr l) {
-		UnityEngine.SphereCollider o = checkSelf<UnityEngine.SphereCollider>(l);
+		UnityEngine.SphereCollider o = (UnityEngine.SphereCollider)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.center=v;
@@ -31,13 +31,13 @@ public class Lua_UnityEngine_SphereCollider : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_radius(IntPtr l) {
-		UnityEngine.SphereCollider o = checkSelf<UnityEngine.SphereCollider>(l);
+		UnityEngine.SphereCollider o = (UnityEngine.SphereCollider)checkSelf(l);
 		pushValue(l,o.radius);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_radius(IntPtr l) {
-		UnityEngine.SphereCollider o = checkSelf<UnityEngine.SphereCollider>(l);
+		UnityEngine.SphereCollider o = (UnityEngine.SphereCollider)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.radius=v;
@@ -45,12 +45,8 @@ public class Lua_UnityEngine_SphereCollider : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SphereCollider");
-		addMember(l,get_center, "get_center");
-		addMember(l,set_center, "set_center");
-		addMember(l,get_radius, "get_radius");
-		addMember(l,set_radius, "set_radius");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.SphereCollider),typeof(UnityEngine.Collider));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"center",get_center,set_center);
+		addMember(l,"radius",get_radius,set_radius);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.SphereCollider),typeof(UnityEngine.Collider));
 	}
 }

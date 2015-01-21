@@ -20,7 +20,7 @@ public class Lua_UnityEngine_Ping : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int DestroyPing(IntPtr l) {
 		try{
-			UnityEngine.Ping self=checkSelf<UnityEngine.Ping>(l);
+			UnityEngine.Ping self=(UnityEngine.Ping)checkSelf(l);
 			self.DestroyPing();
 			return 0;
 		}
@@ -31,30 +31,28 @@ public class Lua_UnityEngine_Ping : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isDone(IntPtr l) {
-		UnityEngine.Ping o = checkSelf<UnityEngine.Ping>(l);
+		UnityEngine.Ping o = (UnityEngine.Ping)checkSelf(l);
 		pushValue(l,o.isDone);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_time(IntPtr l) {
-		UnityEngine.Ping o = checkSelf<UnityEngine.Ping>(l);
+		UnityEngine.Ping o = (UnityEngine.Ping)checkSelf(l);
 		pushValue(l,o.time);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_ip(IntPtr l) {
-		UnityEngine.Ping o = checkSelf<UnityEngine.Ping>(l);
+		UnityEngine.Ping o = (UnityEngine.Ping)checkSelf(l);
 		pushValue(l,o.ip);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Ping");
-		addMember(l,DestroyPing, "DestroyPing");
-		addMember(l,get_isDone, "get_isDone");
-		addMember(l,get_time, "get_time");
-		addMember(l,get_ip, "get_ip");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Ping));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,DestroyPing);
+		addMember(l,"isDone",get_isDone,null);
+		addMember(l,"time",get_time,null);
+		addMember(l,"ip",get_ip,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Ping));
 	}
 }

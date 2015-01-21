@@ -17,13 +17,13 @@ public class Lua_UnityEngine_MeshCollider : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_sharedMesh(IntPtr l) {
-		UnityEngine.MeshCollider o = checkSelf<UnityEngine.MeshCollider>(l);
+		UnityEngine.MeshCollider o = (UnityEngine.MeshCollider)checkSelf(l);
 		pushValue(l,o.sharedMesh);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sharedMesh(IntPtr l) {
-		UnityEngine.MeshCollider o = checkSelf<UnityEngine.MeshCollider>(l);
+		UnityEngine.MeshCollider o = (UnityEngine.MeshCollider)checkSelf(l);
 		UnityEngine.Mesh v;
 		checkType(l,2,out v);
 		o.sharedMesh=v;
@@ -31,13 +31,13 @@ public class Lua_UnityEngine_MeshCollider : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_convex(IntPtr l) {
-		UnityEngine.MeshCollider o = checkSelf<UnityEngine.MeshCollider>(l);
+		UnityEngine.MeshCollider o = (UnityEngine.MeshCollider)checkSelf(l);
 		pushValue(l,o.convex);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_convex(IntPtr l) {
-		UnityEngine.MeshCollider o = checkSelf<UnityEngine.MeshCollider>(l);
+		UnityEngine.MeshCollider o = (UnityEngine.MeshCollider)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.convex=v;
@@ -45,13 +45,13 @@ public class Lua_UnityEngine_MeshCollider : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_smoothSphereCollisions(IntPtr l) {
-		UnityEngine.MeshCollider o = checkSelf<UnityEngine.MeshCollider>(l);
+		UnityEngine.MeshCollider o = (UnityEngine.MeshCollider)checkSelf(l);
 		pushValue(l,o.smoothSphereCollisions);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_smoothSphereCollisions(IntPtr l) {
-		UnityEngine.MeshCollider o = checkSelf<UnityEngine.MeshCollider>(l);
+		UnityEngine.MeshCollider o = (UnityEngine.MeshCollider)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.smoothSphereCollisions=v;
@@ -59,14 +59,9 @@ public class Lua_UnityEngine_MeshCollider : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.MeshCollider");
-		addMember(l,get_sharedMesh, "get_sharedMesh");
-		addMember(l,set_sharedMesh, "set_sharedMesh");
-		addMember(l,get_convex, "get_convex");
-		addMember(l,set_convex, "set_convex");
-		addMember(l,get_smoothSphereCollisions, "get_smoothSphereCollisions");
-		addMember(l,set_smoothSphereCollisions, "set_smoothSphereCollisions");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.MeshCollider),typeof(UnityEngine.Collider));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"sharedMesh",get_sharedMesh,set_sharedMesh);
+		addMember(l,"convex",get_convex,set_convex);
+		addMember(l,"smoothSphereCollisions",get_smoothSphereCollisions,set_smoothSphereCollisions);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.MeshCollider),typeof(UnityEngine.Collider));
 	}
 }

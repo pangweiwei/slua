@@ -12,25 +12,16 @@ public class Lua_UnityEngine_TextAnchor : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.TextAnchor");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "UpperLeft");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "UpperCenter");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "UpperRight");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "MiddleLeft");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "MiddleCenter");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "MiddleRight");
-		LuaDLL.lua_pushinteger(l, 6);
-		LuaDLL.lua_setfield(l, -2, "LowerLeft");
-		LuaDLL.lua_pushinteger(l, 7);
-		LuaDLL.lua_setfield(l, -2, "LowerCenter");
-		LuaDLL.lua_pushinteger(l, 8);
-		LuaDLL.lua_setfield(l, -2, "LowerRight");
+		getEnumTable(l,"UnityEngine.TextAnchor");
+		addMember(l,0,"UpperLeft");
+		addMember(l,1,"UpperCenter");
+		addMember(l,2,"UpperRight");
+		addMember(l,3,"MiddleLeft");
+		addMember(l,4,"MiddleCenter");
+		addMember(l,5,"MiddleRight");
+		addMember(l,6,"LowerLeft");
+		addMember(l,7,"LowerCenter");
+		addMember(l,8,"LowerRight");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

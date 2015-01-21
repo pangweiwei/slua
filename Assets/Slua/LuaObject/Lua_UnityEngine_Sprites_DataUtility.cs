@@ -73,12 +73,10 @@ public class Lua_UnityEngine_Sprites_DataUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Sprites.DataUtility");
-		addMember(l,GetInnerUV, "GetInnerUV");
-		addMember(l,GetOuterUV, "GetOuterUV");
-		addMember(l,GetPadding, "GetPadding");
-		addMember(l,GetMinSize, "GetMinSize");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Sprites.DataUtility));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,GetInnerUV);
+		addMember(l,GetOuterUV);
+		addMember(l,GetPadding);
+		addMember(l,GetMinSize);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Sprites.DataUtility));
 	}
 }

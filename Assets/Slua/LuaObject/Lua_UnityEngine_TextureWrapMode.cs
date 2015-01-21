@@ -12,11 +12,9 @@ public class Lua_UnityEngine_TextureWrapMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.TextureWrapMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Repeat");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Clamp");
+		getEnumTable(l,"UnityEngine.TextureWrapMode");
+		addMember(l,0,"Repeat");
+		addMember(l,1,"Clamp");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

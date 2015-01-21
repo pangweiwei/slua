@@ -12,17 +12,12 @@ public class Lua_UnityEngine_ParticleSystemRenderMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.ParticleSystemRenderMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Billboard");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Stretch");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "HorizontalBillboard");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "VerticalBillboard");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Mesh");
+		getEnumTable(l,"UnityEngine.ParticleSystemRenderMode");
+		addMember(l,0,"Billboard");
+		addMember(l,1,"Stretch");
+		addMember(l,2,"HorizontalBillboard");
+		addMember(l,3,"VerticalBillboard");
+		addMember(l,4,"Mesh");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

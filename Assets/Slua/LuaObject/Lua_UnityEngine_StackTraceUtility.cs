@@ -43,10 +43,8 @@ public class Lua_UnityEngine_StackTraceUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.StackTraceUtility");
-		addMember(l,ExtractStackTrace, "ExtractStackTrace");
-		addMember(l,ExtractStringFromException, "ExtractStringFromException");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.StackTraceUtility));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,ExtractStackTrace);
+		addMember(l,ExtractStringFromException);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.StackTraceUtility));
 	}
 }

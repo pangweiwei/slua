@@ -200,7 +200,7 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Set(IntPtr l) {
 		try{
-			UnityEngine.Vector3 self=checkSelf<UnityEngine.Vector3>(l);
+			UnityEngine.Vector3 self=(UnityEngine.Vector3)checkSelf(l);
 			System.Single a1;
 			checkType(l,2,out a1);
 			System.Single a2;
@@ -229,7 +229,7 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2,typeof(UnityEngine.Vector3))){
-				UnityEngine.Vector3 self=checkSelf<UnityEngine.Vector3>(l);
+				UnityEngine.Vector3 self=(UnityEngine.Vector3)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
 				self.Scale(a1);
@@ -287,7 +287,7 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 				return 1;
 			}
 			else if(matchType(l,2)){
-				UnityEngine.Vector3 self=checkSelf<UnityEngine.Vector3>(l);
+				UnityEngine.Vector3 self=(UnityEngine.Vector3)checkSelf(l);
 				self.Normalize();
 				setBack(l,self);
 				return 0;
@@ -586,13 +586,13 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_x(IntPtr l) {
-		UnityEngine.Vector3 o = checkSelf<UnityEngine.Vector3>(l);
+		UnityEngine.Vector3 o = (UnityEngine.Vector3)checkSelf(l);
 		pushValue(l,o.x);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_x(IntPtr l) {
-		UnityEngine.Vector3 o = checkSelf<UnityEngine.Vector3>(l);
+		UnityEngine.Vector3 o = (UnityEngine.Vector3)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.x=v;
@@ -601,13 +601,13 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_y(IntPtr l) {
-		UnityEngine.Vector3 o = checkSelf<UnityEngine.Vector3>(l);
+		UnityEngine.Vector3 o = (UnityEngine.Vector3)checkSelf(l);
 		pushValue(l,o.y);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_y(IntPtr l) {
-		UnityEngine.Vector3 o = checkSelf<UnityEngine.Vector3>(l);
+		UnityEngine.Vector3 o = (UnityEngine.Vector3)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.y=v;
@@ -616,13 +616,13 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_z(IntPtr l) {
-		UnityEngine.Vector3 o = checkSelf<UnityEngine.Vector3>(l);
+		UnityEngine.Vector3 o = (UnityEngine.Vector3)checkSelf(l);
 		pushValue(l,o.z);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_z(IntPtr l) {
-		UnityEngine.Vector3 o = checkSelf<UnityEngine.Vector3>(l);
+		UnityEngine.Vector3 o = (UnityEngine.Vector3)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.z=v;
@@ -631,19 +631,19 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_normalized(IntPtr l) {
-		UnityEngine.Vector3 o = checkSelf<UnityEngine.Vector3>(l);
+		UnityEngine.Vector3 o = (UnityEngine.Vector3)checkSelf(l);
 		pushValue(l,o.normalized);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_magnitude(IntPtr l) {
-		UnityEngine.Vector3 o = checkSelf<UnityEngine.Vector3>(l);
+		UnityEngine.Vector3 o = (UnityEngine.Vector3)checkSelf(l);
 		pushValue(l,o.magnitude);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_sqrMagnitude(IntPtr l) {
-		UnityEngine.Vector3 o = checkSelf<UnityEngine.Vector3>(l);
+		UnityEngine.Vector3 o = (UnityEngine.Vector3)checkSelf(l);
 		pushValue(l,o.sqrMagnitude);
 		return 1;
 	}
@@ -689,54 +689,49 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Vector3");
-		addMember(l,Lerp, "Lerp");
-		addMember(l,Slerp, "Slerp");
-		addMember(l,OrthoNormalize, "OrthoNormalize");
-		addMember(l,MoveTowards, "MoveTowards");
-		addMember(l,RotateTowards, "RotateTowards");
-		addMember(l,SmoothDamp, "SmoothDamp");
-		addMember(l,Set, "Set");
-		addMember(l,Scale, "Scale");
-		addMember(l,Cross, "Cross");
-		addMember(l,Reflect, "Reflect");
-		addMember(l,Normalize, "Normalize");
-		addMember(l,Dot, "Dot");
-		addMember(l,Project, "Project");
-		addMember(l,ProjectOnPlane, "ProjectOnPlane");
-		addMember(l,Angle, "Angle");
-		addMember(l,Distance, "Distance");
-		addMember(l,ClampMagnitude, "ClampMagnitude");
-		addMember(l,Magnitude, "Magnitude");
-		addMember(l,SqrMagnitude, "SqrMagnitude");
-		addMember(l,Min, "Min");
-		addMember(l,Max, "Max");
-		addMember(l,op_Addition, "op_Addition");
-		addMember(l,op_Subtraction, "op_Subtraction");
-		addMember(l,op_UnaryNegation, "op_UnaryNegation");
-		addMember(l,op_Multiply, "op_Multiply");
-		addMember(l,op_Division, "op_Division");
-		addMember(l,op_Equality, "op_Equality");
-		addMember(l,op_Inequality, "op_Inequality");
-		addMember(l,get_kEpsilon, "get_kEpsilon");
-		addMember(l,get_x, "get_x");
-		addMember(l,set_x, "set_x");
-		addMember(l,get_y, "get_y");
-		addMember(l,set_y, "set_y");
-		addMember(l,get_z, "get_z");
-		addMember(l,set_z, "set_z");
-		addMember(l,get_normalized, "get_normalized");
-		addMember(l,get_magnitude, "get_magnitude");
-		addMember(l,get_sqrMagnitude, "get_sqrMagnitude");
-		addMember(l,get_zero, "get_zero");
-		addMember(l,get_one, "get_one");
-		addMember(l,get_forward, "get_forward");
-		addMember(l,get_back, "get_back");
-		addMember(l,get_up, "get_up");
-		addMember(l,get_down, "get_down");
-		addMember(l,get_left, "get_left");
-		addMember(l,get_right, "get_right");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Vector3));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Lerp);
+		addMember(l,Slerp);
+		addMember(l,OrthoNormalize);
+		addMember(l,MoveTowards);
+		addMember(l,RotateTowards);
+		addMember(l,SmoothDamp);
+		addMember(l,Set);
+		addMember(l,Scale);
+		addMember(l,Cross);
+		addMember(l,Reflect);
+		addMember(l,Normalize);
+		addMember(l,Dot);
+		addMember(l,Project);
+		addMember(l,ProjectOnPlane);
+		addMember(l,Angle);
+		addMember(l,Distance);
+		addMember(l,ClampMagnitude);
+		addMember(l,Magnitude);
+		addMember(l,SqrMagnitude);
+		addMember(l,Min);
+		addMember(l,Max);
+		addMember(l,op_Addition);
+		addMember(l,op_Subtraction);
+		addMember(l,op_UnaryNegation);
+		addMember(l,op_Multiply);
+		addMember(l,op_Division);
+		addMember(l,op_Equality);
+		addMember(l,op_Inequality);
+		addMember(l,"kEpsilon",get_kEpsilon,null);
+		addMember(l,"x",get_x,set_x);
+		addMember(l,"y",get_y,set_y);
+		addMember(l,"z",get_z,set_z);
+		addMember(l,"normalized",get_normalized,null);
+		addMember(l,"magnitude",get_magnitude,null);
+		addMember(l,"sqrMagnitude",get_sqrMagnitude,null);
+		addMember(l,"zero",get_zero,null);
+		addMember(l,"one",get_one,null);
+		addMember(l,"forward",get_forward,null);
+		addMember(l,"back",get_back,null);
+		addMember(l,"up",get_up,null);
+		addMember(l,"down",get_down,null);
+		addMember(l,"left",get_left,null);
+		addMember(l,"right",get_right,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Vector3));
 	}
 }

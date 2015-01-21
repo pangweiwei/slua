@@ -12,15 +12,11 @@ public class Lua_UnityEngine_UI_GridLayoutGroup_Corner : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.GridLayoutGroup.Corner");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "UpperLeft");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "UpperRight");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "LowerLeft");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "LowerRight");
+		getEnumTable(l,"UnityEngine.UI.GridLayoutGroup.Corner");
+		addMember(l,0,"UpperLeft");
+		addMember(l,1,"UpperRight");
+		addMember(l,2,"LowerLeft");
+		addMember(l,3,"LowerRight");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

@@ -12,13 +12,10 @@ public class Lua_UnityEngine_AnisotropicFiltering : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.AnisotropicFiltering");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Disable");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Enable");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "ForceEnable");
+		getEnumTable(l,"UnityEngine.AnisotropicFiltering");
+		addMember(l,0,"Disable");
+		addMember(l,1,"Enable");
+		addMember(l,2,"ForceEnable");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

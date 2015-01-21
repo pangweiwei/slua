@@ -12,17 +12,12 @@ public class Lua_UnityEngine_ComputeBufferType : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.ComputeBufferType");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Default");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Raw");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Append");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Counter");
-		LuaDLL.lua_pushinteger(l, 256);
-		LuaDLL.lua_setfield(l, -2, "DrawIndirect");
+		getEnumTable(l,"UnityEngine.ComputeBufferType");
+		addMember(l,0,"Default");
+		addMember(l,1,"Raw");
+		addMember(l,2,"Append");
+		addMember(l,4,"Counter");
+		addMember(l,256,"DrawIndirect");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

@@ -1,7 +1,8 @@
 
-UVector3 = UnityEngine.Vector3
-GameObject = UnityEngine.GameObject
-Profiler = UnityEngine.Profiler
+local Vector3 = UnityEngine.Vector3
+local GameObject = UnityEngine.GameObject
+local Profiler = UnityEngine.Profiler
+local Time = UnityEngine.Time
 
 function main()
 
@@ -46,44 +47,7 @@ function main()
 	cube.transform.localScale = Vector3(10,10,10)
 
 	print(UnityEngine.PrimitiveType.Cube,type(UnityEngine.PrimitiveType.Cube))
-	cube=nil
-	collectgarbage("collect")
 
-	local go = GameObject.Find("Canvas/Panel2/Button")
-	local btn = go:GetComponent("Button")
-	
-
-	-- for performance test
-	btn.onClick:AddListener(function()
-	
-		local Vector3=Vector3
-		local start = os.clock()
-		Profiler.BeginSample("create 1000000 vector3/lua")
-		for i=1,1000000 do
-			local a=Vector3(i,i,i) --vector3 is valuetype, implemented in pure lua, see luaValuetype
-			a:Normalize()
-		end
-		Profiler.EndSample()
-		print("create 1000000 vector3/lua",os.clock()-start)
-
-		local start = os.clock()
-		Profiler.BeginSample("create 1000000 vector3/lua")
-		for i=1,1000000 do
-			local a=UVector3(i,i,i)
-			a:Normalize()
-		end
-		Profiler.EndSample()
-		print("create 1000000 vector3/cslua",os.clock()-start)
-
-		-- test in cs
-		local start = os.clock()
-		local h = HelloWorld()
-		h:perf()
-		print("create 1000000 vector3/cs",os.clock()-start)
-
-	end)
 
 	print("LogCallback occured",n)
-	HelloWorld.testvec3(Vector3(1,2,3)) --it's lua table
-	HelloWorld.testvec3(UVector3(2,3,4)) --it's userdata
 end

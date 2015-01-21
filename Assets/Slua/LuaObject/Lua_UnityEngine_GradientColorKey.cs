@@ -21,13 +21,13 @@ public class Lua_UnityEngine_GradientColorKey : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_color(IntPtr l) {
-		UnityEngine.GradientColorKey o = checkSelf<UnityEngine.GradientColorKey>(l);
+		UnityEngine.GradientColorKey o = (UnityEngine.GradientColorKey)checkSelf(l);
 		pushValue(l,o.color);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_color(IntPtr l) {
-		UnityEngine.GradientColorKey o = checkSelf<UnityEngine.GradientColorKey>(l);
+		UnityEngine.GradientColorKey o = (UnityEngine.GradientColorKey)checkSelf(l);
 		UnityEngine.Color v;
 		checkType(l,2,out v);
 		o.color=v;
@@ -36,13 +36,13 @@ public class Lua_UnityEngine_GradientColorKey : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_time(IntPtr l) {
-		UnityEngine.GradientColorKey o = checkSelf<UnityEngine.GradientColorKey>(l);
+		UnityEngine.GradientColorKey o = (UnityEngine.GradientColorKey)checkSelf(l);
 		pushValue(l,o.time);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_time(IntPtr l) {
-		UnityEngine.GradientColorKey o = checkSelf<UnityEngine.GradientColorKey>(l);
+		UnityEngine.GradientColorKey o = (UnityEngine.GradientColorKey)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.time=v;
@@ -51,12 +51,8 @@ public class Lua_UnityEngine_GradientColorKey : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.GradientColorKey");
-		addMember(l,get_color, "get_color");
-		addMember(l,set_color, "set_color");
-		addMember(l,get_time, "get_time");
-		addMember(l,set_time, "set_time");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.GradientColorKey));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"color",get_color,set_color);
+		addMember(l,"time",get_time,set_time);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.GradientColorKey));
 	}
 }

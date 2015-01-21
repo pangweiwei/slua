@@ -12,23 +12,15 @@ public class Lua_UnityEngine_Rendering_StencilOp : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.Rendering.StencilOp");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Keep");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Zero");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Replace");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "IncrementSaturate");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "DecrementSaturate");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "Invert");
-		LuaDLL.lua_pushinteger(l, 6);
-		LuaDLL.lua_setfield(l, -2, "IncrementWrap");
-		LuaDLL.lua_pushinteger(l, 7);
-		LuaDLL.lua_setfield(l, -2, "DecrementWrap");
+		getEnumTable(l,"UnityEngine.Rendering.StencilOp");
+		addMember(l,0,"Keep");
+		addMember(l,1,"Zero");
+		addMember(l,2,"Replace");
+		addMember(l,3,"IncrementSaturate");
+		addMember(l,4,"DecrementSaturate");
+		addMember(l,5,"Invert");
+		addMember(l,6,"IncrementWrap");
+		addMember(l,7,"DecrementWrap");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

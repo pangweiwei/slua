@@ -17,8 +17,6 @@ public class Lua_UnityEngine_Flare : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Flare");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Flare),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Flare),typeof(UnityEngine.Object));
 	}
 }

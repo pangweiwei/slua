@@ -18,7 +18,7 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int BakeMesh(IntPtr l) {
 		try{
-			UnityEngine.SkinnedMeshRenderer self=checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+			UnityEngine.SkinnedMeshRenderer self=(UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 			UnityEngine.Mesh a1;
 			checkType(l,2,out a1);
 			self.BakeMesh(a1);
@@ -32,7 +32,7 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetBlendShapeWeight(IntPtr l) {
 		try{
-			UnityEngine.SkinnedMeshRenderer self=checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+			UnityEngine.SkinnedMeshRenderer self=(UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			System.Single ret=self.GetBlendShapeWeight(a1);
@@ -47,7 +47,7 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetBlendShapeWeight(IntPtr l) {
 		try{
-			UnityEngine.SkinnedMeshRenderer self=checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+			UnityEngine.SkinnedMeshRenderer self=(UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			System.Single a2;
@@ -62,13 +62,13 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_bones(IntPtr l) {
-		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 		pushValue(l,o.bones);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_bones(IntPtr l) {
-		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 		UnityEngine.Transform[] v;
 		checkType(l,2,out v);
 		o.bones=v;
@@ -76,13 +76,13 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rootBone(IntPtr l) {
-		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 		pushValue(l,o.rootBone);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_rootBone(IntPtr l) {
-		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 		UnityEngine.Transform v;
 		checkType(l,2,out v);
 		o.rootBone=v;
@@ -90,13 +90,13 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_quality(IntPtr l) {
-		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 		pushValue(l,o.quality);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_quality(IntPtr l) {
-		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 		UnityEngine.SkinQuality v;
 		checkEnum(l,2,out v);
 		o.quality=v;
@@ -104,13 +104,13 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_sharedMesh(IntPtr l) {
-		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 		pushValue(l,o.sharedMesh);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sharedMesh(IntPtr l) {
-		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 		UnityEngine.Mesh v;
 		checkType(l,2,out v);
 		o.sharedMesh=v;
@@ -118,13 +118,13 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_updateWhenOffscreen(IntPtr l) {
-		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 		pushValue(l,o.updateWhenOffscreen);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_updateWhenOffscreen(IntPtr l) {
-		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.updateWhenOffscreen=v;
@@ -132,13 +132,13 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_localBounds(IntPtr l) {
-		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 		pushValue(l,o.localBounds);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_localBounds(IntPtr l) {
-		UnityEngine.SkinnedMeshRenderer o = checkSelf<UnityEngine.SkinnedMeshRenderer>(l);
+		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
 		UnityEngine.Bounds v;
 		checkType(l,2,out v);
 		o.localBounds=v;
@@ -146,23 +146,15 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SkinnedMeshRenderer");
-		addMember(l,BakeMesh, "BakeMesh");
-		addMember(l,GetBlendShapeWeight, "GetBlendShapeWeight");
-		addMember(l,SetBlendShapeWeight, "SetBlendShapeWeight");
-		addMember(l,get_bones, "get_bones");
-		addMember(l,set_bones, "set_bones");
-		addMember(l,get_rootBone, "get_rootBone");
-		addMember(l,set_rootBone, "set_rootBone");
-		addMember(l,get_quality, "get_quality");
-		addMember(l,set_quality, "set_quality");
-		addMember(l,get_sharedMesh, "get_sharedMesh");
-		addMember(l,set_sharedMesh, "set_sharedMesh");
-		addMember(l,get_updateWhenOffscreen, "get_updateWhenOffscreen");
-		addMember(l,set_updateWhenOffscreen, "set_updateWhenOffscreen");
-		addMember(l,get_localBounds, "get_localBounds");
-		addMember(l,set_localBounds, "set_localBounds");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.SkinnedMeshRenderer),typeof(UnityEngine.Renderer));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,BakeMesh);
+		addMember(l,GetBlendShapeWeight);
+		addMember(l,SetBlendShapeWeight);
+		addMember(l,"bones",get_bones,set_bones);
+		addMember(l,"rootBone",get_rootBone,set_rootBone);
+		addMember(l,"quality",get_quality,set_quality);
+		addMember(l,"sharedMesh",get_sharedMesh,set_sharedMesh);
+		addMember(l,"updateWhenOffscreen",get_updateWhenOffscreen,set_updateWhenOffscreen);
+		addMember(l,"localBounds",get_localBounds,set_localBounds);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.SkinnedMeshRenderer),typeof(UnityEngine.Renderer));
 	}
 }

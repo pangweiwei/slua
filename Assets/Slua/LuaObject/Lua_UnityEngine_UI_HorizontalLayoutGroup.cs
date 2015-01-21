@@ -11,7 +11,7 @@ public class Lua_UnityEngine_UI_HorizontalLayoutGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CalculateLayoutInputHorizontal(IntPtr l) {
 		try{
-			UnityEngine.UI.HorizontalLayoutGroup self=checkSelf<UnityEngine.UI.HorizontalLayoutGroup>(l);
+			UnityEngine.UI.HorizontalLayoutGroup self=(UnityEngine.UI.HorizontalLayoutGroup)checkSelf(l);
 			self.CalculateLayoutInputHorizontal();
 			return 0;
 		}
@@ -23,7 +23,7 @@ public class Lua_UnityEngine_UI_HorizontalLayoutGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CalculateLayoutInputVertical(IntPtr l) {
 		try{
-			UnityEngine.UI.HorizontalLayoutGroup self=checkSelf<UnityEngine.UI.HorizontalLayoutGroup>(l);
+			UnityEngine.UI.HorizontalLayoutGroup self=(UnityEngine.UI.HorizontalLayoutGroup)checkSelf(l);
 			self.CalculateLayoutInputVertical();
 			return 0;
 		}
@@ -35,7 +35,7 @@ public class Lua_UnityEngine_UI_HorizontalLayoutGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetLayoutHorizontal(IntPtr l) {
 		try{
-			UnityEngine.UI.HorizontalLayoutGroup self=checkSelf<UnityEngine.UI.HorizontalLayoutGroup>(l);
+			UnityEngine.UI.HorizontalLayoutGroup self=(UnityEngine.UI.HorizontalLayoutGroup)checkSelf(l);
 			self.SetLayoutHorizontal();
 			return 0;
 		}
@@ -47,7 +47,7 @@ public class Lua_UnityEngine_UI_HorizontalLayoutGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetLayoutVertical(IntPtr l) {
 		try{
-			UnityEngine.UI.HorizontalLayoutGroup self=checkSelf<UnityEngine.UI.HorizontalLayoutGroup>(l);
+			UnityEngine.UI.HorizontalLayoutGroup self=(UnityEngine.UI.HorizontalLayoutGroup)checkSelf(l);
 			self.SetLayoutVertical();
 			return 0;
 		}
@@ -58,12 +58,10 @@ public class Lua_UnityEngine_UI_HorizontalLayoutGroup : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.HorizontalLayoutGroup");
-		addMember(l,CalculateLayoutInputHorizontal, "CalculateLayoutInputHorizontal");
-		addMember(l,CalculateLayoutInputVertical, "CalculateLayoutInputVertical");
-		addMember(l,SetLayoutHorizontal, "SetLayoutHorizontal");
-		addMember(l,SetLayoutVertical, "SetLayoutVertical");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.HorizontalLayoutGroup),typeof(UnityEngine.UI.HorizontalOrVerticalLayoutGroup));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,CalculateLayoutInputHorizontal);
+		addMember(l,CalculateLayoutInputVertical);
+		addMember(l,SetLayoutHorizontal);
+		addMember(l,SetLayoutVertical);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.HorizontalLayoutGroup),typeof(UnityEngine.UI.HorizontalOrVerticalLayoutGroup));
 	}
 }

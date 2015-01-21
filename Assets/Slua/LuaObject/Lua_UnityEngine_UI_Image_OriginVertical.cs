@@ -12,11 +12,9 @@ public class Lua_UnityEngine_UI_Image_OriginVertical : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.Image.OriginVertical");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Bottom");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Top");
+		getEnumTable(l,"UnityEngine.UI.Image.OriginVertical");
+		addMember(l,0,"Bottom");
+		addMember(l,1,"Top");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

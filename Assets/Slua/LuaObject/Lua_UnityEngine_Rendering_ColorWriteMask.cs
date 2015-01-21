@@ -12,17 +12,12 @@ public class Lua_UnityEngine_Rendering_ColorWriteMask : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.Rendering.ColorWriteMask");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Alpha");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Blue");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Green");
-		LuaDLL.lua_pushinteger(l, 8);
-		LuaDLL.lua_setfield(l, -2, "Red");
-		LuaDLL.lua_pushinteger(l, 15);
-		LuaDLL.lua_setfield(l, -2, "All");
+		getEnumTable(l,"UnityEngine.Rendering.ColorWriteMask");
+		addMember(l,1,"Alpha");
+		addMember(l,2,"Blue");
+		addMember(l,4,"Green");
+		addMember(l,8,"Red");
+		addMember(l,15,"All");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

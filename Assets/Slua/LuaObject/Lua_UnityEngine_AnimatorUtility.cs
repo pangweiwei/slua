@@ -45,10 +45,8 @@ public class Lua_UnityEngine_AnimatorUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimatorUtility");
-		addMember(l,OptimizeTransformHierarchy, "OptimizeTransformHierarchy");
-		addMember(l,DeoptimizeTransformHierarchy, "DeoptimizeTransformHierarchy");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AnimatorUtility));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,OptimizeTransformHierarchy);
+		addMember(l,DeoptimizeTransformHierarchy);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimatorUtility));
 	}
 }

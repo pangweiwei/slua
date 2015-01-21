@@ -17,13 +17,13 @@ public class Lua_UnityEngine_AnimationClipPair : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_originalClip(IntPtr l) {
-		UnityEngine.AnimationClipPair o = checkSelf<UnityEngine.AnimationClipPair>(l);
+		UnityEngine.AnimationClipPair o = (UnityEngine.AnimationClipPair)checkSelf(l);
 		pushValue(l,o.originalClip);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_originalClip(IntPtr l) {
-		UnityEngine.AnimationClipPair o = checkSelf<UnityEngine.AnimationClipPair>(l);
+		UnityEngine.AnimationClipPair o = (UnityEngine.AnimationClipPair)checkSelf(l);
 		UnityEngine.AnimationClip v;
 		checkType(l,2,out v);
 		o.originalClip=v;
@@ -31,13 +31,13 @@ public class Lua_UnityEngine_AnimationClipPair : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_overrideClip(IntPtr l) {
-		UnityEngine.AnimationClipPair o = checkSelf<UnityEngine.AnimationClipPair>(l);
+		UnityEngine.AnimationClipPair o = (UnityEngine.AnimationClipPair)checkSelf(l);
 		pushValue(l,o.overrideClip);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_overrideClip(IntPtr l) {
-		UnityEngine.AnimationClipPair o = checkSelf<UnityEngine.AnimationClipPair>(l);
+		UnityEngine.AnimationClipPair o = (UnityEngine.AnimationClipPair)checkSelf(l);
 		UnityEngine.AnimationClip v;
 		checkType(l,2,out v);
 		o.overrideClip=v;
@@ -45,12 +45,8 @@ public class Lua_UnityEngine_AnimationClipPair : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimationClipPair");
-		addMember(l,get_originalClip, "get_originalClip");
-		addMember(l,set_originalClip, "set_originalClip");
-		addMember(l,get_overrideClip, "get_overrideClip");
-		addMember(l,set_overrideClip, "set_overrideClip");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AnimationClipPair));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"originalClip",get_originalClip,set_originalClip);
+		addMember(l,"overrideClip",get_overrideClip,set_overrideClip);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimationClipPair));
 	}
 }

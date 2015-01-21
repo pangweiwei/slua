@@ -12,19 +12,13 @@ public class Lua_UnityEngine_TexGenMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.TexGenMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "None");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "SphereMap");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Object");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "EyeLinear");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "CubeReflect");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "CubeNormal");
+		getEnumTable(l,"UnityEngine.TexGenMode");
+		addMember(l,0,"None");
+		addMember(l,1,"SphereMap");
+		addMember(l,2,"Object");
+		addMember(l,3,"EyeLinear");
+		addMember(l,4,"CubeReflect");
+		addMember(l,5,"CubeNormal");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

@@ -12,11 +12,9 @@ public class Lua_UnityEngine_VerticalWrapMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.VerticalWrapMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Truncate");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Overflow");
+		getEnumTable(l,"UnityEngine.VerticalWrapMode");
+		addMember(l,0,"Truncate");
+		addMember(l,1,"Overflow");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

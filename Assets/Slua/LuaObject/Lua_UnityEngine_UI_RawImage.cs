@@ -11,7 +11,7 @@ public class Lua_UnityEngine_UI_RawImage : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetNativeSize(IntPtr l) {
 		try{
-			UnityEngine.UI.RawImage self=checkSelf<UnityEngine.UI.RawImage>(l);
+			UnityEngine.UI.RawImage self=(UnityEngine.UI.RawImage)checkSelf(l);
 			self.SetNativeSize();
 			return 0;
 		}
@@ -22,19 +22,19 @@ public class Lua_UnityEngine_UI_RawImage : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mainTexture(IntPtr l) {
-		UnityEngine.UI.RawImage o = checkSelf<UnityEngine.UI.RawImage>(l);
+		UnityEngine.UI.RawImage o = (UnityEngine.UI.RawImage)checkSelf(l);
 		pushValue(l,o.mainTexture);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_texture(IntPtr l) {
-		UnityEngine.UI.RawImage o = checkSelf<UnityEngine.UI.RawImage>(l);
+		UnityEngine.UI.RawImage o = (UnityEngine.UI.RawImage)checkSelf(l);
 		pushValue(l,o.texture);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_texture(IntPtr l) {
-		UnityEngine.UI.RawImage o = checkSelf<UnityEngine.UI.RawImage>(l);
+		UnityEngine.UI.RawImage o = (UnityEngine.UI.RawImage)checkSelf(l);
 		UnityEngine.Texture v;
 		checkType(l,2,out v);
 		o.texture=v;
@@ -42,13 +42,13 @@ public class Lua_UnityEngine_UI_RawImage : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_uvRect(IntPtr l) {
-		UnityEngine.UI.RawImage o = checkSelf<UnityEngine.UI.RawImage>(l);
+		UnityEngine.UI.RawImage o = (UnityEngine.UI.RawImage)checkSelf(l);
 		pushValue(l,o.uvRect);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_uvRect(IntPtr l) {
-		UnityEngine.UI.RawImage o = checkSelf<UnityEngine.UI.RawImage>(l);
+		UnityEngine.UI.RawImage o = (UnityEngine.UI.RawImage)checkSelf(l);
 		UnityEngine.Rect v;
 		checkType(l,2,out v);
 		o.uvRect=v;
@@ -56,14 +56,10 @@ public class Lua_UnityEngine_UI_RawImage : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.RawImage");
-		addMember(l,SetNativeSize, "SetNativeSize");
-		addMember(l,get_mainTexture, "get_mainTexture");
-		addMember(l,get_texture, "get_texture");
-		addMember(l,set_texture, "set_texture");
-		addMember(l,get_uvRect, "get_uvRect");
-		addMember(l,set_uvRect, "set_uvRect");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.RawImage),typeof(UnityEngine.UI.MaskableGraphic));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,SetNativeSize);
+		addMember(l,"mainTexture",get_mainTexture,null);
+		addMember(l,"texture",get_texture,set_texture);
+		addMember(l,"uvRect",get_uvRect,set_uvRect);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.RawImage),typeof(UnityEngine.UI.MaskableGraphic));
 	}
 }

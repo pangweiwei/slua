@@ -12,19 +12,13 @@ public class Lua_UnityEngine_CubemapFace : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.CubemapFace");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "PositiveX");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "NegativeX");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "PositiveY");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "NegativeY");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "PositiveZ");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "NegativeZ");
+		getEnumTable(l,"UnityEngine.CubemapFace");
+		addMember(l,0,"PositiveX");
+		addMember(l,1,"NegativeX");
+		addMember(l,2,"PositiveY");
+		addMember(l,3,"NegativeY");
+		addMember(l,4,"PositiveZ");
+		addMember(l,5,"NegativeZ");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

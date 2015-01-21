@@ -150,30 +150,28 @@ public class Lua_UnityEngine_EventSystems_ExecuteEvents : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.ExecuteEvents");
-		addMember(l,ValidateEventData, "ValidateEventData");
-		addMember(l,Execute, "Execute");
-		addMember(l,ExecuteHierarchy, "ExecuteHierarchy");
-		addMember(l,CanHandleEvent, "CanHandleEvent");
-		addMember(l,GetEventHandler, "GetEventHandler");
-		addMember(l,get_pointerEnterHandler, "get_pointerEnterHandler");
-		addMember(l,get_pointerExitHandler, "get_pointerExitHandler");
-		addMember(l,get_pointerDownHandler, "get_pointerDownHandler");
-		addMember(l,get_pointerUpHandler, "get_pointerUpHandler");
-		addMember(l,get_pointerClickHandler, "get_pointerClickHandler");
-		addMember(l,get_initializePotentialDrag, "get_initializePotentialDrag");
-		addMember(l,get_beginDragHandler, "get_beginDragHandler");
-		addMember(l,get_dragHandler, "get_dragHandler");
-		addMember(l,get_endDragHandler, "get_endDragHandler");
-		addMember(l,get_dropHandler, "get_dropHandler");
-		addMember(l,get_scrollHandler, "get_scrollHandler");
-		addMember(l,get_updateSelectedHandler, "get_updateSelectedHandler");
-		addMember(l,get_selectHandler, "get_selectHandler");
-		addMember(l,get_deselectHandler, "get_deselectHandler");
-		addMember(l,get_moveHandler, "get_moveHandler");
-		addMember(l,get_submitHandler, "get_submitHandler");
-		addMember(l,get_cancelHandler, "get_cancelHandler");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.EventSystems.ExecuteEvents));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,ValidateEventData);
+		addMember(l,Execute);
+		addMember(l,ExecuteHierarchy);
+		addMember(l,CanHandleEvent);
+		addMember(l,GetEventHandler);
+		addMember(l,"pointerEnterHandler",get_pointerEnterHandler,null);
+		addMember(l,"pointerExitHandler",get_pointerExitHandler,null);
+		addMember(l,"pointerDownHandler",get_pointerDownHandler,null);
+		addMember(l,"pointerUpHandler",get_pointerUpHandler,null);
+		addMember(l,"pointerClickHandler",get_pointerClickHandler,null);
+		addMember(l,"initializePotentialDrag",get_initializePotentialDrag,null);
+		addMember(l,"beginDragHandler",get_beginDragHandler,null);
+		addMember(l,"dragHandler",get_dragHandler,null);
+		addMember(l,"endDragHandler",get_endDragHandler,null);
+		addMember(l,"dropHandler",get_dropHandler,null);
+		addMember(l,"scrollHandler",get_scrollHandler,null);
+		addMember(l,"updateSelectedHandler",get_updateSelectedHandler,null);
+		addMember(l,"selectHandler",get_selectHandler,null);
+		addMember(l,"deselectHandler",get_deselectHandler,null);
+		addMember(l,"moveHandler",get_moveHandler,null);
+		addMember(l,"submitHandler",get_submitHandler,null);
+		addMember(l,"cancelHandler",get_cancelHandler,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.ExecuteEvents));
 	}
 }

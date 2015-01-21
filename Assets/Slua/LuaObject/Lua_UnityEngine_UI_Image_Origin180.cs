@@ -12,15 +12,11 @@ public class Lua_UnityEngine_UI_Image_Origin180 : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.Image.Origin180");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Bottom");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Left");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Top");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Right");
+		getEnumTable(l,"UnityEngine.UI.Image.Origin180");
+		addMember(l,0,"Bottom");
+		addMember(l,1,"Left");
+		addMember(l,2,"Top");
+		addMember(l,3,"Right");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

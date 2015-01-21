@@ -671,20 +671,18 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Graphics");
-		addMember(l,DrawMesh, "DrawMesh");
-		addMember(l,DrawMeshNow, "DrawMeshNow");
-		addMember(l,DrawProcedural, "DrawProcedural");
-		addMember(l,DrawProceduralIndirect, "DrawProceduralIndirect");
-		addMember(l,DrawTexture, "DrawTexture");
-		addMember(l,Blit, "Blit");
-		addMember(l,BlitMultiTap, "BlitMultiTap");
-		addMember(l,SetRenderTarget, "SetRenderTarget");
-		addMember(l,SetRandomWriteTarget, "SetRandomWriteTarget");
-		addMember(l,ClearRandomWriteTargets, "ClearRandomWriteTargets");
-		addMember(l,get_activeColorBuffer, "get_activeColorBuffer");
-		addMember(l,get_activeDepthBuffer, "get_activeDepthBuffer");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Graphics));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,DrawMesh);
+		addMember(l,DrawMeshNow);
+		addMember(l,DrawProcedural);
+		addMember(l,DrawProceduralIndirect);
+		addMember(l,DrawTexture);
+		addMember(l,Blit);
+		addMember(l,BlitMultiTap);
+		addMember(l,SetRenderTarget);
+		addMember(l,SetRandomWriteTarget);
+		addMember(l,ClearRandomWriteTargets);
+		addMember(l,"activeColorBuffer",get_activeColorBuffer,null);
+		addMember(l,"activeDepthBuffer",get_activeDepthBuffer,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Graphics));
 	}
 }

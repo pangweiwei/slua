@@ -179,21 +179,16 @@ public class Lua_UnityEngine_Caching : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Caching");
-		addMember(l,Authorize, "Authorize");
-		addMember(l,CleanCache, "CleanCache");
-		addMember(l,IsVersionCached, "IsVersionCached");
-		addMember(l,MarkAsUsed, "MarkAsUsed");
-		addMember(l,get_spaceFree, "get_spaceFree");
-		addMember(l,get_maximumAvailableDiskSpace, "get_maximumAvailableDiskSpace");
-		addMember(l,set_maximumAvailableDiskSpace, "set_maximumAvailableDiskSpace");
-		addMember(l,get_spaceOccupied, "get_spaceOccupied");
-		addMember(l,get_expirationDelay, "get_expirationDelay");
-		addMember(l,set_expirationDelay, "set_expirationDelay");
-		addMember(l,get_enabled, "get_enabled");
-		addMember(l,set_enabled, "set_enabled");
-		addMember(l,get_ready, "get_ready");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Caching));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Authorize);
+		addMember(l,CleanCache);
+		addMember(l,IsVersionCached);
+		addMember(l,MarkAsUsed);
+		addMember(l,"spaceFree",get_spaceFree,null);
+		addMember(l,"maximumAvailableDiskSpace",get_maximumAvailableDiskSpace,set_maximumAvailableDiskSpace);
+		addMember(l,"spaceOccupied",get_spaceOccupied,null);
+		addMember(l,"expirationDelay",get_expirationDelay,set_expirationDelay);
+		addMember(l,"enabled",get_enabled,set_enabled);
+		addMember(l,"ready",get_ready,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Caching));
 	}
 }

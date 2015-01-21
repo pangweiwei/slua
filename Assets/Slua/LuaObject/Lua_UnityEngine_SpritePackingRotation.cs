@@ -12,11 +12,9 @@ public class Lua_UnityEngine_SpritePackingRotation : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.SpritePackingRotation");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "None");
-		LuaDLL.lua_pushinteger(l, 15);
-		LuaDLL.lua_setfield(l, -2, "Any");
+		getEnumTable(l,"UnityEngine.SpritePackingRotation");
+		addMember(l,0,"None");
+		addMember(l,15,"Any");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

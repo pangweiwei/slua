@@ -11,7 +11,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetAllDirty(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			self.SetAllDirty();
 			return 0;
 		}
@@ -23,7 +23,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetLayoutDirty(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			self.SetLayoutDirty();
 			return 0;
 		}
@@ -35,7 +35,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetVerticesDirty(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			self.SetVerticesDirty();
 			return 0;
 		}
@@ -47,7 +47,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetMaterialDirty(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			self.SetMaterialDirty();
 			return 0;
 		}
@@ -59,7 +59,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Rebuild(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			UnityEngine.UI.CanvasUpdate a1;
 			checkEnum(l,2,out a1);
 			self.Rebuild(a1);
@@ -73,7 +73,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnRebuildRequested(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			self.OnRebuildRequested();
 			return 0;
 		}
@@ -85,7 +85,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetNativeSize(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			self.SetNativeSize();
 			return 0;
 		}
@@ -97,7 +97,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Raycast(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			UnityEngine.Vector2 a1;
 			checkType(l,2,out a1);
 			UnityEngine.Camera a2;
@@ -114,7 +114,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int PixelAdjustPoint(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			UnityEngine.Vector2 a1;
 			checkType(l,2,out a1);
 			UnityEngine.Vector2 ret=self.PixelAdjustPoint(a1);
@@ -129,7 +129,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetPixelAdjustedRect(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			UnityEngine.Rect ret=self.GetPixelAdjustedRect();
 			pushValue(l,ret);
 			return 1;
@@ -142,7 +142,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CrossFadeColor(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			UnityEngine.Color a1;
 			checkType(l,2,out a1);
 			System.Single a2;
@@ -162,7 +162,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CrossFadeAlpha(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			System.Single a1;
 			checkType(l,2,out a1);
 			System.Single a2;
@@ -180,7 +180,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RegisterDirtyLayoutCallback(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			UnityEngine.Events.UnityAction a1;
 			checkDelegate(l,2,out a1);
 			self.RegisterDirtyLayoutCallback(a1);
@@ -194,7 +194,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int UnregisterDirtyLayoutCallback(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			UnityEngine.Events.UnityAction a1;
 			checkDelegate(l,2,out a1);
 			self.UnregisterDirtyLayoutCallback(a1);
@@ -208,7 +208,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RegisterDirtyVerticesCallback(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			UnityEngine.Events.UnityAction a1;
 			checkDelegate(l,2,out a1);
 			self.RegisterDirtyVerticesCallback(a1);
@@ -222,7 +222,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int UnregisterDirtyVerticesCallback(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			UnityEngine.Events.UnityAction a1;
 			checkDelegate(l,2,out a1);
 			self.UnregisterDirtyVerticesCallback(a1);
@@ -236,7 +236,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RegisterDirtyMaterialCallback(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			UnityEngine.Events.UnityAction a1;
 			checkDelegate(l,2,out a1);
 			self.RegisterDirtyMaterialCallback(a1);
@@ -250,7 +250,7 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int UnregisterDirtyMaterialCallback(IntPtr l) {
 		try{
-			UnityEngine.UI.Graphic self=checkSelf<UnityEngine.UI.Graphic>(l);
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			UnityEngine.Events.UnityAction a1;
 			checkDelegate(l,2,out a1);
 			self.UnregisterDirtyMaterialCallback(a1);
@@ -268,13 +268,13 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_color(IntPtr l) {
-		UnityEngine.UI.Graphic o = checkSelf<UnityEngine.UI.Graphic>(l);
+		UnityEngine.UI.Graphic o = (UnityEngine.UI.Graphic)checkSelf(l);
 		pushValue(l,o.color);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_color(IntPtr l) {
-		UnityEngine.UI.Graphic o = checkSelf<UnityEngine.UI.Graphic>(l);
+		UnityEngine.UI.Graphic o = (UnityEngine.UI.Graphic)checkSelf(l);
 		UnityEngine.Color v;
 		checkType(l,2,out v);
 		o.color=v;
@@ -282,43 +282,43 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_depth(IntPtr l) {
-		UnityEngine.UI.Graphic o = checkSelf<UnityEngine.UI.Graphic>(l);
+		UnityEngine.UI.Graphic o = (UnityEngine.UI.Graphic)checkSelf(l);
 		pushValue(l,o.depth);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rectTransform(IntPtr l) {
-		UnityEngine.UI.Graphic o = checkSelf<UnityEngine.UI.Graphic>(l);
+		UnityEngine.UI.Graphic o = (UnityEngine.UI.Graphic)checkSelf(l);
 		pushValue(l,o.rectTransform);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_canvas(IntPtr l) {
-		UnityEngine.UI.Graphic o = checkSelf<UnityEngine.UI.Graphic>(l);
+		UnityEngine.UI.Graphic o = (UnityEngine.UI.Graphic)checkSelf(l);
 		pushValue(l,o.canvas);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_canvasRenderer(IntPtr l) {
-		UnityEngine.UI.Graphic o = checkSelf<UnityEngine.UI.Graphic>(l);
+		UnityEngine.UI.Graphic o = (UnityEngine.UI.Graphic)checkSelf(l);
 		pushValue(l,o.canvasRenderer);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_defaultMaterial(IntPtr l) {
-		UnityEngine.UI.Graphic o = checkSelf<UnityEngine.UI.Graphic>(l);
+		UnityEngine.UI.Graphic o = (UnityEngine.UI.Graphic)checkSelf(l);
 		pushValue(l,o.defaultMaterial);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_material(IntPtr l) {
-		UnityEngine.UI.Graphic o = checkSelf<UnityEngine.UI.Graphic>(l);
+		UnityEngine.UI.Graphic o = (UnityEngine.UI.Graphic)checkSelf(l);
 		pushValue(l,o.material);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_material(IntPtr l) {
-		UnityEngine.UI.Graphic o = checkSelf<UnityEngine.UI.Graphic>(l);
+		UnityEngine.UI.Graphic o = (UnityEngine.UI.Graphic)checkSelf(l);
 		UnityEngine.Material v;
 		checkType(l,2,out v);
 		o.material=v;
@@ -326,50 +326,46 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_materialForRendering(IntPtr l) {
-		UnityEngine.UI.Graphic o = checkSelf<UnityEngine.UI.Graphic>(l);
+		UnityEngine.UI.Graphic o = (UnityEngine.UI.Graphic)checkSelf(l);
 		pushValue(l,o.materialForRendering);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mainTexture(IntPtr l) {
-		UnityEngine.UI.Graphic o = checkSelf<UnityEngine.UI.Graphic>(l);
+		UnityEngine.UI.Graphic o = (UnityEngine.UI.Graphic)checkSelf(l);
 		pushValue(l,o.mainTexture);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Graphic");
-		addMember(l,SetAllDirty, "SetAllDirty");
-		addMember(l,SetLayoutDirty, "SetLayoutDirty");
-		addMember(l,SetVerticesDirty, "SetVerticesDirty");
-		addMember(l,SetMaterialDirty, "SetMaterialDirty");
-		addMember(l,Rebuild, "Rebuild");
-		addMember(l,OnRebuildRequested, "OnRebuildRequested");
-		addMember(l,SetNativeSize, "SetNativeSize");
-		addMember(l,Raycast, "Raycast");
-		addMember(l,PixelAdjustPoint, "PixelAdjustPoint");
-		addMember(l,GetPixelAdjustedRect, "GetPixelAdjustedRect");
-		addMember(l,CrossFadeColor, "CrossFadeColor");
-		addMember(l,CrossFadeAlpha, "CrossFadeAlpha");
-		addMember(l,RegisterDirtyLayoutCallback, "RegisterDirtyLayoutCallback");
-		addMember(l,UnregisterDirtyLayoutCallback, "UnregisterDirtyLayoutCallback");
-		addMember(l,RegisterDirtyVerticesCallback, "RegisterDirtyVerticesCallback");
-		addMember(l,UnregisterDirtyVerticesCallback, "UnregisterDirtyVerticesCallback");
-		addMember(l,RegisterDirtyMaterialCallback, "RegisterDirtyMaterialCallback");
-		addMember(l,UnregisterDirtyMaterialCallback, "UnregisterDirtyMaterialCallback");
-		addMember(l,get_defaultGraphicMaterial, "get_defaultGraphicMaterial");
-		addMember(l,get_color, "get_color");
-		addMember(l,set_color, "set_color");
-		addMember(l,get_depth, "get_depth");
-		addMember(l,get_rectTransform, "get_rectTransform");
-		addMember(l,get_canvas, "get_canvas");
-		addMember(l,get_canvasRenderer, "get_canvasRenderer");
-		addMember(l,get_defaultMaterial, "get_defaultMaterial");
-		addMember(l,get_material, "get_material");
-		addMember(l,set_material, "set_material");
-		addMember(l,get_materialForRendering, "get_materialForRendering");
-		addMember(l,get_mainTexture, "get_mainTexture");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.Graphic),typeof(UnityEngine.EventSystems.UIBehaviour));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,SetAllDirty);
+		addMember(l,SetLayoutDirty);
+		addMember(l,SetVerticesDirty);
+		addMember(l,SetMaterialDirty);
+		addMember(l,Rebuild);
+		addMember(l,OnRebuildRequested);
+		addMember(l,SetNativeSize);
+		addMember(l,Raycast);
+		addMember(l,PixelAdjustPoint);
+		addMember(l,GetPixelAdjustedRect);
+		addMember(l,CrossFadeColor);
+		addMember(l,CrossFadeAlpha);
+		addMember(l,RegisterDirtyLayoutCallback);
+		addMember(l,UnregisterDirtyLayoutCallback);
+		addMember(l,RegisterDirtyVerticesCallback);
+		addMember(l,UnregisterDirtyVerticesCallback);
+		addMember(l,RegisterDirtyMaterialCallback);
+		addMember(l,UnregisterDirtyMaterialCallback);
+		addMember(l,"defaultGraphicMaterial",get_defaultGraphicMaterial,null);
+		addMember(l,"color",get_color,set_color);
+		addMember(l,"depth",get_depth,null);
+		addMember(l,"rectTransform",get_rectTransform,null);
+		addMember(l,"canvas",get_canvas,null);
+		addMember(l,"canvasRenderer",get_canvasRenderer,null);
+		addMember(l,"defaultMaterial",get_defaultMaterial,null);
+		addMember(l,"material",get_material,set_material);
+		addMember(l,"materialForRendering",get_materialForRendering,null);
+		addMember(l,"mainTexture",get_mainTexture,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Graphic),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

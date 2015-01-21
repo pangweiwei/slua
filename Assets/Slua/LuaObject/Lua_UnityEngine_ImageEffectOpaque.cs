@@ -17,8 +17,6 @@ public class Lua_UnityEngine_ImageEffectOpaque : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ImageEffectOpaque");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.ImageEffectOpaque));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.ImageEffectOpaque));
 	}
 }

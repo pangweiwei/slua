@@ -11,7 +11,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsInteractable(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			System.Boolean ret=self.IsInteractable();
 			pushValue(l,ret);
 			return 1;
@@ -24,7 +24,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindSelectable(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			UnityEngine.Vector3 a1;
 			checkType(l,2,out a1);
 			UnityEngine.UI.Selectable ret=self.FindSelectable(a1);
@@ -39,7 +39,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindSelectableOnLeft(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			UnityEngine.UI.Selectable ret=self.FindSelectableOnLeft();
 			pushValue(l,ret);
 			return 1;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindSelectableOnRight(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			UnityEngine.UI.Selectable ret=self.FindSelectableOnRight();
 			pushValue(l,ret);
 			return 1;
@@ -65,7 +65,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindSelectableOnUp(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			UnityEngine.UI.Selectable ret=self.FindSelectableOnUp();
 			pushValue(l,ret);
 			return 1;
@@ -78,7 +78,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindSelectableOnDown(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			UnityEngine.UI.Selectable ret=self.FindSelectableOnDown();
 			pushValue(l,ret);
 			return 1;
@@ -91,7 +91,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnMove(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			UnityEngine.EventSystems.AxisEventData a1;
 			checkType(l,2,out a1);
 			self.OnMove(a1);
@@ -105,7 +105,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnPointerDown(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			UnityEngine.EventSystems.PointerEventData a1;
 			checkType(l,2,out a1);
 			self.OnPointerDown(a1);
@@ -119,7 +119,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnPointerUp(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			UnityEngine.EventSystems.PointerEventData a1;
 			checkType(l,2,out a1);
 			self.OnPointerUp(a1);
@@ -133,7 +133,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnPointerEnter(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			UnityEngine.EventSystems.PointerEventData a1;
 			checkType(l,2,out a1);
 			self.OnPointerEnter(a1);
@@ -147,7 +147,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnPointerExit(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			UnityEngine.EventSystems.PointerEventData a1;
 			checkType(l,2,out a1);
 			self.OnPointerExit(a1);
@@ -161,7 +161,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnSelect(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			UnityEngine.EventSystems.BaseEventData a1;
 			checkType(l,2,out a1);
 			self.OnSelect(a1);
@@ -175,7 +175,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnDeselect(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			UnityEngine.EventSystems.BaseEventData a1;
 			checkType(l,2,out a1);
 			self.OnDeselect(a1);
@@ -189,7 +189,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Select(IntPtr l) {
 		try{
-			UnityEngine.UI.Selectable self=checkSelf<UnityEngine.UI.Selectable>(l);
+			UnityEngine.UI.Selectable self=(UnityEngine.UI.Selectable)checkSelf(l);
 			self.Select();
 			return 0;
 		}
@@ -205,13 +205,13 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_navigation(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		pushValue(l,o.navigation);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_navigation(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		UnityEngine.UI.Navigation v;
 		checkType(l,2,out v);
 		o.navigation=v;
@@ -219,13 +219,13 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_transition(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		pushValue(l,o.transition);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_transition(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		UnityEngine.UI.Selectable.Transition v;
 		checkEnum(l,2,out v);
 		o.transition=v;
@@ -233,13 +233,13 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_colors(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		pushValue(l,o.colors);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_colors(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		UnityEngine.UI.ColorBlock v;
 		checkType(l,2,out v);
 		o.colors=v;
@@ -247,13 +247,13 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_spriteState(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		pushValue(l,o.spriteState);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_spriteState(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		UnityEngine.UI.SpriteState v;
 		checkType(l,2,out v);
 		o.spriteState=v;
@@ -261,13 +261,13 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_animationTriggers(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		pushValue(l,o.animationTriggers);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_animationTriggers(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		UnityEngine.UI.AnimationTriggers v;
 		checkType(l,2,out v);
 		o.animationTriggers=v;
@@ -275,13 +275,13 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_targetGraphic(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		pushValue(l,o.targetGraphic);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_targetGraphic(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		UnityEngine.UI.Graphic v;
 		checkType(l,2,out v);
 		o.targetGraphic=v;
@@ -289,13 +289,13 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_interactable(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		pushValue(l,o.interactable);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_interactable(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.interactable=v;
@@ -303,13 +303,13 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_image(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		pushValue(l,o.image);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_image(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		UnityEngine.UI.Image v;
 		checkType(l,2,out v);
 		o.image=v;
@@ -317,46 +317,36 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_animator(IntPtr l) {
-		UnityEngine.UI.Selectable o = checkSelf<UnityEngine.UI.Selectable>(l);
+		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
 		pushValue(l,o.animator);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Selectable");
-		addMember(l,IsInteractable, "IsInteractable");
-		addMember(l,FindSelectable, "FindSelectable");
-		addMember(l,FindSelectableOnLeft, "FindSelectableOnLeft");
-		addMember(l,FindSelectableOnRight, "FindSelectableOnRight");
-		addMember(l,FindSelectableOnUp, "FindSelectableOnUp");
-		addMember(l,FindSelectableOnDown, "FindSelectableOnDown");
-		addMember(l,OnMove, "OnMove");
-		addMember(l,OnPointerDown, "OnPointerDown");
-		addMember(l,OnPointerUp, "OnPointerUp");
-		addMember(l,OnPointerEnter, "OnPointerEnter");
-		addMember(l,OnPointerExit, "OnPointerExit");
-		addMember(l,OnSelect, "OnSelect");
-		addMember(l,OnDeselect, "OnDeselect");
-		addMember(l,Select, "Select");
-		addMember(l,get_allSelectables, "get_allSelectables");
-		addMember(l,get_navigation, "get_navigation");
-		addMember(l,set_navigation, "set_navigation");
-		addMember(l,get_transition, "get_transition");
-		addMember(l,set_transition, "set_transition");
-		addMember(l,get_colors, "get_colors");
-		addMember(l,set_colors, "set_colors");
-		addMember(l,get_spriteState, "get_spriteState");
-		addMember(l,set_spriteState, "set_spriteState");
-		addMember(l,get_animationTriggers, "get_animationTriggers");
-		addMember(l,set_animationTriggers, "set_animationTriggers");
-		addMember(l,get_targetGraphic, "get_targetGraphic");
-		addMember(l,set_targetGraphic, "set_targetGraphic");
-		addMember(l,get_interactable, "get_interactable");
-		addMember(l,set_interactable, "set_interactable");
-		addMember(l,get_image, "get_image");
-		addMember(l,set_image, "set_image");
-		addMember(l,get_animator, "get_animator");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.Selectable),typeof(UnityEngine.EventSystems.UIBehaviour));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,IsInteractable);
+		addMember(l,FindSelectable);
+		addMember(l,FindSelectableOnLeft);
+		addMember(l,FindSelectableOnRight);
+		addMember(l,FindSelectableOnUp);
+		addMember(l,FindSelectableOnDown);
+		addMember(l,OnMove);
+		addMember(l,OnPointerDown);
+		addMember(l,OnPointerUp);
+		addMember(l,OnPointerEnter);
+		addMember(l,OnPointerExit);
+		addMember(l,OnSelect);
+		addMember(l,OnDeselect);
+		addMember(l,Select);
+		addMember(l,"allSelectables",get_allSelectables,null);
+		addMember(l,"navigation",get_navigation,set_navigation);
+		addMember(l,"transition",get_transition,set_transition);
+		addMember(l,"colors",get_colors,set_colors);
+		addMember(l,"spriteState",get_spriteState,set_spriteState);
+		addMember(l,"animationTriggers",get_animationTriggers,set_animationTriggers);
+		addMember(l,"targetGraphic",get_targetGraphic,set_targetGraphic);
+		addMember(l,"interactable",get_interactable,set_interactable);
+		addMember(l,"image",get_image,set_image);
+		addMember(l,"animator",get_animator,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Selectable),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

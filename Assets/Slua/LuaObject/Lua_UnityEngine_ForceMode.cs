@@ -12,15 +12,11 @@ public class Lua_UnityEngine_ForceMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.ForceMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Force");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "Acceleration");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Impulse");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "VelocityChange");
+		getEnumTable(l,"UnityEngine.ForceMode");
+		addMember(l,0,"Force");
+		addMember(l,5,"Acceleration");
+		addMember(l,1,"Impulse");
+		addMember(l,2,"VelocityChange");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

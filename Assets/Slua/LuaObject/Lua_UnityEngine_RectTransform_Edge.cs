@@ -12,15 +12,11 @@ public class Lua_UnityEngine_RectTransform_Edge : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.RectTransform.Edge");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Left");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Right");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Top");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Bottom");
+		getEnumTable(l,"UnityEngine.RectTransform.Edge");
+		addMember(l,0,"Left");
+		addMember(l,1,"Right");
+		addMember(l,2,"Top");
+		addMember(l,3,"Bottom");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

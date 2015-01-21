@@ -11,7 +11,7 @@ public class Lua_UnityEngine_Display : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Activate(IntPtr l) {
 		try{
-			UnityEngine.Display self=checkSelf<UnityEngine.Display>(l);
+			UnityEngine.Display self=(UnityEngine.Display)checkSelf(l);
 			self.Activate();
 			return 0;
 		}
@@ -23,7 +23,7 @@ public class Lua_UnityEngine_Display : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetRenderingResolution(IntPtr l) {
 		try{
-			UnityEngine.Display self=checkSelf<UnityEngine.Display>(l);
+			UnityEngine.Display self=(UnityEngine.Display)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			System.Int32 a2;
@@ -50,37 +50,37 @@ public class Lua_UnityEngine_Display : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_renderingWidth(IntPtr l) {
-		UnityEngine.Display o = checkSelf<UnityEngine.Display>(l);
+		UnityEngine.Display o = (UnityEngine.Display)checkSelf(l);
 		pushValue(l,o.renderingWidth);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_renderingHeight(IntPtr l) {
-		UnityEngine.Display o = checkSelf<UnityEngine.Display>(l);
+		UnityEngine.Display o = (UnityEngine.Display)checkSelf(l);
 		pushValue(l,o.renderingHeight);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_systemWidth(IntPtr l) {
-		UnityEngine.Display o = checkSelf<UnityEngine.Display>(l);
+		UnityEngine.Display o = (UnityEngine.Display)checkSelf(l);
 		pushValue(l,o.systemWidth);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_systemHeight(IntPtr l) {
-		UnityEngine.Display o = checkSelf<UnityEngine.Display>(l);
+		UnityEngine.Display o = (UnityEngine.Display)checkSelf(l);
 		pushValue(l,o.systemHeight);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_colorBuffer(IntPtr l) {
-		UnityEngine.Display o = checkSelf<UnityEngine.Display>(l);
+		UnityEngine.Display o = (UnityEngine.Display)checkSelf(l);
 		pushValue(l,o.colorBuffer);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_depthBuffer(IntPtr l) {
-		UnityEngine.Display o = checkSelf<UnityEngine.Display>(l);
+		UnityEngine.Display o = (UnityEngine.Display)checkSelf(l);
 		pushValue(l,o.depthBuffer);
 		return 1;
 	}
@@ -91,19 +91,16 @@ public class Lua_UnityEngine_Display : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Display");
-		addMember(l,Activate, "Activate");
-		addMember(l,SetRenderingResolution, "SetRenderingResolution");
-		addMember(l,get_displays, "get_displays");
-		addMember(l,set_displays, "set_displays");
-		addMember(l,get_renderingWidth, "get_renderingWidth");
-		addMember(l,get_renderingHeight, "get_renderingHeight");
-		addMember(l,get_systemWidth, "get_systemWidth");
-		addMember(l,get_systemHeight, "get_systemHeight");
-		addMember(l,get_colorBuffer, "get_colorBuffer");
-		addMember(l,get_depthBuffer, "get_depthBuffer");
-		addMember(l,get_main, "get_main");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Display));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Activate);
+		addMember(l,SetRenderingResolution);
+		addMember(l,"displays",get_displays,set_displays);
+		addMember(l,"renderingWidth",get_renderingWidth,null);
+		addMember(l,"renderingHeight",get_renderingHeight,null);
+		addMember(l,"systemWidth",get_systemWidth,null);
+		addMember(l,"systemHeight",get_systemHeight,null);
+		addMember(l,"colorBuffer",get_colorBuffer,null);
+		addMember(l,"depthBuffer",get_depthBuffer,null);
+		addMember(l,"main",get_main,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Display));
 	}
 }

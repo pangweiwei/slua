@@ -18,7 +18,7 @@ public class Lua_UnityEngine_LightProbes : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetInterpolatedLightProbe(IntPtr l) {
 		try{
-			UnityEngine.LightProbes self=checkSelf<UnityEngine.LightProbes>(l);
+			UnityEngine.LightProbes self=(UnityEngine.LightProbes)checkSelf(l);
 			UnityEngine.Vector3 a1;
 			checkType(l,2,out a1);
 			UnityEngine.Renderer a2;
@@ -35,19 +35,19 @@ public class Lua_UnityEngine_LightProbes : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_positions(IntPtr l) {
-		UnityEngine.LightProbes o = checkSelf<UnityEngine.LightProbes>(l);
+		UnityEngine.LightProbes o = (UnityEngine.LightProbes)checkSelf(l);
 		pushValue(l,o.positions);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_coefficients(IntPtr l) {
-		UnityEngine.LightProbes o = checkSelf<UnityEngine.LightProbes>(l);
+		UnityEngine.LightProbes o = (UnityEngine.LightProbes)checkSelf(l);
 		pushValue(l,o.coefficients);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_coefficients(IntPtr l) {
-		UnityEngine.LightProbes o = checkSelf<UnityEngine.LightProbes>(l);
+		UnityEngine.LightProbes o = (UnityEngine.LightProbes)checkSelf(l);
 		System.Single[] v;
 		checkType(l,2,out v);
 		o.coefficients=v;
@@ -55,26 +55,23 @@ public class Lua_UnityEngine_LightProbes : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_count(IntPtr l) {
-		UnityEngine.LightProbes o = checkSelf<UnityEngine.LightProbes>(l);
+		UnityEngine.LightProbes o = (UnityEngine.LightProbes)checkSelf(l);
 		pushValue(l,o.count);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_cellCount(IntPtr l) {
-		UnityEngine.LightProbes o = checkSelf<UnityEngine.LightProbes>(l);
+		UnityEngine.LightProbes o = (UnityEngine.LightProbes)checkSelf(l);
 		pushValue(l,o.cellCount);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LightProbes");
-		addMember(l,GetInterpolatedLightProbe, "GetInterpolatedLightProbe");
-		addMember(l,get_positions, "get_positions");
-		addMember(l,get_coefficients, "get_coefficients");
-		addMember(l,set_coefficients, "set_coefficients");
-		addMember(l,get_count, "get_count");
-		addMember(l,get_cellCount, "get_cellCount");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.LightProbes),typeof(UnityEngine.Object));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,GetInterpolatedLightProbe);
+		addMember(l,"positions",get_positions,null);
+		addMember(l,"coefficients",get_coefficients,set_coefficients);
+		addMember(l,"count",get_count,null);
+		addMember(l,"cellCount",get_cellCount,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.LightProbes),typeof(UnityEngine.Object));
 	}
 }

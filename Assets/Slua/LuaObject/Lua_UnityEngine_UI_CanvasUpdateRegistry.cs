@@ -78,14 +78,12 @@ public class Lua_UnityEngine_UI_CanvasUpdateRegistry : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.CanvasUpdateRegistry");
-		addMember(l,RegisterCanvasElementForLayoutRebuild, "RegisterCanvasElementForLayoutRebuild");
-		addMember(l,RegisterCanvasElementForGraphicRebuild, "RegisterCanvasElementForGraphicRebuild");
-		addMember(l,UnRegisterCanvasElementForRebuild, "UnRegisterCanvasElementForRebuild");
-		addMember(l,IsRebuildingLayout, "IsRebuildingLayout");
-		addMember(l,IsRebuildingGraphics, "IsRebuildingGraphics");
-		addMember(l,get_instance, "get_instance");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.CanvasUpdateRegistry));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,RegisterCanvasElementForLayoutRebuild);
+		addMember(l,RegisterCanvasElementForGraphicRebuild);
+		addMember(l,UnRegisterCanvasElementForRebuild);
+		addMember(l,IsRebuildingLayout);
+		addMember(l,IsRebuildingGraphics);
+		addMember(l,"instance",get_instance,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.CanvasUpdateRegistry));
 	}
 }

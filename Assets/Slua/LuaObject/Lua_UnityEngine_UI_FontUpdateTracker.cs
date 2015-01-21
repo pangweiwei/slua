@@ -36,10 +36,8 @@ public class Lua_UnityEngine_UI_FontUpdateTracker : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.FontUpdateTracker");
-		addMember(l,TrackText, "TrackText");
-		addMember(l,UntrackText, "UntrackText");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.FontUpdateTracker));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,TrackText);
+		addMember(l,UntrackText);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.FontUpdateTracker));
 	}
 }

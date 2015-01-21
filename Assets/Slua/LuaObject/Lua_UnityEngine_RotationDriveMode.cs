@@ -12,11 +12,9 @@ public class Lua_UnityEngine_RotationDriveMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.RotationDriveMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "XYAndZ");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Slerp");
+		getEnumTable(l,"UnityEngine.RotationDriveMode");
+		addMember(l,0,"XYAndZ");
+		addMember(l,1,"Slerp");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

@@ -186,25 +186,20 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Profiler");
-		addMember(l,AddFramesFromFile, "AddFramesFromFile");
-		addMember(l,BeginSample, "BeginSample");
-		addMember(l,EndSample, "EndSample");
-		addMember(l,GetRuntimeMemorySize, "GetRuntimeMemorySize");
-		addMember(l,GetMonoHeapSize, "GetMonoHeapSize");
-		addMember(l,GetMonoUsedSize, "GetMonoUsedSize");
-		addMember(l,GetTotalAllocatedMemory, "GetTotalAllocatedMemory");
-		addMember(l,GetTotalUnusedReservedMemory, "GetTotalUnusedReservedMemory");
-		addMember(l,GetTotalReservedMemory, "GetTotalReservedMemory");
-		addMember(l,get_supported, "get_supported");
-		addMember(l,get_logFile, "get_logFile");
-		addMember(l,set_logFile, "set_logFile");
-		addMember(l,get_enableBinaryLog, "get_enableBinaryLog");
-		addMember(l,set_enableBinaryLog, "set_enableBinaryLog");
-		addMember(l,get_enabled, "get_enabled");
-		addMember(l,set_enabled, "set_enabled");
-		addMember(l,get_usedHeapSize, "get_usedHeapSize");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Profiler));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,AddFramesFromFile);
+		addMember(l,BeginSample);
+		addMember(l,EndSample);
+		addMember(l,GetRuntimeMemorySize);
+		addMember(l,GetMonoHeapSize);
+		addMember(l,GetMonoUsedSize);
+		addMember(l,GetTotalAllocatedMemory);
+		addMember(l,GetTotalUnusedReservedMemory);
+		addMember(l,GetTotalReservedMemory);
+		addMember(l,"supported",get_supported,null);
+		addMember(l,"logFile",get_logFile,set_logFile);
+		addMember(l,"enableBinaryLog",get_enableBinaryLog,set_enableBinaryLog);
+		addMember(l,"enabled",get_enabled,set_enabled);
+		addMember(l,"usedHeapSize",get_usedHeapSize,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Profiler));
 	}
 }

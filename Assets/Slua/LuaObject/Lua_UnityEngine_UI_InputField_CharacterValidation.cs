@@ -12,19 +12,13 @@ public class Lua_UnityEngine_UI_InputField_CharacterValidation : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.InputField.CharacterValidation");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "None");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Integer");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Decimal");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Alphanumeric");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Name");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "EmailAddress");
+		getEnumTable(l,"UnityEngine.UI.InputField.CharacterValidation");
+		addMember(l,0,"None");
+		addMember(l,1,"Integer");
+		addMember(l,2,"Decimal");
+		addMember(l,3,"Alphanumeric");
+		addMember(l,4,"Name");
+		addMember(l,5,"EmailAddress");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

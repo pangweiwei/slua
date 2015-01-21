@@ -12,13 +12,10 @@ public class Lua_UnityEngine_LightmapsMode : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.LightmapsMode");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Single");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Dual");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Directional");
+		getEnumTable(l,"UnityEngine.LightmapsMode");
+		addMember(l,0,"Single");
+		addMember(l,1,"Dual");
+		addMember(l,2,"Directional");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

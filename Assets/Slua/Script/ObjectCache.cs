@@ -95,11 +95,21 @@ namespace SLua
             }
         }
         Dictionary<object, ObjPair> objMap = new Dictionary<object, ObjPair>();
+
+        static IntPtr oldl = IntPtr.Zero;
+        static internal ObjectCache oldoc = null;
+
         internal static ObjectCache get(IntPtr l)
         {
+            if (oldl == l)
+                return oldoc;
             ObjectCache oc;
             if (multiState.TryGetValue(l, out oc))
+            {
+                oldl = l;
+                oldoc = oc;
                 return oc;
+            }
             return null;
         }
 
@@ -112,6 +122,8 @@ namespace SLua
         {
             ObjectCache oc = new ObjectCache();
             multiState[l] = oc;
+            oldl = l;
+            oldoc = oc;
         }
 
         internal void gc(int index)

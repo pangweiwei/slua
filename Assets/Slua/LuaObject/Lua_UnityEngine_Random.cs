@@ -88,17 +88,14 @@ public class Lua_UnityEngine_Random : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Random");
-		addMember(l,Range, "Range");
-		addMember(l,get_seed, "get_seed");
-		addMember(l,set_seed, "set_seed");
-		addMember(l,get_value, "get_value");
-		addMember(l,get_insideUnitSphere, "get_insideUnitSphere");
-		addMember(l,get_insideUnitCircle, "get_insideUnitCircle");
-		addMember(l,get_onUnitSphere, "get_onUnitSphere");
-		addMember(l,get_rotation, "get_rotation");
-		addMember(l,get_rotationUniform, "get_rotationUniform");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Random));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Range);
+		addMember(l,"seed",get_seed,set_seed);
+		addMember(l,"value",get_value,null);
+		addMember(l,"insideUnitSphere",get_insideUnitSphere,null);
+		addMember(l,"insideUnitCircle",get_insideUnitCircle,null);
+		addMember(l,"onUnitSphere",get_onUnitSphere,null);
+		addMember(l,"rotation",get_rotation,null);
+		addMember(l,"rotationUniform",get_rotationUniform,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Random));
 	}
 }

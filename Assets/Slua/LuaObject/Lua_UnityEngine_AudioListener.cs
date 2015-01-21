@@ -101,13 +101,13 @@ public class Lua_UnityEngine_AudioListener : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_velocityUpdateMode(IntPtr l) {
-		UnityEngine.AudioListener o = checkSelf<UnityEngine.AudioListener>(l);
+		UnityEngine.AudioListener o = (UnityEngine.AudioListener)checkSelf(l);
 		pushValue(l,o.velocityUpdateMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_velocityUpdateMode(IntPtr l) {
-		UnityEngine.AudioListener o = checkSelf<UnityEngine.AudioListener>(l);
+		UnityEngine.AudioListener o = (UnityEngine.AudioListener)checkSelf(l);
 		UnityEngine.AudioVelocityUpdateMode v;
 		checkEnum(l,2,out v);
 		o.velocityUpdateMode=v;
@@ -115,16 +115,11 @@ public class Lua_UnityEngine_AudioListener : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioListener");
-		addMember(l,GetOutputData, "GetOutputData");
-		addMember(l,GetSpectrumData, "GetSpectrumData");
-		addMember(l,get_volume, "get_volume");
-		addMember(l,set_volume, "set_volume");
-		addMember(l,get_pause, "get_pause");
-		addMember(l,set_pause, "set_pause");
-		addMember(l,get_velocityUpdateMode, "get_velocityUpdateMode");
-		addMember(l,set_velocityUpdateMode, "set_velocityUpdateMode");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.AudioListener),typeof(UnityEngine.Behaviour));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,GetOutputData);
+		addMember(l,GetSpectrumData);
+		addMember(l,"volume",get_volume,set_volume);
+		addMember(l,"pause",get_pause,set_pause);
+		addMember(l,"velocityUpdateMode",get_velocityUpdateMode,set_velocityUpdateMode);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioListener),typeof(UnityEngine.Behaviour));
 	}
 }

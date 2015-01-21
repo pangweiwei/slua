@@ -12,15 +12,11 @@ public class Lua_UnityEngine_AvatarIKGoal : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.AvatarIKGoal");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "LeftFoot");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "RightFoot");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "LeftHand");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "RightHand");
+		getEnumTable(l,"UnityEngine.AvatarIKGoal");
+		addMember(l,0,"LeftFoot");
+		addMember(l,1,"RightFoot");
+		addMember(l,2,"LeftHand");
+		addMember(l,3,"RightHand");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

@@ -18,8 +18,7 @@ public class Lua_HelloWorld : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int say(IntPtr l) {
 		try{
-			HelloWorld self=checkSelf<HelloWorld>(l);
-			self.say();
+			HelloWorld.say();
 			return 0;
 		}
 		catch(Exception e) {
@@ -30,7 +29,7 @@ public class Lua_HelloWorld : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int foo(IntPtr l) {
 		try{
-			HelloWorld self=checkSelf<HelloWorld>(l);
+			HelloWorld self=(HelloWorld)checkSelf(l);
 			Dictionary<System.String,UnityEngine.GameObject> ret=self.foo();
 			pushValue(l,ret);
 			return 1;
@@ -43,7 +42,7 @@ public class Lua_HelloWorld : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int perf(IntPtr l) {
 		try{
-			HelloWorld self=checkSelf<HelloWorld>(l);
+			HelloWorld self=(HelloWorld)checkSelf(l);
 			self.perf();
 			return 0;
 		}
@@ -65,14 +64,26 @@ public class Lua_HelloWorld : LuaObject {
 			return 0;
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int testset(IntPtr l) {
+		try{
+			UnityEngine.GameObject a1;
+			checkType(l,1,out a1);
+			HelloWorld.testset(a1);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"HelloWorld");
-		addMember(l,say, "say");
-		addMember(l,foo, "foo");
-		addMember(l,perf, "perf");
-		addMember(l,testvec3, "testvec3");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(HelloWorld));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,say);
+		addMember(l,foo);
+		addMember(l,perf);
+		addMember(l,testvec3);
+		addMember(l,testset);
+		createTypeMetatable(l,constructor, typeof(HelloWorld));
 	}
 }

@@ -22,7 +22,7 @@ public class Lua_UnityEngine_Ray : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetPoint(IntPtr l) {
 		try{
-			UnityEngine.Ray self=checkSelf<UnityEngine.Ray>(l);
+			UnityEngine.Ray self=(UnityEngine.Ray)checkSelf(l);
 			System.Single a1;
 			checkType(l,2,out a1);
 			UnityEngine.Vector3 ret=self.GetPoint(a1);
@@ -36,13 +36,13 @@ public class Lua_UnityEngine_Ray : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_origin(IntPtr l) {
-		UnityEngine.Ray o = checkSelf<UnityEngine.Ray>(l);
+		UnityEngine.Ray o = (UnityEngine.Ray)checkSelf(l);
 		pushValue(l,o.origin);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_origin(IntPtr l) {
-		UnityEngine.Ray o = checkSelf<UnityEngine.Ray>(l);
+		UnityEngine.Ray o = (UnityEngine.Ray)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.origin=v;
@@ -51,13 +51,13 @@ public class Lua_UnityEngine_Ray : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_direction(IntPtr l) {
-		UnityEngine.Ray o = checkSelf<UnityEngine.Ray>(l);
+		UnityEngine.Ray o = (UnityEngine.Ray)checkSelf(l);
 		pushValue(l,o.direction);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_direction(IntPtr l) {
-		UnityEngine.Ray o = checkSelf<UnityEngine.Ray>(l);
+		UnityEngine.Ray o = (UnityEngine.Ray)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.direction=v;
@@ -66,13 +66,9 @@ public class Lua_UnityEngine_Ray : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Ray");
-		addMember(l,GetPoint, "GetPoint");
-		addMember(l,get_origin, "get_origin");
-		addMember(l,set_origin, "set_origin");
-		addMember(l,get_direction, "get_direction");
-		addMember(l,set_direction, "set_direction");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Ray));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,GetPoint);
+		addMember(l,"origin",get_origin,set_origin);
+		addMember(l,"direction",get_direction,set_direction);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Ray));
 	}
 }

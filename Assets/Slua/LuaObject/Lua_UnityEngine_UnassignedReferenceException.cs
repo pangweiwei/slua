@@ -33,8 +33,6 @@ public class Lua_UnityEngine_UnassignedReferenceException : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UnassignedReferenceException");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UnassignedReferenceException));
-		LuaDLL.lua_pop(l, 1);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UnassignedReferenceException));
 	}
 }

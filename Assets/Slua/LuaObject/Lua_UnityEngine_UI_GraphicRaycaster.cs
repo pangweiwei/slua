@@ -11,7 +11,7 @@ public class Lua_UnityEngine_UI_GraphicRaycaster : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Raycast(IntPtr l) {
 		try{
-			UnityEngine.UI.GraphicRaycaster self=checkSelf<UnityEngine.UI.GraphicRaycaster>(l);
+			UnityEngine.UI.GraphicRaycaster self=(UnityEngine.UI.GraphicRaycaster)checkSelf(l);
 			UnityEngine.EventSystems.PointerEventData a1;
 			checkType(l,2,out a1);
 			List<UnityEngine.EventSystems.RaycastResult> a2;
@@ -26,13 +26,13 @@ public class Lua_UnityEngine_UI_GraphicRaycaster : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_ignoreReversedGraphics(IntPtr l) {
-		UnityEngine.UI.GraphicRaycaster o = checkSelf<UnityEngine.UI.GraphicRaycaster>(l);
+		UnityEngine.UI.GraphicRaycaster o = (UnityEngine.UI.GraphicRaycaster)checkSelf(l);
 		pushValue(l,o.ignoreReversedGraphics);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_ignoreReversedGraphics(IntPtr l) {
-		UnityEngine.UI.GraphicRaycaster o = checkSelf<UnityEngine.UI.GraphicRaycaster>(l);
+		UnityEngine.UI.GraphicRaycaster o = (UnityEngine.UI.GraphicRaycaster)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.ignoreReversedGraphics=v;
@@ -40,13 +40,13 @@ public class Lua_UnityEngine_UI_GraphicRaycaster : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_blockingObjects(IntPtr l) {
-		UnityEngine.UI.GraphicRaycaster o = checkSelf<UnityEngine.UI.GraphicRaycaster>(l);
+		UnityEngine.UI.GraphicRaycaster o = (UnityEngine.UI.GraphicRaycaster)checkSelf(l);
 		pushValue(l,o.blockingObjects);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_blockingObjects(IntPtr l) {
-		UnityEngine.UI.GraphicRaycaster o = checkSelf<UnityEngine.UI.GraphicRaycaster>(l);
+		UnityEngine.UI.GraphicRaycaster o = (UnityEngine.UI.GraphicRaycaster)checkSelf(l);
 		UnityEngine.UI.GraphicRaycaster.BlockingObjects v;
 		checkEnum(l,2,out v);
 		o.blockingObjects=v;
@@ -54,34 +54,30 @@ public class Lua_UnityEngine_UI_GraphicRaycaster : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_sortOrderPriority(IntPtr l) {
-		UnityEngine.UI.GraphicRaycaster o = checkSelf<UnityEngine.UI.GraphicRaycaster>(l);
+		UnityEngine.UI.GraphicRaycaster o = (UnityEngine.UI.GraphicRaycaster)checkSelf(l);
 		pushValue(l,o.sortOrderPriority);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_renderOrderPriority(IntPtr l) {
-		UnityEngine.UI.GraphicRaycaster o = checkSelf<UnityEngine.UI.GraphicRaycaster>(l);
+		UnityEngine.UI.GraphicRaycaster o = (UnityEngine.UI.GraphicRaycaster)checkSelf(l);
 		pushValue(l,o.renderOrderPriority);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_eventCamera(IntPtr l) {
-		UnityEngine.UI.GraphicRaycaster o = checkSelf<UnityEngine.UI.GraphicRaycaster>(l);
+		UnityEngine.UI.GraphicRaycaster o = (UnityEngine.UI.GraphicRaycaster)checkSelf(l);
 		pushValue(l,o.eventCamera);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.GraphicRaycaster");
-		addMember(l,Raycast, "Raycast");
-		addMember(l,get_ignoreReversedGraphics, "get_ignoreReversedGraphics");
-		addMember(l,set_ignoreReversedGraphics, "set_ignoreReversedGraphics");
-		addMember(l,get_blockingObjects, "get_blockingObjects");
-		addMember(l,set_blockingObjects, "set_blockingObjects");
-		addMember(l,get_sortOrderPriority, "get_sortOrderPriority");
-		addMember(l,get_renderOrderPriority, "get_renderOrderPriority");
-		addMember(l,get_eventCamera, "get_eventCamera");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.GraphicRaycaster),typeof(UnityEngine.EventSystems.BaseRaycaster));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Raycast);
+		addMember(l,"ignoreReversedGraphics",get_ignoreReversedGraphics,set_ignoreReversedGraphics);
+		addMember(l,"blockingObjects",get_blockingObjects,set_blockingObjects);
+		addMember(l,"sortOrderPriority",get_sortOrderPriority,null);
+		addMember(l,"renderOrderPriority",get_renderOrderPriority,null);
+		addMember(l,"eventCamera",get_eventCamera,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.GraphicRaycaster),typeof(UnityEngine.EventSystems.BaseRaycaster));
 	}
 }

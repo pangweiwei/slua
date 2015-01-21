@@ -277,20 +277,17 @@ public class Lua_UnityEngine_Debug : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Debug");
-		addMember(l,DrawLine, "DrawLine");
-		addMember(l,DrawRay, "DrawRay");
-		addMember(l,Break, "Break");
-		addMember(l,DebugBreak, "DebugBreak");
-		addMember(l,Log, "Log");
-		addMember(l,LogError, "LogError");
-		addMember(l,ClearDeveloperConsole, "ClearDeveloperConsole");
-		addMember(l,LogException, "LogException");
-		addMember(l,LogWarning, "LogWarning");
-		addMember(l,get_developerConsoleVisible, "get_developerConsoleVisible");
-		addMember(l,set_developerConsoleVisible, "set_developerConsoleVisible");
-		addMember(l,get_isDebugBuild, "get_isDebugBuild");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Debug));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,DrawLine);
+		addMember(l,DrawRay);
+		addMember(l,Break);
+		addMember(l,DebugBreak);
+		addMember(l,Log);
+		addMember(l,LogError);
+		addMember(l,ClearDeveloperConsole);
+		addMember(l,LogException);
+		addMember(l,LogWarning);
+		addMember(l,"developerConsoleVisible",get_developerConsoleVisible,set_developerConsoleVisible);
+		addMember(l,"isDebugBuild",get_isDebugBuild,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Debug));
 	}
 }

@@ -12,17 +12,12 @@ public class Lua_UnityEngine_UI_CanvasScaler_Unit : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.UI.CanvasScaler.Unit");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Centimeters");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Millimeters");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Inches");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Points");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "Picas");
+		getEnumTable(l,"UnityEngine.UI.CanvasScaler.Unit");
+		addMember(l,0,"Centimeters");
+		addMember(l,1,"Millimeters");
+		addMember(l,2,"Inches");
+		addMember(l,3,"Points");
+		addMember(l,4,"Picas");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

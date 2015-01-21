@@ -33,7 +33,7 @@ public class Lua_UnityEngine_ComputeBuffer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Release(IntPtr l) {
 		try{
-			UnityEngine.ComputeBuffer self=checkSelf<UnityEngine.ComputeBuffer>(l);
+			UnityEngine.ComputeBuffer self=(UnityEngine.ComputeBuffer)checkSelf(l);
 			self.Release();
 			return 0;
 		}
@@ -45,7 +45,7 @@ public class Lua_UnityEngine_ComputeBuffer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetData(IntPtr l) {
 		try{
-			UnityEngine.ComputeBuffer self=checkSelf<UnityEngine.ComputeBuffer>(l);
+			UnityEngine.ComputeBuffer self=(UnityEngine.ComputeBuffer)checkSelf(l);
 			System.Array a1;
 			checkType(l,2,out a1);
 			self.SetData(a1);
@@ -59,7 +59,7 @@ public class Lua_UnityEngine_ComputeBuffer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetData(IntPtr l) {
 		try{
-			UnityEngine.ComputeBuffer self=checkSelf<UnityEngine.ComputeBuffer>(l);
+			UnityEngine.ComputeBuffer self=(UnityEngine.ComputeBuffer)checkSelf(l);
 			System.Array a1;
 			checkType(l,2,out a1);
 			self.GetData(a1);
@@ -89,26 +89,24 @@ public class Lua_UnityEngine_ComputeBuffer : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_count(IntPtr l) {
-		UnityEngine.ComputeBuffer o = checkSelf<UnityEngine.ComputeBuffer>(l);
+		UnityEngine.ComputeBuffer o = (UnityEngine.ComputeBuffer)checkSelf(l);
 		pushValue(l,o.count);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_stride(IntPtr l) {
-		UnityEngine.ComputeBuffer o = checkSelf<UnityEngine.ComputeBuffer>(l);
+		UnityEngine.ComputeBuffer o = (UnityEngine.ComputeBuffer)checkSelf(l);
 		pushValue(l,o.stride);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ComputeBuffer");
-		addMember(l,Release, "Release");
-		addMember(l,SetData, "SetData");
-		addMember(l,GetData, "GetData");
-		addMember(l,CopyCount, "CopyCount");
-		addMember(l,get_count, "get_count");
-		addMember(l,get_stride, "get_stride");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.ComputeBuffer));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Release);
+		addMember(l,SetData);
+		addMember(l,GetData);
+		addMember(l,CopyCount);
+		addMember(l,"count",get_count,null);
+		addMember(l,"stride",get_stride,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.ComputeBuffer));
 	}
 }

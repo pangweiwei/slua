@@ -100,14 +100,12 @@ public class Lua_UnityEngine_Microphone : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Microphone");
-		addMember(l,Start, "Start");
-		addMember(l,End, "End");
-		addMember(l,IsRecording, "IsRecording");
-		addMember(l,GetPosition, "GetPosition");
-		addMember(l,GetDeviceCaps, "GetDeviceCaps");
-		addMember(l,get_devices, "get_devices");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.Microphone));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Start);
+		addMember(l,End);
+		addMember(l,IsRecording);
+		addMember(l,GetPosition);
+		addMember(l,GetDeviceCaps);
+		addMember(l,"devices",get_devices,null);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.Microphone));
 	}
 }

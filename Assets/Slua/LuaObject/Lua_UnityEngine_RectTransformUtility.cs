@@ -197,18 +197,16 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.RectTransformUtility");
-		addMember(l,RectangleContainsScreenPoint, "RectangleContainsScreenPoint");
-		addMember(l,PixelAdjustPoint, "PixelAdjustPoint");
-		addMember(l,PixelAdjustRect, "PixelAdjustRect");
-		addMember(l,ScreenPointToWorldPointInRectangle, "ScreenPointToWorldPointInRectangle");
-		addMember(l,ScreenPointToLocalPointInRectangle, "ScreenPointToLocalPointInRectangle");
-		addMember(l,ScreenPointToRay, "ScreenPointToRay");
-		addMember(l,WorldToScreenPoint, "WorldToScreenPoint");
-		addMember(l,CalculateRelativeRectTransformBounds, "CalculateRelativeRectTransformBounds");
-		addMember(l,FlipLayoutOnAxis, "FlipLayoutOnAxis");
-		addMember(l,FlipLayoutAxes, "FlipLayoutAxes");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.RectTransformUtility));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,RectangleContainsScreenPoint);
+		addMember(l,PixelAdjustPoint);
+		addMember(l,PixelAdjustRect);
+		addMember(l,ScreenPointToWorldPointInRectangle);
+		addMember(l,ScreenPointToLocalPointInRectangle);
+		addMember(l,ScreenPointToRay);
+		addMember(l,WorldToScreenPoint);
+		addMember(l,CalculateRelativeRectTransformBounds);
+		addMember(l,FlipLayoutOnAxis);
+		addMember(l,FlipLayoutAxes);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.RectTransformUtility));
 	}
 }

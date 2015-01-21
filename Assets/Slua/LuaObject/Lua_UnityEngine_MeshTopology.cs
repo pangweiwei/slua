@@ -12,17 +12,12 @@ public class Lua_UnityEngine_MeshTopology : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.MeshTopology");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Triangles");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "Quads");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "Lines");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "LineStrip");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "Points");
+		getEnumTable(l,"UnityEngine.MeshTopology");
+		addMember(l,0,"Triangles");
+		addMember(l,2,"Quads");
+		addMember(l,3,"Lines");
+		addMember(l,4,"LineStrip");
+		addMember(l,5,"Points");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

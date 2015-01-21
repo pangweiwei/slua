@@ -12,21 +12,14 @@ public class Lua_UnityEngine_DeviceOrientation : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.DeviceOrientation");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Unknown");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "Portrait");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "PortraitUpsideDown");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "LandscapeLeft");
-		LuaDLL.lua_pushinteger(l, 4);
-		LuaDLL.lua_setfield(l, -2, "LandscapeRight");
-		LuaDLL.lua_pushinteger(l, 5);
-		LuaDLL.lua_setfield(l, -2, "FaceUp");
-		LuaDLL.lua_pushinteger(l, 6);
-		LuaDLL.lua_setfield(l, -2, "FaceDown");
+		getEnumTable(l,"UnityEngine.DeviceOrientation");
+		addMember(l,0,"Unknown");
+		addMember(l,1,"Portrait");
+		addMember(l,2,"PortraitUpsideDown");
+		addMember(l,3,"LandscapeLeft");
+		addMember(l,4,"LandscapeRight");
+		addMember(l,5,"FaceUp");
+		addMember(l,6,"FaceDown");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

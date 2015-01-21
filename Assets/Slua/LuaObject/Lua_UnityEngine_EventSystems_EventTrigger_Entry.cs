@@ -17,13 +17,13 @@ public class Lua_UnityEngine_EventSystems_EventTrigger_Entry : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_eventID(IntPtr l) {
-		UnityEngine.EventSystems.EventTrigger.Entry o = checkSelf<UnityEngine.EventSystems.EventTrigger.Entry>(l);
+		UnityEngine.EventSystems.EventTrigger.Entry o = (UnityEngine.EventSystems.EventTrigger.Entry)checkSelf(l);
 		pushValue(l,o.eventID);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_eventID(IntPtr l) {
-		UnityEngine.EventSystems.EventTrigger.Entry o = checkSelf<UnityEngine.EventSystems.EventTrigger.Entry>(l);
+		UnityEngine.EventSystems.EventTrigger.Entry o = (UnityEngine.EventSystems.EventTrigger.Entry)checkSelf(l);
 		UnityEngine.EventSystems.EventTriggerType v;
 		checkEnum(l,2,out v);
 		o.eventID=v;
@@ -31,13 +31,13 @@ public class Lua_UnityEngine_EventSystems_EventTrigger_Entry : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_callback(IntPtr l) {
-		UnityEngine.EventSystems.EventTrigger.Entry o = checkSelf<UnityEngine.EventSystems.EventTrigger.Entry>(l);
+		UnityEngine.EventSystems.EventTrigger.Entry o = (UnityEngine.EventSystems.EventTrigger.Entry)checkSelf(l);
 		pushValue(l,o.callback);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_callback(IntPtr l) {
-		UnityEngine.EventSystems.EventTrigger.Entry o = checkSelf<UnityEngine.EventSystems.EventTrigger.Entry>(l);
+		UnityEngine.EventSystems.EventTrigger.Entry o = (UnityEngine.EventSystems.EventTrigger.Entry)checkSelf(l);
 		UnityEngine.EventSystems.EventTrigger.TriggerEvent v;
 		checkType(l,2,out v);
 		o.callback=v;
@@ -45,12 +45,8 @@ public class Lua_UnityEngine_EventSystems_EventTrigger_Entry : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.EventTrigger.Entry");
-		addMember(l,get_eventID, "get_eventID");
-		addMember(l,set_eventID, "set_eventID");
-		addMember(l,get_callback, "get_callback");
-		addMember(l,set_callback, "set_callback");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.EventSystems.EventTrigger.Entry));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"eventID",get_eventID,set_eventID);
+		addMember(l,"callback",get_callback,set_callback);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.EventTrigger.Entry));
 	}
 }

@@ -12,15 +12,11 @@ public class Lua_UnityEngine_AnimationCullingType : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.AnimationCullingType");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "AlwaysAnimate");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "BasedOnRenderers");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "BasedOnClipBounds");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "BasedOnUserBounds");
+		getEnumTable(l,"UnityEngine.AnimationCullingType");
+		addMember(l,0,"AlwaysAnimate");
+		addMember(l,1,"BasedOnRenderers");
+		addMember(l,2,"BasedOnClipBounds");
+		addMember(l,3,"BasedOnUserBounds");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

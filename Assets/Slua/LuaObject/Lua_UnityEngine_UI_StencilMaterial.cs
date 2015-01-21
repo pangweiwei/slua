@@ -39,10 +39,8 @@ public class Lua_UnityEngine_UI_StencilMaterial : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.StencilMaterial");
-		addMember(l,Add, "Add");
-		addMember(l,Remove, "Remove");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.UI.StencilMaterial));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,Add);
+		addMember(l,Remove);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.StencilMaterial));
 	}
 }

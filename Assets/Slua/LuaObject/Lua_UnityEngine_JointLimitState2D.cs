@@ -12,15 +12,11 @@ public class Lua_UnityEngine_JointLimitState2D : LuaObject {
 		return 1;
 	}
 	static public void reg(IntPtr l) {
-		getTypeTable(l,"UnityEngine.JointLimitState2D");
-		LuaDLL.lua_pushinteger(l, 0);
-		LuaDLL.lua_setfield(l, -2, "Inactive");
-		LuaDLL.lua_pushinteger(l, 1);
-		LuaDLL.lua_setfield(l, -2, "LowerLimit");
-		LuaDLL.lua_pushinteger(l, 2);
-		LuaDLL.lua_setfield(l, -2, "UpperLimit");
-		LuaDLL.lua_pushinteger(l, 3);
-		LuaDLL.lua_setfield(l, -2, "EqualLimits");
+		getEnumTable(l,"UnityEngine.JointLimitState2D");
+		addMember(l,0,"Inactive");
+		addMember(l,1,"LowerLimit");
+		addMember(l,2,"UpperLimit");
+		addMember(l,3,"EqualLimits");
 		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}

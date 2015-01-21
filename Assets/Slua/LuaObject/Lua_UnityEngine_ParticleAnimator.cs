@@ -17,13 +17,13 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_doesAnimateColor(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		pushValue(l,o.doesAnimateColor);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_doesAnimateColor(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.doesAnimateColor=v;
@@ -31,13 +31,13 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_worldRotationAxis(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		pushValue(l,o.worldRotationAxis);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_worldRotationAxis(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.worldRotationAxis=v;
@@ -45,13 +45,13 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_localRotationAxis(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		pushValue(l,o.localRotationAxis);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_localRotationAxis(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.localRotationAxis=v;
@@ -59,13 +59,13 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_sizeGrow(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		pushValue(l,o.sizeGrow);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sizeGrow(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.sizeGrow=v;
@@ -73,13 +73,13 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rndForce(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		pushValue(l,o.rndForce);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_rndForce(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.rndForce=v;
@@ -87,13 +87,13 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_force(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		pushValue(l,o.force);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_force(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		UnityEngine.Vector3 v;
 		checkType(l,2,out v);
 		o.force=v;
@@ -101,13 +101,13 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_damping(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		pushValue(l,o.damping);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_damping(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		System.Single v;
 		checkType(l,2,out v);
 		o.damping=v;
@@ -115,13 +115,13 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_autodestruct(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		pushValue(l,o.autodestruct);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_autodestruct(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.autodestruct=v;
@@ -129,13 +129,13 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_colorAnimation(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		pushValue(l,o.colorAnimation);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_colorAnimation(IntPtr l) {
-		UnityEngine.ParticleAnimator o = checkSelf<UnityEngine.ParticleAnimator>(l);
+		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
 		UnityEngine.Color[] v;
 		checkType(l,2,out v);
 		o.colorAnimation=v;
@@ -143,26 +143,15 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ParticleAnimator");
-		addMember(l,get_doesAnimateColor, "get_doesAnimateColor");
-		addMember(l,set_doesAnimateColor, "set_doesAnimateColor");
-		addMember(l,get_worldRotationAxis, "get_worldRotationAxis");
-		addMember(l,set_worldRotationAxis, "set_worldRotationAxis");
-		addMember(l,get_localRotationAxis, "get_localRotationAxis");
-		addMember(l,set_localRotationAxis, "set_localRotationAxis");
-		addMember(l,get_sizeGrow, "get_sizeGrow");
-		addMember(l,set_sizeGrow, "set_sizeGrow");
-		addMember(l,get_rndForce, "get_rndForce");
-		addMember(l,set_rndForce, "set_rndForce");
-		addMember(l,get_force, "get_force");
-		addMember(l,set_force, "set_force");
-		addMember(l,get_damping, "get_damping");
-		addMember(l,set_damping, "set_damping");
-		addMember(l,get_autodestruct, "get_autodestruct");
-		addMember(l,set_autodestruct, "set_autodestruct");
-		addMember(l,get_colorAnimation, "get_colorAnimation");
-		addMember(l,set_colorAnimation, "set_colorAnimation");
-		newType(l, constructor);
-		createTypeMetatable(l, typeof(UnityEngine.ParticleAnimator),typeof(UnityEngine.Component));
-		LuaDLL.lua_pop(l, 1);
+		addMember(l,"doesAnimateColor",get_doesAnimateColor,set_doesAnimateColor);
+		addMember(l,"worldRotationAxis",get_worldRotationAxis,set_worldRotationAxis);
+		addMember(l,"localRotationAxis",get_localRotationAxis,set_localRotationAxis);
+		addMember(l,"sizeGrow",get_sizeGrow,set_sizeGrow);
+		addMember(l,"rndForce",get_rndForce,set_rndForce);
+		addMember(l,"force",get_force,set_force);
+		addMember(l,"damping",get_damping,set_damping);
+		addMember(l,"autodestruct",get_autodestruct,set_autodestruct);
+		addMember(l,"colorAnimation",get_colorAnimation,set_colorAnimation);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.ParticleAnimator),typeof(UnityEngine.Component));
 	}
 }
