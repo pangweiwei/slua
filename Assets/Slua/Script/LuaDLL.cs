@@ -303,7 +303,7 @@ namespace LuaInterface
             LuaDLL.lua_settable(luaState, LuaIndexes.LUA_GLOBALSINDEX);
         }
 
-        public static void lua_pushglobaltable(IntPtr l)
+        public static void lua_pushglobaltable(IntPtr l) {
             LuaDLL.lua_pushvalue(l, LuaIndexes.LUA_GLOBALSINDEX);
         }
 
