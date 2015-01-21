@@ -11,21 +11,9 @@ If you get many errors on different version:
 
 1)delete all fills in LuaObject folder.
 
-2)comment out below lines in luasvr.cs
+2)waiting for unity building code, you will see Slua menu in main menu if no errors,
 
-    LuaUnity.Bind(luaState.handle);
-    LuaUnityUI.Bind(luaState.handle);
-    LuaCustom.Bind(luaState.handle);
-    
-3)waiting for unity building code, you will see Slua menu in main menu if no errors,
-
-4)Click menu, SLua->Make, SLua->Make UI, SLua->Make custom, generate all interface file for your version of unity.
-
-5)comment in below lines:
- 
-    LuaUnity.Bind(luaState.handle);
-    LuaUnityUI.Bind(luaState.handle);
-    LuaCustom.Bind(luaState.handle);
+3)Click menu, SLua->Make, SLua->Make UI, SLua->Make custom, generate all interface file for your version of unity.
 
 
 
