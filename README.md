@@ -16,8 +16,16 @@ If you get many errors on different version:
     LuaUnity.Bind(luaState.handle);
     LuaUnityUI.Bind(luaState.handle);
     LuaCustom.Bind(luaState.handle);
+    
+3)waiting for unity building code, you will see Slua menu in main menu if no errors,
 
-3)Click menu, SLua->Make, SLua->Make UI, SLua->Make custom, generate all interface file for your version of unity.
+4)Click menu, SLua->Make, SLua->Make UI, SLua->Make custom, generate all interface file for your version of unity.
+
+5)comment in below lines:
+ 
+    LuaUnity.Bind(luaState.handle);
+    LuaUnityUI.Bind(luaState.handle);
+    LuaCustom.Bind(luaState.handle);
 
 
 
