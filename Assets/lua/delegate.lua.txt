@@ -16,6 +16,12 @@ function main()
 
 	-- call delegation
 	h:callD()
+
+	h.d=nil
+	h.s=nil
+
+	-- call delegation again
+	h:callD()	
 end
 
 

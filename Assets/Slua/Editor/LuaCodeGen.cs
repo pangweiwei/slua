@@ -352,13 +352,18 @@ namespace SLua
     {
 
         static internal bool checkDelegate(IntPtr l,int p,out $FN ua) {
-            LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
+            if(LuaDLL.lua_type(l,p)!=LuaTypes.LUA_TFUNCTION)
+            {
+                ua = null;
+                return true;
+            }
             int r = LuaDLL.luaS_checkcallback(l, p);
             ua = ($ARGS) =>
             {
                 int error = pushTry(l);
                 LuaDLL.lua_getref(l, r);
 ";
+        
         temp = temp.Replace("$TN", t.Name);
         temp = temp.Replace("$FN", FullName(t));
         MethodInfo mi = t.GetMethod("Invoke");

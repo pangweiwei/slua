@@ -10,7 +10,11 @@ namespace SLua
     {
 
         static internal bool checkDelegate(IntPtr l,int p,out UnityEngine.AudioClip.PCMSetPositionCallback ua) {
-            LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
+            if(LuaDLL.lua_type(l,p)!=LuaTypes.LUA_TFUNCTION)
+            {
+                ua = null;
+                return true;
+            }
             int r = LuaDLL.luaS_checkcallback(l, p);
             ua = (int a1) =>
             {

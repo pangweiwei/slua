@@ -26,9 +26,13 @@ public class HelloWorld   {
         int ver;
         uint crc;
         int flag = 1;
-        bool ret = d("/path", out url, out ver, out crc,ref flag);
-        Debug.Log(string.Format("{0},{1},{2},{3},{4}", ret, url, ver, crc,flag));
-        s("GameObject", new GameObject("SimpleDelegate"));
+        if (d != null)
+        {
+            bool ret = d("/path", out url, out ver, out crc, ref flag);
+            Debug.Log(string.Format("{0},{1},{2},{3},{4}", ret, url, ver, crc, flag));
+        }
+        if(s!=null)
+            s("GameObject", new GameObject("SimpleDelegate"));
     }
 
     // this function exported, but get error to call
