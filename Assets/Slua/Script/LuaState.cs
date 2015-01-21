@@ -463,40 +463,7 @@ namespace SLua
 
         object getObject(IntPtr l, int p)
         {
-            LuaTypes type = LuaDLL.lua_type(l, p);
-            switch (type)
-            {
-                case LuaTypes.LUA_TNUMBER:
-                    {
-                        return LuaDLL.lua_tonumber(l, p);
-                    }
-                case LuaTypes.LUA_TSTRING:
-                    {
-                        return LuaDLL.lua_tostring(l, p);
-                    }
-                case LuaTypes.LUA_TBOOLEAN:
-                    {
-                        return LuaDLL.lua_toboolean(l, p);
-                    }
-                case LuaTypes.LUA_TFUNCTION:
-                    {
-                        LuaDLL.lua_pushvalue(l, p);
-                        int r = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
-                        LuaFunction v = new LuaFunction(this, r);
-                        return v;
-                    }
-                case LuaTypes.LUA_TTABLE:
-                    {
-                        LuaDLL.lua_pushvalue(l, p);
-                        int r = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
-                        LuaTable v = new LuaTable(this, r);
-                        return v;
-                    }
-                case LuaTypes.LUA_TUSERDATA:
-                    return LuaObject.checkObj(l, p);
-                default:
-                    return null;
-            }
+			return LuaObject.checkVar(l,p);
         }
 
         /*

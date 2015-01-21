@@ -694,6 +694,43 @@ return index
             return true;
         }
 
+		static internal object checkVar(IntPtr l,int p) {
+			LuaTypes type = LuaDLL.lua_type(l, p);
+			switch (type)
+			{
+			case LuaTypes.LUA_TNUMBER:
+			{
+				return LuaDLL.lua_tonumber(l, p);
+			}
+			case LuaTypes.LUA_TSTRING:
+			{
+				return LuaDLL.lua_tostring(l, p);
+			}
+			case LuaTypes.LUA_TBOOLEAN:
+			{
+				return LuaDLL.lua_toboolean(l, p);
+			}
+			case LuaTypes.LUA_TFUNCTION:
+			{
+				LuaDLL.lua_pushvalue(l, p);
+				int r = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
+				LuaFunction v = new LuaFunction(l, r);
+				return v;
+			}
+			case LuaTypes.LUA_TTABLE:
+			{
+				LuaDLL.lua_pushvalue(l, p);
+				int r = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
+				LuaTable v = new LuaTable(l, r);
+				return v;
+			}
+			case LuaTypes.LUA_TUSERDATA:
+				return LuaObject.checkObj(l, p);
+			default:
+				return null;
+			}
+		}
+
         internal static void pushValue(IntPtr l, float o)
         {
             LuaDLL.lua_pushnumber(l, o);
