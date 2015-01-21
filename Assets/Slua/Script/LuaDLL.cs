@@ -303,6 +303,10 @@ namespace LuaInterface
             LuaDLL.lua_settable(luaState, LuaIndexes.LUA_GLOBALSINDEX);
         }
 
+        public static void lua_pushglobaltable(IntPtr l)
+            LuaDLL.lua_pushvalue(l, LuaIndexes.LUA_GLOBALSINDEX);
+        }
+
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void lua_insert(IntPtr luaState, int newTop);
 

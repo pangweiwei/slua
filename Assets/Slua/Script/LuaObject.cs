@@ -248,12 +248,9 @@ return index
         static void newTypeTable(IntPtr l, string t) {
             string[] subt = t.Split(new Char[] { '.' });
 
-#if !LUA_5_1
+
             LuaDLL.lua_pushglobaltable(l);
-#else
-            LuaDLL.lua_pushvalue(l, LuaIndexes.LUA_GLOBALSINDEX);
-#endif
-            
+           
             for (int n = 0; n < subt.Length; n++)
             {
                 t = subt[n];
@@ -602,9 +599,21 @@ return index
             return true;
         }
 
+        static internal bool checkType(IntPtr l, int p, out uint v)
+        {
+            v = (uint)LuaDLL.luaL_checkinteger(l, p);
+            return true;
+        }
+
         static internal bool checkType(IntPtr l, int p, out Int64 v)
         {
             v = LuaDLL.luaL_checkinteger(l, p);
+            return true;
+        }
+
+        static internal bool checkType(IntPtr l, int p, out UInt64 v)
+        {
+            v = (UInt64)LuaDLL.luaL_checkinteger(l, p);
             return true;
         }
 
@@ -624,32 +633,14 @@ return index
         }
 
         static internal bool checkType<T>(IntPtr l, int p, out T o) {
-            ObjectCache oc = ObjectCache.get(l);
-            o = (T) oc.get(l, p);
+            o = (T)checkObj(l, p);
             return true;
         }
 
-        static internal bool checkVar(IntPtr l, int p, out object o)
+        static internal object checkObj(IntPtr l, int p)
         {
-            LuaTypes t = LuaDLL.lua_type(l, p);
-            switch (t)
-            {
-                case LuaTypes.LUA_TSTRING:
-                    o = LuaDLL.lua_tostring(l, p);
-                    return true;
-                case LuaTypes.LUA_TNUMBER:
-                    o = LuaDLL.lua_tonumber(l, p);
-                    return true;
-                case LuaTypes.LUA_TBOOLEAN:
-                    o = LuaDLL.lua_toboolean(l, p);
-                    break;
-                case LuaTypes.LUA_TUSERDATA:
-                    ObjectCache oc = ObjectCache.get(l);
-                    o = oc.get(l, p);
-                    return true;
-            }
-            o = null;
-            return false;
+            ObjectCache oc = ObjectCache.get(l);
+            return oc.get(l, p);
         }
 
         static internal bool checkType(IntPtr l, int p, out object[] o)
@@ -835,11 +826,17 @@ return index
 
         internal static void pushVar(IntPtr l, object o)
         {
+            if(o==null)
+            {
+                LuaDLL.lua_pushnil(l);
+                return;
+            }
+
             string t = o.GetType().Name;
             switch (t)
             {
                 case "Single":
-                    LuaDLL.lua_pushnumber(l, (double)o);
+                    LuaDLL.lua_pushnumber(l, (float)o);
                     break;
                 case "Int32":
                 case "Uint32":
@@ -858,13 +855,18 @@ return index
                 case "String":
                     LuaDLL.lua_pushstring(l, (string)o);
                     break;
+                case "Boolean":
+                    LuaDLL.lua_pushboolean(l, (bool)o);
+                    break;
+                default:
+                    LuaObject.pushObject(l, o);
+                    break;
             }
         }
 
         internal static T checkSelf<T>(IntPtr l)
         {
-            ObjectCache t = ObjectCache.get(l);
-            object o = t.get(l, 1);
+            object o = checkObj(l, 1);
             if (o!=null)
             {
                 return (T)o;
@@ -874,8 +876,7 @@ return index
         }
 
         internal static object checkSelf(IntPtr l) {
-            ObjectCache t = ObjectCache.get(l);
-            object o = t.get(l,1);
+            object o = checkObj(l, 1);
             if (o != null)
                 return o;
             LuaDLL.luaL_error(l, "expect self, but get null");

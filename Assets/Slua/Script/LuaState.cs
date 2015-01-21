@@ -28,13 +28,22 @@ using System.IO;
 
 namespace SLua
 {
-    public class LuaVar : IDisposable
+    abstract public class LuaVar : IDisposable
     {
-        protected IntPtr l = IntPtr.Zero;
+        protected LuaState state = null;
         protected int valueref = 0;
+        protected IntPtr l;
+
+        public LuaVar(LuaState l, int r)
+        {
+            state = l;
+            this.l = l.handle;
+            valueref = r;
+        }
 
         public LuaVar(IntPtr l, int r)
         {
+            state = LuaState.get(l);
             this.l = l;
             valueref = r;
         }
@@ -58,15 +67,23 @@ namespace SLua
                 LuaDLL.lua_unref(l, valueref);
             }
         }
+
+        public void push(IntPtr l)
+        {
+            LuaDLL.lua_getref(l, valueref);
+        }
     }
 
     public class LuaFunction : LuaVar
     {
+        public LuaFunction(LuaState l, int r):base(l,r)
+        {
+        }
 
         public LuaFunction(IntPtr l, int r):base(l,r)
         {
-            
         }
+
 
         public void call()
         {
@@ -88,14 +105,61 @@ namespace SLua
 
             LuaDLL.lua_pop(l, 1); // pop error function
         }
+
+
+        public void call(params object[] args)
+        {
+            LuaDLL.lua_pushstdcallcfunction(l, LuaState.errorReport);
+            int error = LuaDLL.lua_gettop(l);
+
+            LuaDLL.lua_getref(l, valueref);
+            if (!LuaDLL.lua_isfunction(l, -1))
+            {
+                LuaDLL.lua_pop(l, 1);
+                throw new Exception("Not a function");
+            }
+
+            for (int n = 0; n < args.Length; n++)
+            {
+                LuaObject.pushVar(l, args[n]);
+            }
+
+            if (LuaDLL.lua_pcall(l, args.Length, LuaDLL.LUA_MULTRET, error) != 0)
+            {
+                LuaDLL.lua_pop(l, 1);
+            }
+
+            LuaDLL.lua_pop(l, 1); // pop error function
+        }
         
+    }
+
+    public class LuaTable : LuaVar
+    {
+
+        public LuaTable(LuaState l, int r)
+            : base(l, r)
+        {
+        }
+        public object this[string key]
+        {
+            get
+            {
+                return state.getObject(valueref, key);
+            }
+
+            set
+            {
+                state.setObject(valueref, key, value);
+            }
+        }
     }
 
 
 
 
 
-    class LuaState : IDisposable
+    public class LuaState : IDisposable
     {
         static string WorkPath="./Assets/lua/";
         IntPtr L;
@@ -105,9 +169,18 @@ namespace SLua
             get { return L; }
         }
 
+        static Dictionary<IntPtr, LuaState> statemap = new Dictionary<IntPtr, LuaState>();
+
+        static public LuaState get(IntPtr l)
+        {
+            return statemap[l];
+        }
+
         public LuaState()
         {
             L = LuaDLL.luaL_newstate();
+            statemap[L] = this;
+
             LuaDLL.luaL_openlibs(L);
 
             ObjectCache.make(L);
@@ -269,46 +342,146 @@ namespace SLua
             }
         }
 
-        public object get(string key)
-        {
-            LuaDLL.lua_getglobal(L, key);
-            if (LuaDLL.lua_isnil(L, -1))
-            {
-                throw new Exception(string.Format("{0} not found", key));
-            }
 
-            LuaTypes type=LuaDLL.lua_type(L,-1);
+        internal object getObject(string key)
+        {
+            LuaDLL.lua_pushglobaltable(L);
+            object o = getObject(key.Split(new char[] { '.' }));
+            LuaDLL.lua_pop(L, 1);
+            return o;
+        }
+
+        internal void setObject(string key, object v)
+        {
+            LuaDLL.lua_pushglobaltable(L);
+            setObject(key.Split(new char[] { '.' }),v);
+            LuaDLL.lua_pop(L, 1);
+        }
+
+        internal object getObject(string[] remainingPath)
+        {
+            object returnValue = null;
+            for (int i = 0; i < remainingPath.Length; i++)
+            {
+                LuaDLL.lua_pushstring(L, remainingPath[i]);
+                LuaDLL.lua_gettable(L, -2);
+                returnValue = this.getObject(L, -1);
+                if (returnValue == null) break;
+            }
+            return returnValue;
+        }
+
+        /*
+         * Gets a field of the table or userdata corresponding to the provided reference
+         */
+        internal object getObject(int reference, string field)
+        {
+            int oldTop = LuaDLL.lua_gettop(L);
+            LuaDLL.lua_getref(L, reference);
+            object returnValue = getObject(field.Split(new char[] { '.' }));
+            LuaDLL.lua_settop(L, oldTop);
+            return returnValue;
+        }
+        /*
+         * Gets a numeric field of the table or userdata corresponding the the provided reference
+         */
+        internal object getObject(int reference, object field)
+        {
+            int oldTop = LuaDLL.lua_gettop(L);
+            LuaDLL.lua_getref(L, reference);
+            LuaObject.pushObject(L, field);
+            LuaDLL.lua_gettable(L, -2);
+            object returnValue = getObject(L, -1);
+            LuaDLL.lua_settop(L, oldTop);
+            return returnValue;
+        }
+
+        internal void setObject(string[] remainingPath, object val)
+        {
+            for (int i = 0; i < remainingPath.Length - 1; i++)
+            {
+                LuaDLL.lua_pushstring(L, remainingPath[i]);
+                LuaDLL.lua_gettable(L, -2);
+            }
+            LuaDLL.lua_pushstring(L, remainingPath[remainingPath.Length - 1]);
+            LuaObject.pushObject(L, val);
+            LuaDLL.lua_settable(L, -3);
+        }
+
+        /*
+         * Sets a field of the table or userdata corresponding the the provided reference
+         * to the provided value
+         */
+        internal void setObject(int reference, string field, object val)
+        {
+            int oldTop = LuaDLL.lua_gettop(L);
+            LuaDLL.lua_getref(L, reference);
+            setObject(field.Split(new char[] { '.' }), val);
+            LuaDLL.lua_settop(L, oldTop);
+        }
+        /*
+         * Sets a numeric field of the table or userdata corresponding the the provided reference
+         * to the provided value
+         */
+        internal void setObject(int reference, object field, object val)
+        {
+            int oldTop = LuaDLL.lua_gettop(L);
+            LuaDLL.lua_getref(L, reference);
+            LuaObject.pushObject(L, field);
+            LuaObject.pushObject(L, val);
+            LuaDLL.lua_settable(L, -3);
+            LuaDLL.lua_settop(L, oldTop);
+        }
+
+        object getObject(IntPtr l, int p)
+        {
+            LuaTypes type = LuaDLL.lua_type(l, p);
             switch (type)
             {
                 case LuaTypes.LUA_TNUMBER:
                     {
-                        return LuaDLL.lua_tonumber(L, -1);
+                        return LuaDLL.lua_tonumber(l, p);
                     }
                 case LuaTypes.LUA_TSTRING:
                     {
-                        return LuaDLL.lua_tostring(L, -1);
+                        return LuaDLL.lua_tostring(l, p);
                     }
                 case LuaTypes.LUA_TBOOLEAN:
                     {
-                        return LuaDLL.lua_toboolean(L, -1);
+                        return LuaDLL.lua_toboolean(l, p);
                     }
                 case LuaTypes.LUA_TFUNCTION:
                     {
                         int r = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
-                        LuaFunction v = new LuaFunction(L, r);
+                        LuaFunction v = new LuaFunction(this, r);
                         return v;
                     }
+                case LuaTypes.LUA_TTABLE:
+                    {
+                        int r = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
+                        LuaTable v = new LuaTable(this, r);
+                        return v;
+                    }
+                case LuaTypes.LUA_TUSERDATA:
+                    return LuaObject.checkObj(l, p);
                 default:
                     return null;
             }
-            
         }
 
+        /*
+         * Indexer for global variables from the LuaInterpreter
+         * Supports navigation of tables by using . operator
+         */
         public object this[string fullPath]
         {
             get
             {
-                return get(fullPath);
+                return this.getObject(fullPath);
+            }
+            set
+            {
+                this.setObject(fullPath, value);
             }
         }
     }

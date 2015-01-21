@@ -1,0 +1,21 @@
+
+
+
+
+function main()
+	local h=HelloWorld()
+	h.d=function(path,flag)
+		print(path,flag)
+		--multi return for out flag parameter
+		return true,"http://www.sineysoft.com",1,32,11
+	end
+
+	h.s=function(path,go)
+		print(path,go.name)
+	end
+
+	-- call delegation
+	h:callD()
+end
+
+

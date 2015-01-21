@@ -40,6 +40,29 @@ public class Lua_HelloWorld : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int callD(IntPtr l) {
+		try{
+			HelloWorld self=(HelloWorld)checkSelf(l);
+			self.callD();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int generic(IntPtr l) {
+		try{
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int perf(IntPtr l) {
 		try{
 			HelloWorld self=(HelloWorld)checkSelf(l);
@@ -77,13 +100,45 @@ public class Lua_HelloWorld : LuaObject {
 			return 0;
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_d(IntPtr l) {
+		HelloWorld o = (HelloWorld)checkSelf(l);
+		pushValue(l,o.d);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_d(IntPtr l) {
+		HelloWorld o = (HelloWorld)checkSelf(l);
+		HelloWorld.GetBundleInfoDelegate v;
+		checkDelegate(l,2,out v);
+		o.d=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_s(IntPtr l) {
+		HelloWorld o = (HelloWorld)checkSelf(l);
+		pushValue(l,o.s);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_s(IntPtr l) {
+		HelloWorld o = (HelloWorld)checkSelf(l);
+		HelloWorld.SimpleDelegate v;
+		checkDelegate(l,2,out v);
+		o.s=v;
+		return 0;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"HelloWorld");
 		addMember(l,say);
 		addMember(l,foo);
+		addMember(l,callD);
+		addMember(l,generic);
 		addMember(l,perf);
 		addMember(l,testvec3);
 		addMember(l,testset);
+		addMember(l,"d",get_d,set_d);
+		addMember(l,"s",get_s,set_s);
 		createTypeMetatable(l,constructor, typeof(HelloWorld));
 	}
 }

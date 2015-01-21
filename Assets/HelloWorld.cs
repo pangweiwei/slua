@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class HelloWorld   {
 
-    public delegate bool GetBundleInfoDelegate(string path, out string url, out int version, out uint crc);
-
+    public delegate bool GetBundleInfoDelegate(string path, out string url, out int version, out uint crc,ref int flag);
+    public delegate void SimpleDelegate(string path, GameObject g);
 
 	static public void say() {
 		Debug.Log ("hello world");
@@ -17,7 +17,26 @@ public class HelloWorld   {
         return new Dictionary<string, GameObject>();
     }
 
-    //public GetBundleInfoDelegate d;
+    public GetBundleInfoDelegate d;
+    public SimpleDelegate s;
+
+    public void callD()
+    {
+        string url;
+        int ver;
+        uint crc;
+        int flag = 1;
+        bool ret = d("/path", out url, out ver, out crc,ref flag);
+        Debug.Log(string.Format("{0},{1},{2},{3},{4}", ret, url, ver, crc,flag));
+        s("GameObject", new GameObject("SimpleDelegate"));
+    }
+
+    // this function exported, but get error to call
+    // generic function not support
+    public void generic<T>()
+    {
+        Debug.Log(typeof(T).Name);
+    }
 
     public void perf()
     {

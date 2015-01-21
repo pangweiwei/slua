@@ -358,45 +358,88 @@ namespace SLua
         temp = temp.Replace("$TN", t.Name);
         temp = temp.Replace("$FN", FullName(t));
         MethodInfo mi = t.GetMethod("Invoke");
-        temp = temp.Replace("$ARGS", ArgsList(mi));
+        List<int> outindex = new List<int>();
+        List<int> refindex = new List<int>();
+        temp = temp.Replace("$ARGS", ArgsList(mi, ref outindex, ref refindex));
         Write(file, temp);
+
+        this.indent = 4;
 
         for (int n = 0; n < mi.GetParameters().Length; n++)
         {
-            Write(file, "                pushValue(l,a{0});",n+1);
+            if(!outindex.Contains(n))
+                Write(file, "pushValue(l,a{0});",n+1);
         }
 
-        Write(file, "                if (LuaDLL.lua_pcall(l, {0}, 0, error) != 0)", mi.GetParameters().Length);
+        Write(file, "if (LuaDLL.lua_pcall(l, {0}, -1, error) != 0) {{", mi.GetParameters().Length-outindex.Count);
+        Write(file, "LuaDLL.lua_pop(l, 1);");
+        Write(file,"}");
+
+        Write(file, "int top =LuaDLL.lua_gettop(l);");
+        if (mi.ReturnType != typeof(void))
+            WriteValueCheck(file, mi.ReturnType, 1, "ret", "error+");
+
+        foreach(int i in outindex) {
+            string a=string.Format("a{0}",i+1);
+            WriteCheckType(file, mi.GetParameters()[i].ParameterType, i+1, a, "error+");
+        }
+
+        foreach (int i in refindex)
+        {
+            string a = string.Format("a{0}", i + 1);
+            WriteCheckType(file, mi.GetParameters()[i].ParameterType, i+1, a, "error+");
+        }
 
 
-        temp=@"
-                {
-                    LuaDLL.lua_pop(l, 1); // pop error msg
-                }
-                LuaDLL.lua_pop(l, 1); // pop error function
-            };
-            return true;
-        }   
+        Write(file, "LuaDLL.lua_pop(l, 1);");
+        if (mi.ReturnType != typeof(void))
+            Write(file, "return ret;");
+
+        Write(file,"};");
+        Write(file,"return true;");
+        Write(file,"}");
+        Write(file,"}");
+        Write(file, "}");
     }
-}
-";
-        Write(file, temp);
-    }
 
-    string ArgsList(MethodInfo m)
+    string ArgsList(MethodInfo m, ref List<int> outindex, ref List<int> refindex)
     {
 		string str = "";
         ParameterInfo[] pars = m.GetParameters();
         for (int n = 0; n < pars.Length; n++)
         {
             string t=SimpleType(pars[n].ParameterType);
-            if(pars[n].ParameterType.IsArray)
-                t+="[]";
-            str += string.Format("{0} a{1}", t, n + 1);
+
+
+            ParameterInfo p = pars[n];
+            if (p.ParameterType.IsByRef && p.IsOut)
+            {
+                str += string.Format("out {0} a{1}", t, n + 1);
+                outindex.Add(n);
+            }
+            else if (p.ParameterType.IsByRef)
+            {
+                str += string.Format("ref {0} a{1}", t, n + 1);
+                refindex.Add(n);
+            }
+            else
+                str += string.Format("{0} a{1}", t, n + 1);
             if (n < pars.Length - 1)
                 str += ",";
+
+
         }
         return str;
+    }
+
+    void tryMake(Type t)
+    {
+        
+        if (t.BaseType == typeof(System.MulticastDelegate))
+        {
+            CodeGenerator cg = new CodeGenerator();
+            cg.Generate(t);
+        }
     }
 
     void WriteEvent(Type t, StreamWriter file)
@@ -672,14 +715,14 @@ namespace SLua
                 if (fi.IsStatic)
                 {
                     Write(file, "{0} v;", TypeDecl(fi.FieldType));
-                    WriteCheckType(fi.FieldType, file, 2);
+                    WriteCheckType(file, fi.FieldType, 2);
                     Write(file, "{0}.{1}=v;", t.FullName, fi.Name);
                 }
                 else
                 {
                     Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
                     Write(file, "{0} v;", TypeDecl(fi.FieldType));
-                    WriteCheckType(fi.FieldType, file, 2);
+                    WriteCheckType(file, fi.FieldType, 2);
                     Write(file, "o.{0}=v;", fi.Name);
                 }
 
@@ -692,7 +735,7 @@ namespace SLua
             }
 
             propname.Add(fi.Name, pp);
-
+            tryMake(fi.FieldType);
         }
 
         // Write property set/get
@@ -739,15 +782,13 @@ namespace SLua
                 {
                     if (fi.GetSetMethod().IsStatic)
                     {
-                        Write(file, "{0} v;", TypeDecl(fi.PropertyType));
-                        WriteCheckType(fi.PropertyType, file, 2);
+                        WriteValueCheck(file, fi.PropertyType, 2);
                         Write(file, "{0}.{1}=v;", t.FullName, fi.Name);
                     }
                     else
                     {
                         Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
-                        Write(file, "{0} v;", TypeDecl(fi.PropertyType));
-                        WriteCheckType(fi.PropertyType, file, 2);
+                        WriteValueCheck(file, fi.PropertyType, 2);
                         Write(file, "o.{0}=v;", fi.Name);
                     }
 
@@ -761,17 +802,24 @@ namespace SLua
             }
 
             propname.Add(fi.Name, pp);
+            tryMake(fi.PropertyType);
         }
     }
 
-    void WriteCheckType(Type t, StreamWriter file, int n)
+    void WriteCheckType(StreamWriter file, Type t, int n, string v="v", string nprefix="")
     {
         if(t.IsEnum)
-            Write(file, "checkEnum(l,{0},out v);", n);
+            Write(file, "checkEnum(l,{2}{0},out {1});", n,v,nprefix);
         else if(t.BaseType==typeof(System.MulticastDelegate))
-            Write(file, "checkDelegate(l,{0},out v);", n);
+            Write(file, "checkDelegate(l,{2}{0},out {1});", n, v,nprefix);
         else
-            Write(file, "checkType(l,{0},out v);", n);
+            Write(file, "checkType(l,{2}{0},out {1});", n, v,nprefix);
+    }
+
+    void WriteValueCheck(StreamWriter file, Type t, int n, string v = "v", string nprefix="")
+    {
+        Write(file, "{0} {1};", SimpleType(t),v);
+        WriteCheckType(file,t, n,v,nprefix);
     }
 
     private void WriteFunctionAttr(StreamWriter file)
@@ -836,11 +884,7 @@ namespace SLua
     }
 
     string[] prefix = new string[] { "System.Collections.Generic" };
-	string RemoveRef(string s)
-	{
-		return RemoveRef (s, true);
-	}
-    string RemoveRef(string s, bool removearray)
+    string RemoveRef(string s, bool removearray=true)
     {
         if (s.EndsWith("&")) s = s.Substring(0, s.Length - 1);
         if (s.EndsWith("[]") && removearray) s = s.Substring(0, s.Length - 2);
@@ -1053,7 +1097,7 @@ namespace SLua
         
     }
 
-    string SimpleType(Type t)
+    string SimpleType_(Type t)
     {
 
         string tn = RemoveRef(t.Name);
@@ -1081,6 +1125,13 @@ namespace SLua
         }
     }
 
+    string SimpleType(Type t)
+    {
+        string ret = SimpleType_(t);
+        if (t.IsArray) ret += "[]";
+        return ret;
+    }
+
     void WritePushValue(Type t, StreamWriter file)
     {
         Write(file, "pushValue(l,ret);");
@@ -1094,7 +1145,7 @@ namespace SLua
 
     void Write(StreamWriter file, string fmt, params object[] args)
     {
-        if (fmt.EndsWith("}")) indent--;
+        if (fmt.StartsWith("}")) indent--;
 
         for (int n = 0; n < indent; n++)
             file.Write("\t");
