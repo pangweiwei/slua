@@ -629,8 +629,18 @@ return index
         static internal bool checkType(IntPtr l, int p, out LuaFunction f)
         {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
+            LuaDLL.lua_pushvalue(l, p);
             int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
             f = new LuaFunction(l, fref);
+            return true;
+        }
+
+        static internal bool checkType(IntPtr l, int p, out LuaTable t)
+        {
+            LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
+            LuaDLL.lua_pushvalue(l, p);
+            int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
+            t = new LuaTable(l, fref);
             return true;
         }
 
@@ -750,6 +760,11 @@ return index
         internal static void pushValue(IntPtr l, LuaCSFunction f)
         {
             pushObject(l, f);
+        }
+
+        internal static void pushValue(IntPtr l, LuaTable t)
+        {
+            t.push(l);
         }
 
 //         public static void pushValue(IntPtr l, Quaternion o)

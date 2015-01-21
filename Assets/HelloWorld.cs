@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using SLua;
 public class HelloWorld   {
 
     public delegate bool GetBundleInfoDelegate(string path, out string url, out int version, out uint crc,ref int flag);
@@ -15,6 +15,19 @@ public class HelloWorld   {
     public Dictionary<string, GameObject> foo()
     {
         return new Dictionary<string, GameObject>();
+    }
+
+    static public void setv(LuaTable t) {
+        Debug.Log(t["name"]);
+        Debug.Log(t["value"]);
+    }
+
+    static public LuaTable getv()
+    {
+        LuaTable t = new LuaTable(LuaState.main);
+        t["name"] = "xiaoming";
+        t["age"] = 12;
+        return t;
     }
 
     public GetBundleInfoDelegate d;

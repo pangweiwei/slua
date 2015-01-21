@@ -40,6 +40,31 @@ public class Lua_HelloWorld : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int setv(IntPtr l) {
+		try{
+			SLua.LuaTable a1;
+			checkType(l,1,out a1);
+			HelloWorld.setv(a1);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int getv(IntPtr l) {
+		try{
+			SLua.LuaTable ret=HelloWorld.getv();
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int callD(IntPtr l) {
 		try{
 			HelloWorld self=(HelloWorld)checkSelf(l);
@@ -132,6 +157,8 @@ public class Lua_HelloWorld : LuaObject {
 		getTypeTable(l,"HelloWorld");
 		addMember(l,say);
 		addMember(l,foo);
+		addMember(l,setv);
+		addMember(l,getv);
 		addMember(l,callD);
 		addMember(l,generic);
 		addMember(l,perf);

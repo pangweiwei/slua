@@ -50,4 +50,9 @@ function main()
 
 
 	print("LogCallback occured",n)
+
+	-- test lua table
+	HelloWorld.setv({name="yes",value=12})
+	local t=HelloWorld.getv()
+	print(t.name,t.age)
 end

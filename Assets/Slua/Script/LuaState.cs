@@ -34,6 +34,12 @@ namespace SLua
         protected int valueref = 0;
         protected IntPtr l;
 
+        public LuaVar()
+        {
+            l = IntPtr.Zero;
+            state = null;
+        }
+
         public LuaVar(LuaState l, int r)
         {
             state = l;
@@ -136,10 +142,21 @@ namespace SLua
 
     public class LuaTable : LuaVar
     {
+        public LuaTable(IntPtr l, int r)
+            : base(l, r)
+        {
+        }
 
         public LuaTable(LuaState l, int r)
             : base(l, r)
         {
+        }
+
+        public LuaTable(LuaState state):base(state,0)
+        {
+            
+            LuaDLL.lua_newtable(l);
+            valueref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
         }
         public object this[string key]
         {
@@ -168,7 +185,7 @@ namespace SLua
         {
             get { return L; }
         }
-
+        public static LuaState main;
         static Dictionary<IntPtr, LuaState> statemap = new Dictionary<IntPtr, LuaState>();
 
         static public LuaState get(IntPtr l)
@@ -180,6 +197,7 @@ namespace SLua
         {
             L = LuaDLL.luaL_newstate();
             statemap[L] = this;
+            if (main == null) main = this;
 
             LuaDLL.luaL_openlibs(L);
 
@@ -217,13 +235,13 @@ namespace SLua
         {
             //Unity destructor not call in main thread, so gc some unity object refed by lua will cause error when lua closed.
             //Close();
+            Debug.Log("Finalizing Lua State.");
         }
 
         internal void Close()
         {
             if (L != IntPtr.Zero)
             {
-                Debug.Log("Finalizing Lua State.");
                 LuaDLL.lua_close(L);
             }
         }
@@ -404,7 +422,7 @@ namespace SLua
                 LuaDLL.lua_gettable(L, -2);
             }
             LuaDLL.lua_pushstring(L, remainingPath[remainingPath.Length - 1]);
-            LuaObject.pushObject(L, val);
+            LuaObject.pushVar(L, val);
             LuaDLL.lua_settable(L, -3);
         }
 
@@ -452,12 +470,14 @@ namespace SLua
                     }
                 case LuaTypes.LUA_TFUNCTION:
                     {
+                        LuaDLL.lua_pushvalue(l, p);
                         int r = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
                         LuaFunction v = new LuaFunction(this, r);
                         return v;
                     }
                 case LuaTypes.LUA_TTABLE:
                     {
+                        LuaDLL.lua_pushvalue(l, p);
                         int r = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
                         LuaTable v = new LuaTable(this, r);
                         return v;
