@@ -181,6 +181,9 @@ namespace SLua
         static string WorkPath="./Assets/lua/";
         IntPtr L;
 
+        public delegate byte[] LoaderDelegate(string fn);
+        static public LoaderDelegate loaderDelegate;
+
         public IntPtr handle
         {
             get { return L; }
@@ -321,8 +324,16 @@ namespace SLua
         internal static int loader(IntPtr L)
         {
             string fileName = LuaDLL.lua_tostring(L, 1);
-            fileName += ".lua";
-            byte[] bytes = loadFile(fileName);
+            byte[] bytes;
+            if (loaderDelegate != null)
+            {
+                bytes = loaderDelegate(fileName);
+            }
+            else
+            {
+                fileName += ".lua";
+                bytes = loadFile(fileName);
+            }
             LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fileName);
             return 1;
         }
@@ -343,10 +354,9 @@ namespace SLua
 
         static byte[] loadFile(string fn)
         {
-
-            fn = WorkPath + fn;
             try
             {
+                fn = WorkPath + fn;
                 FileStream fs = File.Open(fn, FileMode.Open);
                 long length = fs.Length;
                 byte[] bytes = new byte[length];
