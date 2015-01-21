@@ -24,7 +24,7 @@ public class Lua_UnityEngine_AudioEchoFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_delay(IntPtr l) {
 		UnityEngine.AudioEchoFilter o = (UnityEngine.AudioEchoFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.delay=v;
 		return 0;
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_AudioEchoFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_decayRatio(IntPtr l) {
 		UnityEngine.AudioEchoFilter o = (UnityEngine.AudioEchoFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.decayRatio=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_AudioEchoFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_dryMix(IntPtr l) {
 		UnityEngine.AudioEchoFilter o = (UnityEngine.AudioEchoFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.dryMix=v;
 		return 0;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_AudioEchoFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_wetMix(IntPtr l) {
 		UnityEngine.AudioEchoFilter o = (UnityEngine.AudioEchoFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.wetMix=v;
 		return 0;

@@ -24,7 +24,7 @@ public class Lua_UnityEngine_AudioLowPassFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_cutoffFrequency(IntPtr l) {
 		UnityEngine.AudioLowPassFilter o = (UnityEngine.AudioLowPassFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.cutoffFrequency=v;
 		return 0;
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_AudioLowPassFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_lowpassResonaceQ(IntPtr l) {
 		UnityEngine.AudioLowPassFilter o = (UnityEngine.AudioLowPassFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.lowpassResonaceQ=v;
 		return 0;

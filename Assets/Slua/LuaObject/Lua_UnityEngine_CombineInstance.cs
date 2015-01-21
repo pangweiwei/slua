@@ -32,7 +32,7 @@ public class Lua_UnityEngine_CombineInstance : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_subMeshIndex(IntPtr l) {
 		UnityEngine.CombineInstance o = (UnityEngine.CombineInstance)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.subMeshIndex=v;
 		setBack(l,o);

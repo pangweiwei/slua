@@ -267,7 +267,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_startDelay(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.startDelay=v;
 		return 0;
@@ -299,7 +299,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_loop(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.loop=v;
 		return 0;
@@ -313,7 +313,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_playOnAwake(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.playOnAwake=v;
 		return 0;
@@ -327,7 +327,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_time(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.time=v;
 		return 0;
@@ -347,7 +347,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_playbackSpeed(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.playbackSpeed=v;
 		return 0;
@@ -373,7 +373,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enableEmission(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.enableEmission=v;
 		return 0;
@@ -387,7 +387,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_emissionRate(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.emissionRate=v;
 		return 0;
@@ -401,7 +401,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_startSpeed(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.startSpeed=v;
 		return 0;
@@ -415,7 +415,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_startSize(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.startSize=v;
 		return 0;
@@ -443,7 +443,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_startRotation(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.startRotation=v;
 		return 0;
@@ -457,7 +457,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_startLifetime(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.startLifetime=v;
 		return 0;
@@ -471,7 +471,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_gravityModifier(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.gravityModifier=v;
 		return 0;
@@ -485,7 +485,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxParticles(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.maxParticles=v;
 		return 0;
@@ -513,7 +513,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_randomSeed(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		System.UInt32 v;
+		UInt32 v;
 		checkType(l,2,out v);
 		o.randomSeed=v;
 		return 0;

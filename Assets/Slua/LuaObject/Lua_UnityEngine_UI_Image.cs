@@ -136,7 +136,7 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_preserveAspect(IntPtr l) {
 		UnityEngine.UI.Image o = (UnityEngine.UI.Image)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.preserveAspect=v;
 		return 0;
@@ -150,7 +150,7 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fillCenter(IntPtr l) {
 		UnityEngine.UI.Image o = (UnityEngine.UI.Image)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.fillCenter=v;
 		return 0;
@@ -178,7 +178,7 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fillAmount(IntPtr l) {
 		UnityEngine.UI.Image o = (UnityEngine.UI.Image)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.fillAmount=v;
 		return 0;
@@ -192,7 +192,7 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fillClockwise(IntPtr l) {
 		UnityEngine.UI.Image o = (UnityEngine.UI.Image)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.fillClockwise=v;
 		return 0;
@@ -206,7 +206,7 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fillOrigin(IntPtr l) {
 		UnityEngine.UI.Image o = (UnityEngine.UI.Image)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.fillOrigin=v;
 		return 0;
@@ -220,7 +220,7 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_eventAlphaThreshold(IntPtr l) {
 		UnityEngine.UI.Image o = (UnityEngine.UI.Image)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.eventAlphaThreshold=v;
 		return 0;

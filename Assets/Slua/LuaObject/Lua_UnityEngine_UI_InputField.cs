@@ -238,7 +238,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_shouldHideMobileInput(IntPtr l) {
 		UnityEngine.UI.InputField o = (UnityEngine.UI.InputField)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.shouldHideMobileInput=v;
 		return 0;
@@ -252,7 +252,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_text(IntPtr l) {
 		UnityEngine.UI.InputField o = (UnityEngine.UI.InputField)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.text=v;
 		return 0;
@@ -272,7 +272,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_caretBlinkRate(IntPtr l) {
 		UnityEngine.UI.InputField o = (UnityEngine.UI.InputField)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.caretBlinkRate=v;
 		return 0;
@@ -366,7 +366,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_characterLimit(IntPtr l) {
 		UnityEngine.UI.InputField o = (UnityEngine.UI.InputField)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.characterLimit=v;
 		return 0;
@@ -456,7 +456,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_asteriskChar(IntPtr l) {
 		UnityEngine.UI.InputField o = (UnityEngine.UI.InputField)checkSelf(l);
-		System.Char v;
+		Char v;
 		checkType(l,2,out v);
 		o.asteriskChar=v;
 		return 0;

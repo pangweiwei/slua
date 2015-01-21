@@ -211,7 +211,7 @@ public class Lua_UnityEngine_UI_Scrollbar : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_value(IntPtr l) {
 		UnityEngine.UI.Scrollbar o = (UnityEngine.UI.Scrollbar)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.value=v;
 		return 0;
@@ -225,7 +225,7 @@ public class Lua_UnityEngine_UI_Scrollbar : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_size(IntPtr l) {
 		UnityEngine.UI.Scrollbar o = (UnityEngine.UI.Scrollbar)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.size=v;
 		return 0;
@@ -239,7 +239,7 @@ public class Lua_UnityEngine_UI_Scrollbar : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_numberOfSteps(IntPtr l) {
 		UnityEngine.UI.Scrollbar o = (UnityEngine.UI.Scrollbar)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.numberOfSteps=v;
 		return 0;

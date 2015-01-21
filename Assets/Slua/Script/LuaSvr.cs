@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using LuaInterface;
+using System.Reflection;
 
 namespace SLua
 {
@@ -15,11 +16,9 @@ namespace SLua
             luaState = new LuaState();
 
             LuaObject.init(luaState.handle);
-            // if compiler report can't find these symbols, 
-            // you should click SLua=>Make, Make UI, Make custom to regenrate them.
-            LuaUnity.Bind(luaState.handle);
-            LuaUnityUI.Bind(luaState.handle);
-			LuaCustom.Bind(luaState.handle);
+            bind("BindUnity");
+            bind("BindUnityUI");
+            bind("BindCustom");
 
             
             luaState.doFile(main);
@@ -28,6 +27,13 @@ namespace SLua
             Profiler.BeginSample("call main");
             func.call();
             Profiler.EndSample();
+        }
+
+        void bind(string name)
+        {
+            MethodInfo mi = typeof(LuaObject).GetMethod(name,BindingFlags.Public|BindingFlags.Static);
+            if (mi != null) mi.Invoke(null, new object[] { luaState.handle });
+            else Debug.LogError(string.Format("Miss {0}, click SLua=>Make to regenerate them",name));
         }
     }
 }

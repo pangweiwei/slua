@@ -58,7 +58,7 @@ public class Lua_UnityEngine_Collider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enabled(IntPtr l) {
 		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.enabled=v;
 		return 0;
@@ -78,7 +78,7 @@ public class Lua_UnityEngine_Collider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isTrigger(IntPtr l) {
 		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isTrigger=v;
 		return 0;

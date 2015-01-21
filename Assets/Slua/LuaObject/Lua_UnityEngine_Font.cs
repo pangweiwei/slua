@@ -159,7 +159,7 @@ public class Lua_UnityEngine_Font : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fontNames(IntPtr l) {
 		UnityEngine.Font o = (UnityEngine.Font)checkSelf(l);
-		System.String[] v;
+		string[] v;
 		checkType(l,2,out v);
 		o.fontNames=v;
 		return 0;

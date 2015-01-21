@@ -24,7 +24,7 @@ public class Lua_UnityEngine_TrailRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_time(IntPtr l) {
 		UnityEngine.TrailRenderer o = (UnityEngine.TrailRenderer)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.time=v;
 		return 0;
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_TrailRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_startWidth(IntPtr l) {
 		UnityEngine.TrailRenderer o = (UnityEngine.TrailRenderer)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.startWidth=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_TrailRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_endWidth(IntPtr l) {
 		UnityEngine.TrailRenderer o = (UnityEngine.TrailRenderer)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.endWidth=v;
 		return 0;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_TrailRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_autodestruct(IntPtr l) {
 		UnityEngine.TrailRenderer o = (UnityEngine.TrailRenderer)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.autodestruct=v;
 		return 0;

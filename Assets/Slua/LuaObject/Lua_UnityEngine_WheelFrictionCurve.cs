@@ -17,7 +17,7 @@ public class Lua_UnityEngine_WheelFrictionCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_extremumSlip(IntPtr l) {
 		UnityEngine.WheelFrictionCurve o = (UnityEngine.WheelFrictionCurve)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.extremumSlip=v;
 		setBack(l,o);
@@ -32,7 +32,7 @@ public class Lua_UnityEngine_WheelFrictionCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_extremumValue(IntPtr l) {
 		UnityEngine.WheelFrictionCurve o = (UnityEngine.WheelFrictionCurve)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.extremumValue=v;
 		setBack(l,o);
@@ -47,7 +47,7 @@ public class Lua_UnityEngine_WheelFrictionCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_asymptoteSlip(IntPtr l) {
 		UnityEngine.WheelFrictionCurve o = (UnityEngine.WheelFrictionCurve)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.asymptoteSlip=v;
 		setBack(l,o);
@@ -62,7 +62,7 @@ public class Lua_UnityEngine_WheelFrictionCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_asymptoteValue(IntPtr l) {
 		UnityEngine.WheelFrictionCurve o = (UnityEngine.WheelFrictionCurve)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.asymptoteValue=v;
 		setBack(l,o);
@@ -77,7 +77,7 @@ public class Lua_UnityEngine_WheelFrictionCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_stiffness(IntPtr l) {
 		UnityEngine.WheelFrictionCurve o = (UnityEngine.WheelFrictionCurve)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.stiffness=v;
 		setBack(l,o);

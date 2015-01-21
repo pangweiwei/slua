@@ -36,7 +36,7 @@ public class Lua_UnityEngine_OffMeshLink : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_activated(IntPtr l) {
 		UnityEngine.OffMeshLink o = (UnityEngine.OffMeshLink)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.activated=v;
 		return 0;
@@ -56,7 +56,7 @@ public class Lua_UnityEngine_OffMeshLink : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_costOverride(IntPtr l) {
 		UnityEngine.OffMeshLink o = (UnityEngine.OffMeshLink)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.costOverride=v;
 		return 0;
@@ -70,7 +70,7 @@ public class Lua_UnityEngine_OffMeshLink : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_biDirectional(IntPtr l) {
 		UnityEngine.OffMeshLink o = (UnityEngine.OffMeshLink)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.biDirectional=v;
 		return 0;
@@ -84,7 +84,7 @@ public class Lua_UnityEngine_OffMeshLink : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_navMeshLayer(IntPtr l) {
 		UnityEngine.OffMeshLink o = (UnityEngine.OffMeshLink)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.navMeshLayer=v;
 		return 0;
@@ -98,7 +98,7 @@ public class Lua_UnityEngine_OffMeshLink : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_autoUpdatePositions(IntPtr l) {
 		UnityEngine.OffMeshLink o = (UnityEngine.OffMeshLink)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.autoUpdatePositions=v;
 		return 0;

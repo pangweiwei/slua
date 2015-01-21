@@ -53,7 +53,7 @@ public class Lua_UnityEngine_WheelJoint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useMotor(IntPtr l) {
 		UnityEngine.WheelJoint2D o = (UnityEngine.WheelJoint2D)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useMotor=v;
 		return 0;

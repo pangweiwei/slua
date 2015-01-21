@@ -97,7 +97,7 @@ public class Lua_UnityEngine_UI_ToggleGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_allowSwitchOff(IntPtr l) {
 		UnityEngine.UI.ToggleGroup o = (UnityEngine.UI.ToggleGroup)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.allowSwitchOff=v;
 		return 0;

@@ -41,7 +41,7 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_time(IntPtr l) {
 		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.time=v;
 		setBack(l,o);
@@ -56,7 +56,7 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_value(IntPtr l) {
 		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.value=v;
 		setBack(l,o);
@@ -71,7 +71,7 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_inTangent(IntPtr l) {
 		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.inTangent=v;
 		setBack(l,o);
@@ -86,7 +86,7 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_outTangent(IntPtr l) {
 		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.outTangent=v;
 		setBack(l,o);
@@ -101,7 +101,7 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_tangentMode(IntPtr l) {
 		UnityEngine.Keyframe o = (UnityEngine.Keyframe)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.tangentMode=v;
 		setBack(l,o);

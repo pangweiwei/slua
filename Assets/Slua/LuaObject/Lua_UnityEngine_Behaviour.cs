@@ -24,7 +24,7 @@ public class Lua_UnityEngine_Behaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enabled(IntPtr l) {
 		UnityEngine.Behaviour o = (UnityEngine.Behaviour)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.enabled=v;
 		return 0;

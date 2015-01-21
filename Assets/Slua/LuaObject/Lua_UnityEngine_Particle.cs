@@ -47,7 +47,7 @@ public class Lua_UnityEngine_Particle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_energy(IntPtr l) {
 		UnityEngine.Particle o = (UnityEngine.Particle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.energy=v;
 		setBack(l,o);
@@ -62,7 +62,7 @@ public class Lua_UnityEngine_Particle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_startEnergy(IntPtr l) {
 		UnityEngine.Particle o = (UnityEngine.Particle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.startEnergy=v;
 		setBack(l,o);
@@ -77,7 +77,7 @@ public class Lua_UnityEngine_Particle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_size(IntPtr l) {
 		UnityEngine.Particle o = (UnityEngine.Particle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.size=v;
 		setBack(l,o);
@@ -92,7 +92,7 @@ public class Lua_UnityEngine_Particle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_rotation(IntPtr l) {
 		UnityEngine.Particle o = (UnityEngine.Particle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.rotation=v;
 		setBack(l,o);
@@ -107,7 +107,7 @@ public class Lua_UnityEngine_Particle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_angularVelocity(IntPtr l) {
 		UnityEngine.Particle o = (UnityEngine.Particle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.angularVelocity=v;
 		setBack(l,o);

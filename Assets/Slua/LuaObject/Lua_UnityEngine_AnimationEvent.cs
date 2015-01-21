@@ -24,7 +24,7 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_stringParameter(IntPtr l) {
 		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.stringParameter=v;
 		return 0;
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_floatParameter(IntPtr l) {
 		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.floatParameter=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_intParameter(IntPtr l) {
 		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.intParameter=v;
 		return 0;
@@ -80,7 +80,7 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_functionName(IntPtr l) {
 		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.functionName=v;
 		return 0;
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_time(IntPtr l) {
 		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.time=v;
 		return 0;

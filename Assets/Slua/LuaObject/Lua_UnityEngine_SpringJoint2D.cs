@@ -54,7 +54,7 @@ public class Lua_UnityEngine_SpringJoint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_distance(IntPtr l) {
 		UnityEngine.SpringJoint2D o = (UnityEngine.SpringJoint2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.distance=v;
 		return 0;
@@ -68,7 +68,7 @@ public class Lua_UnityEngine_SpringJoint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_dampingRatio(IntPtr l) {
 		UnityEngine.SpringJoint2D o = (UnityEngine.SpringJoint2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.dampingRatio=v;
 		return 0;
@@ -82,7 +82,7 @@ public class Lua_UnityEngine_SpringJoint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_frequency(IntPtr l) {
 		UnityEngine.SpringJoint2D o = (UnityEngine.SpringJoint2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.frequency=v;
 		return 0;

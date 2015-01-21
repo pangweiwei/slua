@@ -17,7 +17,7 @@ public class Lua_UnityEngine_HumanLimit : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useDefaultValues(IntPtr l) {
 		UnityEngine.HumanLimit o = (UnityEngine.HumanLimit)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useDefaultValues=v;
 		setBack(l,o);
@@ -77,7 +77,7 @@ public class Lua_UnityEngine_HumanLimit : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_axisLength(IntPtr l) {
 		UnityEngine.HumanLimit o = (UnityEngine.HumanLimit)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.axisLength=v;
 		setBack(l,o);

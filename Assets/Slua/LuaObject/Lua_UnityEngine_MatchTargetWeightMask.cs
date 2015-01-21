@@ -43,7 +43,7 @@ public class Lua_UnityEngine_MatchTargetWeightMask : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_rotationWeight(IntPtr l) {
 		UnityEngine.MatchTargetWeightMask o = (UnityEngine.MatchTargetWeightMask)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.rotationWeight=v;
 		setBack(l,o);

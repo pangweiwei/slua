@@ -59,7 +59,7 @@ public class Lua_UnityEngine_LayerMask : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_value(IntPtr l) {
 		UnityEngine.LayerMask o = (UnityEngine.LayerMask)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.value=v;
 		setBack(l,o);

@@ -72,7 +72,7 @@ public class Lua_UnityEngine_CharacterController : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_radius(IntPtr l) {
 		UnityEngine.CharacterController o = (UnityEngine.CharacterController)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.radius=v;
 		return 0;
@@ -86,7 +86,7 @@ public class Lua_UnityEngine_CharacterController : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_height(IntPtr l) {
 		UnityEngine.CharacterController o = (UnityEngine.CharacterController)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.height=v;
 		return 0;
@@ -114,7 +114,7 @@ public class Lua_UnityEngine_CharacterController : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_slopeLimit(IntPtr l) {
 		UnityEngine.CharacterController o = (UnityEngine.CharacterController)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.slopeLimit=v;
 		return 0;
@@ -128,7 +128,7 @@ public class Lua_UnityEngine_CharacterController : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_stepOffset(IntPtr l) {
 		UnityEngine.CharacterController o = (UnityEngine.CharacterController)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.stepOffset=v;
 		return 0;
@@ -142,7 +142,7 @@ public class Lua_UnityEngine_CharacterController : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_detectCollisions(IntPtr l) {
 		UnityEngine.CharacterController o = (UnityEngine.CharacterController)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.detectCollisions=v;
 		return 0;

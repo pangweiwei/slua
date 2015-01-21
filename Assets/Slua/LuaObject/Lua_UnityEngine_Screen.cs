@@ -70,7 +70,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_showCursor(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Screen.showCursor=v;
 		return 0;
@@ -82,7 +82,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_lockCursor(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Screen.lockCursor=v;
 		return 0;
@@ -109,7 +109,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fullScreen(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Screen.fullScreen=v;
 		return 0;
@@ -121,7 +121,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_autorotateToPortrait(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Screen.autorotateToPortrait=v;
 		return 0;
@@ -133,7 +133,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_autorotateToPortraitUpsideDown(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Screen.autorotateToPortraitUpsideDown=v;
 		return 0;
@@ -145,7 +145,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_autorotateToLandscapeLeft(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Screen.autorotateToLandscapeLeft=v;
 		return 0;
@@ -157,7 +157,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_autorotateToLandscapeRight(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Screen.autorotateToLandscapeRight=v;
 		return 0;
@@ -181,7 +181,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sleepTimeout(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.Screen.sleepTimeout=v;
 		return 0;

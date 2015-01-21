@@ -22,7 +22,7 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fog(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.RenderSettings.fog=v;
 		return 0;
@@ -58,7 +58,7 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fogDensity(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.RenderSettings.fogDensity=v;
 		return 0;
@@ -70,7 +70,7 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fogStartDistance(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.RenderSettings.fogStartDistance=v;
 		return 0;
@@ -82,7 +82,7 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fogEndDistance(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.RenderSettings.fogEndDistance=v;
 		return 0;
@@ -106,7 +106,7 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_haloStrength(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.RenderSettings.haloStrength=v;
 		return 0;
@@ -118,7 +118,7 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_flareStrength(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.RenderSettings.flareStrength=v;
 		return 0;
@@ -130,7 +130,7 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_flareFadeSpeed(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.RenderSettings.flareFadeSpeed=v;
 		return 0;

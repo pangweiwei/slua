@@ -263,7 +263,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_width(IntPtr l) {
 		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.width=v;
 		return 0;
@@ -277,7 +277,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_height(IntPtr l) {
 		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.height=v;
 		return 0;
@@ -291,7 +291,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_depth(IntPtr l) {
 		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.depth=v;
 		return 0;
@@ -305,7 +305,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isPowerOfTwo(IntPtr l) {
 		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isPowerOfTwo=v;
 		return 0;
@@ -339,7 +339,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useMipMap(IntPtr l) {
 		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useMipMap=v;
 		return 0;
@@ -353,7 +353,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_generateMips(IntPtr l) {
 		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.generateMips=v;
 		return 0;
@@ -367,7 +367,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isCubemap(IntPtr l) {
 		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isCubemap=v;
 		return 0;
@@ -381,7 +381,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isVolume(IntPtr l) {
 		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isVolume=v;
 		return 0;
@@ -395,7 +395,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_volumeDepth(IntPtr l) {
 		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.volumeDepth=v;
 		return 0;
@@ -409,7 +409,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_antiAliasing(IntPtr l) {
 		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.antiAliasing=v;
 		return 0;
@@ -423,7 +423,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enableRandomWrite(IntPtr l) {
 		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.enableRandomWrite=v;
 		return 0;

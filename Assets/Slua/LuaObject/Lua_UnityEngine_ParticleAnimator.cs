@@ -24,7 +24,7 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_doesAnimateColor(IntPtr l) {
 		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.doesAnimateColor=v;
 		return 0;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sizeGrow(IntPtr l) {
 		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.sizeGrow=v;
 		return 0;
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_damping(IntPtr l) {
 		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.damping=v;
 		return 0;
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_autodestruct(IntPtr l) {
 		UnityEngine.ParticleAnimator o = (UnityEngine.ParticleAnimator)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.autodestruct=v;
 		return 0;

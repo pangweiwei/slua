@@ -92,7 +92,7 @@ public class Lua_UnityEngine_WheelHit : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_force(IntPtr l) {
 		UnityEngine.WheelHit o = (UnityEngine.WheelHit)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.force=v;
 		setBack(l,o);
@@ -107,7 +107,7 @@ public class Lua_UnityEngine_WheelHit : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_forwardSlip(IntPtr l) {
 		UnityEngine.WheelHit o = (UnityEngine.WheelHit)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.forwardSlip=v;
 		setBack(l,o);
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_WheelHit : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sidewaysSlip(IntPtr l) {
 		UnityEngine.WheelHit o = (UnityEngine.WheelHit)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.sidewaysSlip=v;
 		setBack(l,o);

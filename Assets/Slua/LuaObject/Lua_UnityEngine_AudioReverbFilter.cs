@@ -38,7 +38,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_dryLevel(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.dryLevel=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_room(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.room=v;
 		return 0;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_roomHF(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.roomHF=v;
 		return 0;
@@ -80,7 +80,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_roomRolloff(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.roomRolloff=v;
 		return 0;
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_decayTime(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.decayTime=v;
 		return 0;
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_decayHFRatio(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.decayHFRatio=v;
 		return 0;
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_reflectionsLevel(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.reflectionsLevel=v;
 		return 0;
@@ -136,7 +136,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_reflectionsDelay(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.reflectionsDelay=v;
 		return 0;
@@ -150,7 +150,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_reverbLevel(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.reverbLevel=v;
 		return 0;
@@ -164,7 +164,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_reverbDelay(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.reverbDelay=v;
 		return 0;
@@ -178,7 +178,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_diffusion(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.diffusion=v;
 		return 0;
@@ -192,7 +192,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_density(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.density=v;
 		return 0;
@@ -206,7 +206,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_hfReference(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.hfReference=v;
 		return 0;
@@ -220,7 +220,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_roomLF(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.roomLF=v;
 		return 0;
@@ -234,7 +234,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_lFReference(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.lFReference=v;
 		return 0;

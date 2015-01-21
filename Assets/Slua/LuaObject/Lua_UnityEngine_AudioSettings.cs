@@ -74,7 +74,7 @@ public class Lua_UnityEngine_AudioSettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_outputSampleRate(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.AudioSettings.outputSampleRate=v;
 		return 0;

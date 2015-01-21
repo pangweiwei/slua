@@ -55,7 +55,7 @@ public class Lua_UnityEngine_UI_AspectRatioFitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_aspectRatio(IntPtr l) {
 		UnityEngine.UI.AspectRatioFitter o = (UnityEngine.UI.AspectRatioFitter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.aspectRatio=v;
 		return 0;

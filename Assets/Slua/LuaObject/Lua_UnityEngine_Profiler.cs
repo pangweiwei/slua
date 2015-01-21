@@ -150,7 +150,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_logFile(IntPtr l) {
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		UnityEngine.Profiler.logFile=v;
 		return 0;
@@ -162,7 +162,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enableBinaryLog(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Profiler.enableBinaryLog=v;
 		return 0;
@@ -174,7 +174,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enabled(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Profiler.enabled=v;
 		return 0;

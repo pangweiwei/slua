@@ -24,7 +24,7 @@ public class Lua_UnityEngine_AudioChorusFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_dryMix(IntPtr l) {
 		UnityEngine.AudioChorusFilter o = (UnityEngine.AudioChorusFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.dryMix=v;
 		return 0;
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_AudioChorusFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_wetMix1(IntPtr l) {
 		UnityEngine.AudioChorusFilter o = (UnityEngine.AudioChorusFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.wetMix1=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_AudioChorusFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_wetMix2(IntPtr l) {
 		UnityEngine.AudioChorusFilter o = (UnityEngine.AudioChorusFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.wetMix2=v;
 		return 0;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_AudioChorusFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_wetMix3(IntPtr l) {
 		UnityEngine.AudioChorusFilter o = (UnityEngine.AudioChorusFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.wetMix3=v;
 		return 0;
@@ -80,7 +80,7 @@ public class Lua_UnityEngine_AudioChorusFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_delay(IntPtr l) {
 		UnityEngine.AudioChorusFilter o = (UnityEngine.AudioChorusFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.delay=v;
 		return 0;
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_AudioChorusFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_rate(IntPtr l) {
 		UnityEngine.AudioChorusFilter o = (UnityEngine.AudioChorusFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.rate=v;
 		return 0;
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_AudioChorusFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_depth(IntPtr l) {
 		UnityEngine.AudioChorusFilter o = (UnityEngine.AudioChorusFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.depth=v;
 		return 0;

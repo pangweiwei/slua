@@ -139,7 +139,7 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isMask(IntPtr l) {
 		UnityEngine.CanvasRenderer o = (UnityEngine.CanvasRenderer)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isMask=v;
 		return 0;

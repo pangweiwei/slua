@@ -77,7 +77,7 @@ public class Lua_UnityEngine_UI_ColorBlock : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_colorMultiplier(IntPtr l) {
 		UnityEngine.UI.ColorBlock o = (UnityEngine.UI.ColorBlock)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.colorMultiplier=v;
 		setBack(l,o);
@@ -92,7 +92,7 @@ public class Lua_UnityEngine_UI_ColorBlock : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fadeDuration(IntPtr l) {
 		UnityEngine.UI.ColorBlock o = (UnityEngine.UI.ColorBlock)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.fadeDuration=v;
 		setBack(l,o);

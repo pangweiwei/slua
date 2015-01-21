@@ -24,7 +24,7 @@ public class Lua_UnityEngine_UI_AnimationTriggers : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_normalTrigger(IntPtr l) {
 		UnityEngine.UI.AnimationTriggers o = (UnityEngine.UI.AnimationTriggers)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.normalTrigger=v;
 		return 0;
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_UI_AnimationTriggers : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_highlightedTrigger(IntPtr l) {
 		UnityEngine.UI.AnimationTriggers o = (UnityEngine.UI.AnimationTriggers)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.highlightedTrigger=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_UI_AnimationTriggers : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pressedTrigger(IntPtr l) {
 		UnityEngine.UI.AnimationTriggers o = (UnityEngine.UI.AnimationTriggers)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.pressedTrigger=v;
 		return 0;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_UI_AnimationTriggers : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_disabledTrigger(IntPtr l) {
 		UnityEngine.UI.AnimationTriggers o = (UnityEngine.UI.AnimationTriggers)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.disabledTrigger=v;
 		return 0;

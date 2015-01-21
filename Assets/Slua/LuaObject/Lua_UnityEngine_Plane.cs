@@ -163,7 +163,7 @@ public class Lua_UnityEngine_Plane : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_distance(IntPtr l) {
 		UnityEngine.Plane o = (UnityEngine.Plane)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.distance=v;
 		setBack(l,o);

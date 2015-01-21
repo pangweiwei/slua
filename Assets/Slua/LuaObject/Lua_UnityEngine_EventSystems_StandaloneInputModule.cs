@@ -91,7 +91,7 @@ public class Lua_UnityEngine_EventSystems_StandaloneInputModule : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_allowActivationOnMobileDevice(IntPtr l) {
 		UnityEngine.EventSystems.StandaloneInputModule o = (UnityEngine.EventSystems.StandaloneInputModule)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.allowActivationOnMobileDevice=v;
 		return 0;
@@ -105,7 +105,7 @@ public class Lua_UnityEngine_EventSystems_StandaloneInputModule : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_inputActionsPerSecond(IntPtr l) {
 		UnityEngine.EventSystems.StandaloneInputModule o = (UnityEngine.EventSystems.StandaloneInputModule)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.inputActionsPerSecond=v;
 		return 0;
@@ -119,7 +119,7 @@ public class Lua_UnityEngine_EventSystems_StandaloneInputModule : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_horizontalAxis(IntPtr l) {
 		UnityEngine.EventSystems.StandaloneInputModule o = (UnityEngine.EventSystems.StandaloneInputModule)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.horizontalAxis=v;
 		return 0;
@@ -133,7 +133,7 @@ public class Lua_UnityEngine_EventSystems_StandaloneInputModule : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_verticalAxis(IntPtr l) {
 		UnityEngine.EventSystems.StandaloneInputModule o = (UnityEngine.EventSystems.StandaloneInputModule)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.verticalAxis=v;
 		return 0;
@@ -147,7 +147,7 @@ public class Lua_UnityEngine_EventSystems_StandaloneInputModule : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_submitButton(IntPtr l) {
 		UnityEngine.EventSystems.StandaloneInputModule o = (UnityEngine.EventSystems.StandaloneInputModule)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.submitButton=v;
 		return 0;
@@ -161,7 +161,7 @@ public class Lua_UnityEngine_EventSystems_StandaloneInputModule : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_cancelButton(IntPtr l) {
 		UnityEngine.EventSystems.StandaloneInputModule o = (UnityEngine.EventSystems.StandaloneInputModule)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.cancelButton=v;
 		return 0;

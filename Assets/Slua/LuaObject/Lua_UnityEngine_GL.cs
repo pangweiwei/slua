@@ -428,7 +428,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_wireframe(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.GL.wireframe=v;
 		return 0;
@@ -440,7 +440,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sRGBWrite(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.GL.sRGBWrite=v;
 		return 0;

@@ -49,7 +49,7 @@ public class Lua_UnityEngine_BoneWeight : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_weight0(IntPtr l) {
 		UnityEngine.BoneWeight o = (UnityEngine.BoneWeight)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.weight0=v;
 		setBack(l,o);
@@ -64,7 +64,7 @@ public class Lua_UnityEngine_BoneWeight : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_weight1(IntPtr l) {
 		UnityEngine.BoneWeight o = (UnityEngine.BoneWeight)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.weight1=v;
 		setBack(l,o);
@@ -79,7 +79,7 @@ public class Lua_UnityEngine_BoneWeight : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_weight2(IntPtr l) {
 		UnityEngine.BoneWeight o = (UnityEngine.BoneWeight)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.weight2=v;
 		setBack(l,o);
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_BoneWeight : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_weight3(IntPtr l) {
 		UnityEngine.BoneWeight o = (UnityEngine.BoneWeight)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.weight3=v;
 		setBack(l,o);
@@ -109,7 +109,7 @@ public class Lua_UnityEngine_BoneWeight : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_boneIndex0(IntPtr l) {
 		UnityEngine.BoneWeight o = (UnityEngine.BoneWeight)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.boneIndex0=v;
 		setBack(l,o);
@@ -124,7 +124,7 @@ public class Lua_UnityEngine_BoneWeight : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_boneIndex1(IntPtr l) {
 		UnityEngine.BoneWeight o = (UnityEngine.BoneWeight)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.boneIndex1=v;
 		setBack(l,o);
@@ -139,7 +139,7 @@ public class Lua_UnityEngine_BoneWeight : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_boneIndex2(IntPtr l) {
 		UnityEngine.BoneWeight o = (UnityEngine.BoneWeight)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.boneIndex2=v;
 		setBack(l,o);
@@ -154,7 +154,7 @@ public class Lua_UnityEngine_BoneWeight : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_boneIndex3(IntPtr l) {
 		UnityEngine.BoneWeight o = (UnityEngine.BoneWeight)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.boneIndex3=v;
 		setBack(l,o);

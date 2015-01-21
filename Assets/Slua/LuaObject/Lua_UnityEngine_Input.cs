@@ -260,7 +260,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_compensateSensors(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Input.compensateSensors=v;
 		return 0;
@@ -292,7 +292,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_simulateMouseWithTouches(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Input.simulateMouseWithTouches=v;
 		return 0;
@@ -349,7 +349,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_multiTouchEnabled(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Input.multiTouchEnabled=v;
 		return 0;

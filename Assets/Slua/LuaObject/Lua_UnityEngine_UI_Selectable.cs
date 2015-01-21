@@ -296,7 +296,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_interactable(IntPtr l) {
 		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.interactable=v;
 		return 0;

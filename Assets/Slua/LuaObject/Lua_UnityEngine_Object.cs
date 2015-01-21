@@ -222,7 +222,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_name(IntPtr l) {
 		UnityEngine.Object o = (UnityEngine.Object)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.name=v;
 		return 0;

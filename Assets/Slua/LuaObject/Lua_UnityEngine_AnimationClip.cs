@@ -88,7 +88,7 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_frameRate(IntPtr l) {
 		UnityEngine.AnimationClip o = (UnityEngine.AnimationClip)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.frameRate=v;
 		return 0;

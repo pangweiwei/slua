@@ -53,7 +53,7 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_radius(IntPtr l) {
 		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.radius=v;
 		return 0;
@@ -67,7 +67,7 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_suspensionDistance(IntPtr l) {
 		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.suspensionDistance=v;
 		return 0;
@@ -95,7 +95,7 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_mass(IntPtr l) {
 		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.mass=v;
 		return 0;
@@ -137,7 +137,7 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_motorTorque(IntPtr l) {
 		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.motorTorque=v;
 		return 0;
@@ -151,7 +151,7 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_brakeTorque(IntPtr l) {
 		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.brakeTorque=v;
 		return 0;
@@ -165,7 +165,7 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_steerAngle(IntPtr l) {
 		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.steerAngle=v;
 		return 0;

@@ -24,7 +24,7 @@ public class Lua_UnityEngine_OcclusionPortal : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_open(IntPtr l) {
 		UnityEngine.OcclusionPortal o = (UnityEngine.OcclusionPortal)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.open=v;
 		return 0;

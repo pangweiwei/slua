@@ -39,7 +39,7 @@ public class Lua_UnityEngine_SliderJoint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_angle(IntPtr l) {
 		UnityEngine.SliderJoint2D o = (UnityEngine.SliderJoint2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.angle=v;
 		return 0;
@@ -53,7 +53,7 @@ public class Lua_UnityEngine_SliderJoint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useMotor(IntPtr l) {
 		UnityEngine.SliderJoint2D o = (UnityEngine.SliderJoint2D)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useMotor=v;
 		return 0;
@@ -67,7 +67,7 @@ public class Lua_UnityEngine_SliderJoint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useLimits(IntPtr l) {
 		UnityEngine.SliderJoint2D o = (UnityEngine.SliderJoint2D)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useLimits=v;
 		return 0;

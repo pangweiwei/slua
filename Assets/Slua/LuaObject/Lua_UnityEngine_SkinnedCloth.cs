@@ -65,7 +65,7 @@ public class Lua_UnityEngine_SkinnedCloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_worldVelocityScale(IntPtr l) {
 		UnityEngine.SkinnedCloth o = (UnityEngine.SkinnedCloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.worldVelocityScale=v;
 		return 0;
@@ -79,7 +79,7 @@ public class Lua_UnityEngine_SkinnedCloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_worldAccelerationScale(IntPtr l) {
 		UnityEngine.SkinnedCloth o = (UnityEngine.SkinnedCloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.worldAccelerationScale=v;
 		return 0;

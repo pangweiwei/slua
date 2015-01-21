@@ -47,7 +47,7 @@ public class Lua_UnityEngine_Gyroscope : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enabled(IntPtr l) {
 		UnityEngine.Gyroscope o = (UnityEngine.Gyroscope)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.enabled=v;
 		return 0;
@@ -61,7 +61,7 @@ public class Lua_UnityEngine_Gyroscope : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_updateInterval(IntPtr l) {
 		UnityEngine.Gyroscope o = (UnityEngine.Gyroscope)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.updateInterval=v;
 		return 0;

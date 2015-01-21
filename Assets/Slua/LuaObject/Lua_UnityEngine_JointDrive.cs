@@ -32,7 +32,7 @@ public class Lua_UnityEngine_JointDrive : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_positionSpring(IntPtr l) {
 		UnityEngine.JointDrive o = (UnityEngine.JointDrive)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.positionSpring=v;
 		setBack(l,o);
@@ -47,7 +47,7 @@ public class Lua_UnityEngine_JointDrive : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_positionDamper(IntPtr l) {
 		UnityEngine.JointDrive o = (UnityEngine.JointDrive)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.positionDamper=v;
 		setBack(l,o);
@@ -62,7 +62,7 @@ public class Lua_UnityEngine_JointDrive : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maximumForce(IntPtr l) {
 		UnityEngine.JointDrive o = (UnityEngine.JointDrive)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.maximumForce=v;
 		setBack(l,o);

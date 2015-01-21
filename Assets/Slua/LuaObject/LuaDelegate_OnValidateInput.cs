@@ -9,10 +9,10 @@ namespace SLua
     public partial class LuaObject
     {
 
-        static internal bool checkDelegate(IntPtr l,int p,out UnityEngine.Application.LogCallback ua) {
+        static internal bool checkDelegate(IntPtr l,int p,out UnityEngine.UI.InputField.OnValidateInput ua) {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
             int r = LuaDLL.luaS_checkcallback(l, p);
-            ua = (string a1,string a2,UnityEngine.LogType a3) =>
+            ua = (string a1,int a2,Char a3) =>
             {
                 int error = pushTry(l);
                 LuaDLL.lua_getref(l, r);
@@ -24,7 +24,10 @@ namespace SLua
 					LuaDLL.lua_pop(l, 1);
 				}
 				int top =LuaDLL.lua_gettop(l);
+				Char ret;
+				checkType(l,error+1,out ret);
 				LuaDLL.lua_pop(l, 1);
+				return ret;
 			};
 			return true;
 		}

@@ -77,7 +77,7 @@ public class Lua_UnityEngine_RaycastHit2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_distance(IntPtr l) {
 		UnityEngine.RaycastHit2D o = (UnityEngine.RaycastHit2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.distance=v;
 		setBack(l,o);
@@ -92,7 +92,7 @@ public class Lua_UnityEngine_RaycastHit2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fraction(IntPtr l) {
 		UnityEngine.RaycastHit2D o = (UnityEngine.RaycastHit2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.fraction=v;
 		setBack(l,o);

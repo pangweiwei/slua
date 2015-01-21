@@ -131,14 +131,14 @@ public class LuaCodeGen : MonoBehaviour
                     export = false;
             }
 
-            if (export &&!t.IsGenericType && !typeof(YieldInstruction).IsAssignableFrom(t) && !IsObsolete(t))
+            if (export)
             {
                 if(Generate(t))
                     exports.Add(t);
             }
         }
 
-        GenerateBind(exports,"LuaUnity");
+        GenerateBind(exports,"BindUnity");
         
         AssetDatabase.Refresh();
     }
@@ -168,8 +168,7 @@ public class LuaCodeGen : MonoBehaviour
                     export = false;
             }
 
-            if (export && !t.IsGenericType && t.BaseType != typeof(System.MulticastDelegate) &&
-                !typeof(YieldInstruction).IsAssignableFrom(t) && !IsObsolete(t))
+            if (export)
             {
                 if(Generate(t))
                     exports.Add(t);
@@ -177,7 +176,7 @@ public class LuaCodeGen : MonoBehaviour
 
         }
 
-        GenerateBind(exports, "LuaUnityUI");
+        GenerateBind(exports, "BindUnityUI");
 
         AssetDatabase.Refresh();
     }
@@ -192,9 +191,7 @@ public class LuaCodeGen : MonoBehaviour
     {
         List<Type> cust = new List<Type>{
 			typeof(HelloWorld),
-			// your custom class here
 		};
-
 
         List<Type> exports = new List<Type>();
 
@@ -204,7 +201,7 @@ public class LuaCodeGen : MonoBehaviour
                 exports.Add(t);
         }
 
-        GenerateBind(exports,"LuaCustom");
+        GenerateBind(exports,"BindCustom");
         AssetDatabase.Refresh();
     }
 
@@ -270,12 +267,14 @@ class CodeGenerator
         string f = LuaCodeGen.path + name+".cs";
         StreamWriter file = new StreamWriter(f,false,Encoding.UTF8);
         Write(file, "using System;");
-        Write(file, "public static class {0} {{",name);
-        Write(file, "public static void Bind(IntPtr l) {");
+        Write(file, "namespace SLua {");
+        Write(file, "public partial class LuaObject {");
+        Write(file, "public static void {0}(IntPtr l) {{",name);
         foreach (Type t in list)
         {
             WriteBindType(file, t, list, exported);
         }
+        Write(file, "}");
         Write(file, "}");
         Write(file, "}");
         file.Close();
@@ -294,44 +293,49 @@ class CodeGenerator
 
     public bool Generate(Type t)
     {
-        if (t.IsEnum)
+        if (!t.IsGenericType && !IsObsolete(t) && !typeof(YieldInstruction).IsAssignableFrom(t))
         {
-            StreamWriter file = Begin(t);
-            WriteHead(t, file);
-            WriteEnumToInt(t, file);
-            RegEnumFunction(t, file);
-            End(file);
-        }
-        else if(t.BaseType==typeof(System.MulticastDelegate)) {
-            string f = LuaCodeGen.path + "LuaDelegate_" + t.Name + ".cs";
-            StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
-            WriteDelegate(t, file);
-            file.Close();
-            return false;
-        }
-        else
-        {
-            funcname.Clear();
-            propname.Clear();
-
-            StreamWriter file = Begin(t);
-            WriteHead(t, file);
-            WriteConstructor(t, file);
-            WriteFunction(t, file);
-            WriteField(t, file);
-            RegFunction(t, file);
-            End(file);
-
-            if (t.BaseType!=null && t.BaseType.Name=="UnityEvent`1")
+            if (t.IsEnum)
             {
-                string f = LuaCodeGen.path + "LuaUnityEvent_" + GenericName(t.BaseType) + ".cs";
-                file = new StreamWriter(f, false, Encoding.UTF8);
-                WriteEvent(t, file);
-                file.Close();
+                StreamWriter file = Begin(t);
+                WriteHead(t, file);
+                WriteEnumToInt(t, file);
+                RegEnumFunction(t, file);
+                End(file);
             }
-        }
+            else if (t.BaseType == typeof(System.MulticastDelegate))
+            {
+                string f = LuaCodeGen.path + "LuaDelegate_" + t.Name + ".cs";
+                StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
+                WriteDelegate(t, file);
+                file.Close();
+                return false;
+            }
+            else
+            {
+                funcname.Clear();
+                propname.Clear();
 
-        return true;
+                StreamWriter file = Begin(t);
+                WriteHead(t, file);
+                WriteConstructor(t, file);
+                WriteFunction(t, file);
+                WriteField(t, file);
+                RegFunction(t, file);
+                End(file);
+
+                if (t.BaseType != null && t.BaseType.Name == "UnityEvent`1")
+                {
+                    string f = LuaCodeGen.path + "LuaUnityEvent_" + GenericName(t.BaseType) + ".cs";
+                    file = new StreamWriter(f, false, Encoding.UTF8);
+                    WriteEvent(t, file);
+                    file.Close();
+                }
+            }
+
+            return true;
+        }
+        return false;
     }
 
     void WriteDelegate(Type t, StreamWriter file)
@@ -1114,12 +1118,14 @@ namespace SLua
                 return "bool";
             case "Int32":
                 return "int";
+            case "Object":
+                return FullName(t);
             default:
                 
-                string fn = FullName(t);
-                if (fn.StartsWith("UnityEngine."))
-                    return fn.Substring(12);
-                else if (fn.StartsWith("System."))
+                 string fn = FullName(t);
+//                 if (fn.StartsWith("UnityEngine."))
+//                     return fn.Substring(12);
+                if (fn.StartsWith("System."))
                     return fn.Substring(7);
                 return fn;
         }

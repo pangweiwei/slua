@@ -128,7 +128,7 @@ public class Lua_UnityEngine_EventSystems_PointerEventData : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_eligibleForClick(IntPtr l) {
 		UnityEngine.EventSystems.PointerEventData o = (UnityEngine.EventSystems.PointerEventData)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.eligibleForClick=v;
 		return 0;
@@ -142,7 +142,7 @@ public class Lua_UnityEngine_EventSystems_PointerEventData : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pointerId(IntPtr l) {
 		UnityEngine.EventSystems.PointerEventData o = (UnityEngine.EventSystems.PointerEventData)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.pointerId=v;
 		return 0;
@@ -226,7 +226,7 @@ public class Lua_UnityEngine_EventSystems_PointerEventData : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_clickTime(IntPtr l) {
 		UnityEngine.EventSystems.PointerEventData o = (UnityEngine.EventSystems.PointerEventData)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.clickTime=v;
 		return 0;
@@ -240,7 +240,7 @@ public class Lua_UnityEngine_EventSystems_PointerEventData : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_clickCount(IntPtr l) {
 		UnityEngine.EventSystems.PointerEventData o = (UnityEngine.EventSystems.PointerEventData)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.clickCount=v;
 		return 0;
@@ -268,7 +268,7 @@ public class Lua_UnityEngine_EventSystems_PointerEventData : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useDragThreshold(IntPtr l) {
 		UnityEngine.EventSystems.PointerEventData o = (UnityEngine.EventSystems.PointerEventData)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useDragThreshold=v;
 		return 0;
@@ -282,7 +282,7 @@ public class Lua_UnityEngine_EventSystems_PointerEventData : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_dragging(IntPtr l) {
 		UnityEngine.EventSystems.PointerEventData o = (UnityEngine.EventSystems.PointerEventData)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.dragging=v;
 		return 0;

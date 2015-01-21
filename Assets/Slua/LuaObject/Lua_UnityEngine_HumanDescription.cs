@@ -47,7 +47,7 @@ public class Lua_UnityEngine_HumanDescription : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_upperArmTwist(IntPtr l) {
 		UnityEngine.HumanDescription o = (UnityEngine.HumanDescription)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.upperArmTwist=v;
 		setBack(l,o);
@@ -62,7 +62,7 @@ public class Lua_UnityEngine_HumanDescription : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_lowerArmTwist(IntPtr l) {
 		UnityEngine.HumanDescription o = (UnityEngine.HumanDescription)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.lowerArmTwist=v;
 		setBack(l,o);
@@ -77,7 +77,7 @@ public class Lua_UnityEngine_HumanDescription : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_upperLegTwist(IntPtr l) {
 		UnityEngine.HumanDescription o = (UnityEngine.HumanDescription)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.upperLegTwist=v;
 		setBack(l,o);
@@ -92,7 +92,7 @@ public class Lua_UnityEngine_HumanDescription : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_lowerLegTwist(IntPtr l) {
 		UnityEngine.HumanDescription o = (UnityEngine.HumanDescription)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.lowerLegTwist=v;
 		setBack(l,o);
@@ -107,7 +107,7 @@ public class Lua_UnityEngine_HumanDescription : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_armStretch(IntPtr l) {
 		UnityEngine.HumanDescription o = (UnityEngine.HumanDescription)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.armStretch=v;
 		setBack(l,o);
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_HumanDescription : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_legStretch(IntPtr l) {
 		UnityEngine.HumanDescription o = (UnityEngine.HumanDescription)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.legStretch=v;
 		setBack(l,o);
@@ -137,7 +137,7 @@ public class Lua_UnityEngine_HumanDescription : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_feetSpacing(IntPtr l) {
 		UnityEngine.HumanDescription o = (UnityEngine.HumanDescription)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.feetSpacing=v;
 		setBack(l,o);

@@ -54,7 +54,7 @@ public class Lua_UnityEngine_DistanceJoint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_distance(IntPtr l) {
 		UnityEngine.DistanceJoint2D o = (UnityEngine.DistanceJoint2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.distance=v;
 		return 0;
@@ -68,7 +68,7 @@ public class Lua_UnityEngine_DistanceJoint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxDistanceOnly(IntPtr l) {
 		UnityEngine.DistanceJoint2D o = (UnityEngine.DistanceJoint2D)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.maxDistanceOnly=v;
 		return 0;

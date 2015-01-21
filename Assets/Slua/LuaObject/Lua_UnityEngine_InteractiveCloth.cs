@@ -125,7 +125,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_friction(IntPtr l) {
 		UnityEngine.InteractiveCloth o = (UnityEngine.InteractiveCloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.friction=v;
 		return 0;
@@ -139,7 +139,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_density(IntPtr l) {
 		UnityEngine.InteractiveCloth o = (UnityEngine.InteractiveCloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.density=v;
 		return 0;
@@ -153,7 +153,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pressure(IntPtr l) {
 		UnityEngine.InteractiveCloth o = (UnityEngine.InteractiveCloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.pressure=v;
 		return 0;
@@ -167,7 +167,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_collisionResponse(IntPtr l) {
 		UnityEngine.InteractiveCloth o = (UnityEngine.InteractiveCloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.collisionResponse=v;
 		return 0;
@@ -181,7 +181,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_tearFactor(IntPtr l) {
 		UnityEngine.InteractiveCloth o = (UnityEngine.InteractiveCloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.tearFactor=v;
 		return 0;
@@ -195,7 +195,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_attachmentTearFactor(IntPtr l) {
 		UnityEngine.InteractiveCloth o = (UnityEngine.InteractiveCloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.attachmentTearFactor=v;
 		return 0;
@@ -209,7 +209,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_attachmentResponse(IntPtr l) {
 		UnityEngine.InteractiveCloth o = (UnityEngine.InteractiveCloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.attachmentResponse=v;
 		return 0;

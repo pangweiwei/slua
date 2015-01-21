@@ -59,7 +59,7 @@ public class Lua_UnityEngine_UI_Shadow : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useGraphicAlpha(IntPtr l) {
 		UnityEngine.UI.Shadow o = (UnityEngine.UI.Shadow)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useGraphicAlpha=v;
 		return 0;

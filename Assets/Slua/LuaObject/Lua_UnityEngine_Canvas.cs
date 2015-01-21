@@ -99,7 +99,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_scaleFactor(IntPtr l) {
 		UnityEngine.Canvas o = (UnityEngine.Canvas)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.scaleFactor=v;
 		return 0;
@@ -113,7 +113,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_referencePixelsPerUnit(IntPtr l) {
 		UnityEngine.Canvas o = (UnityEngine.Canvas)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.referencePixelsPerUnit=v;
 		return 0;
@@ -127,7 +127,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_overridePixelPerfect(IntPtr l) {
 		UnityEngine.Canvas o = (UnityEngine.Canvas)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.overridePixelPerfect=v;
 		return 0;
@@ -141,7 +141,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pixelPerfect(IntPtr l) {
 		UnityEngine.Canvas o = (UnityEngine.Canvas)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.pixelPerfect=v;
 		return 0;
@@ -155,7 +155,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_planeDistance(IntPtr l) {
 		UnityEngine.Canvas o = (UnityEngine.Canvas)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.planeDistance=v;
 		return 0;
@@ -175,7 +175,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_overrideSorting(IntPtr l) {
 		UnityEngine.Canvas o = (UnityEngine.Canvas)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.overrideSorting=v;
 		return 0;
@@ -189,7 +189,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sortingOrder(IntPtr l) {
 		UnityEngine.Canvas o = (UnityEngine.Canvas)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.sortingOrder=v;
 		return 0;
@@ -203,7 +203,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sortingLayerID(IntPtr l) {
 		UnityEngine.Canvas o = (UnityEngine.Canvas)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.sortingLayerID=v;
 		return 0;
@@ -217,7 +217,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sortingLayerName(IntPtr l) {
 		UnityEngine.Canvas o = (UnityEngine.Canvas)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.sortingLayerName=v;
 		return 0;

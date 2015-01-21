@@ -459,7 +459,7 @@ public class Lua_UnityEngine_Animation : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_playAutomatically(IntPtr l) {
 		UnityEngine.Animation o = (UnityEngine.Animation)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.playAutomatically=v;
 		return 0;
@@ -493,7 +493,7 @@ public class Lua_UnityEngine_Animation : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_animatePhysics(IntPtr l) {
 		UnityEngine.Animation o = (UnityEngine.Animation)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.animatePhysics=v;
 		return 0;

@@ -17,7 +17,7 @@ public class Lua_UnityEngine_JointMotor : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_targetVelocity(IntPtr l) {
 		UnityEngine.JointMotor o = (UnityEngine.JointMotor)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.targetVelocity=v;
 		setBack(l,o);
@@ -32,7 +32,7 @@ public class Lua_UnityEngine_JointMotor : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_force(IntPtr l) {
 		UnityEngine.JointMotor o = (UnityEngine.JointMotor)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.force=v;
 		setBack(l,o);
@@ -47,7 +47,7 @@ public class Lua_UnityEngine_JointMotor : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_freeSpin(IntPtr l) {
 		UnityEngine.JointMotor o = (UnityEngine.JointMotor)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.freeSpin=v;
 		setBack(l,o);

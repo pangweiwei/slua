@@ -38,7 +38,7 @@ public class Lua_UnityEngine_ParticleRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_lengthScale(IntPtr l) {
 		UnityEngine.ParticleRenderer o = (UnityEngine.ParticleRenderer)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.lengthScale=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_ParticleRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_velocityScale(IntPtr l) {
 		UnityEngine.ParticleRenderer o = (UnityEngine.ParticleRenderer)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.velocityScale=v;
 		return 0;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_ParticleRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_cameraVelocityScale(IntPtr l) {
 		UnityEngine.ParticleRenderer o = (UnityEngine.ParticleRenderer)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.cameraVelocityScale=v;
 		return 0;
@@ -80,7 +80,7 @@ public class Lua_UnityEngine_ParticleRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxParticleSize(IntPtr l) {
 		UnityEngine.ParticleRenderer o = (UnityEngine.ParticleRenderer)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.maxParticleSize=v;
 		return 0;
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_ParticleRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_uvAnimationXTile(IntPtr l) {
 		UnityEngine.ParticleRenderer o = (UnityEngine.ParticleRenderer)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.uvAnimationXTile=v;
 		return 0;
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_ParticleRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_uvAnimationYTile(IntPtr l) {
 		UnityEngine.ParticleRenderer o = (UnityEngine.ParticleRenderer)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.uvAnimationYTile=v;
 		return 0;
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_ParticleRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_uvAnimationCycles(IntPtr l) {
 		UnityEngine.ParticleRenderer o = (UnityEngine.ParticleRenderer)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.uvAnimationCycles=v;
 		return 0;
@@ -136,7 +136,7 @@ public class Lua_UnityEngine_ParticleRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxPartileSize(IntPtr l) {
 		UnityEngine.ParticleRenderer o = (UnityEngine.ParticleRenderer)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.maxPartileSize=v;
 		return 0;

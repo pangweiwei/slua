@@ -190,7 +190,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_deviceName(IntPtr l) {
 		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.deviceName=v;
 		return 0;
@@ -204,7 +204,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_requestedFPS(IntPtr l) {
 		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.requestedFPS=v;
 		return 0;
@@ -218,7 +218,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_requestedWidth(IntPtr l) {
 		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.requestedWidth=v;
 		return 0;
@@ -232,7 +232,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_requestedHeight(IntPtr l) {
 		UnityEngine.WebCamTexture o = (UnityEngine.WebCamTexture)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.requestedHeight=v;
 		return 0;

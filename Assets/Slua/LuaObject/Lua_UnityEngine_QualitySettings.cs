@@ -106,7 +106,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pixelLightCount(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.QualitySettings.pixelLightCount=v;
 		return 0;
@@ -130,7 +130,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_shadowCascades(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.QualitySettings.shadowCascades=v;
 		return 0;
@@ -142,7 +142,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_shadowDistance(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.QualitySettings.shadowDistance=v;
 		return 0;
@@ -154,7 +154,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_masterTextureLimit(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.QualitySettings.masterTextureLimit=v;
 		return 0;
@@ -178,7 +178,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_lodBias(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.QualitySettings.lodBias=v;
 		return 0;
@@ -190,7 +190,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maximumLODLevel(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.QualitySettings.maximumLODLevel=v;
 		return 0;
@@ -202,7 +202,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_particleRaycastBudget(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.QualitySettings.particleRaycastBudget=v;
 		return 0;
@@ -214,7 +214,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_softVegetation(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.QualitySettings.softVegetation=v;
 		return 0;
@@ -226,7 +226,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxQueuedFrames(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.QualitySettings.maxQueuedFrames=v;
 		return 0;
@@ -238,7 +238,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_vSyncCount(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.QualitySettings.vSyncCount=v;
 		return 0;
@@ -250,7 +250,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_antiAliasing(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.QualitySettings.antiAliasing=v;
 		return 0;

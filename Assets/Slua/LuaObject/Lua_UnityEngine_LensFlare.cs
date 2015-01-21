@@ -38,7 +38,7 @@ public class Lua_UnityEngine_LensFlare : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_brightness(IntPtr l) {
 		UnityEngine.LensFlare o = (UnityEngine.LensFlare)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.brightness=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_LensFlare : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fadeSpeed(IntPtr l) {
 		UnityEngine.LensFlare o = (UnityEngine.LensFlare)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.fadeSpeed=v;
 		return 0;

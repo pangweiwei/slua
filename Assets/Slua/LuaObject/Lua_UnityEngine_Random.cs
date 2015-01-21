@@ -51,7 +51,7 @@ public class Lua_UnityEngine_Random : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_seed(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.Random.seed=v;
 		return 0;

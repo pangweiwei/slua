@@ -138,7 +138,7 @@ public class Lua_UnityEngine_Caching : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maximumAvailableDiskSpace(IntPtr l) {
-		System.Int64 v;
+		Int64 v;
 		checkType(l,2,out v);
 		UnityEngine.Caching.maximumAvailableDiskSpace=v;
 		return 0;
@@ -155,7 +155,7 @@ public class Lua_UnityEngine_Caching : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_expirationDelay(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.Caching.expirationDelay=v;
 		return 0;
@@ -167,7 +167,7 @@ public class Lua_UnityEngine_Caching : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enabled(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Caching.enabled=v;
 		return 0;

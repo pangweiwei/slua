@@ -38,7 +38,7 @@ public class Lua_UnityEngine_CapsuleCollider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_radius(IntPtr l) {
 		UnityEngine.CapsuleCollider o = (UnityEngine.CapsuleCollider)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.radius=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_CapsuleCollider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_height(IntPtr l) {
 		UnityEngine.CapsuleCollider o = (UnityEngine.CapsuleCollider)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.height=v;
 		return 0;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_CapsuleCollider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_direction(IntPtr l) {
 		UnityEngine.CapsuleCollider o = (UnityEngine.CapsuleCollider)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.direction=v;
 		return 0;

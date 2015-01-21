@@ -24,7 +24,7 @@ public class Lua_UnityEngine_AudioDistortionFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_distortionLevel(IntPtr l) {
 		UnityEngine.AudioDistortionFilter o = (UnityEngine.AudioDistortionFilter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.distortionLevel=v;
 		return 0;

@@ -52,7 +52,7 @@ public class Lua_UnityEngine_Time : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fixedDeltaTime(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Time.fixedDeltaTime=v;
 		return 0;
@@ -64,7 +64,7 @@ public class Lua_UnityEngine_Time : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maximumDeltaTime(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Time.maximumDeltaTime=v;
 		return 0;
@@ -81,7 +81,7 @@ public class Lua_UnityEngine_Time : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_timeScale(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Time.timeScale=v;
 		return 0;
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_Time : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_captureFramerate(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.Time.captureFramerate=v;
 		return 0;

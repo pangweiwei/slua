@@ -17,15 +17,13 @@ namespace SLua
                 int error = pushTry(l);
                 LuaDLL.lua_getref(l, r);
 
-                if (LuaDLL.lua_pcall(l, 0, 0, error) != 0)
-
-                {
-                    LuaDLL.lua_pop(l, 1); // pop error msg
-                }
-                LuaDLL.lua_pop(l, 1); // pop error function
-            };
-            return true;
-        }   
-    }
+				if (LuaDLL.lua_pcall(l, 0, -1, error) != 0) {
+					LuaDLL.lua_pop(l, 1);
+				}
+				int top =LuaDLL.lua_gettop(l);
+				LuaDLL.lua_pop(l, 1);
+			};
+			return true;
+		}
+	}
 }
-

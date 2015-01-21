@@ -74,7 +74,7 @@ public class Lua_UnityEngine_UI_Mask : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_showMaskGraphic(IntPtr l) {
 		UnityEngine.UI.Mask o = (UnityEngine.UI.Mask)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.showMaskGraphic=v;
 		return 0;

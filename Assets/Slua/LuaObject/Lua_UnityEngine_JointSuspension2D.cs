@@ -17,7 +17,7 @@ public class Lua_UnityEngine_JointSuspension2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_dampingRatio(IntPtr l) {
 		UnityEngine.JointSuspension2D o = (UnityEngine.JointSuspension2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.dampingRatio=v;
 		setBack(l,o);
@@ -32,7 +32,7 @@ public class Lua_UnityEngine_JointSuspension2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_frequency(IntPtr l) {
 		UnityEngine.JointSuspension2D o = (UnityEngine.JointSuspension2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.frequency=v;
 		setBack(l,o);
@@ -47,7 +47,7 @@ public class Lua_UnityEngine_JointSuspension2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_angle(IntPtr l) {
 		UnityEngine.JointSuspension2D o = (UnityEngine.JointSuspension2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.angle=v;
 		setBack(l,o);

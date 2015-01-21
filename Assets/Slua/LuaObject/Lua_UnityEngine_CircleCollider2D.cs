@@ -38,7 +38,7 @@ public class Lua_UnityEngine_CircleCollider2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_radius(IntPtr l) {
 		UnityEngine.CircleCollider2D o = (UnityEngine.CircleCollider2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.radius=v;
 		return 0;

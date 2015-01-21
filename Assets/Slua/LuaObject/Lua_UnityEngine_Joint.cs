@@ -80,7 +80,7 @@ public class Lua_UnityEngine_Joint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_autoConfigureConnectedAnchor(IntPtr l) {
 		UnityEngine.Joint o = (UnityEngine.Joint)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.autoConfigureConnectedAnchor=v;
 		return 0;
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_Joint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_breakForce(IntPtr l) {
 		UnityEngine.Joint o = (UnityEngine.Joint)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.breakForce=v;
 		return 0;
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_Joint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_breakTorque(IntPtr l) {
 		UnityEngine.Joint o = (UnityEngine.Joint)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.breakTorque=v;
 		return 0;
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_Joint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enableCollision(IntPtr l) {
 		UnityEngine.Joint o = (UnityEngine.Joint)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.enableCollision=v;
 		return 0;

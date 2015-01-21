@@ -32,7 +32,7 @@ public class Lua_UnityEngine_HumanBone : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_boneName(IntPtr l) {
 		UnityEngine.HumanBone o = (UnityEngine.HumanBone)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.boneName=v;
 		setBack(l,o);
@@ -47,7 +47,7 @@ public class Lua_UnityEngine_HumanBone : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_humanName(IntPtr l) {
 		UnityEngine.HumanBone o = (UnityEngine.HumanBone)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.humanName=v;
 		setBack(l,o);

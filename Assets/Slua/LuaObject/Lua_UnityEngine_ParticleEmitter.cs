@@ -107,7 +107,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_emit(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.emit=v;
 		return 0;
@@ -121,7 +121,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_minSize(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.minSize=v;
 		return 0;
@@ -135,7 +135,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxSize(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.maxSize=v;
 		return 0;
@@ -149,7 +149,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_minEnergy(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.minEnergy=v;
 		return 0;
@@ -163,7 +163,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxEnergy(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.maxEnergy=v;
 		return 0;
@@ -177,7 +177,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_minEmission(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.minEmission=v;
 		return 0;
@@ -191,7 +191,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxEmission(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.maxEmission=v;
 		return 0;
@@ -205,7 +205,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_emitterVelocityScale(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.emitterVelocityScale=v;
 		return 0;
@@ -261,7 +261,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useWorldSpace(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useWorldSpace=v;
 		return 0;
@@ -275,7 +275,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_rndRotation(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.rndRotation=v;
 		return 0;
@@ -289,7 +289,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_angularVelocity(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.angularVelocity=v;
 		return 0;
@@ -303,7 +303,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_rndAngularVelocity(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.rndAngularVelocity=v;
 		return 0;
@@ -337,7 +337,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enabled(IntPtr l) {
 		UnityEngine.ParticleEmitter o = (UnityEngine.ParticleEmitter)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.enabled=v;
 		return 0;

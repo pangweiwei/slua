@@ -31,7 +31,7 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_referencePixelsPerUnit(IntPtr l) {
 		UnityEngine.UI.CanvasScaler o = (UnityEngine.UI.CanvasScaler)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.referencePixelsPerUnit=v;
 		return 0;
@@ -45,7 +45,7 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_scaleFactor(IntPtr l) {
 		UnityEngine.UI.CanvasScaler o = (UnityEngine.UI.CanvasScaler)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.scaleFactor=v;
 		return 0;
@@ -87,7 +87,7 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_matchWidthOrHeight(IntPtr l) {
 		UnityEngine.UI.CanvasScaler o = (UnityEngine.UI.CanvasScaler)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.matchWidthOrHeight=v;
 		return 0;
@@ -115,7 +115,7 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fallbackScreenDPI(IntPtr l) {
 		UnityEngine.UI.CanvasScaler o = (UnityEngine.UI.CanvasScaler)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.fallbackScreenDPI=v;
 		return 0;
@@ -129,7 +129,7 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_defaultSpriteDPI(IntPtr l) {
 		UnityEngine.UI.CanvasScaler o = (UnityEngine.UI.CanvasScaler)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.defaultSpriteDPI=v;
 		return 0;
@@ -143,7 +143,7 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_dynamicPixelsPerUnit(IntPtr l) {
 		UnityEngine.UI.CanvasScaler o = (UnityEngine.UI.CanvasScaler)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.dynamicPixelsPerUnit=v;
 		return 0;

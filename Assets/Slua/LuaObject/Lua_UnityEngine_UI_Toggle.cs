@@ -115,7 +115,7 @@ public class Lua_UnityEngine_UI_Toggle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isOn(IntPtr l) {
 		UnityEngine.UI.Toggle o = (UnityEngine.UI.Toggle)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isOn=v;
 		return 0;

@@ -24,7 +24,7 @@ public class Lua_UnityEngine_Projector : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_nearClipPlane(IntPtr l) {
 		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.nearClipPlane=v;
 		return 0;
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_Projector : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_farClipPlane(IntPtr l) {
 		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.farClipPlane=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_Projector : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fieldOfView(IntPtr l) {
 		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.fieldOfView=v;
 		return 0;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_Projector : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_aspectRatio(IntPtr l) {
 		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.aspectRatio=v;
 		return 0;
@@ -80,7 +80,7 @@ public class Lua_UnityEngine_Projector : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isOrthoGraphic(IntPtr l) {
 		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isOrthoGraphic=v;
 		return 0;
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_Projector : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_orthographic(IntPtr l) {
 		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.orthographic=v;
 		return 0;
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_Projector : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_orthographicSize(IntPtr l) {
 		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.orthographicSize=v;
 		return 0;
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_Projector : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_orthoGraphicSize(IntPtr l) {
 		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.orthoGraphicSize=v;
 		return 0;
@@ -136,7 +136,7 @@ public class Lua_UnityEngine_Projector : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_ignoreLayers(IntPtr l) {
 		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.ignoreLayers=v;
 		return 0;

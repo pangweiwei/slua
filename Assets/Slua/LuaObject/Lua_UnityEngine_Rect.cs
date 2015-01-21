@@ -210,7 +210,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_x(IntPtr l) {
 		UnityEngine.Rect o = (UnityEngine.Rect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.x=v;
 		setBack(l,o);
@@ -225,7 +225,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_y(IntPtr l) {
 		UnityEngine.Rect o = (UnityEngine.Rect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.y=v;
 		setBack(l,o);
@@ -300,7 +300,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_width(IntPtr l) {
 		UnityEngine.Rect o = (UnityEngine.Rect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.width=v;
 		setBack(l,o);
@@ -315,7 +315,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_height(IntPtr l) {
 		UnityEngine.Rect o = (UnityEngine.Rect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.height=v;
 		setBack(l,o);
@@ -345,7 +345,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_xMin(IntPtr l) {
 		UnityEngine.Rect o = (UnityEngine.Rect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.xMin=v;
 		setBack(l,o);
@@ -360,7 +360,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_yMin(IntPtr l) {
 		UnityEngine.Rect o = (UnityEngine.Rect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.yMin=v;
 		setBack(l,o);
@@ -375,7 +375,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_xMax(IntPtr l) {
 		UnityEngine.Rect o = (UnityEngine.Rect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.xMax=v;
 		setBack(l,o);
@@ -390,7 +390,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_yMax(IntPtr l) {
 		UnityEngine.Rect o = (UnityEngine.Rect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.yMax=v;
 		setBack(l,o);

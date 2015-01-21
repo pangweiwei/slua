@@ -47,7 +47,7 @@ public class Lua_UnityEngine_NavMeshHit : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_distance(IntPtr l) {
 		UnityEngine.NavMeshHit o = (UnityEngine.NavMeshHit)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.distance=v;
 		setBack(l,o);
@@ -62,7 +62,7 @@ public class Lua_UnityEngine_NavMeshHit : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_mask(IntPtr l) {
 		UnityEngine.NavMeshHit o = (UnityEngine.NavMeshHit)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.mask=v;
 		setBack(l,o);
@@ -77,7 +77,7 @@ public class Lua_UnityEngine_NavMeshHit : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_hit(IntPtr l) {
 		UnityEngine.NavMeshHit o = (UnityEngine.NavMeshHit)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.hit=v;
 		setBack(l,o);

@@ -215,7 +215,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useGUILayout(IntPtr l) {
 		UnityEngine.MonoBehaviour o = (UnityEngine.MonoBehaviour)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useGUILayout=v;
 		return 0;

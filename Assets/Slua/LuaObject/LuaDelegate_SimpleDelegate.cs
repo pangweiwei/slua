@@ -12,7 +12,7 @@ namespace SLua
         static internal bool checkDelegate(IntPtr l,int p,out HelloWorld.SimpleDelegate ua) {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
             int r = LuaDLL.luaS_checkcallback(l, p);
-            ua = (string a1,GameObject a2) =>
+            ua = (string a1,UnityEngine.GameObject a2) =>
             {
                 int error = pushTry(l);
                 LuaDLL.lua_getref(l, r);

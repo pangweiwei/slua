@@ -82,7 +82,7 @@ public class Lua_UnityEngine_AudioListener : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_volume(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.AudioListener.volume=v;
 		return 0;
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_AudioListener : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pause(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.AudioListener.pause=v;
 		return 0;

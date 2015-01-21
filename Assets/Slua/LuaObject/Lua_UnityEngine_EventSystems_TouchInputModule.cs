@@ -79,7 +79,7 @@ public class Lua_UnityEngine_EventSystems_TouchInputModule : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_allowActivationOnStandalone(IntPtr l) {
 		UnityEngine.EventSystems.TouchInputModule o = (UnityEngine.EventSystems.TouchInputModule)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.allowActivationOnStandalone=v;
 		return 0;

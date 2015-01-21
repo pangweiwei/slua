@@ -38,7 +38,7 @@ public class Lua_UnityEngine_MeshCollider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_convex(IntPtr l) {
 		UnityEngine.MeshCollider o = (UnityEngine.MeshCollider)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.convex=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_MeshCollider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_smoothSphereCollisions(IntPtr l) {
 		UnityEngine.MeshCollider o = (UnityEngine.MeshCollider)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.smoothSphereCollisions=v;
 		return 0;

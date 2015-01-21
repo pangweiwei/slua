@@ -38,7 +38,7 @@ public class Lua_UnityEngine_Joint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_collideConnected(IntPtr l) {
 		UnityEngine.Joint2D o = (UnityEngine.Joint2D)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.collideConnected=v;
 		return 0;

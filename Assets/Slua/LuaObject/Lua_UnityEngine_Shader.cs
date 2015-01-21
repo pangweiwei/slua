@@ -302,7 +302,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maximumLOD(IntPtr l) {
 		UnityEngine.Shader o = (UnityEngine.Shader)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.maximumLOD=v;
 		return 0;
@@ -314,7 +314,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_globalMaximumLOD(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.Shader.globalMaximumLOD=v;
 		return 0;

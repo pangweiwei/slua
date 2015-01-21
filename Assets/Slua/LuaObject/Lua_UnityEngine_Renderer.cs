@@ -84,7 +84,7 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enabled(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.enabled=v;
 		return 0;
@@ -98,7 +98,7 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_castShadows(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.castShadows=v;
 		return 0;
@@ -112,7 +112,7 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_receiveShadows(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.receiveShadows=v;
 		return 0;
@@ -188,7 +188,7 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_lightmapIndex(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.lightmapIndex=v;
 		return 0;
@@ -222,7 +222,7 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useLightProbes(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useLightProbes=v;
 		return 0;
@@ -250,7 +250,7 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sortingLayerName(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.sortingLayerName=v;
 		return 0;
@@ -264,7 +264,7 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sortingLayerID(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.sortingLayerID=v;
 		return 0;
@@ -278,7 +278,7 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sortingOrder(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.sortingOrder=v;
 		return 0;

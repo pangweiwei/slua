@@ -24,7 +24,7 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_bendingStiffness(IntPtr l) {
 		UnityEngine.Cloth o = (UnityEngine.Cloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.bendingStiffness=v;
 		return 0;
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_stretchingStiffness(IntPtr l) {
 		UnityEngine.Cloth o = (UnityEngine.Cloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.stretchingStiffness=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_damping(IntPtr l) {
 		UnityEngine.Cloth o = (UnityEngine.Cloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.damping=v;
 		return 0;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_thickness(IntPtr l) {
 		UnityEngine.Cloth o = (UnityEngine.Cloth)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.thickness=v;
 		return 0;
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useGravity(IntPtr l) {
 		UnityEngine.Cloth o = (UnityEngine.Cloth)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useGravity=v;
 		return 0;
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_selfCollision(IntPtr l) {
 		UnityEngine.Cloth o = (UnityEngine.Cloth)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.selfCollision=v;
 		return 0;
@@ -136,7 +136,7 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enabled(IntPtr l) {
 		UnityEngine.Cloth o = (UnityEngine.Cloth)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.enabled=v;
 		return 0;

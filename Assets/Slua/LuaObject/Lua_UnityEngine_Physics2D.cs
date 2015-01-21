@@ -1767,7 +1767,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_velocityIterations(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.velocityIterations=v;
 		return 0;
@@ -1779,7 +1779,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_positionIterations(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.positionIterations=v;
 		return 0;
@@ -1803,7 +1803,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_raycastsHitTriggers(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.raycastsHitTriggers=v;
 		return 0;
@@ -1815,7 +1815,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_raycastsStartInColliders(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.raycastsStartInColliders=v;
 		return 0;
@@ -1827,7 +1827,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_changeStopsCallbacks(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.changeStopsCallbacks=v;
 		return 0;
@@ -1839,7 +1839,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_velocityThreshold(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.velocityThreshold=v;
 		return 0;
@@ -1851,7 +1851,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxLinearCorrection(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.maxLinearCorrection=v;
 		return 0;
@@ -1863,7 +1863,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxAngularCorrection(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.maxAngularCorrection=v;
 		return 0;
@@ -1875,7 +1875,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxTranslationSpeed(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.maxTranslationSpeed=v;
 		return 0;
@@ -1887,7 +1887,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxRotationSpeed(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.maxRotationSpeed=v;
 		return 0;
@@ -1899,7 +1899,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_minPenetrationForPenalty(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.minPenetrationForPenalty=v;
 		return 0;
@@ -1911,7 +1911,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_baumgarteScale(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.baumgarteScale=v;
 		return 0;
@@ -1923,7 +1923,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_baumgarteTOIScale(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.baumgarteTOIScale=v;
 		return 0;
@@ -1935,7 +1935,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_timeToSleep(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.timeToSleep=v;
 		return 0;
@@ -1947,7 +1947,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_linearSleepTolerance(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.linearSleepTolerance=v;
 		return 0;
@@ -1959,7 +1959,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_angularSleepTolerance(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics2D.angularSleepTolerance=v;
 		return 0;

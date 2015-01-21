@@ -465,7 +465,7 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isStatic(IntPtr l) {
 		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isStatic=v;
 		return 0;
@@ -581,7 +581,7 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_layer(IntPtr l) {
 		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.layer=v;
 		return 0;
@@ -607,7 +607,7 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_tag(IntPtr l) {
 		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.tag=v;
 		return 0;

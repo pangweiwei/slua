@@ -247,7 +247,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_volume(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.volume=v;
 		return 0;
@@ -261,7 +261,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pitch(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.pitch=v;
 		return 0;
@@ -275,7 +275,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_time(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.time=v;
 		return 0;
@@ -289,7 +289,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_timeSamples(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.timeSamples=v;
 		return 0;
@@ -323,7 +323,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_loop(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.loop=v;
 		return 0;
@@ -337,7 +337,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_ignoreListenerVolume(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.ignoreListenerVolume=v;
 		return 0;
@@ -351,7 +351,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_playOnAwake(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.playOnAwake=v;
 		return 0;
@@ -365,7 +365,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_ignoreListenerPause(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.ignoreListenerPause=v;
 		return 0;
@@ -393,7 +393,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_panLevel(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.panLevel=v;
 		return 0;
@@ -407,7 +407,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_bypassEffects(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.bypassEffects=v;
 		return 0;
@@ -421,7 +421,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_bypassListenerEffects(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.bypassListenerEffects=v;
 		return 0;
@@ -435,7 +435,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_bypassReverbZones(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.bypassReverbZones=v;
 		return 0;
@@ -449,7 +449,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_dopplerLevel(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.dopplerLevel=v;
 		return 0;
@@ -463,7 +463,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_spread(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.spread=v;
 		return 0;
@@ -477,7 +477,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_priority(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.priority=v;
 		return 0;
@@ -491,7 +491,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_mute(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.mute=v;
 		return 0;
@@ -505,7 +505,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_minDistance(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.minDistance=v;
 		return 0;
@@ -519,7 +519,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxDistance(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.maxDistance=v;
 		return 0;
@@ -533,7 +533,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pan(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.pan=v;
 		return 0;

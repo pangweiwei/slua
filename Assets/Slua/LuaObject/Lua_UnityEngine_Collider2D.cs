@@ -39,7 +39,7 @@ public class Lua_UnityEngine_Collider2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isTrigger(IntPtr l) {
 		UnityEngine.Collider2D o = (UnityEngine.Collider2D)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isTrigger=v;
 		return 0;

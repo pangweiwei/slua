@@ -41,7 +41,7 @@ public class Lua_UnityEngine_CanvasGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_alpha(IntPtr l) {
 		UnityEngine.CanvasGroup o = (UnityEngine.CanvasGroup)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.alpha=v;
 		return 0;
@@ -55,7 +55,7 @@ public class Lua_UnityEngine_CanvasGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_interactable(IntPtr l) {
 		UnityEngine.CanvasGroup o = (UnityEngine.CanvasGroup)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.interactable=v;
 		return 0;
@@ -69,7 +69,7 @@ public class Lua_UnityEngine_CanvasGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_blocksRaycasts(IntPtr l) {
 		UnityEngine.CanvasGroup o = (UnityEngine.CanvasGroup)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.blocksRaycasts=v;
 		return 0;
@@ -83,7 +83,7 @@ public class Lua_UnityEngine_CanvasGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_ignoreParentGroups(IntPtr l) {
 		UnityEngine.CanvasGroup o = (UnityEngine.CanvasGroup)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.ignoreParentGroups=v;
 		return 0;

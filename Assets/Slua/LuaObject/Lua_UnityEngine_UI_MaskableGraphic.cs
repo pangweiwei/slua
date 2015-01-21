@@ -41,7 +41,7 @@ public class Lua_UnityEngine_UI_MaskableGraphic : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maskable(IntPtr l) {
 		UnityEngine.UI.MaskableGraphic o = (UnityEngine.UI.MaskableGraphic)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.maskable=v;
 		return 0;

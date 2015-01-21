@@ -66,7 +66,7 @@ public class Lua_UnityEngine_HingeJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useMotor(IntPtr l) {
 		UnityEngine.HingeJoint o = (UnityEngine.HingeJoint)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useMotor=v;
 		return 0;
@@ -80,7 +80,7 @@ public class Lua_UnityEngine_HingeJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useLimits(IntPtr l) {
 		UnityEngine.HingeJoint o = (UnityEngine.HingeJoint)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useLimits=v;
 		return 0;
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_HingeJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useSpring(IntPtr l) {
 		UnityEngine.HingeJoint o = (UnityEngine.HingeJoint)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useSpring=v;
 		return 0;

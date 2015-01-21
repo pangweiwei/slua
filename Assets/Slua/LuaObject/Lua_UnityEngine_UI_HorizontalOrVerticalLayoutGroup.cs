@@ -17,7 +17,7 @@ public class Lua_UnityEngine_UI_HorizontalOrVerticalLayoutGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_spacing(IntPtr l) {
 		UnityEngine.UI.HorizontalOrVerticalLayoutGroup o = (UnityEngine.UI.HorizontalOrVerticalLayoutGroup)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.spacing=v;
 		return 0;
@@ -31,7 +31,7 @@ public class Lua_UnityEngine_UI_HorizontalOrVerticalLayoutGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_childForceExpandWidth(IntPtr l) {
 		UnityEngine.UI.HorizontalOrVerticalLayoutGroup o = (UnityEngine.UI.HorizontalOrVerticalLayoutGroup)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.childForceExpandWidth=v;
 		return 0;
@@ -45,7 +45,7 @@ public class Lua_UnityEngine_UI_HorizontalOrVerticalLayoutGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_childForceExpandHeight(IntPtr l) {
 		UnityEngine.UI.HorizontalOrVerticalLayoutGroup o = (UnityEngine.UI.HorizontalOrVerticalLayoutGroup)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.childForceExpandHeight=v;
 		return 0;

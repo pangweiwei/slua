@@ -47,7 +47,7 @@ public class Lua_UnityEngine_ParticleSystem_Particle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_lifetime(IntPtr l) {
 		UnityEngine.ParticleSystem.Particle o = (UnityEngine.ParticleSystem.Particle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.lifetime=v;
 		setBack(l,o);
@@ -62,7 +62,7 @@ public class Lua_UnityEngine_ParticleSystem_Particle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_startLifetime(IntPtr l) {
 		UnityEngine.ParticleSystem.Particle o = (UnityEngine.ParticleSystem.Particle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.startLifetime=v;
 		setBack(l,o);
@@ -77,7 +77,7 @@ public class Lua_UnityEngine_ParticleSystem_Particle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_size(IntPtr l) {
 		UnityEngine.ParticleSystem.Particle o = (UnityEngine.ParticleSystem.Particle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.size=v;
 		setBack(l,o);
@@ -107,7 +107,7 @@ public class Lua_UnityEngine_ParticleSystem_Particle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_rotation(IntPtr l) {
 		UnityEngine.ParticleSystem.Particle o = (UnityEngine.ParticleSystem.Particle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.rotation=v;
 		setBack(l,o);
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_ParticleSystem_Particle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_angularVelocity(IntPtr l) {
 		UnityEngine.ParticleSystem.Particle o = (UnityEngine.ParticleSystem.Particle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.angularVelocity=v;
 		setBack(l,o);
@@ -152,7 +152,7 @@ public class Lua_UnityEngine_ParticleSystem_Particle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_randomSeed(IntPtr l) {
 		UnityEngine.ParticleSystem.Particle o = (UnityEngine.ParticleSystem.Particle)checkSelf(l);
-		System.UInt32 v;
+		UInt32 v;
 		checkType(l,2,out v);
 		o.randomSeed=v;
 		setBack(l,o);

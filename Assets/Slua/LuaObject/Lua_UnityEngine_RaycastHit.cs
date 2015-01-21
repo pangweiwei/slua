@@ -62,7 +62,7 @@ public class Lua_UnityEngine_RaycastHit : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_distance(IntPtr l) {
 		UnityEngine.RaycastHit o = (UnityEngine.RaycastHit)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.distance=v;
 		setBack(l,o);

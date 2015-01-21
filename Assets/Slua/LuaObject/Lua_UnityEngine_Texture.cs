@@ -63,7 +63,7 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_masterTextureLimit(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.Texture.masterTextureLimit=v;
 		return 0;
@@ -89,7 +89,7 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_width(IntPtr l) {
 		UnityEngine.Texture o = (UnityEngine.Texture)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.width=v;
 		return 0;
@@ -103,7 +103,7 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_height(IntPtr l) {
 		UnityEngine.Texture o = (UnityEngine.Texture)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.height=v;
 		return 0;
@@ -131,7 +131,7 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_anisoLevel(IntPtr l) {
 		UnityEngine.Texture o = (UnityEngine.Texture)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.anisoLevel=v;
 		return 0;
@@ -159,7 +159,7 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_mipMapBias(IntPtr l) {
 		UnityEngine.Texture o = (UnityEngine.Texture)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.mipMapBias=v;
 		return 0;

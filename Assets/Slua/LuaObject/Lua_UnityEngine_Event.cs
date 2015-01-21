@@ -146,7 +146,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_button(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.button=v;
 		return 0;
@@ -174,7 +174,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pressure(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.pressure=v;
 		return 0;
@@ -188,7 +188,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_clickCount(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.clickCount=v;
 		return 0;
@@ -202,7 +202,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_character(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		System.Char v;
+		Char v;
 		checkType(l,2,out v);
 		o.character=v;
 		return 0;
@@ -216,7 +216,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_commandName(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.commandName=v;
 		return 0;
@@ -244,7 +244,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_shift(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.shift=v;
 		return 0;
@@ -258,7 +258,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_control(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.control=v;
 		return 0;
@@ -272,7 +272,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_alt(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.alt=v;
 		return 0;
@@ -286,7 +286,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_command(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.command=v;
 		return 0;
@@ -300,7 +300,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_capsLock(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.capsLock=v;
 		return 0;
@@ -314,7 +314,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_numeric(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.numeric=v;
 		return 0;

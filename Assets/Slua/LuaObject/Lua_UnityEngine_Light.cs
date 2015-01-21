@@ -68,7 +68,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_intensity(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.intensity=v;
 		return 0;
@@ -96,7 +96,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_shadowStrength(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.shadowStrength=v;
 		return 0;
@@ -110,7 +110,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_shadowBias(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.shadowBias=v;
 		return 0;
@@ -124,7 +124,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_shadowSoftness(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.shadowSoftness=v;
 		return 0;
@@ -138,7 +138,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_shadowSoftnessFade(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.shadowSoftnessFade=v;
 		return 0;
@@ -152,7 +152,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_range(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.range=v;
 		return 0;
@@ -166,7 +166,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_spotAngle(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.spotAngle=v;
 		return 0;
@@ -180,7 +180,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_cookieSize(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.cookieSize=v;
 		return 0;
@@ -236,7 +236,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_alreadyLightmapped(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.alreadyLightmapped=v;
 		return 0;
@@ -250,7 +250,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_cullingMask(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.cullingMask=v;
 		return 0;

@@ -65,7 +65,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enabled(IntPtr l) {
 		UnityEngine.AnimationState o = (UnityEngine.AnimationState)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.enabled=v;
 		return 0;
@@ -79,7 +79,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_weight(IntPtr l) {
 		UnityEngine.AnimationState o = (UnityEngine.AnimationState)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.weight=v;
 		return 0;
@@ -107,7 +107,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_time(IntPtr l) {
 		UnityEngine.AnimationState o = (UnityEngine.AnimationState)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.time=v;
 		return 0;
@@ -121,7 +121,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_normalizedTime(IntPtr l) {
 		UnityEngine.AnimationState o = (UnityEngine.AnimationState)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.normalizedTime=v;
 		return 0;
@@ -135,7 +135,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_speed(IntPtr l) {
 		UnityEngine.AnimationState o = (UnityEngine.AnimationState)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.speed=v;
 		return 0;
@@ -149,7 +149,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_normalizedSpeed(IntPtr l) {
 		UnityEngine.AnimationState o = (UnityEngine.AnimationState)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.normalizedSpeed=v;
 		return 0;
@@ -169,7 +169,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_layer(IntPtr l) {
 		UnityEngine.AnimationState o = (UnityEngine.AnimationState)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.layer=v;
 		return 0;
@@ -189,7 +189,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_name(IntPtr l) {
 		UnityEngine.AnimationState o = (UnityEngine.AnimationState)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.name=v;
 		return 0;

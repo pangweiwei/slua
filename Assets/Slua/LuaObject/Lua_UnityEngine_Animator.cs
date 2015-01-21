@@ -1028,7 +1028,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_applyRootMotion(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.applyRootMotion=v;
 		return 0;
@@ -1096,7 +1096,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_stabilizeFeet(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.stabilizeFeet=v;
 		return 0;
@@ -1116,7 +1116,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_feetPivotActive(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.feetPivotActive=v;
 		return 0;
@@ -1148,7 +1148,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_speed(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.speed=v;
 		return 0;
@@ -1188,7 +1188,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_playbackTime(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.playbackTime=v;
 		return 0;
@@ -1202,7 +1202,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_recorderStartTime(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.recorderStartTime=v;
 		return 0;
@@ -1216,7 +1216,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_recorderStopTime(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.recorderStopTime=v;
 		return 0;
@@ -1258,7 +1258,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_layersAffectMassCenter(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.layersAffectMassCenter=v;
 		return 0;
@@ -1284,7 +1284,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_logWarnings(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.logWarnings=v;
 		return 0;
@@ -1298,7 +1298,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fireEvents(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.fireEvents=v;
 		return 0;

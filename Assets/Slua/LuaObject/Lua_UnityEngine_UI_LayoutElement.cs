@@ -41,7 +41,7 @@ public class Lua_UnityEngine_UI_LayoutElement : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_ignoreLayout(IntPtr l) {
 		UnityEngine.UI.LayoutElement o = (UnityEngine.UI.LayoutElement)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.ignoreLayout=v;
 		return 0;
@@ -55,7 +55,7 @@ public class Lua_UnityEngine_UI_LayoutElement : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_minWidth(IntPtr l) {
 		UnityEngine.UI.LayoutElement o = (UnityEngine.UI.LayoutElement)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.minWidth=v;
 		return 0;
@@ -69,7 +69,7 @@ public class Lua_UnityEngine_UI_LayoutElement : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_minHeight(IntPtr l) {
 		UnityEngine.UI.LayoutElement o = (UnityEngine.UI.LayoutElement)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.minHeight=v;
 		return 0;
@@ -83,7 +83,7 @@ public class Lua_UnityEngine_UI_LayoutElement : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_preferredWidth(IntPtr l) {
 		UnityEngine.UI.LayoutElement o = (UnityEngine.UI.LayoutElement)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.preferredWidth=v;
 		return 0;
@@ -97,7 +97,7 @@ public class Lua_UnityEngine_UI_LayoutElement : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_preferredHeight(IntPtr l) {
 		UnityEngine.UI.LayoutElement o = (UnityEngine.UI.LayoutElement)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.preferredHeight=v;
 		return 0;
@@ -111,7 +111,7 @@ public class Lua_UnityEngine_UI_LayoutElement : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_flexibleWidth(IntPtr l) {
 		UnityEngine.UI.LayoutElement o = (UnityEngine.UI.LayoutElement)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.flexibleWidth=v;
 		return 0;
@@ -125,7 +125,7 @@ public class Lua_UnityEngine_UI_LayoutElement : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_flexibleHeight(IntPtr l) {
 		UnityEngine.UI.LayoutElement o = (UnityEngine.UI.LayoutElement)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.flexibleHeight=v;
 		return 0;

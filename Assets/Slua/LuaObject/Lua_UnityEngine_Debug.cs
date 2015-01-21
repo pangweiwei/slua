@@ -265,7 +265,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_developerConsoleVisible(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Debug.developerConsoleVisible=v;
 		return 0;

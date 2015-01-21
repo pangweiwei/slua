@@ -132,7 +132,7 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_text(IntPtr l) {
 		UnityEngine.UI.Text o = (UnityEngine.UI.Text)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.text=v;
 		return 0;
@@ -146,7 +146,7 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_supportRichText(IntPtr l) {
 		UnityEngine.UI.Text o = (UnityEngine.UI.Text)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.supportRichText=v;
 		return 0;
@@ -160,7 +160,7 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_resizeTextForBestFit(IntPtr l) {
 		UnityEngine.UI.Text o = (UnityEngine.UI.Text)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.resizeTextForBestFit=v;
 		return 0;
@@ -174,7 +174,7 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_resizeTextMinSize(IntPtr l) {
 		UnityEngine.UI.Text o = (UnityEngine.UI.Text)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.resizeTextMinSize=v;
 		return 0;
@@ -188,7 +188,7 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_resizeTextMaxSize(IntPtr l) {
 		UnityEngine.UI.Text o = (UnityEngine.UI.Text)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.resizeTextMaxSize=v;
 		return 0;
@@ -216,7 +216,7 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fontSize(IntPtr l) {
 		UnityEngine.UI.Text o = (UnityEngine.UI.Text)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.fontSize=v;
 		return 0;
@@ -258,7 +258,7 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_lineSpacing(IntPtr l) {
 		UnityEngine.UI.Text o = (UnityEngine.UI.Text)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.lineSpacing=v;
 		return 0;

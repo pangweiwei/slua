@@ -197,7 +197,7 @@ public class Lua_UnityEngine_UI_Slider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_minValue(IntPtr l) {
 		UnityEngine.UI.Slider o = (UnityEngine.UI.Slider)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.minValue=v;
 		return 0;
@@ -211,7 +211,7 @@ public class Lua_UnityEngine_UI_Slider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxValue(IntPtr l) {
 		UnityEngine.UI.Slider o = (UnityEngine.UI.Slider)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.maxValue=v;
 		return 0;
@@ -225,7 +225,7 @@ public class Lua_UnityEngine_UI_Slider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_wholeNumbers(IntPtr l) {
 		UnityEngine.UI.Slider o = (UnityEngine.UI.Slider)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.wholeNumbers=v;
 		return 0;
@@ -239,7 +239,7 @@ public class Lua_UnityEngine_UI_Slider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_value(IntPtr l) {
 		UnityEngine.UI.Slider o = (UnityEngine.UI.Slider)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.value=v;
 		return 0;
@@ -253,7 +253,7 @@ public class Lua_UnityEngine_UI_Slider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_normalizedValue(IntPtr l) {
 		UnityEngine.UI.Slider o = (UnityEngine.UI.Slider)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.normalizedValue=v;
 		return 0;

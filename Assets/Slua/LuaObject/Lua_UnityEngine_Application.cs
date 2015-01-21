@@ -377,7 +377,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_runInBackground(IntPtr l) {
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		UnityEngine.Application.runInBackground=v;
 		return 0;
@@ -434,7 +434,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_targetFrameRate(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.Application.targetFrameRate=v;
 		return 0;

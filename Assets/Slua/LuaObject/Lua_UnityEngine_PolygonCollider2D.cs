@@ -120,7 +120,7 @@ public class Lua_UnityEngine_PolygonCollider2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pathCount(IntPtr l) {
 		UnityEngine.PolygonCollider2D o = (UnityEngine.PolygonCollider2D)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.pathCount=v;
 		return 0;

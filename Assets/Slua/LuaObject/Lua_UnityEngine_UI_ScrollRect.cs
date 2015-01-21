@@ -140,7 +140,7 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_horizontal(IntPtr l) {
 		UnityEngine.UI.ScrollRect o = (UnityEngine.UI.ScrollRect)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.horizontal=v;
 		return 0;
@@ -154,7 +154,7 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_vertical(IntPtr l) {
 		UnityEngine.UI.ScrollRect o = (UnityEngine.UI.ScrollRect)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.vertical=v;
 		return 0;
@@ -182,7 +182,7 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_elasticity(IntPtr l) {
 		UnityEngine.UI.ScrollRect o = (UnityEngine.UI.ScrollRect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.elasticity=v;
 		return 0;
@@ -196,7 +196,7 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_inertia(IntPtr l) {
 		UnityEngine.UI.ScrollRect o = (UnityEngine.UI.ScrollRect)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.inertia=v;
 		return 0;
@@ -210,7 +210,7 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_decelerationRate(IntPtr l) {
 		UnityEngine.UI.ScrollRect o = (UnityEngine.UI.ScrollRect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.decelerationRate=v;
 		return 0;
@@ -224,7 +224,7 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_scrollSensitivity(IntPtr l) {
 		UnityEngine.UI.ScrollRect o = (UnityEngine.UI.ScrollRect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.scrollSensitivity=v;
 		return 0;
@@ -308,7 +308,7 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_horizontalNormalizedPosition(IntPtr l) {
 		UnityEngine.UI.ScrollRect o = (UnityEngine.UI.ScrollRect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.horizontalNormalizedPosition=v;
 		return 0;
@@ -322,7 +322,7 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_verticalNormalizedPosition(IntPtr l) {
 		UnityEngine.UI.ScrollRect o = (UnityEngine.UI.ScrollRect)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.verticalNormalizedPosition=v;
 		return 0;

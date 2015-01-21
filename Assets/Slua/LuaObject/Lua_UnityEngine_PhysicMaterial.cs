@@ -31,7 +31,7 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_dynamicFriction(IntPtr l) {
 		UnityEngine.PhysicMaterial o = (UnityEngine.PhysicMaterial)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.dynamicFriction=v;
 		return 0;
@@ -45,7 +45,7 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_staticFriction(IntPtr l) {
 		UnityEngine.PhysicMaterial o = (UnityEngine.PhysicMaterial)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.staticFriction=v;
 		return 0;
@@ -59,7 +59,7 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_bounciness(IntPtr l) {
 		UnityEngine.PhysicMaterial o = (UnityEngine.PhysicMaterial)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.bounciness=v;
 		return 0;
@@ -87,7 +87,7 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_dynamicFriction2(IntPtr l) {
 		UnityEngine.PhysicMaterial o = (UnityEngine.PhysicMaterial)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.dynamicFriction2=v;
 		return 0;
@@ -101,7 +101,7 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_staticFriction2(IntPtr l) {
 		UnityEngine.PhysicMaterial o = (UnityEngine.PhysicMaterial)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.staticFriction2=v;
 		return 0;

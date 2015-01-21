@@ -24,7 +24,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_text(IntPtr l) {
 		UnityEngine.TextMesh o = (UnityEngine.TextMesh)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.text=v;
 		return 0;
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fontSize(IntPtr l) {
 		UnityEngine.TextMesh o = (UnityEngine.TextMesh)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.fontSize=v;
 		return 0;
@@ -80,7 +80,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_offsetZ(IntPtr l) {
 		UnityEngine.TextMesh o = (UnityEngine.TextMesh)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.offsetZ=v;
 		return 0;
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_characterSize(IntPtr l) {
 		UnityEngine.TextMesh o = (UnityEngine.TextMesh)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.characterSize=v;
 		return 0;
@@ -136,7 +136,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_lineSpacing(IntPtr l) {
 		UnityEngine.TextMesh o = (UnityEngine.TextMesh)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.lineSpacing=v;
 		return 0;
@@ -150,7 +150,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_tabSize(IntPtr l) {
 		UnityEngine.TextMesh o = (UnityEngine.TextMesh)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.tabSize=v;
 		return 0;
@@ -164,7 +164,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_richText(IntPtr l) {
 		UnityEngine.TextMesh o = (UnityEngine.TextMesh)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.richText=v;
 		return 0;

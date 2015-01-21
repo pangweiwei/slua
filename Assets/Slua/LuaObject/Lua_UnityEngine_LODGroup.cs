@@ -78,7 +78,7 @@ public class Lua_UnityEngine_LODGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_size(IntPtr l) {
 		UnityEngine.LODGroup o = (UnityEngine.LODGroup)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.size=v;
 		return 0;
@@ -98,7 +98,7 @@ public class Lua_UnityEngine_LODGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_enabled(IntPtr l) {
 		UnityEngine.LODGroup o = (UnityEngine.LODGroup)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.enabled=v;
 		return 0;

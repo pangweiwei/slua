@@ -269,7 +269,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_stoppingDistance(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.stoppingDistance=v;
 		return 0;
@@ -329,7 +329,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_baseOffset(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.baseOffset=v;
 		return 0;
@@ -361,7 +361,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_autoTraverseOffMeshLink(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.autoTraverseOffMeshLink=v;
 		return 0;
@@ -375,7 +375,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_autoBraking(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.autoBraking=v;
 		return 0;
@@ -389,7 +389,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_autoRepath(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.autoRepath=v;
 		return 0;
@@ -447,7 +447,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_walkableMask(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.walkableMask=v;
 		return 0;
@@ -461,7 +461,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_speed(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.speed=v;
 		return 0;
@@ -475,7 +475,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_angularSpeed(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.angularSpeed=v;
 		return 0;
@@ -489,7 +489,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_acceleration(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.acceleration=v;
 		return 0;
@@ -503,7 +503,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_updatePosition(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.updatePosition=v;
 		return 0;
@@ -517,7 +517,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_updateRotation(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.updateRotation=v;
 		return 0;
@@ -531,7 +531,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_radius(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.radius=v;
 		return 0;
@@ -545,7 +545,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_height(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.height=v;
 		return 0;
@@ -573,7 +573,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_avoidancePriority(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.avoidancePriority=v;
 		return 0;

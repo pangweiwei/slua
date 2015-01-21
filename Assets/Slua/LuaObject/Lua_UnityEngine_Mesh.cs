@@ -388,7 +388,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_triangles(IntPtr l) {
 		UnityEngine.Mesh o = (UnityEngine.Mesh)checkSelf(l);
-		System.Int32[] v;
+		int[] v;
 		checkType(l,2,out v);
 		o.triangles=v;
 		return 0;
@@ -408,7 +408,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_subMeshCount(IntPtr l) {
 		UnityEngine.Mesh o = (UnityEngine.Mesh)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.subMeshCount=v;
 		return 0;

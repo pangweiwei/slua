@@ -755,7 +755,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_hasChanged(IntPtr l) {
 		UnityEngine.Transform o = (UnityEngine.Transform)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.hasChanged=v;
 		return 0;

@@ -358,7 +358,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_animationUpdateRate(IntPtr l) {
 		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.animationUpdateRate=v;
 		return 0;
@@ -384,7 +384,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isLoadTimeGenerated(IntPtr l) {
 		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isLoadTimeGenerated=v;
 		return 0;
@@ -421,7 +421,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_preset(IntPtr l) {
 		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.preset=v;
 		return 0;
@@ -435,7 +435,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isReadable(IntPtr l) {
 		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isReadable=v;
 		return 0;

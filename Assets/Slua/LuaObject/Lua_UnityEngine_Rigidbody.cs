@@ -523,7 +523,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_drag(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.drag=v;
 		return 0;
@@ -537,7 +537,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_angularDrag(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.angularDrag=v;
 		return 0;
@@ -551,7 +551,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_mass(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.mass=v;
 		return 0;
@@ -565,7 +565,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useGravity(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useGravity=v;
 		return 0;
@@ -579,7 +579,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isKinematic(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isKinematic=v;
 		return 0;
@@ -593,7 +593,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_freezeRotation(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.freezeRotation=v;
 		return 0;
@@ -683,7 +683,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_detectCollisions(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.detectCollisions=v;
 		return 0;
@@ -697,7 +697,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useConeFriction(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useConeFriction=v;
 		return 0;
@@ -753,7 +753,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_solverIterationCount(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.solverIterationCount=v;
 		return 0;
@@ -767,7 +767,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sleepVelocity(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.sleepVelocity=v;
 		return 0;
@@ -781,7 +781,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sleepAngularVelocity(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.sleepAngularVelocity=v;
 		return 0;
@@ -795,7 +795,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxAngularVelocity(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.maxAngularVelocity=v;
 		return 0;

@@ -318,7 +318,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_rotation(IntPtr l) {
 		UnityEngine.Rigidbody2D o = (UnityEngine.Rigidbody2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.rotation=v;
 		return 0;
@@ -346,7 +346,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_angularVelocity(IntPtr l) {
 		UnityEngine.Rigidbody2D o = (UnityEngine.Rigidbody2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.angularVelocity=v;
 		return 0;
@@ -360,7 +360,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_mass(IntPtr l) {
 		UnityEngine.Rigidbody2D o = (UnityEngine.Rigidbody2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.mass=v;
 		return 0;
@@ -394,7 +394,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_inertia(IntPtr l) {
 		UnityEngine.Rigidbody2D o = (UnityEngine.Rigidbody2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.inertia=v;
 		return 0;
@@ -408,7 +408,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_drag(IntPtr l) {
 		UnityEngine.Rigidbody2D o = (UnityEngine.Rigidbody2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.drag=v;
 		return 0;
@@ -422,7 +422,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_angularDrag(IntPtr l) {
 		UnityEngine.Rigidbody2D o = (UnityEngine.Rigidbody2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.angularDrag=v;
 		return 0;
@@ -436,7 +436,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_gravityScale(IntPtr l) {
 		UnityEngine.Rigidbody2D o = (UnityEngine.Rigidbody2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.gravityScale=v;
 		return 0;
@@ -450,7 +450,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isKinematic(IntPtr l) {
 		UnityEngine.Rigidbody2D o = (UnityEngine.Rigidbody2D)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isKinematic=v;
 		return 0;
@@ -464,7 +464,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fixedAngle(IntPtr l) {
 		UnityEngine.Rigidbody2D o = (UnityEngine.Rigidbody2D)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.fixedAngle=v;
 		return 0;
@@ -478,7 +478,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_simulated(IntPtr l) {
 		UnityEngine.Rigidbody2D o = (UnityEngine.Rigidbody2D)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.simulated=v;
 		return 0;

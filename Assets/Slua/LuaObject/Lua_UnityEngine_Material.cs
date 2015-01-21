@@ -665,7 +665,7 @@ public class Lua_UnityEngine_Material : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_renderQueue(IntPtr l) {
 		UnityEngine.Material o = (UnityEngine.Material)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.renderQueue=v;
 		return 0;
@@ -679,7 +679,7 @@ public class Lua_UnityEngine_Material : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_shaderKeywords(IntPtr l) {
 		UnityEngine.Material o = (UnityEngine.Material)checkSelf(l);
-		System.String[] v;
+		string[] v;
 		checkType(l,2,out v);
 		o.shaderKeywords=v;
 		return 0;

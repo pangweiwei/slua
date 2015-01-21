@@ -24,7 +24,7 @@ public class Lua_UnityEngine_NavMeshObstacle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_height(IntPtr l) {
 		UnityEngine.NavMeshObstacle o = (UnityEngine.NavMeshObstacle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.height=v;
 		return 0;
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_NavMeshObstacle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_radius(IntPtr l) {
 		UnityEngine.NavMeshObstacle o = (UnityEngine.NavMeshObstacle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.radius=v;
 		return 0;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_NavMeshObstacle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_carving(IntPtr l) {
 		UnityEngine.NavMeshObstacle o = (UnityEngine.NavMeshObstacle)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.carving=v;
 		return 0;
@@ -80,7 +80,7 @@ public class Lua_UnityEngine_NavMeshObstacle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_carvingMoveThreshold(IntPtr l) {
 		UnityEngine.NavMeshObstacle o = (UnityEngine.NavMeshObstacle)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.carvingMoveThreshold=v;
 		return 0;

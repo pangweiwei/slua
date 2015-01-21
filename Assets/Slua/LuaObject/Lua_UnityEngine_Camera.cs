@@ -380,7 +380,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_fieldOfView(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.fieldOfView=v;
 		return 0;
@@ -394,7 +394,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_nearClipPlane(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.nearClipPlane=v;
 		return 0;
@@ -408,7 +408,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_farClipPlane(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.farClipPlane=v;
 		return 0;
@@ -442,7 +442,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_hdr(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.hdr=v;
 		return 0;
@@ -456,7 +456,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_orthographicSize(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.orthographicSize=v;
 		return 0;
@@ -470,7 +470,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_orthographic(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.orthographic=v;
 		return 0;
@@ -498,7 +498,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_isOrthoGraphic(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.isOrthoGraphic=v;
 		return 0;
@@ -512,7 +512,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_depth(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.depth=v;
 		return 0;
@@ -526,7 +526,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_aspect(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.aspect=v;
 		return 0;
@@ -540,7 +540,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_cullingMask(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.cullingMask=v;
 		return 0;
@@ -554,7 +554,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_eventMask(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.eventMask=v;
 		return 0;
@@ -696,7 +696,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_stereoSeparation(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.stereoSeparation=v;
 		return 0;
@@ -710,7 +710,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_stereoConvergence(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.stereoConvergence=v;
 		return 0;
@@ -744,7 +744,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useOcclusionCulling(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useOcclusionCulling=v;
 		return 0;
@@ -758,7 +758,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_layerCullDistances(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Single[] v;
+		float[] v;
 		checkType(l,2,out v);
 		o.layerCullDistances=v;
 		return 0;
@@ -772,7 +772,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_layerCullSpherical(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.layerCullSpherical=v;
 		return 0;
@@ -800,7 +800,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_clearStencilAfterLightingPass(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.clearStencilAfterLightingPass=v;
 		return 0;

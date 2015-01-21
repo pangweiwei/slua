@@ -430,7 +430,7 @@ public class Lua_UnityEngine_Component : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_tag(IntPtr l) {
 		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		System.String v;
+		string v;
 		checkType(l,2,out v);
 		o.tag=v;
 		return 0;

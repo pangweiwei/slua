@@ -67,7 +67,7 @@ public class Lua_UnityEngine_RectOffset : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_left(IntPtr l) {
 		UnityEngine.RectOffset o = (UnityEngine.RectOffset)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.left=v;
 		return 0;
@@ -81,7 +81,7 @@ public class Lua_UnityEngine_RectOffset : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_right(IntPtr l) {
 		UnityEngine.RectOffset o = (UnityEngine.RectOffset)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.right=v;
 		return 0;
@@ -95,7 +95,7 @@ public class Lua_UnityEngine_RectOffset : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_top(IntPtr l) {
 		UnityEngine.RectOffset o = (UnityEngine.RectOffset)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.top=v;
 		return 0;
@@ -109,7 +109,7 @@ public class Lua_UnityEngine_RectOffset : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_bottom(IntPtr l) {
 		UnityEngine.RectOffset o = (UnityEngine.RectOffset)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.bottom=v;
 		return 0;

@@ -360,7 +360,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_projectionDistance(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.projectionDistance=v;
 		return 0;
@@ -374,7 +374,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_projectionAngle(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.projectionAngle=v;
 		return 0;
@@ -388,7 +388,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_configuredInWorldSpace(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.configuredInWorldSpace=v;
 		return 0;
@@ -402,7 +402,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_swapBodies(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.swapBodies=v;
 		return 0;

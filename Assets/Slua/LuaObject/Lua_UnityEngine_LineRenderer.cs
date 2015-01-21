@@ -86,7 +86,7 @@ public class Lua_UnityEngine_LineRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_useWorldSpace(IntPtr l) {
 		UnityEngine.LineRenderer o = (UnityEngine.LineRenderer)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.useWorldSpace=v;
 		return 0;

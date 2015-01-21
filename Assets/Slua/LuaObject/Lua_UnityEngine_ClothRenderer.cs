@@ -24,7 +24,7 @@ public class Lua_UnityEngine_ClothRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pauseWhenNotVisible(IntPtr l) {
 		UnityEngine.ClothRenderer o = (UnityEngine.ClothRenderer)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.pauseWhenNotVisible=v;
 		return 0;

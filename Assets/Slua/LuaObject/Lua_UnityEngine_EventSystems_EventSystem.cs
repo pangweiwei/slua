@@ -109,7 +109,7 @@ public class Lua_UnityEngine_EventSystems_EventSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sendNavigationEvents(IntPtr l) {
 		UnityEngine.EventSystems.EventSystem o = (UnityEngine.EventSystems.EventSystem)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.sendNavigationEvents=v;
 		return 0;
@@ -123,7 +123,7 @@ public class Lua_UnityEngine_EventSystems_EventSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_pixelDragThreshold(IntPtr l) {
 		UnityEngine.EventSystems.EventSystem o = (UnityEngine.EventSystems.EventSystem)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.pixelDragThreshold=v;
 		return 0;

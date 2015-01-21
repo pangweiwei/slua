@@ -17,7 +17,7 @@ public class Lua_UnityEngine_JointMotor2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_motorSpeed(IntPtr l) {
 		UnityEngine.JointMotor2D o = (UnityEngine.JointMotor2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.motorSpeed=v;
 		setBack(l,o);
@@ -32,7 +32,7 @@ public class Lua_UnityEngine_JointMotor2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxMotorTorque(IntPtr l) {
 		UnityEngine.JointMotor2D o = (UnityEngine.JointMotor2D)checkSelf(l);
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		o.maxMotorTorque=v;
 		setBack(l,o);

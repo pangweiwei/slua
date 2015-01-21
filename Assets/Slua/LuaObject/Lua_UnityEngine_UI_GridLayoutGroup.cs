@@ -135,7 +135,7 @@ public class Lua_UnityEngine_UI_GridLayoutGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_constraintCount(IntPtr l) {
 		UnityEngine.UI.GridLayoutGroup o = (UnityEngine.UI.GridLayoutGroup)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.constraintCount=v;
 		return 0;

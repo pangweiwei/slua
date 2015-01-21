@@ -125,7 +125,7 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_updateWhenOffscreen(IntPtr l) {
 		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
-		System.Boolean v;
+		bool v;
 		checkType(l,2,out v);
 		o.updateWhenOffscreen=v;
 		return 0;

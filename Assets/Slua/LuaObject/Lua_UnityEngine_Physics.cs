@@ -878,7 +878,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_minPenetrationForPenalty(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics.minPenetrationForPenalty=v;
 		return 0;
@@ -890,7 +890,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_bounceThreshold(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics.bounceThreshold=v;
 		return 0;
@@ -902,7 +902,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sleepVelocity(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics.sleepVelocity=v;
 		return 0;
@@ -914,7 +914,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_sleepAngularVelocity(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics.sleepAngularVelocity=v;
 		return 0;
@@ -926,7 +926,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maxAngularVelocity(IntPtr l) {
-		System.Single v;
+		float v;
 		checkType(l,2,out v);
 		UnityEngine.Physics.maxAngularVelocity=v;
 		return 0;
@@ -938,7 +938,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_solverIterationCount(IntPtr l) {
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		UnityEngine.Physics.solverIterationCount=v;
 		return 0;

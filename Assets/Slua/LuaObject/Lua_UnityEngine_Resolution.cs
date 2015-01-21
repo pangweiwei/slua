@@ -17,7 +17,7 @@ public class Lua_UnityEngine_Resolution : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_width(IntPtr l) {
 		UnityEngine.Resolution o = (UnityEngine.Resolution)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.width=v;
 		setBack(l,o);
@@ -32,7 +32,7 @@ public class Lua_UnityEngine_Resolution : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_height(IntPtr l) {
 		UnityEngine.Resolution o = (UnityEngine.Resolution)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.height=v;
 		setBack(l,o);
@@ -47,7 +47,7 @@ public class Lua_UnityEngine_Resolution : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_refreshRate(IntPtr l) {
 		UnityEngine.Resolution o = (UnityEngine.Resolution)checkSelf(l);
-		System.Int32 v;
+		int v;
 		checkType(l,2,out v);
 		o.refreshRate=v;
 		setBack(l,o);
