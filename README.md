@@ -82,6 +82,8 @@ open helloworld.unity and run, see lua/main.lua.txt for simple tutorials.
 
 see http://www.sineysoft.com/post/164 for detail (in chinese), compared with ulua/Cstolua/raw mono.
 
+**with luajit**
+
 
         test1	                test2	             test3	            test4 	         test5 
 		propery get and set		member method call   static func call   property set     create valuetype return

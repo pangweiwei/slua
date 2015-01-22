@@ -6,7 +6,7 @@ local Time = UnityEngine.Time
 
 
 function main()
-	print(jit and "jit on" or "jit off")
+	print(jit and "jit on" or "jit off, pls run test with luajit")
 end
 
 local cube = GameObject("Script cube")

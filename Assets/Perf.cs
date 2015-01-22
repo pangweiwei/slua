@@ -39,7 +39,7 @@ public class Perf : MonoBehaviour {
 
         if (GUI.Button(new Rect(10, 400, 300, 50), "Click here for detail(in Chinese)"))
         {
-            
+            Application.OpenURL("http://www.sineysoft.com/post/164");
         }
     }
 }
