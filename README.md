@@ -77,3 +77,7 @@ find code "static public void Custom()", add your custom class type into exports
 ###help
 
 open helloworld.unity and run, see lua/main.lua.txt for simple tutorials.
+
+###benchmark
+
+see http://www.sineysoft.com/post/164 (in chinese).
