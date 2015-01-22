@@ -33,11 +33,14 @@ function main()
 	end)
 
 	local cube = GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube)
+	local cube2 = GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube)
 	cube.name="Script cube"
+	cube2.name="Script cube2"
 
 	local pos = Vector3(10,10,10)+Vector3(1,1,1)
 	cube.transform.position = pos
 	cube.transform.localScale = Vector3(10,10,10)
+	print(cube==cube2)
 
 	print(UnityEngine.PrimitiveType.Cube,type(UnityEngine.PrimitiveType.Cube))
 

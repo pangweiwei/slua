@@ -131,10 +131,8 @@ namespace SLua
                     ObjPair pair;
                     if (objMap.TryGetValue(o, out pair))
                     {
-                        System.Diagnostics.Debug.Assert(pair.index == index, "Cached object missed");
                         pair.count--;
-                        System.Diagnostics.Debug.Assert(pair.count >= 0);
-                        if (pair.count == 0)
+                        if (pair.count <= 0)
                         {
                             cache.del(index);       
                             objMap.Remove(o);

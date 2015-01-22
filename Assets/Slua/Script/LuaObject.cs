@@ -118,122 +118,67 @@ return index
 
         }
 
-
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static public int luaAdd(IntPtr l)
+        static int luaOp(IntPtr l,string f, string tip)
         {
             int err = pushTry(l);
             checkLuaObject(l, 1);
-            
-            LuaDLL.lua_getfield(l, -1, "op_Addition");
+
+            while (!LuaDLL.lua_isnil(l, -1))
+            {
+                LuaDLL.lua_getfield(l, -1, f);
+                if(!LuaDLL.lua_isnil(l,-1)) {
+                    LuaDLL.lua_remove(l, -2);
+                    break;
+                }
+                LuaDLL.lua_pop(l,1); //pop nil
+                LuaDLL.lua_getfield(l, -1, "__parent");
+                LuaDLL.lua_remove(l, -2); //pop base
+            }
 
             if (LuaDLL.lua_isnil(l, -1))
             {
-                LuaDLL.lua_pop(l, 2);
-                LuaDLL.luaL_error(l, "No add operator");
+                LuaDLL.lua_pop(l, 1);
+                LuaDLL.luaL_error(l, "No {0} operator",tip);
                 return 0;
             }
-            LuaDLL.lua_remove(l, -2); // remove type table
             
+
             LuaDLL.lua_pushvalue(l, 1);
             LuaDLL.lua_pushvalue(l, 2);
             if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
                 LuaDLL.lua_pop(l, 1);
             LuaDLL.lua_remove(l, err);
             return 1;
+        }
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int luaAdd(IntPtr l)
+        {
+            return luaOp(l,"op_Addition","add");
         }
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaSub(IntPtr l)
         {
-            int err = pushTry(l);
-            checkLuaObject(l, 1);
-            
-            LuaDLL.lua_getfield(l, -1, "op_Subtraction");
-
-            if (LuaDLL.lua_isnil(l, -1))
-            {
-                LuaDLL.lua_pop(l, 2);
-                LuaDLL.luaL_error(l, "No sub operator");
-                return 0;
-            }
-            LuaDLL.lua_remove(l, -2); // remove type table
-            
-            LuaDLL.lua_pushvalue(l, 1);
-            LuaDLL.lua_pushvalue(l, 2);
-            if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
-                LuaDLL.lua_pop(l, 1);
-            LuaDLL.lua_remove(l, err);
-            return 1;
+            return luaOp(l,"op_Subtraction","sub");
         }
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaMul(IntPtr l)
         {
-            int err = pushTry(l);
-            checkLuaObject(l, 1);
-            
-            LuaDLL.lua_getfield(l, -1, "op_Multiply");
-
-            if (LuaDLL.lua_isnil(l, -1))
-            {
-                LuaDLL.lua_pop(l, 2);
-                LuaDLL.luaL_error(l, "No mul operator");
-                return 0;
-            }
-            LuaDLL.lua_remove(l, -2); // remove type table
-            LuaDLL.lua_pushvalue(l, 1);
-            LuaDLL.lua_pushvalue(l, 2);
-            if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
-                LuaDLL.lua_pop(l, 1);
-            LuaDLL.lua_remove(l, err);
-            return 1;
+            return luaOp(l, "op_Multiply", "mul");
         }
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaDiv(IntPtr l)
         {
-            int err = pushTry(l);
-            checkLuaObject(l, 1);
-            
-            LuaDLL.lua_getfield(l, -1, "op_Division");
-
-            if (LuaDLL.lua_isnil(l, -1))
-            {
-                LuaDLL.lua_pop(l, 2);
-                LuaDLL.luaL_error(l, "No div operator");
-                return 0;
-            }
-            LuaDLL.lua_remove(l, -2); // remove type table
-            LuaDLL.lua_pushvalue(l, 1);
-            LuaDLL.lua_pushvalue(l, 2);
-            if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
-                LuaDLL.lua_pop(l, 1);
-            LuaDLL.lua_remove(l, err);
-            return 1;
+            return luaOp(l, "op_Division", "div");
         }
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaEq(IntPtr l)
         {
-            int err = pushTry(l);
-            checkLuaObject(l, 1);
-            
-            LuaDLL.lua_getfield(l, -1, "op_Equality");
-
-            if (LuaDLL.lua_isnil(l, -1))
-            {
-                LuaDLL.lua_pop(l, 2);
-                LuaDLL.luaL_error(l, "No eq operator");
-                return 0;
-            }
-            LuaDLL.lua_remove(l, -2); // remove type table
-            LuaDLL.lua_pushvalue(l, 1);
-            LuaDLL.lua_pushvalue(l, 2);
-            if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
-                LuaDLL.lua_pop(l, 1);
-            LuaDLL.lua_remove(l, err);
-            return 1;
+            return luaOp(l, "op_Equality", "eq");
         }
 
         internal static void getEnumTable(IntPtr l, string t)
