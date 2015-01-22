@@ -16,7 +16,7 @@ public class Lua_UnityEngine_HumanTrait : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int MuscleFromBone(IntPtr l) {
+	static public int MuscleFromBone_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
@@ -32,7 +32,7 @@ public class Lua_UnityEngine_HumanTrait : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int BoneFromMuscle(IntPtr l) {
+	static public int BoneFromMuscle_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
@@ -46,7 +46,7 @@ public class Lua_UnityEngine_HumanTrait : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RequiredBone(IntPtr l) {
+	static public int RequiredBone_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
@@ -60,7 +60,7 @@ public class Lua_UnityEngine_HumanTrait : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetMuscleDefaultMin(IntPtr l) {
+	static public int GetMuscleDefaultMin_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
@@ -74,7 +74,7 @@ public class Lua_UnityEngine_HumanTrait : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetMuscleDefaultMax(IntPtr l) {
+	static public int GetMuscleDefaultMax_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
@@ -114,11 +114,11 @@ public class Lua_UnityEngine_HumanTrait : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.HumanTrait");
-		addMember(l,MuscleFromBone);
-		addMember(l,BoneFromMuscle);
-		addMember(l,RequiredBone);
-		addMember(l,GetMuscleDefaultMin);
-		addMember(l,GetMuscleDefaultMax);
+		addMember(l,MuscleFromBone_s);
+		addMember(l,BoneFromMuscle_s);
+		addMember(l,RequiredBone_s);
+		addMember(l,GetMuscleDefaultMin_s);
+		addMember(l,GetMuscleDefaultMax_s);
 		addMember(l,"MuscleCount",get_MuscleCount,null);
 		addMember(l,"MuscleName",get_MuscleName,null);
 		addMember(l,"BoneCount",get_BoneCount,null);

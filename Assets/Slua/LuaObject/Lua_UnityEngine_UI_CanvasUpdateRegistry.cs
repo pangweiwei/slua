@@ -9,7 +9,7 @@ public class Lua_UnityEngine_UI_CanvasUpdateRegistry : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RegisterCanvasElementForLayoutRebuild(IntPtr l) {
+	static public int RegisterCanvasElementForLayoutRebuild_s(IntPtr l) {
 		try{
 			UnityEngine.UI.ICanvasElement a1;
 			checkType(l,1,out a1);
@@ -22,7 +22,7 @@ public class Lua_UnityEngine_UI_CanvasUpdateRegistry : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RegisterCanvasElementForGraphicRebuild(IntPtr l) {
+	static public int RegisterCanvasElementForGraphicRebuild_s(IntPtr l) {
 		try{
 			UnityEngine.UI.ICanvasElement a1;
 			checkType(l,1,out a1);
@@ -35,7 +35,7 @@ public class Lua_UnityEngine_UI_CanvasUpdateRegistry : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int UnRegisterCanvasElementForRebuild(IntPtr l) {
+	static public int UnRegisterCanvasElementForRebuild_s(IntPtr l) {
 		try{
 			UnityEngine.UI.ICanvasElement a1;
 			checkType(l,1,out a1);
@@ -48,7 +48,7 @@ public class Lua_UnityEngine_UI_CanvasUpdateRegistry : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int IsRebuildingLayout(IntPtr l) {
+	static public int IsRebuildingLayout_s(IntPtr l) {
 		try{
 			System.Boolean ret=UnityEngine.UI.CanvasUpdateRegistry.IsRebuildingLayout();
 			pushValue(l,ret);
@@ -60,7 +60,7 @@ public class Lua_UnityEngine_UI_CanvasUpdateRegistry : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int IsRebuildingGraphics(IntPtr l) {
+	static public int IsRebuildingGraphics_s(IntPtr l) {
 		try{
 			System.Boolean ret=UnityEngine.UI.CanvasUpdateRegistry.IsRebuildingGraphics();
 			pushValue(l,ret);
@@ -78,11 +78,11 @@ public class Lua_UnityEngine_UI_CanvasUpdateRegistry : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.CanvasUpdateRegistry");
-		addMember(l,RegisterCanvasElementForLayoutRebuild);
-		addMember(l,RegisterCanvasElementForGraphicRebuild);
-		addMember(l,UnRegisterCanvasElementForRebuild);
-		addMember(l,IsRebuildingLayout);
-		addMember(l,IsRebuildingGraphics);
+		addMember(l,RegisterCanvasElementForLayoutRebuild_s);
+		addMember(l,RegisterCanvasElementForGraphicRebuild_s);
+		addMember(l,UnRegisterCanvasElementForRebuild_s);
+		addMember(l,IsRebuildingLayout_s);
+		addMember(l,IsRebuildingGraphics_s);
 		addMember(l,"instance",get_instance,null);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.CanvasUpdateRegistry));
 	}

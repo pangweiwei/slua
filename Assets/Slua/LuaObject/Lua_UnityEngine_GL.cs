@@ -16,7 +16,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Vertex3(IntPtr l) {
+	static public int Vertex3_s(IntPtr l) {
 		try{
 			System.Single a1;
 			checkType(l,1,out a1);
@@ -33,7 +33,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Vertex(IntPtr l) {
+	static public int Vertex_s(IntPtr l) {
 		try{
 			UnityEngine.Vector3 a1;
 			checkType(l,1,out a1);
@@ -46,7 +46,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Color(IntPtr l) {
+	static public int Color_s(IntPtr l) {
 		try{
 			UnityEngine.Color a1;
 			checkType(l,1,out a1);
@@ -59,7 +59,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int TexCoord(IntPtr l) {
+	static public int TexCoord_s(IntPtr l) {
 		try{
 			UnityEngine.Vector3 a1;
 			checkType(l,1,out a1);
@@ -72,7 +72,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int TexCoord2(IntPtr l) {
+	static public int TexCoord2_s(IntPtr l) {
 		try{
 			System.Single a1;
 			checkType(l,1,out a1);
@@ -87,7 +87,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int TexCoord3(IntPtr l) {
+	static public int TexCoord3_s(IntPtr l) {
 		try{
 			System.Single a1;
 			checkType(l,1,out a1);
@@ -104,7 +104,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int MultiTexCoord2(IntPtr l) {
+	static public int MultiTexCoord2_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
@@ -121,7 +121,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int MultiTexCoord3(IntPtr l) {
+	static public int MultiTexCoord3_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
@@ -140,7 +140,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int MultiTexCoord(IntPtr l) {
+	static public int MultiTexCoord_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
@@ -155,7 +155,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Begin(IntPtr l) {
+	static public int Begin_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
@@ -168,7 +168,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int End(IntPtr l) {
+	static public int End_s(IntPtr l) {
 		try{
 			UnityEngine.GL.End();
 			return 0;
@@ -179,7 +179,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadOrtho(IntPtr l) {
+	static public int LoadOrtho_s(IntPtr l) {
 		try{
 			UnityEngine.GL.LoadOrtho();
 			return 0;
@@ -190,7 +190,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadPixelMatrix(IntPtr l) {
+	static public int LoadPixelMatrix_s(IntPtr l) {
 		try{
 			if(matchType(l,1)){
 				UnityEngine.GL.LoadPixelMatrix();
@@ -217,7 +217,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Viewport(IntPtr l) {
+	static public int Viewport_s(IntPtr l) {
 		try{
 			UnityEngine.Rect a1;
 			checkType(l,1,out a1);
@@ -230,7 +230,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadProjectionMatrix(IntPtr l) {
+	static public int LoadProjectionMatrix_s(IntPtr l) {
 		try{
 			UnityEngine.Matrix4x4 a1;
 			checkType(l,1,out a1);
@@ -243,7 +243,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadIdentity(IntPtr l) {
+	static public int LoadIdentity_s(IntPtr l) {
 		try{
 			UnityEngine.GL.LoadIdentity();
 			return 0;
@@ -254,7 +254,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int MultMatrix(IntPtr l) {
+	static public int MultMatrix_s(IntPtr l) {
 		try{
 			UnityEngine.Matrix4x4 a1;
 			checkType(l,1,out a1);
@@ -267,7 +267,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int PushMatrix(IntPtr l) {
+	static public int PushMatrix_s(IntPtr l) {
 		try{
 			UnityEngine.GL.PushMatrix();
 			return 0;
@@ -278,7 +278,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int PopMatrix(IntPtr l) {
+	static public int PopMatrix_s(IntPtr l) {
 		try{
 			UnityEngine.GL.PopMatrix();
 			return 0;
@@ -289,7 +289,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetGPUProjectionMatrix(IntPtr l) {
+	static public int GetGPUProjectionMatrix_s(IntPtr l) {
 		try{
 			UnityEngine.Matrix4x4 a1;
 			checkType(l,1,out a1);
@@ -305,7 +305,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetRevertBackfacing(IntPtr l) {
+	static public int SetRevertBackfacing_s(IntPtr l) {
 		try{
 			System.Boolean a1;
 			checkType(l,1,out a1);
@@ -318,7 +318,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Clear(IntPtr l) {
+	static public int Clear_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Boolean),typeof(System.Boolean),typeof(UnityEngine.Color))){
 				System.Boolean a1;
@@ -351,7 +351,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ClearWithSkybox(IntPtr l) {
+	static public int ClearWithSkybox_s(IntPtr l) {
 		try{
 			System.Boolean a1;
 			checkType(l,1,out a1);
@@ -366,7 +366,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int InvalidateState(IntPtr l) {
+	static public int InvalidateState_s(IntPtr l) {
 		try{
 			UnityEngine.GL.InvalidateState();
 			return 0;
@@ -377,7 +377,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int IssuePluginEvent(IntPtr l) {
+	static public int IssuePluginEvent_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
@@ -447,31 +447,31 @@ public class Lua_UnityEngine_GL : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.GL");
-		addMember(l,Vertex3);
-		addMember(l,Vertex);
-		addMember(l,Color);
-		addMember(l,TexCoord);
-		addMember(l,TexCoord2);
-		addMember(l,TexCoord3);
-		addMember(l,MultiTexCoord2);
-		addMember(l,MultiTexCoord3);
-		addMember(l,MultiTexCoord);
-		addMember(l,Begin);
-		addMember(l,End);
-		addMember(l,LoadOrtho);
-		addMember(l,LoadPixelMatrix);
-		addMember(l,Viewport);
-		addMember(l,LoadProjectionMatrix);
-		addMember(l,LoadIdentity);
-		addMember(l,MultMatrix);
-		addMember(l,PushMatrix);
-		addMember(l,PopMatrix);
-		addMember(l,GetGPUProjectionMatrix);
-		addMember(l,SetRevertBackfacing);
-		addMember(l,Clear);
-		addMember(l,ClearWithSkybox);
-		addMember(l,InvalidateState);
-		addMember(l,IssuePluginEvent);
+		addMember(l,Vertex3_s);
+		addMember(l,Vertex_s);
+		addMember(l,Color_s);
+		addMember(l,TexCoord_s);
+		addMember(l,TexCoord2_s);
+		addMember(l,TexCoord3_s);
+		addMember(l,MultiTexCoord2_s);
+		addMember(l,MultiTexCoord3_s);
+		addMember(l,MultiTexCoord_s);
+		addMember(l,Begin_s);
+		addMember(l,End_s);
+		addMember(l,LoadOrtho_s);
+		addMember(l,LoadPixelMatrix_s);
+		addMember(l,Viewport_s);
+		addMember(l,LoadProjectionMatrix_s);
+		addMember(l,LoadIdentity_s);
+		addMember(l,MultMatrix_s);
+		addMember(l,PushMatrix_s);
+		addMember(l,PopMatrix_s);
+		addMember(l,GetGPUProjectionMatrix_s);
+		addMember(l,SetRevertBackfacing_s);
+		addMember(l,Clear_s);
+		addMember(l,ClearWithSkybox_s);
+		addMember(l,InvalidateState_s);
+		addMember(l,IssuePluginEvent_s);
 		addMember(l,"TRIANGLES",get_TRIANGLES,null);
 		addMember(l,"TRIANGLE_STRIP",get_TRIANGLE_STRIP,null);
 		addMember(l,"QUADS",get_QUADS,null);

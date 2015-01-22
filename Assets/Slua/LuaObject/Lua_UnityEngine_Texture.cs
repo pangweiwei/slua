@@ -16,21 +16,6 @@ public class Lua_UnityEngine_Texture : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetGlobalAnisotropicFilteringLimits(IntPtr l) {
-		try{
-			System.Int32 a1;
-			checkType(l,1,out a1);
-			System.Int32 a2;
-			checkType(l,2,out a2);
-			UnityEngine.Texture.SetGlobalAnisotropicFilteringLimits(a1,a2);
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetNativeTexturePtr(IntPtr l) {
 		try{
 			UnityEngine.Texture self=(UnityEngine.Texture)checkSelf(l);
@@ -50,6 +35,21 @@ public class Lua_UnityEngine_Texture : LuaObject {
 			System.Int32 ret=self.GetNativeTextureID();
 			pushValue(l,ret);
 			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetGlobalAnisotropicFilteringLimits_s(IntPtr l) {
+		try{
+			System.Int32 a1;
+			checkType(l,1,out a1);
+			System.Int32 a2;
+			checkType(l,2,out a2);
+			UnityEngine.Texture.SetGlobalAnisotropicFilteringLimits(a1,a2);
+			return 0;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -172,9 +172,9 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Texture");
-		addMember(l,SetGlobalAnisotropicFilteringLimits);
 		addMember(l,GetNativeTexturePtr);
 		addMember(l,GetNativeTextureID);
+		addMember(l,SetGlobalAnisotropicFilteringLimits_s);
 		addMember(l,"masterTextureLimit",get_masterTextureLimit,set_masterTextureLimit);
 		addMember(l,"anisotropicFiltering",get_anisotropicFiltering,set_anisotropicFiltering);
 		addMember(l,"width",get_width,set_width);

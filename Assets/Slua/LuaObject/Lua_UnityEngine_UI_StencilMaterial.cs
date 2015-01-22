@@ -9,7 +9,7 @@ public class Lua_UnityEngine_UI_StencilMaterial : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Add(IntPtr l) {
+	static public int Add_s(IntPtr l) {
 		try{
 			UnityEngine.Material a1;
 			checkType(l,1,out a1);
@@ -25,7 +25,7 @@ public class Lua_UnityEngine_UI_StencilMaterial : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Remove(IntPtr l) {
+	static public int Remove_s(IntPtr l) {
 		try{
 			UnityEngine.Material a1;
 			checkType(l,1,out a1);
@@ -39,8 +39,8 @@ public class Lua_UnityEngine_UI_StencilMaterial : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.StencilMaterial");
-		addMember(l,Add);
-		addMember(l,Remove);
+		addMember(l,Add_s);
+		addMember(l,Remove_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.StencilMaterial));
 	}
 }

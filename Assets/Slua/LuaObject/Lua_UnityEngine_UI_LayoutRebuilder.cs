@@ -22,7 +22,7 @@ public class Lua_UnityEngine_UI_LayoutRebuilder : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int MarkLayoutForRebuild(IntPtr l) {
+	static public int MarkLayoutForRebuild_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -43,7 +43,7 @@ public class Lua_UnityEngine_UI_LayoutRebuilder : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.LayoutRebuilder");
 		addMember(l,IsDestroyed);
-		addMember(l,MarkLayoutForRebuild);
+		addMember(l,MarkLayoutForRebuild_s);
 		addMember(l,"transform",get_transform,null);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.LayoutRebuilder));
 	}

@@ -73,10 +73,47 @@ public class HelloWorld   {
 
     static public void testset(GameObject go)
     {
-        float time = Time.realtimeSinceStartup;
+        Transform t= go.transform;
         for (int i = 0; i < 200000; i++)
         {
-            go.transform.position = Vector3.one;
+            t.position = t.position;
+        }
+    }
+
+    static public void test2(GameObject go)
+    {
+        Vector3 v = Vector3.one;
+        for (int i = 0; i < 200000; i++)
+        {
+            v.Normalize();
+        }
+    }
+
+    static public void test3(GameObject go)
+    {
+        Vector3 v = Vector3.one;
+        for (int i = 0; i < 200000; i++)
+        {
+            v = Vector3.Normalize(v);
+        }
+    }
+
+    static public void test4(GameObject go)
+    {
+        Vector3 v = Vector3.one;
+        Transform t = go.transform;
+        for (int i = 0; i < 200000; i++)
+        {
+            t.position = v;
+        }
+    }
+
+    static public void test5(GameObject go)
+    {
+        Vector3 v;
+        for (int i = 0; i < 200000; i++)
+        {
+            v = new Vector3(i, i, i);
         }
     }
 }

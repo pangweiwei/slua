@@ -48,20 +48,6 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CreatePrimitive(IntPtr l) {
-		try{
-			UnityEngine.PrimitiveType a1;
-			checkEnum(l,1,out a1);
-			UnityEngine.GameObject ret=UnityEngine.GameObject.CreatePrimitive(a1);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetComponent(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.Type))){
@@ -224,48 +210,6 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Boolean ret=self.CompareTag(a1);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int FindGameObjectWithTag(IntPtr l) {
-		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			UnityEngine.GameObject ret=UnityEngine.GameObject.FindGameObjectWithTag(a1);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int FindWithTag(IntPtr l) {
-		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			UnityEngine.GameObject ret=UnityEngine.GameObject.FindWithTag(a1);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int FindGameObjectsWithTag(IntPtr l) {
-		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			UnityEngine.GameObject[] ret=UnityEngine.GameObject.FindGameObjectsWithTag(a1);
 			pushValue(l,ret);
 			return 1;
 		}
@@ -443,7 +387,63 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Find(IntPtr l) {
+	static public int CreatePrimitive_s(IntPtr l) {
+		try{
+			UnityEngine.PrimitiveType a1;
+			checkEnum(l,1,out a1);
+			UnityEngine.GameObject ret=UnityEngine.GameObject.CreatePrimitive(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int FindGameObjectWithTag_s(IntPtr l) {
+		try{
+			System.String a1;
+			checkType(l,1,out a1);
+			UnityEngine.GameObject ret=UnityEngine.GameObject.FindGameObjectWithTag(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int FindWithTag_s(IntPtr l) {
+		try{
+			System.String a1;
+			checkType(l,1,out a1);
+			UnityEngine.GameObject ret=UnityEngine.GameObject.FindWithTag(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int FindGameObjectsWithTag_s(IntPtr l) {
+		try{
+			System.String a1;
+			checkType(l,1,out a1);
+			UnityEngine.GameObject[] ret=UnityEngine.GameObject.FindGameObjectsWithTag(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Find_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -621,7 +621,6 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.GameObject");
 		addMember(l,SampleAnimation);
-		addMember(l,CreatePrimitive);
 		addMember(l,GetComponent);
 		addMember(l,GetComponentInChildren);
 		addMember(l,GetComponentInParent);
@@ -630,14 +629,15 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 		addMember(l,GetComponentsInChildren);
 		addMember(l,SetActive);
 		addMember(l,CompareTag);
-		addMember(l,FindGameObjectWithTag);
-		addMember(l,FindWithTag);
-		addMember(l,FindGameObjectsWithTag);
 		addMember(l,SendMessageUpwards);
 		addMember(l,SendMessage);
 		addMember(l,BroadcastMessage);
 		addMember(l,AddComponent);
-		addMember(l,Find);
+		addMember(l,CreatePrimitive_s);
+		addMember(l,FindGameObjectWithTag_s);
+		addMember(l,FindWithTag_s);
+		addMember(l,FindGameObjectsWithTag_s);
+		addMember(l,Find_s);
 		addMember(l,"isStatic",get_isStatic,set_isStatic);
 		addMember(l,"transform",get_transform,null);
 		addMember(l,"rigidbody",get_rigidbody,null);

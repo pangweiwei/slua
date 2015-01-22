@@ -16,7 +16,7 @@ public class Lua_UnityEngine_GeometryUtility : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CalculateFrustumPlanes(IntPtr l) {
+	static public int CalculateFrustumPlanes_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Camera))){
 				UnityEngine.Camera a1;
@@ -41,7 +41,7 @@ public class Lua_UnityEngine_GeometryUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int TestPlanesAABB(IntPtr l) {
+	static public int TestPlanesAABB_s(IntPtr l) {
 		try{
 			UnityEngine.Plane[] a1;
 			checkType(l,1,out a1);
@@ -58,8 +58,8 @@ public class Lua_UnityEngine_GeometryUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.GeometryUtility");
-		addMember(l,CalculateFrustumPlanes);
-		addMember(l,TestPlanesAABB);
+		addMember(l,CalculateFrustumPlanes_s);
+		addMember(l,TestPlanesAABB_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.GeometryUtility));
 	}
 }

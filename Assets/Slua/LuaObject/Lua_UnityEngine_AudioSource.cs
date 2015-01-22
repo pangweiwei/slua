@@ -146,35 +146,6 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int PlayClipAtPoint(IntPtr l) {
-		try{
-			if(matchType(l,1,typeof(UnityEngine.AudioClip),typeof(UnityEngine.Vector3))){
-				UnityEngine.AudioClip a1;
-				checkType(l,1,out a1);
-				UnityEngine.Vector3 a2;
-				checkType(l,2,out a2);
-				UnityEngine.AudioSource.PlayClipAtPoint(a1,a2);
-				return 0;
-			}
-			else if(matchType(l,1,typeof(UnityEngine.AudioClip),typeof(UnityEngine.Vector3),typeof(System.Single))){
-				UnityEngine.AudioClip a1;
-				checkType(l,1,out a1);
-				UnityEngine.Vector3 a2;
-				checkType(l,2,out a2);
-				System.Single a3;
-				checkType(l,3,out a3);
-				UnityEngine.AudioSource.PlayClipAtPoint(a1,a2,a3);
-				return 0;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetOutputData(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.Int32),typeof(System.Int32))){
@@ -228,6 +199,35 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 				UnityEngine.FFTWindow a3;
 				checkEnum(l,4,out a3);
 				self.GetSpectrumData(a1,a2,a3);
+				return 0;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int PlayClipAtPoint_s(IntPtr l) {
+		try{
+			if(matchType(l,1,typeof(UnityEngine.AudioClip),typeof(UnityEngine.Vector3))){
+				UnityEngine.AudioClip a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.AudioSource.PlayClipAtPoint(a1,a2);
+				return 0;
+			}
+			else if(matchType(l,1,typeof(UnityEngine.AudioClip),typeof(UnityEngine.Vector3),typeof(System.Single))){
+				UnityEngine.AudioClip a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				UnityEngine.AudioSource.PlayClipAtPoint(a1,a2,a3);
 				return 0;
 			}
 			LuaDLL.luaL_error(l,"No matched override function to call");
@@ -562,9 +562,9 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 		addMember(l,Stop);
 		addMember(l,Pause);
 		addMember(l,PlayOneShot);
-		addMember(l,PlayClipAtPoint);
 		addMember(l,GetOutputData);
 		addMember(l,GetSpectrumData);
+		addMember(l,PlayClipAtPoint_s);
 		addMember(l,"volume",get_volume,set_volume);
 		addMember(l,"pitch",get_pitch,set_pitch);
 		addMember(l,"time",get_time,set_time);

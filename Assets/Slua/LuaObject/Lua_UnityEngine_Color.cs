@@ -35,7 +35,7 @@ public class Lua_UnityEngine_Color : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Lerp(IntPtr l) {
+	static public int Lerp_s(IntPtr l) {
 		try{
 			UnityEngine.Color a1;
 			checkType(l,1,out a1);
@@ -305,7 +305,7 @@ public class Lua_UnityEngine_Color : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Color");
-		addMember(l,Lerp);
+		addMember(l,Lerp_s);
 		addMember(l,op_Addition);
 		addMember(l,op_Subtraction);
 		addMember(l,op_Multiply);

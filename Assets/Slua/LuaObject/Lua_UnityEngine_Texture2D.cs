@@ -48,30 +48,6 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CreateExternalTexture(IntPtr l) {
-		try{
-			System.Int32 a1;
-			checkType(l,1,out a1);
-			System.Int32 a2;
-			checkType(l,2,out a2);
-			UnityEngine.TextureFormat a3;
-			checkEnum(l,3,out a3);
-			System.Boolean a4;
-			checkType(l,4,out a4);
-			System.Boolean a5;
-			checkType(l,5,out a5);
-			System.IntPtr a6;
-			checkType(l,6,out a6);
-			UnityEngine.Texture2D ret=UnityEngine.Texture2D.CreateExternalTexture(a1,a2,a3,a4,a5,a6);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int UpdateExternalTexture(IntPtr l) {
 		try{
 			UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
@@ -534,6 +510,30 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int CreateExternalTexture_s(IntPtr l) {
+		try{
+			System.Int32 a1;
+			checkType(l,1,out a1);
+			System.Int32 a2;
+			checkType(l,2,out a2);
+			UnityEngine.TextureFormat a3;
+			checkEnum(l,3,out a3);
+			System.Boolean a4;
+			checkType(l,4,out a4);
+			System.Boolean a5;
+			checkType(l,5,out a5);
+			System.IntPtr a6;
+			checkType(l,6,out a6);
+			UnityEngine.Texture2D ret=UnityEngine.Texture2D.CreateExternalTexture(a1,a2,a3,a4,a5,a6);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mipmapCount(IntPtr l) {
 		UnityEngine.Texture2D o = (UnityEngine.Texture2D)checkSelf(l);
 		pushValue(l,o.mipmapCount);
@@ -557,7 +557,6 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Texture2D");
-		addMember(l,CreateExternalTexture);
 		addMember(l,UpdateExternalTexture);
 		addMember(l,SetPixel);
 		addMember(l,GetPixel);
@@ -575,6 +574,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 		addMember(l,ReadPixels);
 		addMember(l,EncodeToPNG);
 		addMember(l,EncodeToJPG);
+		addMember(l,CreateExternalTexture_s);
 		addMember(l,"mipmapCount",get_mipmapCount,null);
 		addMember(l,"format",get_format,null);
 		addMember(l,"whiteTexture",get_whiteTexture,null);

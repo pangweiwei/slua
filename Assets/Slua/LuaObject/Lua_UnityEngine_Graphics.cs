@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DrawMesh(IntPtr l) {
+	static public int DrawMesh_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Mesh),typeof(UnityEngine.Vector3),typeof(UnityEngine.Quaternion),typeof(UnityEngine.Material),typeof(System.Int32),typeof(UnityEngine.Camera),typeof(System.Int32))){
 				UnityEngine.Mesh a1;
@@ -241,7 +241,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DrawMeshNow(IntPtr l) {
+	static public int DrawMeshNow_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Mesh),typeof(UnityEngine.Vector3),typeof(UnityEngine.Quaternion))){
 				UnityEngine.Mesh a1;
@@ -292,7 +292,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DrawProcedural(IntPtr l) {
+	static public int DrawProcedural_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.MeshTopology),typeof(System.Int32),typeof(System.Int32))){
 				UnityEngine.MeshTopology a1;
@@ -321,7 +321,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DrawProceduralIndirect(IntPtr l) {
+	static public int DrawProceduralIndirect_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.MeshTopology),typeof(UnityEngine.ComputeBuffer),typeof(System.Int32))){
 				UnityEngine.MeshTopology a1;
@@ -350,7 +350,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DrawTexture(IntPtr l) {
+	static public int DrawTexture_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Rect),typeof(UnityEngine.Texture))){
 				UnityEngine.Rect a1;
@@ -493,7 +493,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Blit(IntPtr l) {
+	static public int Blit_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Texture),typeof(UnityEngine.RenderTexture))){
 				UnityEngine.Texture a1;
@@ -552,7 +552,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int BlitMultiTap(IntPtr l) {
+	static public int BlitMultiTap_s(IntPtr l) {
 		try{
 			UnityEngine.Texture a1;
 			checkType(l,1,out a1);
@@ -571,7 +571,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetRenderTarget(IntPtr l) {
+	static public int SetRenderTarget_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.RenderTexture))){
 				UnityEngine.RenderTexture a1;
@@ -622,7 +622,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetRandomWriteTarget(IntPtr l) {
+	static public int SetRandomWriteTarget_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Int32),typeof(UnityEngine.RenderTexture))){
 				System.Int32 a1;
@@ -649,7 +649,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ClearRandomWriteTargets(IntPtr l) {
+	static public int ClearRandomWriteTargets_s(IntPtr l) {
 		try{
 			UnityEngine.Graphics.ClearRandomWriteTargets();
 			return 0;
@@ -671,16 +671,16 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Graphics");
-		addMember(l,DrawMesh);
-		addMember(l,DrawMeshNow);
-		addMember(l,DrawProcedural);
-		addMember(l,DrawProceduralIndirect);
-		addMember(l,DrawTexture);
-		addMember(l,Blit);
-		addMember(l,BlitMultiTap);
-		addMember(l,SetRenderTarget);
-		addMember(l,SetRandomWriteTarget);
-		addMember(l,ClearRandomWriteTargets);
+		addMember(l,DrawMesh_s);
+		addMember(l,DrawMeshNow_s);
+		addMember(l,DrawProcedural_s);
+		addMember(l,DrawProceduralIndirect_s);
+		addMember(l,DrawTexture_s);
+		addMember(l,Blit_s);
+		addMember(l,BlitMultiTap_s);
+		addMember(l,SetRenderTarget_s);
+		addMember(l,SetRandomWriteTarget_s);
+		addMember(l,ClearRandomWriteTargets_s);
 		addMember(l,"activeColorBuffer",get_activeColorBuffer,null);
 		addMember(l,"activeDepthBuffer",get_activeDepthBuffer,null);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Graphics));

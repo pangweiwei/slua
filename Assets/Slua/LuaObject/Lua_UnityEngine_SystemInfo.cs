@@ -16,7 +16,7 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SupportsRenderTextureFormat(IntPtr l) {
+	static public int SupportsRenderTextureFormat_s(IntPtr l) {
 		try{
 			UnityEngine.RenderTextureFormat a1;
 			checkEnum(l,1,out a1);
@@ -196,7 +196,7 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SystemInfo");
-		addMember(l,SupportsRenderTextureFormat);
+		addMember(l,SupportsRenderTextureFormat_s);
 		addMember(l,"operatingSystem",get_operatingSystem,null);
 		addMember(l,"processorType",get_processorType,null);
 		addMember(l,"processorCount",get_processorCount,null);

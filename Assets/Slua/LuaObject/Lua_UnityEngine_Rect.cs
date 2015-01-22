@@ -31,26 +31,6 @@ public class Lua_UnityEngine_Rect : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int MinMaxRect(IntPtr l) {
-		try{
-			System.Single a1;
-			checkType(l,1,out a1);
-			System.Single a2;
-			checkType(l,2,out a2);
-			System.Single a3;
-			checkType(l,3,out a3);
-			System.Single a4;
-			checkType(l,4,out a4);
-			UnityEngine.Rect ret=UnityEngine.Rect.MinMaxRect(a1,a2,a3,a4);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Set(IntPtr l) {
 		try{
 			UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
@@ -138,7 +118,27 @@ public class Lua_UnityEngine_Rect : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int NormalizedToPoint(IntPtr l) {
+	static public int MinMaxRect_s(IntPtr l) {
+		try{
+			System.Single a1;
+			checkType(l,1,out a1);
+			System.Single a2;
+			checkType(l,2,out a2);
+			System.Single a3;
+			checkType(l,3,out a3);
+			System.Single a4;
+			checkType(l,4,out a4);
+			UnityEngine.Rect ret=UnityEngine.Rect.MinMaxRect(a1,a2,a3,a4);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int NormalizedToPoint_s(IntPtr l) {
 		try{
 			UnityEngine.Rect a1;
 			checkType(l,1,out a1);
@@ -154,7 +154,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int PointToNormalized(IntPtr l) {
+	static public int PointToNormalized_s(IntPtr l) {
 		try{
 			UnityEngine.Rect a1;
 			checkType(l,1,out a1);
@@ -398,12 +398,12 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Rect");
-		addMember(l,MinMaxRect);
 		addMember(l,Set);
 		addMember(l,Contains);
 		addMember(l,Overlaps);
-		addMember(l,NormalizedToPoint);
-		addMember(l,PointToNormalized);
+		addMember(l,MinMaxRect_s);
+		addMember(l,NormalizedToPoint_s);
+		addMember(l,PointToNormalized_s);
 		addMember(l,op_Inequality);
 		addMember(l,op_Equality);
 		addMember(l,"x",get_x,set_x);

@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Random : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Range(IntPtr l) {
+	static public int Range_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Single),typeof(System.Single))){
 				System.Single a1;
@@ -88,7 +88,7 @@ public class Lua_UnityEngine_Random : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Random");
-		addMember(l,Range);
+		addMember(l,Range_s);
 		addMember(l,"seed",get_seed,set_seed);
 		addMember(l,"value",get_value,null);
 		addMember(l,"insideUnitSphere",get_insideUnitSphere,null);

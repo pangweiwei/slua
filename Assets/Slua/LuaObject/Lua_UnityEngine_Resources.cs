@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int FindObjectsOfTypeAll(IntPtr l) {
+	static public int FindObjectsOfTypeAll_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Type))){
 				System.Type a1;
@@ -34,7 +34,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Load(IntPtr l) {
+	static public int Load_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String))){
 				System.String a1;
@@ -61,7 +61,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadAsync(IntPtr l) {
+	static public int LoadAsync_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String))){
 				System.String a1;
@@ -95,7 +95,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadAll(IntPtr l) {
+	static public int LoadAll_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(System.Type))){
 				System.String a1;
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetBuiltinResource(IntPtr l) {
+	static public int GetBuiltinResource_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Type),typeof(System.String))){
 				System.Type a1;
@@ -142,7 +142,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadAssetAtPath(IntPtr l) {
+	static public int LoadAssetAtPath_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(System.Type))){
 				System.String a1;
@@ -162,7 +162,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int UnloadAsset(IntPtr l) {
+	static public int UnloadAsset_s(IntPtr l) {
 		try{
 			UnityEngine.Object a1;
 			checkType(l,1,out a1);
@@ -175,7 +175,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int UnloadUnusedAssets(IntPtr l) {
+	static public int UnloadUnusedAssets_s(IntPtr l) {
 		try{
 			UnityEngine.AsyncOperation ret=UnityEngine.Resources.UnloadUnusedAssets();
 			pushValue(l,ret);
@@ -188,14 +188,14 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Resources");
-		addMember(l,FindObjectsOfTypeAll);
-		addMember(l,Load);
-		addMember(l,LoadAsync);
-		addMember(l,LoadAll);
-		addMember(l,GetBuiltinResource);
-		addMember(l,LoadAssetAtPath);
-		addMember(l,UnloadAsset);
-		addMember(l,UnloadUnusedAssets);
+		addMember(l,FindObjectsOfTypeAll_s);
+		addMember(l,Load_s);
+		addMember(l,LoadAsync_s);
+		addMember(l,LoadAll_s);
+		addMember(l,GetBuiltinResource_s);
+		addMember(l,LoadAssetAtPath_s);
+		addMember(l,UnloadAsset_s);
+		addMember(l,UnloadUnusedAssets_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Resources));
 	}
 }

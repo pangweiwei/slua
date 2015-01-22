@@ -80,7 +80,7 @@ public class Lua_UnityEngine_Events_UnityEventBase : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetValidMethodInfo(IntPtr l) {
+	static public int GetValidMethodInfo_s(IntPtr l) {
 		try{
 			System.Object a1;
 			checkType(l,1,out a1);
@@ -104,7 +104,7 @@ public class Lua_UnityEngine_Events_UnityEventBase : LuaObject {
 		addMember(l,GetPersistentMethodName);
 		addMember(l,SetPersistentListenerState);
 		addMember(l,RemoveAllListeners);
-		addMember(l,GetValidMethodInfo);
+		addMember(l,GetValidMethodInfo_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Events.UnityEventBase));
 	}
 }

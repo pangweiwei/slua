@@ -50,95 +50,6 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetTemporary(IntPtr l) {
-		try{
-			if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite),typeof(System.Int32))){
-				System.Int32 a1;
-				checkType(l,1,out a1);
-				System.Int32 a2;
-				checkType(l,2,out a2);
-				System.Int32 a3;
-				checkType(l,3,out a3);
-				UnityEngine.RenderTextureFormat a4;
-				checkEnum(l,4,out a4);
-				UnityEngine.RenderTextureReadWrite a5;
-				checkEnum(l,5,out a5);
-				System.Int32 a6;
-				checkType(l,6,out a6);
-				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2,a3,a4,a5,a6);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite))){
-				System.Int32 a1;
-				checkType(l,1,out a1);
-				System.Int32 a2;
-				checkType(l,2,out a2);
-				System.Int32 a3;
-				checkType(l,3,out a3);
-				UnityEngine.RenderTextureFormat a4;
-				checkEnum(l,4,out a4);
-				UnityEngine.RenderTextureReadWrite a5;
-				checkEnum(l,5,out a5);
-				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2,a3,a4,a5);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.RenderTextureFormat))){
-				System.Int32 a1;
-				checkType(l,1,out a1);
-				System.Int32 a2;
-				checkType(l,2,out a2);
-				System.Int32 a3;
-				checkType(l,3,out a3);
-				UnityEngine.RenderTextureFormat a4;
-				checkEnum(l,4,out a4);
-				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2,a3,a4);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32))){
-				System.Int32 a1;
-				checkType(l,1,out a1);
-				System.Int32 a2;
-				checkType(l,2,out a2);
-				System.Int32 a3;
-				checkType(l,3,out a3);
-				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2,a3);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32))){
-				System.Int32 a1;
-				checkType(l,1,out a1);
-				System.Int32 a2;
-				checkType(l,2,out a2);
-				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ReleaseTemporary(IntPtr l) {
-		try{
-			UnityEngine.RenderTexture a1;
-			checkType(l,1,out a1);
-			UnityEngine.RenderTexture.ReleaseTemporary(a1);
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Create(IntPtr l) {
 		try{
 			UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
@@ -241,7 +152,96 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SupportsStencil(IntPtr l) {
+	static public int GetTemporary_s(IntPtr l) {
+		try{
+			if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite),typeof(System.Int32))){
+				System.Int32 a1;
+				checkType(l,1,out a1);
+				System.Int32 a2;
+				checkType(l,2,out a2);
+				System.Int32 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RenderTextureFormat a4;
+				checkEnum(l,4,out a4);
+				UnityEngine.RenderTextureReadWrite a5;
+				checkEnum(l,5,out a5);
+				System.Int32 a6;
+				checkType(l,6,out a6);
+				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2,a3,a4,a5,a6);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite))){
+				System.Int32 a1;
+				checkType(l,1,out a1);
+				System.Int32 a2;
+				checkType(l,2,out a2);
+				System.Int32 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RenderTextureFormat a4;
+				checkEnum(l,4,out a4);
+				UnityEngine.RenderTextureReadWrite a5;
+				checkEnum(l,5,out a5);
+				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2,a3,a4,a5);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.RenderTextureFormat))){
+				System.Int32 a1;
+				checkType(l,1,out a1);
+				System.Int32 a2;
+				checkType(l,2,out a2);
+				System.Int32 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RenderTextureFormat a4;
+				checkEnum(l,4,out a4);
+				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2,a3,a4);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32))){
+				System.Int32 a1;
+				checkType(l,1,out a1);
+				System.Int32 a2;
+				checkType(l,2,out a2);
+				System.Int32 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2,a3);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32))){
+				System.Int32 a1;
+				checkType(l,1,out a1);
+				System.Int32 a2;
+				checkType(l,2,out a2);
+				UnityEngine.RenderTexture ret=UnityEngine.RenderTexture.GetTemporary(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ReleaseTemporary_s(IntPtr l) {
+		try{
+			UnityEngine.RenderTexture a1;
+			checkType(l,1,out a1);
+			UnityEngine.RenderTexture.ReleaseTemporary(a1);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SupportsStencil_s(IntPtr l) {
 		try{
 			UnityEngine.RenderTexture a1;
 			checkType(l,1,out a1);
@@ -454,8 +454,6 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.RenderTexture");
-		addMember(l,GetTemporary);
-		addMember(l,ReleaseTemporary);
 		addMember(l,Create);
 		addMember(l,Release);
 		addMember(l,IsCreated);
@@ -463,7 +461,9 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 		addMember(l,MarkRestoreExpected);
 		addMember(l,SetGlobalShaderProperty);
 		addMember(l,GetTexelOffset);
-		addMember(l,SupportsStencil);
+		addMember(l,GetTemporary_s);
+		addMember(l,ReleaseTemporary_s);
+		addMember(l,SupportsStencil_s);
 		addMember(l,"width",get_width,set_width);
 		addMember(l,"height",get_height,set_height);
 		addMember(l,"depth",get_depth,set_depth);

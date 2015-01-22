@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Sprites_DataUtility : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetInnerUV(IntPtr l) {
+	static public int GetInnerUV_s(IntPtr l) {
 		try{
 			UnityEngine.Sprite a1;
 			checkType(l,1,out a1);
@@ -30,7 +30,7 @@ public class Lua_UnityEngine_Sprites_DataUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetOuterUV(IntPtr l) {
+	static public int GetOuterUV_s(IntPtr l) {
 		try{
 			UnityEngine.Sprite a1;
 			checkType(l,1,out a1);
@@ -44,7 +44,7 @@ public class Lua_UnityEngine_Sprites_DataUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetPadding(IntPtr l) {
+	static public int GetPadding_s(IntPtr l) {
 		try{
 			UnityEngine.Sprite a1;
 			checkType(l,1,out a1);
@@ -58,7 +58,7 @@ public class Lua_UnityEngine_Sprites_DataUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetMinSize(IntPtr l) {
+	static public int GetMinSize_s(IntPtr l) {
 		try{
 			UnityEngine.Sprite a1;
 			checkType(l,1,out a1);
@@ -73,10 +73,10 @@ public class Lua_UnityEngine_Sprites_DataUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Sprites.DataUtility");
-		addMember(l,GetInnerUV);
-		addMember(l,GetOuterUV);
-		addMember(l,GetPadding);
-		addMember(l,GetMinSize);
+		addMember(l,GetInnerUV_s);
+		addMember(l,GetOuterUV_s);
+		addMember(l,GetPadding_s);
+		addMember(l,GetMinSize_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Sprites.DataUtility));
 	}
 }

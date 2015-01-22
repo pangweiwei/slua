@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetLights(IntPtr l) {
+	static public int GetLights_s(IntPtr l) {
 		try{
 			UnityEngine.LightType a1;
 			checkEnum(l,1,out a1);
@@ -257,7 +257,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Light");
-		addMember(l,GetLights);
+		addMember(l,GetLights_s);
 		addMember(l,"type",get_type,set_type);
 		addMember(l,"color",get_color,set_color);
 		addMember(l,"intensity",get_intensity,set_intensity);

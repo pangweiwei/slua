@@ -499,6 +499,16 @@ namespace SLua
             }
         }
 
+        public LuaFunction getFunction(string key)
+        {
+            return (LuaFunction)this[key];
+        }
+
+        public LuaTable getTable(string key)
+        {
+            return (LuaTable)this[key];
+        }
+
         /*
          * Indexer for global variables from the LuaInterpreter
          * Supports navigation of tables by using . operator

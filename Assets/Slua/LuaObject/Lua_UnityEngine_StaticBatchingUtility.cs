@@ -16,7 +16,7 @@ public class Lua_UnityEngine_StaticBatchingUtility : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Combine(IntPtr l) {
+	static public int Combine_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.GameObject))){
 				UnityEngine.GameObject a1;
@@ -42,7 +42,7 @@ public class Lua_UnityEngine_StaticBatchingUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.StaticBatchingUtility");
-		addMember(l,Combine);
+		addMember(l,Combine_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.StaticBatchingUtility));
 	}
 }

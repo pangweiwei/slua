@@ -16,7 +16,7 @@ public class Lua_UnityEngine_AudioListener : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetOutputData(IntPtr l) {
+	static public int GetOutputData_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Int32),typeof(System.Int32))){
 				System.Int32 a1;
@@ -44,7 +44,7 @@ public class Lua_UnityEngine_AudioListener : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetSpectrumData(IntPtr l) {
+	static public int GetSpectrumData_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.FFTWindow))){
 				System.Int32 a1;
@@ -115,8 +115,8 @@ public class Lua_UnityEngine_AudioListener : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioListener");
-		addMember(l,GetOutputData);
-		addMember(l,GetSpectrumData);
+		addMember(l,GetOutputData_s);
+		addMember(l,GetSpectrumData_s);
 		addMember(l,"volume",get_volume,set_volume);
 		addMember(l,"pause",get_pause,set_pause);
 		addMember(l,"velocityUpdateMode",get_velocityUpdateMode,set_velocityUpdateMode);

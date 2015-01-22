@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Raycast(IntPtr l) {
+	static public int Raycast_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(System.Single))){
 				UnityEngine.Vector3 a1;
@@ -159,7 +159,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RaycastAll(IntPtr l) {
+	static public int RaycastAll_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Ray),typeof(System.Single))){
 				UnityEngine.Ray a1;
@@ -230,7 +230,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Linecast(IntPtr l) {
+	static public int Linecast_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3))){
 				UnityEngine.Vector3 a1;
@@ -285,7 +285,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int OverlapSphere(IntPtr l) {
+	static public int OverlapSphere_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(System.Single),typeof(System.Int32))){
 				UnityEngine.Vector3 a1;
@@ -316,7 +316,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CapsuleCast(IntPtr l) {
+	static public int CapsuleCast_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(System.Single),typeof(UnityEngine.Vector3),typeof(System.Single))){
 				UnityEngine.Vector3 a1;
@@ -423,7 +423,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SphereCast(IntPtr l) {
+	static public int SphereCast_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(System.Single),typeof(UnityEngine.Vector3),typeof(UnityEngine.RaycastHit),typeof(System.Single))){
 				UnityEngine.Vector3 a1;
@@ -551,7 +551,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CapsuleCastAll(IntPtr l) {
+	static public int CapsuleCastAll_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(System.Single),typeof(UnityEngine.Vector3),typeof(System.Single),typeof(System.Int32))){
 				UnityEngine.Vector3 a1;
@@ -607,7 +607,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SphereCastAll(IntPtr l) {
+	static public int SphereCastAll_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(System.Single),typeof(UnityEngine.Vector3),typeof(System.Single))){
 				UnityEngine.Vector3 a1;
@@ -690,7 +690,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CheckSphere(IntPtr l) {
+	static public int CheckSphere_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(System.Single),typeof(System.Int32))){
 				UnityEngine.Vector3 a1;
@@ -721,7 +721,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CheckCapsule(IntPtr l) {
+	static public int CheckCapsule_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(System.Single),typeof(System.Int32))){
 				UnityEngine.Vector3 a1;
@@ -756,7 +756,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int IgnoreCollision(IntPtr l) {
+	static public int IgnoreCollision_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Collider),typeof(UnityEngine.Collider),typeof(System.Boolean))){
 				UnityEngine.Collider a1;
@@ -785,7 +785,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int IgnoreLayerCollision(IntPtr l) {
+	static public int IgnoreLayerCollision_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Boolean))){
 				System.Int32 a1;
@@ -814,7 +814,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetIgnoreLayerCollision(IntPtr l) {
+	static public int GetIgnoreLayerCollision_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
@@ -945,19 +945,19 @@ public class Lua_UnityEngine_Physics : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Physics");
-		addMember(l,Raycast);
-		addMember(l,RaycastAll);
-		addMember(l,Linecast);
-		addMember(l,OverlapSphere);
-		addMember(l,CapsuleCast);
-		addMember(l,SphereCast);
-		addMember(l,CapsuleCastAll);
-		addMember(l,SphereCastAll);
-		addMember(l,CheckSphere);
-		addMember(l,CheckCapsule);
-		addMember(l,IgnoreCollision);
-		addMember(l,IgnoreLayerCollision);
-		addMember(l,GetIgnoreLayerCollision);
+		addMember(l,Raycast_s);
+		addMember(l,RaycastAll_s);
+		addMember(l,Linecast_s);
+		addMember(l,OverlapSphere_s);
+		addMember(l,CapsuleCast_s);
+		addMember(l,SphereCast_s);
+		addMember(l,CapsuleCastAll_s);
+		addMember(l,SphereCastAll_s);
+		addMember(l,CheckSphere_s);
+		addMember(l,CheckCapsule_s);
+		addMember(l,IgnoreCollision_s);
+		addMember(l,IgnoreLayerCollision_s);
+		addMember(l,GetIgnoreLayerCollision_s);
 		addMember(l,"kIgnoreRaycastLayer",get_kIgnoreRaycastLayer,null);
 		addMember(l,"kDefaultRaycastLayers",get_kDefaultRaycastLayers,null);
 		addMember(l,"kAllLayers",get_kAllLayers,null);

@@ -48,7 +48,7 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Create(IntPtr l) {
+	static public int Create_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(System.Boolean),typeof(System.Boolean))){
 				System.String a1;
@@ -149,7 +149,7 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 		getTypeTable(l,"UnityEngine.AudioClip");
 		addMember(l,GetData);
 		addMember(l,SetData);
-		addMember(l,Create);
+		addMember(l,Create_s);
 		addMember(l,"length",get_length,null);
 		addMember(l,"samples",get_samples,null);
 		addMember(l,"channels",get_channels,null);

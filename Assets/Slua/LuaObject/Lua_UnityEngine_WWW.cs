@@ -65,60 +65,6 @@ public class Lua_UnityEngine_WWW : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int EscapeURL(IntPtr l) {
-		try{
-			if(matchType(l,1,typeof(System.String))){
-				System.String a1;
-				checkType(l,1,out a1);
-				System.String ret=UnityEngine.WWW.EscapeURL(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,1,typeof(System.String),typeof(System.Text.Encoding))){
-				System.String a1;
-				checkType(l,1,out a1);
-				System.Text.Encoding a2;
-				checkType(l,2,out a2);
-				System.String ret=UnityEngine.WWW.EscapeURL(a1,a2);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int UnEscapeURL(IntPtr l) {
-		try{
-			if(matchType(l,1,typeof(System.String))){
-				System.String a1;
-				checkType(l,1,out a1);
-				System.String ret=UnityEngine.WWW.UnEscapeURL(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,1,typeof(System.String),typeof(System.Text.Encoding))){
-				System.String a1;
-				checkType(l,1,out a1);
-				System.Text.Encoding a2;
-				checkType(l,2,out a2);
-				System.String ret=UnityEngine.WWW.UnEscapeURL(a1,a2);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetAudioClip(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.Boolean))){
@@ -186,7 +132,61 @@ public class Lua_UnityEngine_WWW : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadFromCacheOrDownload(IntPtr l) {
+	static public int EscapeURL_s(IntPtr l) {
+		try{
+			if(matchType(l,1,typeof(System.String))){
+				System.String a1;
+				checkType(l,1,out a1);
+				System.String ret=UnityEngine.WWW.EscapeURL(a1);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,1,typeof(System.String),typeof(System.Text.Encoding))){
+				System.String a1;
+				checkType(l,1,out a1);
+				System.Text.Encoding a2;
+				checkType(l,2,out a2);
+				System.String ret=UnityEngine.WWW.EscapeURL(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int UnEscapeURL_s(IntPtr l) {
+		try{
+			if(matchType(l,1,typeof(System.String))){
+				System.String a1;
+				checkType(l,1,out a1);
+				System.String ret=UnityEngine.WWW.UnEscapeURL(a1);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,1,typeof(System.String),typeof(System.Text.Encoding))){
+				System.String a1;
+				checkType(l,1,out a1);
+				System.Text.Encoding a2;
+				checkType(l,2,out a2);
+				System.String ret=UnityEngine.WWW.UnEscapeURL(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LoadFromCacheOrDownload_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(System.Int32))){
 				System.String a1;
@@ -317,12 +317,12 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.WWW");
 		addMember(l,InitWWW);
-		addMember(l,EscapeURL);
-		addMember(l,UnEscapeURL);
 		addMember(l,GetAudioClip);
 		addMember(l,LoadImageIntoTexture);
 		addMember(l,LoadUnityWeb);
-		addMember(l,LoadFromCacheOrDownload);
+		addMember(l,EscapeURL_s);
+		addMember(l,UnEscapeURL_s);
+		addMember(l,LoadFromCacheOrDownload_s);
 		addMember(l,"responseHeaders",get_responseHeaders,null);
 		addMember(l,"text",get_text,null);
 		addMember(l,"bytes",get_bytes,null);

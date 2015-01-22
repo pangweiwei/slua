@@ -9,7 +9,7 @@ public class Lua_UnityEngine_UI_GraphicRegistry : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RegisterGraphicForCanvas(IntPtr l) {
+	static public int RegisterGraphicForCanvas_s(IntPtr l) {
 		try{
 			UnityEngine.Canvas a1;
 			checkType(l,1,out a1);
@@ -24,7 +24,7 @@ public class Lua_UnityEngine_UI_GraphicRegistry : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int UnregisterGraphicForCanvas(IntPtr l) {
+	static public int UnregisterGraphicForCanvas_s(IntPtr l) {
 		try{
 			UnityEngine.Canvas a1;
 			checkType(l,1,out a1);
@@ -39,7 +39,7 @@ public class Lua_UnityEngine_UI_GraphicRegistry : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetGraphicsForCanvas(IntPtr l) {
+	static public int GetGraphicsForCanvas_s(IntPtr l) {
 		try{
 			UnityEngine.Canvas a1;
 			checkType(l,1,out a1);
@@ -59,9 +59,9 @@ public class Lua_UnityEngine_UI_GraphicRegistry : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.GraphicRegistry");
-		addMember(l,RegisterGraphicForCanvas);
-		addMember(l,UnregisterGraphicForCanvas);
-		addMember(l,GetGraphicsForCanvas);
+		addMember(l,RegisterGraphicForCanvas_s);
+		addMember(l,UnregisterGraphicForCanvas_s);
+		addMember(l,GetGraphicsForCanvas_s);
 		addMember(l,"instance",get_instance,null);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.GraphicRegistry));
 	}

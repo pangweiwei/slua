@@ -9,7 +9,7 @@ public class Lua_UnityEngine_EventSystems_ExecuteEvents : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ValidateEventData(IntPtr l) {
+	static public int ValidateEventData_s(IntPtr l) {
 		try{
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
@@ -20,7 +20,7 @@ public class Lua_UnityEngine_EventSystems_ExecuteEvents : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Execute(IntPtr l) {
+	static public int Execute_s(IntPtr l) {
 		try{
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
@@ -31,7 +31,7 @@ public class Lua_UnityEngine_EventSystems_ExecuteEvents : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ExecuteHierarchy(IntPtr l) {
+	static public int ExecuteHierarchy_s(IntPtr l) {
 		try{
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
@@ -42,7 +42,7 @@ public class Lua_UnityEngine_EventSystems_ExecuteEvents : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CanHandleEvent(IntPtr l) {
+	static public int CanHandleEvent_s(IntPtr l) {
 		try{
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
@@ -53,7 +53,7 @@ public class Lua_UnityEngine_EventSystems_ExecuteEvents : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetEventHandler(IntPtr l) {
+	static public int GetEventHandler_s(IntPtr l) {
 		try{
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
@@ -150,11 +150,11 @@ public class Lua_UnityEngine_EventSystems_ExecuteEvents : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.ExecuteEvents");
-		addMember(l,ValidateEventData);
-		addMember(l,Execute);
-		addMember(l,ExecuteHierarchy);
-		addMember(l,CanHandleEvent);
-		addMember(l,GetEventHandler);
+		addMember(l,ValidateEventData_s);
+		addMember(l,Execute_s);
+		addMember(l,ExecuteHierarchy_s);
+		addMember(l,CanHandleEvent_s);
+		addMember(l,GetEventHandler_s);
 		addMember(l,"pointerEnterHandler",get_pointerEnterHandler,null);
 		addMember(l,"pointerExitHandler",get_pointerExitHandler,null);
 		addMember(l,"pointerDownHandler",get_pointerDownHandler,null);

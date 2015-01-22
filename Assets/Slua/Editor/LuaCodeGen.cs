@@ -320,6 +320,7 @@ class CodeGenerator
                 WriteHead(t, file);
                 WriteConstructor(t, file);
                 WriteFunction(t, file);
+                WriteFunction(t, file, true);
                 WriteField(t, file);
                 RegFunction(t, file);
                 End(file);
@@ -607,14 +608,21 @@ namespace SLua
     }
     
 
-    private void WriteFunction(Type t, StreamWriter file)
+    private void WriteFunction(Type t, StreamWriter file, bool writeStatic=false)
     {
         Dictionary<string, int> renamefunc = new Dictionary<string, int>();
-        BindingFlags bf = BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance|BindingFlags.DeclaredOnly;
+        BindingFlags bf = BindingFlags.Public | BindingFlags.DeclaredOnly;
+        if (writeStatic)
+            bf |= BindingFlags.Static;
+        else
+            bf |= BindingFlags.Instance;
+
         MethodInfo[] members = t.GetMethods( bf );
         foreach (MethodInfo mi in members)
         {
-            if (mi.MemberType == MemberTypes.Method && !funcname.Contains(mi.Name) && isUsefullMethod(mi))
+            string fn = writeStatic ? staticName(mi.Name) : mi.Name;
+
+            if (mi.MemberType == MemberTypes.Method && !funcname.Contains(fn) && isUsefullMethod(mi))
             {
                 if (!renamefunc.ContainsKey(mi.Name)) renamefunc[mi.Name] = 0;
                 renamefunc[mi.Name] += 1;
@@ -623,18 +631,26 @@ namespace SLua
 
         foreach (MethodInfo mi in members)
         {
+            string fn = writeStatic ? staticName(mi.Name) : mi.Name;
 
             if (mi.MemberType == MemberTypes.Method
                 && !IsObsolete(mi)
-                && !funcname.Contains(mi.Name)
+                && !funcname.Contains(fn)
                 && isUsefullMethod(mi)
                 && !MemberInFilter(t, mi))
             {
-                WriteFunctionDec(file, mi.Name);
+                WriteFunctionDec(file, fn);
                 WriteFunctionImpl(file, mi, t, renamefunc[mi.Name]);
-                funcname.Add(mi.Name);
+                funcname.Add(fn);
             }
         }
+    }
+
+    string staticName(string name)
+    {
+        if (name.StartsWith("op_"))
+            return name;
+        return name + "_s";
     }
 
 

@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int AddFramesFromFile(IntPtr l) {
+	static public int AddFramesFromFile_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -29,7 +29,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int BeginSample(IntPtr l) {
+	static public int BeginSample_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String))){
 				System.String a1;
@@ -54,7 +54,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int EndSample(IntPtr l) {
+	static public int EndSample_s(IntPtr l) {
 		try{
 			UnityEngine.Profiler.EndSample();
 			return 0;
@@ -65,7 +65,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetRuntimeMemorySize(IntPtr l) {
+	static public int GetRuntimeMemorySize_s(IntPtr l) {
 		try{
 			UnityEngine.Object a1;
 			checkType(l,1,out a1);
@@ -79,7 +79,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetMonoHeapSize(IntPtr l) {
+	static public int GetMonoHeapSize_s(IntPtr l) {
 		try{
 			System.UInt32 ret=UnityEngine.Profiler.GetMonoHeapSize();
 			pushValue(l,ret);
@@ -91,7 +91,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetMonoUsedSize(IntPtr l) {
+	static public int GetMonoUsedSize_s(IntPtr l) {
 		try{
 			System.UInt32 ret=UnityEngine.Profiler.GetMonoUsedSize();
 			pushValue(l,ret);
@@ -103,7 +103,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetTotalAllocatedMemory(IntPtr l) {
+	static public int GetTotalAllocatedMemory_s(IntPtr l) {
 		try{
 			System.UInt32 ret=UnityEngine.Profiler.GetTotalAllocatedMemory();
 			pushValue(l,ret);
@@ -115,7 +115,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetTotalUnusedReservedMemory(IntPtr l) {
+	static public int GetTotalUnusedReservedMemory_s(IntPtr l) {
 		try{
 			System.UInt32 ret=UnityEngine.Profiler.GetTotalUnusedReservedMemory();
 			pushValue(l,ret);
@@ -127,7 +127,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetTotalReservedMemory(IntPtr l) {
+	static public int GetTotalReservedMemory_s(IntPtr l) {
 		try{
 			System.UInt32 ret=UnityEngine.Profiler.GetTotalReservedMemory();
 			pushValue(l,ret);
@@ -186,15 +186,15 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Profiler");
-		addMember(l,AddFramesFromFile);
-		addMember(l,BeginSample);
-		addMember(l,EndSample);
-		addMember(l,GetRuntimeMemorySize);
-		addMember(l,GetMonoHeapSize);
-		addMember(l,GetMonoUsedSize);
-		addMember(l,GetTotalAllocatedMemory);
-		addMember(l,GetTotalUnusedReservedMemory);
-		addMember(l,GetTotalReservedMemory);
+		addMember(l,AddFramesFromFile_s);
+		addMember(l,BeginSample_s);
+		addMember(l,EndSample_s);
+		addMember(l,GetRuntimeMemorySize_s);
+		addMember(l,GetMonoHeapSize_s);
+		addMember(l,GetMonoUsedSize_s);
+		addMember(l,GetTotalAllocatedMemory_s);
+		addMember(l,GetTotalUnusedReservedMemory_s);
+		addMember(l,GetTotalReservedMemory_s);
 		addMember(l,"supported",get_supported,null);
 		addMember(l,"logFile",get_logFile,set_logFile);
 		addMember(l,"enableBinaryLog",get_enableBinaryLog,set_enableBinaryLog);

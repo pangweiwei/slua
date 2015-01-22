@@ -9,7 +9,7 @@ public class Lua_UnityEngine_UI_GraphicRebuildTracker : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int TrackGraphic(IntPtr l) {
+	static public int TrackGraphic_s(IntPtr l) {
 		try{
 			UnityEngine.UI.Graphic a1;
 			checkType(l,1,out a1);
@@ -22,7 +22,7 @@ public class Lua_UnityEngine_UI_GraphicRebuildTracker : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int UnTrackGraphic(IntPtr l) {
+	static public int UnTrackGraphic_s(IntPtr l) {
 		try{
 			UnityEngine.UI.Graphic a1;
 			checkType(l,1,out a1);
@@ -36,8 +36,8 @@ public class Lua_UnityEngine_UI_GraphicRebuildTracker : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.GraphicRebuildTracker");
-		addMember(l,TrackGraphic);
-		addMember(l,UnTrackGraphic);
+		addMember(l,TrackGraphic_s);
+		addMember(l,UnTrackGraphic_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.GraphicRebuildTracker));
 	}
 }

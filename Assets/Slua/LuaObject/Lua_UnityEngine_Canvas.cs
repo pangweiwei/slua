@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetDefaultCanvasMaterial(IntPtr l) {
+	static public int GetDefaultCanvasMaterial_s(IntPtr l) {
 		try{
 			UnityEngine.Material ret=UnityEngine.Canvas.GetDefaultCanvasMaterial();
 			pushValue(l,ret);
@@ -28,7 +28,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetDefaultCanvasTextMaterial(IntPtr l) {
+	static public int GetDefaultCanvasTextMaterial_s(IntPtr l) {
 		try{
 			UnityEngine.Material ret=UnityEngine.Canvas.GetDefaultCanvasTextMaterial();
 			pushValue(l,ret);
@@ -40,7 +40,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ForceUpdateCanvases(IntPtr l) {
+	static public int ForceUpdateCanvases_s(IntPtr l) {
 		try{
 			UnityEngine.Canvas.ForceUpdateCanvases();
 			return 0;
@@ -224,9 +224,9 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Canvas");
-		addMember(l,GetDefaultCanvasMaterial);
-		addMember(l,GetDefaultCanvasTextMaterial);
-		addMember(l,ForceUpdateCanvases);
+		addMember(l,GetDefaultCanvasMaterial_s);
+		addMember(l,GetDefaultCanvasTextMaterial_s);
+		addMember(l,ForceUpdateCanvases_s);
 		addMember(l,"renderMode",get_renderMode,set_renderMode);
 		addMember(l,"isRootCanvas",get_isRootCanvas,null);
 		addMember(l,"worldCamera",get_worldCamera,set_worldCamera);

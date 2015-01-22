@@ -29,7 +29,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Instantiate(IntPtr l) {
+	static public int Instantiate_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Object),typeof(UnityEngine.Vector3),typeof(UnityEngine.Quaternion))){
 				UnityEngine.Object a1;
@@ -58,7 +58,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Destroy(IntPtr l) {
+	static public int Destroy_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Object),typeof(System.Single))){
 				UnityEngine.Object a1;
@@ -83,7 +83,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DestroyImmediate(IntPtr l) {
+	static public int DestroyImmediate_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Object),typeof(System.Boolean))){
 				UnityEngine.Object a1;
@@ -108,7 +108,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int FindObjectsOfType(IntPtr l) {
+	static public int FindObjectsOfType_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Type))){
 				System.Type a1;
@@ -126,7 +126,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int FindObjectOfType(IntPtr l) {
+	static public int FindObjectOfType_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Type))){
 				System.Type a1;
@@ -144,7 +144,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DontDestroyOnLoad(IntPtr l) {
+	static public int DontDestroyOnLoad_s(IntPtr l) {
 		try{
 			UnityEngine.Object a1;
 			checkType(l,1,out a1);
@@ -157,7 +157,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DestroyObject(IntPtr l) {
+	static public int DestroyObject_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Object),typeof(System.Single))){
 				UnityEngine.Object a1;
@@ -244,13 +244,13 @@ public class Lua_UnityEngine_Object : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Object");
 		addMember(l,GetInstanceID);
-		addMember(l,Instantiate);
-		addMember(l,Destroy);
-		addMember(l,DestroyImmediate);
-		addMember(l,FindObjectsOfType);
-		addMember(l,FindObjectOfType);
-		addMember(l,DontDestroyOnLoad);
-		addMember(l,DestroyObject);
+		addMember(l,Instantiate_s);
+		addMember(l,Destroy_s);
+		addMember(l,DestroyImmediate_s);
+		addMember(l,FindObjectsOfType_s);
+		addMember(l,FindObjectOfType_s);
+		addMember(l,DontDestroyOnLoad_s);
+		addMember(l,DestroyObject_s);
 		addMember(l,op_Equality);
 		addMember(l,op_Inequality);
 		addMember(l,"name",get_name,set_name);

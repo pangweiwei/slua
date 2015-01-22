@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Microphone : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Start(IntPtr l) {
+	static public int Start_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -36,7 +36,7 @@ public class Lua_UnityEngine_Microphone : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int End(IntPtr l) {
+	static public int End_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -49,7 +49,7 @@ public class Lua_UnityEngine_Microphone : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int IsRecording(IntPtr l) {
+	static public int IsRecording_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -63,7 +63,7 @@ public class Lua_UnityEngine_Microphone : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetPosition(IntPtr l) {
+	static public int GetPosition_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -77,7 +77,7 @@ public class Lua_UnityEngine_Microphone : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetDeviceCaps(IntPtr l) {
+	static public int GetDeviceCaps_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -100,11 +100,11 @@ public class Lua_UnityEngine_Microphone : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Microphone");
-		addMember(l,Start);
-		addMember(l,End);
-		addMember(l,IsRecording);
-		addMember(l,GetPosition);
-		addMember(l,GetDeviceCaps);
+		addMember(l,Start_s);
+		addMember(l,End_s);
+		addMember(l,IsRecording_s);
+		addMember(l,GetPosition_s);
+		addMember(l,GetDeviceCaps_s);
 		addMember(l,"devices",get_devices,null);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Microphone));
 	}

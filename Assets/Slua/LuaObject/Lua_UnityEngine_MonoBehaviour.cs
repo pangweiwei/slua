@@ -194,7 +194,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int print(IntPtr l) {
+	static public int print_s(IntPtr l) {
 		try{
 			System.Object a1;
 			checkType(l,1,out a1);
@@ -230,7 +230,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 		addMember(l,StartCoroutine_Auto);
 		addMember(l,StopCoroutine);
 		addMember(l,StopAllCoroutines);
-		addMember(l,print);
+		addMember(l,print_s);
 		addMember(l,"useGUILayout",get_useGUILayout,set_useGUILayout);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.MonoBehaviour),typeof(UnityEngine.Behaviour));
 	}

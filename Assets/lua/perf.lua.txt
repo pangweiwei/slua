@@ -1,56 +1,84 @@
 
-local UVector3 = UnityEngine.Vector3
+local Vector3 = UnityEngine.Vector3
 local GameObject = UnityEngine.GameObject
 local Profiler = UnityEngine.Profiler
 local Time = UnityEngine.Time
 
 
 function main()
-	foo()
+	print(jit and "jit on" or "jit off")
 end
 
-function foo()
-
-	local cube = GameObject("Script cube")
-
-	local Vector3=Vector3
-	local start = os.clock()
-	Profiler.BeginSample("create 100000 vector3/lua")
-	for i=1,100000 do
-		local a=Vector3(i,i,i) --vector3 is valuetype, implemented in pure lua, see luaValuetype
-		a:Normalize()
-	end
-	Profiler.EndSample()
-	print("create 100000 vector3/lua",os.clock()-start)
-
-	local start = os.clock()
-	Profiler.BeginSample("create 1000000 vector3/lua")
-	for i=1,100000 do
-		local a=UVector3(i,i,i)
-		a:Normalize()
-	end
-	Profiler.EndSample()
-	print("create 100000 vector3/cslua",os.clock()-start)
-
-	-- test in cs
-	local start = os.clock()
-	local h = HelloWorld()
-	h:perf()
-	print("create 100000 vector3/cs",os.clock()-start)
+local cube = GameObject("Script cube")
 
 
-	-- properset
-
+function test1()
+		-- properset
+	-- test1
 	local start = os.clock()
 	HelloWorld.testset(cube)
-	print("properset/cs",os.clock()-start)
+	print("test1/cs",os.clock()-start)
 
 	local transform = cube.transform
+
 	local start = os.clock()
 	for i=1,200000 do
-		local v = UVector3(i,i,i)
+		local v = transform.position
 		transform.position=v
 	end
-	print("properset/lua " .. (os.clock() - start));
+	print("test1/lua " .. (os.clock() - start));
+end
 
+function test2()
+	local start = os.clock()
+	HelloWorld.test2(cube)
+	print("test2/cs",os.clock()-start)
+
+	local v = cube.transform.position
+	local start = os.clock()
+	for i=1,200000 do
+		v:Normalize()
+	end
+	print("test2/lua " .. (os.clock() - start));
+end
+
+function test3()
+	local start = os.clock()
+	HelloWorld.test3(cube)
+	print("test3/cs",os.clock()-start)
+
+	local v = cube.transform.position
+	local start = os.clock()
+	for i=1,200000 do
+		v = Vector3.Normalize(v)
+	end
+	print("test3/lua " .. (os.clock() - start));
+end
+
+function test4()
+	local start = os.clock()
+	HelloWorld.test4(cube)
+	print("test4/cs",os.clock()-start)
+
+	local t = cube.transform
+	local v = Vector3.one
+	local start = os.clock()
+	for i=1,200000 do
+		t.position = v
+	end
+	print("test3/lua " .. (os.clock() - start));
+end
+
+
+function test5()
+	local start = os.clock()
+	HelloWorld.test5(cube)
+	print("test5/cs",os.clock()-start)
+
+	local v = cube.transform.position
+	local start = os.clock()
+	for i=1,200000 do
+		v = Vector3(i,i,i)
+	end
+	print("test5/lua " .. (os.clock() - start));
 end

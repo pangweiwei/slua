@@ -16,7 +16,7 @@ public class Lua_UnityEngine_AvatarBuilder : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int BuildHumanAvatar(IntPtr l) {
+	static public int BuildHumanAvatar_s(IntPtr l) {
 		try{
 			UnityEngine.GameObject a1;
 			checkType(l,1,out a1);
@@ -32,7 +32,7 @@ public class Lua_UnityEngine_AvatarBuilder : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int BuildGenericAvatar(IntPtr l) {
+	static public int BuildGenericAvatar_s(IntPtr l) {
 		try{
 			UnityEngine.GameObject a1;
 			checkType(l,1,out a1);
@@ -49,8 +49,8 @@ public class Lua_UnityEngine_AvatarBuilder : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AvatarBuilder");
-		addMember(l,BuildHumanAvatar);
-		addMember(l,BuildGenericAvatar);
+		addMember(l,BuildHumanAvatar_s);
+		addMember(l,BuildGenericAvatar_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AvatarBuilder));
 	}
 }

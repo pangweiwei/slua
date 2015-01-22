@@ -916,20 +916,6 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int StringToHash(IntPtr l) {
-		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			System.Int32 ret=UnityEngine.Animator.StringToHash(a1);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Update(IntPtr l) {
 		try{
 			UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
@@ -949,6 +935,20 @@ public class Lua_UnityEngine_Animator : LuaObject {
 			UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 			self.Rebind();
 			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int StringToHash_s(IntPtr l) {
+		try{
+			System.String a1;
+			checkType(l,1,out a1);
+			System.Int32 ret=UnityEngine.Animator.StringToHash(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -1343,9 +1343,9 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		addMember(l,StopPlayback);
 		addMember(l,StartRecording);
 		addMember(l,StopRecording);
-		addMember(l,StringToHash);
 		addMember(l,Update);
 		addMember(l,Rebind);
+		addMember(l,StringToHash_s);
 		addMember(l,"isOptimizable",get_isOptimizable,null);
 		addMember(l,"isHuman",get_isHuman,null);
 		addMember(l,"hasRootMotion",get_hasRootMotion,null);

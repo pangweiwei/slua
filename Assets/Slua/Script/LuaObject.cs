@@ -346,7 +346,14 @@ return index
         public static void addMember(IntPtr l, LuaCSFunction func)
         {
             LuaDLL.lua_pushstdcallcfunction(l, func);
-            LuaDLL.lua_setfield(l, -2,func.Method.Name);
+            string name = func.Method.Name;
+            if(name.EndsWith("_s"))
+            {
+                name = name.Substring(0, name.Length - 2);
+                LuaDLL.lua_setfield(l, -3, name);
+            }
+            else
+                LuaDLL.lua_setfield(l, -2,func.Method.Name);
         }
 
         public static void addMember(IntPtr l, string name, LuaCSFunction get, LuaCSFunction set)
@@ -906,4 +913,5 @@ return index
             t.setBack(l, 1, o);
         }
     }
+
 }

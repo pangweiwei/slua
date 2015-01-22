@@ -9,7 +9,7 @@ public class Lua_UnityEngine_UI_FontUpdateTracker : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int TrackText(IntPtr l) {
+	static public int TrackText_s(IntPtr l) {
 		try{
 			UnityEngine.UI.Text a1;
 			checkType(l,1,out a1);
@@ -22,7 +22,7 @@ public class Lua_UnityEngine_UI_FontUpdateTracker : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int UntrackText(IntPtr l) {
+	static public int UntrackText_s(IntPtr l) {
 		try{
 			UnityEngine.UI.Text a1;
 			checkType(l,1,out a1);
@@ -36,8 +36,8 @@ public class Lua_UnityEngine_UI_FontUpdateTracker : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.FontUpdateTracker");
-		addMember(l,TrackText);
-		addMember(l,UntrackText);
+		addMember(l,TrackText_s);
+		addMember(l,UntrackText_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.FontUpdateTracker));
 	}
 }

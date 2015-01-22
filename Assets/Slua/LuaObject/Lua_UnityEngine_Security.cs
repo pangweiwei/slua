@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Security : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadAndVerifyAssembly(IntPtr l) {
+	static public int LoadAndVerifyAssembly_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Byte),typeof(System.String))){
 				System.Byte[] a1;
@@ -43,7 +43,7 @@ public class Lua_UnityEngine_Security : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int PrefetchSocketPolicy(IntPtr l) {
+	static public int PrefetchSocketPolicy_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(System.Int32))){
 				System.String a1;
@@ -75,8 +75,8 @@ public class Lua_UnityEngine_Security : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Security");
-		addMember(l,LoadAndVerifyAssembly);
-		addMember(l,PrefetchSocketPolicy);
+		addMember(l,LoadAndVerifyAssembly_s);
+		addMember(l,PrefetchSocketPolicy_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Security));
 	}
 }

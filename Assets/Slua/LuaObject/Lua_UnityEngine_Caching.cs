@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Caching : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Authorize(IntPtr l) {
+	static public int Authorize_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(System.String),typeof(System.Int64),typeof(System.String))){
 				System.String a1;
@@ -83,7 +83,7 @@ public class Lua_UnityEngine_Caching : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CleanCache(IntPtr l) {
+	static public int CleanCache_s(IntPtr l) {
 		try{
 			System.Boolean ret=UnityEngine.Caching.CleanCache();
 			pushValue(l,ret);
@@ -95,7 +95,7 @@ public class Lua_UnityEngine_Caching : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int IsVersionCached(IntPtr l) {
+	static public int IsVersionCached_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -111,7 +111,7 @@ public class Lua_UnityEngine_Caching : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int MarkAsUsed(IntPtr l) {
+	static public int MarkAsUsed_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -179,10 +179,10 @@ public class Lua_UnityEngine_Caching : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Caching");
-		addMember(l,Authorize);
-		addMember(l,CleanCache);
-		addMember(l,IsVersionCached);
-		addMember(l,MarkAsUsed);
+		addMember(l,Authorize_s);
+		addMember(l,CleanCache_s);
+		addMember(l,IsVersionCached_s);
+		addMember(l,MarkAsUsed_s);
 		addMember(l,"spaceFree",get_spaceFree,null);
 		addMember(l,"maximumAvailableDiskSpace",get_maximumAvailableDiskSpace,set_maximumAvailableDiskSpace);
 		addMember(l,"spaceOccupied",get_spaceOccupied,null);

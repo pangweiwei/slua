@@ -9,7 +9,7 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RectangleContainsScreenPoint(IntPtr l) {
+	static public int RectangleContainsScreenPoint_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -27,7 +27,7 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int PixelAdjustPoint(IntPtr l) {
+	static public int PixelAdjustPoint_s(IntPtr l) {
 		try{
 			UnityEngine.Vector2 a1;
 			checkType(l,1,out a1);
@@ -45,7 +45,7 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int PixelAdjustRect(IntPtr l) {
+	static public int PixelAdjustRect_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -61,7 +61,7 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ScreenPointToWorldPointInRectangle(IntPtr l) {
+	static public int ScreenPointToWorldPointInRectangle_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -81,7 +81,7 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ScreenPointToLocalPointInRectangle(IntPtr l) {
+	static public int ScreenPointToLocalPointInRectangle_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -101,7 +101,7 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ScreenPointToRay(IntPtr l) {
+	static public int ScreenPointToRay_s(IntPtr l) {
 		try{
 			UnityEngine.Camera a1;
 			checkType(l,1,out a1);
@@ -117,7 +117,7 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int WorldToScreenPoint(IntPtr l) {
+	static public int WorldToScreenPoint_s(IntPtr l) {
 		try{
 			UnityEngine.Camera a1;
 			checkType(l,1,out a1);
@@ -133,7 +133,7 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CalculateRelativeRectTransformBounds(IntPtr l) {
+	static public int CalculateRelativeRectTransformBounds_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Transform),typeof(UnityEngine.Transform))){
 				UnityEngine.Transform a1;
@@ -160,7 +160,7 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int FlipLayoutOnAxis(IntPtr l) {
+	static public int FlipLayoutOnAxis_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -179,7 +179,7 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int FlipLayoutAxes(IntPtr l) {
+	static public int FlipLayoutAxes_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -197,16 +197,16 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.RectTransformUtility");
-		addMember(l,RectangleContainsScreenPoint);
-		addMember(l,PixelAdjustPoint);
-		addMember(l,PixelAdjustRect);
-		addMember(l,ScreenPointToWorldPointInRectangle);
-		addMember(l,ScreenPointToLocalPointInRectangle);
-		addMember(l,ScreenPointToRay);
-		addMember(l,WorldToScreenPoint);
-		addMember(l,CalculateRelativeRectTransformBounds);
-		addMember(l,FlipLayoutOnAxis);
-		addMember(l,FlipLayoutAxes);
+		addMember(l,RectangleContainsScreenPoint_s);
+		addMember(l,PixelAdjustPoint_s);
+		addMember(l,PixelAdjustRect_s);
+		addMember(l,ScreenPointToWorldPointInRectangle_s);
+		addMember(l,ScreenPointToLocalPointInRectangle_s);
+		addMember(l,ScreenPointToRay_s);
+		addMember(l,WorldToScreenPoint_s);
+		addMember(l,CalculateRelativeRectTransformBounds_s);
+		addMember(l,FlipLayoutOnAxis_s);
+		addMember(l,FlipLayoutAxes_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.RectTransformUtility));
 	}
 }

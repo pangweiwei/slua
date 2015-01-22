@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Quit(IntPtr l) {
+	static public int Quit_s(IntPtr l) {
 		try{
 			UnityEngine.Application.Quit();
 			return 0;
@@ -27,7 +27,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CancelQuit(IntPtr l) {
+	static public int CancelQuit_s(IntPtr l) {
 		try{
 			UnityEngine.Application.CancelQuit();
 			return 0;
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadLevel(IntPtr l) {
+	static public int LoadLevel_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Int32))){
 				System.Int32 a1;
@@ -61,7 +61,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadLevelAsync(IntPtr l) {
+	static public int LoadLevelAsync_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Int32))){
 				System.Int32 a1;
@@ -86,7 +86,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadLevelAdditiveAsync(IntPtr l) {
+	static public int LoadLevelAdditiveAsync_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Int32))){
 				System.Int32 a1;
@@ -111,7 +111,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadLevelAdditive(IntPtr l) {
+	static public int LoadLevelAdditive_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Int32))){
 				System.Int32 a1;
@@ -134,7 +134,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetStreamProgressForLevel(IntPtr l) {
+	static public int GetStreamProgressForLevel_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Int32))){
 				System.Int32 a1;
@@ -159,7 +159,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CanStreamedLevelBeLoaded(IntPtr l) {
+	static public int CanStreamedLevelBeLoaded_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Int32))){
 				System.Int32 a1;
@@ -184,7 +184,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CaptureScreenshot(IntPtr l) {
+	static public int CaptureScreenshot_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(System.Int32))){
 				System.String a1;
@@ -209,7 +209,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int HasProLicense(IntPtr l) {
+	static public int HasProLicense_s(IntPtr l) {
 		try{
 			System.Boolean ret=UnityEngine.Application.HasProLicense();
 			pushValue(l,ret);
@@ -221,7 +221,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ExternalCall(IntPtr l) {
+	static public int ExternalCall_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -236,7 +236,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ExternalEval(IntPtr l) {
+	static public int ExternalEval_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -249,7 +249,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int OpenURL(IntPtr l) {
+	static public int OpenURL_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -262,7 +262,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RegisterLogCallback(IntPtr l) {
+	static public int RegisterLogCallback_s(IntPtr l) {
 		try{
 			UnityEngine.Application.LogCallback a1;
 			checkDelegate(l,1,out a1);
@@ -275,7 +275,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RegisterLogCallbackThreaded(IntPtr l) {
+	static public int RegisterLogCallbackThreaded_s(IntPtr l) {
 		try{
 			UnityEngine.Application.LogCallback a1;
 			checkDelegate(l,1,out a1);
@@ -288,7 +288,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RequestUserAuthorization(IntPtr l) {
+	static public int RequestUserAuthorization_s(IntPtr l) {
 		try{
 			UnityEngine.UserAuthorization a1;
 			checkEnum(l,1,out a1);
@@ -302,7 +302,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int HasUserAuthorization(IntPtr l) {
+	static public int HasUserAuthorization_s(IntPtr l) {
 		try{
 			UnityEngine.UserAuthorization a1;
 			checkEnum(l,1,out a1);
@@ -473,23 +473,23 @@ public class Lua_UnityEngine_Application : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Application");
-		addMember(l,Quit);
-		addMember(l,CancelQuit);
-		addMember(l,LoadLevel);
-		addMember(l,LoadLevelAsync);
-		addMember(l,LoadLevelAdditiveAsync);
-		addMember(l,LoadLevelAdditive);
-		addMember(l,GetStreamProgressForLevel);
-		addMember(l,CanStreamedLevelBeLoaded);
-		addMember(l,CaptureScreenshot);
-		addMember(l,HasProLicense);
-		addMember(l,ExternalCall);
-		addMember(l,ExternalEval);
-		addMember(l,OpenURL);
-		addMember(l,RegisterLogCallback);
-		addMember(l,RegisterLogCallbackThreaded);
-		addMember(l,RequestUserAuthorization);
-		addMember(l,HasUserAuthorization);
+		addMember(l,Quit_s);
+		addMember(l,CancelQuit_s);
+		addMember(l,LoadLevel_s);
+		addMember(l,LoadLevelAsync_s);
+		addMember(l,LoadLevelAdditiveAsync_s);
+		addMember(l,LoadLevelAdditive_s);
+		addMember(l,GetStreamProgressForLevel_s);
+		addMember(l,CanStreamedLevelBeLoaded_s);
+		addMember(l,CaptureScreenshot_s);
+		addMember(l,HasProLicense_s);
+		addMember(l,ExternalCall_s);
+		addMember(l,ExternalEval_s);
+		addMember(l,OpenURL_s);
+		addMember(l,RegisterLogCallback_s);
+		addMember(l,RegisterLogCallbackThreaded_s);
+		addMember(l,RequestUserAuthorization_s);
+		addMember(l,HasUserAuthorization_s);
 		addMember(l,"loadedLevel",get_loadedLevel,null);
 		addMember(l,"loadedLevelName",get_loadedLevelName,null);
 		addMember(l,"isLoadingLevel",get_isLoadingLevel,null);

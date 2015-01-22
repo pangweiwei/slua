@@ -114,7 +114,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Linear(IntPtr l) {
+	static public int Linear_s(IntPtr l) {
 		try{
 			System.Single a1;
 			checkType(l,1,out a1);
@@ -134,7 +134,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int EaseInOut(IntPtr l) {
+	static public int EaseInOut_s(IntPtr l) {
 		try{
 			System.Single a1;
 			checkType(l,1,out a1);
@@ -208,8 +208,8 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 		addMember(l,MoveKey);
 		addMember(l,RemoveKey);
 		addMember(l,SmoothTangents);
-		addMember(l,Linear);
-		addMember(l,EaseInOut);
+		addMember(l,Linear_s);
+		addMember(l,EaseInOut_s);
 		addMember(l,"keys",get_keys,set_keys);
 		addMember(l,"length",get_length,null);
 		addMember(l,"preWrapMode",get_preWrapMode,set_preWrapMode);

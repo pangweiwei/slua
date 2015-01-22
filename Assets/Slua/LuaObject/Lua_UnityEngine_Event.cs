@@ -50,7 +50,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int PopEvent(IntPtr l) {
+	static public int PopEvent_s(IntPtr l) {
 		try{
 			UnityEngine.Event a1;
 			checkType(l,1,out a1);
@@ -64,7 +64,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetEventCount(IntPtr l) {
+	static public int GetEventCount_s(IntPtr l) {
 		try{
 			System.Int32 ret=UnityEngine.Event.GetEventCount();
 			pushValue(l,ret);
@@ -76,7 +76,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int KeyboardEvent(IntPtr l) {
+	static public int KeyboardEvent_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -353,9 +353,9 @@ public class Lua_UnityEngine_Event : LuaObject {
 		getTypeTable(l,"UnityEngine.Event");
 		addMember(l,GetTypeForControl);
 		addMember(l,Use);
-		addMember(l,PopEvent);
-		addMember(l,GetEventCount);
-		addMember(l,KeyboardEvent);
+		addMember(l,PopEvent_s);
+		addMember(l,GetEventCount_s);
+		addMember(l,KeyboardEvent_s);
 		addMember(l,"rawType",get_rawType,null);
 		addMember(l,"type",get_type,set_type);
 		addMember(l,"mousePosition",get_mousePosition,set_mousePosition);

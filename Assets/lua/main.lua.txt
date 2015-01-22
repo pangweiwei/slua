@@ -21,13 +21,6 @@ function main()
 		local go = GameObject.Find("Canvas/Text")
 		local label = go:GetComponent("Text")
 		label.text="hello world"
-
-		-- custom export
-		local h=HelloWorld()
-		h:say()
-		local f=h:foo()
-		f:Add("fuck",go)
-		print( "dictionary length",f.Count )
 	end)
 	
 

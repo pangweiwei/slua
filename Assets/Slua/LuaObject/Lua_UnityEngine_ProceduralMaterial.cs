@@ -297,17 +297,6 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int StopRebuilds(IntPtr l) {
-		try{
-			UnityEngine.ProceduralMaterial.StopRebuilds();
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetGeneratedTextures(IntPtr l) {
 		try{
 			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
@@ -329,6 +318,17 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 			UnityEngine.ProceduralTexture ret=self.GetGeneratedTexture(a1);
 			pushValue(l,ret);
 			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int StopRebuilds_s(IntPtr l) {
+		try{
+			UnityEngine.ProceduralMaterial.StopRebuilds();
+			return 0;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -461,9 +461,9 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 		addMember(l,ClearCache);
 		addMember(l,RebuildTextures);
 		addMember(l,RebuildTexturesImmediately);
-		addMember(l,StopRebuilds);
 		addMember(l,GetGeneratedTextures);
 		addMember(l,GetGeneratedTexture);
+		addMember(l,StopRebuilds_s);
 		addMember(l,"cacheSize",get_cacheSize,set_cacheSize);
 		addMember(l,"animationUpdateRate",get_animationUpdateRate,set_animationUpdateRate);
 		addMember(l,"isProcessing",get_isProcessing,null);

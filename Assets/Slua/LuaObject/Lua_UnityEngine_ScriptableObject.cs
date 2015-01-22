@@ -16,7 +16,7 @@ public class Lua_UnityEngine_ScriptableObject : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CreateInstance(IntPtr l) {
+	static public int CreateInstance_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String))){
 				System.String a1;
@@ -42,7 +42,7 @@ public class Lua_UnityEngine_ScriptableObject : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ScriptableObject");
-		addMember(l,CreateInstance);
+		addMember(l,CreateInstance_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ScriptableObject),typeof(UnityEngine.Object));
 	}
 }

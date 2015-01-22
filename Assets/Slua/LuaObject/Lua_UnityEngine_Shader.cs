@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Find(IntPtr l) {
+	static public int Find_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -30,7 +30,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int EnableKeyword(IntPtr l) {
+	static public int EnableKeyword_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -43,7 +43,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DisableKeyword(IntPtr l) {
+	static public int DisableKeyword_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -56,7 +56,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetGlobalColor(IntPtr l) {
+	static public int SetGlobalColor_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(UnityEngine.Color))){
 				System.String a1;
@@ -83,7 +83,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetGlobalVector(IntPtr l) {
+	static public int SetGlobalVector_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(UnityEngine.Vector4))){
 				System.String a1;
@@ -110,7 +110,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetGlobalFloat(IntPtr l) {
+	static public int SetGlobalFloat_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(System.Single))){
 				System.String a1;
@@ -137,7 +137,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetGlobalInt(IntPtr l) {
+	static public int SetGlobalInt_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(System.Int32))){
 				System.String a1;
@@ -164,7 +164,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetGlobalTexture(IntPtr l) {
+	static public int SetGlobalTexture_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(UnityEngine.Texture))){
 				System.String a1;
@@ -191,7 +191,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetGlobalMatrix(IntPtr l) {
+	static public int SetGlobalMatrix_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String),typeof(UnityEngine.Matrix4x4))){
 				System.String a1;
@@ -218,7 +218,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetGlobalTexGenMode(IntPtr l) {
+	static public int SetGlobalTexGenMode_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -233,7 +233,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetGlobalTextureMatrixName(IntPtr l) {
+	static public int SetGlobalTextureMatrixName_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -248,7 +248,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetGlobalBuffer(IntPtr l) {
+	static public int SetGlobalBuffer_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -263,7 +263,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int PropertyToID(IntPtr l) {
+	static public int PropertyToID_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -277,7 +277,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int WarmupAllShaders(IntPtr l) {
+	static public int WarmupAllShaders_s(IntPtr l) {
 		try{
 			UnityEngine.Shader.WarmupAllShaders();
 			return 0;
@@ -327,20 +327,20 @@ public class Lua_UnityEngine_Shader : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Shader");
-		addMember(l,Find);
-		addMember(l,EnableKeyword);
-		addMember(l,DisableKeyword);
-		addMember(l,SetGlobalColor);
-		addMember(l,SetGlobalVector);
-		addMember(l,SetGlobalFloat);
-		addMember(l,SetGlobalInt);
-		addMember(l,SetGlobalTexture);
-		addMember(l,SetGlobalMatrix);
-		addMember(l,SetGlobalTexGenMode);
-		addMember(l,SetGlobalTextureMatrixName);
-		addMember(l,SetGlobalBuffer);
-		addMember(l,PropertyToID);
-		addMember(l,WarmupAllShaders);
+		addMember(l,Find_s);
+		addMember(l,EnableKeyword_s);
+		addMember(l,DisableKeyword_s);
+		addMember(l,SetGlobalColor_s);
+		addMember(l,SetGlobalVector_s);
+		addMember(l,SetGlobalFloat_s);
+		addMember(l,SetGlobalInt_s);
+		addMember(l,SetGlobalTexture_s);
+		addMember(l,SetGlobalMatrix_s);
+		addMember(l,SetGlobalTexGenMode_s);
+		addMember(l,SetGlobalTextureMatrixName_s);
+		addMember(l,SetGlobalBuffer_s);
+		addMember(l,PropertyToID_s);
+		addMember(l,WarmupAllShaders_s);
 		addMember(l,"isSupported",get_isSupported,null);
 		addMember(l,"maximumLOD",get_maximumLOD,set_maximumLOD);
 		addMember(l,"globalMaximumLOD",get_globalMaximumLOD,set_globalMaximumLOD);

@@ -16,7 +16,7 @@ public class Lua_UnityEngine_AnimatorUtility : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int OptimizeTransformHierarchy(IntPtr l) {
+	static public int OptimizeTransformHierarchy_s(IntPtr l) {
 		try{
 			UnityEngine.GameObject a1;
 			checkType(l,1,out a1);
@@ -31,7 +31,7 @@ public class Lua_UnityEngine_AnimatorUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DeoptimizeTransformHierarchy(IntPtr l) {
+	static public int DeoptimizeTransformHierarchy_s(IntPtr l) {
 		try{
 			UnityEngine.GameObject a1;
 			checkType(l,1,out a1);
@@ -45,8 +45,8 @@ public class Lua_UnityEngine_AnimatorUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimatorUtility");
-		addMember(l,OptimizeTransformHierarchy);
-		addMember(l,DeoptimizeTransformHierarchy);
+		addMember(l,OptimizeTransformHierarchy_s);
+		addMember(l,DeoptimizeTransformHierarchy_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimatorUtility));
 	}
 }

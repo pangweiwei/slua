@@ -9,9 +9,10 @@ public class Lua_UnityEngine_CrashReport : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RemoveAll(IntPtr l) {
+	static public int Remove(IntPtr l) {
 		try{
-			UnityEngine.CrashReport.RemoveAll();
+			UnityEngine.CrashReport self=(UnityEngine.CrashReport)checkSelf(l);
+			self.Remove();
 			return 0;
 		}
 		catch(Exception e) {
@@ -20,10 +21,9 @@ public class Lua_UnityEngine_CrashReport : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Remove(IntPtr l) {
+	static public int RemoveAll_s(IntPtr l) {
 		try{
-			UnityEngine.CrashReport self=(UnityEngine.CrashReport)checkSelf(l);
-			self.Remove();
+			UnityEngine.CrashReport.RemoveAll();
 			return 0;
 		}
 		catch(Exception e) {
@@ -55,8 +55,8 @@ public class Lua_UnityEngine_CrashReport : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.CrashReport");
-		addMember(l,RemoveAll);
 		addMember(l,Remove);
+		addMember(l,RemoveAll_s);
 		addMember(l,"time",get_time,null);
 		addMember(l,"text",get_text,null);
 		addMember(l,"reports",get_reports,null);

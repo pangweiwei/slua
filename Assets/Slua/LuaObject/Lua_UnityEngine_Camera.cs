@@ -201,20 +201,6 @@ public class Lua_UnityEngine_Camera : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetAllCameras(IntPtr l) {
-		try{
-			UnityEngine.Camera[] a1;
-			checkType(l,1,out a1);
-			System.Int32 ret=UnityEngine.Camera.GetAllCameras(a1);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Render(IntPtr l) {
 		try{
 			UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
@@ -275,19 +261,6 @@ public class Lua_UnityEngine_Camera : LuaObject {
 		try{
 			UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 			self.RenderDontRestore();
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetupCurrent(IntPtr l) {
-		try{
-			UnityEngine.Camera a1;
-			checkType(l,1,out a1);
-			UnityEngine.Camera.SetupCurrent(a1);
 			return 0;
 		}
 		catch(Exception e) {
@@ -365,6 +338,33 @@ public class Lua_UnityEngine_Camera : LuaObject {
 			UnityEngine.Matrix4x4 ret=self.CalculateObliqueMatrix(a1);
 			pushValue(l,ret);
 			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetAllCameras_s(IntPtr l) {
+		try{
+			UnityEngine.Camera[] a1;
+			checkType(l,1,out a1);
+			System.Int32 ret=UnityEngine.Camera.GetAllCameras(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetupCurrent_s(IntPtr l) {
+		try{
+			UnityEngine.Camera a1;
+			checkType(l,1,out a1);
+			UnityEngine.Camera.SetupCurrent(a1);
+			return 0;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -819,16 +819,16 @@ public class Lua_UnityEngine_Camera : LuaObject {
 		addMember(l,ViewportToScreenPoint);
 		addMember(l,ViewportPointToRay);
 		addMember(l,ScreenPointToRay);
-		addMember(l,GetAllCameras);
 		addMember(l,Render);
 		addMember(l,RenderWithShader);
 		addMember(l,SetReplacementShader);
 		addMember(l,ResetReplacementShader);
 		addMember(l,RenderDontRestore);
-		addMember(l,SetupCurrent);
 		addMember(l,RenderToCubemap);
 		addMember(l,CopyFrom);
 		addMember(l,CalculateObliqueMatrix);
+		addMember(l,GetAllCameras_s);
+		addMember(l,SetupCurrent_s);
 		addMember(l,"fieldOfView",get_fieldOfView,set_fieldOfView);
 		addMember(l,"nearClipPlane",get_nearClipPlane,set_nearClipPlane);
 		addMember(l,"farClipPlane",get_farClipPlane,set_farClipPlane);

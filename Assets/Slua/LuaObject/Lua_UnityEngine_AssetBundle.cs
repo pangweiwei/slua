@@ -16,48 +16,6 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CreateFromMemory(IntPtr l) {
-		try{
-			System.Byte[] a1;
-			checkType(l,1,out a1);
-			UnityEngine.AssetBundleCreateRequest ret=UnityEngine.AssetBundle.CreateFromMemory(a1);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CreateFromMemoryImmediate(IntPtr l) {
-		try{
-			System.Byte[] a1;
-			checkType(l,1,out a1);
-			UnityEngine.AssetBundle ret=UnityEngine.AssetBundle.CreateFromMemoryImmediate(a1);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CreateFromFile(IntPtr l) {
-		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			UnityEngine.AssetBundle ret=UnityEngine.AssetBundle.CreateFromFile(a1);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Contains(IntPtr l) {
 		try{
 			UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
@@ -158,6 +116,48 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int CreateFromMemory_s(IntPtr l) {
+		try{
+			System.Byte[] a1;
+			checkType(l,1,out a1);
+			UnityEngine.AssetBundleCreateRequest ret=UnityEngine.AssetBundle.CreateFromMemory(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int CreateFromMemoryImmediate_s(IntPtr l) {
+		try{
+			System.Byte[] a1;
+			checkType(l,1,out a1);
+			UnityEngine.AssetBundle ret=UnityEngine.AssetBundle.CreateFromMemoryImmediate(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int CreateFromFile_s(IntPtr l) {
+		try{
+			System.String a1;
+			checkType(l,1,out a1);
+			UnityEngine.AssetBundle ret=UnityEngine.AssetBundle.CreateFromFile(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mainAsset(IntPtr l) {
 		UnityEngine.AssetBundle o = (UnityEngine.AssetBundle)checkSelf(l);
 		pushValue(l,o.mainAsset);
@@ -165,14 +165,14 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AssetBundle");
-		addMember(l,CreateFromMemory);
-		addMember(l,CreateFromMemoryImmediate);
-		addMember(l,CreateFromFile);
 		addMember(l,Contains);
 		addMember(l,Load);
 		addMember(l,LoadAsync);
 		addMember(l,LoadAll);
 		addMember(l,Unload);
+		addMember(l,CreateFromMemory_s);
+		addMember(l,CreateFromMemoryImmediate_s);
+		addMember(l,CreateFromFile_s);
 		addMember(l,"mainAsset",get_mainAsset,null);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AssetBundle),typeof(UnityEngine.Object));
 	}

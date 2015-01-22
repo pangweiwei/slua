@@ -76,20 +76,6 @@ public class Lua_UnityEngine_Font : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetMaxVertsForString(IntPtr l) {
-		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			System.Int32 ret=UnityEngine.Font.GetMaxVertsForString(a1);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetCharacterInfo(IntPtr l) {
 		try{
 			if(matchType(l,2,typeof(System.Char),typeof(UnityEngine.CharacterInfo),typeof(System.Int32),typeof(UnityEngine.FontStyle))){
@@ -130,6 +116,20 @@ public class Lua_UnityEngine_Font : LuaObject {
 			}
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetMaxVertsForString_s(IntPtr l) {
+		try{
+			System.String a1;
+			checkType(l,1,out a1);
+			System.Int32 ret=UnityEngine.Font.GetMaxVertsForString(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -204,8 +204,8 @@ public class Lua_UnityEngine_Font : LuaObject {
 		getTypeTable(l,"UnityEngine.Font");
 		addMember(l,HasCharacter);
 		addMember(l,RequestCharactersInTexture);
-		addMember(l,GetMaxVertsForString);
 		addMember(l,GetCharacterInfo);
+		addMember(l,GetMaxVertsForString_s);
 		addMember(l,"material",get_material,set_material);
 		addMember(l,"fontNames",get_fontNames,set_fontNames);
 		addMember(l,"characterInfo",get_characterInfo,set_characterInfo);

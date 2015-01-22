@@ -16,7 +16,7 @@ public class Lua_UnityEngine_AudioSettings : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetDSPBufferSize(IntPtr l) {
+	static public int SetDSPBufferSize_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
@@ -31,7 +31,7 @@ public class Lua_UnityEngine_AudioSettings : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetDSPBufferSize(IntPtr l) {
+	static public int GetDSPBufferSize_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			System.Int32 a2;
@@ -81,8 +81,8 @@ public class Lua_UnityEngine_AudioSettings : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioSettings");
-		addMember(l,SetDSPBufferSize);
-		addMember(l,GetDSPBufferSize);
+		addMember(l,SetDSPBufferSize_s);
+		addMember(l,GetDSPBufferSize_s);
 		addMember(l,"driverCaps",get_driverCaps,null);
 		addMember(l,"speakerMode",get_speakerMode,set_speakerMode);
 		addMember(l,"dspTime",get_dspTime,null);

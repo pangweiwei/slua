@@ -74,11 +74,6 @@ namespace SLua
 
             public void set(int i, object o)
             {
-                if (i < 1 || i > this.Count)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-
                 this[i].v = o;
             }
         }

@@ -16,7 +16,7 @@ public class Lua_UnityEngine_StackTraceUtility : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ExtractStackTrace(IntPtr l) {
+	static public int ExtractStackTrace_s(IntPtr l) {
 		try{
 			System.String ret=UnityEngine.StackTraceUtility.ExtractStackTrace();
 			pushValue(l,ret);
@@ -28,7 +28,7 @@ public class Lua_UnityEngine_StackTraceUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ExtractStringFromException(IntPtr l) {
+	static public int ExtractStringFromException_s(IntPtr l) {
 		try{
 			System.Object a1;
 			checkType(l,1,out a1);
@@ -43,8 +43,8 @@ public class Lua_UnityEngine_StackTraceUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.StackTraceUtility");
-		addMember(l,ExtractStackTrace);
-		addMember(l,ExtractStringFromException);
+		addMember(l,ExtractStackTrace_s);
+		addMember(l,ExtractStringFromException_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.StackTraceUtility));
 	}
 }

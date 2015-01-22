@@ -71,7 +71,7 @@ public class Lua_UnityEngine_ComputeBuffer : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CopyCount(IntPtr l) {
+	static public int CopyCount_s(IntPtr l) {
 		try{
 			UnityEngine.ComputeBuffer a1;
 			checkType(l,1,out a1);
@@ -104,7 +104,7 @@ public class Lua_UnityEngine_ComputeBuffer : LuaObject {
 		addMember(l,Release);
 		addMember(l,SetData);
 		addMember(l,GetData);
-		addMember(l,CopyCount);
+		addMember(l,CopyCount_s);
 		addMember(l,"count",get_count,null);
 		addMember(l,"stride",get_stride,null);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ComputeBuffer));

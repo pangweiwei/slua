@@ -9,7 +9,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetMinSize(IntPtr l) {
+	static public int GetMinSize_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -25,7 +25,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetPreferredSize(IntPtr l) {
+	static public int GetPreferredSize_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -41,7 +41,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetFlexibleSize(IntPtr l) {
+	static public int GetFlexibleSize_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -57,7 +57,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetMinWidth(IntPtr l) {
+	static public int GetMinWidth_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -71,7 +71,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetPreferredWidth(IntPtr l) {
+	static public int GetPreferredWidth_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -85,7 +85,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetFlexibleWidth(IntPtr l) {
+	static public int GetFlexibleWidth_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -99,7 +99,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetMinHeight(IntPtr l) {
+	static public int GetMinHeight_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -113,7 +113,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetPreferredHeight(IntPtr l) {
+	static public int GetPreferredHeight_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -127,7 +127,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetFlexibleHeight(IntPtr l) {
+	static public int GetFlexibleHeight_s(IntPtr l) {
 		try{
 			UnityEngine.RectTransform a1;
 			checkType(l,1,out a1);
@@ -141,7 +141,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetLayoutProperty(IntPtr l) {
+	static public int GetLayoutProperty_s(IntPtr l) {
 		try{
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
@@ -153,16 +153,16 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.LayoutUtility");
-		addMember(l,GetMinSize);
-		addMember(l,GetPreferredSize);
-		addMember(l,GetFlexibleSize);
-		addMember(l,GetMinWidth);
-		addMember(l,GetPreferredWidth);
-		addMember(l,GetFlexibleWidth);
-		addMember(l,GetMinHeight);
-		addMember(l,GetPreferredHeight);
-		addMember(l,GetFlexibleHeight);
-		addMember(l,GetLayoutProperty);
+		addMember(l,GetMinSize_s);
+		addMember(l,GetPreferredSize_s);
+		addMember(l,GetFlexibleSize_s);
+		addMember(l,GetMinWidth_s);
+		addMember(l,GetPreferredWidth_s);
+		addMember(l,GetFlexibleWidth_s);
+		addMember(l,GetMinHeight_s);
+		addMember(l,GetPreferredHeight_s);
+		addMember(l,GetFlexibleHeight_s);
+		addMember(l,GetLayoutProperty_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.LayoutUtility));
 	}
 }

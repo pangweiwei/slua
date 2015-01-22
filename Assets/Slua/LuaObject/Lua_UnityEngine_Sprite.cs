@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Create(IntPtr l) {
+	static public int Create_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(System.Single),typeof(System.UInt32),typeof(UnityEngine.SpriteMeshType),typeof(UnityEngine.Vector4))){
 				UnityEngine.Texture2D a1;
@@ -163,7 +163,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Sprite");
-		addMember(l,Create);
+		addMember(l,Create_s);
 		addMember(l,"bounds",get_bounds,null);
 		addMember(l,"rect",get_rect,null);
 		addMember(l,"pixelsPerUnit",get_pixelsPerUnit,null);

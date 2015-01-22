@@ -45,38 +45,6 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Dot(IntPtr l) {
-		try{
-			UnityEngine.Quaternion a1;
-			checkType(l,1,out a1);
-			UnityEngine.Quaternion a2;
-			checkType(l,2,out a2);
-			System.Single ret=UnityEngine.Quaternion.Dot(a1,a2);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int AngleAxis(IntPtr l) {
-		try{
-			System.Single a1;
-			checkType(l,1,out a1);
-			UnityEngine.Vector3 a2;
-			checkType(l,2,out a2);
-			UnityEngine.Quaternion ret=UnityEngine.Quaternion.AngleAxis(a1,a2);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ToAngleAxis(IntPtr l) {
 		try{
 			UnityEngine.Quaternion self=(UnityEngine.Quaternion)checkSelf(l);
@@ -94,22 +62,6 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int FromToRotation(IntPtr l) {
-		try{
-			UnityEngine.Vector3 a1;
-			checkType(l,1,out a1);
-			UnityEngine.Vector3 a2;
-			checkType(l,2,out a2);
-			UnityEngine.Quaternion ret=UnityEngine.Quaternion.FromToRotation(a1,a2);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetFromToRotation(IntPtr l) {
 		try{
 			UnityEngine.Quaternion self=(UnityEngine.Quaternion)checkSelf(l);
@@ -119,33 +71,6 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 			checkType(l,3,out a2);
 			self.SetFromToRotation(a1,a2);
 			setBack(l,self);
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LookRotation(IntPtr l) {
-		try{
-			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3))){
-				UnityEngine.Vector3 a1;
-				checkType(l,1,out a1);
-				UnityEngine.Vector3 a2;
-				checkType(l,2,out a2);
-				UnityEngine.Quaternion ret=UnityEngine.Quaternion.LookRotation(a1,a2);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,1,typeof(UnityEngine.Vector3))){
-				UnityEngine.Vector3 a1;
-				checkType(l,1,out a1);
-				UnityEngine.Quaternion ret=UnityEngine.Quaternion.LookRotation(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}
 		catch(Exception e) {
@@ -183,7 +108,82 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Slerp(IntPtr l) {
+	static public int Dot_s(IntPtr l) {
+		try{
+			UnityEngine.Quaternion a1;
+			checkType(l,1,out a1);
+			UnityEngine.Quaternion a2;
+			checkType(l,2,out a2);
+			System.Single ret=UnityEngine.Quaternion.Dot(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int AngleAxis_s(IntPtr l) {
+		try{
+			System.Single a1;
+			checkType(l,1,out a1);
+			UnityEngine.Vector3 a2;
+			checkType(l,2,out a2);
+			UnityEngine.Quaternion ret=UnityEngine.Quaternion.AngleAxis(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int FromToRotation_s(IntPtr l) {
+		try{
+			UnityEngine.Vector3 a1;
+			checkType(l,1,out a1);
+			UnityEngine.Vector3 a2;
+			checkType(l,2,out a2);
+			UnityEngine.Quaternion ret=UnityEngine.Quaternion.FromToRotation(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LookRotation_s(IntPtr l) {
+		try{
+			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Quaternion ret=UnityEngine.Quaternion.LookRotation(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,1,typeof(UnityEngine.Vector3))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Quaternion ret=UnityEngine.Quaternion.LookRotation(a1);
+				pushValue(l,ret);
+				return 1;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Slerp_s(IntPtr l) {
 		try{
 			UnityEngine.Quaternion a1;
 			checkType(l,1,out a1);
@@ -201,7 +201,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Lerp(IntPtr l) {
+	static public int Lerp_s(IntPtr l) {
 		try{
 			UnityEngine.Quaternion a1;
 			checkType(l,1,out a1);
@@ -219,7 +219,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RotateTowards(IntPtr l) {
+	static public int RotateTowards_s(IntPtr l) {
 		try{
 			UnityEngine.Quaternion a1;
 			checkType(l,1,out a1);
@@ -237,7 +237,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Inverse(IntPtr l) {
+	static public int Inverse_s(IntPtr l) {
 		try{
 			UnityEngine.Quaternion a1;
 			checkType(l,1,out a1);
@@ -251,7 +251,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Angle(IntPtr l) {
+	static public int Angle_s(IntPtr l) {
 		try{
 			UnityEngine.Quaternion a1;
 			checkType(l,1,out a1);
@@ -267,7 +267,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Euler(IntPtr l) {
+	static public int Euler_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Single),typeof(System.Single),typeof(System.Single))){
 				System.Single a1;
@@ -444,19 +444,19 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Quaternion");
 		addMember(l,Set);
-		addMember(l,Dot);
-		addMember(l,AngleAxis);
 		addMember(l,ToAngleAxis);
-		addMember(l,FromToRotation);
 		addMember(l,SetFromToRotation);
-		addMember(l,LookRotation);
 		addMember(l,SetLookRotation);
-		addMember(l,Slerp);
-		addMember(l,Lerp);
-		addMember(l,RotateTowards);
-		addMember(l,Inverse);
-		addMember(l,Angle);
-		addMember(l,Euler);
+		addMember(l,Dot_s);
+		addMember(l,AngleAxis_s);
+		addMember(l,FromToRotation_s);
+		addMember(l,LookRotation_s);
+		addMember(l,Slerp_s);
+		addMember(l,Lerp_s);
+		addMember(l,RotateTowards_s);
+		addMember(l,Inverse_s);
+		addMember(l,Angle_s);
+		addMember(l,Euler_s);
 		addMember(l,op_Multiply);
 		addMember(l,op_Equality);
 		addMember(l,op_Inequality);

@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetResolution(IntPtr l) {
+	static public int SetResolution_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Boolean),typeof(System.Int32))){
 				System.Int32 a1;
@@ -188,7 +188,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Screen");
-		addMember(l,SetResolution);
+		addMember(l,SetResolution_s);
 		addMember(l,"resolutions",get_resolutions,null);
 		addMember(l,"GetResolution",get_GetResolution,null);
 		addMember(l,"currentResolution",get_currentResolution,null);

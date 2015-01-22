@@ -16,7 +16,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetQualityLevel(IntPtr l) {
+	static public int GetQualityLevel_s(IntPtr l) {
 		try{
 			System.Int32 ret=UnityEngine.QualitySettings.GetQualityLevel();
 			pushValue(l,ret);
@@ -28,7 +28,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetQualityLevel(IntPtr l) {
+	static public int SetQualityLevel_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Int32),typeof(System.Boolean))){
 				System.Int32 a1;
@@ -53,7 +53,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int IncreaseLevel(IntPtr l) {
+	static public int IncreaseLevel_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Boolean))){
 				System.Boolean a1;
@@ -74,7 +74,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DecreaseLevel(IntPtr l) {
+	static public int DecreaseLevel_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Boolean))){
 				System.Boolean a1;
@@ -279,10 +279,10 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.QualitySettings");
-		addMember(l,GetQualityLevel);
-		addMember(l,SetQualityLevel);
-		addMember(l,IncreaseLevel);
-		addMember(l,DecreaseLevel);
+		addMember(l,GetQualityLevel_s);
+		addMember(l,SetQualityLevel_s);
+		addMember(l,IncreaseLevel_s);
+		addMember(l,DecreaseLevel_s);
 		addMember(l,"names",get_names,null);
 		addMember(l,"pixelLightCount",get_pixelLightCount,set_pixelLightCount);
 		addMember(l,"shadowProjection",get_shadowProjection,set_shadowProjection);

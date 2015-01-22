@@ -16,7 +16,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DrawLine(IntPtr l) {
+	static public int DrawLine_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Color),typeof(System.Single),typeof(System.Boolean))){
 				UnityEngine.Vector3 a1;
@@ -71,7 +71,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DrawRay(IntPtr l) {
+	static public int DrawRay_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Color),typeof(System.Single))){
 				UnityEngine.Vector3 a1;
@@ -126,7 +126,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Break(IntPtr l) {
+	static public int Break_s(IntPtr l) {
 		try{
 			UnityEngine.Debug.Break();
 			return 0;
@@ -137,7 +137,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DebugBreak(IntPtr l) {
+	static public int DebugBreak_s(IntPtr l) {
 		try{
 			UnityEngine.Debug.DebugBreak();
 			return 0;
@@ -148,7 +148,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Log(IntPtr l) {
+	static public int Log_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Object))){
 				System.Object a1;
@@ -173,7 +173,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LogError(IntPtr l) {
+	static public int LogError_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Object))){
 				System.Object a1;
@@ -198,7 +198,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ClearDeveloperConsole(IntPtr l) {
+	static public int ClearDeveloperConsole_s(IntPtr l) {
 		try{
 			UnityEngine.Debug.ClearDeveloperConsole();
 			return 0;
@@ -209,7 +209,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LogException(IntPtr l) {
+	static public int LogException_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Exception))){
 				System.Exception a1;
@@ -234,7 +234,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LogWarning(IntPtr l) {
+	static public int LogWarning_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.Object))){
 				System.Object a1;
@@ -277,15 +277,15 @@ public class Lua_UnityEngine_Debug : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Debug");
-		addMember(l,DrawLine);
-		addMember(l,DrawRay);
-		addMember(l,Break);
-		addMember(l,DebugBreak);
-		addMember(l,Log);
-		addMember(l,LogError);
-		addMember(l,ClearDeveloperConsole);
-		addMember(l,LogException);
-		addMember(l,LogWarning);
+		addMember(l,DrawLine_s);
+		addMember(l,DrawRay_s);
+		addMember(l,Break_s);
+		addMember(l,DebugBreak_s);
+		addMember(l,Log_s);
+		addMember(l,LogError_s);
+		addMember(l,ClearDeveloperConsole_s);
+		addMember(l,LogException_s);
+		addMember(l,LogWarning_s);
 		addMember(l,"developerConsoleVisible",get_developerConsoleVisible,set_developerConsoleVisible);
 		addMember(l,"isDebugBuild",get_isDebugBuild,null);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Debug));
