@@ -80,4 +80,4 @@ open helloworld.unity and run, see lua/main.lua.txt for simple tutorials.
 
 ###benchmark
 
-see http://www.sineysoft.com/post/164 (in chinese).
+see http://www.sineysoft.com/post/164 (in chinese), compared with ulua/Cstolua/raw mono.
