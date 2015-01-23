@@ -6,7 +6,6 @@ using System.Reflection;
 
 namespace SLua
 {
-
     class LuaSvr
     {
         public LuaState luaState;
@@ -20,13 +19,15 @@ namespace SLua
             bind("BindUnityUI");
             bind("BindCustom");
 
+            GameObject go = new GameObject("LuaSvrProxy");
+            LuaSvrGameObject lgo = go.AddComponent<LuaSvrGameObject>();
+            lgo.state = luaState;
+
             
             luaState.doFile(main);
 
             LuaFunction func = (LuaFunction)luaState["main"];
-            Profiler.BeginSample("call main");
             func.call();
-            Profiler.EndSample();
         }
 
         void bind(string name)

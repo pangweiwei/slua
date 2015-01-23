@@ -234,18 +234,13 @@ namespace SLua
             LuaDLL.lua_settop(L, 0);
         }
 
-        ~LuaState()
-        {
-            //Unity destructor not call in main thread, so gc some unity object refed by lua will cause error when lua closed.
-            //Close();
-            Debug.Log("Finalizing Lua State.");
-        }
-
         internal void Close()
         {
             if (L != IntPtr.Zero)
             {
+                Debug.Log("Finalizing Lua State.");
                 LuaDLL.lua_close(L);
+                L = IntPtr.Zero;
             }
         }
 
