@@ -66,7 +66,7 @@ function test4()
 	for i=1,200000 do
 		t.position = v
 	end
-	print("test3/lua " .. (os.clock() - start));
+	print("test4/lua " .. (os.clock() - start));
 end
 
 
