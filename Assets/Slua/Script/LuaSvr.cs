@@ -21,6 +21,7 @@ namespace SLua
 
             GameObject go = new GameObject("LuaSvrProxy");
             LuaSvrGameObject lgo = go.AddComponent<LuaSvrGameObject>();
+            GameObject.DontDestroyOnLoad(go);
             lgo.state = luaState;
 
             
