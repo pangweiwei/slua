@@ -223,6 +223,8 @@ namespace SLua
             LuaDLL.lua_setfield(l, -2, "__index");
             LuaDLL.lua_pushstdcallcfunction(l, luaIndex);
             LuaDLL.lua_setfield(l, -2, "__newindex");
+            LuaDLL.lua_pushstdcallcfunction(l, luaGC);
+            LuaDLL.lua_setfield(l, -2, "__gc");
             LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "LuaVarObject");
 
             LuaDLL.lua_newtable(l);
