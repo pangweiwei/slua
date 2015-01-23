@@ -29,6 +29,19 @@ public class Lua_HelloWorld : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int getList(IntPtr l) {
+		try{
+			HelloWorld self=(HelloWorld)checkSelf(l);
+			List<UnityEngine.GameObject> ret=self.getList();
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int callD(IntPtr l) {
 		try{
 			HelloWorld self=(HelloWorld)checkSelf(l);
@@ -208,6 +221,7 @@ public class Lua_HelloWorld : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"HelloWorld");
 		addMember(l,foo);
+		addMember(l,getList);
 		addMember(l,callD);
 		addMember(l,generic);
 		addMember(l,perf);

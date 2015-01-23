@@ -31,7 +31,8 @@ using System.Runtime.InteropServices;
 namespace SLua
 {
 
-
+    // Try to avoid using this class for not export class
+    // This class use reflection and not completed, you should write your code for your purpose.
     class LuaVarObject : LuaObject
     {
 
@@ -79,11 +80,11 @@ namespace SLua
                         return (float)LuaDLL.lua_tonumber(l, p);
                     case "Double":
                         return (double)LuaDLL.lua_tonumber(l, p);
+                    case "Boolean":
+                        return LuaDLL.lua_toboolean(l, p);
 
                     default:
-                        object o;
-                        checkType(l, p, out o);
-                        return o;
+                        return checkObj(l, p);
                 }
             }
 
@@ -191,6 +192,11 @@ namespace SLua
 
         static int indexInt(IntPtr l, object self, int index)
         {
+            if (self is IList)
+            {
+                pushVar(l, (self as IList)[index]);
+                return 1;
+            }
             return 0;
         }
 

@@ -1,0 +1,38 @@
+
+
+
+GameObject = UnityEngine.GameObject
+
+function main()
+
+	-- List<>,Dictionay<> not exported
+	-- so return as LuaVarObject
+	-- varobj access via reflection, try to avoid using not exported class
+
+	local obj = HelloWorld()
+	local list = obj:getList()
+	print(list.Count) -- call var's property
+	
+	for i=3,10 do
+		list:Add(GameObject(tostring(i)))
+	end
+
+	-- list index based 0 not 1
+	for i=0,9 do
+		print(i,list[i],list[i].name) -- access item by index
+	end
+
+
+
+	print("List count",list.Count) -- call var's property
+
+
+
+	local dict = obj:foo()
+
+	for i=1,10 do
+		dict:Add(tostring(i),GameObject("dict"..i)) -- add k,v to Dictionary<string,GameObject>
+	end
+
+	print("Dict count",dict.Count)
+end

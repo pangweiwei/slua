@@ -17,6 +17,11 @@ public class HelloWorld   {
         return new Dictionary<string, GameObject>();
     }
 
+    public List<GameObject> getList()
+    {
+        return new List<GameObject> { new GameObject("1"), new GameObject("2") };
+    }
+
     static public void setv(LuaTable t) {
         Debug.Log(t["name"]);
         Debug.Log(t["value"]);
