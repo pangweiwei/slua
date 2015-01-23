@@ -194,7 +194,8 @@ public class LuaCodeGen : MonoBehaviour
 		};
 
         List<Type> exports = new List<Type>();
-
+        string oldpath = path;
+        path += "Custom/";
         foreach (Type t in cust)
         {
             if (Generate(t))
@@ -203,12 +204,20 @@ public class LuaCodeGen : MonoBehaviour
 
         GenerateBind(exports,"BindCustom");
         AssetDatabase.Refresh();
+        path = oldpath;
     }
 
-    [MenuItem("SLua/Clear")]
-    static public void Clear()
+    [MenuItem("SLua/Clear Custom")]
+    static public void ClearCustom()
     {
-
+        string[] assets = AssetDatabase.FindAssets("", new string[]{path+"Custom"});
+        foreach (string asset in assets)
+        {
+            string p = AssetDatabase.GUIDToAssetPath(asset);
+            AssetDatabase.DeleteAsset(p);
+        }
+        AssetDatabase.Refresh();
+        Debug.Log("Clear custom complete.");
     }
 
     static bool Generate(Type t)
