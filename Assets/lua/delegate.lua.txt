@@ -1,20 +1,31 @@
 
 
 
+function xx()
+	print(2,path,flag)
+	--multi return for out flag parameter
+	return true,"http://www.sineysoft.com",1,32,11
+end
 
 function main()
 	local h=HelloWorld()
 	h.d=function(path,flag)
-		print(path,flag)
+		print(1,path,flag)
 		--multi return for out flag parameter
 		return true,"http://www.sineysoft.com",1,32,11
 	end
+
+	h.d={"+=",xx}
 
 	h.s=function(path,go)
 		print(path,go.name)
 	end
 
 	-- call delegation
+	h:callD()
+
+	h.d={"-=",xx}
+
 	h:callD()
 
 	h.d=nil

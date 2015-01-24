@@ -9,13 +9,17 @@ namespace SLua
     public partial class LuaObject
     {
 
-        static internal bool checkDelegate(IntPtr l,int p,out HelloWorld.GetBundleInfoDelegate ua) {
-            if(LuaDLL.lua_type(l,p)!=LuaTypes.LUA_TFUNCTION)
-            {
-                ua = null;
-                return true;
-            }
-            int r = LuaDLL.luaS_checkcallback(l, p);
+        static internal int checkDelegate(IntPtr l,int p,out HelloWorld.GetBundleInfoDelegate ua) {
+            int op = extractFunction(l,p);
+			if(LuaDLL.lua_isnil(l,-1)) {
+				ua=null;
+				return op;
+			}
+            int r = LuaDLL.luaS_checkcallback(l, -1);
+			if(r<0) LuaDLL.luaL_error(l,"expect function");
+			if(getCacheDelegate<HelloWorld.GetBundleInfoDelegate>(r,out ua))
+				return op;
+			LuaDLL.lua_pop(l,1);
             ua = (string a1,out string a2,out int a3,out UInt32 a4,ref int a5) =>
             {
                 int error = pushTry(l);
@@ -36,7 +40,8 @@ namespace SLua
 				LuaDLL.lua_pop(l, 1);
 				return ret;
 			};
-			return true;
+			cacheDelegate(r,ua);
+			return op;
 		}
 	}
 }

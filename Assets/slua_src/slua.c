@@ -72,6 +72,10 @@ LUA_API int luaS_checkcallback(lua_State *L, int index)
 {
 	int r;
 	lua_Debug ar;
+
+	if(lua_type(L,index)!=LUA_TFUNCTION)
+		return -1;
+	
 	index = index > 0 ? index : lua_gettop(L) + index + 1;
 
 	lua_pushvalue(L, index);

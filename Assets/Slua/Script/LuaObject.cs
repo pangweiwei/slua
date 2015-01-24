@@ -897,6 +897,46 @@ return index
             ObjectCache t = ObjectCache.get(l);
             t.setBack(l, 1, o);
         }
+
+		internal static int extractFunction(IntPtr l,int p) {
+			int op=0;
+			LuaTypes t = LuaDLL.lua_type(l,p);
+			if(t==LuaTypes.LUA_TNIL)
+			{
+				op=0;
+			} else if(t==LuaTypes.LUA_TTABLE) {
+				
+				LuaDLL.lua_rawgeti(l,p,1);
+				LuaDLL.lua_pushstring(l,"+=");
+				if(LuaDLL.lua_rawequal(l,-1,-2)==1) 
+					op=1;
+				else
+					op=2;
+				
+				LuaDLL.lua_pop(l,2);
+				LuaDLL.lua_rawgeti(l,p,2);
+			} 
+			else if(t==LuaTypes.LUA_TFUNCTION) {
+				LuaDLL.lua_pushvalue(l,p);
+			} else 
+				LuaDLL.luaL_error(l,"expect valid Delegate ");
+			return op;
+		}
+
+		static Dictionary<int ,object> delegateCache = new Dictionary<int, object>();
+		static internal bool getCacheDelegate<T>(int r,out T ua) {
+			object o;
+			if(delegateCache.TryGetValue(r,out o)) {
+				ua=(T)o;
+				return true;
+			}
+			ua=default(T);
+			return false;
+		}
+
+		static internal void cacheDelegate(int r,object o) {
+			delegateCache[r]=o;
+		}
     }
 
 }

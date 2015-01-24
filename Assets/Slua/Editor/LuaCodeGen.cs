@@ -361,13 +361,17 @@ namespace SLua
     public partial class LuaObject
     {
 
-        static internal bool checkDelegate(IntPtr l,int p,out $FN ua) {
-            if(LuaDLL.lua_type(l,p)!=LuaTypes.LUA_TFUNCTION)
-            {
-                ua = null;
-                return true;
-            }
-            int r = LuaDLL.luaS_checkcallback(l, p);
+        static internal int checkDelegate(IntPtr l,int p,out $FN ua) {
+            int op = extractFunction(l,p);
+			if(LuaDLL.lua_isnil(l,-1)) {
+				ua=null;
+				return op;
+			}
+            int r = LuaDLL.luaS_checkcallback(l, -1);
+			if(r<0) LuaDLL.luaL_error(l,""expect function"");
+			if(getCacheDelegate<$FN>(r,out ua))
+				return op;
+			LuaDLL.lua_pop(l,1);
             ua = ($ARGS) =>
             {
                 int error = pushTry(l);
@@ -415,7 +419,8 @@ namespace SLua
             Write(file, "return ret;");
 
         Write(file,"};");
-        Write(file,"return true;");
+		Write(file,"cacheDelegate(r,ua);");
+        Write(file,"return op;");
         Write(file,"}");
         Write(file,"}");
         Write(file, "}");
@@ -714,6 +719,30 @@ namespace SLua
         return false;
     }
 
+	void WriteSet(StreamWriter file,Type t,string cls,string fn,bool isstatic=false) 
+	{
+		if(t.BaseType==typeof(MulticastDelegate)) 
+		{
+			if(isstatic) {
+				Write(file,"if(op==0) {0}.{1}=v;",cls,fn);
+				Write(file,"else if(op==1) {0}.{1}+=v;",cls,fn);
+				Write(file,"else if(op==2) {0}.{1}-=v;",cls,fn);
+			} else {
+				Write(file,"if(op==0) o.{0}=v;",fn);
+				Write(file,"else if(op==1) o.{0}+=v;",fn);
+				Write(file,"else if(op==2) o.{0}-=v;",fn);
+			}
+		}
+		else 
+		{
+			if(isstatic) {
+				Write(file, "{0}.{1}=v;", cls, fn);
+			} else {
+				Write(file, "o.{0}=v;", fn);
+			}
+		}
+	}
+
     private void WriteField(Type t, StreamWriter file)
     {
         // Write field set/get
@@ -721,23 +750,29 @@ namespace SLua
         FieldInfo[] fields = t.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance|BindingFlags.DeclaredOnly);
         foreach (FieldInfo fi in fields)
         {
-            WriteFunctionAttr(file);
-            Write(file, "static public int get_{0}(IntPtr l) {{", fi.Name);
+			PropPair pp = new PropPair();
 
-            if (fi.IsStatic)
-            {
-                WritePushValue(fi.FieldType, file, string.Format("{0}.{1}", t.FullName, fi.Name));
-            }
-            else
-            {
-                Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
-                WritePushValue(fi.FieldType, file, string.Format("o.{0}", fi.Name));
-            }
+			if(fi.FieldType.BaseType!=typeof(MulticastDelegate))
+			{
+	            WriteFunctionAttr(file);
+	            Write(file, "static public int get_{0}(IntPtr l) {{", fi.Name);
 
-            Write(file, "return 1;");
-            Write(file, "}");
-            PropPair pp = new PropPair();
-            pp.get = "get_" + fi.Name;
+	            if (fi.IsStatic)
+	            {
+	                WritePushValue(fi.FieldType, file, string.Format("{0}.{1}", t.FullName, fi.Name));
+	            }
+	            else
+	            {
+	                Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
+	                WritePushValue(fi.FieldType, file, string.Format("o.{0}", fi.Name));
+	            }
+
+	            Write(file, "return 1;");
+	            Write(file, "}");
+	            
+	            pp.get = "get_" + fi.Name;
+			}
+
 
             
 
@@ -750,14 +785,16 @@ namespace SLua
                 {
                     Write(file, "{0} v;", TypeDecl(fi.FieldType));
                     WriteCheckType(file, fi.FieldType, 2);
-                    Write(file, "{0}.{1}=v;", t.FullName, fi.Name);
+                    //Write(file, "{0}.{1}=v;", t.FullName, fi.Name);
+					WriteSet(file,fi.FieldType,t.FullName,fi.Name,true);
                 }
                 else
                 {
                     Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
                     Write(file, "{0} v;", TypeDecl(fi.FieldType));
                     WriteCheckType(file, fi.FieldType, 2);
-                    Write(file, "o.{0}=v;", fi.Name);
+                    //Write(file, "o.{0}=v;", fi.Name);
+					WriteSet(file,fi.FieldType,t.FullName,fi.Name);
                 }
 
                 if(t.IsValueType && !fi.IsStatic)
@@ -817,13 +854,15 @@ namespace SLua
                     if (fi.GetSetMethod().IsStatic)
                     {
                         WriteValueCheck(file, fi.PropertyType, 2);
-                        Write(file, "{0}.{1}=v;", t.FullName, fi.Name);
+						WriteSet(file,fi.PropertyType,t.FullName,fi.Name,true);
+                        //Write(file, "{0}.{1}=v;", t.FullName, fi.Name);
                     }
                     else
                     {
                         Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
                         WriteValueCheck(file, fi.PropertyType, 2);
-                        Write(file, "o.{0}=v;", fi.Name);
+						WriteSet(file,fi.PropertyType,t.FullName,fi.Name);
+                        //Write(file, "o.{0}=v;", fi.Name);
                     }
 
                     if (t.IsValueType)
@@ -845,7 +884,7 @@ namespace SLua
         if(t.IsEnum)
             Write(file, "checkEnum(l,{2}{0},out {1});", n,v,nprefix);
         else if(t.BaseType==typeof(System.MulticastDelegate))
-            Write(file, "checkDelegate(l,{2}{0},out {1});", n, v,nprefix);
+            Write(file, "int op=checkDelegate(l,{2}{0},out {1});", n, v,nprefix);
         else
             Write(file, "checkType(l,{2}{0},out {1});", n, v,nprefix);
     }

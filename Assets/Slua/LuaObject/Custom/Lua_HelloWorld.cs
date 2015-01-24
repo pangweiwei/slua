@@ -191,31 +191,23 @@ public class Lua_HelloWorld : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_d(IntPtr l) {
-		HelloWorld o = (HelloWorld)checkSelf(l);
-		pushValue(l,o.d);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_d(IntPtr l) {
 		HelloWorld o = (HelloWorld)checkSelf(l);
 		HelloWorld.GetBundleInfoDelegate v;
-		checkDelegate(l,2,out v);
-		o.d=v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.d=v;
+		else if(op==1) o.d+=v;
+		else if(op==2) o.d-=v;
 		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_s(IntPtr l) {
-		HelloWorld o = (HelloWorld)checkSelf(l);
-		pushValue(l,o.s);
-		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_s(IntPtr l) {
 		HelloWorld o = (HelloWorld)checkSelf(l);
 		HelloWorld.SimpleDelegate v;
-		checkDelegate(l,2,out v);
-		o.s=v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.s=v;
+		else if(op==1) o.s+=v;
+		else if(op==2) o.s-=v;
 		return 0;
 	}
 	static public void reg(IntPtr l) {
@@ -234,8 +226,8 @@ public class Lua_HelloWorld : LuaObject {
 		addMember(l,test3_s);
 		addMember(l,test4_s);
 		addMember(l,test5_s);
-		addMember(l,"d",get_d,set_d);
-		addMember(l,"s",get_s,set_s);
+		addMember(l,"d",null,set_d);
+		addMember(l,"s",null,set_s);
 		createTypeMetatable(l,constructor, typeof(HelloWorld));
 	}
 }
