@@ -15,6 +15,7 @@ function main()
 		return true,"http://www.sineysoft.com",1,32,11
 	end
 
+	-- add handler
 	h.d={"+=",xx}
 
 	h.s=function(path,go)
@@ -24,10 +25,12 @@ function main()
 	-- call delegation
 	h:callD()
 
+	-- remove handler
 	h.d={"-=",xx}
 
 	h:callD()
 
+	-- remove all
 	h.d=nil
 	h.s=nil
 
