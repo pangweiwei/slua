@@ -940,6 +940,7 @@ namespace SLua
                 }
             }
         }
+		Write(file, "LuaDLL.luaL_error(l,\"New object failed.\");");
         Write(file, "return 0;");
         Write(file, "}");
     }
