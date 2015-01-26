@@ -13,6 +13,7 @@ public class Lua_UnityEngine_UI_Scrollbar_ScrollEvent : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
+		LuaDLL.luaL_error(l,"New object failed.");
 		return 0;
 	}
 	static public void reg(IntPtr l) {

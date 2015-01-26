@@ -9,13 +9,17 @@ namespace SLua
     public partial class LuaObject
     {
 
-        static internal bool checkDelegate(IntPtr l,int p,out UnityEngine.Application.LogCallback ua) {
-            if(LuaDLL.lua_type(l,p)!=LuaTypes.LUA_TFUNCTION)
-            {
-                ua = null;
-                return true;
-            }
-            int r = LuaDLL.luaS_checkcallback(l, p);
+        static internal int checkDelegate(IntPtr l,int p,out UnityEngine.Application.LogCallback ua) {
+            int op = extractFunction(l,p);
+			if(LuaDLL.lua_isnil(l,-1)) {
+				ua=null;
+				return op;
+			}
+            int r = LuaDLL.luaS_checkcallback(l, -1);
+			if(r<0) LuaDLL.luaL_error(l,"expect function");
+			if(getCacheDelegate<UnityEngine.Application.LogCallback>(r,out ua))
+				return op;
+			LuaDLL.lua_pop(l,1);
             ua = (string a1,string a2,UnityEngine.LogType a3) =>
             {
                 int error = pushTry(l);
@@ -30,7 +34,8 @@ namespace SLua
 				int top =LuaDLL.lua_gettop(l);
 				LuaDLL.lua_pop(l, 1);
 			};
-			return true;
+			cacheDelegate(r,ua);
+			return op;
 		}
 	}
 }

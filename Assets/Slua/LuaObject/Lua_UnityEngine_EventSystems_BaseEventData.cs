@@ -15,6 +15,7 @@ public class Lua_UnityEngine_EventSystems_BaseEventData : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
+		LuaDLL.luaL_error(l,"New object failed.");
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

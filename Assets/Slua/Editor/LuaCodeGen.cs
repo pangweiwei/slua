@@ -114,6 +114,7 @@ public class LuaCodeGen : MonoBehaviour
             "Cursor",
             "Flash",
             "ActionScript",
+            "OnRequestRebuild",
         };
 
         Assembly assembly = Assembly.Load("UnityEngine");

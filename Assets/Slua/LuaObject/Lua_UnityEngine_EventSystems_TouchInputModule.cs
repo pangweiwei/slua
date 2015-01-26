@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_EventSystems_TouchInputModule : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
+		LuaDLL.luaL_error(l,"New object failed.");
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
