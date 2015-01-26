@@ -4,13 +4,6 @@ using LuaInterface;
 using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_Rendering_CompareFunction : LuaObject {
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int IntToEnum(IntPtr l) {
-		int v = LuaDLL.lua_tointeger(l, 1);
-		UnityEngine.Rendering.CompareFunction o = (UnityEngine.Rendering.CompareFunction)v;
-		pushValue(l,o);
-		return 1;
-	}
 	static public void reg(IntPtr l) {
 		getEnumTable(l,"UnityEngine.Rendering.CompareFunction");
 		addMember(l,0,"Disabled");
@@ -22,7 +15,6 @@ public class Lua_UnityEngine_Rendering_CompareFunction : LuaObject {
 		addMember(l,6,"NotEqual");
 		addMember(l,7,"GreaterEqual");
 		addMember(l,8,"Always");
-		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

@@ -4,13 +4,6 @@ using LuaInterface;
 using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_HumanBodyBones : LuaObject {
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int IntToEnum(IntPtr l) {
-		int v = LuaDLL.lua_tointeger(l, 1);
-		UnityEngine.HumanBodyBones o = (UnityEngine.HumanBodyBones)v;
-		pushValue(l,o);
-		return 1;
-	}
 	static public void reg(IntPtr l) {
 		getEnumTable(l,"UnityEngine.HumanBodyBones");
 		addMember(l,0,"Hips");
@@ -68,7 +61,6 @@ public class Lua_UnityEngine_HumanBodyBones : LuaObject {
 		addMember(l,52,"RightLittleIntermediate");
 		addMember(l,53,"RightLittleDistal");
 		addMember(l,54,"LastBone");
-		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

@@ -4,13 +4,6 @@ using LuaInterface;
 using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_Rendering_BlendOp : LuaObject {
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int IntToEnum(IntPtr l) {
-		int v = LuaDLL.lua_tointeger(l, 1);
-		UnityEngine.Rendering.BlendOp o = (UnityEngine.Rendering.BlendOp)v;
-		pushValue(l,o);
-		return 1;
-	}
 	static public void reg(IntPtr l) {
 		getEnumTable(l,"UnityEngine.Rendering.BlendOp");
 		addMember(l,0,"Add");
@@ -34,7 +27,6 @@ public class Lua_UnityEngine_Rendering_BlendOp : LuaObject {
 		addMember(l,18,"LogicalAndInverted");
 		addMember(l,19,"LogicalOrReverse");
 		addMember(l,20,"LogicalOrInverted");
-		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

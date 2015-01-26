@@ -309,7 +309,6 @@ class CodeGenerator
             {
                 StreamWriter file = Begin(t);
                 WriteHead(t, file);
-                WriteEnumToInt(t, file);
                 RegEnumFunction(t, file);
                 End(file);
             }
@@ -567,17 +566,6 @@ namespace SLua
         Write(file, temp);
     }
 
-    void WriteEnumToInt(Type t, StreamWriter file)
-    {
-        WriteFunctionAttr(file);
-        Write(file, "static int IntToEnum(IntPtr l) {");
-        Write(file, "int v = LuaDLL.lua_tointeger(l, 1);");
-		Write(file, "{0} o = ({0})v;",FullName(t));
-        Write(file, "pushValue(l,o);");
-		Write(file,"return 1;");
-        Write(file,"}");
-	}
-
     void RegEnumFunction(Type t, StreamWriter file)
     {
         // Write export function
@@ -591,7 +579,6 @@ namespace SLua
             Write(file, "addMember(l,{0},\"{1}\");",(int)f.GetValue(null),f.Name);
         }
 
-        Write(file, "addMember(l,IntToEnum, \"IntToEnum\");" );
         Write(file, "LuaDLL.lua_pop(l, 1);");
         Write(file, "}");
     }

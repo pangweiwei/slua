@@ -4,13 +4,6 @@ using LuaInterface;
 using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_KeyCode : LuaObject {
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int IntToEnum(IntPtr l) {
-		int v = LuaDLL.lua_tointeger(l, 1);
-		UnityEngine.KeyCode o = (UnityEngine.KeyCode)v;
-		pushValue(l,o);
-		return 1;
-	}
 	static public void reg(IntPtr l) {
 		getEnumTable(l,"UnityEngine.KeyCode");
 		addMember(l,0,"None");
@@ -254,7 +247,6 @@ public class Lua_UnityEngine_KeyCode : LuaObject {
 		addMember(l,427,"Joystick4Button17");
 		addMember(l,428,"Joystick4Button18");
 		addMember(l,429,"Joystick4Button19");
-		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

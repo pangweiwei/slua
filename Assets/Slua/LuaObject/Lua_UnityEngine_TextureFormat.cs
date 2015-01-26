@@ -4,13 +4,6 @@ using LuaInterface;
 using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_TextureFormat : LuaObject {
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int IntToEnum(IntPtr l) {
-		int v = LuaDLL.lua_tointeger(l, 1);
-		UnityEngine.TextureFormat o = (UnityEngine.TextureFormat)v;
-		pushValue(l,o);
-		return 1;
-	}
 	static public void reg(IntPtr l) {
 		getEnumTable(l,"UnityEngine.TextureFormat");
 		addMember(l,1,"Alpha8");
@@ -56,7 +49,6 @@ public class Lua_UnityEngine_TextureFormat : LuaObject {
 		addMember(l,31,"PVRTC_2BPP_RGBA");
 		addMember(l,32,"PVRTC_4BPP_RGB");
 		addMember(l,33,"PVRTC_4BPP_RGBA");
-		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

@@ -4,13 +4,6 @@ using LuaInterface;
 using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_SpriteAlignment : LuaObject {
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int IntToEnum(IntPtr l) {
-		int v = LuaDLL.lua_tointeger(l, 1);
-		UnityEngine.SpriteAlignment o = (UnityEngine.SpriteAlignment)v;
-		pushValue(l,o);
-		return 1;
-	}
 	static public void reg(IntPtr l) {
 		getEnumTable(l,"UnityEngine.SpriteAlignment");
 		addMember(l,0,"Center");
@@ -23,7 +16,6 @@ public class Lua_UnityEngine_SpriteAlignment : LuaObject {
 		addMember(l,7,"BottomCenter");
 		addMember(l,8,"BottomRight");
 		addMember(l,9,"Custom");
-		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

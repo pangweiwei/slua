@@ -4,13 +4,6 @@ using LuaInterface;
 using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_AudioReverbPreset : LuaObject {
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int IntToEnum(IntPtr l) {
-		int v = LuaDLL.lua_tointeger(l, 1);
-		UnityEngine.AudioReverbPreset o = (UnityEngine.AudioReverbPreset)v;
-		pushValue(l,o);
-		return 1;
-	}
 	static public void reg(IntPtr l) {
 		getEnumTable(l,"UnityEngine.AudioReverbPreset");
 		addMember(l,0,"Off");
@@ -41,7 +34,6 @@ public class Lua_UnityEngine_AudioReverbPreset : LuaObject {
 		addMember(l,25,"Dizzy");
 		addMember(l,26,"Psychotic");
 		addMember(l,27,"User");
-		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

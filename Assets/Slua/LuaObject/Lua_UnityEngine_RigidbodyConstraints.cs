@@ -4,13 +4,6 @@ using LuaInterface;
 using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_RigidbodyConstraints : LuaObject {
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int IntToEnum(IntPtr l) {
-		int v = LuaDLL.lua_tointeger(l, 1);
-		UnityEngine.RigidbodyConstraints o = (UnityEngine.RigidbodyConstraints)v;
-		pushValue(l,o);
-		return 1;
-	}
 	static public void reg(IntPtr l) {
 		getEnumTable(l,"UnityEngine.RigidbodyConstraints");
 		addMember(l,0,"None");
@@ -23,7 +16,6 @@ public class Lua_UnityEngine_RigidbodyConstraints : LuaObject {
 		addMember(l,14,"FreezePosition");
 		addMember(l,112,"FreezeRotation");
 		addMember(l,126,"FreezeAll");
-		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

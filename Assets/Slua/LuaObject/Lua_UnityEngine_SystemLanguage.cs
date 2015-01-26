@@ -4,13 +4,6 @@ using LuaInterface;
 using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_SystemLanguage : LuaObject {
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int IntToEnum(IntPtr l) {
-		int v = LuaDLL.lua_tointeger(l, 1);
-		UnityEngine.SystemLanguage o = (UnityEngine.SystemLanguage)v;
-		pushValue(l,o);
-		return 1;
-	}
 	static public void reg(IntPtr l) {
 		getEnumTable(l,"UnityEngine.SystemLanguage");
 		addMember(l,0,"Afrikaans");
@@ -55,7 +48,6 @@ public class Lua_UnityEngine_SystemLanguage : LuaObject {
 		addMember(l,39,"Vietnamese");
 		addMember(l,40,"Unknown");
 		addMember(l,18,"Hungarian");
-		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

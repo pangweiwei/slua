@@ -4,13 +4,6 @@ using LuaInterface;
 using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_EventSystems_EventTriggerType : LuaObject {
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int IntToEnum(IntPtr l) {
-		int v = LuaDLL.lua_tointeger(l, 1);
-		UnityEngine.EventSystems.EventTriggerType o = (UnityEngine.EventSystems.EventTriggerType)v;
-		pushValue(l,o);
-		return 1;
-	}
 	static public void reg(IntPtr l) {
 		getEnumTable(l,"UnityEngine.EventSystems.EventTriggerType");
 		addMember(l,0,"PointerEnter");
@@ -30,7 +23,6 @@ public class Lua_UnityEngine_EventSystems_EventTriggerType : LuaObject {
 		addMember(l,14,"EndDrag");
 		addMember(l,15,"Submit");
 		addMember(l,16,"Cancel");
-		addMember(l,IntToEnum, "IntToEnum");
 		LuaDLL.lua_pop(l, 1);
 	}
 }
