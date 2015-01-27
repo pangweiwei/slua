@@ -464,22 +464,22 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		addMember(l,UploadMeshData);
 		addMember(l,GetBlendShapeName);
 		addMember(l,GetBlendShapeIndex);
-		addMember(l,"isReadable",get_isReadable,null);
-		addMember(l,"vertices",get_vertices,set_vertices);
-		addMember(l,"normals",get_normals,set_normals);
-		addMember(l,"tangents",get_tangents,set_tangents);
-		addMember(l,"uv",get_uv,set_uv);
-		addMember(l,"uv2",get_uv2,set_uv2);
-		addMember(l,"uv1",get_uv1,set_uv1);
-		addMember(l,"bounds",get_bounds,set_bounds);
-		addMember(l,"colors",get_colors,set_colors);
-		addMember(l,"colors32",get_colors32,set_colors32);
-		addMember(l,"triangles",get_triangles,set_triangles);
-		addMember(l,"vertexCount",get_vertexCount,null);
-		addMember(l,"subMeshCount",get_subMeshCount,set_subMeshCount);
-		addMember(l,"boneWeights",get_boneWeights,set_boneWeights);
-		addMember(l,"bindposes",get_bindposes,set_bindposes);
-		addMember(l,"blendShapeCount",get_blendShapeCount,null);
+		addMember(l,"isReadable",get_isReadable,null,true);
+		addMember(l,"vertices",get_vertices,set_vertices,true);
+		addMember(l,"normals",get_normals,set_normals,true);
+		addMember(l,"tangents",get_tangents,set_tangents,true);
+		addMember(l,"uv",get_uv,set_uv,true);
+		addMember(l,"uv2",get_uv2,set_uv2,true);
+		addMember(l,"uv1",get_uv1,set_uv1,true);
+		addMember(l,"bounds",get_bounds,set_bounds,true);
+		addMember(l,"colors",get_colors,set_colors,true);
+		addMember(l,"colors32",get_colors32,set_colors32,true);
+		addMember(l,"triangles",get_triangles,set_triangles,true);
+		addMember(l,"vertexCount",get_vertexCount,null,true);
+		addMember(l,"subMeshCount",get_subMeshCount,set_subMeshCount,true);
+		addMember(l,"boneWeights",get_boneWeights,set_boneWeights,true);
+		addMember(l,"bindposes",get_bindposes,set_bindposes,true);
+		addMember(l,"blendShapeCount",get_blendShapeCount,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Mesh),typeof(UnityEngine.Object));
 	}
 }

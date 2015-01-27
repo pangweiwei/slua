@@ -41,8 +41,8 @@ public class Lua_UnityEngine_JointMotor2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.JointMotor2D");
-		addMember(l,"motorSpeed",get_motorSpeed,set_motorSpeed);
-		addMember(l,"maxMotorTorque",get_maxMotorTorque,set_maxMotorTorque);
+		addMember(l,"motorSpeed",get_motorSpeed,set_motorSpeed,true);
+		addMember(l,"maxMotorTorque",get_maxMotorTorque,set_maxMotorTorque,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.JointMotor2D));
 	}
 }

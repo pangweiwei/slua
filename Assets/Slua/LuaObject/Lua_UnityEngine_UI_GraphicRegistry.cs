@@ -63,7 +63,7 @@ public class Lua_UnityEngine_UI_GraphicRegistry : LuaObject {
 		addMember(l,RegisterGraphicForCanvas_s);
 		addMember(l,UnregisterGraphicForCanvas_s);
 		addMember(l,GetGraphicsForCanvas_s);
-		addMember(l,"instance",get_instance,null);
+		addMember(l,"instance",get_instance,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.GraphicRegistry));
 	}
 }

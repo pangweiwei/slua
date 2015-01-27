@@ -46,8 +46,8 @@ public class Lua_UnityEngine_MeshFilter : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.MeshFilter");
-		addMember(l,"mesh",get_mesh,set_mesh);
-		addMember(l,"sharedMesh",get_sharedMesh,set_sharedMesh);
+		addMember(l,"mesh",get_mesh,set_mesh,true);
+		addMember(l,"sharedMesh",get_sharedMesh,set_sharedMesh,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.MeshFilter),typeof(UnityEngine.Component));
 	}
 }

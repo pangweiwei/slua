@@ -58,9 +58,9 @@ public class Lua_UnityEngine_UI_RawImage : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.RawImage");
 		addMember(l,SetNativeSize);
-		addMember(l,"mainTexture",get_mainTexture,null);
-		addMember(l,"texture",get_texture,set_texture);
-		addMember(l,"uvRect",get_uvRect,set_uvRect);
+		addMember(l,"mainTexture",get_mainTexture,null,true);
+		addMember(l,"texture",get_texture,set_texture,true);
+		addMember(l,"uvRect",get_uvRect,set_uvRect,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.RawImage),typeof(UnityEngine.UI.MaskableGraphic));
 	}
 }

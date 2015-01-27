@@ -158,16 +158,16 @@ public class Lua_UnityEngine_Projector : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Projector");
-		addMember(l,"nearClipPlane",get_nearClipPlane,set_nearClipPlane);
-		addMember(l,"farClipPlane",get_farClipPlane,set_farClipPlane);
-		addMember(l,"fieldOfView",get_fieldOfView,set_fieldOfView);
-		addMember(l,"aspectRatio",get_aspectRatio,set_aspectRatio);
-		addMember(l,"isOrthoGraphic",get_isOrthoGraphic,set_isOrthoGraphic);
-		addMember(l,"orthographic",get_orthographic,set_orthographic);
-		addMember(l,"orthographicSize",get_orthographicSize,set_orthographicSize);
-		addMember(l,"orthoGraphicSize",get_orthoGraphicSize,set_orthoGraphicSize);
-		addMember(l,"ignoreLayers",get_ignoreLayers,set_ignoreLayers);
-		addMember(l,"material",get_material,set_material);
+		addMember(l,"nearClipPlane",get_nearClipPlane,set_nearClipPlane,true);
+		addMember(l,"farClipPlane",get_farClipPlane,set_farClipPlane,true);
+		addMember(l,"fieldOfView",get_fieldOfView,set_fieldOfView,true);
+		addMember(l,"aspectRatio",get_aspectRatio,set_aspectRatio,true);
+		addMember(l,"isOrthoGraphic",get_isOrthoGraphic,set_isOrthoGraphic,true);
+		addMember(l,"orthographic",get_orthographic,set_orthographic,true);
+		addMember(l,"orthographicSize",get_orthographicSize,set_orthographicSize,true);
+		addMember(l,"orthoGraphicSize",get_orthoGraphicSize,set_orthoGraphicSize,true);
+		addMember(l,"ignoreLayers",get_ignoreLayers,set_ignoreLayers,true);
+		addMember(l,"material",get_material,set_material,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Projector),typeof(UnityEngine.Behaviour));
 	}
 }

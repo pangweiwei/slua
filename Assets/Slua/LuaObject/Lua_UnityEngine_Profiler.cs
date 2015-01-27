@@ -196,11 +196,11 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		addMember(l,GetTotalAllocatedMemory_s);
 		addMember(l,GetTotalUnusedReservedMemory_s);
 		addMember(l,GetTotalReservedMemory_s);
-		addMember(l,"supported",get_supported,null);
-		addMember(l,"logFile",get_logFile,set_logFile);
-		addMember(l,"enableBinaryLog",get_enableBinaryLog,set_enableBinaryLog);
-		addMember(l,"enabled",get_enabled,set_enabled);
-		addMember(l,"usedHeapSize",get_usedHeapSize,null);
+		addMember(l,"supported",get_supported,null,false);
+		addMember(l,"logFile",get_logFile,set_logFile,false);
+		addMember(l,"enableBinaryLog",get_enableBinaryLog,set_enableBinaryLog,false);
+		addMember(l,"enabled",get_enabled,set_enabled,false);
+		addMember(l,"usedHeapSize",get_usedHeapSize,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Profiler));
 	}
 }

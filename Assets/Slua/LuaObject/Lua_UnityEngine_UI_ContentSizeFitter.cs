@@ -65,8 +65,8 @@ public class Lua_UnityEngine_UI_ContentSizeFitter : LuaObject {
 		getTypeTable(l,"UnityEngine.UI.ContentSizeFitter");
 		addMember(l,SetLayoutHorizontal);
 		addMember(l,SetLayoutVertical);
-		addMember(l,"horizontalFit",get_horizontalFit,set_horizontalFit);
-		addMember(l,"verticalFit",get_verticalFit,set_verticalFit);
+		addMember(l,"horizontalFit",get_horizontalFit,set_horizontalFit,true);
+		addMember(l,"verticalFit",get_verticalFit,set_verticalFit,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.ContentSizeFitter),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

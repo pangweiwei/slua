@@ -74,10 +74,10 @@ public class Lua_UnityEngine_ConstantForce : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ConstantForce");
-		addMember(l,"force",get_force,set_force);
-		addMember(l,"relativeForce",get_relativeForce,set_relativeForce);
-		addMember(l,"torque",get_torque,set_torque);
-		addMember(l,"relativeTorque",get_relativeTorque,set_relativeTorque);
+		addMember(l,"force",get_force,set_force,true);
+		addMember(l,"relativeForce",get_relativeForce,set_relativeForce,true);
+		addMember(l,"torque",get_torque,set_torque,true);
+		addMember(l,"relativeTorque",get_relativeTorque,set_relativeTorque,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ConstantForce),typeof(UnityEngine.Behaviour));
 	}
 }

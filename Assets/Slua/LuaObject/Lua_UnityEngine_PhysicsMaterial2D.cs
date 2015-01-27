@@ -53,8 +53,8 @@ public class Lua_UnityEngine_PhysicsMaterial2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.PhysicsMaterial2D");
-		addMember(l,"bounciness",get_bounciness,set_bounciness);
-		addMember(l,"friction",get_friction,set_friction);
+		addMember(l,"bounciness",get_bounciness,set_bounciness,true);
+		addMember(l,"friction",get_friction,set_friction,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.PhysicsMaterial2D),typeof(UnityEngine.Object));
 	}
 }

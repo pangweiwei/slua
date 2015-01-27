@@ -190,7 +190,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 		addMember(l,SetPixels);
 		addMember(l,Apply);
 		addMember(l,SmoothEdges);
-		addMember(l,"format",get_format,null);
+		addMember(l,"format",get_format,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Cubemap),typeof(UnityEngine.Texture));
 	}
 }

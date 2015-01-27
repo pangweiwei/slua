@@ -35,10 +35,10 @@ public class Lua_UnityEngine_ParticleSystem_CollisionEvent : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ParticleSystem.CollisionEvent");
-		addMember(l,"intersection",get_intersection,null);
-		addMember(l,"normal",get_normal,null);
-		addMember(l,"velocity",get_velocity,null);
-		addMember(l,"collider",get_collider,null);
+		addMember(l,"intersection",get_intersection,null,true);
+		addMember(l,"normal",get_normal,null,true);
+		addMember(l,"velocity",get_velocity,null,true);
+		addMember(l,"collider",get_collider,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ParticleSystem.CollisionEvent));
 	}
 }

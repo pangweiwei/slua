@@ -23,8 +23,8 @@ public class Lua_UnityEngine_WebCamDevice : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.WebCamDevice");
-		addMember(l,"name",get_name,null);
-		addMember(l,"isFrontFacing",get_isFrontFacing,null);
+		addMember(l,"name",get_name,null,true);
+		addMember(l,"isFrontFacing",get_isFrontFacing,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.WebCamDevice));
 	}
 }

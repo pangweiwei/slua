@@ -167,9 +167,9 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 		addMember(l,GetMaterial);
 		addMember(l,SetVertices);
 		addMember(l,Clear);
-		addMember(l,"isMask",get_isMask,set_isMask);
-		addMember(l,"relativeDepth",get_relativeDepth,null);
-		addMember(l,"absoluteDepth",get_absoluteDepth,null);
+		addMember(l,"isMask",get_isMask,set_isMask,true);
+		addMember(l,"relativeDepth",get_relativeDepth,null,true);
+		addMember(l,"absoluteDepth",get_absoluteDepth,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.CanvasRenderer),typeof(UnityEngine.Component));
 	}
 }

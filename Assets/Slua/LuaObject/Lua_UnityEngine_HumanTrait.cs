@@ -120,11 +120,11 @@ public class Lua_UnityEngine_HumanTrait : LuaObject {
 		addMember(l,RequiredBone_s);
 		addMember(l,GetMuscleDefaultMin_s);
 		addMember(l,GetMuscleDefaultMax_s);
-		addMember(l,"MuscleCount",get_MuscleCount,null);
-		addMember(l,"MuscleName",get_MuscleName,null);
-		addMember(l,"BoneCount",get_BoneCount,null);
-		addMember(l,"BoneName",get_BoneName,null);
-		addMember(l,"RequiredBoneCount",get_RequiredBoneCount,null);
+		addMember(l,"MuscleCount",get_MuscleCount,null,false);
+		addMember(l,"MuscleName",get_MuscleName,null,false);
+		addMember(l,"BoneCount",get_BoneCount,null,false);
+		addMember(l,"BoneName",get_BoneName,null,false);
+		addMember(l,"RequiredBoneCount",get_RequiredBoneCount,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.HumanTrait),typeof(UnityEngine.Object));
 	}
 }

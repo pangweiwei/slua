@@ -7,8 +7,6 @@ function main()
 	-- varobj access via reflection, try to avoid using not exported class
 
 	local obj = HelloWorld()
-	local a,b= obj:custom()
-	print(a,b)
 
 	local list = obj:getList()
 	print(list.Count) -- call var's property

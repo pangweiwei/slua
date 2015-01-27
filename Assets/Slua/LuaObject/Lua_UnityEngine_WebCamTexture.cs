@@ -269,15 +269,15 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 		addMember(l,GetPixel);
 		addMember(l,GetPixels);
 		addMember(l,GetPixels32);
-		addMember(l,"isPlaying",get_isPlaying,null);
-		addMember(l,"deviceName",get_deviceName,set_deviceName);
-		addMember(l,"requestedFPS",get_requestedFPS,set_requestedFPS);
-		addMember(l,"requestedWidth",get_requestedWidth,set_requestedWidth);
-		addMember(l,"requestedHeight",get_requestedHeight,set_requestedHeight);
-		addMember(l,"devices",get_devices,null);
-		addMember(l,"videoRotationAngle",get_videoRotationAngle,null);
-		addMember(l,"videoVerticallyMirrored",get_videoVerticallyMirrored,null);
-		addMember(l,"didUpdateThisFrame",get_didUpdateThisFrame,null);
+		addMember(l,"isPlaying",get_isPlaying,null,true);
+		addMember(l,"deviceName",get_deviceName,set_deviceName,true);
+		addMember(l,"requestedFPS",get_requestedFPS,set_requestedFPS,true);
+		addMember(l,"requestedWidth",get_requestedWidth,set_requestedWidth,true);
+		addMember(l,"requestedHeight",get_requestedHeight,set_requestedHeight,true);
+		addMember(l,"devices",get_devices,null,false);
+		addMember(l,"videoRotationAngle",get_videoRotationAngle,null,true);
+		addMember(l,"videoVerticallyMirrored",get_videoVerticallyMirrored,null,true);
+		addMember(l,"didUpdateThisFrame",get_didUpdateThisFrame,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.WebCamTexture),typeof(UnityEngine.Texture));
 	}
 }

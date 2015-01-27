@@ -46,8 +46,8 @@ public class Lua_UnityEngine_AnimationClipPair : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimationClipPair");
-		addMember(l,"originalClip",get_originalClip,set_originalClip);
-		addMember(l,"overrideClip",get_overrideClip,set_overrideClip);
+		addMember(l,"originalClip",get_originalClip,set_originalClip,true);
+		addMember(l,"overrideClip",get_overrideClip,set_overrideClip,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimationClipPair));
 	}
 }

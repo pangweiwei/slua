@@ -338,21 +338,21 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 		addMember(l,OnBeginDrag);
 		addMember(l,OnEndDrag);
 		addMember(l,OnDrag);
-		addMember(l,"content",get_content,set_content);
-		addMember(l,"horizontal",get_horizontal,set_horizontal);
-		addMember(l,"vertical",get_vertical,set_vertical);
-		addMember(l,"movementType",get_movementType,set_movementType);
-		addMember(l,"elasticity",get_elasticity,set_elasticity);
-		addMember(l,"inertia",get_inertia,set_inertia);
-		addMember(l,"decelerationRate",get_decelerationRate,set_decelerationRate);
-		addMember(l,"scrollSensitivity",get_scrollSensitivity,set_scrollSensitivity);
-		addMember(l,"horizontalScrollbar",get_horizontalScrollbar,set_horizontalScrollbar);
-		addMember(l,"verticalScrollbar",get_verticalScrollbar,set_verticalScrollbar);
-		addMember(l,"onValueChanged",get_onValueChanged,set_onValueChanged);
-		addMember(l,"velocity",get_velocity,set_velocity);
-		addMember(l,"normalizedPosition",get_normalizedPosition,set_normalizedPosition);
-		addMember(l,"horizontalNormalizedPosition",get_horizontalNormalizedPosition,set_horizontalNormalizedPosition);
-		addMember(l,"verticalNormalizedPosition",get_verticalNormalizedPosition,set_verticalNormalizedPosition);
+		addMember(l,"content",get_content,set_content,true);
+		addMember(l,"horizontal",get_horizontal,set_horizontal,true);
+		addMember(l,"vertical",get_vertical,set_vertical,true);
+		addMember(l,"movementType",get_movementType,set_movementType,true);
+		addMember(l,"elasticity",get_elasticity,set_elasticity,true);
+		addMember(l,"inertia",get_inertia,set_inertia,true);
+		addMember(l,"decelerationRate",get_decelerationRate,set_decelerationRate,true);
+		addMember(l,"scrollSensitivity",get_scrollSensitivity,set_scrollSensitivity,true);
+		addMember(l,"horizontalScrollbar",get_horizontalScrollbar,set_horizontalScrollbar,true);
+		addMember(l,"verticalScrollbar",get_verticalScrollbar,set_verticalScrollbar,true);
+		addMember(l,"onValueChanged",get_onValueChanged,set_onValueChanged,true);
+		addMember(l,"velocity",get_velocity,set_velocity,true);
+		addMember(l,"normalizedPosition",get_normalizedPosition,set_normalizedPosition,true);
+		addMember(l,"horizontalNormalizedPosition",get_horizontalNormalizedPosition,set_horizontalNormalizedPosition,true);
+		addMember(l,"verticalNormalizedPosition",get_verticalNormalizedPosition,set_verticalNormalizedPosition,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.ScrollRect),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

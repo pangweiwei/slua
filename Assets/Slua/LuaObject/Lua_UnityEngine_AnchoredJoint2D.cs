@@ -46,8 +46,8 @@ public class Lua_UnityEngine_AnchoredJoint2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnchoredJoint2D");
-		addMember(l,"anchor",get_anchor,set_anchor);
-		addMember(l,"connectedAnchor",get_connectedAnchor,set_connectedAnchor);
+		addMember(l,"anchor",get_anchor,set_anchor,true);
+		addMember(l,"connectedAnchor",get_connectedAnchor,set_connectedAnchor,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnchoredJoint2D),typeof(UnityEngine.Joint2D));
 	}
 }

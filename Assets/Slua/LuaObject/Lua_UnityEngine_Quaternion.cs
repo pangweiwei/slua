@@ -461,13 +461,13 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 		addMember(l,op_Multiply);
 		addMember(l,op_Equality);
 		addMember(l,op_Inequality);
-		addMember(l,"kEpsilon",get_kEpsilon,null);
-		addMember(l,"x",get_x,set_x);
-		addMember(l,"y",get_y,set_y);
-		addMember(l,"z",get_z,set_z);
-		addMember(l,"w",get_w,set_w);
-		addMember(l,"identity",get_identity,null);
-		addMember(l,"eulerAngles",get_eulerAngles,set_eulerAngles);
+		addMember(l,"kEpsilon",get_kEpsilon,null,false);
+		addMember(l,"x",get_x,set_x,true);
+		addMember(l,"y",get_y,set_y,true);
+		addMember(l,"z",get_z,set_z,true);
+		addMember(l,"w",get_w,set_w,true);
+		addMember(l,"identity",get_identity,null,false);
+		addMember(l,"eulerAngles",get_eulerAngles,set_eulerAngles,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Quaternion));
 	}
 }

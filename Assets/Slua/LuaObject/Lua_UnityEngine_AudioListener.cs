@@ -90,9 +90,9 @@ public class Lua_UnityEngine_AudioListener : LuaObject {
 		getTypeTable(l,"UnityEngine.AudioListener");
 		addMember(l,GetOutputData_s);
 		addMember(l,GetSpectrumData_s);
-		addMember(l,"volume",get_volume,set_volume);
-		addMember(l,"pause",get_pause,set_pause);
-		addMember(l,"velocityUpdateMode",get_velocityUpdateMode,set_velocityUpdateMode);
+		addMember(l,"volume",get_volume,set_volume,false);
+		addMember(l,"pause",get_pause,set_pause,false);
+		addMember(l,"velocityUpdateMode",get_velocityUpdateMode,set_velocityUpdateMode,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioListener),typeof(UnityEngine.Behaviour));
 	}
 }

@@ -465,22 +465,22 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 		addMember(l,GetTemporary_s);
 		addMember(l,ReleaseTemporary_s);
 		addMember(l,SupportsStencil_s);
-		addMember(l,"width",get_width,set_width);
-		addMember(l,"height",get_height,set_height);
-		addMember(l,"depth",get_depth,set_depth);
-		addMember(l,"isPowerOfTwo",get_isPowerOfTwo,set_isPowerOfTwo);
-		addMember(l,"sRGB",get_sRGB,null);
-		addMember(l,"format",get_format,set_format);
-		addMember(l,"useMipMap",get_useMipMap,set_useMipMap);
-		addMember(l,"generateMips",get_generateMips,set_generateMips);
-		addMember(l,"isCubemap",get_isCubemap,set_isCubemap);
-		addMember(l,"isVolume",get_isVolume,set_isVolume);
-		addMember(l,"volumeDepth",get_volumeDepth,set_volumeDepth);
-		addMember(l,"antiAliasing",get_antiAliasing,set_antiAliasing);
-		addMember(l,"enableRandomWrite",get_enableRandomWrite,set_enableRandomWrite);
-		addMember(l,"colorBuffer",get_colorBuffer,null);
-		addMember(l,"depthBuffer",get_depthBuffer,null);
-		addMember(l,"active",get_active,set_active);
+		addMember(l,"width",get_width,set_width,true);
+		addMember(l,"height",get_height,set_height,true);
+		addMember(l,"depth",get_depth,set_depth,true);
+		addMember(l,"isPowerOfTwo",get_isPowerOfTwo,set_isPowerOfTwo,true);
+		addMember(l,"sRGB",get_sRGB,null,true);
+		addMember(l,"format",get_format,set_format,true);
+		addMember(l,"useMipMap",get_useMipMap,set_useMipMap,true);
+		addMember(l,"generateMips",get_generateMips,set_generateMips,true);
+		addMember(l,"isCubemap",get_isCubemap,set_isCubemap,true);
+		addMember(l,"isVolume",get_isVolume,set_isVolume,true);
+		addMember(l,"volumeDepth",get_volumeDepth,set_volumeDepth,true);
+		addMember(l,"antiAliasing",get_antiAliasing,set_antiAliasing,true);
+		addMember(l,"enableRandomWrite",get_enableRandomWrite,set_enableRandomWrite,true);
+		addMember(l,"colorBuffer",get_colorBuffer,null,true);
+		addMember(l,"depthBuffer",get_depthBuffer,null,true);
+		addMember(l,"active",get_active,set_active,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.RenderTexture),typeof(UnityEngine.Texture));
 	}
 }

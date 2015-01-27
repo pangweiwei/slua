@@ -135,14 +135,14 @@ public class Lua_UnityEngine_OffMeshLink : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.OffMeshLink");
 		addMember(l,UpdatePositions);
-		addMember(l,"activated",get_activated,set_activated);
-		addMember(l,"occupied",get_occupied,null);
-		addMember(l,"costOverride",get_costOverride,set_costOverride);
-		addMember(l,"biDirectional",get_biDirectional,set_biDirectional);
-		addMember(l,"navMeshLayer",get_navMeshLayer,set_navMeshLayer);
-		addMember(l,"autoUpdatePositions",get_autoUpdatePositions,set_autoUpdatePositions);
-		addMember(l,"startTransform",get_startTransform,set_startTransform);
-		addMember(l,"endTransform",get_endTransform,set_endTransform);
+		addMember(l,"activated",get_activated,set_activated,true);
+		addMember(l,"occupied",get_occupied,null,true);
+		addMember(l,"costOverride",get_costOverride,set_costOverride,true);
+		addMember(l,"biDirectional",get_biDirectional,set_biDirectional,true);
+		addMember(l,"navMeshLayer",get_navMeshLayer,set_navMeshLayer,true);
+		addMember(l,"autoUpdatePositions",get_autoUpdatePositions,set_autoUpdatePositions,true);
+		addMember(l,"startTransform",get_startTransform,set_startTransform,true);
+		addMember(l,"endTransform",get_endTransform,set_endTransform,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.OffMeshLink),typeof(UnityEngine.Component));
 	}
 }

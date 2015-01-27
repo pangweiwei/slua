@@ -232,7 +232,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 		addMember(l,StopCoroutine);
 		addMember(l,StopAllCoroutines);
 		addMember(l,print_s);
-		addMember(l,"useGUILayout",get_useGUILayout,set_useGUILayout);
+		addMember(l,"useGUILayout",get_useGUILayout,set_useGUILayout,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.MonoBehaviour),typeof(UnityEngine.Behaviour));
 	}
 }

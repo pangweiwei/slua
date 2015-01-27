@@ -246,8 +246,8 @@ public class Lua_UnityEngine_Object : LuaObject {
 		addMember(l,DestroyObject_s);
 		addMember(l,op_Equality);
 		addMember(l,op_Inequality);
-		addMember(l,"name",get_name,set_name);
-		addMember(l,"hideFlags",get_hideFlags,set_hideFlags);
+		addMember(l,"name",get_name,set_name,true);
+		addMember(l,"hideFlags",get_hideFlags,set_hideFlags,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Object));
 	}
 }

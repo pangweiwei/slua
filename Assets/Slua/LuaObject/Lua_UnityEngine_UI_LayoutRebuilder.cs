@@ -45,7 +45,7 @@ public class Lua_UnityEngine_UI_LayoutRebuilder : LuaObject {
 		getTypeTable(l,"UnityEngine.UI.LayoutRebuilder");
 		addMember(l,IsDestroyed);
 		addMember(l,MarkLayoutForRebuild_s);
-		addMember(l,"transform",get_transform,null);
+		addMember(l,"transform",get_transform,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.LayoutRebuilder));
 	}
 }

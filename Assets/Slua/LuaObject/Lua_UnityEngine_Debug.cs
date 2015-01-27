@@ -287,8 +287,8 @@ public class Lua_UnityEngine_Debug : LuaObject {
 		addMember(l,ClearDeveloperConsole_s);
 		addMember(l,LogException_s);
 		addMember(l,LogWarning_s);
-		addMember(l,"developerConsoleVisible",get_developerConsoleVisible,set_developerConsoleVisible);
-		addMember(l,"isDebugBuild",get_isDebugBuild,null);
+		addMember(l,"developerConsoleVisible",get_developerConsoleVisible,set_developerConsoleVisible,false);
+		addMember(l,"isDebugBuild",get_isDebugBuild,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Debug));
 	}
 }

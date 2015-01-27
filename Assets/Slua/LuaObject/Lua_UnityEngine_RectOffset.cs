@@ -131,12 +131,12 @@ public class Lua_UnityEngine_RectOffset : LuaObject {
 		getTypeTable(l,"UnityEngine.RectOffset");
 		addMember(l,Add);
 		addMember(l,Remove);
-		addMember(l,"left",get_left,set_left);
-		addMember(l,"right",get_right,set_right);
-		addMember(l,"top",get_top,set_top);
-		addMember(l,"bottom",get_bottom,set_bottom);
-		addMember(l,"horizontal",get_horizontal,null);
-		addMember(l,"vertical",get_vertical,null);
+		addMember(l,"left",get_left,set_left,true);
+		addMember(l,"right",get_right,set_right,true);
+		addMember(l,"top",get_top,set_top,true);
+		addMember(l,"bottom",get_bottom,set_bottom,true);
+		addMember(l,"horizontal",get_horizontal,null,true);
+		addMember(l,"vertical",get_vertical,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.RectOffset));
 	}
 }

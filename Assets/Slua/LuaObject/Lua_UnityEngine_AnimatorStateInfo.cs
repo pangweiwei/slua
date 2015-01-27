@@ -73,11 +73,11 @@ public class Lua_UnityEngine_AnimatorStateInfo : LuaObject {
 		getTypeTable(l,"UnityEngine.AnimatorStateInfo");
 		addMember(l,IsName);
 		addMember(l,IsTag);
-		addMember(l,"nameHash",get_nameHash,null);
-		addMember(l,"normalizedTime",get_normalizedTime,null);
-		addMember(l,"length",get_length,null);
-		addMember(l,"tagHash",get_tagHash,null);
-		addMember(l,"loop",get_loop,null);
+		addMember(l,"nameHash",get_nameHash,null,true);
+		addMember(l,"normalizedTime",get_normalizedTime,null,true);
+		addMember(l,"length",get_length,null,true);
+		addMember(l,"tagHash",get_tagHash,null,true);
+		addMember(l,"loop",get_loop,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimatorStateInfo));
 	}
 }

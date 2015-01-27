@@ -65,8 +65,8 @@ public class Lua_UnityEngine_UI_AspectRatioFitter : LuaObject {
 		getTypeTable(l,"UnityEngine.UI.AspectRatioFitter");
 		addMember(l,SetLayoutHorizontal);
 		addMember(l,SetLayoutVertical);
-		addMember(l,"aspectMode",get_aspectMode,set_aspectMode);
-		addMember(l,"aspectRatio",get_aspectRatio,set_aspectRatio);
+		addMember(l,"aspectMode",get_aspectMode,set_aspectMode,true);
+		addMember(l,"aspectRatio",get_aspectRatio,set_aspectRatio,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.AspectRatioFitter),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

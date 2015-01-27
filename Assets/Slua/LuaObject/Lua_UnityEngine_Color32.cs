@@ -105,10 +105,10 @@ public class Lua_UnityEngine_Color32 : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Color32");
 		addMember(l,Lerp_s);
-		addMember(l,"r",get_r,set_r);
-		addMember(l,"g",get_g,set_g);
-		addMember(l,"b",get_b,set_b);
-		addMember(l,"a",get_a,set_a);
+		addMember(l,"r",get_r,set_r,true);
+		addMember(l,"g",get_g,set_g,true);
+		addMember(l,"b",get_b,set_b,true);
+		addMember(l,"a",get_a,set_a,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Color32));
 	}
 }

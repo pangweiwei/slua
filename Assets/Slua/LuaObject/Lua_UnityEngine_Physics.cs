@@ -959,19 +959,19 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		addMember(l,IgnoreCollision_s);
 		addMember(l,IgnoreLayerCollision_s);
 		addMember(l,GetIgnoreLayerCollision_s);
-		addMember(l,"kIgnoreRaycastLayer",get_kIgnoreRaycastLayer,null);
-		addMember(l,"kDefaultRaycastLayers",get_kDefaultRaycastLayers,null);
-		addMember(l,"kAllLayers",get_kAllLayers,null);
-		addMember(l,"IgnoreRaycastLayer",get_IgnoreRaycastLayer,null);
-		addMember(l,"DefaultRaycastLayers",get_DefaultRaycastLayers,null);
-		addMember(l,"AllLayers",get_AllLayers,null);
-		addMember(l,"gravity",get_gravity,set_gravity);
-		addMember(l,"minPenetrationForPenalty",get_minPenetrationForPenalty,set_minPenetrationForPenalty);
-		addMember(l,"bounceThreshold",get_bounceThreshold,set_bounceThreshold);
-		addMember(l,"sleepVelocity",get_sleepVelocity,set_sleepVelocity);
-		addMember(l,"sleepAngularVelocity",get_sleepAngularVelocity,set_sleepAngularVelocity);
-		addMember(l,"maxAngularVelocity",get_maxAngularVelocity,set_maxAngularVelocity);
-		addMember(l,"solverIterationCount",get_solverIterationCount,set_solverIterationCount);
+		addMember(l,"kIgnoreRaycastLayer",get_kIgnoreRaycastLayer,null,false);
+		addMember(l,"kDefaultRaycastLayers",get_kDefaultRaycastLayers,null,false);
+		addMember(l,"kAllLayers",get_kAllLayers,null,false);
+		addMember(l,"IgnoreRaycastLayer",get_IgnoreRaycastLayer,null,false);
+		addMember(l,"DefaultRaycastLayers",get_DefaultRaycastLayers,null,false);
+		addMember(l,"AllLayers",get_AllLayers,null,false);
+		addMember(l,"gravity",get_gravity,set_gravity,false);
+		addMember(l,"minPenetrationForPenalty",get_minPenetrationForPenalty,set_minPenetrationForPenalty,false);
+		addMember(l,"bounceThreshold",get_bounceThreshold,set_bounceThreshold,false);
+		addMember(l,"sleepVelocity",get_sleepVelocity,set_sleepVelocity,false);
+		addMember(l,"sleepAngularVelocity",get_sleepAngularVelocity,set_sleepAngularVelocity,false);
+		addMember(l,"maxAngularVelocity",get_maxAngularVelocity,set_maxAngularVelocity,false);
+		addMember(l,"solverIterationCount",get_solverIterationCount,set_solverIterationCount,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Physics));
 	}
 }

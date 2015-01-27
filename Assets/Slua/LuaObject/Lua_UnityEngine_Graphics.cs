@@ -642,8 +642,8 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 		addMember(l,SetRenderTarget_s);
 		addMember(l,SetRandomWriteTarget_s);
 		addMember(l,ClearRandomWriteTargets_s);
-		addMember(l,"activeColorBuffer",get_activeColorBuffer,null);
-		addMember(l,"activeDepthBuffer",get_activeDepthBuffer,null);
+		addMember(l,"activeColorBuffer",get_activeColorBuffer,null,false);
+		addMember(l,"activeDepthBuffer",get_activeDepthBuffer,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Graphics));
 	}
 }

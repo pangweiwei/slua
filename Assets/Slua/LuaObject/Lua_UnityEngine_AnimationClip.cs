@@ -128,10 +128,10 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 		addMember(l,EnsureQuaternionContinuity);
 		addMember(l,ClearCurves);
 		addMember(l,AddEvent);
-		addMember(l,"length",get_length,null);
-		addMember(l,"frameRate",get_frameRate,set_frameRate);
-		addMember(l,"wrapMode",get_wrapMode,set_wrapMode);
-		addMember(l,"localBounds",get_localBounds,set_localBounds);
+		addMember(l,"length",get_length,null,true);
+		addMember(l,"frameRate",get_frameRate,set_frameRate,true);
+		addMember(l,"wrapMode",get_wrapMode,set_wrapMode,true);
+		addMember(l,"localBounds",get_localBounds,set_localBounds,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimationClip),typeof(UnityEngine.Motion));
 	}
 }

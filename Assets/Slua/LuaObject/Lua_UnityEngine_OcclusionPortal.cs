@@ -32,7 +32,7 @@ public class Lua_UnityEngine_OcclusionPortal : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.OcclusionPortal");
-		addMember(l,"open",get_open,set_open);
+		addMember(l,"open",get_open,set_open,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.OcclusionPortal),typeof(UnityEngine.Component));
 	}
 }

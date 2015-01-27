@@ -69,13 +69,13 @@ public class Lua_UnityEngine_Gyroscope : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Gyroscope");
-		addMember(l,"rotationRate",get_rotationRate,null);
-		addMember(l,"rotationRateUnbiased",get_rotationRateUnbiased,null);
-		addMember(l,"gravity",get_gravity,null);
-		addMember(l,"userAcceleration",get_userAcceleration,null);
-		addMember(l,"attitude",get_attitude,null);
-		addMember(l,"enabled",get_enabled,set_enabled);
-		addMember(l,"updateInterval",get_updateInterval,set_updateInterval);
+		addMember(l,"rotationRate",get_rotationRate,null,true);
+		addMember(l,"rotationRateUnbiased",get_rotationRateUnbiased,null,true);
+		addMember(l,"gravity",get_gravity,null,true);
+		addMember(l,"userAcceleration",get_userAcceleration,null,true);
+		addMember(l,"attitude",get_attitude,null,true);
+		addMember(l,"enabled",get_enabled,set_enabled,true);
+		addMember(l,"updateInterval",get_updateInterval,set_updateInterval,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Gyroscope));
 	}
 }

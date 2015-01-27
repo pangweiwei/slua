@@ -98,7 +98,7 @@ public class Lua_UnityEngine_LineRenderer : LuaObject {
 		addMember(l,SetColors);
 		addMember(l,SetVertexCount);
 		addMember(l,SetPosition);
-		addMember(l,"useWorldSpace",get_useWorldSpace,set_useWorldSpace);
+		addMember(l,"useWorldSpace",get_useWorldSpace,set_useWorldSpace,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LineRenderer),typeof(UnityEngine.Renderer));
 	}
 }

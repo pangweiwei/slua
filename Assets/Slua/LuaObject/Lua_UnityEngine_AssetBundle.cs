@@ -174,7 +174,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 		addMember(l,CreateFromMemory_s);
 		addMember(l,CreateFromMemoryImmediate_s);
 		addMember(l,CreateFromFile_s);
-		addMember(l,"mainAsset",get_mainAsset,null);
+		addMember(l,"mainAsset",get_mainAsset,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AssetBundle),typeof(UnityEngine.Object));
 	}
 }

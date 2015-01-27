@@ -130,14 +130,14 @@ public class Lua_UnityEngine_Joint : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Joint");
-		addMember(l,"connectedBody",get_connectedBody,set_connectedBody);
-		addMember(l,"axis",get_axis,set_axis);
-		addMember(l,"anchor",get_anchor,set_anchor);
-		addMember(l,"connectedAnchor",get_connectedAnchor,set_connectedAnchor);
-		addMember(l,"autoConfigureConnectedAnchor",get_autoConfigureConnectedAnchor,set_autoConfigureConnectedAnchor);
-		addMember(l,"breakForce",get_breakForce,set_breakForce);
-		addMember(l,"breakTorque",get_breakTorque,set_breakTorque);
-		addMember(l,"enableCollision",get_enableCollision,set_enableCollision);
+		addMember(l,"connectedBody",get_connectedBody,set_connectedBody,true);
+		addMember(l,"axis",get_axis,set_axis,true);
+		addMember(l,"anchor",get_anchor,set_anchor,true);
+		addMember(l,"connectedAnchor",get_connectedAnchor,set_connectedAnchor,true);
+		addMember(l,"autoConfigureConnectedAnchor",get_autoConfigureConnectedAnchor,set_autoConfigureConnectedAnchor,true);
+		addMember(l,"breakForce",get_breakForce,set_breakForce,true);
+		addMember(l,"breakTorque",get_breakTorque,set_breakTorque,true);
+		addMember(l,"enableCollision",get_enableCollision,set_enableCollision,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Joint),typeof(UnityEngine.Component));
 	}
 }

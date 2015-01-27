@@ -120,14 +120,14 @@ public class Lua_UnityEngine_RaycastHit2D : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.RaycastHit2D");
 		addMember(l,CompareTo);
-		addMember(l,"centroid",get_centroid,set_centroid);
-		addMember(l,"point",get_point,set_point);
-		addMember(l,"normal",get_normal,set_normal);
-		addMember(l,"distance",get_distance,set_distance);
-		addMember(l,"fraction",get_fraction,set_fraction);
-		addMember(l,"collider",get_collider,null);
-		addMember(l,"rigidbody",get_rigidbody,null);
-		addMember(l,"transform",get_transform,null);
+		addMember(l,"centroid",get_centroid,set_centroid,true);
+		addMember(l,"point",get_point,set_point,true);
+		addMember(l,"normal",get_normal,set_normal,true);
+		addMember(l,"distance",get_distance,set_distance,true);
+		addMember(l,"fraction",get_fraction,set_fraction,true);
+		addMember(l,"collider",get_collider,null,true);
+		addMember(l,"rigidbody",get_rigidbody,null,true);
+		addMember(l,"transform",get_transform,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.RaycastHit2D));
 	}
 }

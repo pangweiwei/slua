@@ -52,8 +52,8 @@ public class Lua_UnityEngine_LOD : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LOD");
-		addMember(l,"screenRelativeTransitionHeight",get_screenRelativeTransitionHeight,set_screenRelativeTransitionHeight);
-		addMember(l,"renderers",get_renderers,set_renderers);
+		addMember(l,"screenRelativeTransitionHeight",get_screenRelativeTransitionHeight,set_screenRelativeTransitionHeight,true);
+		addMember(l,"renderers",get_renderers,set_renderers,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LOD));
 	}
 }

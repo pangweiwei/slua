@@ -576,10 +576,10 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 		addMember(l,EncodeToPNG);
 		addMember(l,EncodeToJPG);
 		addMember(l,CreateExternalTexture_s);
-		addMember(l,"mipmapCount",get_mipmapCount,null);
-		addMember(l,"format",get_format,null);
-		addMember(l,"whiteTexture",get_whiteTexture,null);
-		addMember(l,"blackTexture",get_blackTexture,null);
+		addMember(l,"mipmapCount",get_mipmapCount,null,true);
+		addMember(l,"format",get_format,null,true);
+		addMember(l,"whiteTexture",get_whiteTexture,null,false);
+		addMember(l,"blackTexture",get_blackTexture,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Texture2D),typeof(UnityEngine.Texture));
 	}
 }

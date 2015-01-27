@@ -110,11 +110,11 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Keyframe");
-		addMember(l,"time",get_time,set_time);
-		addMember(l,"value",get_value,set_value);
-		addMember(l,"inTangent",get_inTangent,set_inTangent);
-		addMember(l,"outTangent",get_outTangent,set_outTangent);
-		addMember(l,"tangentMode",get_tangentMode,set_tangentMode);
+		addMember(l,"time",get_time,set_time,true);
+		addMember(l,"value",get_value,set_value,true);
+		addMember(l,"inTangent",get_inTangent,set_inTangent,true);
+		addMember(l,"outTangent",get_outTangent,set_outTangent,true);
+		addMember(l,"tangentMode",get_tangentMode,set_tangentMode,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Keyframe));
 	}
 }

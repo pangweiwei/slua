@@ -525,13 +525,13 @@ public class Lua_UnityEngine_Animation : LuaObject {
 		addMember(l,GetClipCount);
 		addMember(l,SyncLayer);
 		addMember(l,GetClip);
-		addMember(l,"clip",get_clip,set_clip);
-		addMember(l,"playAutomatically",get_playAutomatically,set_playAutomatically);
-		addMember(l,"wrapMode",get_wrapMode,set_wrapMode);
-		addMember(l,"isPlaying",get_isPlaying,null);
-		addMember(l,"animatePhysics",get_animatePhysics,set_animatePhysics);
-		addMember(l,"cullingType",get_cullingType,set_cullingType);
-		addMember(l,"localBounds",get_localBounds,set_localBounds);
+		addMember(l,"clip",get_clip,set_clip,true);
+		addMember(l,"playAutomatically",get_playAutomatically,set_playAutomatically,true);
+		addMember(l,"wrapMode",get_wrapMode,set_wrapMode,true);
+		addMember(l,"isPlaying",get_isPlaying,null,true);
+		addMember(l,"animatePhysics",get_animatePhysics,set_animatePhysics,true);
+		addMember(l,"cullingType",get_cullingType,set_cullingType,true);
+		addMember(l,"localBounds",get_localBounds,set_localBounds,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Animation),typeof(UnityEngine.Behaviour));
 	}
 }

@@ -215,8 +215,8 @@ public class Lua_HelloWorld : LuaObject {
 		addMember(l,test3_s);
 		addMember(l,test4_s);
 		addMember(l,test5_s);
-		addMember(l,"d",null,set_d);
-		addMember(l,"s",null,set_s);
+		addMember(l,"d",null,set_d,true);
+		addMember(l,"s",null,set_s,true);
 		createTypeMetatable(l,constructor, typeof(HelloWorld));
 	}
 }

@@ -35,10 +35,10 @@ public class Lua_UnityEngine_ContactPoint : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ContactPoint");
-		addMember(l,"point",get_point,null);
-		addMember(l,"normal",get_normal,null);
-		addMember(l,"thisCollider",get_thisCollider,null);
-		addMember(l,"otherCollider",get_otherCollider,null);
+		addMember(l,"point",get_point,null,true);
+		addMember(l,"normal",get_normal,null,true);
+		addMember(l,"thisCollider",get_thisCollider,null,true);
+		addMember(l,"otherCollider",get_otherCollider,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ContactPoint));
 	}
 }

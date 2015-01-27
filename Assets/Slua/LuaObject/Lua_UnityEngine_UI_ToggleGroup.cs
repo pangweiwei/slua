@@ -111,7 +111,7 @@ public class Lua_UnityEngine_UI_ToggleGroup : LuaObject {
 		addMember(l,AnyTogglesOn);
 		addMember(l,ActiveToggles);
 		addMember(l,SetAllTogglesOff);
-		addMember(l,"allowSwitchOff",get_allowSwitchOff,set_allowSwitchOff);
+		addMember(l,"allowSwitchOff",get_allowSwitchOff,set_allowSwitchOff,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.ToggleGroup),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

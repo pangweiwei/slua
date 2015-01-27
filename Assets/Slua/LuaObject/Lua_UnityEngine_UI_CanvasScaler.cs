@@ -151,16 +151,16 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.CanvasScaler");
-		addMember(l,"uiScaleMode",get_uiScaleMode,set_uiScaleMode);
-		addMember(l,"referencePixelsPerUnit",get_referencePixelsPerUnit,set_referencePixelsPerUnit);
-		addMember(l,"scaleFactor",get_scaleFactor,set_scaleFactor);
-		addMember(l,"referenceResolution",get_referenceResolution,set_referenceResolution);
-		addMember(l,"screenMatchMode",get_screenMatchMode,set_screenMatchMode);
-		addMember(l,"matchWidthOrHeight",get_matchWidthOrHeight,set_matchWidthOrHeight);
-		addMember(l,"physicalUnit",get_physicalUnit,set_physicalUnit);
-		addMember(l,"fallbackScreenDPI",get_fallbackScreenDPI,set_fallbackScreenDPI);
-		addMember(l,"defaultSpriteDPI",get_defaultSpriteDPI,set_defaultSpriteDPI);
-		addMember(l,"dynamicPixelsPerUnit",get_dynamicPixelsPerUnit,set_dynamicPixelsPerUnit);
+		addMember(l,"uiScaleMode",get_uiScaleMode,set_uiScaleMode,true);
+		addMember(l,"referencePixelsPerUnit",get_referencePixelsPerUnit,set_referencePixelsPerUnit,true);
+		addMember(l,"scaleFactor",get_scaleFactor,set_scaleFactor,true);
+		addMember(l,"referenceResolution",get_referenceResolution,set_referenceResolution,true);
+		addMember(l,"screenMatchMode",get_screenMatchMode,set_screenMatchMode,true);
+		addMember(l,"matchWidthOrHeight",get_matchWidthOrHeight,set_matchWidthOrHeight,true);
+		addMember(l,"physicalUnit",get_physicalUnit,set_physicalUnit,true);
+		addMember(l,"fallbackScreenDPI",get_fallbackScreenDPI,set_fallbackScreenDPI,true);
+		addMember(l,"defaultSpriteDPI",get_defaultSpriteDPI,set_defaultSpriteDPI,true);
+		addMember(l,"dynamicPixelsPerUnit",get_dynamicPixelsPerUnit,set_dynamicPixelsPerUnit,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.CanvasScaler),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

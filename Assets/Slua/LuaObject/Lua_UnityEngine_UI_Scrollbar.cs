@@ -273,12 +273,12 @@ public class Lua_UnityEngine_UI_Scrollbar : LuaObject {
 		addMember(l,FindSelectableOnDown);
 		addMember(l,OnInitializePotentialDrag);
 		addMember(l,SetDirection);
-		addMember(l,"handleRect",get_handleRect,set_handleRect);
-		addMember(l,"direction",get_direction,set_direction);
-		addMember(l,"value",get_value,set_value);
-		addMember(l,"size",get_size,set_size);
-		addMember(l,"numberOfSteps",get_numberOfSteps,set_numberOfSteps);
-		addMember(l,"onValueChanged",get_onValueChanged,set_onValueChanged);
+		addMember(l,"handleRect",get_handleRect,set_handleRect,true);
+		addMember(l,"direction",get_direction,set_direction,true);
+		addMember(l,"value",get_value,set_value,true);
+		addMember(l,"size",get_size,set_size,true);
+		addMember(l,"numberOfSteps",get_numberOfSteps,set_numberOfSteps,true);
+		addMember(l,"onValueChanged",get_onValueChanged,set_onValueChanged,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Scrollbar),typeof(UnityEngine.UI.Selectable));
 	}
 }

@@ -52,8 +52,8 @@ public class Lua_UnityEngine_GradientColorKey : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.GradientColorKey");
-		addMember(l,"color",get_color,set_color);
-		addMember(l,"time",get_time,set_time);
+		addMember(l,"color",get_color,set_color,true);
+		addMember(l,"time",get_time,set_time,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.GradientColorKey));
 	}
 }

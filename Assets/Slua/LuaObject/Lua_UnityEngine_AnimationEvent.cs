@@ -122,14 +122,14 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimationEvent");
-		addMember(l,"stringParameter",get_stringParameter,set_stringParameter);
-		addMember(l,"floatParameter",get_floatParameter,set_floatParameter);
-		addMember(l,"intParameter",get_intParameter,set_intParameter);
-		addMember(l,"objectReferenceParameter",get_objectReferenceParameter,set_objectReferenceParameter);
-		addMember(l,"functionName",get_functionName,set_functionName);
-		addMember(l,"time",get_time,set_time);
-		addMember(l,"messageOptions",get_messageOptions,set_messageOptions);
-		addMember(l,"animationState",get_animationState,null);
+		addMember(l,"stringParameter",get_stringParameter,set_stringParameter,true);
+		addMember(l,"floatParameter",get_floatParameter,set_floatParameter,true);
+		addMember(l,"intParameter",get_intParameter,set_intParameter,true);
+		addMember(l,"objectReferenceParameter",get_objectReferenceParameter,set_objectReferenceParameter,true);
+		addMember(l,"functionName",get_functionName,set_functionName,true);
+		addMember(l,"time",get_time,set_time,true);
+		addMember(l,"messageOptions",get_messageOptions,set_messageOptions,true);
+		addMember(l,"animationState",get_animationState,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimationEvent));
 	}
 }

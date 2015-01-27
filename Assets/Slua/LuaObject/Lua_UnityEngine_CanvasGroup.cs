@@ -92,10 +92,10 @@ public class Lua_UnityEngine_CanvasGroup : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.CanvasGroup");
 		addMember(l,IsRaycastLocationValid);
-		addMember(l,"alpha",get_alpha,set_alpha);
-		addMember(l,"interactable",get_interactable,set_interactable);
-		addMember(l,"blocksRaycasts",get_blocksRaycasts,set_blocksRaycasts);
-		addMember(l,"ignoreParentGroups",get_ignoreParentGroups,set_ignoreParentGroups);
+		addMember(l,"alpha",get_alpha,set_alpha,true);
+		addMember(l,"interactable",get_interactable,set_interactable,true);
+		addMember(l,"blocksRaycasts",get_blocksRaycasts,set_blocksRaycasts,true);
+		addMember(l,"ignoreParentGroups",get_ignoreParentGroups,set_ignoreParentGroups,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.CanvasGroup),typeof(UnityEngine.Component));
 	}
 }

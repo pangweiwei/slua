@@ -161,16 +161,16 @@ public class Lua_UnityEngine_ParticleSystem_Particle : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ParticleSystem.Particle");
-		addMember(l,"position",get_position,set_position);
-		addMember(l,"velocity",get_velocity,set_velocity);
-		addMember(l,"lifetime",get_lifetime,set_lifetime);
-		addMember(l,"startLifetime",get_startLifetime,set_startLifetime);
-		addMember(l,"size",get_size,set_size);
-		addMember(l,"axisOfRotation",get_axisOfRotation,set_axisOfRotation);
-		addMember(l,"rotation",get_rotation,set_rotation);
-		addMember(l,"angularVelocity",get_angularVelocity,set_angularVelocity);
-		addMember(l,"color",get_color,set_color);
-		addMember(l,"randomSeed",get_randomSeed,set_randomSeed);
+		addMember(l,"position",get_position,set_position,true);
+		addMember(l,"velocity",get_velocity,set_velocity,true);
+		addMember(l,"lifetime",get_lifetime,set_lifetime,true);
+		addMember(l,"startLifetime",get_startLifetime,set_startLifetime,true);
+		addMember(l,"size",get_size,set_size,true);
+		addMember(l,"axisOfRotation",get_axisOfRotation,set_axisOfRotation,true);
+		addMember(l,"rotation",get_rotation,set_rotation,true);
+		addMember(l,"angularVelocity",get_angularVelocity,set_angularVelocity,true);
+		addMember(l,"color",get_color,set_color,true);
+		addMember(l,"randomSeed",get_randomSeed,set_randomSeed,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ParticleSystem.Particle));
 	}
 }

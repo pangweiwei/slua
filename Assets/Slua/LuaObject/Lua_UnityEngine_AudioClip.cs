@@ -151,11 +151,11 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 		addMember(l,GetData);
 		addMember(l,SetData);
 		addMember(l,Create_s);
-		addMember(l,"length",get_length,null);
-		addMember(l,"samples",get_samples,null);
-		addMember(l,"channels",get_channels,null);
-		addMember(l,"frequency",get_frequency,null);
-		addMember(l,"isReadyToPlay",get_isReadyToPlay,null);
+		addMember(l,"length",get_length,null,true);
+		addMember(l,"samples",get_samples,null,true);
+		addMember(l,"channels",get_channels,null,true);
+		addMember(l,"frequency",get_frequency,null,true);
+		addMember(l,"isReadyToPlay",get_isReadyToPlay,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioClip),typeof(UnityEngine.Object));
 	}
 }

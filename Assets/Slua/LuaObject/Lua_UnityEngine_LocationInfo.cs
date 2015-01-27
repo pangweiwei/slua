@@ -47,12 +47,12 @@ public class Lua_UnityEngine_LocationInfo : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LocationInfo");
-		addMember(l,"latitude",get_latitude,null);
-		addMember(l,"longitude",get_longitude,null);
-		addMember(l,"altitude",get_altitude,null);
-		addMember(l,"horizontalAccuracy",get_horizontalAccuracy,null);
-		addMember(l,"verticalAccuracy",get_verticalAccuracy,null);
-		addMember(l,"timestamp",get_timestamp,null);
+		addMember(l,"latitude",get_latitude,null,true);
+		addMember(l,"longitude",get_longitude,null,true);
+		addMember(l,"altitude",get_altitude,null,true);
+		addMember(l,"horizontalAccuracy",get_horizontalAccuracy,null,true);
+		addMember(l,"verticalAccuracy",get_verticalAccuracy,null,true);
+		addMember(l,"timestamp",get_timestamp,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LocationInfo));
 	}
 }

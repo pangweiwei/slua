@@ -52,8 +52,8 @@ public class Lua_UnityEngine_MatchTargetWeightMask : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.MatchTargetWeightMask");
-		addMember(l,"positionXYZWeight",get_positionXYZWeight,set_positionXYZWeight);
-		addMember(l,"rotationWeight",get_rotationWeight,set_rotationWeight);
+		addMember(l,"positionXYZWeight",get_positionXYZWeight,set_positionXYZWeight,true);
+		addMember(l,"rotationWeight",get_rotationWeight,set_rotationWeight,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.MatchTargetWeightMask));
 	}
 }

@@ -71,7 +71,7 @@ public class Lua_UnityEngine_LayerMask : LuaObject {
 		addMember(l,LayerToName_s);
 		addMember(l,NameToLayer_s);
 		addMember(l,GetMask_s);
-		addMember(l,"value",get_value,set_value);
+		addMember(l,"value",get_value,set_value,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LayerMask));
 	}
 }

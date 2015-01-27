@@ -91,12 +91,12 @@ public class Lua_UnityEngine_UI_Navigation : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Navigation");
-		addMember(l,"mode",get_mode,set_mode);
-		addMember(l,"selectOnUp",get_selectOnUp,set_selectOnUp);
-		addMember(l,"selectOnDown",get_selectOnDown,set_selectOnDown);
-		addMember(l,"selectOnLeft",get_selectOnLeft,set_selectOnLeft);
-		addMember(l,"selectOnRight",get_selectOnRight,set_selectOnRight);
-		addMember(l,"defaultNavigation",get_defaultNavigation,null);
+		addMember(l,"mode",get_mode,set_mode,true);
+		addMember(l,"selectOnUp",get_selectOnUp,set_selectOnUp,true);
+		addMember(l,"selectOnDown",get_selectOnDown,set_selectOnDown,true);
+		addMember(l,"selectOnLeft",get_selectOnLeft,set_selectOnLeft,true);
+		addMember(l,"selectOnRight",get_selectOnRight,set_selectOnRight,true);
+		addMember(l,"defaultNavigation",get_defaultNavigation,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Navigation));
 	}
 }

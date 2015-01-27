@@ -271,6 +271,7 @@ class CodeGenerator
     {
         public string get="null";
         public string set="null";
+        public bool isInstance = true;
     }
     Dictionary<string, PropPair> propname = new Dictionary<string, PropPair>();
 
@@ -718,7 +719,7 @@ namespace SLua
         foreach (string f in propname.Keys)
         {
             PropPair pp = propname[f];
-            Write(file, "addMember(l,\"{0}\",{1},{2});", f,pp.get,pp.set);
+            Write(file, "addMember(l,\"{0}\",{1},{2},{3});", f,pp.get,pp.set,pp.isInstance?"true":"false");
         }
         if (t.BaseType != null && !CutBase(t.BaseType))
         {
@@ -772,6 +773,7 @@ namespace SLua
         foreach (FieldInfo fi in fields)
         {
 			PropPair pp = new PropPair();
+            pp.isInstance = !fi.IsStatic;
 
 			if(fi.FieldType.BaseType!=typeof(MulticastDelegate))
 			{
@@ -806,7 +808,6 @@ namespace SLua
                 {
                     Write(file, "{0} v;", TypeDecl(fi.FieldType));
                     WriteCheckType(file, fi.FieldType, 2);
-                    //Write(file, "{0}.{1}=v;", t.FullName, fi.Name);
 					WriteSet(file,fi.FieldType,t.FullName,fi.Name,true);
                 }
                 else
@@ -814,7 +815,6 @@ namespace SLua
                     Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
                     Write(file, "{0} v;", TypeDecl(fi.FieldType));
                     WriteCheckType(file, fi.FieldType, 2);
-                    //Write(file, "o.{0}=v;", fi.Name);
 					WriteSet(file,fi.FieldType,t.FullName,fi.Name);
                 }
 
@@ -838,6 +838,8 @@ namespace SLua
                 continue;
 
             PropPair pp = new PropPair();
+            bool isInstance = true;
+
             if (fi.CanRead)
             {
                 WriteFunctionAttr(file);
@@ -850,7 +852,10 @@ namespace SLua
                 else
                 {
                     if (fi.GetGetMethod().IsStatic)
+                    {
+                        isInstance = false;
                         WritePushValue(fi.PropertyType, file, string.Format("{0}.{1}", t.FullName, fi.Name));
+                    }
                     else
                     {
                         Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
@@ -876,14 +881,13 @@ namespace SLua
                     {
                         WriteValueCheck(file, fi.PropertyType, 2);
 						WriteSet(file,fi.PropertyType,t.FullName,fi.Name,true);
-                        //Write(file, "{0}.{1}=v;", t.FullName, fi.Name);
+                        isInstance = false;
                     }
                     else
                     {
                         Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
                         WriteValueCheck(file, fi.PropertyType, 2);
 						WriteSet(file,fi.PropertyType,t.FullName,fi.Name);
-                        //Write(file, "o.{0}=v;", fi.Name);
                     }
 
                     if (t.IsValueType)
@@ -894,6 +898,7 @@ namespace SLua
                 Write(file, "}");
                 pp.set = "set_" + fi.Name;
             }
+            pp.isInstance = isInstance;
 
             propname.Add(fi.Name, pp);
             tryMake(fi.PropertyType);

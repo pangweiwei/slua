@@ -211,10 +211,10 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 		addMember(l,SmoothTangents);
 		addMember(l,Linear_s);
 		addMember(l,EaseInOut_s);
-		addMember(l,"keys",get_keys,set_keys);
-		addMember(l,"length",get_length,null);
-		addMember(l,"preWrapMode",get_preWrapMode,set_preWrapMode);
-		addMember(l,"postWrapMode",get_postWrapMode,set_postWrapMode);
+		addMember(l,"keys",get_keys,set_keys,true);
+		addMember(l,"length",get_length,null,true);
+		addMember(l,"preWrapMode",get_preWrapMode,set_preWrapMode,true);
+		addMember(l,"postWrapMode",get_postWrapMode,set_postWrapMode,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimationCurve));
 	}
 }

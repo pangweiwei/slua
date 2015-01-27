@@ -74,10 +74,10 @@ public class Lua_UnityEngine_CapsuleCollider : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.CapsuleCollider");
-		addMember(l,"center",get_center,set_center);
-		addMember(l,"radius",get_radius,set_radius);
-		addMember(l,"height",get_height,set_height);
-		addMember(l,"direction",get_direction,set_direction);
+		addMember(l,"center",get_center,set_center,true);
+		addMember(l,"radius",get_radius,set_radius,true);
+		addMember(l,"height",get_height,set_height,true);
+		addMember(l,"direction",get_direction,set_direction,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.CapsuleCollider),typeof(UnityEngine.Collider));
 	}
 }

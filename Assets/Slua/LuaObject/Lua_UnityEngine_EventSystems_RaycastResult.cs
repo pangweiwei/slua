@@ -106,12 +106,12 @@ public class Lua_UnityEngine_EventSystems_RaycastResult : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.RaycastResult");
 		addMember(l,Clear);
-		addMember(l,"module",get_module,set_module);
-		addMember(l,"distance",get_distance,set_distance);
-		addMember(l,"index",get_index,set_index);
-		addMember(l,"depth",get_depth,set_depth);
-		addMember(l,"gameObject",get_gameObject,set_gameObject);
-		addMember(l,"isValid",get_isValid,null);
+		addMember(l,"module",get_module,set_module,true);
+		addMember(l,"distance",get_distance,set_distance,true);
+		addMember(l,"index",get_index,set_index,true);
+		addMember(l,"depth",get_depth,set_depth,true);
+		addMember(l,"gameObject",get_gameObject,set_gameObject,true);
+		addMember(l,"isValid",get_isValid,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.RaycastResult));
 	}
 }

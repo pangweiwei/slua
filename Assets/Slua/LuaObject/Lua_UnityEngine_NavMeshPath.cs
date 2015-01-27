@@ -43,8 +43,8 @@ public class Lua_UnityEngine_NavMeshPath : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.NavMeshPath");
 		addMember(l,ClearCorners);
-		addMember(l,"corners",get_corners,null);
-		addMember(l,"status",get_status,null);
+		addMember(l,"corners",get_corners,null,true);
+		addMember(l,"status",get_status,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.NavMeshPath));
 	}
 }

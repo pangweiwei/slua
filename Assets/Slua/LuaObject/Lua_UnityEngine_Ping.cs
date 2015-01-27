@@ -51,9 +51,9 @@ public class Lua_UnityEngine_Ping : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Ping");
 		addMember(l,DestroyPing);
-		addMember(l,"isDone",get_isDone,null);
-		addMember(l,"time",get_time,null);
-		addMember(l,"ip",get_ip,null);
+		addMember(l,"isDone",get_isDone,null,true);
+		addMember(l,"time",get_time,null,true);
+		addMember(l,"ip",get_ip,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Ping));
 	}
 }

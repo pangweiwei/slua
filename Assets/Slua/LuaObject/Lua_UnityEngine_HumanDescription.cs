@@ -146,15 +146,15 @@ public class Lua_UnityEngine_HumanDescription : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.HumanDescription");
-		addMember(l,"human",get_human,set_human);
-		addMember(l,"skeleton",get_skeleton,set_skeleton);
-		addMember(l,"upperArmTwist",get_upperArmTwist,set_upperArmTwist);
-		addMember(l,"lowerArmTwist",get_lowerArmTwist,set_lowerArmTwist);
-		addMember(l,"upperLegTwist",get_upperLegTwist,set_upperLegTwist);
-		addMember(l,"lowerLegTwist",get_lowerLegTwist,set_lowerLegTwist);
-		addMember(l,"armStretch",get_armStretch,set_armStretch);
-		addMember(l,"legStretch",get_legStretch,set_legStretch);
-		addMember(l,"feetSpacing",get_feetSpacing,set_feetSpacing);
+		addMember(l,"human",get_human,set_human,true);
+		addMember(l,"skeleton",get_skeleton,set_skeleton,true);
+		addMember(l,"upperArmTwist",get_upperArmTwist,set_upperArmTwist,true);
+		addMember(l,"lowerArmTwist",get_lowerArmTwist,set_lowerArmTwist,true);
+		addMember(l,"upperLegTwist",get_upperLegTwist,set_upperLegTwist,true);
+		addMember(l,"lowerLegTwist",get_lowerLegTwist,set_lowerLegTwist,true);
+		addMember(l,"armStretch",get_armStretch,set_armStretch,true);
+		addMember(l,"legStretch",get_legStretch,set_legStretch,true);
+		addMember(l,"feetSpacing",get_feetSpacing,set_feetSpacing,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.HumanDescription));
 	}
 }

@@ -473,13 +473,13 @@ public class Lua_UnityEngine_GL : LuaObject {
 		addMember(l,ClearWithSkybox_s);
 		addMember(l,InvalidateState_s);
 		addMember(l,IssuePluginEvent_s);
-		addMember(l,"TRIANGLES",get_TRIANGLES,null);
-		addMember(l,"TRIANGLE_STRIP",get_TRIANGLE_STRIP,null);
-		addMember(l,"QUADS",get_QUADS,null);
-		addMember(l,"LINES",get_LINES,null);
-		addMember(l,"modelview",get_modelview,set_modelview);
-		addMember(l,"wireframe",get_wireframe,set_wireframe);
-		addMember(l,"sRGBWrite",get_sRGBWrite,set_sRGBWrite);
+		addMember(l,"TRIANGLES",get_TRIANGLES,null,false);
+		addMember(l,"TRIANGLE_STRIP",get_TRIANGLE_STRIP,null,false);
+		addMember(l,"QUADS",get_QUADS,null,false);
+		addMember(l,"LINES",get_LINES,null,false);
+		addMember(l,"modelview",get_modelview,set_modelview,false);
+		addMember(l,"wireframe",get_wireframe,set_wireframe,false);
+		addMember(l,"sRGBWrite",get_sRGBWrite,set_sRGBWrite,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.GL));
 	}
 }

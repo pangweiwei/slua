@@ -519,16 +519,16 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 		addMember(l,op_Division);
 		addMember(l,op_Equality);
 		addMember(l,op_Inequality);
-		addMember(l,"kEpsilon",get_kEpsilon,null);
-		addMember(l,"x",get_x,set_x);
-		addMember(l,"y",get_y,set_y);
-		addMember(l,"normalized",get_normalized,null);
-		addMember(l,"magnitude",get_magnitude,null);
-		addMember(l,"sqrMagnitude",get_sqrMagnitude,null);
-		addMember(l,"zero",get_zero,null);
-		addMember(l,"one",get_one,null);
-		addMember(l,"up",get_up,null);
-		addMember(l,"right",get_right,null);
+		addMember(l,"kEpsilon",get_kEpsilon,null,false);
+		addMember(l,"x",get_x,set_x,true);
+		addMember(l,"y",get_y,set_y,true);
+		addMember(l,"normalized",get_normalized,null,true);
+		addMember(l,"magnitude",get_magnitude,null,true);
+		addMember(l,"sqrMagnitude",get_sqrMagnitude,null,true);
+		addMember(l,"zero",get_zero,null,false);
+		addMember(l,"one",get_one,null,false);
+		addMember(l,"up",get_up,null,false);
+		addMember(l,"right",get_right,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Vector2));
 	}
 }

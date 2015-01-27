@@ -47,12 +47,12 @@ public class Lua_UnityEngine_OffMeshLinkData : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.OffMeshLinkData");
-		addMember(l,"valid",get_valid,null);
-		addMember(l,"activated",get_activated,null);
-		addMember(l,"linkType",get_linkType,null);
-		addMember(l,"startPos",get_startPos,null);
-		addMember(l,"endPos",get_endPos,null);
-		addMember(l,"offMeshLink",get_offMeshLink,null);
+		addMember(l,"valid",get_valid,null,true);
+		addMember(l,"activated",get_activated,null,true);
+		addMember(l,"linkType",get_linkType,null,true);
+		addMember(l,"startPos",get_startPos,null,true);
+		addMember(l,"endPos",get_endPos,null,true);
+		addMember(l,"offMeshLink",get_offMeshLink,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.OffMeshLinkData));
 	}
 }

@@ -88,9 +88,9 @@ public class Lua_UnityEngine_SkinnedCloth : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SkinnedCloth");
 		addMember(l,SetEnabledFading);
-		addMember(l,"coefficients",get_coefficients,set_coefficients);
-		addMember(l,"worldVelocityScale",get_worldVelocityScale,set_worldVelocityScale);
-		addMember(l,"worldAccelerationScale",get_worldAccelerationScale,set_worldAccelerationScale);
+		addMember(l,"coefficients",get_coefficients,set_coefficients,true);
+		addMember(l,"worldVelocityScale",get_worldVelocityScale,set_worldVelocityScale,true);
+		addMember(l,"worldAccelerationScale",get_worldAccelerationScale,set_worldAccelerationScale,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SkinnedCloth),typeof(UnityEngine.Cloth));
 	}
 }

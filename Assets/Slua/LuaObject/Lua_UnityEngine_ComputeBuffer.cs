@@ -106,8 +106,8 @@ public class Lua_UnityEngine_ComputeBuffer : LuaObject {
 		addMember(l,SetData);
 		addMember(l,GetData);
 		addMember(l,CopyCount_s);
-		addMember(l,"count",get_count,null);
-		addMember(l,"stride",get_stride,null);
+		addMember(l,"count",get_count,null,true);
+		addMember(l,"stride",get_stride,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ComputeBuffer));
 	}
 }

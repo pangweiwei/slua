@@ -46,8 +46,8 @@ public class Lua_UnityEngine_AnimatorOverrideController : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimatorOverrideController");
-		addMember(l,"runtimeAnimatorController",get_runtimeAnimatorController,set_runtimeAnimatorController);
-		addMember(l,"clips",get_clips,set_clips);
+		addMember(l,"runtimeAnimatorController",get_runtimeAnimatorController,set_runtimeAnimatorController,true);
+		addMember(l,"clips",get_clips,set_clips,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimatorOverrideController),typeof(UnityEngine.RuntimeAnimatorController));
 	}
 }

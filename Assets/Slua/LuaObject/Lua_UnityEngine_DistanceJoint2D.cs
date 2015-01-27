@@ -78,8 +78,8 @@ public class Lua_UnityEngine_DistanceJoint2D : LuaObject {
 		getTypeTable(l,"UnityEngine.DistanceJoint2D");
 		addMember(l,GetReactionForce);
 		addMember(l,GetReactionTorque);
-		addMember(l,"distance",get_distance,set_distance);
-		addMember(l,"maxDistanceOnly",get_maxDistanceOnly,set_maxDistanceOnly);
+		addMember(l,"distance",get_distance,set_distance,true);
+		addMember(l,"maxDistanceOnly",get_maxDistanceOnly,set_maxDistanceOnly,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.DistanceJoint2D),typeof(UnityEngine.AnchoredJoint2D));
 	}
 }

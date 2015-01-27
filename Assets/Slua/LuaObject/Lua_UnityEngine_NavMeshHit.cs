@@ -86,11 +86,11 @@ public class Lua_UnityEngine_NavMeshHit : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.NavMeshHit");
-		addMember(l,"position",get_position,set_position);
-		addMember(l,"normal",get_normal,set_normal);
-		addMember(l,"distance",get_distance,set_distance);
-		addMember(l,"mask",get_mask,set_mask);
-		addMember(l,"hit",get_hit,set_hit);
+		addMember(l,"position",get_position,set_position,true);
+		addMember(l,"normal",get_normal,set_normal,true);
+		addMember(l,"distance",get_distance,set_distance,true);
+		addMember(l,"mask",get_mask,set_mask,true);
+		addMember(l,"hit",get_hit,set_hit,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.NavMeshHit));
 	}
 }

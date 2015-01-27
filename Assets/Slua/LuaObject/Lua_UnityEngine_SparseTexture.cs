@@ -120,9 +120,9 @@ public class Lua_UnityEngine_SparseTexture : LuaObject {
 		addMember(l,UpdateTile);
 		addMember(l,UpdateTileRaw);
 		addMember(l,UnloadTile);
-		addMember(l,"tileWidth",get_tileWidth,null);
-		addMember(l,"tileHeight",get_tileHeight,null);
-		addMember(l,"isCreated",get_isCreated,null);
+		addMember(l,"tileWidth",get_tileWidth,null,true);
+		addMember(l,"tileHeight",get_tileHeight,null,true);
+		addMember(l,"isCreated",get_isCreated,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SparseTexture),typeof(UnityEngine.Texture));
 	}
 }

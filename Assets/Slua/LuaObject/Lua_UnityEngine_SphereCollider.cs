@@ -46,8 +46,8 @@ public class Lua_UnityEngine_SphereCollider : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SphereCollider");
-		addMember(l,"center",get_center,set_center);
-		addMember(l,"radius",get_radius,set_radius);
+		addMember(l,"center",get_center,set_center,true);
+		addMember(l,"radius",get_radius,set_radius,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SphereCollider),typeof(UnityEngine.Collider));
 	}
 }

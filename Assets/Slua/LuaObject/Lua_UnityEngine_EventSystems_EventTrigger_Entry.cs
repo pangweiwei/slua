@@ -46,8 +46,8 @@ public class Lua_UnityEngine_EventSystems_EventTrigger_Entry : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.EventTrigger.Entry");
-		addMember(l,"eventID",get_eventID,set_eventID);
-		addMember(l,"callback",get_callback,set_callback);
+		addMember(l,"eventID",get_eventID,set_eventID,true);
+		addMember(l,"callback",get_callback,set_callback,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.EventTrigger.Entry));
 	}
 }

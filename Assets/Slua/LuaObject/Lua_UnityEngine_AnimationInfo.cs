@@ -23,8 +23,8 @@ public class Lua_UnityEngine_AnimationInfo : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimationInfo");
-		addMember(l,"clip",get_clip,null);
-		addMember(l,"weight",get_weight,null);
+		addMember(l,"clip",get_clip,null,true);
+		addMember(l,"weight",get_weight,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimationInfo));
 	}
 }

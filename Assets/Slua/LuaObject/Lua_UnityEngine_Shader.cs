@@ -342,10 +342,10 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		addMember(l,SetGlobalBuffer_s);
 		addMember(l,PropertyToID_s);
 		addMember(l,WarmupAllShaders_s);
-		addMember(l,"isSupported",get_isSupported,null);
-		addMember(l,"maximumLOD",get_maximumLOD,set_maximumLOD);
-		addMember(l,"globalMaximumLOD",get_globalMaximumLOD,set_globalMaximumLOD);
-		addMember(l,"renderQueue",get_renderQueue,null);
+		addMember(l,"isSupported",get_isSupported,null,true);
+		addMember(l,"maximumLOD",get_maximumLOD,set_maximumLOD,true);
+		addMember(l,"globalMaximumLOD",get_globalMaximumLOD,set_globalMaximumLOD,false);
+		addMember(l,"renderQueue",get_renderQueue,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Shader),typeof(UnityEngine.Object));
 	}
 }

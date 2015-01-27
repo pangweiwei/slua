@@ -52,8 +52,8 @@ public class Lua_UnityEngine_GradientAlphaKey : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.GradientAlphaKey");
-		addMember(l,"alpha",get_alpha,set_alpha);
-		addMember(l,"time",get_time,set_time);
+		addMember(l,"alpha",get_alpha,set_alpha,true);
+		addMember(l,"time",get_time,set_time,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.GradientAlphaKey));
 	}
 }

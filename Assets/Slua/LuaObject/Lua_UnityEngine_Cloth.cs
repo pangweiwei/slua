@@ -156,17 +156,17 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Cloth");
-		addMember(l,"bendingStiffness",get_bendingStiffness,set_bendingStiffness);
-		addMember(l,"stretchingStiffness",get_stretchingStiffness,set_stretchingStiffness);
-		addMember(l,"damping",get_damping,set_damping);
-		addMember(l,"thickness",get_thickness,set_thickness);
-		addMember(l,"externalAcceleration",get_externalAcceleration,set_externalAcceleration);
-		addMember(l,"randomAcceleration",get_randomAcceleration,set_randomAcceleration);
-		addMember(l,"useGravity",get_useGravity,set_useGravity);
-		addMember(l,"selfCollision",get_selfCollision,set_selfCollision);
-		addMember(l,"enabled",get_enabled,set_enabled);
-		addMember(l,"vertices",get_vertices,null);
-		addMember(l,"normals",get_normals,null);
+		addMember(l,"bendingStiffness",get_bendingStiffness,set_bendingStiffness,true);
+		addMember(l,"stretchingStiffness",get_stretchingStiffness,set_stretchingStiffness,true);
+		addMember(l,"damping",get_damping,set_damping,true);
+		addMember(l,"thickness",get_thickness,set_thickness,true);
+		addMember(l,"externalAcceleration",get_externalAcceleration,set_externalAcceleration,true);
+		addMember(l,"randomAcceleration",get_randomAcceleration,set_randomAcceleration,true);
+		addMember(l,"useGravity",get_useGravity,set_useGravity,true);
+		addMember(l,"selfCollision",get_selfCollision,set_selfCollision,true);
+		addMember(l,"enabled",get_enabled,set_enabled,true);
+		addMember(l,"vertices",get_vertices,null,true);
+		addMember(l,"normals",get_normals,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Cloth),typeof(UnityEngine.Component));
 	}
 }

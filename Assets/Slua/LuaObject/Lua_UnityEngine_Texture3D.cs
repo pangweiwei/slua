@@ -118,8 +118,8 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 		addMember(l,GetPixels);
 		addMember(l,SetPixels);
 		addMember(l,Apply);
-		addMember(l,"depth",get_depth,null);
-		addMember(l,"format",get_format,null);
+		addMember(l,"depth",get_depth,null,true);
+		addMember(l,"format",get_format,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Texture3D),typeof(UnityEngine.Texture));
 	}
 }

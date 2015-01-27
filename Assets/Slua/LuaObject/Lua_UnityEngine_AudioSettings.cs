@@ -84,10 +84,10 @@ public class Lua_UnityEngine_AudioSettings : LuaObject {
 		getTypeTable(l,"UnityEngine.AudioSettings");
 		addMember(l,SetDSPBufferSize_s);
 		addMember(l,GetDSPBufferSize_s);
-		addMember(l,"driverCaps",get_driverCaps,null);
-		addMember(l,"speakerMode",get_speakerMode,set_speakerMode);
-		addMember(l,"dspTime",get_dspTime,null);
-		addMember(l,"outputSampleRate",get_outputSampleRate,set_outputSampleRate);
+		addMember(l,"driverCaps",get_driverCaps,null,false);
+		addMember(l,"speakerMode",get_speakerMode,set_speakerMode,false);
+		addMember(l,"dspTime",get_dspTime,null,false);
+		addMember(l,"outputSampleRate",get_outputSampleRate,set_outputSampleRate,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioSettings));
 	}
 }

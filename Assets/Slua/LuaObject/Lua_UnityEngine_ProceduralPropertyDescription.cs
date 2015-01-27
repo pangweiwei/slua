@@ -158,16 +158,16 @@ public class Lua_UnityEngine_ProceduralPropertyDescription : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ProceduralPropertyDescription");
-		addMember(l,"name",get_name,set_name);
-		addMember(l,"label",get_label,set_label);
-		addMember(l,"group",get_group,set_group);
-		addMember(l,"type",get_type,set_type);
-		addMember(l,"hasRange",get_hasRange,set_hasRange);
-		addMember(l,"minimum",get_minimum,set_minimum);
-		addMember(l,"maximum",get_maximum,set_maximum);
-		addMember(l,"step",get_step,set_step);
-		addMember(l,"enumOptions",get_enumOptions,set_enumOptions);
-		addMember(l,"componentLabels",get_componentLabels,set_componentLabels);
+		addMember(l,"name",get_name,set_name,true);
+		addMember(l,"label",get_label,set_label,true);
+		addMember(l,"group",get_group,set_group,true);
+		addMember(l,"type",get_type,set_type,true);
+		addMember(l,"hasRange",get_hasRange,set_hasRange,true);
+		addMember(l,"minimum",get_minimum,set_minimum,true);
+		addMember(l,"maximum",get_maximum,set_maximum,true);
+		addMember(l,"step",get_step,set_step,true);
+		addMember(l,"enumOptions",get_enumOptions,set_enumOptions,true);
+		addMember(l,"componentLabels",get_componentLabels,set_componentLabels,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ProceduralPropertyDescription));
 	}
 }

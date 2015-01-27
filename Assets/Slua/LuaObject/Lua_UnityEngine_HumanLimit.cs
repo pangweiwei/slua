@@ -86,11 +86,11 @@ public class Lua_UnityEngine_HumanLimit : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.HumanLimit");
-		addMember(l,"useDefaultValues",get_useDefaultValues,set_useDefaultValues);
-		addMember(l,"min",get_min,set_min);
-		addMember(l,"max",get_max,set_max);
-		addMember(l,"center",get_center,set_center);
-		addMember(l,"axisLength",get_axisLength,set_axisLength);
+		addMember(l,"useDefaultValues",get_useDefaultValues,set_useDefaultValues,true);
+		addMember(l,"min",get_min,set_min,true);
+		addMember(l,"max",get_max,set_max,true);
+		addMember(l,"center",get_center,set_center,true);
+		addMember(l,"axisLength",get_axisLength,set_axisLength,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.HumanLimit));
 	}
 }

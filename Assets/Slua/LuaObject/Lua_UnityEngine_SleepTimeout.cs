@@ -28,8 +28,8 @@ public class Lua_UnityEngine_SleepTimeout : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SleepTimeout");
-		addMember(l,"NeverSleep",get_NeverSleep,null);
-		addMember(l,"SystemSetting",get_SystemSetting,null);
+		addMember(l,"NeverSleep",get_NeverSleep,null,false);
+		addMember(l,"SystemSetting",get_SystemSetting,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SleepTimeout));
 	}
 }

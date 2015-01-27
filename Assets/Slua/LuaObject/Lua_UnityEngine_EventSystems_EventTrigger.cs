@@ -280,7 +280,7 @@ public class Lua_UnityEngine_EventSystems_EventTrigger : LuaObject {
 		addMember(l,OnEndDrag);
 		addMember(l,OnSubmit);
 		addMember(l,OnCancel);
-		addMember(l,"delegates",get_delegates,set_delegates);
+		addMember(l,"delegates",get_delegates,set_delegates,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.EventTrigger),typeof(UnityEngine.MonoBehaviour));
 	}
 }

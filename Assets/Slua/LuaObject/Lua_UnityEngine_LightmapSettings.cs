@@ -66,10 +66,10 @@ public class Lua_UnityEngine_LightmapSettings : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LightmapSettings");
-		addMember(l,"lightmaps",get_lightmaps,set_lightmaps);
-		addMember(l,"lightmapsMode",get_lightmapsMode,set_lightmapsMode);
-		addMember(l,"bakedColorSpace",get_bakedColorSpace,set_bakedColorSpace);
-		addMember(l,"lightProbes",get_lightProbes,set_lightProbes);
+		addMember(l,"lightmaps",get_lightmaps,set_lightmaps,false);
+		addMember(l,"lightmapsMode",get_lightmapsMode,set_lightmapsMode,false);
+		addMember(l,"bakedColorSpace",get_bakedColorSpace,set_bakedColorSpace,false);
+		addMember(l,"lightProbes",get_lightProbes,set_lightProbes,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LightmapSettings),typeof(UnityEngine.Object));
 	}
 }

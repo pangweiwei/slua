@@ -56,9 +56,9 @@ public class Lua_UnityEngine_HumanBone : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.HumanBone");
-		addMember(l,"limit",get_limit,set_limit);
-		addMember(l,"boneName",get_boneName,set_boneName);
-		addMember(l,"humanName",get_humanName,set_humanName);
+		addMember(l,"limit",get_limit,set_limit,true);
+		addMember(l,"boneName",get_boneName,set_boneName,true);
+		addMember(l,"humanName",get_humanName,set_humanName,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.HumanBone));
 	}
 }

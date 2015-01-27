@@ -46,8 +46,8 @@ public class Lua_UnityEngine_SpriteRenderer : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SpriteRenderer");
-		addMember(l,"sprite",get_sprite,set_sprite);
-		addMember(l,"color",get_color,set_color);
+		addMember(l,"sprite",get_sprite,set_sprite,true);
+		addMember(l,"color",get_color,set_color,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SpriteRenderer),typeof(UnityEngine.Renderer));
 	}
 }

@@ -74,11 +74,11 @@ public class Lua_UnityEngine_UI_GraphicRaycaster : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.GraphicRaycaster");
 		addMember(l,Raycast);
-		addMember(l,"ignoreReversedGraphics",get_ignoreReversedGraphics,set_ignoreReversedGraphics);
-		addMember(l,"blockingObjects",get_blockingObjects,set_blockingObjects);
-		addMember(l,"sortOrderPriority",get_sortOrderPriority,null);
-		addMember(l,"renderOrderPriority",get_renderOrderPriority,null);
-		addMember(l,"eventCamera",get_eventCamera,null);
+		addMember(l,"ignoreReversedGraphics",get_ignoreReversedGraphics,set_ignoreReversedGraphics,true);
+		addMember(l,"blockingObjects",get_blockingObjects,set_blockingObjects,true);
+		addMember(l,"sortOrderPriority",get_sortOrderPriority,null,true);
+		addMember(l,"renderOrderPriority",get_renderOrderPriority,null,true);
+		addMember(l,"eventCamera",get_eventCamera,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.GraphicRaycaster),typeof(UnityEngine.EventSystems.BaseRaycaster));
 	}
 }

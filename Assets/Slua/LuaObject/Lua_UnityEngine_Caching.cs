@@ -156,12 +156,12 @@ public class Lua_UnityEngine_Caching : LuaObject {
 		addMember(l,CleanCache_s);
 		addMember(l,IsVersionCached_s);
 		addMember(l,MarkAsUsed_s);
-		addMember(l,"spaceFree",get_spaceFree,null);
-		addMember(l,"maximumAvailableDiskSpace",get_maximumAvailableDiskSpace,set_maximumAvailableDiskSpace);
-		addMember(l,"spaceOccupied",get_spaceOccupied,null);
-		addMember(l,"expirationDelay",get_expirationDelay,set_expirationDelay);
-		addMember(l,"enabled",get_enabled,set_enabled);
-		addMember(l,"ready",get_ready,null);
+		addMember(l,"spaceFree",get_spaceFree,null,false);
+		addMember(l,"maximumAvailableDiskSpace",get_maximumAvailableDiskSpace,set_maximumAvailableDiskSpace,false);
+		addMember(l,"spaceOccupied",get_spaceOccupied,null,false);
+		addMember(l,"expirationDelay",get_expirationDelay,set_expirationDelay,false);
+		addMember(l,"enabled",get_enabled,set_enabled,false);
+		addMember(l,"ready",get_ready,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Caching));
 	}
 }

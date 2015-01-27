@@ -82,9 +82,9 @@ public class Lua_UnityEngine_LocationService : LuaObject {
 		getTypeTable(l,"UnityEngine.LocationService");
 		addMember(l,Start);
 		addMember(l,Stop);
-		addMember(l,"isEnabledByUser",get_isEnabledByUser,null);
-		addMember(l,"status",get_status,null);
-		addMember(l,"lastData",get_lastData,null);
+		addMember(l,"isEnabledByUser",get_isEnabledByUser,null,true);
+		addMember(l,"status",get_status,null,true);
+		addMember(l,"lastData",get_lastData,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LocationService));
 	}
 }

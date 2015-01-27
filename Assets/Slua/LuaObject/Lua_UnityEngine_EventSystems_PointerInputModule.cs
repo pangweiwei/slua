@@ -47,10 +47,10 @@ public class Lua_UnityEngine_EventSystems_PointerInputModule : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.PointerInputModule");
 		addMember(l,IsPointerOverGameObject);
-		addMember(l,"kMouseLeftId",get_kMouseLeftId,null);
-		addMember(l,"kMouseRightId",get_kMouseRightId,null);
-		addMember(l,"kMouseMiddleId",get_kMouseMiddleId,null);
-		addMember(l,"kFakeTouchesId",get_kFakeTouchesId,null);
+		addMember(l,"kMouseLeftId",get_kMouseLeftId,null,false);
+		addMember(l,"kMouseRightId",get_kMouseRightId,null,false);
+		addMember(l,"kMouseMiddleId",get_kMouseMiddleId,null,false);
+		addMember(l,"kFakeTouchesId",get_kFakeTouchesId,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.PointerInputModule),typeof(UnityEngine.EventSystems.BaseInputModule));
 	}
 }

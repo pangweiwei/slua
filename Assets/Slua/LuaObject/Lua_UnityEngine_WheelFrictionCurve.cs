@@ -86,11 +86,11 @@ public class Lua_UnityEngine_WheelFrictionCurve : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.WheelFrictionCurve");
-		addMember(l,"extremumSlip",get_extremumSlip,set_extremumSlip);
-		addMember(l,"extremumValue",get_extremumValue,set_extremumValue);
-		addMember(l,"asymptoteSlip",get_asymptoteSlip,set_asymptoteSlip);
-		addMember(l,"asymptoteValue",get_asymptoteValue,set_asymptoteValue);
-		addMember(l,"stiffness",get_stiffness,set_stiffness);
+		addMember(l,"extremumSlip",get_extremumSlip,set_extremumSlip,true);
+		addMember(l,"extremumValue",get_extremumValue,set_extremumValue,true);
+		addMember(l,"asymptoteSlip",get_asymptoteSlip,set_asymptoteSlip,true);
+		addMember(l,"asymptoteValue",get_asymptoteValue,set_asymptoteValue,true);
+		addMember(l,"stiffness",get_stiffness,set_stiffness,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.WheelFrictionCurve));
 	}
 }

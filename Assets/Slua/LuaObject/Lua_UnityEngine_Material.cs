@@ -711,14 +711,14 @@ public class Lua_UnityEngine_Material : LuaObject {
 		addMember(l,CopyPropertiesFromMaterial);
 		addMember(l,EnableKeyword);
 		addMember(l,DisableKeyword);
-		addMember(l,"shader",get_shader,set_shader);
-		addMember(l,"color",get_color,set_color);
-		addMember(l,"mainTexture",get_mainTexture,set_mainTexture);
-		addMember(l,"mainTextureOffset",get_mainTextureOffset,set_mainTextureOffset);
-		addMember(l,"mainTextureScale",get_mainTextureScale,set_mainTextureScale);
-		addMember(l,"passCount",get_passCount,null);
-		addMember(l,"renderQueue",get_renderQueue,set_renderQueue);
-		addMember(l,"shaderKeywords",get_shaderKeywords,set_shaderKeywords);
+		addMember(l,"shader",get_shader,set_shader,true);
+		addMember(l,"color",get_color,set_color,true);
+		addMember(l,"mainTexture",get_mainTexture,set_mainTexture,true);
+		addMember(l,"mainTextureOffset",get_mainTextureOffset,set_mainTextureOffset,true);
+		addMember(l,"mainTextureScale",get_mainTextureScale,set_mainTextureScale,true);
+		addMember(l,"passCount",get_passCount,null,true);
+		addMember(l,"renderQueue",get_renderQueue,set_renderQueue,true);
+		addMember(l,"shaderKeywords",get_shaderKeywords,set_shaderKeywords,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Material),typeof(UnityEngine.Object));
 	}
 }

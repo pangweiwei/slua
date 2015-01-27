@@ -74,10 +74,10 @@ public class Lua_UnityEngine_UI_AnimationTriggers : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.AnimationTriggers");
-		addMember(l,"normalTrigger",get_normalTrigger,set_normalTrigger);
-		addMember(l,"highlightedTrigger",get_highlightedTrigger,set_highlightedTrigger);
-		addMember(l,"pressedTrigger",get_pressedTrigger,set_pressedTrigger);
-		addMember(l,"disabledTrigger",get_disabledTrigger,set_disabledTrigger);
+		addMember(l,"normalTrigger",get_normalTrigger,set_normalTrigger,true);
+		addMember(l,"highlightedTrigger",get_highlightedTrigger,set_highlightedTrigger,true);
+		addMember(l,"pressedTrigger",get_pressedTrigger,set_pressedTrigger,true);
+		addMember(l,"disabledTrigger",get_disabledTrigger,set_disabledTrigger,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.AnimationTriggers));
 	}
 }

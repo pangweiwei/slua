@@ -80,11 +80,11 @@ public class Lua_UnityEngine_Collider2D : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Collider2D");
 		addMember(l,OverlapPoint);
-		addMember(l,"isTrigger",get_isTrigger,set_isTrigger);
-		addMember(l,"attachedRigidbody",get_attachedRigidbody,null);
-		addMember(l,"shapeCount",get_shapeCount,null);
-		addMember(l,"bounds",get_bounds,null);
-		addMember(l,"sharedMaterial",get_sharedMaterial,set_sharedMaterial);
+		addMember(l,"isTrigger",get_isTrigger,set_isTrigger,true);
+		addMember(l,"attachedRigidbody",get_attachedRigidbody,null,true);
+		addMember(l,"shapeCount",get_shapeCount,null,true);
+		addMember(l,"bounds",get_bounds,null,true);
+		addMember(l,"sharedMaterial",get_sharedMaterial,set_sharedMaterial,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Collider2D),typeof(UnityEngine.Behaviour));
 	}
 }

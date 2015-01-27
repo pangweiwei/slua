@@ -178,8 +178,8 @@ public class Lua_UnityEngine_Plane : LuaObject {
 		addMember(l,GetSide);
 		addMember(l,SameSide);
 		addMember(l,Raycast);
-		addMember(l,"normal",get_normal,set_normal);
-		addMember(l,"distance",get_distance,set_distance);
+		addMember(l,"normal",get_normal,set_normal,true);
+		addMember(l,"distance",get_distance,set_distance,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Plane));
 	}
 }

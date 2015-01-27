@@ -186,18 +186,18 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.TextMesh");
-		addMember(l,"text",get_text,set_text);
-		addMember(l,"font",get_font,set_font);
-		addMember(l,"fontSize",get_fontSize,set_fontSize);
-		addMember(l,"fontStyle",get_fontStyle,set_fontStyle);
-		addMember(l,"offsetZ",get_offsetZ,set_offsetZ);
-		addMember(l,"alignment",get_alignment,set_alignment);
-		addMember(l,"anchor",get_anchor,set_anchor);
-		addMember(l,"characterSize",get_characterSize,set_characterSize);
-		addMember(l,"lineSpacing",get_lineSpacing,set_lineSpacing);
-		addMember(l,"tabSize",get_tabSize,set_tabSize);
-		addMember(l,"richText",get_richText,set_richText);
-		addMember(l,"color",get_color,set_color);
+		addMember(l,"text",get_text,set_text,true);
+		addMember(l,"font",get_font,set_font,true);
+		addMember(l,"fontSize",get_fontSize,set_fontSize,true);
+		addMember(l,"fontStyle",get_fontStyle,set_fontStyle,true);
+		addMember(l,"offsetZ",get_offsetZ,set_offsetZ,true);
+		addMember(l,"alignment",get_alignment,set_alignment,true);
+		addMember(l,"anchor",get_anchor,set_anchor,true);
+		addMember(l,"characterSize",get_characterSize,set_characterSize,true);
+		addMember(l,"lineSpacing",get_lineSpacing,set_lineSpacing,true);
+		addMember(l,"tabSize",get_tabSize,set_tabSize,true);
+		addMember(l,"richText",get_richText,set_richText,true);
+		addMember(l,"color",get_color,set_color,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.TextMesh),typeof(UnityEngine.Component));
 	}
 }

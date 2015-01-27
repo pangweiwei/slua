@@ -53,13 +53,13 @@ public class Lua_UnityEngine_Touch : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Touch");
-		addMember(l,"fingerId",get_fingerId,null);
-		addMember(l,"position",get_position,null);
-		addMember(l,"rawPosition",get_rawPosition,null);
-		addMember(l,"deltaPosition",get_deltaPosition,null);
-		addMember(l,"deltaTime",get_deltaTime,null);
-		addMember(l,"tapCount",get_tapCount,null);
-		addMember(l,"phase",get_phase,null);
+		addMember(l,"fingerId",get_fingerId,null,true);
+		addMember(l,"position",get_position,null,true);
+		addMember(l,"rawPosition",get_rawPosition,null,true);
+		addMember(l,"deltaPosition",get_deltaPosition,null,true);
+		addMember(l,"deltaTime",get_deltaTime,null,true);
+		addMember(l,"tapCount",get_tapCount,null,true);
+		addMember(l,"phase",get_phase,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Touch));
 	}
 }

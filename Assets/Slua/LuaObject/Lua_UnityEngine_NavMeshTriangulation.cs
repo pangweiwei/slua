@@ -56,9 +56,9 @@ public class Lua_UnityEngine_NavMeshTriangulation : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.NavMeshTriangulation");
-		addMember(l,"vertices",get_vertices,set_vertices);
-		addMember(l,"indices",get_indices,set_indices);
-		addMember(l,"layers",get_layers,set_layers);
+		addMember(l,"vertices",get_vertices,set_vertices,true);
+		addMember(l,"indices",get_indices,set_indices,true);
+		addMember(l,"layers",get_layers,set_layers,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.NavMeshTriangulation));
 	}
 }

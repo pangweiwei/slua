@@ -132,8 +132,8 @@ public class Lua_UnityEngine_PolygonCollider2D : LuaObject {
 		addMember(l,SetPath);
 		addMember(l,GetTotalPointCount);
 		addMember(l,CreatePrimitive);
-		addMember(l,"points",get_points,set_points);
-		addMember(l,"pathCount",get_pathCount,set_pathCount);
+		addMember(l,"points",get_points,set_points,true);
+		addMember(l,"pathCount",get_pathCount,set_pathCount,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.PolygonCollider2D),typeof(UnityEngine.Collider2D));
 	}
 }

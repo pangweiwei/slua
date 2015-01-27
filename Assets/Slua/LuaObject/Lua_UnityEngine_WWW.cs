@@ -313,21 +313,21 @@ public class Lua_UnityEngine_WWW : LuaObject {
 		addMember(l,EscapeURL_s);
 		addMember(l,UnEscapeURL_s);
 		addMember(l,LoadFromCacheOrDownload_s);
-		addMember(l,"responseHeaders",get_responseHeaders,null);
-		addMember(l,"text",get_text,null);
-		addMember(l,"bytes",get_bytes,null);
-		addMember(l,"size",get_size,null);
-		addMember(l,"error",get_error,null);
-		addMember(l,"texture",get_texture,null);
-		addMember(l,"textureNonReadable",get_textureNonReadable,null);
-		addMember(l,"audioClip",get_audioClip,null);
-		addMember(l,"isDone",get_isDone,null);
-		addMember(l,"progress",get_progress,null);
-		addMember(l,"uploadProgress",get_uploadProgress,null);
-		addMember(l,"bytesDownloaded",get_bytesDownloaded,null);
-		addMember(l,"url",get_url,null);
-		addMember(l,"assetBundle",get_assetBundle,null);
-		addMember(l,"threadPriority",get_threadPriority,set_threadPriority);
+		addMember(l,"responseHeaders",get_responseHeaders,null,true);
+		addMember(l,"text",get_text,null,true);
+		addMember(l,"bytes",get_bytes,null,true);
+		addMember(l,"size",get_size,null,true);
+		addMember(l,"error",get_error,null,true);
+		addMember(l,"texture",get_texture,null,true);
+		addMember(l,"textureNonReadable",get_textureNonReadable,null,true);
+		addMember(l,"audioClip",get_audioClip,null,true);
+		addMember(l,"isDone",get_isDone,null,true);
+		addMember(l,"progress",get_progress,null,true);
+		addMember(l,"uploadProgress",get_uploadProgress,null,true);
+		addMember(l,"bytesDownloaded",get_bytesDownloaded,null,true);
+		addMember(l,"url",get_url,null,true);
+		addMember(l,"assetBundle",get_assetBundle,null,true);
+		addMember(l,"threadPriority",get_threadPriority,set_threadPriority,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.WWW));
 	}
 }

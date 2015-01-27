@@ -109,10 +109,10 @@ public class Lua_UnityEngine_LODGroup : LuaObject {
 		addMember(l,RecalculateBounds);
 		addMember(l,SetLODS);
 		addMember(l,ForceLOD);
-		addMember(l,"localReferencePoint",get_localReferencePoint,set_localReferencePoint);
-		addMember(l,"size",get_size,set_size);
-		addMember(l,"lodCount",get_lodCount,null);
-		addMember(l,"enabled",get_enabled,set_enabled);
+		addMember(l,"localReferencePoint",get_localReferencePoint,set_localReferencePoint,true);
+		addMember(l,"size",get_size,set_size,true);
+		addMember(l,"lodCount",get_lodCount,null,true);
+		addMember(l,"enabled",get_enabled,set_enabled,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LODGroup),typeof(UnityEngine.Component));
 	}
 }

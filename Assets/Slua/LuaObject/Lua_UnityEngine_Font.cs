@@ -207,12 +207,12 @@ public class Lua_UnityEngine_Font : LuaObject {
 		addMember(l,RequestCharactersInTexture);
 		addMember(l,GetCharacterInfo);
 		addMember(l,GetMaxVertsForString_s);
-		addMember(l,"material",get_material,set_material);
-		addMember(l,"fontNames",get_fontNames,set_fontNames);
-		addMember(l,"characterInfo",get_characterInfo,set_characterInfo);
-		addMember(l,"textureRebuildCallback",get_textureRebuildCallback,set_textureRebuildCallback);
-		addMember(l,"dynamic",get_dynamic,null);
-		addMember(l,"fontSize",get_fontSize,null);
+		addMember(l,"material",get_material,set_material,true);
+		addMember(l,"fontNames",get_fontNames,set_fontNames,true);
+		addMember(l,"characterInfo",get_characterInfo,set_characterInfo,true);
+		addMember(l,"textureRebuildCallback",get_textureRebuildCallback,set_textureRebuildCallback,true);
+		addMember(l,"dynamic",get_dynamic,null,true);
+		addMember(l,"fontSize",get_fontSize,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Font),typeof(UnityEngine.Object));
 	}
 }

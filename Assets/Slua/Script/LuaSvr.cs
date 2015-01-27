@@ -19,6 +19,9 @@ namespace SLua
             bind("BindUnityUI");
             bind("BindCustom");
 
+            if (LuaDLL.lua_gettop(luaState.handle) != 0)
+                Debug.LogError("Some function not remove temp value from lua stack.");
+
             GameObject go = new GameObject("LuaSvrProxy");
             LuaSvrGameObject lgo = go.AddComponent<LuaSvrGameObject>();
             GameObject.DontDestroyOnLoad(go);

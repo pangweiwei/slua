@@ -226,15 +226,15 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 		addMember(l,AddForceAtPosition);
 		addMember(l,AttachToCollider);
 		addMember(l,DetachFromCollider);
-		addMember(l,"mesh",get_mesh,set_mesh);
-		addMember(l,"friction",get_friction,set_friction);
-		addMember(l,"density",get_density,set_density);
-		addMember(l,"pressure",get_pressure,set_pressure);
-		addMember(l,"collisionResponse",get_collisionResponse,set_collisionResponse);
-		addMember(l,"tearFactor",get_tearFactor,set_tearFactor);
-		addMember(l,"attachmentTearFactor",get_attachmentTearFactor,set_attachmentTearFactor);
-		addMember(l,"attachmentResponse",get_attachmentResponse,set_attachmentResponse);
-		addMember(l,"isTeared",get_isTeared,null);
+		addMember(l,"mesh",get_mesh,set_mesh,true);
+		addMember(l,"friction",get_friction,set_friction,true);
+		addMember(l,"density",get_density,set_density,true);
+		addMember(l,"pressure",get_pressure,set_pressure,true);
+		addMember(l,"collisionResponse",get_collisionResponse,set_collisionResponse,true);
+		addMember(l,"tearFactor",get_tearFactor,set_tearFactor,true);
+		addMember(l,"attachmentTearFactor",get_attachmentTearFactor,set_attachmentTearFactor,true);
+		addMember(l,"attachmentResponse",get_attachmentResponse,set_attachmentResponse,true);
+		addMember(l,"isTeared",get_isTeared,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.InteractiveCloth),typeof(UnityEngine.Cloth));
 	}
 }

@@ -116,8 +116,8 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 		getTypeTable(l,"UnityEngine.WWWForm");
 		addMember(l,AddField);
 		addMember(l,AddBinaryData);
-		addMember(l,"headers",get_headers,null);
-		addMember(l,"data",get_data,null);
+		addMember(l,"headers",get_headers,null,true);
+		addMember(l,"data",get_data,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.WWWForm));
 	}
 }

@@ -79,8 +79,8 @@ public class Lua_UnityEngine_Gradient : LuaObject {
 		getTypeTable(l,"UnityEngine.Gradient");
 		addMember(l,Evaluate);
 		addMember(l,SetKeys);
-		addMember(l,"colorKeys",get_colorKeys,set_colorKeys);
-		addMember(l,"alphaKeys",get_alphaKeys,set_alphaKeys);
+		addMember(l,"colorKeys",get_colorKeys,set_colorKeys,true);
+		addMember(l,"alphaKeys",get_alphaKeys,set_alphaKeys,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Gradient));
 	}
 }

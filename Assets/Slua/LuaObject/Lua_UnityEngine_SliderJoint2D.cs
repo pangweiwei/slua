@@ -128,15 +128,15 @@ public class Lua_UnityEngine_SliderJoint2D : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SliderJoint2D");
 		addMember(l,GetMotorForce);
-		addMember(l,"angle",get_angle,set_angle);
-		addMember(l,"useMotor",get_useMotor,set_useMotor);
-		addMember(l,"useLimits",get_useLimits,set_useLimits);
-		addMember(l,"motor",get_motor,set_motor);
-		addMember(l,"limits",get_limits,set_limits);
-		addMember(l,"limitState",get_limitState,null);
-		addMember(l,"referenceAngle",get_referenceAngle,null);
-		addMember(l,"jointTranslation",get_jointTranslation,null);
-		addMember(l,"jointSpeed",get_jointSpeed,null);
+		addMember(l,"angle",get_angle,set_angle,true);
+		addMember(l,"useMotor",get_useMotor,set_useMotor,true);
+		addMember(l,"useLimits",get_useLimits,set_useLimits,true);
+		addMember(l,"motor",get_motor,set_motor,true);
+		addMember(l,"limits",get_limits,set_limits,true);
+		addMember(l,"limitState",get_limitState,null,true);
+		addMember(l,"referenceAngle",get_referenceAngle,null,true);
+		addMember(l,"jointTranslation",get_jointTranslation,null,true);
+		addMember(l,"jointSpeed",get_jointSpeed,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SliderJoint2D),typeof(UnityEngine.AnchoredJoint2D));
 	}
 }

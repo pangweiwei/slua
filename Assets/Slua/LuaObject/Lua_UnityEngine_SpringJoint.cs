@@ -74,10 +74,10 @@ public class Lua_UnityEngine_SpringJoint : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SpringJoint");
-		addMember(l,"spring",get_spring,set_spring);
-		addMember(l,"damper",get_damper,set_damper);
-		addMember(l,"minDistance",get_minDistance,set_minDistance);
-		addMember(l,"maxDistance",get_maxDistance,set_maxDistance);
+		addMember(l,"spring",get_spring,set_spring,true);
+		addMember(l,"damper",get_damper,set_damper,true);
+		addMember(l,"minDistance",get_minDistance,set_minDistance,true);
+		addMember(l,"maxDistance",get_maxDistance,set_maxDistance,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SpringJoint),typeof(UnityEngine.Joint));
 	}
 }

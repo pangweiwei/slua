@@ -202,15 +202,15 @@ public class Lua_UnityEngine_RectTransform : LuaObject {
 		addMember(l,GetWorldCorners);
 		addMember(l,SetInsetAndSizeFromParentEdge);
 		addMember(l,SetSizeWithCurrentAnchors);
-		addMember(l,"rect",get_rect,null);
-		addMember(l,"anchorMin",get_anchorMin,set_anchorMin);
-		addMember(l,"anchorMax",get_anchorMax,set_anchorMax);
-		addMember(l,"anchoredPosition3D",get_anchoredPosition3D,set_anchoredPosition3D);
-		addMember(l,"anchoredPosition",get_anchoredPosition,set_anchoredPosition);
-		addMember(l,"sizeDelta",get_sizeDelta,set_sizeDelta);
-		addMember(l,"pivot",get_pivot,set_pivot);
-		addMember(l,"offsetMin",get_offsetMin,set_offsetMin);
-		addMember(l,"offsetMax",get_offsetMax,set_offsetMax);
+		addMember(l,"rect",get_rect,null,true);
+		addMember(l,"anchorMin",get_anchorMin,set_anchorMin,true);
+		addMember(l,"anchorMax",get_anchorMax,set_anchorMax,true);
+		addMember(l,"anchoredPosition3D",get_anchoredPosition3D,set_anchoredPosition3D,true);
+		addMember(l,"anchoredPosition",get_anchoredPosition,set_anchoredPosition,true);
+		addMember(l,"sizeDelta",get_sizeDelta,set_sizeDelta,true);
+		addMember(l,"pivot",get_pivot,set_pivot,true);
+		addMember(l,"offsetMin",get_offsetMin,set_offsetMin,true);
+		addMember(l,"offsetMax",get_offsetMax,set_offsetMax,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.RectTransform),typeof(UnityEngine.Transform));
 	}
 }
