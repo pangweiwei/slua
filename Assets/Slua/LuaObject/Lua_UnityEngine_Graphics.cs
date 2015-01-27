@@ -193,46 +193,6 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.DrawMesh(a1,a2,a3,a4,a5,a6,a7,a8,a9);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Mesh),typeof(UnityEngine.Vector3),typeof(UnityEngine.Quaternion))){
-				UnityEngine.Mesh a1;
-				checkType(l,1,out a1);
-				UnityEngine.Vector3 a2;
-				checkType(l,2,out a2);
-				UnityEngine.Quaternion a3;
-				checkType(l,3,out a3);
-				UnityEngine.Graphics.DrawMesh(a1,a2,a3);
-				return 0;
-			}
-			else if(matchType(l,1,typeof(UnityEngine.Mesh),typeof(UnityEngine.Vector3),typeof(UnityEngine.Quaternion),typeof(System.Int32))){
-				UnityEngine.Mesh a1;
-				checkType(l,1,out a1);
-				UnityEngine.Vector3 a2;
-				checkType(l,2,out a2);
-				UnityEngine.Quaternion a3;
-				checkType(l,3,out a3);
-				System.Int32 a4;
-				checkType(l,4,out a4);
-				UnityEngine.Graphics.DrawMesh(a1,a2,a3,a4);
-				return 0;
-			}
-			else if(matchType(l,1,typeof(UnityEngine.Mesh),typeof(UnityEngine.Matrix4x4))){
-				UnityEngine.Mesh a1;
-				checkType(l,1,out a1);
-				UnityEngine.Matrix4x4 a2;
-				checkType(l,2,out a2);
-				UnityEngine.Graphics.DrawMesh(a1,a2);
-				return 0;
-			}
-			else if(matchType(l,1,typeof(UnityEngine.Mesh),typeof(UnityEngine.Matrix4x4),typeof(System.Int32))){
-				UnityEngine.Mesh a1;
-				checkType(l,1,out a1);
-				UnityEngine.Matrix4x4 a2;
-				checkType(l,2,out a2);
-				System.Int32 a3;
-				checkType(l,3,out a3);
-				UnityEngine.Graphics.DrawMesh(a1,a2,a3);
-				return 0;
-			}
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}

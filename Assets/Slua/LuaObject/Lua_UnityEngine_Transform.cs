@@ -183,27 +183,14 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RotateAround(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(System.Single))){
-				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
-				UnityEngine.Vector3 a1;
-				checkType(l,2,out a1);
-				UnityEngine.Vector3 a2;
-				checkType(l,3,out a2);
-				System.Single a3;
-				checkType(l,4,out a3);
-				self.RotateAround(a1,a2,a3);
-				return 0;
-			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(System.Single))){
-				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
-				UnityEngine.Vector3 a1;
-				checkType(l,2,out a1);
-				System.Single a2;
-				checkType(l,3,out a2);
-				self.RotateAround(a1,a2);
-				return 0;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
+			UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
+			UnityEngine.Vector3 a1;
+			checkType(l,2,out a1);
+			UnityEngine.Vector3 a2;
+			checkType(l,3,out a2);
+			System.Single a3;
+			checkType(l,4,out a3);
+			self.RotateAround(a1,a2,a3);
 			return 0;
 		}
 		catch(Exception e) {

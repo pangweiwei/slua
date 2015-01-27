@@ -33,17 +33,6 @@ public class Lua_UnityEngine_WWW : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.String),typeof(System.Byte),typeof(System.Collections.Hashtable))){
-			System.String a1;
-			checkType(l,1,out a1);
-			System.Byte[] a2;
-			checkType(l,2,out a2);
-			System.Collections.Hashtable a3;
-			checkType(l,3,out a3);
-			o=new UnityEngine.WWW(a1,a2,a3);
-			pushObject(l,o);
-			return 1;
-		}
 		LuaDLL.luaL_error(l,"New object failed.");
 		return 0;
 	}

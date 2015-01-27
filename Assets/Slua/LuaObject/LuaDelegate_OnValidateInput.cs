@@ -31,7 +31,6 @@ namespace SLua
 				if (LuaDLL.lua_pcall(l, 3, -1, error) != 0) {
 					LuaDLL.lua_pop(l, 1);
 				}
-				int top =LuaDLL.lua_gettop(l);
 				Char ret;
 				checkType(l,error+1,out ret);
 				LuaDLL.lua_pop(l, 1);

@@ -149,26 +149,12 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetOutputData(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Int32),typeof(System.Int32))){
-				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
-				System.Int32 a1;
-				checkType(l,2,out a1);
-				System.Int32 a2;
-				checkType(l,3,out a2);
-				System.Single[] ret=self.GetOutputData(a1,a2);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,2,typeof(System.Single),typeof(System.Int32))){
-				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
-				System.Single[] a1;
-				checkType(l,2,out a1);
-				System.Int32 a2;
-				checkType(l,3,out a2);
-				self.GetOutputData(a1,a2);
-				return 0;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
+			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
+			System.Single[] a1;
+			checkType(l,2,out a1);
+			System.Int32 a2;
+			checkType(l,3,out a2);
+			self.GetOutputData(a1,a2);
 			return 0;
 		}
 		catch(Exception e) {
@@ -179,30 +165,14 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetSpectrumData(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.FFTWindow))){
-				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
-				System.Int32 a1;
-				checkType(l,2,out a1);
-				System.Int32 a2;
-				checkType(l,3,out a2);
-				UnityEngine.FFTWindow a3;
-				checkEnum(l,4,out a3);
-				System.Single[] ret=self.GetSpectrumData(a1,a2,a3);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,2,typeof(System.Single),typeof(System.Int32),typeof(UnityEngine.FFTWindow))){
-				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
-				System.Single[] a1;
-				checkType(l,2,out a1);
-				System.Int32 a2;
-				checkType(l,3,out a2);
-				UnityEngine.FFTWindow a3;
-				checkEnum(l,4,out a3);
-				self.GetSpectrumData(a1,a2,a3);
-				return 0;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
+			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
+			System.Single[] a1;
+			checkType(l,2,out a1);
+			System.Int32 a2;
+			checkType(l,3,out a2);
+			UnityEngine.FFTWindow a3;
+			checkEnum(l,4,out a3);
+			self.GetSpectrumData(a1,a2,a3);
 			return 0;
 		}
 		catch(Exception e) {

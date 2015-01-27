@@ -398,7 +398,6 @@ namespace SLua
         Write(file, "LuaDLL.lua_pop(l, 1);");
         Write(file,"}");
 
-        Write(file, "int top =LuaDLL.lua_gettop(l);");
         if (mi.ReturnType != typeof(void))
             WriteValueCheck(file, mi.ReturnType, 1, "ret", "error+");
 
@@ -624,7 +623,10 @@ namespace SLua
         {
             string fn = writeStatic ? staticName(mi.Name) : mi.Name;
 
-            if (mi.MemberType == MemberTypes.Method && !funcname.Contains(fn) && isUsefullMethod(mi))
+            if (mi.MemberType == MemberTypes.Method 
+                && !funcname.Contains(fn) &&
+                !IsObsolete(mi) &&
+                isUsefullMethod(mi))
             {
                 if (!renamefunc.ContainsKey(mi.Name)) renamefunc[mi.Name] = 0;
                 renamefunc[mi.Name] += 1;
@@ -902,7 +904,7 @@ namespace SLua
             {
                 ConstructorInfo ci = cons[n];
                 ParameterInfo[] pars = ci.GetParameters();
-                if (!containGeneric(pars))
+                if (!containGeneric(pars) && !IsObsolete(ci))
                 {
                     Write(file, "{0}(matchType(l,1{1})){{", first ? "if" : "else if", TypeDecl(pars));
                     // pre-check is parameter is delegate
@@ -1040,6 +1042,9 @@ namespace SLua
                 if (cons[n].MemberType == MemberTypes.Method)
                 {
                     MethodInfo mi = cons[n] as MethodInfo;
+                    if (IsObsolete(mi))
+                        continue;
+
                     ParameterInfo[] pars = mi.GetParameters();
                     if (!mi.ReturnType.ContainsGenericParameters && !containGeneric(pars)) // don't support generic method
                     {

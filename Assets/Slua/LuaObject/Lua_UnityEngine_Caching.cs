@@ -47,34 +47,6 @@ public class Lua_UnityEngine_Caching : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String),typeof(System.String),typeof(System.Int32),typeof(System.Int32),typeof(System.String))){
-				System.String a1;
-				checkType(l,1,out a1);
-				System.String a2;
-				checkType(l,2,out a2);
-				System.Int32 a3;
-				checkType(l,3,out a3);
-				System.Int32 a4;
-				checkType(l,4,out a4);
-				System.String a5;
-				checkType(l,5,out a5);
-				System.Boolean ret=UnityEngine.Caching.Authorize(a1,a2,a3,a4,a5);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,1,typeof(System.String),typeof(System.String),typeof(System.Int32),typeof(System.String))){
-				System.String a1;
-				checkType(l,1,out a1);
-				System.String a2;
-				checkType(l,2,out a2);
-				System.Int32 a3;
-				checkType(l,3,out a3);
-				System.String a4;
-				checkType(l,4,out a4);
-				System.Boolean ret=UnityEngine.Caching.Authorize(a1,a2,a3,a4);
-				pushValue(l,ret);
-				return 1;
-			}
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}

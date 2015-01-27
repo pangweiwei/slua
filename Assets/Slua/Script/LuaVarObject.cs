@@ -300,7 +300,7 @@ namespace SLua
             }
         }
 
-        static internal void init(IntPtr l)
+        static new public void init(IntPtr l)
         {
             LuaDLL.lua_newtable(l);
             LuaDLL.lua_pushstdcallcfunction(l, luaIndex);

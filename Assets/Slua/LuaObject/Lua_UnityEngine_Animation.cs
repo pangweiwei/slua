@@ -124,24 +124,6 @@ public class Lua_UnityEngine_Animation : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.AnimationPlayMode))){
-				UnityEngine.Animation self=(UnityEngine.Animation)checkSelf(l);
-				UnityEngine.AnimationPlayMode a1;
-				checkEnum(l,2,out a1);
-				System.Boolean ret=self.Play(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,2,typeof(System.String),typeof(UnityEngine.AnimationPlayMode))){
-				UnityEngine.Animation self=(UnityEngine.Animation)checkSelf(l);
-				System.String a1;
-				checkType(l,2,out a1);
-				UnityEngine.AnimationPlayMode a2;
-				checkEnum(l,3,out a2);
-				System.Boolean ret=self.Play(a1,a2);
-				pushValue(l,ret);
-				return 1;
-			}
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}
