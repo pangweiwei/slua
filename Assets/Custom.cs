@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using LuaInterface;
 using SLua;
 using System;
@@ -36,5 +37,10 @@ public class Custom : MonoBehaviour {
         LuaDLL.lua_pushstring(l,vs);
         LuaObject.pushObject(l, c);
         return 2;
+    }
+
+    public string getTypeName(Type t)
+    {
+        return t.Name;
     }
 }

@@ -234,12 +234,24 @@ return index
                 LuaDLL.luaL_getmetatable(l, parent.AssemblyQualifiedName);
                 LuaDLL.lua_rawset(l, -3);
             }
+            // typename
+            LuaDLL.lua_pushstring(l, "__fullname");
+            LuaDLL.lua_pushstring(l, ObjectCache.getAQName(self));
+            LuaDLL.lua_rawset(l, -4);
 
             LuaDLL.lua_pushstring(l, "__typename");
             LuaDLL.lua_pushstring(l, self.Name);
             LuaDLL.lua_rawset(l, -3);
+            
 
             newTypeMeta(l, con);
+
+//             if (parent != null && parent != typeof(object))
+//             {
+//                 LuaDLL.lua_pushstring(l, "__parent");
+//                 newTypeTable(l, parent.FullName);
+// 
+//             }
 
             LuaDLL.lua_pushvalue(l, -1);
             LuaDLL.lua_setmetatable(l, -3);
@@ -250,6 +262,7 @@ return index
 
         private static void newTypeMeta(IntPtr l,LuaCSFunction con)
         {
+            // for instance 
             LuaDLL.lua_getref(l, index_ref);
             LuaDLL.lua_setfield(l, -2, "__index");
 
@@ -305,10 +318,7 @@ return index
         {
             LuaDLL.lua_pushstdcallcfunction(l, func);
             string name = func.Method.Name;
-            if (!instance)
-                LuaDLL.lua_setfield(l, -3, name);
-            else
-                LuaDLL.lua_setfield(l, -2, name);
+            LuaDLL.lua_setfield(l, instance?-2:-3, name);
         }
 
         public static void addMember(IntPtr l, string name, LuaCSFunction get, LuaCSFunction set)
@@ -609,6 +619,38 @@ return index
             return true;
         }
 
+        static Dictionary<string, Type> typeCache = new Dictionary<string, Type>();
+        static internal bool checkType(IntPtr l, int p, out Type t)
+        {
+            string tname=null;
+            LuaTypes lt = LuaDLL.lua_type(l, p);
+            if (lt == LuaTypes.LUA_TTABLE)
+            {
+                LuaDLL.lua_pushstring(l, "__fullname");
+                LuaDLL.lua_rawget(l, p);
+                tname = LuaDLL.lua_tostring(l, -1);
+                LuaDLL.lua_pop(l, 1);
+            }
+            else if (lt == LuaTypes.LUA_TSTRING)
+                tname = LuaDLL.lua_tostring(l, p);
+            
+            if(tname==null)
+                LuaDLL.luaL_error(l, "expect string or type table");
+
+            if (typeCache.TryGetValue(tname, out t))
+            {
+                return true;
+            }
+
+
+            t = Type.GetType(tname);
+            if (t!=null)
+            {
+                typeCache[tname] = t;
+            }
+            return t != null;
+        }
+
         static internal bool checkType<T>(IntPtr l, int p, out T o) {
             o = (T)checkObj(l, p);
             return true;
@@ -710,6 +752,30 @@ return index
                 LuaDLL.lua_rawseti(l, -2, n+1);
             }
         }
+
+        // i don't know why c# find a wrong generic function
+        // push T will push object not a real push<T>
+
+//         internal static void pushValue<T>(IntPtr l, List<T> list)
+//         {
+//             LuaDLL.lua_newtable(l);
+//             for (int n = 0; n < list.Count; n++)
+//             {
+//                 pushValue(l, (T)list[n]);
+//                 LuaDLL.lua_rawseti(l, -2, n + 1);
+//             }
+//         }
+// 
+//         internal static void pushValue<K,V>(IntPtr l, Dictionary<K,V> dict)
+//         {
+//             LuaDLL.lua_newtable(l);
+//             foreach (K k in dict.Keys)
+//             {
+//                 pushValue(l, (K)k);
+//                 pushValue(l, (V)dict[k]);
+//                 LuaDLL.lua_rawset(l, -3);
+//             }
+//         }
 
         internal static void pushValue(IntPtr l, bool b)
         {
