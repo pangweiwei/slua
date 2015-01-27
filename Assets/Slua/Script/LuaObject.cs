@@ -417,7 +417,7 @@ return index
                 case LuaTypes.LUA_TBOOLEAN:
                     return t == typeof(bool);
                 case LuaTypes.LUA_TTABLE:
-                    return luaTypeCheck(l, p, t.Name);
+                    return t == typeof(Type) || t == typeof(LuaTable) || luaTypeCheck(l, p, t.Name);
                 case LuaTypes.LUA_TFUNCTION:
                     return t == typeof(LuaFunction);
             }
