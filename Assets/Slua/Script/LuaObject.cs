@@ -854,7 +854,7 @@ return index
 
                 case "Int64":
                 case "UInt64":
-#if !LUA_5_1
+#if LUA_5_3
                     LuaDLL.lua_pushinteger(l, (long)o);
 #else
                     LuaDLL.lua_pushnumber(l, (double)o);

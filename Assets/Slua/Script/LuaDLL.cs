@@ -49,7 +49,7 @@ namespace LuaInterface
 
     sealed class LuaIndexes
     {
-#if !LUA_5_1
+#if LUA_5_3
         // for lua5.3
         public static int LUA_REGISTRYINDEX = -1000000 - 1000;
 #else
@@ -211,7 +211,7 @@ namespace LuaInterface
         }
 
 
-#if !LUA_5_1
+#if LUA_5_3
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void lua_getglobal(IntPtr luaState, string name);
 
