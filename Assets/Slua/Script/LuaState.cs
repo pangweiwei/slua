@@ -400,9 +400,7 @@ namespace SLua
             return returnValue;
         }
 
-        /*
-         * Gets a field of the table or userdata corresponding to the provided reference
-         */
+        
         internal object getObject(int reference, string field)
         {
             int oldTop = LuaDLL.lua_gettop(L);
@@ -411,9 +409,7 @@ namespace SLua
             LuaDLL.lua_settop(L, oldTop);
             return returnValue;
         }
-        /*
-         * Gets a numeric field of the table or userdata corresponding the the provided reference
-         */
+       
         internal object getObject(int reference, object field)
         {
             int oldTop = LuaDLL.lua_gettop(L);
@@ -425,7 +421,7 @@ namespace SLua
             return returnValue;
         }
 
-        internal void setObject(string[] remainingPath, object val)
+        internal void setObject(string[] remainingPath, object o)
         {
             for (int i = 0; i < remainingPath.Length - 1; i++)
             {
@@ -433,31 +429,25 @@ namespace SLua
                 LuaDLL.lua_gettable(L, -2);
             }
             LuaDLL.lua_pushstring(L, remainingPath[remainingPath.Length - 1]);
-            LuaObject.pushVar(L, val);
+            LuaObject.pushVar(L, o);
             LuaDLL.lua_settable(L, -3);
         }
 
-        /*
-         * Sets a field of the table or userdata corresponding the the provided reference
-         * to the provided value
-         */
-        internal void setObject(int reference, string field, object val)
+       
+        internal void setObject(int reference, string field, object o)
         {
             int oldTop = LuaDLL.lua_gettop(L);
             LuaDLL.lua_getref(L, reference);
-            setObject(field.Split(new char[] { '.' }), val);
+            setObject(field.Split(new char[] { '.' }), o);
             LuaDLL.lua_settop(L, oldTop);
         }
-        /*
-         * Sets a numeric field of the table or userdata corresponding the the provided reference
-         * to the provided value
-         */
-        internal void setObject(int reference, object field, object val)
+        
+        internal void setObject(int reference, object field, object o)
         {
             int oldTop = LuaDLL.lua_gettop(L);
             LuaDLL.lua_getref(L, reference);
             LuaObject.pushObject(L, field);
-            LuaObject.pushObject(L, val);
+            LuaObject.pushObject(L, o);
             LuaDLL.lua_settable(L, -3);
             LuaDLL.lua_settop(L, oldTop);
         }
@@ -477,19 +467,16 @@ namespace SLua
             return (LuaTable)this[key];
         }
 
-        /*
-         * Indexer for global variables from the LuaInterpreter
-         * Supports navigation of tables by using . operator
-         */
-        public object this[string fullPath]
+        
+        public object this[string path]
         {
             get
             {
-                return this.getObject(fullPath);
+                return this.getObject(path);
             }
             set
             {
-                this.setObject(fullPath, value);
+                this.setObject(path, value);
             }
         }
     }
