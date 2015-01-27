@@ -19,15 +19,11 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindObjectsOfTypeAll_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Type))){
-				System.Type a1;
-				checkType(l,1,out a1);
-				UnityEngine.Object[] ret=UnityEngine.Resources.FindObjectsOfTypeAll(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
+			System.Type a1;
+			checkType(l,1,out a1);
+			UnityEngine.Object[] ret=UnityEngine.Resources.FindObjectsOfTypeAll(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -65,13 +61,6 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	static public int LoadAsync_s(IntPtr l) {
 		try{
 			if(matchType(l,1,typeof(System.String))){
-				System.String a1;
-				checkType(l,1,out a1);
-				UnityEngine.ResourceRequest ret=UnityEngine.Resources.LoadAsync(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,1,typeof(System.String))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.ResourceRequest ret=UnityEngine.Resources.LoadAsync(a1);
@@ -125,17 +114,13 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetBuiltinResource_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Type),typeof(System.String))){
-				System.Type a1;
-				checkType(l,1,out a1);
-				System.String a2;
-				checkType(l,2,out a2);
-				UnityEngine.Object ret=UnityEngine.Resources.GetBuiltinResource(a1,a2);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
+			System.Type a1;
+			checkType(l,1,out a1);
+			System.String a2;
+			checkType(l,2,out a2);
+			UnityEngine.Object ret=UnityEngine.Resources.GetBuiltinResource(a1,a2);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -145,17 +130,13 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadAssetAtPath_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(System.Type))){
-				System.String a1;
-				checkType(l,1,out a1);
-				System.Type a2;
-				checkType(l,2,out a2);
-				UnityEngine.Object ret=UnityEngine.Resources.LoadAssetAtPath(a1,a2);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
+			System.String a1;
+			checkType(l,1,out a1);
+			System.Type a2;
+			checkType(l,2,out a2);
+			UnityEngine.Object ret=UnityEngine.Resources.LoadAssetAtPath(a1,a2);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());

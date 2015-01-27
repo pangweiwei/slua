@@ -1004,6 +1004,7 @@ namespace SLua
             !method.Name.StartsWith("get_", StringComparison.Ordinal) &&
             !method.Name.StartsWith("set_", StringComparison.Ordinal) &&
             !method.Name.StartsWith("add_", StringComparison.Ordinal) &&
+            !IsObsolete(method) && !method.IsGenericMethod &&
             //!method.Name.StartsWith("op_", StringComparison.Ordinal) &&
             !method.Name.StartsWith("remove_", StringComparison.Ordinal))
         {
@@ -1025,7 +1026,7 @@ namespace SLua
 
         if (overridecount == 1) // no override function
         {
-            if (!m.ReturnType.ContainsGenericParameters && !m.ContainsGenericParameters) // don't support generic method
+            if (isUsefullMethod(m) && !m.ReturnType.ContainsGenericParameters && !m.ContainsGenericParameters) // don't support generic method
                 WriteFunctionCall(m, file, t);
             else
             {
@@ -1042,11 +1043,9 @@ namespace SLua
                 if (cons[n].MemberType == MemberTypes.Method)
                 {
                     MethodInfo mi = cons[n] as MethodInfo;
-                    if (IsObsolete(mi))
-                        continue;
 
                     ParameterInfo[] pars = mi.GetParameters();
-                    if (!mi.ReturnType.ContainsGenericParameters && !containGeneric(pars)) // don't support generic method
+                    if (isUsefullMethod(mi) && !mi.ReturnType.ContainsGenericParameters && !containGeneric(pars)) // don't support generic method
                     {
 
                         Write(file, "{0}(matchType(l,{1}{2})){{", first ? "if" : "else if", mi.IsStatic ? 1 : 2, TypeDecl(pars));

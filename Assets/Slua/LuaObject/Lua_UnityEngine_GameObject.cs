@@ -78,16 +78,12 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetComponentInChildren(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Type))){
-				UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
-				System.Type a1;
-				checkType(l,2,out a1);
-				UnityEngine.Component ret=self.GetComponentInChildren(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
+			UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
+			System.Type a1;
+			checkType(l,2,out a1);
+			UnityEngine.Component ret=self.GetComponentInChildren(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -97,45 +93,12 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetComponentInParent(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Type))){
-				UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
-				System.Type a1;
-				checkType(l,2,out a1);
-				UnityEngine.Component ret=self.GetComponentInParent(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetComponentsInParent(IntPtr l) {
-		try{
-			if(matchType(l,2,typeof(System.Type))){
-				UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
-				System.Type a1;
-				checkType(l,2,out a1);
-				UnityEngine.Component[] ret=self.GetComponentsInParent(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,2,typeof(System.Type),typeof(System.Boolean))){
-				UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
-				System.Type a1;
-				checkType(l,2,out a1);
-				System.Boolean a2;
-				checkType(l,3,out a2);
-				UnityEngine.Component[] ret=self.GetComponentsInParent(a1,a2);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
+			UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
+			System.Type a1;
+			checkType(l,2,out a1);
+			UnityEngine.Component ret=self.GetComponentInParent(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -179,6 +142,35 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 				System.Boolean a2;
 				checkType(l,3,out a2);
 				UnityEngine.Component[] ret=self.GetComponentsInChildren(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetComponentsInParent(IntPtr l) {
+		try{
+			if(matchType(l,2,typeof(System.Type))){
+				UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
+				System.Type a1;
+				checkType(l,2,out a1);
+				UnityEngine.Component[] ret=self.GetComponentsInParent(a1);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,2,typeof(System.Type),typeof(System.Boolean))){
+				UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
+				System.Type a1;
+				checkType(l,2,out a1);
+				System.Boolean a2;
+				checkType(l,3,out a2);
+				UnityEngine.Component[] ret=self.GetComponentsInParent(a1,a2);
 				pushValue(l,ret);
 				return 1;
 			}
@@ -625,9 +617,9 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 		addMember(l,GetComponent);
 		addMember(l,GetComponentInChildren);
 		addMember(l,GetComponentInParent);
-		addMember(l,GetComponentsInParent);
 		addMember(l,GetComponents);
 		addMember(l,GetComponentsInChildren);
+		addMember(l,GetComponentsInParent);
 		addMember(l,SetActive);
 		addMember(l,CompareTag);
 		addMember(l,SendMessageUpwards);

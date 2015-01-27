@@ -55,17 +55,6 @@ public class Lua_HelloWorld : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int generic(IntPtr l) {
-		try{
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int perf(IntPtr l) {
 		try{
 			HelloWorld self=(HelloWorld)checkSelf(l);
@@ -216,7 +205,6 @@ public class Lua_HelloWorld : LuaObject {
 		addMember(l,foo);
 		addMember(l,getList);
 		addMember(l,callD);
-		addMember(l,generic);
 		addMember(l,perf);
 		addMember(l,say_s);
 		addMember(l,setv_s);

@@ -351,12 +351,18 @@ namespace SLua
         {
             try
             {
-                fn = WorkPath + fn;
-                FileStream fs = File.Open(fn, FileMode.Open);
-                long length = fs.Length;
-                byte[] bytes = new byte[length];
-                fs.Read(bytes, 0, bytes.Length);
-                fs.Close();
+                byte[] bytes;
+                if (loaderDelegate != null)
+                    bytes = loaderDelegate(fn);
+                else
+                {
+                    fn = WorkPath + fn;
+                    FileStream fs = File.Open(fn, FileMode.Open);
+                    long length = fs.Length;
+                    bytes = new byte[length];
+                    fs.Read(bytes, 0, bytes.Length);
+                    fs.Close();
+                }
                 return bytes;
             }
             catch (Exception e)

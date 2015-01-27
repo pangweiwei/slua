@@ -111,15 +111,11 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindObjectsOfType_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Type))){
-				System.Type a1;
-				checkType(l,1,out a1);
-				UnityEngine.Object[] ret=UnityEngine.Object.FindObjectsOfType(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
+			System.Type a1;
+			checkType(l,1,out a1);
+			UnityEngine.Object[] ret=UnityEngine.Object.FindObjectsOfType(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -129,15 +125,11 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindObjectOfType_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Type))){
-				System.Type a1;
-				checkType(l,1,out a1);
-				UnityEngine.Object ret=UnityEngine.Object.FindObjectOfType(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
+			System.Type a1;
+			checkType(l,1,out a1);
+			UnityEngine.Object ret=UnityEngine.Object.FindObjectOfType(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());

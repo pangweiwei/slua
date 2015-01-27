@@ -46,16 +46,12 @@ public class Lua_UnityEngine_Component : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetComponentInChildren(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Type))){
-				UnityEngine.Component self=(UnityEngine.Component)checkSelf(l);
-				System.Type a1;
-				checkType(l,2,out a1);
-				UnityEngine.Component ret=self.GetComponentInChildren(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
+			UnityEngine.Component self=(UnityEngine.Component)checkSelf(l);
+			System.Type a1;
+			checkType(l,2,out a1);
+			UnityEngine.Component ret=self.GetComponentInChildren(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -94,16 +90,12 @@ public class Lua_UnityEngine_Component : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetComponentInParent(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Type))){
-				UnityEngine.Component self=(UnityEngine.Component)checkSelf(l);
-				System.Type a1;
-				checkType(l,2,out a1);
-				UnityEngine.Component ret=self.GetComponentInParent(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
+			UnityEngine.Component self=(UnityEngine.Component)checkSelf(l);
+			System.Type a1;
+			checkType(l,2,out a1);
+			UnityEngine.Component ret=self.GetComponentInParent(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
