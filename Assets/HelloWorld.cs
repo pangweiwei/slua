@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using SLua;
+using System;
+using LuaInterface;
+
 public class HelloWorld   {
 
     public delegate bool GetBundleInfoDelegate(string path, out string url, out int version, out uint crc,ref int flag);

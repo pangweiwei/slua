@@ -301,6 +301,16 @@ return index
                 LuaDLL.lua_setfield(l, -2,func.Method.Name);
         }
 
+        public static void addMember(IntPtr l, LuaCSFunction func, bool instance)
+        {
+            LuaDLL.lua_pushstdcallcfunction(l, func);
+            string name = func.Method.Name;
+            if (!instance)
+                LuaDLL.lua_setfield(l, -3, name);
+            else
+                LuaDLL.lua_setfield(l, -2, name);
+        }
+
         public static void addMember(IntPtr l, string name, LuaCSFunction get, LuaCSFunction set)
         {
             LuaDLL.lua_newtable(l);

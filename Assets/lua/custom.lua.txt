@@ -1,0 +1,10 @@
+
+function main()
+
+	local s,c=Custom.staticCustom();
+	print(s,c)
+
+	local a,b,c=c:instanceCustom()
+	print(a,b,c)
+
+end

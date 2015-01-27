@@ -34,6 +34,22 @@ namespace SLua
         protected int valueref = 0;
         protected IntPtr l;
 
+        public IntPtr L
+        {
+            get
+            {
+                return l;
+            }
+        }
+
+        public int Ref
+        {
+            get
+            {
+                return valueref;
+            }
+        }
+
         public LuaVar()
         {
             l = IntPtr.Zero;
@@ -178,7 +194,7 @@ namespace SLua
 
     public class LuaState : IDisposable
     {
-        static string WorkPath="./Assets/lua/";
+        static string WorkPath="Assets/lua/";
         IntPtr L;
 
         public delegate byte[] LoaderDelegate(string fn);
@@ -326,6 +342,8 @@ namespace SLua
             }
             else
             {
+                fileName = WorkPath + fileName;
+                fileName = fileName.Replace('.', '/');
                 fileName += ".lua";
                 bytes = loadFile(fileName);
             }
@@ -335,6 +353,7 @@ namespace SLua
 
         public void doFile(string fn)
         {
+            fn = WorkPath + fn;
             byte[] bytes = loadFile(fn);
 
             LuaDLL.lua_pushstdcallcfunction(L, errorReport);
@@ -356,7 +375,6 @@ namespace SLua
                     bytes = loaderDelegate(fn);
                 else
                 {
-                    fn = WorkPath + fn;
                     FileStream fs = File.Open(fn, FileMode.Open);
                     long length = fs.Length;
                     bytes = new byte[length];

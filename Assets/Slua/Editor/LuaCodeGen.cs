@@ -192,6 +192,10 @@ public class LuaCodeGen : MonoBehaviour
     {
         List<Type> cust = new List<Type>{
 			typeof(HelloWorld),
+            typeof(Custom),
+
+
+            // your custom class here
 		};
 
         List<Type> exports = new List<Type>();
@@ -262,6 +266,7 @@ class CodeGenerator
 
     public static HashSet<string> InnerTypes = new HashSet<string>();
     HashSet<string> funcname = new HashSet<string>();
+    Dictionary<string, bool> directfunc = new Dictionary<string, bool>();
     class PropPair
     {
         public string get="null";
@@ -324,6 +329,7 @@ class CodeGenerator
             {
                 funcname.Clear();
                 propname.Clear();
+                directfunc.Clear();
 
                 StreamWriter file = Begin(t);
                 WriteHead(t, file);
@@ -635,6 +641,13 @@ namespace SLua
 
         foreach (MethodInfo mi in members)
         {
+            bool instanceFunc;
+            if (writeStatic && isPInvoke(mi,out instanceFunc))
+            {
+                directfunc.Add(t.FullName + "." + mi.Name,instanceFunc);
+                continue;
+            }
+
             string fn = writeStatic ? staticName(mi.Name) : mi.Name;
 
             if (mi.MemberType == MemberTypes.Method
@@ -648,6 +661,19 @@ namespace SLua
                 funcname.Add(fn);
             }
         }
+    }
+
+    bool isPInvoke(MethodInfo mi,out bool instanceFunc)
+    {
+        object[] attrs = mi.GetCustomAttributes(typeof(MonoPInvokeCallbackAttribute), false);
+        if (attrs.Length > 0)
+        {
+            MonoPInvokeCallbackAttribute p = attrs[0] as MonoPInvokeCallbackAttribute;
+            instanceFunc = p.instance;
+            return true;
+        }
+        instanceFunc = true;
+        return false;
     }
 
     string staticName(string name)
@@ -682,6 +708,11 @@ namespace SLua
         foreach (string f in funcname)
         {
             Write(file, "addMember(l,{0});", f);
+        }
+        foreach (string f in directfunc.Keys)
+        {
+            bool instance = directfunc[f];
+            Write(file, "addMember(l,{0},{1});", f, instance?"true":"false");
         }
 
         foreach (string f in propname.Keys)
