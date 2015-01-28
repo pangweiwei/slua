@@ -29,6 +29,17 @@ namespace SLua
 {
     class ObjectCache
     {
+
+        public ObjectCache(IntPtr l)
+        {
+            LuaDLL.lua_newtable(l);
+            LuaDLL.lua_newtable(l);
+            LuaDLL.lua_pushstring(l, "v");
+            LuaDLL.lua_setfield(l, -2, "__mode");
+            LuaDLL.lua_setmetatable(l, -2);
+            udCacheRef = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
+        }
+
         static Dictionary<IntPtr, ObjectCache> multiState = new Dictionary<IntPtr, ObjectCache>();
 
         class ObjSlot
@@ -101,17 +112,9 @@ namespace SLua
         }
 
         FreeList cache = new FreeList();
-        class ObjPair
-        {
-            public int index=0;
-            public int count=0;
-            public ObjPair(int i, int c)
-            {
-                this.index = i;
-                this.count = c;
-            }
-        }
-        Dictionary<object, ObjPair> objMap = new Dictionary<object, ObjPair>();
+
+        Dictionary<object, int> objMap = new Dictionary<object, int>();
+        int udCacheRef = 0;
 
         static IntPtr oldl = IntPtr.Zero;
         static internal ObjectCache oldoc = null;
@@ -137,7 +140,7 @@ namespace SLua
 
         internal static void make(IntPtr l)
         {
-            ObjectCache oc = new ObjectCache();
+            ObjectCache oc = new ObjectCache(l);
             multiState[l] = oc;
             oldl = l;
             oldoc = oc;
@@ -150,19 +153,9 @@ namespace SLua
             {
                 if (isGcObject(o))
                 {
-                    ObjPair pair;
-                    if (objMap.TryGetValue(o, out pair))
-                    {
-                        pair.count--;
-                        if (pair.count <= 0)
-                        {
-                            cache.del(index);       
-                            objMap.Remove(o);
-                        }
-                    }
+                    objMap.Remove(o);
                 }
-                else
-                    cache.del(index);
+                cache.del(index);
             }
         }
 
@@ -171,7 +164,7 @@ namespace SLua
             int objIndex = cache.add(o);
             if (isGcObject(o))
             {
-                objMap[o] = new ObjPair(objIndex,1);
+                objMap[o] = objIndex;
             }
             return objIndex;
         }
@@ -196,6 +189,27 @@ namespace SLua
 			}
         }
 
+        bool getUDCache(IntPtr l,int index)
+        {
+            LuaDLL.lua_getref(l, udCacheRef);
+            LuaDLL.lua_rawgeti(l, -1, index);
+            if (!LuaDLL.lua_isnil(l,-1))
+            {
+                LuaDLL.lua_remove(l, -2);
+                return true;
+            }
+            LuaDLL.lua_pop(l, 2);
+            return false;
+        }
+
+        void cacheUD(IntPtr l, int index)
+        {
+            LuaDLL.lua_getref(l, udCacheRef);
+            LuaDLL.lua_pushvalue(l, -2);
+            LuaDLL.lua_rawseti(l, -2, index);
+            LuaDLL.lua_pop(l, 1);
+        }
+
         internal void push(IntPtr l, object o)
         {
             if (o == null)
@@ -204,17 +218,19 @@ namespace SLua
                 return;
             }
             int index = -1;
-            ObjPair pair=null;
-            bool found = isGcObject(o) && objMap.TryGetValue(o, out pair);
-            if (found && pair!=null)
-            {
-                index = pair.index;
-                pair.count++;
-            }
-            else
-                index = add(o);
 
+            bool gco = isGcObject(o);
+            bool found = gco && objMap.TryGetValue(o, out index);
+            if (found)
+            {
+                if (getUDCache(l,index))
+                    return;
+            }
+
+            
+            index = add(o);
             LuaDLL.luaS_newuserdata(l, index);
+            if(gco) cacheUD(l, index);
 
             
             LuaDLL.luaL_getmetatable(l, getAQName(o));
