@@ -103,6 +103,30 @@ public class Lua_HelloWorld : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ofunc_s(IntPtr l) {
+		try{
+			if(matchType(l,1,typeof(UnityEngine.GameObject))){
+				UnityEngine.GameObject a1;
+				checkType(l,1,out a1);
+				HelloWorld.ofunc(a1);
+				return 0;
+			}
+            else if (matchType(l, 1, typeof(System.Type)))
+            {
+                System.Type a1;
+                checkType(l, 1, out a1);
+                HelloWorld.ofunc(a1);
+                return 0;
+            }
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int testvec3_s(IntPtr l) {
 		try{
 			UnityEngine.Vector3 a1;
@@ -209,6 +233,7 @@ public class Lua_HelloWorld : LuaObject {
 		addMember(l,say_s);
 		addMember(l,setv_s);
 		addMember(l,getv_s);
+		addMember(l,ofunc_s);
 		addMember(l,testvec3_s);
 		addMember(l,testset_s);
 		addMember(l,test2_s);

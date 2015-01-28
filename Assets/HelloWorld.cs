@@ -38,6 +38,15 @@ public class HelloWorld   {
         return t;
     }
 
+
+    static public void ofunc(Type t) {
+        Debug.Log(t.Name);
+    }
+
+    static public void ofunc(GameObject go) {
+        Debug.Log(go.name);
+    }
+
     public GetBundleInfoDelegate d;
     public SimpleDelegate s;
 
