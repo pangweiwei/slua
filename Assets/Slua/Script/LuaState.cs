@@ -33,6 +33,7 @@ namespace SLua
         protected LuaState state = null;
         protected int valueref = 0;
         protected IntPtr l;
+        bool disposed = false;
 
         public IntPtr L
         {
@@ -83,10 +84,11 @@ namespace SLua
 
         public virtual void Dispose(bool disposeManagedResources)
         {
-
-            if (disposeManagedResources)
+            if (!disposed && valueref!=0)
             {
                 LuaDLL.lua_unref(l, valueref);
+                disposed = true;
+                valueref = 0;
             }
         }
 
