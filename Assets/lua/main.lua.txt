@@ -53,4 +53,5 @@ function main()
 	print(t.name,t.age)
 
 	HelloWorld.ofunc(GameObject)
+	HelloWorld.ofunc(cube)
 end

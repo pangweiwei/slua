@@ -417,11 +417,32 @@ return index
                 case LuaTypes.LUA_TBOOLEAN:
                     return t == typeof(bool);
                 case LuaTypes.LUA_TTABLE:
-                    return t == typeof(Type) || t == typeof(LuaTable) || luaTypeCheck(l, p, t.Name);
+                    {
+                        if (t == typeof(Type))
+                            return isTypeTable(l, p);
+                        else if (t.IsValueType)
+                            return luaTypeCheck(l, p, t.Name);
+                        else
+                            return t == typeof(LuaTable);
+                    }
                 case LuaTypes.LUA_TFUNCTION:
                     return t == typeof(LuaFunction) || t.BaseType == typeof(MulticastDelegate);
             }
             return false;
+        }
+
+        static bool isTypeTable(IntPtr l, int p)
+        {
+            if (LuaDLL.lua_type(l, p) != LuaTypes.LUA_TTABLE)
+                return false;
+            LuaDLL.lua_pushstring(l, "__fullname");
+            LuaDLL.lua_rawget(l, p);
+            if (LuaDLL.lua_isnil(l, -1))
+            {
+                LuaDLL.lua_pop(l, 1);
+                return false;
+            }
+            return true;
         }
 
         public static bool matchType(IntPtr l, int from, params Type[] types)

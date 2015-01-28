@@ -335,25 +335,13 @@ namespace SLua
         internal static int loader(IntPtr L)
         {
             string fileName = LuaDLL.lua_tostring(L, 1);
-            byte[] bytes;
-            if (loaderDelegate != null)
-            {
-                bytes = loaderDelegate(fileName);
-            }
-            else
-            {
-                fileName = WorkPath + fileName;
-                fileName = fileName.Replace('.', '/');
-                fileName += ".lua";
-                bytes = loadFile(fileName);
-            }
+            byte[] bytes = loadFile(fileName);
             LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fileName);
             return 1;
         }
 
         public void doFile(string fn)
         {
-            fn = WorkPath + fn;
             byte[] bytes = loadFile(fn);
 
             LuaDLL.lua_pushstdcallcfunction(L, errorReport);
@@ -375,6 +363,15 @@ namespace SLua
                     bytes = loaderDelegate(fn);
                 else
                 {
+                    if (fn.EndsWith(".txt") || fn.EndsWith(".lua"))
+                    {
+                        fn = WorkPath + fn;
+                    }
+                    else
+                    {
+                        fn = fn.Replace('.', '/');
+                        fn = WorkPath + fn;
+                    }
                     FileStream fs = File.Open(fn, FileMode.Open);
                     long length = fs.Length;
                     bytes = new byte[length];
