@@ -475,7 +475,14 @@ return index
             if (LuaDLL.lua_type(l, p) != LuaTypes.LUA_TTABLE)
                 return false;
 
-            LuaDLL.lua_getfield(l, p, "__typename");
+            LuaDLL.lua_pushstring(l, "__typename");
+            LuaDLL.lua_rawget(l, p);
+            if (LuaDLL.lua_isnil(l, -1))
+            {
+                LuaDLL.lua_pop(l, 1);
+                return false;
+            }
+
             LuaDLL.lua_pushstring(l, t);
             int equal = LuaDLL.lua_rawequal(l, -1, -2);
             LuaDLL.lua_pop(l, 2);
@@ -929,6 +936,10 @@ return index
                     break;
                 case "Boolean":
                     LuaDLL.lua_pushboolean(l, (bool)o);
+                    break;
+                case "LuaTable":
+                case "LuaFunction":
+                    ((LuaVar)o).push(l);
                     break;
                 default:
                     LuaObject.pushObject(l, o);
