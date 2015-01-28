@@ -85,8 +85,8 @@ namespace SLua
         {
             if (valueref!=0)
             {
-                LuaDLL.lua_unref(l, valueref);
-                valueref = 0;
+                //LuaDLL.lua_unref(l, valueref);
+                //valueref = 0;
             }
         }
 
