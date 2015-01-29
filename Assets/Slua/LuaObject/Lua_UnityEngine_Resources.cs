@@ -33,14 +33,14 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Load_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object ret=UnityEngine.Resources.Load(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String),typeof(System.Type))){
+			else if(matchType(l,1,typeof(string),typeof(System.Type))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Type a2;
@@ -60,14 +60,14 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadAsync_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.ResourceRequest ret=UnityEngine.Resources.LoadAsync(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String),typeof(System.Type))){
+			else if(matchType(l,1,typeof(string),typeof(System.Type))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Type a2;
@@ -87,7 +87,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadAll_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(System.Type))){
+			if(matchType(l,1,typeof(string),typeof(System.Type))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Type a2;
@@ -96,7 +96,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String))){
+			else if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object[] ret=UnityEngine.Resources.LoadAll(a1);

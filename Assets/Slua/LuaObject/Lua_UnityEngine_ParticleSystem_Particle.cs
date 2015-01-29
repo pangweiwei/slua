@@ -153,7 +153,7 @@ public class Lua_UnityEngine_ParticleSystem_Particle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_randomSeed(IntPtr l) {
 		UnityEngine.ParticleSystem.Particle o = (UnityEngine.ParticleSystem.Particle)checkSelf(l);
-		UInt32 v;
+		System.UInt32 v;
 		checkType(l,2,out v);
 		o.randomSeed=v;
 		setBack(l,o);

@@ -8,7 +8,7 @@ public class Lua_UnityEngine_Vector4 : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.Vector4 o;
-		if(matchType(l,1,typeof(System.Single),typeof(System.Single),typeof(System.Single),typeof(System.Single))){
+		if(matchType(l,1,typeof(float),typeof(float),typeof(float),typeof(float))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -21,7 +21,7 @@ public class Lua_UnityEngine_Vector4 : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.Single),typeof(System.Single),typeof(System.Single))){
+		else if(matchType(l,1,typeof(float),typeof(float),typeof(float))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -32,7 +32,7 @@ public class Lua_UnityEngine_Vector4 : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.Single),typeof(System.Single))){
+		else if(matchType(l,1,typeof(float),typeof(float))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -329,7 +329,7 @@ public class Lua_UnityEngine_Vector4 : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int op_Multiply(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Vector4),typeof(System.Single))){
+			if(matchType(l,1,typeof(UnityEngine.Vector4),typeof(float))){
 				UnityEngine.Vector4 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -338,7 +338,7 @@ public class Lua_UnityEngine_Vector4 : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.Single),typeof(UnityEngine.Vector4))){
+			else if(matchType(l,1,typeof(float),typeof(UnityEngine.Vector4))){
 				System.Single a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector4 a2;

@@ -59,7 +59,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetGlobalColor_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(UnityEngine.Color))){
+			if(matchType(l,1,typeof(string),typeof(UnityEngine.Color))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Color a2;
@@ -67,7 +67,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 				UnityEngine.Shader.SetGlobalColor(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(UnityEngine.Color))){
+			else if(matchType(l,1,typeof(int),typeof(UnityEngine.Color))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Color a2;
@@ -86,7 +86,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetGlobalVector_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(UnityEngine.Vector4))){
+			if(matchType(l,1,typeof(string),typeof(UnityEngine.Vector4))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector4 a2;
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 				UnityEngine.Shader.SetGlobalVector(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(UnityEngine.Vector4))){
+			else if(matchType(l,1,typeof(int),typeof(UnityEngine.Vector4))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector4 a2;
@@ -113,7 +113,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetGlobalFloat_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(System.Single))){
+			if(matchType(l,1,typeof(string),typeof(float))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -121,7 +121,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 				UnityEngine.Shader.SetGlobalFloat(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Single))){
+			else if(matchType(l,1,typeof(int),typeof(float))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -140,7 +140,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetGlobalInt_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(System.Int32))){
+			if(matchType(l,1,typeof(string),typeof(int))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -148,7 +148,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 				UnityEngine.Shader.SetGlobalInt(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32))){
+			else if(matchType(l,1,typeof(int),typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -167,7 +167,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetGlobalTexture_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(UnityEngine.Texture))){
+			if(matchType(l,1,typeof(string),typeof(UnityEngine.Texture))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Texture a2;
@@ -175,7 +175,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 				UnityEngine.Shader.SetGlobalTexture(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(UnityEngine.Texture))){
+			else if(matchType(l,1,typeof(int),typeof(UnityEngine.Texture))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Texture a2;
@@ -194,7 +194,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetGlobalMatrix_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(UnityEngine.Matrix4x4))){
+			if(matchType(l,1,typeof(string),typeof(UnityEngine.Matrix4x4))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Matrix4x4 a2;
@@ -202,7 +202,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 				UnityEngine.Shader.SetGlobalMatrix(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(UnityEngine.Matrix4x4))){
+			else if(matchType(l,1,typeof(int),typeof(UnityEngine.Matrix4x4))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Matrix4x4 a2;

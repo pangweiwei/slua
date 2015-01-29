@@ -19,7 +19,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddMixingTransform(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Transform),typeof(System.Boolean))){
+			if(matchType(l,2,typeof(UnityEngine.Transform),typeof(bool))){
 				UnityEngine.AnimationState self=(UnityEngine.AnimationState)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);

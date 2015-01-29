@@ -49,7 +49,7 @@ public class Lua_UnityEngine_LightProbes : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_coefficients(IntPtr l) {
 		UnityEngine.LightProbes o = (UnityEngine.LightProbes)checkSelf(l);
-		float[] v;
+		System.Single[] v;
 		checkType(l,2,out v);
 		o.coefficients=v;
 		return 0;

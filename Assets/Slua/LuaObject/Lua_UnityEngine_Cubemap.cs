@@ -8,7 +8,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.Cubemap o;
-		if(matchType(l,1,typeof(System.Int32),typeof(UnityEngine.TextureFormat),typeof(System.Boolean))){
+		if(matchType(l,1,typeof(int),typeof(UnityEngine.TextureFormat),typeof(bool))){
 			System.Int32 a1;
 			checkType(l,1,out a1);
 			UnityEngine.TextureFormat a2;
@@ -64,7 +64,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetPixels(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.CubemapFace),typeof(System.Int32))){
+			if(matchType(l,2,typeof(UnityEngine.CubemapFace),typeof(int))){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				UnityEngine.CubemapFace a1;
 				checkEnum(l,2,out a1);
@@ -93,7 +93,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetPixels(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Color),typeof(UnityEngine.CubemapFace),typeof(System.Int32))){
+			if(matchType(l,2,typeof(UnityEngine.Color[]),typeof(UnityEngine.CubemapFace),typeof(int))){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
@@ -104,7 +104,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 				self.SetPixels(a1,a2,a3);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Color),typeof(UnityEngine.CubemapFace))){
+			else if(matchType(l,2,typeof(UnityEngine.Color[]),typeof(UnityEngine.CubemapFace))){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
@@ -124,7 +124,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Apply(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Boolean),typeof(System.Boolean))){
+			if(matchType(l,2,typeof(bool),typeof(bool))){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -133,7 +133,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 				self.Apply(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(bool))){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -156,7 +156,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SmoothEdges(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Int32))){
+			if(matchType(l,2,typeof(int))){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);

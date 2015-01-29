@@ -31,7 +31,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetQualityLevel_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32),typeof(System.Boolean))){
+			if(matchType(l,1,typeof(int),typeof(bool))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -39,7 +39,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 				UnityEngine.QualitySettings.SetQualityLevel(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Int32))){
+			else if(matchType(l,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.QualitySettings.SetQualityLevel(a1);
@@ -56,7 +56,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IncreaseLevel_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Boolean))){
+			if(matchType(l,1,typeof(bool))){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				UnityEngine.QualitySettings.IncreaseLevel(a1);
@@ -77,7 +77,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int DecreaseLevel_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Boolean))){
+			if(matchType(l,1,typeof(bool))){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				UnityEngine.QualitySettings.DecreaseLevel(a1);

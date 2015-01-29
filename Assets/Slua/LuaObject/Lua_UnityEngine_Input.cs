@@ -89,7 +89,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetKey_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Boolean ret=UnityEngine.Input.GetKey(a1);
@@ -114,7 +114,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetKeyDown_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Boolean ret=UnityEngine.Input.GetKeyDown(a1);
@@ -139,7 +139,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetKeyUp_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Boolean ret=UnityEngine.Input.GetKeyUp(a1);

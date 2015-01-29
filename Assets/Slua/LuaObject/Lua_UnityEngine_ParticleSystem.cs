@@ -67,7 +67,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Simulate(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Single),typeof(System.Boolean))){
+			if(matchType(l,2,typeof(float),typeof(bool))){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -76,14 +76,14 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 				self.Simulate(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Single))){
+			else if(matchType(l,2,typeof(float))){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
 				self.Simulate(a1);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Single),typeof(System.Boolean),typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(float),typeof(bool),typeof(bool))){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -110,7 +110,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 				self.Play();
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(bool))){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -133,7 +133,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 				self.Stop();
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(bool))){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -156,7 +156,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 				self.Pause();
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(bool))){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -179,7 +179,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 				self.Clear();
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(bool))){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -203,7 +203,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(bool))){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -222,14 +222,14 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Emit(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Int32))){
+			if(matchType(l,2,typeof(int))){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
 				self.Emit(a1);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(System.Single),typeof(System.Single),typeof(UnityEngine.Color32))){
+			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float),typeof(float),typeof(UnityEngine.Color32))){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -514,7 +514,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_randomSeed(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		UInt32 v;
+		System.UInt32 v;
 		checkType(l,2,out v);
 		o.randomSeed=v;
 		return 0;

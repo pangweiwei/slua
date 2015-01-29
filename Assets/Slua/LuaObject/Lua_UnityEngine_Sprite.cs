@@ -19,7 +19,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Create_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(System.Single),typeof(System.UInt32),typeof(UnityEngine.SpriteMeshType),typeof(UnityEngine.Vector4))){
+			if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(float),typeof(System.UInt32),typeof(UnityEngine.SpriteMeshType),typeof(UnityEngine.Vector4))){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(System.Single),typeof(System.UInt32),typeof(UnityEngine.SpriteMeshType))){
+			else if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(float),typeof(System.UInt32),typeof(UnityEngine.SpriteMeshType))){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;
@@ -55,7 +55,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(System.Single),typeof(System.UInt32))){
+			else if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(float),typeof(System.UInt32))){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;
@@ -70,7 +70,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(System.Single))){
+			else if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(float))){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;

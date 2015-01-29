@@ -41,13 +41,13 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadLevel_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32))){
+			if(matchType(l,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Application.LoadLevel(a1);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.String))){
+			else if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Application.LoadLevel(a1);
@@ -64,14 +64,14 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadLevelAsync_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32))){
+			if(matchType(l,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.AsyncOperation ret=UnityEngine.Application.LoadLevelAsync(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String))){
+			else if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.AsyncOperation ret=UnityEngine.Application.LoadLevelAsync(a1);
@@ -89,14 +89,14 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadLevelAdditiveAsync_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32))){
+			if(matchType(l,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.AsyncOperation ret=UnityEngine.Application.LoadLevelAdditiveAsync(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String))){
+			else if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.AsyncOperation ret=UnityEngine.Application.LoadLevelAdditiveAsync(a1);
@@ -114,13 +114,13 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadLevelAdditive_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32))){
+			if(matchType(l,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Application.LoadLevelAdditive(a1);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.String))){
+			else if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Application.LoadLevelAdditive(a1);
@@ -137,14 +137,14 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetStreamProgressForLevel_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32))){
+			if(matchType(l,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Single ret=UnityEngine.Application.GetStreamProgressForLevel(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String))){
+			else if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Single ret=UnityEngine.Application.GetStreamProgressForLevel(a1);
@@ -162,14 +162,14 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CanStreamedLevelBeLoaded_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32))){
+			if(matchType(l,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Boolean ret=UnityEngine.Application.CanStreamedLevelBeLoaded(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String))){
+			else if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Boolean ret=UnityEngine.Application.CanStreamedLevelBeLoaded(a1);
@@ -187,7 +187,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CaptureScreenshot_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(System.Int32))){
+			if(matchType(l,1,typeof(string),typeof(int))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -195,7 +195,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 				UnityEngine.Application.CaptureScreenshot(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.String))){
+			else if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Application.CaptureScreenshot(a1);

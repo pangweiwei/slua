@@ -25,7 +25,7 @@ public class Lua_UnityEngine_StaticBatchingUtility : LuaObject {
 				UnityEngine.StaticBatchingUtility.Combine(a1);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.GameObject),typeof(UnityEngine.GameObject))){
+			else if(matchType(l,1,typeof(UnityEngine.GameObject[]),typeof(UnityEngine.GameObject))){
 				UnityEngine.GameObject[] a1;
 				checkType(l,1,out a1);
 				UnityEngine.GameObject a2;

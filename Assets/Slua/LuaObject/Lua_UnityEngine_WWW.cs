@@ -8,14 +8,14 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.WWW o;
-		if(matchType(l,1,typeof(System.String))){
+		if(matchType(l,1,typeof(string))){
 			System.String a1;
 			checkType(l,1,out a1);
 			o=new UnityEngine.WWW(a1);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.String),typeof(UnityEngine.WWWForm))){
+		else if(matchType(l,1,typeof(string),typeof(UnityEngine.WWWForm))){
 			System.String a1;
 			checkType(l,1,out a1);
 			UnityEngine.WWWForm a2;
@@ -24,7 +24,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.String),typeof(System.Byte))){
+		else if(matchType(l,1,typeof(string),typeof(System.Byte[]))){
 			System.String a1;
 			checkType(l,1,out a1);
 			System.Byte[] a2;
@@ -57,7 +57,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetAudioClip(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Boolean))){
+			if(matchType(l,2,typeof(bool))){
 				UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -65,7 +65,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(System.Boolean),typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(bool),typeof(bool))){
 				UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -75,7 +75,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(System.Boolean),typeof(System.Boolean),typeof(UnityEngine.AudioType))){
+			else if(matchType(l,2,typeof(bool),typeof(bool),typeof(UnityEngine.AudioType))){
 				UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -124,14 +124,14 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int EscapeURL_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String ret=UnityEngine.WWW.EscapeURL(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String),typeof(System.Text.Encoding))){
+			else if(matchType(l,1,typeof(string),typeof(System.Text.Encoding))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Text.Encoding a2;
@@ -151,14 +151,14 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int UnEscapeURL_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String ret=UnityEngine.WWW.UnEscapeURL(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String),typeof(System.Text.Encoding))){
+			else if(matchType(l,1,typeof(string),typeof(System.Text.Encoding))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Text.Encoding a2;
@@ -178,7 +178,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadFromCacheOrDownload_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(System.Int32))){
+			if(matchType(l,1,typeof(string),typeof(int))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -187,7 +187,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String),typeof(System.Int32),typeof(System.UInt32))){
+			else if(matchType(l,1,typeof(string),typeof(int),typeof(System.UInt32))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;

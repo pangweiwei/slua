@@ -32,13 +32,13 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int BeginSample_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Profiler.BeginSample(a1);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.String),typeof(UnityEngine.Object))){
+			else if(matchType(l,1,typeof(string),typeof(UnityEngine.Object))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object a2;

@@ -19,7 +19,7 @@ public class Lua_UnityEngine_Random : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Range_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Single),typeof(System.Single))){
+			if(matchType(l,1,typeof(float),typeof(float))){
 				System.Single a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -28,7 +28,7 @@ public class Lua_UnityEngine_Random : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32))){
+			else if(matchType(l,1,typeof(int),typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;

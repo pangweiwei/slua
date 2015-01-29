@@ -67,7 +67,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Expand(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Single))){
+			if(matchType(l,2,typeof(float))){
 				UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);

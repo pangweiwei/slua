@@ -352,6 +352,12 @@ namespace SLua
                     LuaDLL.lua_pop(L, 1);
                 }
             }
+            else
+            {
+                string err = LuaDLL.lua_tostring(L, -1);
+                Debug.LogError(err);
+                LuaDLL.lua_pop(L, 1);
+            }
         }
 
         static byte[] loadFile(string fn)

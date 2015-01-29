@@ -17,7 +17,7 @@ public class Lua_UnityEngine_Plane : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(System.Single))){
+		else if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(float))){
 			UnityEngine.Vector3 a1;
 			checkType(l,1,out a1);
 			System.Single a2;

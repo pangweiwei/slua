@@ -19,7 +19,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetResolution_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Boolean),typeof(System.Int32))){
+			if(matchType(l,1,typeof(int),typeof(int),typeof(bool),typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -31,7 +31,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 				UnityEngine.Screen.SetResolution(a1,a2,a3,a4);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Boolean))){
+			else if(matchType(l,1,typeof(int),typeof(int),typeof(bool))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;

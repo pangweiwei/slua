@@ -102,7 +102,7 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetVertices(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.UIVertex),typeof(System.Int32))){
+			if(matchType(l,2,typeof(UnityEngine.UIVertex[]),typeof(int))){
 				UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 				UnityEngine.UIVertex[] a1;
 				checkType(l,2,out a1);

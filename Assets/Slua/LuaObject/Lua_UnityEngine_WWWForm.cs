@@ -19,7 +19,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddField(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.String),typeof(System.String))){
+			if(matchType(l,2,typeof(string),typeof(string))){
 				UnityEngine.WWWForm self=(UnityEngine.WWWForm)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -28,7 +28,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 				self.AddField(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.String),typeof(System.String),typeof(System.Text.Encoding))){
+			else if(matchType(l,2,typeof(string),typeof(string),typeof(System.Text.Encoding))){
 				UnityEngine.WWWForm self=(UnityEngine.WWWForm)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -39,7 +39,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 				self.AddField(a1,a2,a3);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.String),typeof(System.Int32))){
+			else if(matchType(l,2,typeof(string),typeof(int))){
 				UnityEngine.WWWForm self=(UnityEngine.WWWForm)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -59,7 +59,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddBinaryData(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.String),typeof(System.Byte),typeof(System.String))){
+			if(matchType(l,2,typeof(string),typeof(System.Byte[]),typeof(string))){
 				UnityEngine.WWWForm self=(UnityEngine.WWWForm)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -70,7 +70,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 				self.AddBinaryData(a1,a2,a3);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.String),typeof(System.Byte))){
+			else if(matchType(l,2,typeof(string),typeof(System.Byte[]))){
 				UnityEngine.WWWForm self=(UnityEngine.WWWForm)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -79,7 +79,7 @@ public class Lua_UnityEngine_WWWForm : LuaObject {
 				self.AddBinaryData(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.String),typeof(System.Byte),typeof(System.String),typeof(System.String))){
+			else if(matchType(l,2,typeof(string),typeof(System.Byte[]),typeof(string),typeof(string))){
 				UnityEngine.WWWForm self=(UnityEngine.WWWForm)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);

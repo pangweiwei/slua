@@ -203,7 +203,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_character(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		Char v;
+		System.Char v;
 		checkType(l,2,out v);
 		o.character=v;
 		return 0;

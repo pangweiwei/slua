@@ -8,7 +8,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.Rect o;
-		if(matchType(l,1,typeof(System.Single),typeof(System.Single),typeof(System.Single),typeof(System.Single))){
+		if(matchType(l,1,typeof(float),typeof(float),typeof(float),typeof(float))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -71,7 +71,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(bool))){
 				UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -100,7 +100,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Rect),typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(UnityEngine.Rect),typeof(bool))){
 				UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
 				UnityEngine.Rect a1;
 				checkType(l,2,out a1);

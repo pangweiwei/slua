@@ -28,7 +28,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 				self.SetTargetBuffers(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.RenderBuffer),typeof(UnityEngine.RenderBuffer))){
+			else if(matchType(l,2,typeof(UnityEngine.RenderBuffer[]),typeof(UnityEngine.RenderBuffer))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.RenderBuffer[] a1;
 				checkType(l,2,out a1);
@@ -280,7 +280,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Cubemap),typeof(System.Int32))){
+			else if(matchType(l,2,typeof(UnityEngine.Cubemap),typeof(int))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.Cubemap a1;
 				checkType(l,2,out a1);
@@ -298,7 +298,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.RenderTexture),typeof(System.Int32))){
+			else if(matchType(l,2,typeof(UnityEngine.RenderTexture),typeof(int))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.RenderTexture a1;
 				checkType(l,2,out a1);
@@ -759,7 +759,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_layerCullDistances(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		float[] v;
+		System.Single[] v;
 		checkType(l,2,out v);
 		o.layerCullDistances=v;
 		return 0;

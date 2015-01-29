@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace SLua
 {
-    public class LuaUnityEvent_BaseEventData : LuaObject
+    public class LuaUnityEvent_UnityEngine_Vector2 : LuaObject
     {
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -15,8 +15,8 @@ namespace SLua
         {
             try
             {
-                UnityEngine.Events.UnityEvent<BaseEventData> self = checkSelf<UnityEngine.Events.UnityEvent<BaseEventData>>(l);
-                UnityEngine.Events.UnityAction<BaseEventData> a1;
+                UnityEngine.Events.UnityEvent<UnityEngine.Vector2> self = checkSelf<UnityEngine.Events.UnityEvent<UnityEngine.Vector2>>(l);
+                UnityEngine.Events.UnityAction<UnityEngine.Vector2> a1;
                 checkType(l, 2, out a1);
                 self.AddListener(a1);
                 return 0;
@@ -32,8 +32,8 @@ namespace SLua
         {
             try
             {
-                UnityEngine.Events.UnityEvent<BaseEventData> self = checkSelf<UnityEngine.Events.UnityEvent<BaseEventData>>(l);
-                UnityEngine.Events.UnityAction<BaseEventData> a1;
+                UnityEngine.Events.UnityEvent<UnityEngine.Vector2> self = checkSelf<UnityEngine.Events.UnityEvent<UnityEngine.Vector2>>(l);
+                UnityEngine.Events.UnityAction<UnityEngine.Vector2> a1;
                 checkType(l, 2, out a1);
                 self.RemoveListener(a1);
                 return 0;
@@ -49,8 +49,8 @@ namespace SLua
         {
             try
             {
-                UnityEngine.Events.UnityEvent<BaseEventData> self = checkSelf<UnityEngine.Events.UnityEvent<BaseEventData>>(l);
-                BaseEventData o;
+                UnityEngine.Events.UnityEvent<UnityEngine.Vector2> self = checkSelf<UnityEngine.Events.UnityEvent<UnityEngine.Vector2>>(l);
+                UnityEngine.Vector2 o;
                 checkType(l,2,out o);
                 self.Invoke(o);
                 return 0;
@@ -63,17 +63,17 @@ namespace SLua
         }
         static public void reg(IntPtr l)
         {
-            getTypeTable(l, typeof(LuaUnityEvent_BaseEventData).FullName);
+            getTypeTable(l, typeof(LuaUnityEvent_UnityEngine_Vector2).FullName);
             addMember(l, AddListener);
             addMember(l, RemoveListener);
             addMember(l, Invoke);
-            createTypeMetatable(l, typeof(LuaUnityEvent_BaseEventData));
+            createTypeMetatable(l, typeof(LuaUnityEvent_UnityEngine_Vector2));
         }
 
-        static bool checkType(IntPtr l,int p,out UnityEngine.Events.UnityAction<BaseEventData> ua) {
+        static bool checkType(IntPtr l,int p,out UnityEngine.Events.UnityAction<UnityEngine.Vector2> ua) {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
             int r = LuaDLL.luaS_checkcallback(l, p);
-            ua = (BaseEventData v) =>
+            ua = (UnityEngine.Vector2 v) =>
             {
                 int error = pushTry(l);
                 LuaDLL.lua_getref(l, r);

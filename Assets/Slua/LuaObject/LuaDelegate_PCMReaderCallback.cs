@@ -20,7 +20,7 @@ namespace SLua
 			if(getCacheDelegate<UnityEngine.AudioClip.PCMReaderCallback>(r,out ua))
 				return op;
 			LuaDLL.lua_pop(l,1);
-            ua = (float[] a1) =>
+            ua = (System.Single[] a1) =>
             {
                 int error = pushTry(l);
                 LuaDLL.lua_getref(l, r);

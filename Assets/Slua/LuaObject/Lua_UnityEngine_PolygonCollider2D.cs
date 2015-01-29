@@ -63,7 +63,7 @@ public class Lua_UnityEngine_PolygonCollider2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CreatePrimitive(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Int32),typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2))){
+			if(matchType(l,2,typeof(int),typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2))){
 				UnityEngine.PolygonCollider2D self=(UnityEngine.PolygonCollider2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -74,7 +74,7 @@ public class Lua_UnityEngine_PolygonCollider2D : LuaObject {
 				self.CreatePrimitive(a1,a2,a3);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Int32),typeof(UnityEngine.Vector2))){
+			else if(matchType(l,2,typeof(int),typeof(UnityEngine.Vector2))){
 				UnityEngine.PolygonCollider2D self=(UnityEngine.PolygonCollider2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -83,7 +83,7 @@ public class Lua_UnityEngine_PolygonCollider2D : LuaObject {
 				self.CreatePrimitive(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Int32))){
+			else if(matchType(l,2,typeof(int))){
 				UnityEngine.PolygonCollider2D self=(UnityEngine.PolygonCollider2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);

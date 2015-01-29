@@ -4,6 +4,7 @@ namespace SLua {
 		public static void BindCustom(IntPtr l) {
 			Lua_HelloWorld.reg(l);
 			Lua_Custom.reg(l);
+			Lua_Deleg.reg(l);
 		}
 	}
 }

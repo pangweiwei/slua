@@ -8,7 +8,7 @@ public class Lua_UnityEngine_Color : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.Color o;
-		if(matchType(l,1,typeof(System.Single),typeof(System.Single),typeof(System.Single),typeof(System.Single))){
+		if(matchType(l,1,typeof(float),typeof(float),typeof(float),typeof(float))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -21,7 +21,7 @@ public class Lua_UnityEngine_Color : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.Single),typeof(System.Single),typeof(System.Single))){
+		else if(matchType(l,1,typeof(float),typeof(float),typeof(float))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -97,7 +97,7 @@ public class Lua_UnityEngine_Color : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Color),typeof(System.Single))){
+			else if(matchType(l,1,typeof(UnityEngine.Color),typeof(float))){
 				UnityEngine.Color a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -106,7 +106,7 @@ public class Lua_UnityEngine_Color : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.Single),typeof(UnityEngine.Color))){
+			else if(matchType(l,1,typeof(float),typeof(UnityEngine.Color))){
 				System.Single a1;
 				checkType(l,1,out a1);
 				UnityEngine.Color a2;

@@ -29,7 +29,7 @@ using System.Reflection;
 using UnityEditor;
 using LuaInterface;
 using System.Text;
-
+using System.Text.RegularExpressions;
 
 public class LuaCodeGen : MonoBehaviour
 {
@@ -191,10 +191,12 @@ public class LuaCodeGen : MonoBehaviour
     static public void Custom()
     {
         List<Type> cust = new List<Type>{
-			typeof(HelloWorld),
+ 			typeof(HelloWorld),
             typeof(Custom),
-
-
+            typeof(System.Func<int>),
+            typeof(System.Action<int,string>),
+            typeof(System.Action<int, Dictionary<int,object>>),
+            typeof(Deleg),
             // your custom class here
 		};
 
@@ -309,7 +311,8 @@ class CodeGenerator
 
     public bool Generate(Type t)
     {
-        if (!t.IsGenericType && !IsObsolete(t) && !typeof(YieldInstruction).IsAssignableFrom(t))
+        if ((!t.IsGenericType && !IsObsolete(t) && !typeof(YieldInstruction).IsAssignableFrom(t))
+            || (t.BaseType!=null && t.BaseType==typeof(System.MulticastDelegate)))
         {
             if (t.IsEnum)
             {
@@ -320,7 +323,19 @@ class CodeGenerator
             }
             else if (t.BaseType == typeof(System.MulticastDelegate))
             {
-                string f = LuaCodeGen.path + "LuaDelegate_" + t.Name + ".cs";
+                string f;
+                if (t.IsGenericType)
+                {
+                    if (t.ContainsGenericParameters)
+                        return false;
+
+                    string fn = string.Format("Lua{0}_{1}.cs", GenericBaseName(t), _Name(GenericName(t)));
+                    f = LuaCodeGen.path + fn;
+                }
+                else
+                {
+                    f = LuaCodeGen.path + "LuaDelegate_" + t.Name + ".cs";
+                }
                 StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
                 WriteDelegate(t, file);
                 file.Close();
@@ -343,7 +358,7 @@ class CodeGenerator
 
                 if (t.BaseType != null && t.BaseType.Name == "UnityEvent`1")
                 {
-                    string f = LuaCodeGen.path + "LuaUnityEvent_" + GenericName(t.BaseType) + ".cs";
+                    string f = LuaCodeGen.path + "LuaUnityEvent_" + _Name(GenericName(t.BaseType)) + ".cs";
                     file = new StreamWriter(f, false, Encoding.UTF8);
                     WriteEvent(t, file);
                     file.Close();
@@ -386,7 +401,7 @@ namespace SLua
 ";
         
         temp = temp.Replace("$TN", t.Name);
-        temp = temp.Replace("$FN", FullName(t));
+        temp = temp.Replace("$FN", SimpleType(t));
         MethodInfo mi = t.GetMethod("Invoke");
         List<int> outindex = new List<int>();
         List<int> refindex = new List<int>();
@@ -483,7 +498,7 @@ using UnityEngine.EventSystems;
 
 namespace SLua
 {
-    public class LuaUnityEvent_$GN : LuaObject
+    public class LuaUnityEvent_$CLS : LuaObject
     {
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -539,11 +554,11 @@ namespace SLua
         }
         static public void reg(IntPtr l)
         {
-            getTypeTable(l, typeof(LuaUnityEvent_$GN).FullName);
+            getTypeTable(l, typeof(LuaUnityEvent_$CLS).FullName);
             addMember(l, AddListener);
             addMember(l, RemoveListener);
             addMember(l, Invoke);
-            createTypeMetatable(l, typeof(LuaUnityEvent_$GN));
+            createTypeMetatable(l, typeof(LuaUnityEvent_$CLS));
         }
 
         static bool checkType(IntPtr l,int p,out UnityEngine.Events.UnityAction<$GN> ua) {
@@ -566,7 +581,7 @@ namespace SLua
 }";
 
 
-        temp = temp.Replace("$CLS", ExportName(t));
+        temp = temp.Replace("$CLS", _Name(GenericName(t.BaseType)));
         temp = temp.Replace("$FNAME", FullName(t));
         temp = temp.Replace("$GN", GenericName(t.BaseType));
         Write(file, temp);
@@ -700,9 +715,9 @@ namespace SLua
         // Write export function
         Write(file, "static public void reg(IntPtr l) {");
 
-        if (t.BaseType != null && t.BaseType.Name=="UnityEvent`1")
+        if (t.BaseType != null && t.BaseType.Name.Contains("UnityEvent`"))
         {
-            Write(file, "LuaUnityEvent_{1}.reg(l);", FullName(t), GenericName(t.BaseType));
+            Write(file, "LuaUnityEvent_{1}.reg(l);", FullName(t), _Name((GenericName(t.BaseType)) ));
         }
 
         Write(file, "getTypeTable(l,\"{0}\");", FullName(t));
@@ -723,8 +738,8 @@ namespace SLua
         }
         if (t.BaseType != null && !CutBase(t.BaseType))
         {
-            if(t.BaseType.Name=="UnityEvent`1")
-                Write(file, "createTypeMetatable(l,constructor, typeof({0}),typeof(LuaUnityEvent_{1}));", FullName(t), GenericName(t.BaseType));
+            if (t.BaseType.Name.Contains("UnityEvent`1"))
+                Write(file, "createTypeMetatable(l,constructor, typeof({0}),typeof(LuaUnityEvent_{1}));", FullName(t), _Name(GenericName(t.BaseType)));
             else
                 Write(file, "createTypeMetatable(l,constructor, typeof({0}),typeof({1}));", FullName(t), FullName(t.BaseType));
         }
@@ -993,24 +1008,38 @@ namespace SLua
         s = s.Replace("+", ".");
         if (s.Contains("`"))
         {
-            s = s.Replace("`1", "");
-            s = s.Replace("`2", "");
+            string regstr = @"`\d";
+            Regex r = new Regex(regstr, RegexOptions.None);
+            s = r.Replace(s, "");
             s = s.Replace("[", "<");
             s = s.Replace("]", ">");
         }
         return s;
     }
 
+    string GenericBaseName(Type t)
+    {
+        string n = t.Name;
+        if (n.IndexOf('`')>0)
+        {
+            return n.Substring(0, n.IndexOf('`'));
+        }
+        return n;
+    }
     string GenericName(Type t)
     {
         try
         {
-            string s = t.ToString();
-            int start = s.IndexOf('[')+1;
-            int end = s.IndexOf(']');
-            s = s.Substring(start, end - start);
-            s = s.Substring(s.LastIndexOf('.')+1);
-            return s;
+            Type[] tt = t.GetGenericArguments();
+            string ret = "";
+            for (int n = 0; n < tt.Length; n++)
+            {
+                string dt = SimpleType(tt[n]);
+                ret += dt;
+                if (n < tt.Length - 1)
+                    ret += "_";
+            }
+            return ret;
         }
         catch (Exception e)
         {
@@ -1019,13 +1048,26 @@ namespace SLua
         }
     }
 
+    string _Name(string n)
+    {
+        string ret="";
+        for(int i=0;i<n.Length;i++) 
+        {
+            if(char.IsLetterOrDigit(n[i]))
+                ret+=n[i];
+            else
+                ret += "_";
+        }
+        return ret;
+    }
+
     string TypeDecl(ParameterInfo[] pars)
     {
         string ret = "";
         for (int n = 0; n < pars.Length; n++)
         {
             ret += ",typeof(";
-            ret += FullName(pars[n].ParameterType);
+            ret += SimpleType(pars[n].ParameterType);
             ret += ")";
         }
         return ret;
@@ -1202,7 +1244,7 @@ namespace SLua
     string SimpleType_(Type t)
     {
 
-        string tn = RemoveRef(t.Name);
+        string tn = t.Name;
 
         switch (tn)
         {
@@ -1219,20 +1261,16 @@ namespace SLua
             case "Object":
                 return FullName(t);
             default:
-                
-                 string fn = FullName(t);
-//                 if (fn.StartsWith("UnityEngine."))
-//                     return fn.Substring(12);
-                if (fn.StartsWith("System."))
-                    return fn.Substring(7);
-                return fn;
+                tn = TypeDecl(t);
+                tn = tn.Replace("System.Collections.Generic.", "");
+                tn = tn.Replace("System.Object", "object");
+                return tn;
         }
     }
 
     string SimpleType(Type t)
     {
         string ret = SimpleType_(t);
-        if (t.IsArray) ret += "[]";
         return ret;
     }
 

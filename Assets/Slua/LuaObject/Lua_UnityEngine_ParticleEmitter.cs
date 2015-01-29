@@ -36,14 +36,14 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 				self.Emit();
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Int32))){
+			else if(matchType(l,2,typeof(int))){
 				UnityEngine.ParticleEmitter self=(UnityEngine.ParticleEmitter)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
 				self.Emit(a1);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(System.Single),typeof(System.Single),typeof(UnityEngine.Color))){
+			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float),typeof(float),typeof(UnityEngine.Color))){
 				UnityEngine.ParticleEmitter self=(UnityEngine.ParticleEmitter)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -58,7 +58,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 				self.Emit(a1,a2,a3,a4,a5);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(System.Single),typeof(System.Single),typeof(UnityEngine.Color),typeof(System.Single),typeof(System.Single))){
+			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float),typeof(float),typeof(UnityEngine.Color),typeof(float),typeof(float))){
 				UnityEngine.ParticleEmitter self=(UnityEngine.ParticleEmitter)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);

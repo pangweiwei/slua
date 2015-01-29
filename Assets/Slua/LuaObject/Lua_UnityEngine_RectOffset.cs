@@ -13,7 +13,7 @@ public class Lua_UnityEngine_RectOffset : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(System.Int32))){
+		else if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(int))){
 			System.Int32 a1;
 			checkType(l,1,out a1);
 			System.Int32 a2;

@@ -19,7 +19,7 @@ public class Lua_UnityEngine_SkinnedCloth : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetEnabledFading(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Boolean),typeof(System.Single))){
+			if(matchType(l,2,typeof(bool),typeof(float))){
 				UnityEngine.SkinnedCloth self=(UnityEngine.SkinnedCloth)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -28,7 +28,7 @@ public class Lua_UnityEngine_SkinnedCloth : LuaObject {
 				self.SetEnabledFading(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(bool))){
 				UnityEngine.SkinnedCloth self=(UnityEngine.SkinnedCloth)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);

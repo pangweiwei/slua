@@ -8,7 +8,7 @@ public class Lua_UnityEngine_LOD : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.LOD o;
-		if(matchType(l,1,typeof(System.Single),typeof(UnityEngine.Renderer))){
+		if(matchType(l,1,typeof(float),typeof(UnityEngine.Renderer[]))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			UnityEngine.Renderer[] a2;

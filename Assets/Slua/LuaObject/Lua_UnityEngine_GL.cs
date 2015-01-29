@@ -197,7 +197,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 				UnityEngine.GL.LoadPixelMatrix();
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Single),typeof(System.Single),typeof(System.Single),typeof(System.Single))){
+			else if(matchType(l,1,typeof(float),typeof(float),typeof(float),typeof(float))){
 				System.Single a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -321,7 +321,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Clear_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Boolean),typeof(System.Boolean),typeof(UnityEngine.Color))){
+			if(matchType(l,1,typeof(bool),typeof(bool),typeof(UnityEngine.Color))){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -331,7 +331,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 				UnityEngine.GL.Clear(a1,a2,a3);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Boolean),typeof(System.Boolean),typeof(UnityEngine.Color),typeof(System.Single))){
+			else if(matchType(l,1,typeof(bool),typeof(bool),typeof(UnityEngine.Color),typeof(float))){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;

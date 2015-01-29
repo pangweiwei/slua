@@ -8,7 +8,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.Quaternion o;
-		if(matchType(l,1,typeof(System.Single),typeof(System.Single),typeof(System.Single),typeof(System.Single))){
+		if(matchType(l,1,typeof(float),typeof(float),typeof(float),typeof(float))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -270,7 +270,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Euler_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Single),typeof(System.Single),typeof(System.Single))){
+			if(matchType(l,1,typeof(float),typeof(float),typeof(float))){
 				System.Single a1;
 				checkType(l,1,out a1);
 				System.Single a2;

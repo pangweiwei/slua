@@ -73,7 +73,7 @@ public class Lua_UnityEngine_EventSystems_EventSystem : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(System.Int32))){
+			else if(matchType(l,2,typeof(int))){
 				UnityEngine.EventSystems.EventSystem self=(UnityEngine.EventSystems.EventSystem)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);

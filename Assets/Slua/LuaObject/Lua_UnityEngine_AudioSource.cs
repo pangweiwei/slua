@@ -122,7 +122,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int PlayOneShot(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.AudioClip),typeof(System.Single))){
+			if(matchType(l,2,typeof(UnityEngine.AudioClip),typeof(float))){
 				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
 				UnityEngine.AudioClip a1;
 				checkType(l,2,out a1);
@@ -191,7 +191,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 				UnityEngine.AudioSource.PlayClipAtPoint(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.AudioClip),typeof(UnityEngine.Vector3),typeof(System.Single))){
+			else if(matchType(l,1,typeof(UnityEngine.AudioClip),typeof(UnityEngine.Vector3),typeof(float))){
 				UnityEngine.AudioClip a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;

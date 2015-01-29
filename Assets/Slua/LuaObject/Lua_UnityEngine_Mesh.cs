@@ -19,7 +19,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Clear(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Boolean))){
+			if(matchType(l,2,typeof(bool))){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -157,7 +157,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CombineMeshes(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.CombineInstance),typeof(System.Boolean),typeof(System.Boolean))){
+			if(matchType(l,2,typeof(UnityEngine.CombineInstance[]),typeof(bool),typeof(bool))){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				UnityEngine.CombineInstance[] a1;
 				checkType(l,2,out a1);
@@ -168,7 +168,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 				self.CombineMeshes(a1,a2,a3);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.CombineInstance),typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(UnityEngine.CombineInstance[]),typeof(bool))){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				UnityEngine.CombineInstance[] a1;
 				checkType(l,2,out a1);
@@ -177,7 +177,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 				self.CombineMeshes(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.CombineInstance))){
+			else if(matchType(l,2,typeof(UnityEngine.CombineInstance[]))){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				UnityEngine.CombineInstance[] a1;
 				checkType(l,2,out a1);
@@ -389,7 +389,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_triangles(IntPtr l) {
 		UnityEngine.Mesh o = (UnityEngine.Mesh)checkSelf(l);
-		int[] v;
+		System.Int32[] v;
 		checkType(l,2,out v);
 		o.triangles=v;
 		return 0;

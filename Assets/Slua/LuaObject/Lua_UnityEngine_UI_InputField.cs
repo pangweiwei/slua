@@ -457,7 +457,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_asteriskChar(IntPtr l) {
 		UnityEngine.UI.InputField o = (UnityEngine.UI.InputField)checkSelf(l);
-		Char v;
+		System.Char v;
 		checkType(l,2,out v);
 		o.asteriskChar=v;
 		return 0;

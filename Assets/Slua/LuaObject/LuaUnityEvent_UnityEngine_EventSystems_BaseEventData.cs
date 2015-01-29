@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace SLua
 {
-    public class LuaUnityEvent_Boolean : LuaObject
+    public class LuaUnityEvent_UnityEngine_EventSystems_BaseEventData : LuaObject
     {
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -15,8 +15,8 @@ namespace SLua
         {
             try
             {
-                UnityEngine.Events.UnityEvent<Boolean> self = checkSelf<UnityEngine.Events.UnityEvent<Boolean>>(l);
-                UnityEngine.Events.UnityAction<Boolean> a1;
+                UnityEngine.Events.UnityEvent<UnityEngine.EventSystems.BaseEventData> self = checkSelf<UnityEngine.Events.UnityEvent<UnityEngine.EventSystems.BaseEventData>>(l);
+                UnityEngine.Events.UnityAction<UnityEngine.EventSystems.BaseEventData> a1;
                 checkType(l, 2, out a1);
                 self.AddListener(a1);
                 return 0;
@@ -32,8 +32,8 @@ namespace SLua
         {
             try
             {
-                UnityEngine.Events.UnityEvent<Boolean> self = checkSelf<UnityEngine.Events.UnityEvent<Boolean>>(l);
-                UnityEngine.Events.UnityAction<Boolean> a1;
+                UnityEngine.Events.UnityEvent<UnityEngine.EventSystems.BaseEventData> self = checkSelf<UnityEngine.Events.UnityEvent<UnityEngine.EventSystems.BaseEventData>>(l);
+                UnityEngine.Events.UnityAction<UnityEngine.EventSystems.BaseEventData> a1;
                 checkType(l, 2, out a1);
                 self.RemoveListener(a1);
                 return 0;
@@ -49,8 +49,8 @@ namespace SLua
         {
             try
             {
-                UnityEngine.Events.UnityEvent<Boolean> self = checkSelf<UnityEngine.Events.UnityEvent<Boolean>>(l);
-                Boolean o;
+                UnityEngine.Events.UnityEvent<UnityEngine.EventSystems.BaseEventData> self = checkSelf<UnityEngine.Events.UnityEvent<UnityEngine.EventSystems.BaseEventData>>(l);
+                UnityEngine.EventSystems.BaseEventData o;
                 checkType(l,2,out o);
                 self.Invoke(o);
                 return 0;
@@ -63,17 +63,17 @@ namespace SLua
         }
         static public void reg(IntPtr l)
         {
-            getTypeTable(l, typeof(LuaUnityEvent_Boolean).FullName);
+            getTypeTable(l, typeof(LuaUnityEvent_UnityEngine_EventSystems_BaseEventData).FullName);
             addMember(l, AddListener);
             addMember(l, RemoveListener);
             addMember(l, Invoke);
-            createTypeMetatable(l, typeof(LuaUnityEvent_Boolean));
+            createTypeMetatable(l, typeof(LuaUnityEvent_UnityEngine_EventSystems_BaseEventData));
         }
 
-        static bool checkType(IntPtr l,int p,out UnityEngine.Events.UnityAction<Boolean> ua) {
+        static bool checkType(IntPtr l,int p,out UnityEngine.Events.UnityAction<UnityEngine.EventSystems.BaseEventData> ua) {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
             int r = LuaDLL.luaS_checkcallback(l, p);
-            ua = (Boolean v) =>
+            ua = (UnityEngine.EventSystems.BaseEventData v) =>
             {
                 int error = pushTry(l);
                 LuaDLL.lua_getref(l, r);

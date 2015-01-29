@@ -89,7 +89,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Stop(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Boolean))){
+			if(matchType(l,2,typeof(bool))){
 				UnityEngine.NavMeshAgent self=(UnityEngine.NavMeshAgent)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
