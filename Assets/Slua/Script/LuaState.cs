@@ -34,6 +34,8 @@ namespace SLua
         protected int valueref = 0;
         protected IntPtr l;
 
+        
+
         public IntPtr L
         {
             get
@@ -86,7 +88,9 @@ namespace SLua
             if (valueref!=0)
             {
                 //LuaDLL.lua_unref(l, valueref);
-                //valueref = 0;
+                // move unref to luastate thread
+                state.gcRef(valueref);
+                valueref = 0;
             }
         }
 
@@ -200,6 +204,8 @@ namespace SLua
         public delegate byte[] LoaderDelegate(string fn);
         static public LoaderDelegate loaderDelegate;
 
+        Queue<int> refQueue;
+
         public IntPtr handle
         {
             get { return L; }
@@ -217,6 +223,8 @@ namespace SLua
             L = LuaDLL.luaL_newstate();
             statemap[L] = this;
             if (main == null) main = this;
+
+            refQueue = new Queue<int>();
 
             LuaDLL.luaL_openlibs(L);
 
@@ -260,12 +268,6 @@ namespace SLua
             }
         }
 
-        internal void dispose(int reference)
-        {
-            if (L != IntPtr.Zero) 
-                LuaDLL.lua_unref(L, reference);
-        }
-
         public void Dispose()
         {
             Dispose(true);
@@ -276,7 +278,10 @@ namespace SLua
 
         public virtual void Dispose(bool dispose)
         {
-            
+            if (dispose)
+            {
+                Close();
+            } 
         }
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -500,6 +505,25 @@ namespace SLua
                 this.setObject(path, value);
             }
         }
-    }
 
+        public void gcRef(int r)
+        {
+            lock (refQueue)
+            {
+                refQueue.Enqueue(r);    
+            }
+        }
+
+        public void checkRef()
+        {
+            while( refQueue.Count> 0 ) {
+                int r;
+                lock (refQueue)
+                {
+                    r = refQueue.Dequeue();
+                }
+                LuaDLL.lua_unref(L, r);
+            }
+        }
+    }
 }
