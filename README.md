@@ -3,6 +3,17 @@ Unity lua binding via static code generating.
 
 QQ group: 15647305
 
+Mail to : sineysan#163.com
+
+
+#Release Note
+
+[here.](release_note.md)
+
+#Help
+
+See inner demo for help.
+
 #important
 
 pre-generated file need unity 4.6+, 
@@ -74,9 +85,6 @@ find code "static public void Custom()", add your custom class type into exports
         AssetDatabase.Refresh();
     }
 
-###help
-
-open helloworld.unity and run, see lua/main.lua.txt for simple tutorials.
 
 ###benchmark
 
