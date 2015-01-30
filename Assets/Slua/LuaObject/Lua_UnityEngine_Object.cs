@@ -61,7 +61,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Destroy_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Object),typeof(System.Single))){
+			if(matchType(l,1,typeof(UnityEngine.Object),typeof(float))){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -86,7 +86,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int DestroyImmediate_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Object),typeof(System.Boolean))){
+			if(matchType(l,1,typeof(UnityEngine.Object),typeof(bool))){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -111,15 +111,11 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindObjectsOfType_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Type))){
-				System.Type a1;
-				checkType(l,1,out a1);
-				UnityEngine.Object[] ret=UnityEngine.Object.FindObjectsOfType(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
+			System.Type a1;
+			checkType(l,1,out a1);
+			UnityEngine.Object[] ret=UnityEngine.Object.FindObjectsOfType(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -129,15 +125,11 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindObjectOfType_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Type))){
-				System.Type a1;
-				checkType(l,1,out a1);
-				UnityEngine.Object ret=UnityEngine.Object.FindObjectOfType(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
+			System.Type a1;
+			checkType(l,1,out a1);
+			UnityEngine.Object ret=UnityEngine.Object.FindObjectOfType(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -160,7 +152,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int DestroyObject_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Object),typeof(System.Single))){
+			if(matchType(l,1,typeof(UnityEngine.Object),typeof(float))){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -254,8 +246,8 @@ public class Lua_UnityEngine_Object : LuaObject {
 		addMember(l,DestroyObject_s);
 		addMember(l,op_Equality);
 		addMember(l,op_Inequality);
-		addMember(l,"name",get_name,set_name);
-		addMember(l,"hideFlags",get_hideFlags,set_hideFlags);
+		addMember(l,"name",get_name,set_name,true);
+		addMember(l,"hideFlags",get_hideFlags,set_hideFlags,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Object));
 	}
 }

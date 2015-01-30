@@ -92,7 +92,7 @@ public class Lua_UnityEngine_EventSystems_TouchInputModule : LuaObject {
 		addMember(l,ShouldActivateModule);
 		addMember(l,Process);
 		addMember(l,DeactivateModule);
-		addMember(l,"allowActivationOnStandalone",get_allowActivationOnStandalone,set_allowActivationOnStandalone);
+		addMember(l,"allowActivationOnStandalone",get_allowActivationOnStandalone,set_allowActivationOnStandalone,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.TouchInputModule),typeof(UnityEngine.EventSystems.PointerInputModule));
 	}
 }

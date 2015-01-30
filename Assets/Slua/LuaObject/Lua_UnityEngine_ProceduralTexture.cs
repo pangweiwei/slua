@@ -66,8 +66,8 @@ public class Lua_UnityEngine_ProceduralTexture : LuaObject {
 		getTypeTable(l,"UnityEngine.ProceduralTexture");
 		addMember(l,GetProceduralOutputType);
 		addMember(l,GetPixels32);
-		addMember(l,"hasAlpha",get_hasAlpha,null);
-		addMember(l,"format",get_format,null);
+		addMember(l,"hasAlpha",get_hasAlpha,null,true);
+		addMember(l,"format",get_format,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ProceduralTexture),typeof(UnityEngine.Texture));
 	}
 }

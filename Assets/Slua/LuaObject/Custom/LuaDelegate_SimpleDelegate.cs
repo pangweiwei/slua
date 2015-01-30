@@ -30,7 +30,6 @@ namespace SLua
 				if (LuaDLL.lua_pcall(l, 2, -1, error) != 0) {
 					LuaDLL.lua_pop(l, 1);
 				}
-				int top =LuaDLL.lua_gettop(l);
 				LuaDLL.lua_pop(l, 1);
 			};
 			cacheDelegate(r,ua);

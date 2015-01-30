@@ -13,7 +13,7 @@ public class Lua_UnityEngine_PhysicsMaterial2D : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.String))){
+		else if(matchType(l,1,typeof(string))){
 			System.String a1;
 			checkType(l,1,out a1);
 			o=new UnityEngine.PhysicsMaterial2D(a1);
@@ -53,8 +53,8 @@ public class Lua_UnityEngine_PhysicsMaterial2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.PhysicsMaterial2D");
-		addMember(l,"bounciness",get_bounciness,set_bounciness);
-		addMember(l,"friction",get_friction,set_friction);
+		addMember(l,"bounciness",get_bounciness,set_bounciness,true);
+		addMember(l,"friction",get_friction,set_friction,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.PhysicsMaterial2D),typeof(UnityEngine.Object));
 	}
 }

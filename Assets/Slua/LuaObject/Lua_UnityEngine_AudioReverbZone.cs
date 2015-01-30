@@ -256,23 +256,23 @@ public class Lua_UnityEngine_AudioReverbZone : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioReverbZone");
-		addMember(l,"minDistance",get_minDistance,set_minDistance);
-		addMember(l,"maxDistance",get_maxDistance,set_maxDistance);
-		addMember(l,"reverbPreset",get_reverbPreset,set_reverbPreset);
-		addMember(l,"room",get_room,set_room);
-		addMember(l,"roomHF",get_roomHF,set_roomHF);
-		addMember(l,"roomLF",get_roomLF,set_roomLF);
-		addMember(l,"decayTime",get_decayTime,set_decayTime);
-		addMember(l,"decayHFRatio",get_decayHFRatio,set_decayHFRatio);
-		addMember(l,"reflections",get_reflections,set_reflections);
-		addMember(l,"reflectionsDelay",get_reflectionsDelay,set_reflectionsDelay);
-		addMember(l,"reverb",get_reverb,set_reverb);
-		addMember(l,"reverbDelay",get_reverbDelay,set_reverbDelay);
-		addMember(l,"HFReference",get_HFReference,set_HFReference);
-		addMember(l,"LFReference",get_LFReference,set_LFReference);
-		addMember(l,"roomRolloffFactor",get_roomRolloffFactor,set_roomRolloffFactor);
-		addMember(l,"diffusion",get_diffusion,set_diffusion);
-		addMember(l,"density",get_density,set_density);
+		addMember(l,"minDistance",get_minDistance,set_minDistance,true);
+		addMember(l,"maxDistance",get_maxDistance,set_maxDistance,true);
+		addMember(l,"reverbPreset",get_reverbPreset,set_reverbPreset,true);
+		addMember(l,"room",get_room,set_room,true);
+		addMember(l,"roomHF",get_roomHF,set_roomHF,true);
+		addMember(l,"roomLF",get_roomLF,set_roomLF,true);
+		addMember(l,"decayTime",get_decayTime,set_decayTime,true);
+		addMember(l,"decayHFRatio",get_decayHFRatio,set_decayHFRatio,true);
+		addMember(l,"reflections",get_reflections,set_reflections,true);
+		addMember(l,"reflectionsDelay",get_reflectionsDelay,set_reflectionsDelay,true);
+		addMember(l,"reverb",get_reverb,set_reverb,true);
+		addMember(l,"reverbDelay",get_reverbDelay,set_reverbDelay,true);
+		addMember(l,"HFReference",get_HFReference,set_HFReference,true);
+		addMember(l,"LFReference",get_LFReference,set_LFReference,true);
+		addMember(l,"roomRolloffFactor",get_roomRolloffFactor,set_roomRolloffFactor,true);
+		addMember(l,"diffusion",get_diffusion,set_diffusion,true);
+		addMember(l,"density",get_density,set_density,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioReverbZone),typeof(UnityEngine.Behaviour));
 	}
 }

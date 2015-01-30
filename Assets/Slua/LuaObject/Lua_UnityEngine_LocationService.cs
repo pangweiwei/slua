@@ -19,7 +19,7 @@ public class Lua_UnityEngine_LocationService : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Start(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Single),typeof(System.Single))){
+			if(matchType(l,2,typeof(float),typeof(float))){
 				UnityEngine.LocationService self=(UnityEngine.LocationService)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -28,7 +28,7 @@ public class Lua_UnityEngine_LocationService : LuaObject {
 				self.Start(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Single))){
+			else if(matchType(l,2,typeof(float))){
 				UnityEngine.LocationService self=(UnityEngine.LocationService)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -82,9 +82,9 @@ public class Lua_UnityEngine_LocationService : LuaObject {
 		getTypeTable(l,"UnityEngine.LocationService");
 		addMember(l,Start);
 		addMember(l,Stop);
-		addMember(l,"isEnabledByUser",get_isEnabledByUser,null);
-		addMember(l,"status",get_status,null);
-		addMember(l,"lastData",get_lastData,null);
+		addMember(l,"isEnabledByUser",get_isEnabledByUser,null,true);
+		addMember(l,"status",get_status,null,true);
+		addMember(l,"lastData",get_lastData,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LocationService));
 	}
 }

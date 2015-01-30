@@ -19,7 +19,7 @@ public class Lua_UnityEngine_ScriptableObject : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CreateInstance_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.ScriptableObject ret=UnityEngine.ScriptableObject.CreateInstance(a1);

@@ -20,7 +20,7 @@ namespace SLua
 			if(getCacheDelegate<UnityEngine.UI.InputField.OnValidateInput>(r,out ua))
 				return op;
 			LuaDLL.lua_pop(l,1);
-            ua = (string a1,int a2,Char a3) =>
+            ua = (string a1,int a2,System.Char a3) =>
             {
                 int error = pushTry(l);
                 LuaDLL.lua_getref(l, r);
@@ -31,8 +31,7 @@ namespace SLua
 				if (LuaDLL.lua_pcall(l, 3, -1, error) != 0) {
 					LuaDLL.lua_pop(l, 1);
 				}
-				int top =LuaDLL.lua_gettop(l);
-				Char ret;
+				System.Char ret;
 				checkType(l,error+1,out ret);
 				LuaDLL.lua_pop(l, 1);
 				return ret;

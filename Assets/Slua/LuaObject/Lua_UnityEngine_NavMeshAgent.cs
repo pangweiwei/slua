@@ -89,7 +89,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Stop(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Boolean))){
+			if(matchType(l,2,typeof(bool))){
 				UnityEngine.NavMeshAgent self=(UnityEngine.NavMeshAgent)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -596,36 +596,36 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 		addMember(l,SamplePathPosition);
 		addMember(l,SetLayerCost);
 		addMember(l,GetLayerCost);
-		addMember(l,"destination",get_destination,set_destination);
-		addMember(l,"stoppingDistance",get_stoppingDistance,set_stoppingDistance);
-		addMember(l,"velocity",get_velocity,set_velocity);
-		addMember(l,"nextPosition",get_nextPosition,set_nextPosition);
-		addMember(l,"steeringTarget",get_steeringTarget,null);
-		addMember(l,"desiredVelocity",get_desiredVelocity,null);
-		addMember(l,"remainingDistance",get_remainingDistance,null);
-		addMember(l,"baseOffset",get_baseOffset,set_baseOffset);
-		addMember(l,"isOnOffMeshLink",get_isOnOffMeshLink,null);
-		addMember(l,"currentOffMeshLinkData",get_currentOffMeshLinkData,null);
-		addMember(l,"nextOffMeshLinkData",get_nextOffMeshLinkData,null);
-		addMember(l,"autoTraverseOffMeshLink",get_autoTraverseOffMeshLink,set_autoTraverseOffMeshLink);
-		addMember(l,"autoBraking",get_autoBraking,set_autoBraking);
-		addMember(l,"autoRepath",get_autoRepath,set_autoRepath);
-		addMember(l,"hasPath",get_hasPath,null);
-		addMember(l,"pathPending",get_pathPending,null);
-		addMember(l,"isPathStale",get_isPathStale,null);
-		addMember(l,"pathStatus",get_pathStatus,null);
-		addMember(l,"pathEndPosition",get_pathEndPosition,null);
-		addMember(l,"path",get_path,set_path);
-		addMember(l,"walkableMask",get_walkableMask,set_walkableMask);
-		addMember(l,"speed",get_speed,set_speed);
-		addMember(l,"angularSpeed",get_angularSpeed,set_angularSpeed);
-		addMember(l,"acceleration",get_acceleration,set_acceleration);
-		addMember(l,"updatePosition",get_updatePosition,set_updatePosition);
-		addMember(l,"updateRotation",get_updateRotation,set_updateRotation);
-		addMember(l,"radius",get_radius,set_radius);
-		addMember(l,"height",get_height,set_height);
-		addMember(l,"obstacleAvoidanceType",get_obstacleAvoidanceType,set_obstacleAvoidanceType);
-		addMember(l,"avoidancePriority",get_avoidancePriority,set_avoidancePriority);
+		addMember(l,"destination",get_destination,set_destination,true);
+		addMember(l,"stoppingDistance",get_stoppingDistance,set_stoppingDistance,true);
+		addMember(l,"velocity",get_velocity,set_velocity,true);
+		addMember(l,"nextPosition",get_nextPosition,set_nextPosition,true);
+		addMember(l,"steeringTarget",get_steeringTarget,null,true);
+		addMember(l,"desiredVelocity",get_desiredVelocity,null,true);
+		addMember(l,"remainingDistance",get_remainingDistance,null,true);
+		addMember(l,"baseOffset",get_baseOffset,set_baseOffset,true);
+		addMember(l,"isOnOffMeshLink",get_isOnOffMeshLink,null,true);
+		addMember(l,"currentOffMeshLinkData",get_currentOffMeshLinkData,null,true);
+		addMember(l,"nextOffMeshLinkData",get_nextOffMeshLinkData,null,true);
+		addMember(l,"autoTraverseOffMeshLink",get_autoTraverseOffMeshLink,set_autoTraverseOffMeshLink,true);
+		addMember(l,"autoBraking",get_autoBraking,set_autoBraking,true);
+		addMember(l,"autoRepath",get_autoRepath,set_autoRepath,true);
+		addMember(l,"hasPath",get_hasPath,null,true);
+		addMember(l,"pathPending",get_pathPending,null,true);
+		addMember(l,"isPathStale",get_isPathStale,null,true);
+		addMember(l,"pathStatus",get_pathStatus,null,true);
+		addMember(l,"pathEndPosition",get_pathEndPosition,null,true);
+		addMember(l,"path",get_path,set_path,true);
+		addMember(l,"walkableMask",get_walkableMask,set_walkableMask,true);
+		addMember(l,"speed",get_speed,set_speed,true);
+		addMember(l,"angularSpeed",get_angularSpeed,set_angularSpeed,true);
+		addMember(l,"acceleration",get_acceleration,set_acceleration,true);
+		addMember(l,"updatePosition",get_updatePosition,set_updatePosition,true);
+		addMember(l,"updateRotation",get_updateRotation,set_updateRotation,true);
+		addMember(l,"radius",get_radius,set_radius,true);
+		addMember(l,"height",get_height,set_height,true);
+		addMember(l,"obstacleAvoidanceType",get_obstacleAvoidanceType,set_obstacleAvoidanceType,true);
+		addMember(l,"avoidancePriority",get_avoidancePriority,set_avoidancePriority,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.NavMeshAgent),typeof(UnityEngine.Behaviour));
 	}
 }

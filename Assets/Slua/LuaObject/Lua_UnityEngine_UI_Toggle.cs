@@ -126,11 +126,11 @@ public class Lua_UnityEngine_UI_Toggle : LuaObject {
 		addMember(l,Rebuild);
 		addMember(l,OnPointerClick);
 		addMember(l,OnSubmit);
-		addMember(l,"toggleTransition",get_toggleTransition,set_toggleTransition);
-		addMember(l,"graphic",get_graphic,set_graphic);
-		addMember(l,"onValueChanged",get_onValueChanged,set_onValueChanged);
-		addMember(l,"group",get_group,set_group);
-		addMember(l,"isOn",get_isOn,set_isOn);
+		addMember(l,"toggleTransition",get_toggleTransition,set_toggleTransition,true);
+		addMember(l,"graphic",get_graphic,set_graphic,true);
+		addMember(l,"onValueChanged",get_onValueChanged,set_onValueChanged,true);
+		addMember(l,"group",get_group,set_group,true);
+		addMember(l,"isOn",get_isOn,set_isOn,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Toggle),typeof(UnityEngine.UI.Selectable));
 	}
 }

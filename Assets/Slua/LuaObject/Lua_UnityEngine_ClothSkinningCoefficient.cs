@@ -71,10 +71,10 @@ public class Lua_UnityEngine_ClothSkinningCoefficient : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ClothSkinningCoefficient");
-		addMember(l,"maxDistance",get_maxDistance,set_maxDistance);
-		addMember(l,"maxDistanceBias",get_maxDistanceBias,set_maxDistanceBias);
-		addMember(l,"collisionSphereRadius",get_collisionSphereRadius,set_collisionSphereRadius);
-		addMember(l,"collisionSphereDistance",get_collisionSphereDistance,set_collisionSphereDistance);
+		addMember(l,"maxDistance",get_maxDistance,set_maxDistance,true);
+		addMember(l,"maxDistanceBias",get_maxDistanceBias,set_maxDistanceBias,true);
+		addMember(l,"collisionSphereRadius",get_collisionSphereRadius,set_collisionSphereRadius,true);
+		addMember(l,"collisionSphereDistance",get_collisionSphereDistance,set_collisionSphereDistance,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ClothSkinningCoefficient));
 	}
 }

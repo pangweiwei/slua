@@ -56,9 +56,9 @@ public class Lua_UnityEngine_UI_SpriteState : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.SpriteState");
-		addMember(l,"highlightedSprite",get_highlightedSprite,set_highlightedSprite);
-		addMember(l,"pressedSprite",get_pressedSprite,set_pressedSprite);
-		addMember(l,"disabledSprite",get_disabledSprite,set_disabledSprite);
+		addMember(l,"highlightedSprite",get_highlightedSprite,set_highlightedSprite,true);
+		addMember(l,"pressedSprite",get_pressedSprite,set_pressedSprite,true);
+		addMember(l,"disabledSprite",get_disabledSprite,set_disabledSprite,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.SpriteState));
 	}
 }

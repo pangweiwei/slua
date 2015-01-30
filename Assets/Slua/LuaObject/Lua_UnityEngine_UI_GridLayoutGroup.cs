@@ -147,12 +147,12 @@ public class Lua_UnityEngine_UI_GridLayoutGroup : LuaObject {
 		addMember(l,CalculateLayoutInputVertical);
 		addMember(l,SetLayoutHorizontal);
 		addMember(l,SetLayoutVertical);
-		addMember(l,"startCorner",get_startCorner,set_startCorner);
-		addMember(l,"startAxis",get_startAxis,set_startAxis);
-		addMember(l,"cellSize",get_cellSize,set_cellSize);
-		addMember(l,"spacing",get_spacing,set_spacing);
-		addMember(l,"constraint",get_constraint,set_constraint);
-		addMember(l,"constraintCount",get_constraintCount,set_constraintCount);
+		addMember(l,"startCorner",get_startCorner,set_startCorner,true);
+		addMember(l,"startAxis",get_startAxis,set_startAxis,true);
+		addMember(l,"cellSize",get_cellSize,set_cellSize,true);
+		addMember(l,"spacing",get_spacing,set_spacing,true);
+		addMember(l,"constraint",get_constraint,set_constraint,true);
+		addMember(l,"constraintCount",get_constraintCount,set_constraintCount,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.GridLayoutGroup),typeof(UnityEngine.UI.LayoutGroup));
 	}
 }

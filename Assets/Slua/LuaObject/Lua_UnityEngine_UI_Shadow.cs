@@ -68,9 +68,9 @@ public class Lua_UnityEngine_UI_Shadow : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Shadow");
 		addMember(l,ModifyVertices);
-		addMember(l,"effectColor",get_effectColor,set_effectColor);
-		addMember(l,"effectDistance",get_effectDistance,set_effectDistance);
-		addMember(l,"useGraphicAlpha",get_useGraphicAlpha,set_useGraphicAlpha);
+		addMember(l,"effectColor",get_effectColor,set_effectColor,true);
+		addMember(l,"effectDistance",get_effectDistance,set_effectDistance,true);
+		addMember(l,"useGraphicAlpha",get_useGraphicAlpha,set_useGraphicAlpha,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Shadow),typeof(UnityEngine.UI.BaseVertexEffect));
 	}
 }

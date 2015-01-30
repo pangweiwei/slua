@@ -19,24 +19,11 @@ public class Lua_UnityEngine_AudioListener : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetOutputData_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32),typeof(System.Int32))){
-				System.Int32 a1;
-				checkType(l,1,out a1);
-				System.Int32 a2;
-				checkType(l,2,out a2);
-				System.Single[] ret=UnityEngine.AudioListener.GetOutputData(a1,a2);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,1,typeof(System.Single),typeof(System.Int32))){
-				System.Single[] a1;
-				checkType(l,1,out a1);
-				System.Int32 a2;
-				checkType(l,2,out a2);
-				UnityEngine.AudioListener.GetOutputData(a1,a2);
-				return 0;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
+			System.Single[] a1;
+			checkType(l,1,out a1);
+			System.Int32 a2;
+			checkType(l,2,out a2);
+			UnityEngine.AudioListener.GetOutputData(a1,a2);
 			return 0;
 		}
 		catch(Exception e) {
@@ -47,28 +34,13 @@ public class Lua_UnityEngine_AudioListener : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetSpectrumData_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.FFTWindow))){
-				System.Int32 a1;
-				checkType(l,1,out a1);
-				System.Int32 a2;
-				checkType(l,2,out a2);
-				UnityEngine.FFTWindow a3;
-				checkEnum(l,3,out a3);
-				System.Single[] ret=UnityEngine.AudioListener.GetSpectrumData(a1,a2,a3);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,1,typeof(System.Single),typeof(System.Int32),typeof(UnityEngine.FFTWindow))){
-				System.Single[] a1;
-				checkType(l,1,out a1);
-				System.Int32 a2;
-				checkType(l,2,out a2);
-				UnityEngine.FFTWindow a3;
-				checkEnum(l,3,out a3);
-				UnityEngine.AudioListener.GetSpectrumData(a1,a2,a3);
-				return 0;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
+			System.Single[] a1;
+			checkType(l,1,out a1);
+			System.Int32 a2;
+			checkType(l,2,out a2);
+			UnityEngine.FFTWindow a3;
+			checkEnum(l,3,out a3);
+			UnityEngine.AudioListener.GetSpectrumData(a1,a2,a3);
 			return 0;
 		}
 		catch(Exception e) {
@@ -118,9 +90,9 @@ public class Lua_UnityEngine_AudioListener : LuaObject {
 		getTypeTable(l,"UnityEngine.AudioListener");
 		addMember(l,GetOutputData_s);
 		addMember(l,GetSpectrumData_s);
-		addMember(l,"volume",get_volume,set_volume);
-		addMember(l,"pause",get_pause,set_pause);
-		addMember(l,"velocityUpdateMode",get_velocityUpdateMode,set_velocityUpdateMode);
+		addMember(l,"volume",get_volume,set_volume,false);
+		addMember(l,"pause",get_pause,set_pause,false);
+		addMember(l,"velocityUpdateMode",get_velocityUpdateMode,set_velocityUpdateMode,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioListener),typeof(UnityEngine.Behaviour));
 	}
 }

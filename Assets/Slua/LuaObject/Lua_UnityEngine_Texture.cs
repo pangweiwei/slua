@@ -176,15 +176,15 @@ public class Lua_UnityEngine_Texture : LuaObject {
 		addMember(l,GetNativeTexturePtr);
 		addMember(l,GetNativeTextureID);
 		addMember(l,SetGlobalAnisotropicFilteringLimits_s);
-		addMember(l,"masterTextureLimit",get_masterTextureLimit,set_masterTextureLimit);
-		addMember(l,"anisotropicFiltering",get_anisotropicFiltering,set_anisotropicFiltering);
-		addMember(l,"width",get_width,set_width);
-		addMember(l,"height",get_height,set_height);
-		addMember(l,"filterMode",get_filterMode,set_filterMode);
-		addMember(l,"anisoLevel",get_anisoLevel,set_anisoLevel);
-		addMember(l,"wrapMode",get_wrapMode,set_wrapMode);
-		addMember(l,"mipMapBias",get_mipMapBias,set_mipMapBias);
-		addMember(l,"texelSize",get_texelSize,null);
+		addMember(l,"masterTextureLimit",get_masterTextureLimit,set_masterTextureLimit,false);
+		addMember(l,"anisotropicFiltering",get_anisotropicFiltering,set_anisotropicFiltering,false);
+		addMember(l,"width",get_width,set_width,true);
+		addMember(l,"height",get_height,set_height,true);
+		addMember(l,"filterMode",get_filterMode,set_filterMode,true);
+		addMember(l,"anisoLevel",get_anisoLevel,set_anisoLevel,true);
+		addMember(l,"wrapMode",get_wrapMode,set_wrapMode,true);
+		addMember(l,"mipMapBias",get_mipMapBias,set_mipMapBias,true);
+		addMember(l,"texelSize",get_texelSize,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Texture),typeof(UnityEngine.Object));
 	}
 }

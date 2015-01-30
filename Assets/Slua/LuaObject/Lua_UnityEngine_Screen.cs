@@ -19,7 +19,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetResolution_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Boolean),typeof(System.Int32))){
+			if(matchType(l,1,typeof(int),typeof(int),typeof(bool),typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -31,7 +31,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 				UnityEngine.Screen.SetResolution(a1,a2,a3,a4);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Boolean))){
+			else if(matchType(l,1,typeof(int),typeof(int),typeof(bool))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -190,21 +190,21 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Screen");
 		addMember(l,SetResolution_s);
-		addMember(l,"resolutions",get_resolutions,null);
-		addMember(l,"GetResolution",get_GetResolution,null);
-		addMember(l,"currentResolution",get_currentResolution,null);
-		addMember(l,"showCursor",get_showCursor,set_showCursor);
-		addMember(l,"lockCursor",get_lockCursor,set_lockCursor);
-		addMember(l,"width",get_width,null);
-		addMember(l,"height",get_height,null);
-		addMember(l,"dpi",get_dpi,null);
-		addMember(l,"fullScreen",get_fullScreen,set_fullScreen);
-		addMember(l,"autorotateToPortrait",get_autorotateToPortrait,set_autorotateToPortrait);
-		addMember(l,"autorotateToPortraitUpsideDown",get_autorotateToPortraitUpsideDown,set_autorotateToPortraitUpsideDown);
-		addMember(l,"autorotateToLandscapeLeft",get_autorotateToLandscapeLeft,set_autorotateToLandscapeLeft);
-		addMember(l,"autorotateToLandscapeRight",get_autorotateToLandscapeRight,set_autorotateToLandscapeRight);
-		addMember(l,"orientation",get_orientation,set_orientation);
-		addMember(l,"sleepTimeout",get_sleepTimeout,set_sleepTimeout);
+		addMember(l,"resolutions",get_resolutions,null,false);
+		addMember(l,"GetResolution",get_GetResolution,null,false);
+		addMember(l,"currentResolution",get_currentResolution,null,false);
+		addMember(l,"showCursor",get_showCursor,set_showCursor,false);
+		addMember(l,"lockCursor",get_lockCursor,set_lockCursor,false);
+		addMember(l,"width",get_width,null,false);
+		addMember(l,"height",get_height,null,false);
+		addMember(l,"dpi",get_dpi,null,false);
+		addMember(l,"fullScreen",get_fullScreen,set_fullScreen,false);
+		addMember(l,"autorotateToPortrait",get_autorotateToPortrait,set_autorotateToPortrait,false);
+		addMember(l,"autorotateToPortraitUpsideDown",get_autorotateToPortraitUpsideDown,set_autorotateToPortraitUpsideDown,false);
+		addMember(l,"autorotateToLandscapeLeft",get_autorotateToLandscapeLeft,set_autorotateToLandscapeLeft,false);
+		addMember(l,"autorotateToLandscapeRight",get_autorotateToLandscapeRight,set_autorotateToLandscapeRight,false);
+		addMember(l,"orientation",get_orientation,set_orientation,false);
+		addMember(l,"sleepTimeout",get_sleepTimeout,set_sleepTimeout,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Screen));
 	}
 }

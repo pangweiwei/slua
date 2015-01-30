@@ -242,22 +242,22 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioReverbFilter");
-		addMember(l,"reverbPreset",get_reverbPreset,set_reverbPreset);
-		addMember(l,"dryLevel",get_dryLevel,set_dryLevel);
-		addMember(l,"room",get_room,set_room);
-		addMember(l,"roomHF",get_roomHF,set_roomHF);
-		addMember(l,"roomRolloff",get_roomRolloff,set_roomRolloff);
-		addMember(l,"decayTime",get_decayTime,set_decayTime);
-		addMember(l,"decayHFRatio",get_decayHFRatio,set_decayHFRatio);
-		addMember(l,"reflectionsLevel",get_reflectionsLevel,set_reflectionsLevel);
-		addMember(l,"reflectionsDelay",get_reflectionsDelay,set_reflectionsDelay);
-		addMember(l,"reverbLevel",get_reverbLevel,set_reverbLevel);
-		addMember(l,"reverbDelay",get_reverbDelay,set_reverbDelay);
-		addMember(l,"diffusion",get_diffusion,set_diffusion);
-		addMember(l,"density",get_density,set_density);
-		addMember(l,"hfReference",get_hfReference,set_hfReference);
-		addMember(l,"roomLF",get_roomLF,set_roomLF);
-		addMember(l,"lFReference",get_lFReference,set_lFReference);
+		addMember(l,"reverbPreset",get_reverbPreset,set_reverbPreset,true);
+		addMember(l,"dryLevel",get_dryLevel,set_dryLevel,true);
+		addMember(l,"room",get_room,set_room,true);
+		addMember(l,"roomHF",get_roomHF,set_roomHF,true);
+		addMember(l,"roomRolloff",get_roomRolloff,set_roomRolloff,true);
+		addMember(l,"decayTime",get_decayTime,set_decayTime,true);
+		addMember(l,"decayHFRatio",get_decayHFRatio,set_decayHFRatio,true);
+		addMember(l,"reflectionsLevel",get_reflectionsLevel,set_reflectionsLevel,true);
+		addMember(l,"reflectionsDelay",get_reflectionsDelay,set_reflectionsDelay,true);
+		addMember(l,"reverbLevel",get_reverbLevel,set_reverbLevel,true);
+		addMember(l,"reverbDelay",get_reverbDelay,set_reverbDelay,true);
+		addMember(l,"diffusion",get_diffusion,set_diffusion,true);
+		addMember(l,"density",get_density,set_density,true);
+		addMember(l,"hfReference",get_hfReference,set_hfReference,true);
+		addMember(l,"roomLF",get_roomLF,set_roomLF,true);
+		addMember(l,"lFReference",get_lFReference,set_lFReference,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioReverbFilter),typeof(UnityEngine.Behaviour));
 	}
 }

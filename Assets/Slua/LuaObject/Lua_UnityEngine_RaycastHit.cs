@@ -113,17 +113,17 @@ public class Lua_UnityEngine_RaycastHit : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.RaycastHit");
-		addMember(l,"point",get_point,set_point);
-		addMember(l,"normal",get_normal,set_normal);
-		addMember(l,"barycentricCoordinate",get_barycentricCoordinate,set_barycentricCoordinate);
-		addMember(l,"distance",get_distance,set_distance);
-		addMember(l,"triangleIndex",get_triangleIndex,null);
-		addMember(l,"textureCoord",get_textureCoord,null);
-		addMember(l,"textureCoord2",get_textureCoord2,null);
-		addMember(l,"lightmapCoord",get_lightmapCoord,null);
-		addMember(l,"collider",get_collider,null);
-		addMember(l,"rigidbody",get_rigidbody,null);
-		addMember(l,"transform",get_transform,null);
+		addMember(l,"point",get_point,set_point,true);
+		addMember(l,"normal",get_normal,set_normal,true);
+		addMember(l,"barycentricCoordinate",get_barycentricCoordinate,set_barycentricCoordinate,true);
+		addMember(l,"distance",get_distance,set_distance,true);
+		addMember(l,"triangleIndex",get_triangleIndex,null,true);
+		addMember(l,"textureCoord",get_textureCoord,null,true);
+		addMember(l,"textureCoord2",get_textureCoord2,null,true);
+		addMember(l,"lightmapCoord",get_lightmapCoord,null,true);
+		addMember(l,"collider",get_collider,null,true);
+		addMember(l,"rigidbody",get_rigidbody,null,true);
+		addMember(l,"transform",get_transform,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.RaycastHit));
 	}
 }

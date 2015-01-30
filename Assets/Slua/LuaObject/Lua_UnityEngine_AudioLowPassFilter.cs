@@ -46,8 +46,8 @@ public class Lua_UnityEngine_AudioLowPassFilter : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioLowPassFilter");
-		addMember(l,"cutoffFrequency",get_cutoffFrequency,set_cutoffFrequency);
-		addMember(l,"lowpassResonaceQ",get_lowpassResonaceQ,set_lowpassResonaceQ);
+		addMember(l,"cutoffFrequency",get_cutoffFrequency,set_cutoffFrequency,true);
+		addMember(l,"lowpassResonaceQ",get_lowpassResonaceQ,set_lowpassResonaceQ,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioLowPassFilter),typeof(UnityEngine.Behaviour));
 	}
 }

@@ -8,7 +8,7 @@ public class Lua_UnityEngine_GradientAlphaKey : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.GradientAlphaKey o;
-		if(matchType(l,1,typeof(System.Single),typeof(System.Single))){
+		if(matchType(l,1,typeof(float),typeof(float))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -52,8 +52,8 @@ public class Lua_UnityEngine_GradientAlphaKey : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.GradientAlphaKey");
-		addMember(l,"alpha",get_alpha,set_alpha);
-		addMember(l,"time",get_time,set_time);
+		addMember(l,"alpha",get_alpha,set_alpha,true);
+		addMember(l,"time",get_time,set_time,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.GradientAlphaKey));
 	}
 }

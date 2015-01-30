@@ -86,11 +86,11 @@ public class Lua_UnityEngine_SkeletonBone : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SkeletonBone");
-		addMember(l,"name",get_name,set_name);
-		addMember(l,"position",get_position,set_position);
-		addMember(l,"rotation",get_rotation,set_rotation);
-		addMember(l,"scale",get_scale,set_scale);
-		addMember(l,"transformModified",get_transformModified,set_transformModified);
+		addMember(l,"name",get_name,set_name,true);
+		addMember(l,"position",get_position,set_position,true);
+		addMember(l,"rotation",get_rotation,set_rotation,true);
+		addMember(l,"scale",get_scale,set_scale,true);
+		addMember(l,"transformModified",get_transformModified,set_transformModified,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SkeletonBone));
 	}
 }

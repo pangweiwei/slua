@@ -46,8 +46,8 @@ public class Lua_UnityEngine_LightmapData : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LightmapData");
-		addMember(l,"lightmapFar",get_lightmapFar,set_lightmapFar);
-		addMember(l,"lightmapNear",get_lightmapNear,set_lightmapNear);
+		addMember(l,"lightmapFar",get_lightmapFar,set_lightmapFar,true);
+		addMember(l,"lightmapNear",get_lightmapNear,set_lightmapNear,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LightmapData));
 	}
 }

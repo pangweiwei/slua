@@ -68,8 +68,8 @@ public class Lua_UnityEngine_Ray2D : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Ray2D");
 		addMember(l,GetPoint);
-		addMember(l,"origin",get_origin,set_origin);
-		addMember(l,"direction",get_direction,set_direction);
+		addMember(l,"origin",get_origin,set_origin,true);
+		addMember(l,"direction",get_direction,set_direction,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Ray2D));
 	}
 }

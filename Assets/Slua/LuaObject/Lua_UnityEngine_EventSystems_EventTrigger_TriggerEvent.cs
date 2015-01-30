@@ -17,8 +17,8 @@ public class Lua_UnityEngine_EventSystems_EventTrigger_TriggerEvent : LuaObject 
 		return 0;
 	}
 	static public void reg(IntPtr l) {
-		LuaUnityEvent_BaseEventData.reg(l);
+		LuaUnityEvent_UnityEngine_EventSystems_BaseEventData.reg(l);
 		getTypeTable(l,"UnityEngine.EventSystems.EventTrigger.TriggerEvent");
-		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.EventTrigger.TriggerEvent),typeof(LuaUnityEvent_BaseEventData));
+		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.EventTrigger.TriggerEvent),typeof(LuaUnityEvent_UnityEngine_EventSystems_BaseEventData));
 	}
 }

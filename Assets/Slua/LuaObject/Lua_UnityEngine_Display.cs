@@ -94,14 +94,14 @@ public class Lua_UnityEngine_Display : LuaObject {
 		getTypeTable(l,"UnityEngine.Display");
 		addMember(l,Activate);
 		addMember(l,SetRenderingResolution);
-		addMember(l,"displays",get_displays,set_displays);
-		addMember(l,"renderingWidth",get_renderingWidth,null);
-		addMember(l,"renderingHeight",get_renderingHeight,null);
-		addMember(l,"systemWidth",get_systemWidth,null);
-		addMember(l,"systemHeight",get_systemHeight,null);
-		addMember(l,"colorBuffer",get_colorBuffer,null);
-		addMember(l,"depthBuffer",get_depthBuffer,null);
-		addMember(l,"main",get_main,null);
+		addMember(l,"displays",get_displays,set_displays,false);
+		addMember(l,"renderingWidth",get_renderingWidth,null,true);
+		addMember(l,"renderingHeight",get_renderingHeight,null,true);
+		addMember(l,"systemWidth",get_systemWidth,null,true);
+		addMember(l,"systemHeight",get_systemHeight,null,true);
+		addMember(l,"colorBuffer",get_colorBuffer,null,true);
+		addMember(l,"depthBuffer",get_depthBuffer,null,true);
+		addMember(l,"main",get_main,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Display));
 	}
 }

@@ -28,7 +28,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 				self.SetTargetBuffers(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.RenderBuffer),typeof(UnityEngine.RenderBuffer))){
+			else if(matchType(l,2,typeof(UnityEngine.RenderBuffer[]),typeof(UnityEngine.RenderBuffer))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.RenderBuffer[] a1;
 				checkType(l,2,out a1);
@@ -280,7 +280,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Cubemap),typeof(System.Int32))){
+			else if(matchType(l,2,typeof(UnityEngine.Cubemap),typeof(int))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.Cubemap a1;
 				checkType(l,2,out a1);
@@ -298,7 +298,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.RenderTexture),typeof(System.Int32))){
+			else if(matchType(l,2,typeof(UnityEngine.RenderTexture),typeof(int))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.RenderTexture a1;
 				checkType(l,2,out a1);
@@ -759,7 +759,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_layerCullDistances(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		float[] v;
+		System.Single[] v;
 		checkType(l,2,out v);
 		o.layerCullDistances=v;
 		return 0;
@@ -830,43 +830,43 @@ public class Lua_UnityEngine_Camera : LuaObject {
 		addMember(l,CalculateObliqueMatrix);
 		addMember(l,GetAllCameras_s);
 		addMember(l,SetupCurrent_s);
-		addMember(l,"fieldOfView",get_fieldOfView,set_fieldOfView);
-		addMember(l,"nearClipPlane",get_nearClipPlane,set_nearClipPlane);
-		addMember(l,"farClipPlane",get_farClipPlane,set_farClipPlane);
-		addMember(l,"renderingPath",get_renderingPath,set_renderingPath);
-		addMember(l,"actualRenderingPath",get_actualRenderingPath,null);
-		addMember(l,"hdr",get_hdr,set_hdr);
-		addMember(l,"orthographicSize",get_orthographicSize,set_orthographicSize);
-		addMember(l,"orthographic",get_orthographic,set_orthographic);
-		addMember(l,"transparencySortMode",get_transparencySortMode,set_transparencySortMode);
-		addMember(l,"isOrthoGraphic",get_isOrthoGraphic,set_isOrthoGraphic);
-		addMember(l,"depth",get_depth,set_depth);
-		addMember(l,"aspect",get_aspect,set_aspect);
-		addMember(l,"cullingMask",get_cullingMask,set_cullingMask);
-		addMember(l,"eventMask",get_eventMask,set_eventMask);
-		addMember(l,"backgroundColor",get_backgroundColor,set_backgroundColor);
-		addMember(l,"rect",get_rect,set_rect);
-		addMember(l,"pixelRect",get_pixelRect,set_pixelRect);
-		addMember(l,"targetTexture",get_targetTexture,set_targetTexture);
-		addMember(l,"pixelWidth",get_pixelWidth,null);
-		addMember(l,"pixelHeight",get_pixelHeight,null);
-		addMember(l,"cameraToWorldMatrix",get_cameraToWorldMatrix,null);
-		addMember(l,"worldToCameraMatrix",get_worldToCameraMatrix,set_worldToCameraMatrix);
-		addMember(l,"projectionMatrix",get_projectionMatrix,set_projectionMatrix);
-		addMember(l,"velocity",get_velocity,null);
-		addMember(l,"clearFlags",get_clearFlags,set_clearFlags);
-		addMember(l,"stereoEnabled",get_stereoEnabled,null);
-		addMember(l,"stereoSeparation",get_stereoSeparation,set_stereoSeparation);
-		addMember(l,"stereoConvergence",get_stereoConvergence,set_stereoConvergence);
-		addMember(l,"main",get_main,null);
-		addMember(l,"current",get_current,null);
-		addMember(l,"allCameras",get_allCameras,null);
-		addMember(l,"allCamerasCount",get_allCamerasCount,null);
-		addMember(l,"useOcclusionCulling",get_useOcclusionCulling,set_useOcclusionCulling);
-		addMember(l,"layerCullDistances",get_layerCullDistances,set_layerCullDistances);
-		addMember(l,"layerCullSpherical",get_layerCullSpherical,set_layerCullSpherical);
-		addMember(l,"depthTextureMode",get_depthTextureMode,set_depthTextureMode);
-		addMember(l,"clearStencilAfterLightingPass",get_clearStencilAfterLightingPass,set_clearStencilAfterLightingPass);
+		addMember(l,"fieldOfView",get_fieldOfView,set_fieldOfView,true);
+		addMember(l,"nearClipPlane",get_nearClipPlane,set_nearClipPlane,true);
+		addMember(l,"farClipPlane",get_farClipPlane,set_farClipPlane,true);
+		addMember(l,"renderingPath",get_renderingPath,set_renderingPath,true);
+		addMember(l,"actualRenderingPath",get_actualRenderingPath,null,true);
+		addMember(l,"hdr",get_hdr,set_hdr,true);
+		addMember(l,"orthographicSize",get_orthographicSize,set_orthographicSize,true);
+		addMember(l,"orthographic",get_orthographic,set_orthographic,true);
+		addMember(l,"transparencySortMode",get_transparencySortMode,set_transparencySortMode,true);
+		addMember(l,"isOrthoGraphic",get_isOrthoGraphic,set_isOrthoGraphic,true);
+		addMember(l,"depth",get_depth,set_depth,true);
+		addMember(l,"aspect",get_aspect,set_aspect,true);
+		addMember(l,"cullingMask",get_cullingMask,set_cullingMask,true);
+		addMember(l,"eventMask",get_eventMask,set_eventMask,true);
+		addMember(l,"backgroundColor",get_backgroundColor,set_backgroundColor,true);
+		addMember(l,"rect",get_rect,set_rect,true);
+		addMember(l,"pixelRect",get_pixelRect,set_pixelRect,true);
+		addMember(l,"targetTexture",get_targetTexture,set_targetTexture,true);
+		addMember(l,"pixelWidth",get_pixelWidth,null,true);
+		addMember(l,"pixelHeight",get_pixelHeight,null,true);
+		addMember(l,"cameraToWorldMatrix",get_cameraToWorldMatrix,null,true);
+		addMember(l,"worldToCameraMatrix",get_worldToCameraMatrix,set_worldToCameraMatrix,true);
+		addMember(l,"projectionMatrix",get_projectionMatrix,set_projectionMatrix,true);
+		addMember(l,"velocity",get_velocity,null,true);
+		addMember(l,"clearFlags",get_clearFlags,set_clearFlags,true);
+		addMember(l,"stereoEnabled",get_stereoEnabled,null,true);
+		addMember(l,"stereoSeparation",get_stereoSeparation,set_stereoSeparation,true);
+		addMember(l,"stereoConvergence",get_stereoConvergence,set_stereoConvergence,true);
+		addMember(l,"main",get_main,null,false);
+		addMember(l,"current",get_current,null,false);
+		addMember(l,"allCameras",get_allCameras,null,false);
+		addMember(l,"allCamerasCount",get_allCamerasCount,null,false);
+		addMember(l,"useOcclusionCulling",get_useOcclusionCulling,set_useOcclusionCulling,true);
+		addMember(l,"layerCullDistances",get_layerCullDistances,set_layerCullDistances,true);
+		addMember(l,"layerCullSpherical",get_layerCullSpherical,set_layerCullSpherical,true);
+		addMember(l,"depthTextureMode",get_depthTextureMode,set_depthTextureMode,true);
+		addMember(l,"clearStencilAfterLightingPass",get_clearStencilAfterLightingPass,set_clearStencilAfterLightingPass,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Camera),typeof(UnityEngine.Behaviour));
 	}
 }

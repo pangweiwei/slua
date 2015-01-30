@@ -61,9 +61,9 @@ public class Lua_UnityEngine_AnimatorTransitionInfo : LuaObject {
 		getTypeTable(l,"UnityEngine.AnimatorTransitionInfo");
 		addMember(l,IsName);
 		addMember(l,IsUserName);
-		addMember(l,"nameHash",get_nameHash,null);
-		addMember(l,"userNameHash",get_userNameHash,null);
-		addMember(l,"normalizedTime",get_normalizedTime,null);
+		addMember(l,"nameHash",get_nameHash,null,true);
+		addMember(l,"userNameHash",get_userNameHash,null,true);
+		addMember(l,"normalizedTime",get_normalizedTime,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimatorTransitionInfo));
 	}
 }

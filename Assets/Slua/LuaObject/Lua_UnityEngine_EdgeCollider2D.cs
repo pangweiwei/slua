@@ -57,9 +57,9 @@ public class Lua_UnityEngine_EdgeCollider2D : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EdgeCollider2D");
 		addMember(l,Reset);
-		addMember(l,"edgeCount",get_edgeCount,null);
-		addMember(l,"pointCount",get_pointCount,null);
-		addMember(l,"points",get_points,set_points);
+		addMember(l,"edgeCount",get_edgeCount,null,true);
+		addMember(l,"pointCount",get_pointCount,null,true);
+		addMember(l,"points",get_points,set_points,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EdgeCollider2D),typeof(UnityEngine.Collider2D));
 	}
 }

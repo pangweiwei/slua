@@ -26,7 +26,7 @@ function main()
 
 
 	local go = GameObject.Find("Canvas/Panel2"):GetComponent("ScrollRect")
-
+	local go = GameObject.Find("Canvas/Panel2"):GetComponent("ScrollRect")
 
 	go.onValueChanged:AddListener(function(v)
 		print("scroll value changed",v.x,v.y)
@@ -51,4 +51,7 @@ function main()
 	HelloWorld.setv({name="yes",value=12})
 	local t=HelloWorld.getv()
 	print(t.name,t.age)
+
+	HelloWorld.ofunc(GameObject)
+	HelloWorld.ofunc(cube)
 end

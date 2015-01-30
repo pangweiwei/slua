@@ -48,8 +48,8 @@ public class Lua_UnityEngine_EventSystems_AxisEventData : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.AxisEventData");
-		addMember(l,"moveVector",get_moveVector,set_moveVector);
-		addMember(l,"moveDir",get_moveDir,set_moveDir);
+		addMember(l,"moveVector",get_moveVector,set_moveVector,true);
+		addMember(l,"moveDir",get_moveDir,set_moveDir,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.AxisEventData),typeof(UnityEngine.EventSystems.BaseEventData));
 	}
 }

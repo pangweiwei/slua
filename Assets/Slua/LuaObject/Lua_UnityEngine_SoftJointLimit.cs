@@ -71,10 +71,10 @@ public class Lua_UnityEngine_SoftJointLimit : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SoftJointLimit");
-		addMember(l,"limit",get_limit,set_limit);
-		addMember(l,"spring",get_spring,set_spring);
-		addMember(l,"damper",get_damper,set_damper);
-		addMember(l,"bounciness",get_bounciness,set_bounciness);
+		addMember(l,"limit",get_limit,set_limit,true);
+		addMember(l,"spring",get_spring,set_spring,true);
+		addMember(l,"damper",get_damper,set_damper,true);
+		addMember(l,"bounciness",get_bounciness,set_bounciness,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SoftJointLimit));
 	}
 }

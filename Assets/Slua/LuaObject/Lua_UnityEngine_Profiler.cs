@@ -32,13 +32,13 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int BeginSample_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Profiler.BeginSample(a1);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.String),typeof(UnityEngine.Object))){
+			else if(matchType(l,1,typeof(string),typeof(UnityEngine.Object))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object a2;
@@ -196,11 +196,11 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		addMember(l,GetTotalAllocatedMemory_s);
 		addMember(l,GetTotalUnusedReservedMemory_s);
 		addMember(l,GetTotalReservedMemory_s);
-		addMember(l,"supported",get_supported,null);
-		addMember(l,"logFile",get_logFile,set_logFile);
-		addMember(l,"enableBinaryLog",get_enableBinaryLog,set_enableBinaryLog);
-		addMember(l,"enabled",get_enabled,set_enabled);
-		addMember(l,"usedHeapSize",get_usedHeapSize,null);
+		addMember(l,"supported",get_supported,null,false);
+		addMember(l,"logFile",get_logFile,set_logFile,false);
+		addMember(l,"enableBinaryLog",get_enableBinaryLog,set_enableBinaryLog,false);
+		addMember(l,"enabled",get_enabled,set_enabled,false);
+		addMember(l,"usedHeapSize",get_usedHeapSize,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Profiler));
 	}
 }

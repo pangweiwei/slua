@@ -158,16 +158,16 @@ public class Lua_UnityEngine_ParticleRenderer : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ParticleRenderer");
-		addMember(l,"particleRenderMode",get_particleRenderMode,set_particleRenderMode);
-		addMember(l,"lengthScale",get_lengthScale,set_lengthScale);
-		addMember(l,"velocityScale",get_velocityScale,set_velocityScale);
-		addMember(l,"cameraVelocityScale",get_cameraVelocityScale,set_cameraVelocityScale);
-		addMember(l,"maxParticleSize",get_maxParticleSize,set_maxParticleSize);
-		addMember(l,"uvAnimationXTile",get_uvAnimationXTile,set_uvAnimationXTile);
-		addMember(l,"uvAnimationYTile",get_uvAnimationYTile,set_uvAnimationYTile);
-		addMember(l,"uvAnimationCycles",get_uvAnimationCycles,set_uvAnimationCycles);
-		addMember(l,"maxPartileSize",get_maxPartileSize,set_maxPartileSize);
-		addMember(l,"uvTiles",get_uvTiles,set_uvTiles);
+		addMember(l,"particleRenderMode",get_particleRenderMode,set_particleRenderMode,true);
+		addMember(l,"lengthScale",get_lengthScale,set_lengthScale,true);
+		addMember(l,"velocityScale",get_velocityScale,set_velocityScale,true);
+		addMember(l,"cameraVelocityScale",get_cameraVelocityScale,set_cameraVelocityScale,true);
+		addMember(l,"maxParticleSize",get_maxParticleSize,set_maxParticleSize,true);
+		addMember(l,"uvAnimationXTile",get_uvAnimationXTile,set_uvAnimationXTile,true);
+		addMember(l,"uvAnimationYTile",get_uvAnimationYTile,set_uvAnimationYTile,true);
+		addMember(l,"uvAnimationCycles",get_uvAnimationCycles,set_uvAnimationCycles,true);
+		addMember(l,"maxPartileSize",get_maxPartileSize,set_maxPartileSize,true);
+		addMember(l,"uvTiles",get_uvTiles,set_uvTiles,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ParticleRenderer),typeof(UnityEngine.Renderer));
 	}
 }

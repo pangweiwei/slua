@@ -34,7 +34,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetInt_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(System.Int32))){
+			if(matchType(l,1,typeof(string),typeof(int))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -43,7 +43,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String))){
+			else if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 ret=UnityEngine.PlayerPrefs.GetInt(a1);
@@ -76,7 +76,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetFloat_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(System.Single))){
+			if(matchType(l,1,typeof(string),typeof(float))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -85,7 +85,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String))){
+			else if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Single ret=UnityEngine.PlayerPrefs.GetFloat(a1);
@@ -118,7 +118,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetString_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(System.String))){
+			if(matchType(l,1,typeof(string),typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String a2;
@@ -127,7 +127,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String))){
+			else if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String ret=UnityEngine.PlayerPrefs.GetString(a1);

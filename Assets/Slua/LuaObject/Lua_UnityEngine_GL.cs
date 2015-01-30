@@ -197,7 +197,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 				UnityEngine.GL.LoadPixelMatrix();
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Single),typeof(System.Single),typeof(System.Single),typeof(System.Single))){
+			else if(matchType(l,1,typeof(float),typeof(float),typeof(float),typeof(float))){
 				System.Single a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -321,7 +321,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Clear_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Boolean),typeof(System.Boolean),typeof(UnityEngine.Color))){
+			if(matchType(l,1,typeof(bool),typeof(bool),typeof(UnityEngine.Color))){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -331,7 +331,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 				UnityEngine.GL.Clear(a1,a2,a3);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Boolean),typeof(System.Boolean),typeof(UnityEngine.Color),typeof(System.Single))){
+			else if(matchType(l,1,typeof(bool),typeof(bool),typeof(UnityEngine.Color),typeof(float))){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -473,13 +473,13 @@ public class Lua_UnityEngine_GL : LuaObject {
 		addMember(l,ClearWithSkybox_s);
 		addMember(l,InvalidateState_s);
 		addMember(l,IssuePluginEvent_s);
-		addMember(l,"TRIANGLES",get_TRIANGLES,null);
-		addMember(l,"TRIANGLE_STRIP",get_TRIANGLE_STRIP,null);
-		addMember(l,"QUADS",get_QUADS,null);
-		addMember(l,"LINES",get_LINES,null);
-		addMember(l,"modelview",get_modelview,set_modelview);
-		addMember(l,"wireframe",get_wireframe,set_wireframe);
-		addMember(l,"sRGBWrite",get_sRGBWrite,set_sRGBWrite);
+		addMember(l,"TRIANGLES",get_TRIANGLES,null,false);
+		addMember(l,"TRIANGLE_STRIP",get_TRIANGLE_STRIP,null,false);
+		addMember(l,"QUADS",get_QUADS,null,false);
+		addMember(l,"LINES",get_LINES,null,false);
+		addMember(l,"modelview",get_modelview,set_modelview,false);
+		addMember(l,"wireframe",get_wireframe,set_wireframe,false);
+		addMember(l,"sRGBWrite",get_sRGBWrite,set_sRGBWrite,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.GL));
 	}
 }

@@ -74,8 +74,8 @@ public class Lua_UnityEngine_EventSystems_PointerInputModule_MouseButtonEventDat
 		getTypeTable(l,"UnityEngine.EventSystems.PointerInputModule.MouseButtonEventData");
 		addMember(l,PressedThisFrame);
 		addMember(l,ReleasedThisFrame);
-		addMember(l,"buttonState",get_buttonState,set_buttonState);
-		addMember(l,"buttonData",get_buttonData,set_buttonData);
+		addMember(l,"buttonState",get_buttonState,set_buttonState,true);
+		addMember(l,"buttonData",get_buttonData,set_buttonData,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.PointerInputModule.MouseButtonEventData));
 	}
 }

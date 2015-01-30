@@ -60,10 +60,10 @@ public class Lua_UnityEngine_EventSystems_PhysicsRaycaster : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.PhysicsRaycaster");
 		addMember(l,Raycast);
-		addMember(l,"eventCamera",get_eventCamera,null);
-		addMember(l,"depth",get_depth,null);
-		addMember(l,"finalEventMask",get_finalEventMask,null);
-		addMember(l,"eventMask",get_eventMask,set_eventMask);
+		addMember(l,"eventCamera",get_eventCamera,null,true);
+		addMember(l,"depth",get_depth,null,true);
+		addMember(l,"finalEventMask",get_finalEventMask,null,true);
+		addMember(l,"eventMask",get_eventMask,set_eventMask,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.PhysicsRaycaster),typeof(UnityEngine.EventSystems.BaseRaycaster));
 	}
 }

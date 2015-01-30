@@ -92,8 +92,8 @@ public class Lua_UnityEngine_UI_Mask : LuaObject {
 		addMember(l,OnSiblingGraphicEnabledDisabled);
 		addMember(l,IsRaycastLocationValid);
 		addMember(l,GetModifiedMaterial);
-		addMember(l,"showMaskGraphic",get_showMaskGraphic,set_showMaskGraphic);
-		addMember(l,"rectTransform",get_rectTransform,null);
+		addMember(l,"showMaskGraphic",get_showMaskGraphic,set_showMaskGraphic,true);
+		addMember(l,"rectTransform",get_rectTransform,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Mask),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

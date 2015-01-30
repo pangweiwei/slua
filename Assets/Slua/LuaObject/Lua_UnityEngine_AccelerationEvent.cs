@@ -23,8 +23,8 @@ public class Lua_UnityEngine_AccelerationEvent : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AccelerationEvent");
-		addMember(l,"acceleration",get_acceleration,null);
-		addMember(l,"deltaTime",get_deltaTime,null);
+		addMember(l,"acceleration",get_acceleration,null,true);
+		addMember(l,"deltaTime",get_deltaTime,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AccelerationEvent));
 	}
 }

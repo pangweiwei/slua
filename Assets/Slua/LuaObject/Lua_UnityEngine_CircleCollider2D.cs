@@ -46,8 +46,8 @@ public class Lua_UnityEngine_CircleCollider2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.CircleCollider2D");
-		addMember(l,"center",get_center,set_center);
-		addMember(l,"radius",get_radius,set_radius);
+		addMember(l,"center",get_center,set_center,true);
+		addMember(l,"radius",get_radius,set_radius,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.CircleCollider2D),typeof(UnityEngine.Collider2D));
 	}
 }

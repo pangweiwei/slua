@@ -10,61 +10,6 @@ public class Lua_UnityEngine_EventSystems_ExecuteEvents : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ValidateEventData_s(IntPtr l) {
-		try{
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Execute_s(IntPtr l) {
-		try{
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ExecuteHierarchy_s(IntPtr l) {
-		try{
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int CanHandleEvent_s(IntPtr l) {
-		try{
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetEventHandler_s(IntPtr l) {
-		try{
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_pointerEnterHandler(IntPtr l) {
 		LuaDLL.luaL_error(l,"Not support");
 		return 0;
@@ -151,28 +96,23 @@ public class Lua_UnityEngine_EventSystems_ExecuteEvents : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.ExecuteEvents");
-		addMember(l,ValidateEventData_s);
-		addMember(l,Execute_s);
-		addMember(l,ExecuteHierarchy_s);
-		addMember(l,CanHandleEvent_s);
-		addMember(l,GetEventHandler_s);
-		addMember(l,"pointerEnterHandler",get_pointerEnterHandler,null);
-		addMember(l,"pointerExitHandler",get_pointerExitHandler,null);
-		addMember(l,"pointerDownHandler",get_pointerDownHandler,null);
-		addMember(l,"pointerUpHandler",get_pointerUpHandler,null);
-		addMember(l,"pointerClickHandler",get_pointerClickHandler,null);
-		addMember(l,"initializePotentialDrag",get_initializePotentialDrag,null);
-		addMember(l,"beginDragHandler",get_beginDragHandler,null);
-		addMember(l,"dragHandler",get_dragHandler,null);
-		addMember(l,"endDragHandler",get_endDragHandler,null);
-		addMember(l,"dropHandler",get_dropHandler,null);
-		addMember(l,"scrollHandler",get_scrollHandler,null);
-		addMember(l,"updateSelectedHandler",get_updateSelectedHandler,null);
-		addMember(l,"selectHandler",get_selectHandler,null);
-		addMember(l,"deselectHandler",get_deselectHandler,null);
-		addMember(l,"moveHandler",get_moveHandler,null);
-		addMember(l,"submitHandler",get_submitHandler,null);
-		addMember(l,"cancelHandler",get_cancelHandler,null);
+		addMember(l,"pointerEnterHandler",get_pointerEnterHandler,null,true);
+		addMember(l,"pointerExitHandler",get_pointerExitHandler,null,true);
+		addMember(l,"pointerDownHandler",get_pointerDownHandler,null,true);
+		addMember(l,"pointerUpHandler",get_pointerUpHandler,null,true);
+		addMember(l,"pointerClickHandler",get_pointerClickHandler,null,true);
+		addMember(l,"initializePotentialDrag",get_initializePotentialDrag,null,true);
+		addMember(l,"beginDragHandler",get_beginDragHandler,null,true);
+		addMember(l,"dragHandler",get_dragHandler,null,true);
+		addMember(l,"endDragHandler",get_endDragHandler,null,true);
+		addMember(l,"dropHandler",get_dropHandler,null,true);
+		addMember(l,"scrollHandler",get_scrollHandler,null,true);
+		addMember(l,"updateSelectedHandler",get_updateSelectedHandler,null,true);
+		addMember(l,"selectHandler",get_selectHandler,null,true);
+		addMember(l,"deselectHandler",get_deselectHandler,null,true);
+		addMember(l,"moveHandler",get_moveHandler,null,true);
+		addMember(l,"submitHandler",get_submitHandler,null,true);
+		addMember(l,"cancelHandler",get_cancelHandler,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.ExecuteEvents));
 	}
 }

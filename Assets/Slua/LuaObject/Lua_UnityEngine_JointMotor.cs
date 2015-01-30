@@ -56,9 +56,9 @@ public class Lua_UnityEngine_JointMotor : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.JointMotor");
-		addMember(l,"targetVelocity",get_targetVelocity,set_targetVelocity);
-		addMember(l,"force",get_force,set_force);
-		addMember(l,"freeSpin",get_freeSpin,set_freeSpin);
+		addMember(l,"targetVelocity",get_targetVelocity,set_targetVelocity,true);
+		addMember(l,"force",get_force,set_force,true);
+		addMember(l,"freeSpin",get_freeSpin,set_freeSpin,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.JointMotor));
 	}
 }

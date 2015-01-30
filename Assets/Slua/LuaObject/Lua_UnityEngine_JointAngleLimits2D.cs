@@ -41,8 +41,8 @@ public class Lua_UnityEngine_JointAngleLimits2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.JointAngleLimits2D");
-		addMember(l,"min",get_min,set_min);
-		addMember(l,"max",get_max,set_max);
+		addMember(l,"min",get_min,set_min,true);
+		addMember(l,"max",get_max,set_max,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.JointAngleLimits2D));
 	}
 }

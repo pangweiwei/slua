@@ -71,10 +71,10 @@ public class Lua_UnityEngine_JointDrive : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.JointDrive");
-		addMember(l,"mode",get_mode,set_mode);
-		addMember(l,"positionSpring",get_positionSpring,set_positionSpring);
-		addMember(l,"positionDamper",get_positionDamper,set_positionDamper);
-		addMember(l,"maximumForce",get_maximumForce,set_maximumForce);
+		addMember(l,"mode",get_mode,set_mode,true);
+		addMember(l,"positionSpring",get_positionSpring,set_positionSpring,true);
+		addMember(l,"positionDamper",get_positionDamper,set_positionDamper,true);
+		addMember(l,"maximumForce",get_maximumForce,set_maximumForce,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.JointDrive));
 	}
 }

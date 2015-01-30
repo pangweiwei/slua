@@ -74,10 +74,10 @@ public class Lua_UnityEngine_TrailRenderer : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.TrailRenderer");
-		addMember(l,"time",get_time,set_time);
-		addMember(l,"startWidth",get_startWidth,set_startWidth);
-		addMember(l,"endWidth",get_endWidth,set_endWidth);
-		addMember(l,"autodestruct",get_autodestruct,set_autodestruct);
+		addMember(l,"time",get_time,set_time,true);
+		addMember(l,"startWidth",get_startWidth,set_startWidth,true);
+		addMember(l,"endWidth",get_endWidth,set_endWidth,true);
+		addMember(l,"autodestruct",get_autodestruct,set_autodestruct,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.TrailRenderer),typeof(UnityEngine.Renderer));
 	}
 }

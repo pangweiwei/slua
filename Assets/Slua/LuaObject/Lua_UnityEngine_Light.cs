@@ -259,22 +259,22 @@ public class Lua_UnityEngine_Light : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Light");
 		addMember(l,GetLights_s);
-		addMember(l,"type",get_type,set_type);
-		addMember(l,"color",get_color,set_color);
-		addMember(l,"intensity",get_intensity,set_intensity);
-		addMember(l,"shadows",get_shadows,set_shadows);
-		addMember(l,"shadowStrength",get_shadowStrength,set_shadowStrength);
-		addMember(l,"shadowBias",get_shadowBias,set_shadowBias);
-		addMember(l,"shadowSoftness",get_shadowSoftness,set_shadowSoftness);
-		addMember(l,"shadowSoftnessFade",get_shadowSoftnessFade,set_shadowSoftnessFade);
-		addMember(l,"range",get_range,set_range);
-		addMember(l,"spotAngle",get_spotAngle,set_spotAngle);
-		addMember(l,"cookieSize",get_cookieSize,set_cookieSize);
-		addMember(l,"cookie",get_cookie,set_cookie);
-		addMember(l,"flare",get_flare,set_flare);
-		addMember(l,"renderMode",get_renderMode,set_renderMode);
-		addMember(l,"alreadyLightmapped",get_alreadyLightmapped,set_alreadyLightmapped);
-		addMember(l,"cullingMask",get_cullingMask,set_cullingMask);
+		addMember(l,"type",get_type,set_type,true);
+		addMember(l,"color",get_color,set_color,true);
+		addMember(l,"intensity",get_intensity,set_intensity,true);
+		addMember(l,"shadows",get_shadows,set_shadows,true);
+		addMember(l,"shadowStrength",get_shadowStrength,set_shadowStrength,true);
+		addMember(l,"shadowBias",get_shadowBias,set_shadowBias,true);
+		addMember(l,"shadowSoftness",get_shadowSoftness,set_shadowSoftness,true);
+		addMember(l,"shadowSoftnessFade",get_shadowSoftnessFade,set_shadowSoftnessFade,true);
+		addMember(l,"range",get_range,set_range,true);
+		addMember(l,"spotAngle",get_spotAngle,set_spotAngle,true);
+		addMember(l,"cookieSize",get_cookieSize,set_cookieSize,true);
+		addMember(l,"cookie",get_cookie,set_cookie,true);
+		addMember(l,"flare",get_flare,set_flare,true);
+		addMember(l,"renderMode",get_renderMode,set_renderMode,true);
+		addMember(l,"alreadyLightmapped",get_alreadyLightmapped,set_alreadyLightmapped,true);
+		addMember(l,"cullingMask",get_cullingMask,set_cullingMask,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Light),typeof(UnityEngine.Behaviour));
 	}
 }

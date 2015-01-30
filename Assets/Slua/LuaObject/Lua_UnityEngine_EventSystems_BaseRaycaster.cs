@@ -46,9 +46,9 @@ public class Lua_UnityEngine_EventSystems_BaseRaycaster : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.BaseRaycaster");
 		addMember(l,Raycast);
-		addMember(l,"eventCamera",get_eventCamera,null);
-		addMember(l,"sortOrderPriority",get_sortOrderPriority,null);
-		addMember(l,"renderOrderPriority",get_renderOrderPriority,null);
+		addMember(l,"eventCamera",get_eventCamera,null,true);
+		addMember(l,"sortOrderPriority",get_sortOrderPriority,null,true);
+		addMember(l,"renderOrderPriority",get_renderOrderPriority,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.BaseRaycaster),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

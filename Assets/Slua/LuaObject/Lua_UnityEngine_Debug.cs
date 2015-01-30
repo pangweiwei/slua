@@ -19,7 +19,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int DrawLine_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Color),typeof(System.Single),typeof(System.Boolean))){
+			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Color),typeof(float),typeof(bool))){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -33,7 +33,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 				UnityEngine.Debug.DrawLine(a1,a2,a3,a4,a5);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Color),typeof(System.Single))){
+			else if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Color),typeof(float))){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -74,7 +74,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int DrawRay_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Color),typeof(System.Single))){
+			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Color),typeof(float))){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -104,7 +104,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 				UnityEngine.Debug.DrawRay(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Color),typeof(System.Single),typeof(System.Boolean))){
+			else if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Color),typeof(float),typeof(bool))){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -287,8 +287,8 @@ public class Lua_UnityEngine_Debug : LuaObject {
 		addMember(l,ClearDeveloperConsole_s);
 		addMember(l,LogException_s);
 		addMember(l,LogWarning_s);
-		addMember(l,"developerConsoleVisible",get_developerConsoleVisible,set_developerConsoleVisible);
-		addMember(l,"isDebugBuild",get_isDebugBuild,null);
+		addMember(l,"developerConsoleVisible",get_developerConsoleVisible,set_developerConsoleVisible,false);
+		addMember(l,"isDebugBuild",get_isDebugBuild,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Debug));
 	}
 }

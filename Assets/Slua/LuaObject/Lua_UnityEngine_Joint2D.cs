@@ -46,8 +46,8 @@ public class Lua_UnityEngine_Joint2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Joint2D");
-		addMember(l,"connectedBody",get_connectedBody,set_connectedBody);
-		addMember(l,"collideConnected",get_collideConnected,set_collideConnected);
+		addMember(l,"connectedBody",get_connectedBody,set_connectedBody,true);
+		addMember(l,"collideConnected",get_collideConnected,set_collideConnected,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Joint2D),typeof(UnityEngine.Behaviour));
 	}
 }

@@ -8,7 +8,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.Rect o;
-		if(matchType(l,1,typeof(System.Single),typeof(System.Single),typeof(System.Single),typeof(System.Single))){
+		if(matchType(l,1,typeof(float),typeof(float),typeof(float),typeof(float))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -71,7 +71,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(bool))){
 				UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -100,7 +100,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Rect),typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(UnityEngine.Rect),typeof(bool))){
 				UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
 				UnityEngine.Rect a1;
 				checkType(l,2,out a1);
@@ -407,19 +407,19 @@ public class Lua_UnityEngine_Rect : LuaObject {
 		addMember(l,PointToNormalized_s);
 		addMember(l,op_Inequality);
 		addMember(l,op_Equality);
-		addMember(l,"x",get_x,set_x);
-		addMember(l,"y",get_y,set_y);
-		addMember(l,"position",get_position,set_position);
-		addMember(l,"center",get_center,set_center);
-		addMember(l,"min",get_min,set_min);
-		addMember(l,"max",get_max,set_max);
-		addMember(l,"width",get_width,set_width);
-		addMember(l,"height",get_height,set_height);
-		addMember(l,"size",get_size,set_size);
-		addMember(l,"xMin",get_xMin,set_xMin);
-		addMember(l,"yMin",get_yMin,set_yMin);
-		addMember(l,"xMax",get_xMax,set_xMax);
-		addMember(l,"yMax",get_yMax,set_yMax);
+		addMember(l,"x",get_x,set_x,true);
+		addMember(l,"y",get_y,set_y,true);
+		addMember(l,"position",get_position,set_position,true);
+		addMember(l,"center",get_center,set_center,true);
+		addMember(l,"min",get_min,set_min,true);
+		addMember(l,"max",get_max,set_max,true);
+		addMember(l,"width",get_width,set_width,true);
+		addMember(l,"height",get_height,set_height,true);
+		addMember(l,"size",get_size,set_size,true);
+		addMember(l,"xMin",get_xMin,set_xMin,true);
+		addMember(l,"yMin",get_yMin,set_yMin,true);
+		addMember(l,"xMax",get_xMax,set_xMax,true);
+		addMember(l,"yMax",get_yMax,set_yMax,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Rect));
 	}
 }

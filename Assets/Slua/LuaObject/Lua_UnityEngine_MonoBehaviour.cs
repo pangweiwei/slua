@@ -58,7 +58,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 				self.CancelInvoke();
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.String))){
+			else if(matchType(l,2,typeof(string))){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -76,7 +76,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsInvoking(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.String))){
+			if(matchType(l,2,typeof(string))){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -109,7 +109,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(System.String),typeof(System.Object))){
+			else if(matchType(l,2,typeof(string),typeof(System.Object))){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -119,7 +119,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(System.String))){
+			else if(matchType(l,2,typeof(string))){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -153,7 +153,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int StopCoroutine(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.String))){
+			if(matchType(l,2,typeof(string))){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -232,7 +232,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 		addMember(l,StopCoroutine);
 		addMember(l,StopAllCoroutines);
 		addMember(l,print_s);
-		addMember(l,"useGUILayout",get_useGUILayout,set_useGUILayout);
+		addMember(l,"useGUILayout",get_useGUILayout,set_useGUILayout,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.MonoBehaviour),typeof(UnityEngine.Behaviour));
 	}
 }

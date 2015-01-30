@@ -60,9 +60,9 @@ public class Lua_UnityEngine_MeshCollider : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.MeshCollider");
-		addMember(l,"sharedMesh",get_sharedMesh,set_sharedMesh);
-		addMember(l,"convex",get_convex,set_convex);
-		addMember(l,"smoothSphereCollisions",get_smoothSphereCollisions,set_smoothSphereCollisions);
+		addMember(l,"sharedMesh",get_sharedMesh,set_sharedMesh,true);
+		addMember(l,"convex",get_convex,set_convex,true);
+		addMember(l,"smoothSphereCollisions",get_smoothSphereCollisions,set_smoothSphereCollisions,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.MeshCollider),typeof(UnityEngine.Collider));
 	}
 }

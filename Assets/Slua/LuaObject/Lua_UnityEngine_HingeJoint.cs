@@ -114,14 +114,14 @@ public class Lua_UnityEngine_HingeJoint : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.HingeJoint");
-		addMember(l,"motor",get_motor,set_motor);
-		addMember(l,"limits",get_limits,set_limits);
-		addMember(l,"spring",get_spring,set_spring);
-		addMember(l,"useMotor",get_useMotor,set_useMotor);
-		addMember(l,"useLimits",get_useLimits,set_useLimits);
-		addMember(l,"useSpring",get_useSpring,set_useSpring);
-		addMember(l,"velocity",get_velocity,null);
-		addMember(l,"angle",get_angle,null);
+		addMember(l,"motor",get_motor,set_motor,true);
+		addMember(l,"limits",get_limits,set_limits,true);
+		addMember(l,"spring",get_spring,set_spring,true);
+		addMember(l,"useMotor",get_useMotor,set_useMotor,true);
+		addMember(l,"useLimits",get_useLimits,set_useLimits,true);
+		addMember(l,"useSpring",get_useSpring,set_useSpring,true);
+		addMember(l,"velocity",get_velocity,null,true);
+		addMember(l,"angle",get_angle,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.HingeJoint),typeof(UnityEngine.Joint));
 	}
 }

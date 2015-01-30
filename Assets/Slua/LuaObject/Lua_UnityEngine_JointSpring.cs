@@ -56,9 +56,9 @@ public class Lua_UnityEngine_JointSpring : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.JointSpring");
-		addMember(l,"spring",get_spring,set_spring);
-		addMember(l,"damper",get_damper,set_damper);
-		addMember(l,"targetPosition",get_targetPosition,set_targetPosition);
+		addMember(l,"spring",get_spring,set_spring,true);
+		addMember(l,"damper",get_damper,set_damper,true);
+		addMember(l,"targetPosition",get_targetPosition,set_targetPosition,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.JointSpring));
 	}
 }

@@ -131,14 +131,14 @@ public class Lua_UnityEngine_WheelHit : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.WheelHit");
-		addMember(l,"collider",get_collider,set_collider);
-		addMember(l,"point",get_point,set_point);
-		addMember(l,"normal",get_normal,set_normal);
-		addMember(l,"forwardDir",get_forwardDir,set_forwardDir);
-		addMember(l,"sidewaysDir",get_sidewaysDir,set_sidewaysDir);
-		addMember(l,"force",get_force,set_force);
-		addMember(l,"forwardSlip",get_forwardSlip,set_forwardSlip);
-		addMember(l,"sidewaysSlip",get_sidewaysSlip,set_sidewaysSlip);
+		addMember(l,"collider",get_collider,set_collider,true);
+		addMember(l,"point",get_point,set_point,true);
+		addMember(l,"normal",get_normal,set_normal,true);
+		addMember(l,"forwardDir",get_forwardDir,set_forwardDir,true);
+		addMember(l,"sidewaysDir",get_sidewaysDir,set_sidewaysDir,true);
+		addMember(l,"force",get_force,set_force,true);
+		addMember(l,"forwardSlip",get_forwardSlip,set_forwardSlip,true);
+		addMember(l,"sidewaysSlip",get_sidewaysSlip,set_sidewaysSlip,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.WheelHit));
 	}
 }

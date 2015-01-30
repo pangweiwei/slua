@@ -465,16 +465,16 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 		addMember(l,GetGeneratedTextures);
 		addMember(l,GetGeneratedTexture);
 		addMember(l,StopRebuilds_s);
-		addMember(l,"cacheSize",get_cacheSize,set_cacheSize);
-		addMember(l,"animationUpdateRate",get_animationUpdateRate,set_animationUpdateRate);
-		addMember(l,"isProcessing",get_isProcessing,null);
-		addMember(l,"isCachedDataAvailable",get_isCachedDataAvailable,null);
-		addMember(l,"isLoadTimeGenerated",get_isLoadTimeGenerated,set_isLoadTimeGenerated);
-		addMember(l,"loadingBehavior",get_loadingBehavior,null);
-		addMember(l,"isSupported",get_isSupported,null);
-		addMember(l,"substanceProcessorUsage",get_substanceProcessorUsage,set_substanceProcessorUsage);
-		addMember(l,"preset",get_preset,set_preset);
-		addMember(l,"isReadable",get_isReadable,set_isReadable);
+		addMember(l,"cacheSize",get_cacheSize,set_cacheSize,true);
+		addMember(l,"animationUpdateRate",get_animationUpdateRate,set_animationUpdateRate,true);
+		addMember(l,"isProcessing",get_isProcessing,null,true);
+		addMember(l,"isCachedDataAvailable",get_isCachedDataAvailable,null,true);
+		addMember(l,"isLoadTimeGenerated",get_isLoadTimeGenerated,set_isLoadTimeGenerated,true);
+		addMember(l,"loadingBehavior",get_loadingBehavior,null,true);
+		addMember(l,"isSupported",get_isSupported,null,false);
+		addMember(l,"substanceProcessorUsage",get_substanceProcessorUsage,set_substanceProcessorUsage,false);
+		addMember(l,"preset",get_preset,set_preset,true);
+		addMember(l,"isReadable",get_isReadable,set_isReadable,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ProceduralMaterial),typeof(UnityEngine.Material));
 	}
 }

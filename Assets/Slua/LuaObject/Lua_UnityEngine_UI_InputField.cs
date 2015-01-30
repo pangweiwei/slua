@@ -457,7 +457,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_asteriskChar(IntPtr l) {
 		UnityEngine.UI.InputField o = (UnityEngine.UI.InputField)checkSelf(l);
-		Char v;
+		System.Char v;
 		checkType(l,2,out v);
 		o.asteriskChar=v;
 		return 0;
@@ -486,25 +486,25 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 		addMember(l,DeactivateInputField);
 		addMember(l,OnDeselect);
 		addMember(l,OnSubmit);
-		addMember(l,"shouldHideMobileInput",get_shouldHideMobileInput,set_shouldHideMobileInput);
-		addMember(l,"text",get_text,set_text);
-		addMember(l,"isFocused",get_isFocused,null);
-		addMember(l,"caretBlinkRate",get_caretBlinkRate,set_caretBlinkRate);
-		addMember(l,"textComponent",get_textComponent,set_textComponent);
-		addMember(l,"placeholder",get_placeholder,set_placeholder);
-		addMember(l,"selectionColor",get_selectionColor,set_selectionColor);
-		addMember(l,"onEndEdit",get_onEndEdit,set_onEndEdit);
-		addMember(l,"onValueChange",get_onValueChange,set_onValueChange);
-		addMember(l,"onValidateInput",get_onValidateInput,set_onValidateInput);
-		addMember(l,"characterLimit",get_characterLimit,set_characterLimit);
-		addMember(l,"contentType",get_contentType,set_contentType);
-		addMember(l,"lineType",get_lineType,set_lineType);
-		addMember(l,"inputType",get_inputType,set_inputType);
-		addMember(l,"keyboardType",get_keyboardType,set_keyboardType);
-		addMember(l,"characterValidation",get_characterValidation,set_characterValidation);
-		addMember(l,"multiLine",get_multiLine,null);
-		addMember(l,"asteriskChar",get_asteriskChar,set_asteriskChar);
-		addMember(l,"wasCanceled",get_wasCanceled,null);
+		addMember(l,"shouldHideMobileInput",get_shouldHideMobileInput,set_shouldHideMobileInput,true);
+		addMember(l,"text",get_text,set_text,true);
+		addMember(l,"isFocused",get_isFocused,null,true);
+		addMember(l,"caretBlinkRate",get_caretBlinkRate,set_caretBlinkRate,true);
+		addMember(l,"textComponent",get_textComponent,set_textComponent,true);
+		addMember(l,"placeholder",get_placeholder,set_placeholder,true);
+		addMember(l,"selectionColor",get_selectionColor,set_selectionColor,true);
+		addMember(l,"onEndEdit",get_onEndEdit,set_onEndEdit,true);
+		addMember(l,"onValueChange",get_onValueChange,set_onValueChange,true);
+		addMember(l,"onValidateInput",get_onValidateInput,set_onValidateInput,true);
+		addMember(l,"characterLimit",get_characterLimit,set_characterLimit,true);
+		addMember(l,"contentType",get_contentType,set_contentType,true);
+		addMember(l,"lineType",get_lineType,set_lineType,true);
+		addMember(l,"inputType",get_inputType,set_inputType,true);
+		addMember(l,"keyboardType",get_keyboardType,set_keyboardType,true);
+		addMember(l,"characterValidation",get_characterValidation,set_characterValidation,true);
+		addMember(l,"multiLine",get_multiLine,null,true);
+		addMember(l,"asteriskChar",get_asteriskChar,set_asteriskChar,true);
+		addMember(l,"wasCanceled",get_wasCanceled,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.InputField),typeof(UnityEngine.UI.Selectable));
 	}
 }

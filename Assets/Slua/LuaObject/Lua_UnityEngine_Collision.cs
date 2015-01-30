@@ -54,12 +54,12 @@ public class Lua_UnityEngine_Collision : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Collision");
-		addMember(l,"relativeVelocity",get_relativeVelocity,null);
-		addMember(l,"rigidbody",get_rigidbody,null);
-		addMember(l,"collider",get_collider,null);
-		addMember(l,"transform",get_transform,null);
-		addMember(l,"gameObject",get_gameObject,null);
-		addMember(l,"contacts",get_contacts,null);
+		addMember(l,"relativeVelocity",get_relativeVelocity,null,true);
+		addMember(l,"rigidbody",get_rigidbody,null,true);
+		addMember(l,"collider",get_collider,null,true);
+		addMember(l,"transform",get_transform,null,true);
+		addMember(l,"gameObject",get_gameObject,null,true);
+		addMember(l,"contacts",get_contacts,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Collision));
 	}
 }

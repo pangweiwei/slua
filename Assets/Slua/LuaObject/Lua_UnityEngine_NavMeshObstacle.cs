@@ -88,11 +88,11 @@ public class Lua_UnityEngine_NavMeshObstacle : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.NavMeshObstacle");
-		addMember(l,"height",get_height,set_height);
-		addMember(l,"radius",get_radius,set_radius);
-		addMember(l,"velocity",get_velocity,set_velocity);
-		addMember(l,"carving",get_carving,set_carving);
-		addMember(l,"carvingMoveThreshold",get_carvingMoveThreshold,set_carvingMoveThreshold);
+		addMember(l,"height",get_height,set_height,true);
+		addMember(l,"radius",get_radius,set_radius,true);
+		addMember(l,"velocity",get_velocity,set_velocity,true);
+		addMember(l,"carving",get_carving,set_carving,true);
+		addMember(l,"carvingMoveThreshold",get_carvingMoveThreshold,set_carvingMoveThreshold,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.NavMeshObstacle),typeof(UnityEngine.Behaviour));
 	}
 }

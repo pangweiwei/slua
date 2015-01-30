@@ -46,8 +46,8 @@ public class Lua_UnityEngine_BoxCollider2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.BoxCollider2D");
-		addMember(l,"center",get_center,set_center);
-		addMember(l,"size",get_size,set_size);
+		addMember(l,"center",get_center,set_center,true);
+		addMember(l,"size",get_size,set_size,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.BoxCollider2D),typeof(UnityEngine.Collider2D));
 	}
 }

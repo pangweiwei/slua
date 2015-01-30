@@ -32,7 +32,7 @@ public class Lua_UnityEngine_AudioDistortionFilter : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioDistortionFilter");
-		addMember(l,"distortionLevel",get_distortionLevel,set_distortionLevel);
+		addMember(l,"distortionLevel",get_distortionLevel,set_distortionLevel,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioDistortionFilter),typeof(UnityEngine.Behaviour));
 	}
 }

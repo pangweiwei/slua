@@ -89,7 +89,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetKey_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Boolean ret=UnityEngine.Input.GetKey(a1);
@@ -114,7 +114,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetKeyDown_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Boolean ret=UnityEngine.Input.GetKeyDown(a1);
@@ -139,7 +139,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetKeyUp_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String))){
+			if(matchType(l,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Boolean ret=UnityEngine.Input.GetKeyUp(a1);
@@ -421,29 +421,29 @@ public class Lua_UnityEngine_Input : LuaObject {
 		addMember(l,ResetInputAxes_s);
 		addMember(l,GetAccelerationEvent_s);
 		addMember(l,GetTouch_s);
-		addMember(l,"compensateSensors",get_compensateSensors,set_compensateSensors);
-		addMember(l,"gyro",get_gyro,null);
-		addMember(l,"mousePosition",get_mousePosition,null);
-		addMember(l,"mouseScrollDelta",get_mouseScrollDelta,null);
-		addMember(l,"mousePresent",get_mousePresent,null);
-		addMember(l,"simulateMouseWithTouches",get_simulateMouseWithTouches,set_simulateMouseWithTouches);
-		addMember(l,"anyKey",get_anyKey,null);
-		addMember(l,"anyKeyDown",get_anyKeyDown,null);
-		addMember(l,"inputString",get_inputString,null);
-		addMember(l,"acceleration",get_acceleration,null);
-		addMember(l,"accelerationEvents",get_accelerationEvents,null);
-		addMember(l,"accelerationEventCount",get_accelerationEventCount,null);
-		addMember(l,"touches",get_touches,null);
-		addMember(l,"touchCount",get_touchCount,null);
-		addMember(l,"touchSupported",get_touchSupported,null);
-		addMember(l,"multiTouchEnabled",get_multiTouchEnabled,set_multiTouchEnabled);
-		addMember(l,"location",get_location,null);
-		addMember(l,"compass",get_compass,null);
-		addMember(l,"deviceOrientation",get_deviceOrientation,null);
-		addMember(l,"imeCompositionMode",get_imeCompositionMode,set_imeCompositionMode);
-		addMember(l,"compositionString",get_compositionString,null);
-		addMember(l,"imeIsSelected",get_imeIsSelected,null);
-		addMember(l,"compositionCursorPos",get_compositionCursorPos,set_compositionCursorPos);
+		addMember(l,"compensateSensors",get_compensateSensors,set_compensateSensors,false);
+		addMember(l,"gyro",get_gyro,null,false);
+		addMember(l,"mousePosition",get_mousePosition,null,false);
+		addMember(l,"mouseScrollDelta",get_mouseScrollDelta,null,false);
+		addMember(l,"mousePresent",get_mousePresent,null,false);
+		addMember(l,"simulateMouseWithTouches",get_simulateMouseWithTouches,set_simulateMouseWithTouches,false);
+		addMember(l,"anyKey",get_anyKey,null,false);
+		addMember(l,"anyKeyDown",get_anyKeyDown,null,false);
+		addMember(l,"inputString",get_inputString,null,false);
+		addMember(l,"acceleration",get_acceleration,null,false);
+		addMember(l,"accelerationEvents",get_accelerationEvents,null,false);
+		addMember(l,"accelerationEventCount",get_accelerationEventCount,null,false);
+		addMember(l,"touches",get_touches,null,false);
+		addMember(l,"touchCount",get_touchCount,null,false);
+		addMember(l,"touchSupported",get_touchSupported,null,false);
+		addMember(l,"multiTouchEnabled",get_multiTouchEnabled,set_multiTouchEnabled,false);
+		addMember(l,"location",get_location,null,false);
+		addMember(l,"compass",get_compass,null,false);
+		addMember(l,"deviceOrientation",get_deviceOrientation,null,false);
+		addMember(l,"imeCompositionMode",get_imeCompositionMode,set_imeCompositionMode,false);
+		addMember(l,"compositionString",get_compositionString,null,false);
+		addMember(l,"imeIsSelected",get_imeIsSelected,null,false);
+		addMember(l,"compositionCursorPos",get_compositionCursorPos,set_compositionCursorPos,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Input));
 	}
 }

@@ -133,15 +133,15 @@ public class Lua_UnityEngine_UI_LayoutGroup : LuaObject {
 		addMember(l,CalculateLayoutInputVertical);
 		addMember(l,SetLayoutHorizontal);
 		addMember(l,SetLayoutVertical);
-		addMember(l,"padding",get_padding,set_padding);
-		addMember(l,"childAlignment",get_childAlignment,set_childAlignment);
-		addMember(l,"minWidth",get_minWidth,null);
-		addMember(l,"preferredWidth",get_preferredWidth,null);
-		addMember(l,"flexibleWidth",get_flexibleWidth,null);
-		addMember(l,"minHeight",get_minHeight,null);
-		addMember(l,"preferredHeight",get_preferredHeight,null);
-		addMember(l,"flexibleHeight",get_flexibleHeight,null);
-		addMember(l,"layoutPriority",get_layoutPriority,null);
+		addMember(l,"padding",get_padding,set_padding,true);
+		addMember(l,"childAlignment",get_childAlignment,set_childAlignment,true);
+		addMember(l,"minWidth",get_minWidth,null,true);
+		addMember(l,"preferredWidth",get_preferredWidth,null,true);
+		addMember(l,"flexibleWidth",get_flexibleWidth,null,true);
+		addMember(l,"minHeight",get_minHeight,null,true);
+		addMember(l,"preferredHeight",get_preferredHeight,null,true);
+		addMember(l,"flexibleHeight",get_flexibleHeight,null,true);
+		addMember(l,"layoutPriority",get_layoutPriority,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.LayoutGroup),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

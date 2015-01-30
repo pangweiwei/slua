@@ -60,6 +60,7 @@ function test4()
 	HelloWorld.test4(cube)
 	print("test4/cs",os.clock()-start)
 
+
 	local t = cube.transform
 	local v = Vector3.one
 	local start = os.clock()

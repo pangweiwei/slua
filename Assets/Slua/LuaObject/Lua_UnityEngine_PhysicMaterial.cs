@@ -13,7 +13,7 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.String))){
+		else if(matchType(l,1,typeof(string))){
 			System.String a1;
 			checkType(l,1,out a1);
 			o=new UnityEngine.PhysicMaterial(a1);
@@ -137,14 +137,14 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.PhysicMaterial");
-		addMember(l,"dynamicFriction",get_dynamicFriction,set_dynamicFriction);
-		addMember(l,"staticFriction",get_staticFriction,set_staticFriction);
-		addMember(l,"bounciness",get_bounciness,set_bounciness);
-		addMember(l,"frictionDirection2",get_frictionDirection2,set_frictionDirection2);
-		addMember(l,"dynamicFriction2",get_dynamicFriction2,set_dynamicFriction2);
-		addMember(l,"staticFriction2",get_staticFriction2,set_staticFriction2);
-		addMember(l,"frictionCombine",get_frictionCombine,set_frictionCombine);
-		addMember(l,"bounceCombine",get_bounceCombine,set_bounceCombine);
+		addMember(l,"dynamicFriction",get_dynamicFriction,set_dynamicFriction,true);
+		addMember(l,"staticFriction",get_staticFriction,set_staticFriction,true);
+		addMember(l,"bounciness",get_bounciness,set_bounciness,true);
+		addMember(l,"frictionDirection2",get_frictionDirection2,set_frictionDirection2,true);
+		addMember(l,"dynamicFriction2",get_dynamicFriction2,set_dynamicFriction2,true);
+		addMember(l,"staticFriction2",get_staticFriction2,set_staticFriction2,true);
+		addMember(l,"frictionCombine",get_frictionCombine,set_frictionCombine,true);
+		addMember(l,"bounceCombine",get_bounceCombine,set_bounceCombine,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.PhysicMaterial),typeof(UnityEngine.Object));
 	}
 }

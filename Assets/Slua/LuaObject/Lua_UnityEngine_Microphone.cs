@@ -106,7 +106,7 @@ public class Lua_UnityEngine_Microphone : LuaObject {
 		addMember(l,IsRecording_s);
 		addMember(l,GetPosition_s);
 		addMember(l,GetDeviceCaps_s);
-		addMember(l,"devices",get_devices,null);
+		addMember(l,"devices",get_devices,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Microphone));
 	}
 }

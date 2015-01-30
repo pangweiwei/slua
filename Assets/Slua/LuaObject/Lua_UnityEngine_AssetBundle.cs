@@ -34,7 +34,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Load(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.String))){
+			if(matchType(l,2,typeof(string))){
 				UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -42,7 +42,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(System.String),typeof(System.Type))){
+			else if(matchType(l,2,typeof(string),typeof(System.Type))){
 				UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -174,7 +174,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 		addMember(l,CreateFromMemory_s);
 		addMember(l,CreateFromMemoryImmediate_s);
 		addMember(l,CreateFromFile_s);
-		addMember(l,"mainAsset",get_mainAsset,null);
+		addMember(l,"mainAsset",get_mainAsset,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AssetBundle),typeof(UnityEngine.Object));
 	}
 }

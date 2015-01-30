@@ -141,14 +141,14 @@ public class Lua_UnityEngine_UI_LayoutElement : LuaObject {
 		getTypeTable(l,"UnityEngine.UI.LayoutElement");
 		addMember(l,CalculateLayoutInputHorizontal);
 		addMember(l,CalculateLayoutInputVertical);
-		addMember(l,"ignoreLayout",get_ignoreLayout,set_ignoreLayout);
-		addMember(l,"minWidth",get_minWidth,set_minWidth);
-		addMember(l,"minHeight",get_minHeight,set_minHeight);
-		addMember(l,"preferredWidth",get_preferredWidth,set_preferredWidth);
-		addMember(l,"preferredHeight",get_preferredHeight,set_preferredHeight);
-		addMember(l,"flexibleWidth",get_flexibleWidth,set_flexibleWidth);
-		addMember(l,"flexibleHeight",get_flexibleHeight,set_flexibleHeight);
-		addMember(l,"layoutPriority",get_layoutPriority,null);
+		addMember(l,"ignoreLayout",get_ignoreLayout,set_ignoreLayout,true);
+		addMember(l,"minWidth",get_minWidth,set_minWidth,true);
+		addMember(l,"minHeight",get_minHeight,set_minHeight,true);
+		addMember(l,"preferredWidth",get_preferredWidth,set_preferredWidth,true);
+		addMember(l,"preferredHeight",get_preferredHeight,set_preferredHeight,true);
+		addMember(l,"flexibleWidth",get_flexibleWidth,set_flexibleWidth,true);
+		addMember(l,"flexibleHeight",get_flexibleHeight,set_flexibleHeight,true);
+		addMember(l,"layoutPriority",get_layoutPriority,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.LayoutElement),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

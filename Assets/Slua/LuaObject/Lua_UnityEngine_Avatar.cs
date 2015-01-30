@@ -30,8 +30,8 @@ public class Lua_UnityEngine_Avatar : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Avatar");
-		addMember(l,"isValid",get_isValid,null);
-		addMember(l,"isHuman",get_isHuman,null);
+		addMember(l,"isValid",get_isValid,null,true);
+		addMember(l,"isHuman",get_isHuman,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Avatar),typeof(UnityEngine.Object));
 	}
 }

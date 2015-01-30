@@ -20,7 +20,7 @@ namespace SLua
 			if(getCacheDelegate<HelloWorld.GetBundleInfoDelegate>(r,out ua))
 				return op;
 			LuaDLL.lua_pop(l,1);
-            ua = (string a1,out string a2,out int a3,out UInt32 a4,ref int a5) =>
+            ua = (string a1,out System.String a2,out System.Int32 a3,out System.UInt32 a4,ref System.Int32 a5) =>
             {
                 int error = pushTry(l);
                 LuaDLL.lua_getref(l, r);
@@ -30,7 +30,6 @@ namespace SLua
 				if (LuaDLL.lua_pcall(l, 2, -1, error) != 0) {
 					LuaDLL.lua_pop(l, 1);
 				}
-				int top =LuaDLL.lua_gettop(l);
 				bool ret;
 				checkType(l,error+1,out ret);
 				checkType(l,error+2,out a2);

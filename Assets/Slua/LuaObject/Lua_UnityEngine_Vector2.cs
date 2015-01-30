@@ -8,7 +8,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.Vector2 o;
-		if(matchType(l,1,typeof(System.Single),typeof(System.Single))){
+		if(matchType(l,1,typeof(float),typeof(float))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -243,7 +243,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SmoothDamp_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2),typeof(System.Single),typeof(System.Single))){
+			if(matchType(l,1,typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2),typeof(float),typeof(float))){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -259,7 +259,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 				pushValue(l,a3);
 				return 2;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2),typeof(System.Single))){
+			else if(matchType(l,1,typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2),typeof(float))){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -273,7 +273,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 				pushValue(l,a3);
 				return 2;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2),typeof(System.Single),typeof(System.Single),typeof(System.Single))){
+			else if(matchType(l,1,typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2),typeof(float),typeof(float),typeof(float))){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -348,7 +348,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int op_Multiply(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Vector2),typeof(System.Single))){
+			if(matchType(l,1,typeof(UnityEngine.Vector2),typeof(float))){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -357,7 +357,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.Single),typeof(UnityEngine.Vector2))){
+			else if(matchType(l,1,typeof(float),typeof(UnityEngine.Vector2))){
 				System.Single a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -519,16 +519,16 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 		addMember(l,op_Division);
 		addMember(l,op_Equality);
 		addMember(l,op_Inequality);
-		addMember(l,"kEpsilon",get_kEpsilon,null);
-		addMember(l,"x",get_x,set_x);
-		addMember(l,"y",get_y,set_y);
-		addMember(l,"normalized",get_normalized,null);
-		addMember(l,"magnitude",get_magnitude,null);
-		addMember(l,"sqrMagnitude",get_sqrMagnitude,null);
-		addMember(l,"zero",get_zero,null);
-		addMember(l,"one",get_one,null);
-		addMember(l,"up",get_up,null);
-		addMember(l,"right",get_right,null);
+		addMember(l,"kEpsilon",get_kEpsilon,null,false);
+		addMember(l,"x",get_x,set_x,true);
+		addMember(l,"y",get_y,set_y,true);
+		addMember(l,"normalized",get_normalized,null,true);
+		addMember(l,"magnitude",get_magnitude,null,true);
+		addMember(l,"sqrMagnitude",get_sqrMagnitude,null,true);
+		addMember(l,"zero",get_zero,null,false);
+		addMember(l,"one",get_one,null,false);
+		addMember(l,"up",get_up,null,false);
+		addMember(l,"right",get_right,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Vector2));
 	}
 }

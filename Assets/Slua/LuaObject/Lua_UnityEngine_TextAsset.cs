@@ -30,8 +30,8 @@ public class Lua_UnityEngine_TextAsset : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.TextAsset");
-		addMember(l,"text",get_text,null);
-		addMember(l,"bytes",get_bytes,null);
+		addMember(l,"text",get_text,null,true);
+		addMember(l,"bytes",get_bytes,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.TextAsset),typeof(UnityEngine.Object));
 	}
 }

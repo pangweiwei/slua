@@ -67,7 +67,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Expand(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Single))){
+			if(matchType(l,2,typeof(float))){
 				UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -283,11 +283,11 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 		addMember(l,IntersectRay);
 		addMember(l,op_Equality);
 		addMember(l,op_Inequality);
-		addMember(l,"center",get_center,set_center);
-		addMember(l,"size",get_size,set_size);
-		addMember(l,"extents",get_extents,set_extents);
-		addMember(l,"min",get_min,set_min);
-		addMember(l,"max",get_max,set_max);
+		addMember(l,"center",get_center,set_center,true);
+		addMember(l,"size",get_size,set_size,true);
+		addMember(l,"extents",get_extents,set_extents,true);
+		addMember(l,"min",get_min,set_min,true);
+		addMember(l,"max",get_max,set_max,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Bounds));
 	}
 }

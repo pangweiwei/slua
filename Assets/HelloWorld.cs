@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using SLua;
+using System;
+using LuaInterface;
+
 public class HelloWorld   {
 
     public delegate bool GetBundleInfoDelegate(string path, out string url, out int version, out uint crc,ref int flag);
@@ -33,6 +36,15 @@ public class HelloWorld   {
         t["name"] = "xiaoming";
         t["age"] = 12;
         return t;
+    }
+
+
+    static public void ofunc(Type t) {
+        Debug.Log(t.Name);
+    }
+
+    static public void ofunc(GameObject go) {
+        Debug.Log(go.name);
     }
 
     public GetBundleInfoDelegate d;

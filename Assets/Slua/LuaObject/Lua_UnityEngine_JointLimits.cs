@@ -71,10 +71,10 @@ public class Lua_UnityEngine_JointLimits : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.JointLimits");
-		addMember(l,"min",get_min,set_min);
-		addMember(l,"minBounce",get_minBounce,set_minBounce);
-		addMember(l,"max",get_max,set_max);
-		addMember(l,"maxBounce",get_maxBounce,set_maxBounce);
+		addMember(l,"min",get_min,set_min,true);
+		addMember(l,"minBounce",get_minBounce,set_minBounce,true);
+		addMember(l,"max",get_max,set_max,true);
+		addMember(l,"maxBounce",get_maxBounce,set_maxBounce,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.JointLimits));
 	}
 }

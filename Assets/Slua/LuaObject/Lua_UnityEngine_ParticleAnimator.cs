@@ -144,15 +144,15 @@ public class Lua_UnityEngine_ParticleAnimator : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ParticleAnimator");
-		addMember(l,"doesAnimateColor",get_doesAnimateColor,set_doesAnimateColor);
-		addMember(l,"worldRotationAxis",get_worldRotationAxis,set_worldRotationAxis);
-		addMember(l,"localRotationAxis",get_localRotationAxis,set_localRotationAxis);
-		addMember(l,"sizeGrow",get_sizeGrow,set_sizeGrow);
-		addMember(l,"rndForce",get_rndForce,set_rndForce);
-		addMember(l,"force",get_force,set_force);
-		addMember(l,"damping",get_damping,set_damping);
-		addMember(l,"autodestruct",get_autodestruct,set_autodestruct);
-		addMember(l,"colorAnimation",get_colorAnimation,set_colorAnimation);
+		addMember(l,"doesAnimateColor",get_doesAnimateColor,set_doesAnimateColor,true);
+		addMember(l,"worldRotationAxis",get_worldRotationAxis,set_worldRotationAxis,true);
+		addMember(l,"localRotationAxis",get_localRotationAxis,set_localRotationAxis,true);
+		addMember(l,"sizeGrow",get_sizeGrow,set_sizeGrow,true);
+		addMember(l,"rndForce",get_rndForce,set_rndForce,true);
+		addMember(l,"force",get_force,set_force,true);
+		addMember(l,"damping",get_damping,set_damping,true);
+		addMember(l,"autodestruct",get_autodestruct,set_autodestruct,true);
+		addMember(l,"colorAnimation",get_colorAnimation,set_colorAnimation,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.ParticleAnimator),typeof(UnityEngine.Component));
 	}
 }

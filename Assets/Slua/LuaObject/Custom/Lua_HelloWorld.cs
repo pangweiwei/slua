@@ -55,17 +55,6 @@ public class Lua_HelloWorld : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int generic(IntPtr l) {
-		try{
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int perf(IntPtr l) {
 		try{
 			HelloWorld self=(HelloWorld)checkSelf(l);
@@ -107,6 +96,29 @@ public class Lua_HelloWorld : LuaObject {
 			SLua.LuaTable ret=HelloWorld.getv();
 			pushValue(l,ret);
 			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ofunc_s(IntPtr l) {
+		try{
+			if(matchType(l,1,typeof(System.Type))){
+				System.Type a1;
+				checkType(l,1,out a1);
+				HelloWorld.ofunc(a1);
+				return 0;
+			}
+			else if(matchType(l,1,typeof(UnityEngine.GameObject))){
+				UnityEngine.GameObject a1;
+				checkType(l,1,out a1);
+				HelloWorld.ofunc(a1);
+				return 0;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -216,19 +228,19 @@ public class Lua_HelloWorld : LuaObject {
 		addMember(l,foo);
 		addMember(l,getList);
 		addMember(l,callD);
-		addMember(l,generic);
 		addMember(l,perf);
 		addMember(l,say_s);
 		addMember(l,setv_s);
 		addMember(l,getv_s);
+		addMember(l,ofunc_s);
 		addMember(l,testvec3_s);
 		addMember(l,testset_s);
 		addMember(l,test2_s);
 		addMember(l,test3_s);
 		addMember(l,test4_s);
 		addMember(l,test5_s);
-		addMember(l,"d",null,set_d);
-		addMember(l,"s",null,set_s);
+		addMember(l,"d",null,set_d,true);
+		addMember(l,"s",null,set_s,true);
 		createTypeMetatable(l,constructor, typeof(HelloWorld));
 	}
 }

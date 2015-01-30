@@ -116,13 +116,13 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.CharacterInfo");
-		addMember(l,"index",get_index,set_index);
-		addMember(l,"uv",get_uv,set_uv);
-		addMember(l,"vert",get_vert,set_vert);
-		addMember(l,"width",get_width,set_width);
-		addMember(l,"size",get_size,set_size);
-		addMember(l,"style",get_style,set_style);
-		addMember(l,"flipped",get_flipped,set_flipped);
+		addMember(l,"index",get_index,set_index,true);
+		addMember(l,"uv",get_uv,set_uv,true);
+		addMember(l,"vert",get_vert,set_vert,true);
+		addMember(l,"width",get_width,set_width,true);
+		addMember(l,"size",get_size,set_size,true);
+		addMember(l,"style",get_style,set_style,true);
+		addMember(l,"flipped",get_flipped,set_flipped,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.CharacterInfo));
 	}
 }

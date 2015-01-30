@@ -92,9 +92,9 @@ public class Lua_UnityEngine_SpringJoint2D : LuaObject {
 		getTypeTable(l,"UnityEngine.SpringJoint2D");
 		addMember(l,GetReactionForce);
 		addMember(l,GetReactionTorque);
-		addMember(l,"distance",get_distance,set_distance);
-		addMember(l,"dampingRatio",get_dampingRatio,set_dampingRatio);
-		addMember(l,"frequency",get_frequency,set_frequency);
+		addMember(l,"distance",get_distance,set_distance,true);
+		addMember(l,"dampingRatio",get_dampingRatio,set_dampingRatio,true);
+		addMember(l,"frequency",get_frequency,set_frequency,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SpringJoint2D),typeof(UnityEngine.AnchoredJoint2D));
 	}
 }

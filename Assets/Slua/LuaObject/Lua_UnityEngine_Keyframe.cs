@@ -8,7 +8,7 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.Keyframe o;
-		if(matchType(l,1,typeof(System.Single),typeof(System.Single))){
+		if(matchType(l,1,typeof(float),typeof(float))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -17,7 +17,7 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.Single),typeof(System.Single),typeof(System.Single),typeof(System.Single))){
+		else if(matchType(l,1,typeof(float),typeof(float),typeof(float),typeof(float))){
 			System.Single a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -110,11 +110,11 @@ public class Lua_UnityEngine_Keyframe : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Keyframe");
-		addMember(l,"time",get_time,set_time);
-		addMember(l,"value",get_value,set_value);
-		addMember(l,"inTangent",get_inTangent,set_inTangent);
-		addMember(l,"outTangent",get_outTangent,set_outTangent);
-		addMember(l,"tangentMode",get_tangentMode,set_tangentMode);
+		addMember(l,"time",get_time,set_time,true);
+		addMember(l,"value",get_value,set_value,true);
+		addMember(l,"inTangent",get_inTangent,set_inTangent,true);
+		addMember(l,"outTangent",get_outTangent,set_outTangent,true);
+		addMember(l,"tangentMode",get_tangentMode,set_tangentMode,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Keyframe));
 	}
 }

@@ -175,12 +175,12 @@ public class Lua_UnityEngine_EventSystems_StandaloneInputModule : LuaObject {
 		addMember(l,ActivateModule);
 		addMember(l,DeactivateModule);
 		addMember(l,Process);
-		addMember(l,"allowActivationOnMobileDevice",get_allowActivationOnMobileDevice,set_allowActivationOnMobileDevice);
-		addMember(l,"inputActionsPerSecond",get_inputActionsPerSecond,set_inputActionsPerSecond);
-		addMember(l,"horizontalAxis",get_horizontalAxis,set_horizontalAxis);
-		addMember(l,"verticalAxis",get_verticalAxis,set_verticalAxis);
-		addMember(l,"submitButton",get_submitButton,set_submitButton);
-		addMember(l,"cancelButton",get_cancelButton,set_cancelButton);
+		addMember(l,"allowActivationOnMobileDevice",get_allowActivationOnMobileDevice,set_allowActivationOnMobileDevice,true);
+		addMember(l,"inputActionsPerSecond",get_inputActionsPerSecond,set_inputActionsPerSecond,true);
+		addMember(l,"horizontalAxis",get_horizontalAxis,set_horizontalAxis,true);
+		addMember(l,"verticalAxis",get_verticalAxis,set_verticalAxis,true);
+		addMember(l,"submitButton",get_submitButton,set_submitButton,true);
+		addMember(l,"cancelButton",get_cancelButton,set_cancelButton,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.StandaloneInputModule),typeof(UnityEngine.EventSystems.PointerInputModule));
 	}
 }

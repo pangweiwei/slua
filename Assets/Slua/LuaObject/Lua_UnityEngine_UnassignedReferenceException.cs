@@ -13,14 +13,14 @@ public class Lua_UnityEngine_UnassignedReferenceException : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.String))){
+		else if(matchType(l,1,typeof(string))){
 			System.String a1;
 			checkType(l,1,out a1);
 			o=new UnityEngine.UnassignedReferenceException(a1);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.String),typeof(System.Exception))){
+		else if(matchType(l,1,typeof(string),typeof(System.Exception))){
 			System.String a1;
 			checkType(l,1,out a1);
 			System.Exception a2;

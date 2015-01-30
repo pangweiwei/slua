@@ -106,13 +106,13 @@ public class Lua_UnityEngine_UI_ColorBlock : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.ColorBlock");
-		addMember(l,"normalColor",get_normalColor,set_normalColor);
-		addMember(l,"highlightedColor",get_highlightedColor,set_highlightedColor);
-		addMember(l,"pressedColor",get_pressedColor,set_pressedColor);
-		addMember(l,"disabledColor",get_disabledColor,set_disabledColor);
-		addMember(l,"colorMultiplier",get_colorMultiplier,set_colorMultiplier);
-		addMember(l,"fadeDuration",get_fadeDuration,set_fadeDuration);
-		addMember(l,"defaultColorBlock",get_defaultColorBlock,null);
+		addMember(l,"normalColor",get_normalColor,set_normalColor,true);
+		addMember(l,"highlightedColor",get_highlightedColor,set_highlightedColor,true);
+		addMember(l,"pressedColor",get_pressedColor,set_pressedColor,true);
+		addMember(l,"disabledColor",get_disabledColor,set_disabledColor,true);
+		addMember(l,"colorMultiplier",get_colorMultiplier,set_colorMultiplier,true);
+		addMember(l,"fadeDuration",get_fadeDuration,set_fadeDuration,true);
+		addMember(l,"defaultColorBlock",get_defaultColorBlock,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.ColorBlock));
 	}
 }

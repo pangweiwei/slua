@@ -8,7 +8,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.RenderTexture o;
-		if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite))){
+		if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite))){
 			System.Int32 a1;
 			checkType(l,1,out a1);
 			System.Int32 a2;
@@ -23,7 +23,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.RenderTextureFormat))){
+		else if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(UnityEngine.RenderTextureFormat))){
 			System.Int32 a1;
 			checkType(l,1,out a1);
 			System.Int32 a2;
@@ -36,7 +36,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32))){
+		else if(matchType(l,1,typeof(int),typeof(int),typeof(int))){
 			System.Int32 a1;
 			checkType(l,1,out a1);
 			System.Int32 a2;
@@ -96,7 +96,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				self.DiscardContents();
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Boolean),typeof(System.Boolean))){
+			else if(matchType(l,2,typeof(bool),typeof(bool))){
 				UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -155,7 +155,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetTemporary_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite),typeof(System.Int32))){
+			if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite),typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -172,7 +172,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite))){
+			else if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -187,7 +187,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.RenderTextureFormat))){
+			else if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(UnityEngine.RenderTextureFormat))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -200,7 +200,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32))){
+			else if(matchType(l,1,typeof(int),typeof(int),typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -211,7 +211,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.Int32),typeof(System.Int32))){
+			else if(matchType(l,1,typeof(int),typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -465,22 +465,22 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 		addMember(l,GetTemporary_s);
 		addMember(l,ReleaseTemporary_s);
 		addMember(l,SupportsStencil_s);
-		addMember(l,"width",get_width,set_width);
-		addMember(l,"height",get_height,set_height);
-		addMember(l,"depth",get_depth,set_depth);
-		addMember(l,"isPowerOfTwo",get_isPowerOfTwo,set_isPowerOfTwo);
-		addMember(l,"sRGB",get_sRGB,null);
-		addMember(l,"format",get_format,set_format);
-		addMember(l,"useMipMap",get_useMipMap,set_useMipMap);
-		addMember(l,"generateMips",get_generateMips,set_generateMips);
-		addMember(l,"isCubemap",get_isCubemap,set_isCubemap);
-		addMember(l,"isVolume",get_isVolume,set_isVolume);
-		addMember(l,"volumeDepth",get_volumeDepth,set_volumeDepth);
-		addMember(l,"antiAliasing",get_antiAliasing,set_antiAliasing);
-		addMember(l,"enableRandomWrite",get_enableRandomWrite,set_enableRandomWrite);
-		addMember(l,"colorBuffer",get_colorBuffer,null);
-		addMember(l,"depthBuffer",get_depthBuffer,null);
-		addMember(l,"active",get_active,set_active);
+		addMember(l,"width",get_width,set_width,true);
+		addMember(l,"height",get_height,set_height,true);
+		addMember(l,"depth",get_depth,set_depth,true);
+		addMember(l,"isPowerOfTwo",get_isPowerOfTwo,set_isPowerOfTwo,true);
+		addMember(l,"sRGB",get_sRGB,null,true);
+		addMember(l,"format",get_format,set_format,true);
+		addMember(l,"useMipMap",get_useMipMap,set_useMipMap,true);
+		addMember(l,"generateMips",get_generateMips,set_generateMips,true);
+		addMember(l,"isCubemap",get_isCubemap,set_isCubemap,true);
+		addMember(l,"isVolume",get_isVolume,set_isVolume,true);
+		addMember(l,"volumeDepth",get_volumeDepth,set_volumeDepth,true);
+		addMember(l,"antiAliasing",get_antiAliasing,set_antiAliasing,true);
+		addMember(l,"enableRandomWrite",get_enableRandomWrite,set_enableRandomWrite,true);
+		addMember(l,"colorBuffer",get_colorBuffer,null,true);
+		addMember(l,"depthBuffer",get_depthBuffer,null,true);
+		addMember(l,"active",get_active,set_active,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.RenderTexture),typeof(UnityEngine.Texture));
 	}
 }

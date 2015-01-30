@@ -8,7 +8,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.Texture3D o;
-		if(matchType(l,1,typeof(System.Int32),typeof(System.Int32),typeof(System.Int32),typeof(UnityEngine.TextureFormat),typeof(System.Boolean))){
+		if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(UnityEngine.TextureFormat),typeof(bool))){
 			System.Int32 a1;
 			checkType(l,1,out a1);
 			System.Int32 a2;
@@ -29,7 +29,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetPixels(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Int32))){
+			if(matchType(l,2,typeof(int))){
 				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -54,7 +54,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetPixels(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Color),typeof(System.Int32))){
+			if(matchType(l,2,typeof(UnityEngine.Color[]),typeof(int))){
 				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
@@ -63,7 +63,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 				self.SetPixels(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Color))){
+			else if(matchType(l,2,typeof(UnityEngine.Color[]))){
 				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
@@ -81,7 +81,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Apply(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Boolean))){
+			if(matchType(l,2,typeof(bool))){
 				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -118,8 +118,8 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 		addMember(l,GetPixels);
 		addMember(l,SetPixels);
 		addMember(l,Apply);
-		addMember(l,"depth",get_depth,null);
-		addMember(l,"format",get_format,null);
+		addMember(l,"depth",get_depth,null,true);
+		addMember(l,"format",get_format,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Texture3D),typeof(UnityEngine.Texture));
 	}
 }

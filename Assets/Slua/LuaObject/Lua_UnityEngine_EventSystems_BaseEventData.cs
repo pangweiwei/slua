@@ -72,9 +72,9 @@ public class Lua_UnityEngine_EventSystems_BaseEventData : LuaObject {
 		getTypeTable(l,"UnityEngine.EventSystems.BaseEventData");
 		addMember(l,Reset);
 		addMember(l,Use);
-		addMember(l,"used",get_used,null);
-		addMember(l,"currentInputModule",get_currentInputModule,null);
-		addMember(l,"selectedObject",get_selectedObject,set_selectedObject);
+		addMember(l,"used",get_used,null,true);
+		addMember(l,"currentInputModule",get_currentInputModule,null,true);
+		addMember(l,"selectedObject",get_selectedObject,set_selectedObject,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.BaseEventData));
 	}
 }

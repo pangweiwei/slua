@@ -113,13 +113,13 @@ public class Lua_UnityEngine_UIVertex : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UIVertex");
-		addMember(l,"position",get_position,set_position);
-		addMember(l,"normal",get_normal,set_normal);
-		addMember(l,"color",get_color,set_color);
-		addMember(l,"uv0",get_uv0,set_uv0);
-		addMember(l,"uv1",get_uv1,set_uv1);
-		addMember(l,"tangent",get_tangent,set_tangent);
-		addMember(l,"simpleVert",get_simpleVert,set_simpleVert);
+		addMember(l,"position",get_position,set_position,true);
+		addMember(l,"normal",get_normal,set_normal,true);
+		addMember(l,"color",get_color,set_color,true);
+		addMember(l,"uv0",get_uv0,set_uv0,true);
+		addMember(l,"uv1",get_uv1,set_uv1,true);
+		addMember(l,"tangent",get_tangent,set_tangent,true);
+		addMember(l,"simpleVert",get_simpleVert,set_simpleVert,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.UIVertex));
 	}
 }

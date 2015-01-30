@@ -49,7 +49,7 @@ public class Lua_UnityEngine_LightProbes : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_coefficients(IntPtr l) {
 		UnityEngine.LightProbes o = (UnityEngine.LightProbes)checkSelf(l);
-		float[] v;
+		System.Single[] v;
 		checkType(l,2,out v);
 		o.coefficients=v;
 		return 0;
@@ -69,10 +69,10 @@ public class Lua_UnityEngine_LightProbes : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LightProbes");
 		addMember(l,GetInterpolatedLightProbe);
-		addMember(l,"positions",get_positions,null);
-		addMember(l,"coefficients",get_coefficients,set_coefficients);
-		addMember(l,"count",get_count,null);
-		addMember(l,"cellCount",get_cellCount,null);
+		addMember(l,"positions",get_positions,null,true);
+		addMember(l,"coefficients",get_coefficients,set_coefficients,true);
+		addMember(l,"count",get_count,null,true);
+		addMember(l,"cellCount",get_cellCount,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LightProbes),typeof(UnityEngine.Object));
 	}
 }

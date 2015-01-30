@@ -186,18 +186,18 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.WheelCollider");
 		addMember(l,GetGroundHit);
-		addMember(l,"center",get_center,set_center);
-		addMember(l,"radius",get_radius,set_radius);
-		addMember(l,"suspensionDistance",get_suspensionDistance,set_suspensionDistance);
-		addMember(l,"suspensionSpring",get_suspensionSpring,set_suspensionSpring);
-		addMember(l,"mass",get_mass,set_mass);
-		addMember(l,"forwardFriction",get_forwardFriction,set_forwardFriction);
-		addMember(l,"sidewaysFriction",get_sidewaysFriction,set_sidewaysFriction);
-		addMember(l,"motorTorque",get_motorTorque,set_motorTorque);
-		addMember(l,"brakeTorque",get_brakeTorque,set_brakeTorque);
-		addMember(l,"steerAngle",get_steerAngle,set_steerAngle);
-		addMember(l,"isGrounded",get_isGrounded,null);
-		addMember(l,"rpm",get_rpm,null);
+		addMember(l,"center",get_center,set_center,true);
+		addMember(l,"radius",get_radius,set_radius,true);
+		addMember(l,"suspensionDistance",get_suspensionDistance,set_suspensionDistance,true);
+		addMember(l,"suspensionSpring",get_suspensionSpring,set_suspensionSpring,true);
+		addMember(l,"mass",get_mass,set_mass,true);
+		addMember(l,"forwardFriction",get_forwardFriction,set_forwardFriction,true);
+		addMember(l,"sidewaysFriction",get_sidewaysFriction,set_sidewaysFriction,true);
+		addMember(l,"motorTorque",get_motorTorque,set_motorTorque,true);
+		addMember(l,"brakeTorque",get_brakeTorque,set_brakeTorque,true);
+		addMember(l,"steerAngle",get_steerAngle,set_steerAngle,true);
+		addMember(l,"isGrounded",get_isGrounded,null,true);
+		addMember(l,"rpm",get_rpm,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.WheelCollider),typeof(UnityEngine.Collider));
 	}
 }

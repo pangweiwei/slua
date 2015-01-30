@@ -8,7 +8,7 @@ public class Lua_UnityEngine_GradientColorKey : LuaObject {
 	static public int constructor(IntPtr l) {
 		LuaDLL.lua_remove(l,1);
 		UnityEngine.GradientColorKey o;
-		if(matchType(l,1,typeof(UnityEngine.Color),typeof(System.Single))){
+		if(matchType(l,1,typeof(UnityEngine.Color),typeof(float))){
 			UnityEngine.Color a1;
 			checkType(l,1,out a1);
 			System.Single a2;
@@ -52,8 +52,8 @@ public class Lua_UnityEngine_GradientColorKey : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.GradientColorKey");
-		addMember(l,"color",get_color,set_color);
-		addMember(l,"time",get_time,set_time);
+		addMember(l,"color",get_color,set_color,true);
+		addMember(l,"time",get_time,set_time,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.GradientColorKey));
 	}
 }
