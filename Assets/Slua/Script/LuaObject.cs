@@ -405,6 +405,11 @@ return index
             {
                 return true;
             }
+            else if (t == typeof(Type))
+            {
+                return lt == LuaTypes.LUA_TTABLE;
+            }
+
             switch (lt)
             {
                 case LuaTypes.LUA_TNUMBER:
@@ -418,9 +423,7 @@ return index
                     return t == typeof(bool);
                 case LuaTypes.LUA_TTABLE:
                     {
-                        if (t == typeof(Type))
-                            return isTypeTable(l, p);
-                        else if (t.IsValueType)
+                        if (t.IsValueType)
                             return luaTypeCheck(l, p, t.Name);
                         else
                             return t == typeof(LuaTable);
@@ -599,13 +602,21 @@ return index
 
         static internal bool checkType(IntPtr l, int p, out Int64 v)
         {
+#if LUA_5_3
             v = LuaDLL.luaL_checkinteger(l, p);
+#else
+            v = (Int64)LuaDLL.luaL_checknumber(l,p);
+#endif
             return true;
         }
 
         static internal bool checkType(IntPtr l, int p, out UInt64 v)
         {
-            v = (UInt64)LuaDLL.luaL_checkinteger(l, p);
+#if LUA_5_3
+            v = LuaDLL.luaL_checkinteger(l, p);
+#else
+            v = (UInt64)LuaDLL.luaL_checknumber(l, p);
+#endif
             return true;
         }
 
@@ -716,6 +727,22 @@ return index
             return true;
         }
 
+        static internal bool checkParams(IntPtr l, int p, out object[] pars)
+        {
+            int top = LuaDLL.lua_gettop(l);
+            if (top - p >= 0)
+            {
+                pars = new object[top-p+1];
+                for (int n = p,k=0; n <= top; n++,k++)
+                {
+                    pars[k] = checkVar(l, n);
+                }
+                return true;
+            }
+            pars = null;
+            return false;
+        }
+
 		static internal object checkVar(IntPtr l,int p) {
 			LuaTypes type = LuaDLL.lua_type(l, p);
 			switch (type)
@@ -752,6 +779,7 @@ return index
 				return null;
 			}
 		}
+
 
         internal static void pushValue(IntPtr l, float o)
         {
@@ -805,6 +833,15 @@ return index
         internal static void pushValue(IntPtr l, int i)
         {
             LuaDLL.lua_pushinteger(l, i);
+        }
+
+        public static void pushValue(IntPtr l, Int64 i)
+        {
+#if LUA_5_3
+            LuaDLL.lua_pushinteger(l,i);
+#else
+            LuaDLL.lua_pushnumber(l, (double)i);
+#endif
         }
 
         internal static void pushValue(IntPtr l, double d)

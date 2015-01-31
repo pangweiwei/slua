@@ -971,7 +971,7 @@ namespace SLua
 
                     for (int k = 0; k < pars.Length; k++)
                     {
-                        CheckArgument(file, pars[k].ParameterType, k, 1, false);
+                        CheckArgument(file, pars[k].ParameterType, k, 1, false, false);
                     }
                     Write(file, "o=new {0}({1});", FullName(t), FuncCall(ci));
                     Write(file, "pushObject(l,o);");
@@ -1168,6 +1168,9 @@ namespace SLua
             argIndex++;
         }
 
+        
+
+
         for (int n=0; n < pars.Length; n++)
         {
             ParameterInfo p = pars[n];
@@ -1176,7 +1179,12 @@ namespace SLua
             {
                 hasref = true;
             }
-            CheckArgument(file, p.ParameterType, n, argIndex, p.IsOut);
+
+            bool hasParams = false;
+            if (pars.Length > 0)
+                hasParams = pars[n].GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0;
+            
+            CheckArgument(file, p.ParameterType, n, argIndex, p.IsOut, hasParams);
         }
 
         string ret = "";
@@ -1304,7 +1312,7 @@ namespace SLua
         if (fmt.EndsWith("{")) indent++;
     }
 
-    private void CheckArgument(StreamWriter file, Type t, int n,int argstart, bool isout)
+    private void CheckArgument(StreamWriter file, Type t, int n,int argstart, bool isout, bool isparams)
     {
         Write(file, "{0} a{1};", TypeDecl(t), n + 1);
 
@@ -1314,6 +1322,8 @@ namespace SLua
                 Write(file, "checkEnum(l,{0},out a{1});", n + argstart, n + 1);
             else if (t.BaseType == typeof(System.MulticastDelegate))
                 Write(file, "checkDelegate(l,{0},out a{1});", n + argstart, n + 1);
+            else if (isparams)
+                Write(file, "checkParams(l,{0},out a{1});", n + argstart, n + 1);
             else
                 Write(file, "checkType(l,{0},out a{1});", n + argstart, n + 1);
         }

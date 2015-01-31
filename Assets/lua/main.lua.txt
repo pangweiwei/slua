@@ -52,6 +52,12 @@ function main()
 	local t=HelloWorld.getv()
 	print(t.name,t.age)
 
+	-- test overload func
 	HelloWorld.ofunc(GameObject)
 	HelloWorld.ofunc(cube)
+
+	-- test variant number args
+	HelloWorld.func6("aa",1,2)
+	HelloWorld.func6("aa",1,2,3,"bb")
+	HelloWorld.func6("aa",1,2,3,"bb",true,false)
 end

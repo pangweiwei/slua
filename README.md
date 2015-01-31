@@ -1,4 +1,4 @@
-# slua
+#slua
 Unity lua binding via static code generating.
 
 QQ group: 15647305
@@ -6,15 +6,15 @@ QQ group: 15647305
 Mail to : sineysan#163.com
 
 
-#Release Note
+##Release Note
 
 [here.](release_note.md)
 
-#Help
+##Help
 
-See inner demo for help.
+See inner demo for help or [Document](doc.md) (in chinese).
 
-#important
+##important
 
 pre-generated file need unity 4.6+, 
 
@@ -28,7 +28,7 @@ If you get many errors on different version:
 
 
 
-#main feature
+##main feature
 
 static code generating, no reflection, no extra gc alloc, very fast
 
@@ -48,7 +48,7 @@ return array as lua table
 
 using raw lua 5.3, can be replaced with luajit/lua5.1, link with slua.c, if you switch to lua5.1/luajit, remove LUA_5_3 macro in build setting.
 
-#usage
+##usage
 
 copy Assets/Plugins Assets/Slua to your $Project$/Assets folder, you will see Slua menu, 
 
@@ -64,7 +64,7 @@ Slua/LuaObject contain pre-generated file for exported interface.
 
 Precompiled slua library in Plugins only included x86/macosx(32bit) platform using lua5.3, you should compile other platform/lua5.1/luajit by yourself, see build.txt for help.
 
-###export custom class
+##export custom class
 
 find code "static public void Custom()", add your custom class type into exports list, like HelloWorld, see below:
 
