@@ -9,7 +9,7 @@ namespace SLua
     public partial class LuaObject
     {
 
-        static internal int checkDelegate(IntPtr l,int p,out HelloWorld.SimpleDelegate ua) {
+        static internal int checkDelegate(IntPtr l,int p,out Deleg.SimpleDelegate ua) {
             int op = extractFunction(l,p);
 			if(LuaDLL.lua_isnil(l,-1)) {
 				ua=null;
@@ -17,7 +17,7 @@ namespace SLua
 			}
             int r = LuaDLL.luaS_checkcallback(l, -1);
 			if(r<0) LuaDLL.luaL_error(l,"expect function");
-			if(getCacheDelegate<HelloWorld.SimpleDelegate>(r,out ua))
+			if(getCacheDelegate<Deleg.SimpleDelegate>(r,out ua))
 				return op;
 			LuaDLL.lua_pop(l,1);
             ua = (string a1,UnityEngine.GameObject a2) =>

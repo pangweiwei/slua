@@ -29,34 +29,34 @@ function self.actionD()
 end
 
 function main()
-	local h=HelloWorld()
-	h.d=function(path,flag)
-		print(1,path,flag)
+	
+	Deleg.d=function(path)
+		print(1,path)
 		--multi return for out flag parameter
-		return true,"http://www.sineysoft.com",1,32,11
+		return true,"http://www.sineysoft.com",1
 	end
 
 	-- add handler
-	h.d={"+=",xx}
+	Deleg.d={"+=",xx}
 
-	h.s=function(path,go)
+	Deleg.s=function(path,go)
 		print(path,go.name)
 	end
 
 	-- call delegation
-	h:callD()
+	Deleg.callD()
 
 	-- remove handler
-	h.d={"-=",xx}
+	Deleg.d={"-=",xx}
 
-	h:callD()
+	Deleg.callD()
 
 	-- remove all
-	h.d=nil
-	h.s=nil
+	Deleg.d=nil
+	Deleg.s=nil
 
 	-- call delegation again
-	h:callD()	
+	Deleg.callD()	
 
 
 	Deleg.testFunc( self.func )
@@ -71,6 +71,10 @@ function main()
 	-- remove
 	Deleg.daction = {"-=",self.actionD()}
 	Deleg.callDAction()
+
+	-- out modifier
+
+
 end
 
 

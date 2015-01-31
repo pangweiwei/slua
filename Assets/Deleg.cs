@@ -26,7 +26,7 @@ public class Deleg : MonoBehaviour {
         if (d != null)
         {
             bool ret = d("/path", out url, out ver);
-            Debug.Log(string.Format("{0},{1},{2},{3},{4}", ret, url, ver));
+            Debug.Log(string.Format("{0},{1},{2}", ret, url, ver));
         }
         if (s != null)
             s("GameObject", new GameObject("SimpleDelegate"));

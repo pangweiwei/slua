@@ -17,6 +17,17 @@ public class Lua_Deleg : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int callD_s(IntPtr l) {
+		try{
+			Deleg.callD();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int testFunc_s(IntPtr l) {
 		try{
 			System.Func<System.Int32> a1;
@@ -67,6 +78,24 @@ public class Lua_Deleg : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_d(IntPtr l) {
+		Deleg.GetBundleInfoDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) Deleg.d=v;
+		else if(op==1) Deleg.d+=v;
+		else if(op==2) Deleg.d-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_s(IntPtr l) {
+		Deleg.SimpleDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) Deleg.s=v;
+		else if(op==1) Deleg.s+=v;
+		else if(op==2) Deleg.s-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_daction(IntPtr l) {
 		System.Action<System.Int32,System.Collections.Generic.Dictionary<System.Int32,System.Object>> v;
 		int op=checkDelegate(l,2,out v);
@@ -77,10 +106,13 @@ public class Lua_Deleg : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"Deleg");
+		addMember(l,callD_s);
 		addMember(l,testFunc_s);
 		addMember(l,testAction_s);
 		addMember(l,testDAction_s);
 		addMember(l,callDAction_s);
+		addMember(l,"d",null,set_d,false);
+		addMember(l,"s",null,set_s,false);
 		addMember(l,"daction",null,set_daction,false);
 		createTypeMetatable(l,constructor, typeof(Deleg),typeof(UnityEngine.MonoBehaviour));
 	}
