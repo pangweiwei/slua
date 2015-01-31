@@ -151,3 +151,56 @@ slua的delegate支持+=/-=操作, 例如
 
 >public static Action<int, Dictionary<int, object>> daction;
 
+
+##编译slua库
+
+编译slua库非常简单, 仅需要把slua加入 lua/luajit 的make文件, 按照对应平台的make方法就可以产生对应平台的库文件, 以 luajit2.1 生成 64位 iOS 系统的库文件为例:
+
+首先下载luajit2.1 代码:
+
+>git clone http://repo.or.cz/luajit-2.0.git
+
+切换到2.1分支
+
+>git checkout v2.1
+
+在luajit目录下,创建make_ios.sh脚本, 内容如下:
+
+	#!/usr/bin/env bash
+	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+	LIPO="xcrun -sdk iphoneos lipo"
+	STRIP="xcrun -sdk iphoneos strip"
+	
+	IXCODE=`xcode-select -print-path`
+	ISDK=$IXCODE/Platforms/iPhoneOS.platform/Developer
+	ISDKVER=iPhoneOS8.1.sdk
+	ISDKP=$IXCODE/usr/bin/
+	
+	if [ ! -e $ISDKP/ar ]; then 
+	  sudo cp $ISDK/usr/bin/ar $ISDKP
+	fi
+	
+	if [ ! -e $ISDKP/ranlib ]; then
+	  sudo cp $ISDK/usr/bin/ranlib $ISDKP
+	fi
+	
+	if [ ! -e $ISDKP/strip ]; then
+	  sudo cp $ISDK/usr/bin/strip $ISDKP
+	fi
+	
+	make clean
+	ISDKF="-arch arm64 -isysroot $ISDK/SDKs/$ISDKVER"
+	make HOST_CC="gcc " CROSS="$ISDKP" TARGET_FLAGS="$ISDKF" TARGET=arm64 TARGET_SYS=iOS
+
+注意上面编译脚本采用iOS8.1 sdk
+
+将slua.c 复制进入luajit/src目录, 并修改src目录下 Makefile 文件, 在LJCORE_O = 段最后 加入 slua.o, 保存退出.
+
+然后在luajit目录运行
+
+>chmod +x make_ios.sh
+
+>./make_ios.sh
+
+这样便在src目录生成了libluajit.a库文件, 修改文件为libslua.a, 放入Assets/Plugins/iOS 目录即可.
+
