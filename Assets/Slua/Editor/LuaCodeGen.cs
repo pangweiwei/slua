@@ -215,6 +215,12 @@ public class LuaCodeGen : MonoBehaviour
         List<Type> exports = new List<Type>();
         string oldpath = path;
         path += "Custom/";
+
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+
         foreach (Type t in cust)
         {
             if (Generate(t))
