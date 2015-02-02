@@ -5,6 +5,7 @@ using SLua;
 using System;
 using LuaInterface;
 
+[CustomLuaClassAttribute]
 public class HelloWorld   {
 
 	static public void say() {
