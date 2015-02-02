@@ -47,6 +47,14 @@ slua支持手动导出任何自定义接口, 为此你仅需要将对应的类�
             // your custom class here
 		};
 
+在新版中, 可以通过给类增加[CustomLuaClassAttribute]属性来标记需要导出的类, 而不需要添加代码到上面的cust列表, 感谢@luzexi提交了这个便捷的功能, 例如:
+
+>     [CustomLuaClassAttribute]
+    public class Custom : MonoBehaviour {
+    ...
+    }
+
+
 在自定义的类中, 所有public 成员方法/静态方法/属性/数据成员都会导出.
 
 如果对应的类型中, 存在 public 的 代理的属性/数据成员, 会自动加入导出, 否则需要手动加入上面List, 否则可能在运行是找不到对应的接口报错, 例如:
