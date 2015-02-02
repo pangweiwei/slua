@@ -6,20 +6,16 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Random : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Random o;
-		if(matchType(l,1)){
-			o=new UnityEngine.Random();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.Random();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Range_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(float),typeof(float))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(float),typeof(float))){
 				System.Single a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -28,7 +24,7 @@ public class Lua_UnityEngine_Random : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(int),typeof(int))){
+			else if(matchType(l,argc,1,typeof(int),typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;

@@ -6,23 +6,18 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Quaternion : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Quaternion o;
-		if(matchType(l,1,typeof(float),typeof(float),typeof(float),typeof(float))){
-			System.Single a1;
-			checkType(l,1,out a1);
-			System.Single a2;
-			checkType(l,2,out a2);
-			System.Single a3;
-			checkType(l,3,out a3);
-			System.Single a4;
-			checkType(l,4,out a4);
-			o=new UnityEngine.Quaternion(a1,a2,a3,a4);
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		System.Single a1;
+		checkType(l,2,out a1);
+		System.Single a2;
+		checkType(l,3,out a2);
+		System.Single a3;
+		checkType(l,4,out a3);
+		System.Single a4;
+		checkType(l,5,out a4);
+		o=new UnityEngine.Quaternion(a1,a2,a3,a4);
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Set(IntPtr l) {
@@ -82,7 +77,8 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetLookRotation(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Vector3))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.Quaternion self=(UnityEngine.Quaternion)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -90,7 +86,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 				setBack(l,self);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3))){
+			else if(argc==2){
 				UnityEngine.Quaternion self=(UnityEngine.Quaternion)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -159,7 +155,8 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LookRotation_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -168,7 +165,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Vector3))){
+			else if(argc==1){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Quaternion ret=UnityEngine.Quaternion.LookRotation(a1);
@@ -270,7 +267,8 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Euler_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(float),typeof(float),typeof(float))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==3){
 				System.Single a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -281,7 +279,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Vector3))){
+			else if(argc==1){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Quaternion ret=UnityEngine.Quaternion.Euler(a1);
@@ -299,7 +297,8 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int op_Multiply(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Quaternion),typeof(UnityEngine.Quaternion))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(UnityEngine.Quaternion),typeof(UnityEngine.Quaternion))){
 				UnityEngine.Quaternion a1;
 				checkType(l,1,out a1);
 				UnityEngine.Quaternion a2;
@@ -308,7 +307,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Quaternion),typeof(UnityEngine.Vector3))){
+			else if(matchType(l,argc,1,typeof(UnityEngine.Quaternion),typeof(UnityEngine.Vector3))){
 				UnityEngine.Quaternion a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;

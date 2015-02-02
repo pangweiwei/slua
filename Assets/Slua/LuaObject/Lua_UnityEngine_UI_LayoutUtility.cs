@@ -144,6 +144,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetLayoutProperty_s(IntPtr l) {
 		try{
+			int argc = LuaDLL.lua_gettop(l);
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}

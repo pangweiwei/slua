@@ -6,32 +6,32 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_SparseTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
+		int argc = LuaDLL.lua_gettop(l);
 		UnityEngine.SparseTexture o;
-		if(matchType(l,1,typeof(int),typeof(int),typeof(UnityEngine.TextureFormat),typeof(int))){
+		if(argc==5){
 			System.Int32 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Int32 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			UnityEngine.TextureFormat a3;
-			checkEnum(l,3,out a3);
+			checkEnum(l,4,out a3);
 			System.Int32 a4;
-			checkType(l,4,out a4);
+			checkType(l,5,out a4);
 			o=new UnityEngine.SparseTexture(a1,a2,a3,a4);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(int),typeof(int),typeof(UnityEngine.TextureFormat),typeof(int),typeof(bool))){
+		else if(argc==6){
 			System.Int32 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Int32 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			UnityEngine.TextureFormat a3;
-			checkEnum(l,3,out a3);
+			checkEnum(l,4,out a3);
 			System.Int32 a4;
-			checkType(l,4,out a4);
+			checkType(l,5,out a4);
 			System.Boolean a5;
-			checkType(l,5,out a5);
+			checkType(l,6,out a5);
 			o=new UnityEngine.SparseTexture(a1,a2,a3,a4,a5);
 			pushObject(l,o);
 			return 1;

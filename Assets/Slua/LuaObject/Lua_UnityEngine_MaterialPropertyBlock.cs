@@ -6,20 +6,16 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.MaterialPropertyBlock o;
-		if(matchType(l,1)){
-			o=new UnityEngine.MaterialPropertyBlock();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.MaterialPropertyBlock();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddFloat(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(string),typeof(float))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(string),typeof(float))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -28,7 +24,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				self.AddFloat(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(int),typeof(float))){
+			else if(matchType(l,argc,2,typeof(int),typeof(float))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -48,7 +44,8 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddVector(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(string),typeof(UnityEngine.Vector4))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(string),typeof(UnityEngine.Vector4))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -57,7 +54,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				self.AddVector(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(int),typeof(UnityEngine.Vector4))){
+			else if(matchType(l,argc,2,typeof(int),typeof(UnityEngine.Vector4))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -77,7 +74,8 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddColor(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(string),typeof(UnityEngine.Color))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(string),typeof(UnityEngine.Color))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -86,7 +84,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				self.AddColor(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(int),typeof(UnityEngine.Color))){
+			else if(matchType(l,argc,2,typeof(int),typeof(UnityEngine.Color))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -106,7 +104,8 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddMatrix(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(string),typeof(UnityEngine.Matrix4x4))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(string),typeof(UnityEngine.Matrix4x4))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -115,7 +114,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				self.AddMatrix(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(int),typeof(UnityEngine.Matrix4x4))){
+			else if(matchType(l,argc,2,typeof(int),typeof(UnityEngine.Matrix4x4))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -135,7 +134,8 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddTexture(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(string),typeof(UnityEngine.Texture))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(string),typeof(UnityEngine.Texture))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -144,7 +144,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				self.AddTexture(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(int),typeof(UnityEngine.Texture))){
+			else if(matchType(l,argc,2,typeof(int),typeof(UnityEngine.Texture))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -164,7 +164,8 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetFloat(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(string))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(string))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -172,7 +173,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(int))){
+			else if(matchType(l,argc,2,typeof(int))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -191,7 +192,8 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetVector(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(string))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(string))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -199,7 +201,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(int))){
+			else if(matchType(l,argc,2,typeof(int))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -218,7 +220,8 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetMatrix(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(string))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(string))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -226,7 +229,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(int))){
+			else if(matchType(l,argc,2,typeof(int))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -245,7 +248,8 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetTexture(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(string))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(string))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -253,7 +257,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(int))){
+			else if(matchType(l,argc,2,typeof(int))){
 				UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);

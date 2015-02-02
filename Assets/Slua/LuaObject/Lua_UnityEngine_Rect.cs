@@ -6,24 +6,24 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Rect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
+		int argc = LuaDLL.lua_gettop(l);
 		UnityEngine.Rect o;
-		if(matchType(l,1,typeof(float),typeof(float),typeof(float),typeof(float))){
+		if(argc==5){
 			System.Single a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Single a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			System.Single a3;
-			checkType(l,3,out a3);
+			checkType(l,4,out a3);
 			System.Single a4;
-			checkType(l,4,out a4);
+			checkType(l,5,out a4);
 			o=new UnityEngine.Rect(a1,a2,a3,a4);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(UnityEngine.Rect))){
+		else if(argc==2){
 			UnityEngine.Rect a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			o=new UnityEngine.Rect(a1);
 			pushObject(l,o);
 			return 1;
@@ -55,7 +55,8 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Contains(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Vector2))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(UnityEngine.Vector2))){
 				UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
 				UnityEngine.Vector2 a1;
 				checkType(l,2,out a1);
@@ -63,7 +64,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.Vector3))){
 				UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -71,7 +72,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(bool))){
+			else if(argc==2){
 				UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -92,7 +93,8 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Overlaps(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Rect))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
 				UnityEngine.Rect a1;
 				checkType(l,2,out a1);
@@ -100,7 +102,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Rect),typeof(bool))){
+			else if(argc==2){
 				UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
 				UnityEngine.Rect a1;
 				checkType(l,2,out a1);

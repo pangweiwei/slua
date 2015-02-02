@@ -6,33 +6,33 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Plane : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
+		int argc = LuaDLL.lua_gettop(l);
 		UnityEngine.Plane o;
-		if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3))){
+		if(matchType(l,argc,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3))){
 			UnityEngine.Vector3 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			UnityEngine.Vector3 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			o=new UnityEngine.Plane(a1,a2);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(float))){
+		else if(matchType(l,argc,2,typeof(UnityEngine.Vector3),typeof(float))){
 			UnityEngine.Vector3 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Single a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			o=new UnityEngine.Plane(a1,a2);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3))){
+		else if(argc==4){
 			UnityEngine.Vector3 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			UnityEngine.Vector3 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			UnityEngine.Vector3 a3;
-			checkType(l,3,out a3);
+			checkType(l,4,out a3);
 			o=new UnityEngine.Plane(a1,a2,a3);
 			pushObject(l,o);
 			return 1;

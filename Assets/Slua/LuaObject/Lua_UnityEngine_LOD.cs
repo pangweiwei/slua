@@ -6,19 +6,14 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_LOD : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.LOD o;
-		if(matchType(l,1,typeof(float),typeof(UnityEngine.Renderer[]))){
-			System.Single a1;
-			checkType(l,1,out a1);
-			UnityEngine.Renderer[] a2;
-			checkType(l,2,out a2);
-			o=new UnityEngine.LOD(a1,a2);
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		System.Single a1;
+		checkType(l,2,out a1);
+		UnityEngine.Renderer[] a2;
+		checkType(l,3,out a2);
+		o=new UnityEngine.LOD(a1,a2);
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_screenRelativeTransitionHeight(IntPtr l) {

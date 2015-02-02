@@ -6,19 +6,14 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_MatchTargetWeightMask : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.MatchTargetWeightMask o;
-		if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(float))){
-			UnityEngine.Vector3 a1;
-			checkType(l,1,out a1);
-			System.Single a2;
-			checkType(l,2,out a2);
-			o=new UnityEngine.MatchTargetWeightMask(a1,a2);
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		UnityEngine.Vector3 a1;
+		checkType(l,2,out a1);
+		System.Single a2;
+		checkType(l,3,out a2);
+		o=new UnityEngine.MatchTargetWeightMask(a1,a2);
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_positionXYZWeight(IntPtr l) {

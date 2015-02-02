@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Profiler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Profiler o;
-		if(matchType(l,1)){
-			o=new UnityEngine.Profiler();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.Profiler();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddFramesFromFile_s(IntPtr l) {
@@ -32,13 +27,14 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int BeginSample_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(string))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Profiler.BeginSample(a1);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(string),typeof(UnityEngine.Object))){
+			else if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object a2;

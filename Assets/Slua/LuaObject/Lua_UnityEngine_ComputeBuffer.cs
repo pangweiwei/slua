@@ -6,24 +6,24 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_ComputeBuffer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
+		int argc = LuaDLL.lua_gettop(l);
 		UnityEngine.ComputeBuffer o;
-		if(matchType(l,1,typeof(int),typeof(int))){
+		if(argc==3){
 			System.Int32 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Int32 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			o=new UnityEngine.ComputeBuffer(a1,a2);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(int),typeof(int),typeof(UnityEngine.ComputeBufferType))){
+		else if(argc==4){
 			System.Int32 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Int32 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			UnityEngine.ComputeBufferType a3;
-			checkEnum(l,3,out a3);
+			checkEnum(l,4,out a3);
 			o=new UnityEngine.ComputeBuffer(a1,a2,a3);
 			pushObject(l,o);
 			return 1;

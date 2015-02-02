@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_PolygonCollider2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.PolygonCollider2D o;
-		if(matchType(l,1)){
-			o=new UnityEngine.PolygonCollider2D();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.PolygonCollider2D();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetPath(IntPtr l) {
@@ -63,7 +58,8 @@ public class Lua_UnityEngine_PolygonCollider2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CreatePrimitive(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(int),typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==3){
 				UnityEngine.PolygonCollider2D self=(UnityEngine.PolygonCollider2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -74,7 +70,7 @@ public class Lua_UnityEngine_PolygonCollider2D : LuaObject {
 				self.CreatePrimitive(a1,a2,a3);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(int),typeof(UnityEngine.Vector2))){
+			else if(argc==2){
 				UnityEngine.PolygonCollider2D self=(UnityEngine.PolygonCollider2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -83,7 +79,7 @@ public class Lua_UnityEngine_PolygonCollider2D : LuaObject {
 				self.CreatePrimitive(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(int))){
+			else if(argc==1){
 				UnityEngine.PolygonCollider2D self=(UnityEngine.PolygonCollider2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);

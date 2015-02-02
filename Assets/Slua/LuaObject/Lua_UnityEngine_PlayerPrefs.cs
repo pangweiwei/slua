@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.PlayerPrefs o;
-		if(matchType(l,1)){
-			o=new UnityEngine.PlayerPrefs();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.PlayerPrefs();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetInt_s(IntPtr l) {
@@ -34,7 +29,8 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetInt_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(string),typeof(int))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -43,7 +39,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(string))){
+			else if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 ret=UnityEngine.PlayerPrefs.GetInt(a1);
@@ -76,7 +72,8 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetFloat_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(string),typeof(float))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -85,7 +82,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(string))){
+			else if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Single ret=UnityEngine.PlayerPrefs.GetFloat(a1);
@@ -118,7 +115,8 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetString_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(string),typeof(string))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String a2;
@@ -127,7 +125,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(string))){
+			else if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String ret=UnityEngine.PlayerPrefs.GetString(a1);

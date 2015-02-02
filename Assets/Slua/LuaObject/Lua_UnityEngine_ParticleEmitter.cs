@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.ParticleEmitter o;
-		if(matchType(l,1)){
-			o=new UnityEngine.ParticleEmitter();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.ParticleEmitter();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ClearParticles(IntPtr l) {
@@ -31,19 +26,20 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Emit(IntPtr l) {
 		try{
-			if(matchType(l,2)){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==0){
 				UnityEngine.ParticleEmitter self=(UnityEngine.ParticleEmitter)checkSelf(l);
 				self.Emit();
 				return 0;
 			}
-			else if(matchType(l,2,typeof(int))){
+			else if(argc==1){
 				UnityEngine.ParticleEmitter self=(UnityEngine.ParticleEmitter)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
 				self.Emit(a1);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float),typeof(float),typeof(UnityEngine.Color))){
+			else if(argc==5){
 				UnityEngine.ParticleEmitter self=(UnityEngine.ParticleEmitter)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -58,7 +54,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 				self.Emit(a1,a2,a3,a4,a5);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float),typeof(float),typeof(UnityEngine.Color),typeof(float),typeof(float))){
+			else if(argc==7){
 				UnityEngine.ParticleEmitter self=(UnityEngine.ParticleEmitter)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);

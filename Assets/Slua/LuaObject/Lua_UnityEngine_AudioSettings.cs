@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_AudioSettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.AudioSettings o;
-		if(matchType(l,1)){
-			o=new UnityEngine.AudioSettings();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.AudioSettings();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetDSPBufferSize_s(IntPtr l) {

@@ -6,22 +6,22 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_RectOffset : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
+		int argc = LuaDLL.lua_gettop(l);
 		UnityEngine.RectOffset o;
-		if(matchType(l,1)){
+		if(argc==1){
 			o=new UnityEngine.RectOffset();
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(int))){
+		else if(argc==5){
 			System.Int32 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Int32 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			System.Int32 a3;
-			checkType(l,3,out a3);
+			checkType(l,4,out a3);
 			System.Int32 a4;
-			checkType(l,4,out a4);
+			checkType(l,5,out a4);
 			o=new UnityEngine.RectOffset(a1,a2,a3,a4);
 			pushObject(l,o);
 			return 1;

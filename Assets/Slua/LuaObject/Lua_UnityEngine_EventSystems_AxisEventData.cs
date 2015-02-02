@@ -6,17 +6,12 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_EventSystems_AxisEventData : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.EventSystems.AxisEventData o;
-		if(matchType(l,1,typeof(UnityEngine.EventSystems.EventSystem))){
-			UnityEngine.EventSystems.EventSystem a1;
-			checkType(l,1,out a1);
-			o=new UnityEngine.EventSystems.AxisEventData(a1);
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		UnityEngine.EventSystems.EventSystem a1;
+		checkType(l,2,out a1);
+		o=new UnityEngine.EventSystems.AxisEventData(a1);
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_moveVector(IntPtr l) {

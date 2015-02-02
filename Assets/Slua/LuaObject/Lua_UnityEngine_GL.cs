@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_GL : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.GL o;
-		if(matchType(l,1)){
-			o=new UnityEngine.GL();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.GL();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Vertex3_s(IntPtr l) {
@@ -193,11 +188,12 @@ public class Lua_UnityEngine_GL : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadPixelMatrix_s(IntPtr l) {
 		try{
-			if(matchType(l,1)){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==0){
 				UnityEngine.GL.LoadPixelMatrix();
 				return 0;
 			}
-			else if(matchType(l,1,typeof(float),typeof(float),typeof(float),typeof(float))){
+			else if(argc==4){
 				System.Single a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -321,7 +317,8 @@ public class Lua_UnityEngine_GL : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Clear_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(bool),typeof(bool),typeof(UnityEngine.Color))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==3){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -331,7 +328,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 				UnityEngine.GL.Clear(a1,a2,a3);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(bool),typeof(bool),typeof(UnityEngine.Color),typeof(float))){
+			else if(argc==4){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;

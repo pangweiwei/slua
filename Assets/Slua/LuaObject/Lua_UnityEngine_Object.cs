@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Object o;
-		if(matchType(l,1)){
-			o=new UnityEngine.Object();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.Object();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetInstanceID(IntPtr l) {
@@ -32,7 +27,8 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Instantiate_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Object),typeof(UnityEngine.Vector3),typeof(UnityEngine.Quaternion))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==3){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -43,7 +39,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Object))){
+			else if(argc==1){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object ret=UnityEngine.Object.Instantiate(a1);
@@ -61,7 +57,8 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Destroy_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Object),typeof(float))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -69,7 +66,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 				UnityEngine.Object.Destroy(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Object))){
+			else if(argc==1){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object.Destroy(a1);
@@ -86,7 +83,8 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int DestroyImmediate_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Object),typeof(bool))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -94,7 +92,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 				UnityEngine.Object.DestroyImmediate(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Object))){
+			else if(argc==1){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object.DestroyImmediate(a1);
@@ -152,7 +150,8 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int DestroyObject_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Object),typeof(float))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -160,7 +159,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 				UnityEngine.Object.DestroyObject(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Object))){
+			else if(argc==1){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object.DestroyObject(a1);

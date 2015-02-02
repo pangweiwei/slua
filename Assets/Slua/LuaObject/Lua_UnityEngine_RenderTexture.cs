@@ -6,43 +6,43 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
+		int argc = LuaDLL.lua_gettop(l);
 		UnityEngine.RenderTexture o;
-		if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite))){
+		if(argc==6){
 			System.Int32 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Int32 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			System.Int32 a3;
-			checkType(l,3,out a3);
+			checkType(l,4,out a3);
 			UnityEngine.RenderTextureFormat a4;
-			checkEnum(l,4,out a4);
+			checkEnum(l,5,out a4);
 			UnityEngine.RenderTextureReadWrite a5;
-			checkEnum(l,5,out a5);
+			checkEnum(l,6,out a5);
 			o=new UnityEngine.RenderTexture(a1,a2,a3,a4,a5);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(UnityEngine.RenderTextureFormat))){
+		else if(argc==5){
 			System.Int32 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Int32 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			System.Int32 a3;
-			checkType(l,3,out a3);
+			checkType(l,4,out a3);
 			UnityEngine.RenderTextureFormat a4;
-			checkEnum(l,4,out a4);
+			checkEnum(l,5,out a4);
 			o=new UnityEngine.RenderTexture(a1,a2,a3,a4);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(int),typeof(int),typeof(int))){
+		else if(argc==4){
 			System.Int32 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Int32 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			System.Int32 a3;
-			checkType(l,3,out a3);
+			checkType(l,4,out a3);
 			o=new UnityEngine.RenderTexture(a1,a2,a3);
 			pushObject(l,o);
 			return 1;
@@ -91,12 +91,13 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int DiscardContents(IntPtr l) {
 		try{
-			if(matchType(l,2)){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==0){
 				UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 				self.DiscardContents();
 				return 0;
 			}
-			else if(matchType(l,2,typeof(bool),typeof(bool))){
+			else if(argc==2){
 				UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -155,7 +156,8 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetTemporary_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite),typeof(int))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==6){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -172,7 +174,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(UnityEngine.RenderTextureFormat),typeof(UnityEngine.RenderTextureReadWrite))){
+			else if(argc==5){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -187,7 +189,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(int),typeof(int),typeof(int),typeof(UnityEngine.RenderTextureFormat))){
+			else if(argc==4){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -200,7 +202,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(int),typeof(int),typeof(int))){
+			else if(argc==3){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -211,7 +213,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(int),typeof(int))){
+			else if(argc==2){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;

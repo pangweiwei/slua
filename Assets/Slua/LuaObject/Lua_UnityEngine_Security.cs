@@ -6,20 +6,16 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Security : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Security o;
-		if(matchType(l,1)){
-			o=new UnityEngine.Security();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.Security();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadAndVerifyAssembly_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Byte[]),typeof(string))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				System.Byte[] a1;
 				checkType(l,1,out a1);
 				System.String a2;
@@ -28,7 +24,7 @@ public class Lua_UnityEngine_Security : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.Byte[]))){
+			else if(argc==1){
 				System.Byte[] a1;
 				checkType(l,1,out a1);
 				System.Reflection.Assembly ret=UnityEngine.Security.LoadAndVerifyAssembly(a1);
@@ -46,7 +42,8 @@ public class Lua_UnityEngine_Security : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int PrefetchSocketPolicy_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(string),typeof(int))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -55,7 +52,7 @@ public class Lua_UnityEngine_Security : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(string),typeof(int),typeof(int))){
+			else if(argc==3){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;

@@ -6,24 +6,24 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Vector3 : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
+		int argc = LuaDLL.lua_gettop(l);
 		UnityEngine.Vector3 o;
-		if(matchType(l,1,typeof(float),typeof(float),typeof(float))){
+		if(argc==4){
 			System.Single a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Single a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			System.Single a3;
-			checkType(l,3,out a3);
+			checkType(l,4,out a3);
 			o=new UnityEngine.Vector3(a1,a2,a3);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(float),typeof(float))){
+		else if(argc==3){
 			System.Single a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Single a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			o=new UnityEngine.Vector3(a1,a2);
 			pushObject(l,o);
 			return 1;
@@ -117,7 +117,8 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OrthoNormalize_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -127,7 +128,7 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 				pushValue(l,a2);
 				return 2;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3))){
+			else if(argc==3){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -189,7 +190,8 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SmoothDamp_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float),typeof(float))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==5){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -205,7 +207,7 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 				pushValue(l,a3);
 				return 2;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float))){
+			else if(argc==4){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -219,7 +221,7 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 				pushValue(l,a3);
 				return 2;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float),typeof(float),typeof(float))){
+			else if(argc==6){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -512,7 +514,8 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int op_Multiply(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Vector3),typeof(float))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(float))){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -521,7 +524,7 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(float),typeof(UnityEngine.Vector3))){
+			else if(matchType(l,argc,1,typeof(float),typeof(UnityEngine.Vector3))){
 				System.Single a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;

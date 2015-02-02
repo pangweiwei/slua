@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.NavMeshAgent o;
-		if(matchType(l,1)){
-			o=new UnityEngine.NavMeshAgent();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.NavMeshAgent();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetDestination(IntPtr l) {
@@ -89,14 +84,15 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Stop(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(bool))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.NavMeshAgent self=(UnityEngine.NavMeshAgent)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
 				self.Stop(a1);
 				return 0;
 			}
-			else if(matchType(l,2)){
+			else if(argc==0){
 				UnityEngine.NavMeshAgent self=(UnityEngine.NavMeshAgent)checkSelf(l);
 				self.Stop();
 				return 0;

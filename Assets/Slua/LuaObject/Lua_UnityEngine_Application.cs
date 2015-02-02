@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Application o;
-		if(matchType(l,1)){
-			o=new UnityEngine.Application();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.Application();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Quit_s(IntPtr l) {
@@ -41,13 +36,14 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadLevel_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(int))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Application.LoadLevel(a1);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(string))){
+			else if(matchType(l,argc,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Application.LoadLevel(a1);
@@ -64,14 +60,15 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadLevelAsync_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(int))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.AsyncOperation ret=UnityEngine.Application.LoadLevelAsync(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(string))){
+			else if(matchType(l,argc,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.AsyncOperation ret=UnityEngine.Application.LoadLevelAsync(a1);
@@ -89,14 +86,15 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadLevelAdditiveAsync_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(int))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.AsyncOperation ret=UnityEngine.Application.LoadLevelAdditiveAsync(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(string))){
+			else if(matchType(l,argc,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.AsyncOperation ret=UnityEngine.Application.LoadLevelAdditiveAsync(a1);
@@ -114,13 +112,14 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadLevelAdditive_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(int))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Application.LoadLevelAdditive(a1);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(string))){
+			else if(matchType(l,argc,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Application.LoadLevelAdditive(a1);
@@ -137,14 +136,15 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetStreamProgressForLevel_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(int))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Single ret=UnityEngine.Application.GetStreamProgressForLevel(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(string))){
+			else if(matchType(l,argc,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Single ret=UnityEngine.Application.GetStreamProgressForLevel(a1);
@@ -162,14 +162,15 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CanStreamedLevelBeLoaded_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(int))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(int))){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Boolean ret=UnityEngine.Application.CanStreamedLevelBeLoaded(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(string))){
+			else if(matchType(l,argc,1,typeof(string))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Boolean ret=UnityEngine.Application.CanStreamedLevelBeLoaded(a1);
@@ -187,7 +188,8 @@ public class Lua_UnityEngine_Application : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CaptureScreenshot_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(string),typeof(int))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -195,7 +197,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 				UnityEngine.Application.CaptureScreenshot(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(string))){
+			else if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Application.CaptureScreenshot(a1);

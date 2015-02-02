@@ -448,9 +448,9 @@ return index
             return true;
         }
 
-        public static bool matchType(IntPtr l, int from, params Type[] types)
+        public static bool matchType(IntPtr l, int total, int from, params Type[] types)
         {
-            if (LuaDLL.lua_gettop(l) - from + 1 != types.Length)
+            if (total - from + 1 != types.Length)
                 return false;
 
             for (int n = 0; n < types.Length; n++)

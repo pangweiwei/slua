@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_HelloWorld : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		HelloWorld o;
-		if(matchType(l,1)){
-			o=new HelloWorld();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new HelloWorld();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int foo(IntPtr l) {
@@ -93,13 +88,14 @@ public class Lua_HelloWorld : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ofunc_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Type))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(System.Type))){
 				System.Type a1;
 				checkType(l,1,out a1);
 				HelloWorld.ofunc(a1);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.GameObject))){
+			else if(matchType(l,argc,1,typeof(UnityEngine.GameObject))){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				HelloWorld.ofunc(a1);

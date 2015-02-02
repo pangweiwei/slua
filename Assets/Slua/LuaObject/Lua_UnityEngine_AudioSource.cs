@@ -6,27 +6,23 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.AudioSource o;
-		if(matchType(l,1)){
-			o=new UnityEngine.AudioSource();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.AudioSource();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Play(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.UInt64))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
 				System.UInt64 a1;
 				checkType(l,2,out a1);
 				self.Play(a1);
 				return 0;
 			}
-			else if(matchType(l,2)){
+			else if(argc==0){
 				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
 				self.Play();
 				return 0;
@@ -122,7 +118,8 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int PlayOneShot(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.AudioClip),typeof(float))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
 				UnityEngine.AudioClip a1;
 				checkType(l,2,out a1);
@@ -131,7 +128,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 				self.PlayOneShot(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.AudioClip))){
+			else if(argc==1){
 				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
 				UnityEngine.AudioClip a1;
 				checkType(l,2,out a1);
@@ -183,7 +180,8 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int PlayClipAtPoint_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.AudioClip),typeof(UnityEngine.Vector3))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				UnityEngine.AudioClip a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -191,7 +189,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 				UnityEngine.AudioSource.PlayClipAtPoint(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.AudioClip),typeof(UnityEngine.Vector3),typeof(float))){
+			else if(argc==3){
 				UnityEngine.AudioClip a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;

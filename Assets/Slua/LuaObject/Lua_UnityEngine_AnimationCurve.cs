@@ -6,16 +6,16 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
+		int argc = LuaDLL.lua_gettop(l);
 		UnityEngine.AnimationCurve o;
-		if(matchType(l,1,typeof(UnityEngine.Keyframe[]))){
+		if(argc==2){
 			UnityEngine.Keyframe[] a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			o=new UnityEngine.AnimationCurve(a1);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1)){
+		else if(argc==1){
 			o=new UnityEngine.AnimationCurve();
 			pushObject(l,o);
 			return 1;
@@ -41,7 +41,8 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddKey(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(float),typeof(float))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				UnityEngine.AnimationCurve self=(UnityEngine.AnimationCurve)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -51,7 +52,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Keyframe))){
+			else if(argc==1){
 				UnityEngine.AnimationCurve self=(UnityEngine.AnimationCurve)checkSelf(l);
 				UnityEngine.Keyframe a1;
 				checkType(l,2,out a1);

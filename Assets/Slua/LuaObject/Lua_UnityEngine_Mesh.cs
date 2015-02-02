@@ -6,27 +6,23 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Mesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Mesh o;
-		if(matchType(l,1)){
-			o=new UnityEngine.Mesh();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.Mesh();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Clear(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(bool))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
 				self.Clear(a1);
 				return 0;
 			}
-			else if(matchType(l,2)){
+			else if(argc==0){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				self.Clear();
 				return 0;
@@ -157,7 +153,8 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CombineMeshes(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.CombineInstance[]),typeof(bool),typeof(bool))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==3){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				UnityEngine.CombineInstance[] a1;
 				checkType(l,2,out a1);
@@ -168,7 +165,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 				self.CombineMeshes(a1,a2,a3);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.CombineInstance[]),typeof(bool))){
+			else if(argc==2){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				UnityEngine.CombineInstance[] a1;
 				checkType(l,2,out a1);
@@ -177,7 +174,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 				self.CombineMeshes(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.CombineInstance[]))){
+			else if(argc==1){
 				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 				UnityEngine.CombineInstance[] a1;
 				checkType(l,2,out a1);

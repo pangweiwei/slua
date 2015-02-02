@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Resources : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Resources o;
-		if(matchType(l,1)){
-			o=new UnityEngine.Resources();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.Resources();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindObjectsOfTypeAll_s(IntPtr l) {
@@ -33,14 +28,15 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Load_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(string))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object ret=UnityEngine.Resources.Load(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(string),typeof(System.Type))){
+			else if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Type a2;
@@ -60,14 +56,15 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadAsync_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(string))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.ResourceRequest ret=UnityEngine.Resources.LoadAsync(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(string),typeof(System.Type))){
+			else if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Type a2;
@@ -87,7 +84,8 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadAll_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(string),typeof(System.Type))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Type a2;
@@ -96,7 +94,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(string))){
+			else if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object[] ret=UnityEngine.Resources.LoadAll(a1);

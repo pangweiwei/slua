@@ -12,14 +12,15 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetParent(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Transform))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);
 				self.SetParent(a1);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Transform),typeof(bool))){
+			else if(argc==2){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);
@@ -39,14 +40,15 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Translate(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Vector3))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
 				self.Translate(a1);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Space))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Space))){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -55,7 +57,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				self.Translate(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(float),typeof(float),typeof(float))){
+			else if(argc==3){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -66,7 +68,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				self.Translate(a1,a2,a3);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(float),typeof(float),typeof(float),typeof(UnityEngine.Space))){
+			else if(matchType(l,argc,2,typeof(float),typeof(float),typeof(float),typeof(UnityEngine.Space))){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -79,7 +81,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				self.Translate(a1,a2,a3,a4);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Transform))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Transform))){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -88,7 +90,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				self.Translate(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(float),typeof(float),typeof(float),typeof(UnityEngine.Transform))){
+			else if(matchType(l,argc,2,typeof(float),typeof(float),typeof(float),typeof(UnityEngine.Transform))){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -112,14 +114,15 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Rotate(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Vector3))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
 				self.Rotate(a1);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Space))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Space))){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -128,7 +131,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				self.Rotate(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(float),typeof(float),typeof(float))){
+			else if(matchType(l,argc,2,typeof(float),typeof(float),typeof(float))){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -139,7 +142,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				self.Rotate(a1,a2,a3);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(float),typeof(float),typeof(float),typeof(UnityEngine.Space))){
+			else if(argc==4){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -152,7 +155,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				self.Rotate(a1,a2,a3,a4);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(float))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.Vector3),typeof(float))){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -161,7 +164,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				self.Rotate(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Space))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Space))){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -201,14 +204,15 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LookAt(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Transform))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(UnityEngine.Transform))){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);
 				self.LookAt(a1);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Transform),typeof(UnityEngine.Vector3))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.Transform),typeof(UnityEngine.Vector3))){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);
@@ -217,7 +221,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				self.LookAt(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3))){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -226,7 +230,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				self.LookAt(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Vector3))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.Vector3))){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -244,7 +248,8 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int TransformDirection(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Vector3))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -252,7 +257,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(float),typeof(float),typeof(float))){
+			else if(argc==3){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -275,7 +280,8 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int InverseTransformDirection(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Vector3))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -283,7 +289,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(float),typeof(float),typeof(float))){
+			else if(argc==3){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -306,7 +312,8 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int TransformVector(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Vector3))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -314,7 +321,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(float),typeof(float),typeof(float))){
+			else if(argc==3){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -337,7 +344,8 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int InverseTransformVector(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Vector3))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -345,7 +353,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(float),typeof(float),typeof(float))){
+			else if(argc==3){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -368,7 +376,8 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int TransformPoint(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Vector3))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -376,7 +385,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(float),typeof(float),typeof(float))){
+			else if(argc==3){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -399,7 +408,8 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int InverseTransformPoint(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Vector3))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -407,7 +417,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(float),typeof(float),typeof(float))){
+			else if(argc==3){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);

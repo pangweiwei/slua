@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.MonoBehaviour o;
-		if(matchType(l,1)){
-			o=new UnityEngine.MonoBehaviour();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.MonoBehaviour();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Invoke(IntPtr l) {
@@ -53,12 +48,13 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CancelInvoke(IntPtr l) {
 		try{
-			if(matchType(l,2)){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==0){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				self.CancelInvoke();
 				return 0;
 			}
-			else if(matchType(l,2,typeof(string))){
+			else if(argc==1){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -76,7 +72,8 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsInvoking(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(string))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -84,7 +81,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2)){
+			else if(argc==0){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.Boolean ret=self.IsInvoking();
 				pushValue(l,ret);
@@ -101,7 +98,8 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int StartCoroutine(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Collections.IEnumerator))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(System.Collections.IEnumerator))){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.Collections.IEnumerator a1;
 				checkType(l,2,out a1);
@@ -109,7 +107,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(string),typeof(System.Object))){
+			else if(argc==2){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -119,7 +117,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(string))){
+			else if(matchType(l,argc,2,typeof(string))){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -153,21 +151,22 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int StopCoroutine(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(string))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(string))){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				self.StopCoroutine(a1);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Collections.IEnumerator))){
+			else if(matchType(l,argc,2,typeof(System.Collections.IEnumerator))){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.Collections.IEnumerator a1;
 				checkType(l,2,out a1);
 				self.StopCoroutine(a1);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Coroutine))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.Coroutine))){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				UnityEngine.Coroutine a1;
 				checkType(l,2,out a1);

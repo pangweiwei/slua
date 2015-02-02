@@ -6,60 +6,60 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
+		int argc = LuaDLL.lua_gettop(l);
 		UnityEngine.WebCamTexture o;
-		if(matchType(l,1,typeof(string),typeof(int),typeof(int),typeof(int))){
+		if(argc==5){
 			System.String a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Int32 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			System.Int32 a3;
-			checkType(l,3,out a3);
+			checkType(l,4,out a3);
 			System.Int32 a4;
-			checkType(l,4,out a4);
+			checkType(l,5,out a4);
 			o=new UnityEngine.WebCamTexture(a1,a2,a3,a4);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(string),typeof(int),typeof(int))){
+		else if(matchType(l,argc,2,typeof(string),typeof(int),typeof(int))){
 			System.String a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Int32 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			System.Int32 a3;
-			checkType(l,3,out a3);
+			checkType(l,4,out a3);
 			o=new UnityEngine.WebCamTexture(a1,a2,a3);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(string))){
+		else if(argc==2){
 			System.String a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			o=new UnityEngine.WebCamTexture(a1);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(int),typeof(int),typeof(int))){
+		else if(matchType(l,argc,2,typeof(int),typeof(int),typeof(int))){
 			System.Int32 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Int32 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			System.Int32 a3;
-			checkType(l,3,out a3);
+			checkType(l,4,out a3);
 			o=new UnityEngine.WebCamTexture(a1,a2,a3);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(int),typeof(int))){
+		else if(argc==3){
 			System.Int32 a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			System.Int32 a2;
-			checkType(l,2,out a2);
+			checkType(l,3,out a2);
 			o=new UnityEngine.WebCamTexture(a1,a2);
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1)){
+		else if(argc==1){
 			o=new UnityEngine.WebCamTexture();
 			pushObject(l,o);
 			return 1;
@@ -123,13 +123,14 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetPixels(IntPtr l) {
 		try{
-			if(matchType(l,2)){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==0){
 				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				UnityEngine.Color[] ret=self.GetPixels();
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(int),typeof(int),typeof(int),typeof(int))){
+			else if(argc==4){
 				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -154,7 +155,8 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetPixels32(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Color32[]))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				UnityEngine.Color32[] a1;
 				checkType(l,2,out a1);
@@ -162,7 +164,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2)){
+			else if(argc==0){
 				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				UnityEngine.Color32[] ret=self.GetPixels32();
 				pushValue(l,ret);

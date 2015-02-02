@@ -6,16 +6,16 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
+		int argc = LuaDLL.lua_gettop(l);
 		UnityEngine.PhysicMaterial o;
-		if(matchType(l,1)){
+		if(argc==1){
 			o=new UnityEngine.PhysicMaterial();
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(string))){
+		else if(argc==2){
 			System.String a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			o=new UnityEngine.PhysicMaterial(a1);
 			pushObject(l,o);
 			return 1;

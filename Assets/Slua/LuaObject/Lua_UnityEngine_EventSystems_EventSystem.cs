@@ -24,7 +24,8 @@ public class Lua_UnityEngine_EventSystems_EventSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetSelectedGameObject(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.GameObject),typeof(UnityEngine.EventSystems.BaseEventData))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				UnityEngine.EventSystems.EventSystem self=(UnityEngine.EventSystems.EventSystem)checkSelf(l);
 				UnityEngine.GameObject a1;
 				checkType(l,2,out a1);
@@ -33,7 +34,7 @@ public class Lua_UnityEngine_EventSystems_EventSystem : LuaObject {
 				self.SetSelectedGameObject(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.GameObject))){
+			else if(argc==1){
 				UnityEngine.EventSystems.EventSystem self=(UnityEngine.EventSystems.EventSystem)checkSelf(l);
 				UnityEngine.GameObject a1;
 				checkType(l,2,out a1);
@@ -67,13 +68,14 @@ public class Lua_UnityEngine_EventSystems_EventSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsPointerOverGameObject(IntPtr l) {
 		try{
-			if(matchType(l,2)){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==0){
 				UnityEngine.EventSystems.EventSystem self=(UnityEngine.EventSystems.EventSystem)checkSelf(l);
 				System.Boolean ret=self.IsPointerOverGameObject();
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(int))){
+			else if(argc==1){
 				UnityEngine.EventSystems.EventSystem self=(UnityEngine.EventSystems.EventSystem)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);

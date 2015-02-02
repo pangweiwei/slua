@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.CanvasRenderer o;
-		if(matchType(l,1)){
-			o=new UnityEngine.CanvasRenderer();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.CanvasRenderer();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetColor(IntPtr l) {
@@ -102,7 +97,8 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetVertices(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.UIVertex[]),typeof(int))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 				UnityEngine.UIVertex[] a1;
 				checkType(l,2,out a1);
