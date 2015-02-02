@@ -124,7 +124,7 @@ namespace SLua
             }
 
             
-            if (LuaDLL.lua_pcall(l, 0, LuaDLL.LUA_MULTRET, error) != 0)
+            if (LuaDLL.lua_pcall(l, 0, 0, error) != 0)
             {
                 LuaDLL.lua_pop(l, 1);
             }
@@ -133,10 +133,12 @@ namespace SLua
         }
 
 
-        public void call(params object[] args)
+        public object call(params object[] args)
         {
             LuaDLL.lua_pushstdcallcfunction(l, LuaState.errorReport);
             int error = LuaDLL.lua_gettop(l);
+            if (error != 1)
+                Debug.Log("Some function push more value to lua stack");
 
             LuaDLL.lua_getref(l, valueref);
             if (!LuaDLL.lua_isfunction(l, -1))
@@ -155,7 +157,28 @@ namespace SLua
                 LuaDLL.lua_pop(l, 1);
             }
 
-            LuaDLL.lua_pop(l, 1); // pop error function
+            LuaDLL.lua_remove(l, error); // pop error function
+
+            int top = LuaDLL.lua_gettop(l);
+            if (top == 0)
+                return null;
+            else if (top == 1)
+            {
+                object o = LuaObject.checkVar(l, 1);
+                LuaDLL.lua_pop(l, 1);
+                return o;
+            }
+            else
+            {
+                object[] o = new object[top];
+                for (int n = 1; n <= top; n++)
+                {
+                    o[n - 1] = LuaObject.checkVar(l, n);
+                    
+                }
+                LuaDLL.lua_pop(l, top);
+                return o;
+            }
         }
         
     }
@@ -356,6 +379,7 @@ namespace SLua
                 {
                     LuaDLL.lua_pop(L, 1);
                 }
+                LuaDLL.lua_pop(L, 1); // pop error function
             }
             else
             {
@@ -421,6 +445,7 @@ namespace SLua
                 LuaDLL.lua_pushstring(L, remainingPath[i]);
                 LuaDLL.lua_gettable(L, -2);
                 returnValue = this.getObject(L, -1);
+                LuaDLL.lua_pop(L, 1);
                 if (returnValue == null) break;
             }
             return returnValue;

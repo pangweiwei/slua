@@ -739,8 +739,8 @@ return index
                 }
                 return true;
             }
-            pars = null;
-            return false;
+            pars = new object[0];
+            return true;
         }
 
         static internal bool checkParams(IntPtr l, int p, out float[] pars)
@@ -755,8 +755,8 @@ return index
                 }
                 return true;
             }
-            pars = null;
-            return false;
+            pars = new float[0];
+            return true;
         }
 
         static internal bool checkParams(IntPtr l, int p, out int[] pars)
@@ -771,8 +771,8 @@ return index
                 }
                 return true;
             }
-            pars = null;
-            return false;
+            pars = new int[0];
+            return true;
         }
 
         static internal bool checkParams(IntPtr l, int p, out Vector2[] pars)
@@ -787,8 +787,8 @@ return index
                 }
                 return true;
             }
-            pars = null;
-            return false;
+            pars = new Vector2[0];
+            return true;
         }
 
         static internal bool checkParams(IntPtr l, int p, out string[] pars)
@@ -803,8 +803,8 @@ return index
                 }
                 return true;
             }
-            pars = null;
-            return false;
+            pars = new string[0];
+            return true;
         }
 
 		static internal object checkVar(IntPtr l,int p) {

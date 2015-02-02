@@ -60,4 +60,9 @@ function main()
 	HelloWorld.func6("aa",1,2)
 	HelloWorld.func6("aa",1,2,3,"bb")
 	HelloWorld.func6("aa",1,2,3,"bb",true,false)
+	HelloWorld.func6("aa")
+end
+
+function foo(a,b,c)
+	return a,b,c,"slua"
 end
