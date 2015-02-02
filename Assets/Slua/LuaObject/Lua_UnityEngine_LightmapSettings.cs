@@ -30,7 +30,7 @@ public class Lua_UnityEngine_LightmapSettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_lightmapsMode(IntPtr l) {
-		pushValue(l,UnityEngine.LightmapSettings.lightmapsMode);
+		pushEnum(l,(int)UnityEngine.LightmapSettings.lightmapsMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -42,7 +42,7 @@ public class Lua_UnityEngine_LightmapSettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_bakedColorSpace(IntPtr l) {
-		pushValue(l,UnityEngine.LightmapSettings.bakedColorSpace);
+		pushEnum(l,(int)UnityEngine.LightmapSettings.bakedColorSpace);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

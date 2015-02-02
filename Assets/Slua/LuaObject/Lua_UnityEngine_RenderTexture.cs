@@ -320,7 +320,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_format(IntPtr l) {
 		UnityEngine.RenderTexture o = (UnityEngine.RenderTexture)checkSelf(l);
-		pushValue(l,o.format);
+		pushEnum(l,(int)o.format);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

@@ -165,7 +165,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_orientation(IntPtr l) {
-		pushValue(l,UnityEngine.Screen.orientation);
+		pushEnum(l,(int)UnityEngine.Screen.orientation);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

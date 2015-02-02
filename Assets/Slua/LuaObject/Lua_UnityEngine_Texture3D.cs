@@ -110,7 +110,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_format(IntPtr l) {
 		UnityEngine.Texture3D o = (UnityEngine.Texture3D)checkSelf(l);
-		pushValue(l,o.format);
+		pushEnum(l,(int)o.format);
 		return 1;
 	}
 	static public void reg(IntPtr l) {

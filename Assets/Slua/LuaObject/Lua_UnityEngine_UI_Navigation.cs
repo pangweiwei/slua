@@ -12,7 +12,7 @@ public class Lua_UnityEngine_UI_Navigation : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mode(IntPtr l) {
 		UnityEngine.UI.Navigation o = (UnityEngine.UI.Navigation)checkSelf(l);
-		pushValue(l,o.mode);
+		pushEnum(l,(int)o.mode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

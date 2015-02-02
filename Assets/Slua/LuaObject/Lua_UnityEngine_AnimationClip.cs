@@ -97,7 +97,7 @@ public class Lua_UnityEngine_AnimationClip : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_wrapMode(IntPtr l) {
 		UnityEngine.AnimationClip o = (UnityEngine.AnimationClip)checkSelf(l);
-		pushValue(l,o.wrapMode);
+		pushEnum(l,(int)o.wrapMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

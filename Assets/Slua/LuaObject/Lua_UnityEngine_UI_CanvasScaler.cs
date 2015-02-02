@@ -12,7 +12,7 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_uiScaleMode(IntPtr l) {
 		UnityEngine.UI.CanvasScaler o = (UnityEngine.UI.CanvasScaler)checkSelf(l);
-		pushValue(l,o.uiScaleMode);
+		pushEnum(l,(int)o.uiScaleMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -68,7 +68,7 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_screenMatchMode(IntPtr l) {
 		UnityEngine.UI.CanvasScaler o = (UnityEngine.UI.CanvasScaler)checkSelf(l);
-		pushValue(l,o.screenMatchMode);
+		pushEnum(l,(int)o.screenMatchMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -96,7 +96,7 @@ public class Lua_UnityEngine_UI_CanvasScaler : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_physicalUnit(IntPtr l) {
 		UnityEngine.UI.CanvasScaler o = (UnityEngine.UI.CanvasScaler)checkSelf(l);
-		pushValue(l,o.physicalUnit);
+		pushEnum(l,(int)o.physicalUnit);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

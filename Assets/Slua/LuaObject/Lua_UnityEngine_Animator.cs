@@ -1037,7 +1037,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_updateMode(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
-		pushValue(l,o.updateMode);
+		pushEnum(l,(int)o.updateMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -1169,7 +1169,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_cullingMode(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
-		pushValue(l,o.cullingMode);
+		pushEnum(l,(int)o.cullingMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

@@ -1301,12 +1301,18 @@ namespace SLua
 
     void WritePushValue(Type t, StreamWriter file)
     {
-        Write(file, "pushValue(l,ret);");
+        if(t.IsEnum)
+            Write(file, "pushEnum(l,(int)ret);");
+        else
+            Write(file, "pushValue(l,ret);");
     }
 
     void WritePushValue(Type t, StreamWriter file, string ret)
     {
-        Write(file, "pushValue(l,{0});", ret);
+        if(t.IsEnum)
+            Write(file, "pushEnum(l,(int){0});", ret);
+        else
+            Write(file, "pushValue(l,{0});", ret);
     }
 
 

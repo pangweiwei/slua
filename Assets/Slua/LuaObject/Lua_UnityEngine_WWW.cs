@@ -293,7 +293,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_threadPriority(IntPtr l) {
 		UnityEngine.WWW o = (UnityEngine.WWW)checkSelf(l);
-		pushValue(l,o.threadPriority);
+		pushEnum(l,(int)o.threadPriority);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

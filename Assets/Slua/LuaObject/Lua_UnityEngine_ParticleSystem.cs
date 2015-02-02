@@ -494,7 +494,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_simulationSpace(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		pushValue(l,o.simulationSpace);
+		pushEnum(l,(int)o.simulationSpace);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

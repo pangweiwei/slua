@@ -35,7 +35,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_type(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		pushValue(l,o.type);
+		pushEnum(l,(int)o.type);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -77,7 +77,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_shadows(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		pushValue(l,o.shadows);
+		pushEnum(l,(int)o.shadows);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -217,7 +217,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_renderMode(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		pushValue(l,o.renderMode);
+		pushEnum(l,(int)o.renderMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

@@ -103,7 +103,7 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_messageOptions(IntPtr l) {
 		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
-		pushValue(l,o.messageOptions);
+		pushEnum(l,(int)o.messageOptions);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

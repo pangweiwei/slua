@@ -221,7 +221,7 @@ public class Lua_UnityEngine_UI_Selectable : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_transition(IntPtr l) {
 		UnityEngine.UI.Selectable o = (UnityEngine.UI.Selectable)checkSelf(l);
-		pushValue(l,o.transition);
+		pushEnum(l,(int)o.transition);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

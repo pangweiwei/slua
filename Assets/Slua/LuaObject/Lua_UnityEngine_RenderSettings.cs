@@ -30,7 +30,7 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_fogMode(IntPtr l) {
-		pushValue(l,UnityEngine.RenderSettings.fogMode);
+		pushEnum(l,(int)UnityEngine.RenderSettings.fogMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

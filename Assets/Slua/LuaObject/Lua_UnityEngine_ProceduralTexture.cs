@@ -21,7 +21,7 @@ public class Lua_UnityEngine_ProceduralTexture : LuaObject {
 		try{
 			UnityEngine.ProceduralTexture self=(UnityEngine.ProceduralTexture)checkSelf(l);
 			UnityEngine.ProceduralOutputType ret=self.GetProceduralOutputType();
-			pushValue(l,ret);
+			pushEnum(l,(int)ret);
 			return 1;
 		}
 		catch(Exception e) {
@@ -59,7 +59,7 @@ public class Lua_UnityEngine_ProceduralTexture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_format(IntPtr l) {
 		UnityEngine.ProceduralTexture o = (UnityEngine.ProceduralTexture)checkSelf(l);
-		pushValue(l,o.format);
+		pushEnum(l,(int)o.format);
 		return 1;
 	}
 	static public void reg(IntPtr l) {

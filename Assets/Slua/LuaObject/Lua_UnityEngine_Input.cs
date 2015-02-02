@@ -367,12 +367,12 @@ public class Lua_UnityEngine_Input : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_deviceOrientation(IntPtr l) {
-		pushValue(l,UnityEngine.Input.deviceOrientation);
+		pushEnum(l,(int)UnityEngine.Input.deviceOrientation);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_imeCompositionMode(IntPtr l) {
-		pushValue(l,UnityEngine.Input.imeCompositionMode);
+		pushEnum(l,(int)UnityEngine.Input.imeCompositionMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

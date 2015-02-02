@@ -147,7 +147,7 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_npotSupport(IntPtr l) {
-		pushValue(l,UnityEngine.SystemInfo.npotSupport);
+		pushEnum(l,(int)UnityEngine.SystemInfo.npotSupport);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -187,7 +187,7 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_deviceType(IntPtr l) {
-		pushValue(l,UnityEngine.SystemInfo.deviceType);
+		pushEnum(l,(int)UnityEngine.SystemInfo.deviceType);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

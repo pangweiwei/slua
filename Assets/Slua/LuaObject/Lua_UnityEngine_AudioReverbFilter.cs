@@ -19,7 +19,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_reverbPreset(IntPtr l) {
 		UnityEngine.AudioReverbFilter o = (UnityEngine.AudioReverbFilter)checkSelf(l);
-		pushValue(l,o.reverbPreset);
+		pushEnum(l,(int)o.reverbPreset);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

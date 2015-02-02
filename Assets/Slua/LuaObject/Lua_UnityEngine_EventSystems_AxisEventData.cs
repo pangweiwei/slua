@@ -35,7 +35,7 @@ public class Lua_UnityEngine_EventSystems_AxisEventData : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_moveDir(IntPtr l) {
 		UnityEngine.EventSystems.AxisEventData o = (UnityEngine.EventSystems.AxisEventData)checkSelf(l);
-		pushValue(l,o.moveDir);
+		pushEnum(l,(int)o.moveDir);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

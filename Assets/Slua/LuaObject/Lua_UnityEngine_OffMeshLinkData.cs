@@ -24,7 +24,7 @@ public class Lua_UnityEngine_OffMeshLinkData : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_linkType(IntPtr l) {
 		UnityEngine.OffMeshLinkData o = (UnityEngine.OffMeshLinkData)checkSelf(l);
-		pushValue(l,o.linkType);
+		pushEnum(l,(int)o.linkType);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

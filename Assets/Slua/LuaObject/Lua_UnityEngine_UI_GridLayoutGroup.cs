@@ -60,7 +60,7 @@ public class Lua_UnityEngine_UI_GridLayoutGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_startCorner(IntPtr l) {
 		UnityEngine.UI.GridLayoutGroup o = (UnityEngine.UI.GridLayoutGroup)checkSelf(l);
-		pushValue(l,o.startCorner);
+		pushEnum(l,(int)o.startCorner);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -74,7 +74,7 @@ public class Lua_UnityEngine_UI_GridLayoutGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_startAxis(IntPtr l) {
 		UnityEngine.UI.GridLayoutGroup o = (UnityEngine.UI.GridLayoutGroup)checkSelf(l);
-		pushValue(l,o.startAxis);
+		pushEnum(l,(int)o.startAxis);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -116,7 +116,7 @@ public class Lua_UnityEngine_UI_GridLayoutGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_constraint(IntPtr l) {
 		UnityEngine.UI.GridLayoutGroup o = (UnityEngine.UI.GridLayoutGroup)checkSelf(l);
-		pushValue(l,o.constraint);
+		pushEnum(l,(int)o.constraint);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

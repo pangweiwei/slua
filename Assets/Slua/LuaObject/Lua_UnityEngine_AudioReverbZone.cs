@@ -47,7 +47,7 @@ public class Lua_UnityEngine_AudioReverbZone : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_reverbPreset(IntPtr l) {
 		UnityEngine.AudioReverbZone o = (UnityEngine.AudioReverbZone)checkSelf(l);
-		pushValue(l,o.reverbPreset);
+		pushEnum(l,(int)o.reverbPreset);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

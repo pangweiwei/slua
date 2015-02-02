@@ -19,7 +19,7 @@ public class Lua_UnityEngine_ParticleRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_particleRenderMode(IntPtr l) {
 		UnityEngine.ParticleRenderer o = (UnityEngine.ParticleRenderer)checkSelf(l);
-		pushValue(l,o.particleRenderMode);
+		pushEnum(l,(int)o.particleRenderMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

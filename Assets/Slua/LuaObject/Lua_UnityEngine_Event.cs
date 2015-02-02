@@ -30,7 +30,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			UnityEngine.EventType ret=self.GetTypeForControl(a1);
-			pushValue(l,ret);
+			pushEnum(l,(int)ret);
 			return 1;
 		}
 		catch(Exception e) {
@@ -93,13 +93,13 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rawType(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		pushValue(l,o.rawType);
+		pushEnum(l,(int)o.rawType);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_type(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		pushValue(l,o.type);
+		pushEnum(l,(int)o.type);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -155,7 +155,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_modifiers(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		pushValue(l,o.modifiers);
+		pushEnum(l,(int)o.modifiers);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -225,7 +225,7 @@ public class Lua_UnityEngine_Event : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_keyCode(IntPtr l) {
 		UnityEngine.Event o = (UnityEngine.Event)checkSelf(l);
-		pushValue(l,o.keyCode);
+		pushEnum(l,(int)o.keyCode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

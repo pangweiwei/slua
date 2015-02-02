@@ -358,7 +358,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_platform(IntPtr l) {
-		pushValue(l,UnityEngine.Application.platform);
+		pushEnum(l,(int)UnityEngine.Application.platform);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -442,12 +442,12 @@ public class Lua_UnityEngine_Application : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_systemLanguage(IntPtr l) {
-		pushValue(l,UnityEngine.Application.systemLanguage);
+		pushEnum(l,(int)UnityEngine.Application.systemLanguage);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_backgroundLoadingPriority(IntPtr l) {
-		pushValue(l,UnityEngine.Application.backgroundLoadingPriority);
+		pushEnum(l,(int)UnityEngine.Application.backgroundLoadingPriority);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -459,7 +459,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_internetReachability(IntPtr l) {
-		pushValue(l,UnityEngine.Application.internetReachability);
+		pushEnum(l,(int)UnityEngine.Application.internetReachability);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

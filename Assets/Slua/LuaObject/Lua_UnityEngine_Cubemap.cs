@@ -179,7 +179,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_format(IntPtr l) {
 		UnityEngine.Cubemap o = (UnityEngine.Cubemap)checkSelf(l);
-		pushValue(l,o.format);
+		pushEnum(l,(int)o.format);
 		return 1;
 	}
 	static public void reg(IntPtr l) {

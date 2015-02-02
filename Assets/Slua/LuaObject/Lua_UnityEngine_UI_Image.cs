@@ -117,7 +117,7 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_type(IntPtr l) {
 		UnityEngine.UI.Image o = (UnityEngine.UI.Image)checkSelf(l);
-		pushValue(l,o.type);
+		pushEnum(l,(int)o.type);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -159,7 +159,7 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_fillMethod(IntPtr l) {
 		UnityEngine.UI.Image o = (UnityEngine.UI.Image)checkSelf(l);
-		pushValue(l,o.fillMethod);
+		pushEnum(l,(int)o.fillMethod);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

@@ -223,7 +223,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_hideFlags(IntPtr l) {
 		UnityEngine.Object o = (UnityEngine.Object)checkSelf(l);
-		pushValue(l,o.hideFlags);
+		pushEnum(l,(int)o.hideFlags);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

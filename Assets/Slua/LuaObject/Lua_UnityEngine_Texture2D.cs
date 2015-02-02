@@ -543,7 +543,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_format(IntPtr l) {
 		UnityEngine.Texture2D o = (UnityEngine.Texture2D)checkSelf(l);
-		pushValue(l,o.format);
+		pushEnum(l,(int)o.format);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

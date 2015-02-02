@@ -88,7 +88,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_wrapMode(IntPtr l) {
 		UnityEngine.AnimationState o = (UnityEngine.AnimationState)checkSelf(l);
-		pushValue(l,o.wrapMode);
+		pushEnum(l,(int)o.wrapMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -198,7 +198,7 @@ public class Lua_UnityEngine_AnimationState : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_blendMode(IntPtr l) {
 		UnityEngine.AnimationState o = (UnityEngine.AnimationState)checkSelf(l);
-		pushValue(l,o.blendMode);
+		pushEnum(l,(int)o.blendMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

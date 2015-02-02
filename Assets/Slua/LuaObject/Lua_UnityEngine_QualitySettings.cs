@@ -114,7 +114,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_shadowProjection(IntPtr l) {
-		pushValue(l,UnityEngine.QualitySettings.shadowProjection);
+		pushEnum(l,(int)UnityEngine.QualitySettings.shadowProjection);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -162,7 +162,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_anisotropicFiltering(IntPtr l) {
-		pushValue(l,UnityEngine.QualitySettings.anisotropicFiltering);
+		pushEnum(l,(int)UnityEngine.QualitySettings.anisotropicFiltering);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -258,17 +258,17 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_desiredColorSpace(IntPtr l) {
-		pushValue(l,UnityEngine.QualitySettings.desiredColorSpace);
+		pushEnum(l,(int)UnityEngine.QualitySettings.desiredColorSpace);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_activeColorSpace(IntPtr l) {
-		pushValue(l,UnityEngine.QualitySettings.activeColorSpace);
+		pushEnum(l,(int)UnityEngine.QualitySettings.activeColorSpace);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_blendWeights(IntPtr l) {
-		pushValue(l,UnityEngine.QualitySettings.blendWeights);
+		pushEnum(l,(int)UnityEngine.QualitySettings.blendWeights);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

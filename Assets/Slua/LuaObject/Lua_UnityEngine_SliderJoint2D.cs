@@ -104,7 +104,7 @@ public class Lua_UnityEngine_SliderJoint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_limitState(IntPtr l) {
 		UnityEngine.SliderJoint2D o = (UnityEngine.SliderJoint2D)checkSelf(l);
-		pushValue(l,o.limitState);
+		pushEnum(l,(int)o.limitState);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

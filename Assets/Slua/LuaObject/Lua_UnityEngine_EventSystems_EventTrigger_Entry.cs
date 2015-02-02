@@ -19,7 +19,7 @@ public class Lua_UnityEngine_EventSystems_EventTrigger_Entry : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_eventID(IntPtr l) {
 		UnityEngine.EventSystems.EventTrigger.Entry o = (UnityEngine.EventSystems.EventTrigger.Entry)checkSelf(l);
-		pushValue(l,o.eventID);
+		pushEnum(l,(int)o.eventID);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

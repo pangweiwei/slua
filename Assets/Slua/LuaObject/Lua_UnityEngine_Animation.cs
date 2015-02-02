@@ -450,7 +450,7 @@ public class Lua_UnityEngine_Animation : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_wrapMode(IntPtr l) {
 		UnityEngine.Animation o = (UnityEngine.Animation)checkSelf(l);
-		pushValue(l,o.wrapMode);
+		pushEnum(l,(int)o.wrapMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -484,7 +484,7 @@ public class Lua_UnityEngine_Animation : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_cullingType(IntPtr l) {
 		UnityEngine.Animation o = (UnityEngine.Animation)checkSelf(l);
-		pushValue(l,o.cullingType);
+		pushEnum(l,(int)o.cullingType);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

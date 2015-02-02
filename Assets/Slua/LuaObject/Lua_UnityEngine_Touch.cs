@@ -48,7 +48,7 @@ public class Lua_UnityEngine_Touch : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_phase(IntPtr l) {
 		UnityEngine.Touch o = (UnityEngine.Touch)checkSelf(l);
-		pushValue(l,o.phase);
+		pushEnum(l,(int)o.phase);
 		return 1;
 	}
 	static public void reg(IntPtr l) {

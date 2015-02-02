@@ -146,7 +146,7 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			UnityEngine.MeshTopology ret=self.GetTopology(a1);
-			pushValue(l,ret);
+			pushEnum(l,(int)ret);
 			return 1;
 		}
 		catch(Exception e) {

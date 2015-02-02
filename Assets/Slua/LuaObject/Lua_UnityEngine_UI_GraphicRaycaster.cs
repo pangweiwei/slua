@@ -42,7 +42,7 @@ public class Lua_UnityEngine_UI_GraphicRaycaster : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_blockingObjects(IntPtr l) {
 		UnityEngine.UI.GraphicRaycaster o = (UnityEngine.UI.GraphicRaycaster)checkSelf(l);
-		pushValue(l,o.blockingObjects);
+		pushEnum(l,(int)o.blockingObjects);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

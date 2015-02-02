@@ -61,7 +61,7 @@ public class Lua_UnityEngine_ProceduralPropertyDescription : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_type(IntPtr l) {
 		UnityEngine.ProceduralPropertyDescription o = (UnityEngine.ProceduralPropertyDescription)checkSelf(l);
-		pushValue(l,o.type);
+		pushEnum(l,(int)o.type);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

@@ -87,7 +87,7 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_fontStyle(IntPtr l) {
 		UnityEngine.TextGenerationSettings o = (UnityEngine.TextGenerationSettings)checkSelf(l);
-		pushValue(l,o.fontStyle);
+		pushEnum(l,(int)o.fontStyle);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -102,7 +102,7 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_textAnchor(IntPtr l) {
 		UnityEngine.TextGenerationSettings o = (UnityEngine.TextGenerationSettings)checkSelf(l);
-		pushValue(l,o.textAnchor);
+		pushEnum(l,(int)o.textAnchor);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -177,7 +177,7 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_verticalOverflow(IntPtr l) {
 		UnityEngine.TextGenerationSettings o = (UnityEngine.TextGenerationSettings)checkSelf(l);
-		pushValue(l,o.verticalOverflow);
+		pushEnum(l,(int)o.verticalOverflow);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -192,7 +192,7 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_horizontalOverflow(IntPtr l) {
 		UnityEngine.TextGenerationSettings o = (UnityEngine.TextGenerationSettings)checkSelf(l);
-		pushValue(l,o.horizontalOverflow);
+		pushEnum(l,(int)o.horizontalOverflow);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

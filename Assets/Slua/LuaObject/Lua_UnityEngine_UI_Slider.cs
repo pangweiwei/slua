@@ -178,7 +178,7 @@ public class Lua_UnityEngine_UI_Slider : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_direction(IntPtr l) {
 		UnityEngine.UI.Slider o = (UnityEngine.UI.Slider)checkSelf(l);
-		pushValue(l,o.direction);
+		pushEnum(l,(int)o.direction);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

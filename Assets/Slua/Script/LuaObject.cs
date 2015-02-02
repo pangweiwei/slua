@@ -678,7 +678,7 @@ return index
         }
 
         static internal bool checkType<T>(IntPtr l, int p, out T o) {
-            o = (T)checkObj(l, p);
+            o = (T)checkVar(l, p);
             return true;
         }
 
@@ -920,15 +920,7 @@ return index
 
         internal static void pushValue(IntPtr l, object o)
         {
-            Type t = o.GetType();
-            if (t.IsEnum)
-            {
-                pushValue(l, (int)o);
-            }
-            else
-            {
-                pushObject(l, o);
-            }
+            pushObject(l, o);
         }
 
         internal static void pushValue(IntPtr l, object[] o)
@@ -1022,7 +1014,10 @@ return index
 //        }
 
 
-
+        internal static void pushEnum(IntPtr l, int e)
+        {
+            pushValue(l, e);
+        }
 
 
         internal static void pushVar(IntPtr l, object o)
@@ -1038,6 +1033,9 @@ return index
             {
                 case "Single":
                     LuaDLL.lua_pushnumber(l, (float)o);
+                    break;
+                case "Double":
+                    LuaDLL.lua_pushnumber(l, (double)o);
                     break;
                 case "Int32":
                 case "Uint32":
@@ -1068,6 +1066,8 @@ return index
                     break;
             }
         }
+
+
 
         internal static T checkSelf<T>(IntPtr l)
         {

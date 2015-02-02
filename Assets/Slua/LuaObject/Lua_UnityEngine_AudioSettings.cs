@@ -48,12 +48,12 @@ public class Lua_UnityEngine_AudioSettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_driverCaps(IntPtr l) {
-		pushValue(l,UnityEngine.AudioSettings.driverCaps);
+		pushEnum(l,(int)UnityEngine.AudioSettings.driverCaps);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_speakerMode(IntPtr l) {
-		pushValue(l,UnityEngine.AudioSettings.speakerMode);
+		pushEnum(l,(int)UnityEngine.AudioSettings.speakerMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

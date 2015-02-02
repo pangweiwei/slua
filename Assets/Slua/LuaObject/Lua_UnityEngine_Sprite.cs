@@ -147,13 +147,13 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_packingMode(IntPtr l) {
 		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
-		pushValue(l,o.packingMode);
+		pushEnum(l,(int)o.packingMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_packingRotation(IntPtr l) {
 		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
-		pushValue(l,o.packingRotation);
+		pushEnum(l,(int)o.packingRotation);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

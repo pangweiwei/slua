@@ -69,7 +69,7 @@ public class Lua_UnityEngine_LocationService : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_status(IntPtr l) {
 		UnityEngine.LocationService o = (UnityEngine.LocationService)checkSelf(l);
-		pushValue(l,o.status);
+		pushEnum(l,(int)o.status);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

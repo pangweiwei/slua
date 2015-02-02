@@ -92,7 +92,7 @@ public class Lua_UnityEngine_SkinnedMeshRenderer : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_quality(IntPtr l) {
 		UnityEngine.SkinnedMeshRenderer o = (UnityEngine.SkinnedMeshRenderer)checkSelf(l);
-		pushValue(l,o.quality);
+		pushEnum(l,(int)o.quality);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

@@ -45,7 +45,7 @@ public class Lua_UnityEngine_EventSystems_PointerInputModule_MouseButtonEventDat
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_buttonState(IntPtr l) {
 		UnityEngine.EventSystems.PointerInputModule.MouseButtonEventData o = (UnityEngine.EventSystems.PointerInputModule.MouseButtonEventData)checkSelf(l);
-		pushValue(l,o.buttonState);
+		pushEnum(l,(int)o.buttonState);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

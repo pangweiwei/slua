@@ -36,7 +36,7 @@ public class Lua_UnityEngine_UI_AspectRatioFitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_aspectMode(IntPtr l) {
 		UnityEngine.UI.AspectRatioFitter o = (UnityEngine.UI.AspectRatioFitter)checkSelf(l);
-		pushValue(l,o.aspectMode);
+		pushEnum(l,(int)o.aspectMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

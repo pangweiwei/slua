@@ -75,7 +75,7 @@ public class Lua_UnityEngine_AudioListener : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_velocityUpdateMode(IntPtr l) {
 		UnityEngine.AudioListener o = (UnityEngine.AudioListener)checkSelf(l);
-		pushValue(l,o.velocityUpdateMode);
+		pushEnum(l,(int)o.velocityUpdateMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

@@ -163,7 +163,7 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_movementType(IntPtr l) {
 		UnityEngine.UI.ScrollRect o = (UnityEngine.UI.ScrollRect)checkSelf(l);
-		pushValue(l,o.movementType);
+		pushEnum(l,(int)o.movementType);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

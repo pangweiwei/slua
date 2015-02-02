@@ -37,7 +37,7 @@ public class Lua_UnityEngine_NavMeshPath : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_status(IntPtr l) {
 		UnityEngine.NavMeshPath o = (UnityEngine.NavMeshPath)checkSelf(l);
-		pushValue(l,o.status);
+		pushEnum(l,(int)o.status);
 		return 1;
 	}
 	static public void reg(IntPtr l) {

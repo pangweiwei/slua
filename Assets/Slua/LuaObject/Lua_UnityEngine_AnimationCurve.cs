@@ -177,7 +177,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_preWrapMode(IntPtr l) {
 		UnityEngine.AnimationCurve o = (UnityEngine.AnimationCurve)checkSelf(l);
-		pushValue(l,o.preWrapMode);
+		pushEnum(l,(int)o.preWrapMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -191,7 +191,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_postWrapMode(IntPtr l) {
 		UnityEngine.AnimationCurve o = (UnityEngine.AnimationCurve)checkSelf(l);
-		pushValue(l,o.postWrapMode);
+		pushEnum(l,(int)o.postWrapMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

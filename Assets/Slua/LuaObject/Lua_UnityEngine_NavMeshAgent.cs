@@ -416,7 +416,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_pathStatus(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		pushValue(l,o.pathStatus);
+		pushEnum(l,(int)o.pathStatus);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -554,7 +554,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_obstacleAvoidanceType(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		pushValue(l,o.obstacleAvoidanceType);
+		pushEnum(l,(int)o.obstacleAvoidanceType);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

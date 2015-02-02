@@ -110,7 +110,7 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_frictionCombine(IntPtr l) {
 		UnityEngine.PhysicMaterial o = (UnityEngine.PhysicMaterial)checkSelf(l);
-		pushValue(l,o.frictionCombine);
+		pushEnum(l,(int)o.frictionCombine);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -124,7 +124,7 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_bounceCombine(IntPtr l) {
 		UnityEngine.PhysicMaterial o = (UnityEngine.PhysicMaterial)checkSelf(l);
-		pushValue(l,o.bounceCombine);
+		pushEnum(l,(int)o.bounceCombine);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

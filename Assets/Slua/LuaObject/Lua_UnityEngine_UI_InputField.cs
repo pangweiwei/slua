@@ -375,7 +375,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_contentType(IntPtr l) {
 		UnityEngine.UI.InputField o = (UnityEngine.UI.InputField)checkSelf(l);
-		pushValue(l,o.contentType);
+		pushEnum(l,(int)o.contentType);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -389,7 +389,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_lineType(IntPtr l) {
 		UnityEngine.UI.InputField o = (UnityEngine.UI.InputField)checkSelf(l);
-		pushValue(l,o.lineType);
+		pushEnum(l,(int)o.lineType);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -403,7 +403,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_inputType(IntPtr l) {
 		UnityEngine.UI.InputField o = (UnityEngine.UI.InputField)checkSelf(l);
-		pushValue(l,o.inputType);
+		pushEnum(l,(int)o.inputType);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -417,7 +417,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_keyboardType(IntPtr l) {
 		UnityEngine.UI.InputField o = (UnityEngine.UI.InputField)checkSelf(l);
-		pushValue(l,o.keyboardType);
+		pushEnum(l,(int)o.keyboardType);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -431,7 +431,7 @@ public class Lua_UnityEngine_UI_InputField : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_characterValidation(IntPtr l) {
 		UnityEngine.UI.InputField o = (UnityEngine.UI.InputField)checkSelf(l);
-		pushValue(l,o.characterValidation);
+		pushEnum(l,(int)o.characterValidation);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

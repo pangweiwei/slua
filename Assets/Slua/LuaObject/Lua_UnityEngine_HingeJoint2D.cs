@@ -120,7 +120,7 @@ public class Lua_UnityEngine_HingeJoint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_limitState(IntPtr l) {
 		UnityEngine.HingeJoint2D o = (UnityEngine.HingeJoint2D)checkSelf(l);
-		pushValue(l,o.limitState);
+		pushEnum(l,(int)o.limitState);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

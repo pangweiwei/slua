@@ -291,7 +291,7 @@ public class Lua_UnityEngine_EventSystems_PointerEventData : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_button(IntPtr l) {
 		UnityEngine.EventSystems.PointerEventData o = (UnityEngine.EventSystems.PointerEventData)checkSelf(l);
-		pushValue(l,o.button);
+		pushEnum(l,(int)o.button);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

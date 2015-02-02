@@ -38,7 +38,7 @@ public class Lua_UnityEngine_CharacterController : LuaObject {
 			UnityEngine.Vector3 a1;
 			checkType(l,2,out a1);
 			UnityEngine.CollisionFlags ret=self.Move(a1);
-			pushValue(l,ret);
+			pushEnum(l,(int)ret);
 			return 1;
 		}
 		catch(Exception e) {
@@ -61,7 +61,7 @@ public class Lua_UnityEngine_CharacterController : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_collisionFlags(IntPtr l) {
 		UnityEngine.CharacterController o = (UnityEngine.CharacterController)checkSelf(l);
-		pushValue(l,o.collisionFlags);
+		pushEnum(l,(int)o.collisionFlags);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

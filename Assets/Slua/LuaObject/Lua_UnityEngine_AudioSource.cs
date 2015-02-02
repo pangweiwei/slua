@@ -344,7 +344,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_velocityUpdateMode(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		pushValue(l,o.velocityUpdateMode);
+		pushEnum(l,(int)o.velocityUpdateMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -512,7 +512,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rolloffMode(IntPtr l) {
 		UnityEngine.AudioSource o = (UnityEngine.AudioSource)checkSelf(l);
-		pushValue(l,o.rolloffMode);
+		pushEnum(l,(int)o.rolloffMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

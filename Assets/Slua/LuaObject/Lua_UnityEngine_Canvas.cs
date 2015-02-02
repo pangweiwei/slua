@@ -54,7 +54,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_renderMode(IntPtr l) {
 		UnityEngine.Canvas o = (UnityEngine.Canvas)checkSelf(l);
-		pushValue(l,o.renderMode);
+		pushEnum(l,(int)o.renderMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
