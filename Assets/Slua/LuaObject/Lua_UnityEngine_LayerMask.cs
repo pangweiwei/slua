@@ -41,7 +41,7 @@ public class Lua_UnityEngine_LayerMask : LuaObject {
 	static public int GetMask_s(IntPtr l) {
 		try{
 			System.String[] a1;
-			checkType(l,1,out a1);
+			checkParams(l,1,out a1);
 			System.Int32 ret=UnityEngine.LayerMask.GetMask(a1);
 			pushValue(l,ret);
 			return 1;

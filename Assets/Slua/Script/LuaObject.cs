@@ -743,6 +743,70 @@ return index
             return false;
         }
 
+        static internal bool checkParams(IntPtr l, int p, out float[] pars)
+        {
+            int top = LuaDLL.lua_gettop(l);
+            if (top - p >= 0)
+            {
+                pars = new float[top - p + 1];
+                for (int n = p, k = 0; n <= top; n++, k++)
+                {
+                    checkType(l, n, out pars[k]);
+                }
+                return true;
+            }
+            pars = null;
+            return false;
+        }
+
+        static internal bool checkParams(IntPtr l, int p, out int[] pars)
+        {
+            int top = LuaDLL.lua_gettop(l);
+            if (top - p >= 0)
+            {
+                pars = new int[top - p + 1];
+                for (int n = p, k = 0; n <= top; n++, k++)
+                {
+                    checkType(l, n, out pars[k]);
+                }
+                return true;
+            }
+            pars = null;
+            return false;
+        }
+
+        static internal bool checkParams(IntPtr l, int p, out Vector2[] pars)
+        {
+            int top = LuaDLL.lua_gettop(l);
+            if (top - p >= 0)
+            {
+                pars = new Vector2[top - p + 1];
+                for (int n = p, k = 0; n <= top; n++, k++)
+                {
+                    checkType(l, n, out pars[k]);
+                }
+                return true;
+            }
+            pars = null;
+            return false;
+        }
+
+        static internal bool checkParams(IntPtr l, int p, out string[] pars)
+        {
+            int top = LuaDLL.lua_gettop(l);
+            if (top - p >= 0)
+            {
+                pars = new string[top - p + 1];
+                for (int n = p, k = 0; n <= top; n++, k++)
+                {
+                    checkType(l, n, out pars[k]);
+                }
+                return true;
+            }
+            pars = null;
+            return false;
+        }
+
 		static internal object checkVar(IntPtr l,int p) {
 			LuaTypes type = LuaDLL.lua_type(l, p);
 			switch (type)

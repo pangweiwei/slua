@@ -227,7 +227,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 			System.String a1;
 			checkType(l,1,out a1);
 			System.Object[] a2;
-			checkType(l,2,out a2);
+			checkParams(l,2,out a2);
 			UnityEngine.Application.ExternalCall(a1,a2);
 			return 0;
 		}

@@ -86,7 +86,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Single[] a2;
-			checkType(l,3,out a2);
+			checkParams(l,3,out a2);
 			self.SetFloats(a1,a2);
 			return 0;
 		}
@@ -102,7 +102,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Int32[] a2;
-			checkType(l,3,out a2);
+			checkParams(l,3,out a2);
 			self.SetInts(a1,a2);
 			return 0;
 		}

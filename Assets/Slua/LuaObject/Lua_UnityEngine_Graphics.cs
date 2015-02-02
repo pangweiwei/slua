@@ -522,7 +522,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 			UnityEngine.Material a3;
 			checkType(l,3,out a3);
 			UnityEngine.Vector2[] a4;
-			checkType(l,4,out a4);
+			checkParams(l,4,out a4);
 			UnityEngine.Graphics.BlitMultiTap(a1,a2,a3,a4);
 			return 0;
 		}
