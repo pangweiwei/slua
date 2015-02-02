@@ -66,3 +66,7 @@ end
 function foo(a,b,c)
 	return a,b,c,"slua"
 end
+
+function str()
+	return "slua"
+end

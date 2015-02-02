@@ -14,5 +14,8 @@ public class Main : MonoBehaviour {
         object[] array = (object[])o;
         for (int n = 0; n < array.Length; n++)
             Debug.Log(array[n]);
+
+        string s = (string)l.luaState.getFunction("str").call( new object[0] );
+        Debug.Log(s);
     }
 }

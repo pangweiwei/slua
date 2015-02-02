@@ -123,15 +123,14 @@ namespace SLua
                 throw new Exception("Not a function");
             }
 
-            
+
             if (LuaDLL.lua_pcall(l, 0, 0, error) != 0)
             {
                 LuaDLL.lua_pop(l, 1);
             }
 
-            LuaDLL.lua_pop(l, 1); // pop error function
+            LuaDLL.lua_remove(l, error); // pop error function
         }
-
 
         public object call(params object[] args)
         {
