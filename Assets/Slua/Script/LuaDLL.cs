@@ -1,8 +1,20 @@
+using System;
+using System.Runtime.InteropServices;
+using System.Text;
+
+
+[AttributeUsage(AttributeTargets.Class)]
+public class CustomLuaClassAttribute : System.Attribute
+{
+    public CustomLuaClassAttribute()
+    {
+        //
+    }
+}
+
+
 namespace LuaInterface
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Text;
 
 #pragma warning disable 414
     public class MonoPInvokeCallbackAttribute : System.Attribute

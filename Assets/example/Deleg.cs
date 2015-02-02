@@ -3,6 +3,8 @@ using System.Collections;
 using SLua;
 using System;
 using System.Collections.Generic;
+
+[CustomLuaClassAttribute]
 public class Deleg : MonoBehaviour {
     
 
