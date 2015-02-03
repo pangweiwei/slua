@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Canvas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Canvas o;
-		if(matchType(l,1)){
-			o=new UnityEngine.Canvas();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.Canvas();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetDefaultCanvasMaterial_s(IntPtr l) {
@@ -54,7 +49,7 @@ public class Lua_UnityEngine_Canvas : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_renderMode(IntPtr l) {
 		UnityEngine.Canvas o = (UnityEngine.Canvas)checkSelf(l);
-		pushValue(l,o.renderMode);
+		pushEnum(l,(int)o.renderMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

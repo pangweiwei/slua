@@ -28,6 +28,24 @@ using LuaInterface;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
+[AttributeUsage(AttributeTargets.Class)]
+public class CustomLuaClassAttribute : System.Attribute
+{
+    public CustomLuaClassAttribute()
+    {
+        //
+    }
+}
+
+public class DoNotToLuaAttribute : System.Attribute
+{
+    public DoNotToLuaAttribute()
+    {
+        //
+    }
+}
+
+
 namespace SLua
 {
 
@@ -405,6 +423,11 @@ return index
             {
                 return true;
             }
+            else if (t == typeof(Type))
+            {
+                return lt == LuaTypes.LUA_TTABLE;
+            }
+
             switch (lt)
             {
                 case LuaTypes.LUA_TNUMBER:
@@ -418,9 +441,7 @@ return index
                     return t == typeof(bool);
                 case LuaTypes.LUA_TTABLE:
                     {
-                        if (t == typeof(Type))
-                            return isTypeTable(l, p);
-                        else if (t.IsValueType)
+                        if (t.IsValueType)
                             return luaTypeCheck(l, p, t.Name);
                         else
                             return t == typeof(LuaTable);
@@ -445,9 +466,9 @@ return index
             return true;
         }
 
-        public static bool matchType(IntPtr l, int from, params Type[] types)
+        public static bool matchType(IntPtr l, int total, int from, params Type[] types)
         {
-            if (LuaDLL.lua_gettop(l) - from + 1 != types.Length)
+            if (total - from + 1 != types.Length)
                 return false;
 
             for (int n = 0; n < types.Length; n++)
@@ -599,13 +620,21 @@ return index
 
         static internal bool checkType(IntPtr l, int p, out Int64 v)
         {
+#if LUA_5_3
             v = LuaDLL.luaL_checkinteger(l, p);
+#else
+            v = (Int64)LuaDLL.luaL_checknumber(l,p);
+#endif
             return true;
         }
 
         static internal bool checkType(IntPtr l, int p, out UInt64 v)
         {
-            v = (UInt64)LuaDLL.luaL_checkinteger(l, p);
+#if LUA_5_3
+            v = LuaDLL.luaL_checkinteger(l, p);
+#else
+            v = (UInt64)LuaDLL.luaL_checknumber(l, p);
+#endif
             return true;
         }
 
@@ -667,7 +696,7 @@ return index
         }
 
         static internal bool checkType<T>(IntPtr l, int p, out T o) {
-            o = (T)checkObj(l, p);
+            o = (T)checkVar(l, p);
             return true;
         }
 
@@ -716,6 +745,86 @@ return index
             return true;
         }
 
+        static internal bool checkParams(IntPtr l, int p, out object[] pars)
+        {
+            int top = LuaDLL.lua_gettop(l);
+            if (top - p >= 0)
+            {
+                pars = new object[top-p+1];
+                for (int n = p,k=0; n <= top; n++,k++)
+                {
+                    pars[k] = checkVar(l, n);
+                }
+                return true;
+            }
+            pars = new object[0];
+            return true;
+        }
+
+        static internal bool checkParams(IntPtr l, int p, out float[] pars)
+        {
+            int top = LuaDLL.lua_gettop(l);
+            if (top - p >= 0)
+            {
+                pars = new float[top - p + 1];
+                for (int n = p, k = 0; n <= top; n++, k++)
+                {
+                    checkType(l, n, out pars[k]);
+                }
+                return true;
+            }
+            pars = new float[0];
+            return true;
+        }
+
+        static internal bool checkParams(IntPtr l, int p, out int[] pars)
+        {
+            int top = LuaDLL.lua_gettop(l);
+            if (top - p >= 0)
+            {
+                pars = new int[top - p + 1];
+                for (int n = p, k = 0; n <= top; n++, k++)
+                {
+                    checkType(l, n, out pars[k]);
+                }
+                return true;
+            }
+            pars = new int[0];
+            return true;
+        }
+
+        static internal bool checkParams(IntPtr l, int p, out Vector2[] pars)
+        {
+            int top = LuaDLL.lua_gettop(l);
+            if (top - p >= 0)
+            {
+                pars = new Vector2[top - p + 1];
+                for (int n = p, k = 0; n <= top; n++, k++)
+                {
+                    checkType(l, n, out pars[k]);
+                }
+                return true;
+            }
+            pars = new Vector2[0];
+            return true;
+        }
+
+        static internal bool checkParams(IntPtr l, int p, out string[] pars)
+        {
+            int top = LuaDLL.lua_gettop(l);
+            if (top - p >= 0)
+            {
+                pars = new string[top - p + 1];
+                for (int n = p, k = 0; n <= top; n++, k++)
+                {
+                    checkType(l, n, out pars[k]);
+                }
+                return true;
+            }
+            pars = new string[0];
+            return true;
+        }
+
 		static internal object checkVar(IntPtr l,int p) {
 			LuaTypes type = LuaDLL.lua_type(l, p);
 			switch (type)
@@ -752,6 +861,7 @@ return index
 				return null;
 			}
 		}
+
 
         internal static void pushValue(IntPtr l, float o)
         {
@@ -807,6 +917,15 @@ return index
             LuaDLL.lua_pushinteger(l, i);
         }
 
+        public static void pushValue(IntPtr l, Int64 i)
+        {
+#if LUA_5_3
+            LuaDLL.lua_pushinteger(l,i);
+#else
+            LuaDLL.lua_pushnumber(l, (double)i);
+#endif
+        }
+
         internal static void pushValue(IntPtr l, double d)
         {
             LuaDLL.lua_pushnumber(l, d);
@@ -819,15 +938,7 @@ return index
 
         internal static void pushValue(IntPtr l, object o)
         {
-            Type t = o.GetType();
-            if (t.IsEnum)
-            {
-                pushValue(l, (int)o);
-            }
-            else
-            {
-                pushObject(l, o);
-            }
+            pushObject(l, o);
         }
 
         internal static void pushValue(IntPtr l, object[] o)
@@ -921,7 +1032,10 @@ return index
 //        }
 
 
-
+        internal static void pushEnum(IntPtr l, int e)
+        {
+            pushValue(l, e);
+        }
 
 
         internal static void pushVar(IntPtr l, object o)
@@ -937,6 +1051,9 @@ return index
             {
                 case "Single":
                     LuaDLL.lua_pushnumber(l, (float)o);
+                    break;
+                case "Double":
+                    LuaDLL.lua_pushnumber(l, (double)o);
                     break;
                 case "Int32":
                 case "Uint32":
@@ -967,6 +1084,8 @@ return index
                     break;
             }
         }
+
+
 
         internal static T checkSelf<T>(IntPtr l)
         {

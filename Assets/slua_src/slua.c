@@ -82,7 +82,11 @@ LUA_API int luaS_checkcallback(lua_State *L, int index)
 	lua_getinfo(L, ">S", &ar);
 
 	char funcinfo[260];
-	sprintf(funcinfo, "%s:%d", ar.source, ar.linedefined);
+#ifdef _WINDOWS
+	_snprintf(funcinfo, 260, "%s:%d", ar.source, ar.linedefined);
+#else
+	snprintf(funcinfo, 260, "%s:%d", ar.source, ar.linedefined);
+#endif
 	lua_getfield(L, LUA_REGISTRYINDEX, SLuaCallback);
 	if (lua_isnil(L, -1)) {
 		lua_pop(L, 1);

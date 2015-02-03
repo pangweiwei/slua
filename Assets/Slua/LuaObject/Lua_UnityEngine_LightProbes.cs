@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_LightProbes : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.LightProbes o;
-		if(matchType(l,1)){
-			o=new UnityEngine.LightProbes();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.LightProbes();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetInterpolatedLightProbe(IntPtr l) {
@@ -49,7 +44,7 @@ public class Lua_UnityEngine_LightProbes : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_coefficients(IntPtr l) {
 		UnityEngine.LightProbes o = (UnityEngine.LightProbes)checkSelf(l);
-		float[] v;
+		System.Single[] v;
 		checkType(l,2,out v);
 		o.coefficients=v;
 		return 0;

@@ -36,7 +36,7 @@ public class Lua_UnityEngine_UI_ContentSizeFitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_horizontalFit(IntPtr l) {
 		UnityEngine.UI.ContentSizeFitter o = (UnityEngine.UI.ContentSizeFitter)checkSelf(l);
-		pushValue(l,o.horizontalFit);
+		pushEnum(l,(int)o.horizontalFit);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -50,7 +50,7 @@ public class Lua_UnityEngine_UI_ContentSizeFitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_verticalFit(IntPtr l) {
 		UnityEngine.UI.ContentSizeFitter o = (UnityEngine.UI.ContentSizeFitter)checkSelf(l);
-		pushValue(l,o.verticalFit);
+		pushEnum(l,(int)o.verticalFit);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

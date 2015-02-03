@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_QualitySettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.QualitySettings o;
-		if(matchType(l,1)){
-			o=new UnityEngine.QualitySettings();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.QualitySettings();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetQualityLevel_s(IntPtr l) {
@@ -31,7 +26,8 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetQualityLevel_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Int32),typeof(System.Boolean))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -39,7 +35,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 				UnityEngine.QualitySettings.SetQualityLevel(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,1,typeof(System.Int32))){
+			else if(argc==1){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.QualitySettings.SetQualityLevel(a1);
@@ -56,13 +52,14 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IncreaseLevel_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Boolean))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				UnityEngine.QualitySettings.IncreaseLevel(a1);
 				return 0;
 			}
-			else if(matchType(l,1)){
+			else if(argc==0){
 				UnityEngine.QualitySettings.IncreaseLevel();
 				return 0;
 			}
@@ -77,13 +74,14 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int DecreaseLevel_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.Boolean))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				UnityEngine.QualitySettings.DecreaseLevel(a1);
 				return 0;
 			}
-			else if(matchType(l,1)){
+			else if(argc==0){
 				UnityEngine.QualitySettings.DecreaseLevel();
 				return 0;
 			}
@@ -114,7 +112,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_shadowProjection(IntPtr l) {
-		pushValue(l,UnityEngine.QualitySettings.shadowProjection);
+		pushEnum(l,(int)UnityEngine.QualitySettings.shadowProjection);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -162,7 +160,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_anisotropicFiltering(IntPtr l) {
-		pushValue(l,UnityEngine.QualitySettings.anisotropicFiltering);
+		pushEnum(l,(int)UnityEngine.QualitySettings.anisotropicFiltering);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -258,17 +256,17 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_desiredColorSpace(IntPtr l) {
-		pushValue(l,UnityEngine.QualitySettings.desiredColorSpace);
+		pushEnum(l,(int)UnityEngine.QualitySettings.desiredColorSpace);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_activeColorSpace(IntPtr l) {
-		pushValue(l,UnityEngine.QualitySettings.activeColorSpace);
+		pushEnum(l,(int)UnityEngine.QualitySettings.activeColorSpace);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_blendWeights(IntPtr l) {
-		pushValue(l,UnityEngine.QualitySettings.blendWeights);
+		pushEnum(l,(int)UnityEngine.QualitySettings.blendWeights);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

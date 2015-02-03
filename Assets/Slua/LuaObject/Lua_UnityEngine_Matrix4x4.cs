@@ -244,7 +244,8 @@ public class Lua_UnityEngine_Matrix4x4 : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int op_Multiply(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Matrix4x4),typeof(UnityEngine.Matrix4x4))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(UnityEngine.Matrix4x4),typeof(UnityEngine.Matrix4x4))){
 				UnityEngine.Matrix4x4 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Matrix4x4 a2;
@@ -253,7 +254,7 @@ public class Lua_UnityEngine_Matrix4x4 : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Matrix4x4),typeof(UnityEngine.Vector4))){
+			else if(matchType(l,argc,1,typeof(UnityEngine.Matrix4x4),typeof(UnityEngine.Vector4))){
 				UnityEngine.Matrix4x4 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector4 a2;

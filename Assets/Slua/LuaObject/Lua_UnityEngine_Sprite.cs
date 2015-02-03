@@ -6,20 +6,16 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Sprite : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Sprite o;
-		if(matchType(l,1)){
-			o=new UnityEngine.Sprite();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.Sprite();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Create_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(System.Single),typeof(System.UInt32),typeof(UnityEngine.SpriteMeshType),typeof(UnityEngine.Vector4))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==7){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;
@@ -38,7 +34,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(System.Single),typeof(System.UInt32),typeof(UnityEngine.SpriteMeshType))){
+			else if(argc==6){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;
@@ -55,7 +51,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(System.Single),typeof(System.UInt32))){
+			else if(argc==5){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;
@@ -70,7 +66,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2),typeof(System.Single))){
+			else if(argc==4){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;
@@ -83,7 +79,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(UnityEngine.Texture2D),typeof(UnityEngine.Rect),typeof(UnityEngine.Vector2))){
+			else if(argc==3){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;
@@ -147,13 +143,13 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_packingMode(IntPtr l) {
 		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
-		pushValue(l,o.packingMode);
+		pushEnum(l,(int)o.packingMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_packingRotation(IntPtr l) {
 		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
-		pushValue(l,o.packingRotation);
+		pushEnum(l,(int)o.packingRotation);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

@@ -6,16 +6,16 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
+		int argc = LuaDLL.lua_gettop(l);
 		UnityEngine.PhysicMaterial o;
-		if(matchType(l,1)){
+		if(argc==1){
 			o=new UnityEngine.PhysicMaterial();
 			pushObject(l,o);
 			return 1;
 		}
-		else if(matchType(l,1,typeof(System.String))){
+		else if(argc==2){
 			System.String a1;
-			checkType(l,1,out a1);
+			checkType(l,2,out a1);
 			o=new UnityEngine.PhysicMaterial(a1);
 			pushObject(l,o);
 			return 1;
@@ -110,7 +110,7 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_frictionCombine(IntPtr l) {
 		UnityEngine.PhysicMaterial o = (UnityEngine.PhysicMaterial)checkSelf(l);
-		pushValue(l,o.frictionCombine);
+		pushEnum(l,(int)o.frictionCombine);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -124,7 +124,7 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_bounceCombine(IntPtr l) {
 		UnityEngine.PhysicMaterial o = (UnityEngine.PhysicMaterial)checkSelf(l);
-		pushValue(l,o.bounceCombine);
+		pushEnum(l,(int)o.bounceCombine);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

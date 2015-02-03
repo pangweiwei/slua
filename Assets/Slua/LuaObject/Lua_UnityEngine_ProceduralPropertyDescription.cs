@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_ProceduralPropertyDescription : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.ProceduralPropertyDescription o;
-		if(matchType(l,1)){
-			o=new UnityEngine.ProceduralPropertyDescription();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.ProceduralPropertyDescription();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_name(IntPtr l) {
@@ -61,7 +56,7 @@ public class Lua_UnityEngine_ProceduralPropertyDescription : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_type(IntPtr l) {
 		UnityEngine.ProceduralPropertyDescription o = (UnityEngine.ProceduralPropertyDescription)checkSelf(l);
-		pushValue(l,o.type);
+		pushEnum(l,(int)o.type);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

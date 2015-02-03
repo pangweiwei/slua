@@ -6,20 +6,16 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_LocationService : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.LocationService o;
-		if(matchType(l,1)){
-			o=new UnityEngine.LocationService();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.LocationService();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Start(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(System.Single),typeof(System.Single))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
 				UnityEngine.LocationService self=(UnityEngine.LocationService)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -28,14 +24,14 @@ public class Lua_UnityEngine_LocationService : LuaObject {
 				self.Start(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(System.Single))){
+			else if(argc==1){
 				UnityEngine.LocationService self=(UnityEngine.LocationService)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
 				self.Start(a1);
 				return 0;
 			}
-			else if(matchType(l,2)){
+			else if(argc==0){
 				UnityEngine.LocationService self=(UnityEngine.LocationService)checkSelf(l);
 				self.Start();
 				return 0;
@@ -69,7 +65,7 @@ public class Lua_UnityEngine_LocationService : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_status(IntPtr l) {
 		UnityEngine.LocationService o = (UnityEngine.LocationService)checkSelf(l);
-		pushValue(l,o.status);
+		pushEnum(l,(int)o.status);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

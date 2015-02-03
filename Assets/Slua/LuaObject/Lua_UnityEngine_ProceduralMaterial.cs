@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.ProceduralMaterial o;
-		if(matchType(l,1)){
-			o=new UnityEngine.ProceduralMaterial();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.ProceduralMaterial();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetProceduralPropertyDescriptions(IntPtr l) {
@@ -339,7 +334,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_cacheSize(IntPtr l) {
 		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
-		pushValue(l,o.cacheSize);
+		pushEnum(l,(int)o.cacheSize);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -393,7 +388,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_loadingBehavior(IntPtr l) {
 		UnityEngine.ProceduralMaterial o = (UnityEngine.ProceduralMaterial)checkSelf(l);
-		pushValue(l,o.loadingBehavior);
+		pushEnum(l,(int)o.loadingBehavior);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -403,7 +398,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_substanceProcessorUsage(IntPtr l) {
-		pushValue(l,UnityEngine.ProceduralMaterial.substanceProcessorUsage);
+		pushEnum(l,(int)UnityEngine.ProceduralMaterial.substanceProcessorUsage);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

@@ -74,7 +74,7 @@ public class Lua_UnityEngine_UI_LayoutGroup : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_childAlignment(IntPtr l) {
 		UnityEngine.UI.LayoutGroup o = (UnityEngine.UI.LayoutGroup)checkSelf(l);
-		pushValue(l,o.childAlignment);
+		pushEnum(l,(int)o.childAlignment);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

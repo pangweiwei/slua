@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.ConfigurableJoint o;
-		if(matchType(l,1)){
-			o=new UnityEngine.ConfigurableJoint();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.ConfigurableJoint();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_secondaryAxis(IntPtr l) {
@@ -33,7 +28,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_xMotion(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
-		pushValue(l,o.xMotion);
+		pushEnum(l,(int)o.xMotion);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -47,7 +42,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_yMotion(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
-		pushValue(l,o.yMotion);
+		pushEnum(l,(int)o.yMotion);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -61,7 +56,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_zMotion(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
-		pushValue(l,o.zMotion);
+		pushEnum(l,(int)o.zMotion);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -75,7 +70,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_angularXMotion(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
-		pushValue(l,o.angularXMotion);
+		pushEnum(l,(int)o.angularXMotion);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -89,7 +84,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_angularYMotion(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
-		pushValue(l,o.angularYMotion);
+		pushEnum(l,(int)o.angularYMotion);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -103,7 +98,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_angularZMotion(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
-		pushValue(l,o.angularZMotion);
+		pushEnum(l,(int)o.angularZMotion);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -285,7 +280,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rotationDriveMode(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
-		pushValue(l,o.rotationDriveMode);
+		pushEnum(l,(int)o.rotationDriveMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -341,7 +336,7 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_projectionMode(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
-		pushValue(l,o.projectionMode);
+		pushEnum(l,(int)o.projectionMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

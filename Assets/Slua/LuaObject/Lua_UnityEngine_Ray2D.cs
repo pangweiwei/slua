@@ -6,19 +6,14 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Ray2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Ray2D o;
-		if(matchType(l,1,typeof(UnityEngine.Vector2),typeof(UnityEngine.Vector2))){
-			UnityEngine.Vector2 a1;
-			checkType(l,1,out a1);
-			UnityEngine.Vector2 a2;
-			checkType(l,2,out a2);
-			o=new UnityEngine.Ray2D(a1,a2);
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		UnityEngine.Vector2 a1;
+		checkType(l,2,out a1);
+		UnityEngine.Vector2 a2;
+		checkType(l,3,out a2);
+		o=new UnityEngine.Ray2D(a1,a2);
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetPoint(IntPtr l) {

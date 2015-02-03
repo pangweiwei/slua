@@ -54,7 +54,7 @@ public class Lua_UnityEngine_UI_Toggle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_toggleTransition(IntPtr l) {
 		UnityEngine.UI.Toggle o = (UnityEngine.UI.Toggle)checkSelf(l);
-		pushValue(l,o.toggleTransition);
+		pushEnum(l,(int)o.toggleTransition);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

@@ -36,4 +36,9 @@ public class LuaSvrGameObject : MonoBehaviour {
             state.Close();
         }
     }
+
+    void Update()
+    {
+        state.checkRef();
+    }
 }

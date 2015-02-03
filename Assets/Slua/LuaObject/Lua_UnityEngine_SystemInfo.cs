@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_SystemInfo : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.SystemInfo o;
-		if(matchType(l,1)){
-			o=new UnityEngine.SystemInfo();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.SystemInfo();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SupportsRenderTextureFormat_s(IntPtr l) {
@@ -147,7 +142,7 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_npotSupport(IntPtr l) {
-		pushValue(l,UnityEngine.SystemInfo.npotSupport);
+		pushEnum(l,(int)UnityEngine.SystemInfo.npotSupport);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -187,7 +182,7 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_deviceType(IntPtr l) {
-		pushValue(l,UnityEngine.SystemInfo.deviceType);
+		pushEnum(l,(int)UnityEngine.SystemInfo.deviceType);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

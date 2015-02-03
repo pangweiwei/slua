@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_AnchoredJoint2D : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.AnchoredJoint2D o;
-		if(matchType(l,1)){
-			o=new UnityEngine.AnchoredJoint2D();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.AnchoredJoint2D();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_anchor(IntPtr l) {

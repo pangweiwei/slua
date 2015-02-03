@@ -12,7 +12,7 @@ public class Lua_UnityEngine_JointDrive : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mode(IntPtr l) {
 		UnityEngine.JointDrive o = (UnityEngine.JointDrive)checkSelf(l);
-		pushValue(l,o.mode);
+		pushEnum(l,(int)o.mode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

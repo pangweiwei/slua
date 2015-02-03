@@ -256,7 +256,7 @@ public class Lua_UnityEngine_EventSystems_EventTrigger : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_delegates(IntPtr l) {
 		UnityEngine.EventSystems.EventTrigger o = (UnityEngine.EventSystems.EventTrigger)checkSelf(l);
-		List<UnityEngine.EventSystems.EventTrigger.Entry> v;
+		System.Collections.Generic.List<UnityEngine.EventSystems.EventTrigger.Entry> v;
 		checkType(l,2,out v);
 		o.delegates=v;
 		return 0;

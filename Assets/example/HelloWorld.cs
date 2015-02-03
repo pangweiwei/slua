@@ -5,10 +5,8 @@ using SLua;
 using System;
 using LuaInterface;
 
+[CustomLuaClass]
 public class HelloWorld   {
-
-    public delegate bool GetBundleInfoDelegate(string path, out string url, out int version, out uint crc,ref int flag);
-    public delegate void SimpleDelegate(string path, GameObject g);
 
 	static public void say() {
 		Debug.Log ("hello world");
@@ -47,23 +45,9 @@ public class HelloWorld   {
         Debug.Log(go.name);
     }
 
-    public GetBundleInfoDelegate d;
-    public SimpleDelegate s;
 
-    public void callD()
-    {
-        string url;
-        int ver;
-        uint crc;
-        int flag = 1;
-        if (d != null)
-        {
-            bool ret = d("/path", out url, out ver, out crc, ref flag);
-            Debug.Log(string.Format("{0},{1},{2},{3},{4}", ret, url, ver, crc, flag));
-        }
-        if(s!=null)
-            s("GameObject", new GameObject("SimpleDelegate"));
-    }
+
+
 
     // this function exported, but get error to call
     // generic function not support
@@ -133,4 +117,34 @@ public class HelloWorld   {
             v = new Vector3(i, i, i);
         }
     }
+
+    // test variant number for arguments passed in
+    static public void func6(string str, params object[] args)
+    {
+        Debug.Log(str);
+        for (int n = 0; n < args.Length; n++)
+        {
+            Debug.Log(args[n]);
+        }
+    }
+
+    [DoNotToLua]
+    static public void dontexport()
+    {
+        
+    }
+
+    [DoNotToLua]
+    public int a;
+
+    [DoNotToLua]
+    public int A
+    {
+        get
+        {
+            return a;
+        }
+    }
+
+    internal int b;
 }

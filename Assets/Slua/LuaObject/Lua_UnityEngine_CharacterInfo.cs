@@ -87,7 +87,7 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_style(IntPtr l) {
 		UnityEngine.CharacterInfo o = (UnityEngine.CharacterInfo)checkSelf(l);
-		pushValue(l,o.style);
+		pushEnum(l,(int)o.style);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_ComputeShader : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.ComputeShader o;
-		if(matchType(l,1)){
-			o=new UnityEngine.ComputeShader();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.ComputeShader();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int FindKernel(IntPtr l) {
@@ -86,7 +81,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Single[] a2;
-			checkType(l,3,out a2);
+			checkParams(l,3,out a2);
 			self.SetFloats(a1,a2);
 			return 0;
 		}
@@ -102,7 +97,7 @@ public class Lua_UnityEngine_ComputeShader : LuaObject {
 			System.String a1;
 			checkType(l,2,out a1);
 			System.Int32[] a2;
-			checkType(l,3,out a2);
+			checkParams(l,3,out a2);
 			self.SetInts(a1,a2);
 			return 0;
 		}

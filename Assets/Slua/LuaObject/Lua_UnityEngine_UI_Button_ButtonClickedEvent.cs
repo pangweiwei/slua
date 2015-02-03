@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_UI_Button_ButtonClickedEvent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.UI.Button.ButtonClickedEvent o;
-		if(matchType(l,1)){
-			o=new UnityEngine.UI.Button.ButtonClickedEvent();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.UI.Button.ButtonClickedEvent();
+		pushObject(l,o);
+		return 1;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Button.ButtonClickedEvent");

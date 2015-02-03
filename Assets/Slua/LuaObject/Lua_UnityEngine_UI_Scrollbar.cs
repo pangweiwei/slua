@@ -192,7 +192,7 @@ public class Lua_UnityEngine_UI_Scrollbar : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_direction(IntPtr l) {
 		UnityEngine.UI.Scrollbar o = (UnityEngine.UI.Scrollbar)checkSelf(l);
-		pushValue(l,o.direction);
+		pushEnum(l,(int)o.direction);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

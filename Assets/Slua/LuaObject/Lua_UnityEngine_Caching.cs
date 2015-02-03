@@ -6,20 +6,16 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Caching : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Caching o;
-		if(matchType(l,1)){
-			o=new UnityEngine.Caching();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.Caching();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Authorize_s(IntPtr l) {
 		try{
-			if(matchType(l,1,typeof(System.String),typeof(System.String),typeof(System.Int64),typeof(System.String))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==4){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String a2;
@@ -32,7 +28,7 @@ public class Lua_UnityEngine_Caching : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,1,typeof(System.String),typeof(System.String),typeof(System.Int64),typeof(System.Int32),typeof(System.String))){
+			else if(argc==5){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String a2;
@@ -111,7 +107,7 @@ public class Lua_UnityEngine_Caching : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_maximumAvailableDiskSpace(IntPtr l) {
-		Int64 v;
+		System.Int64 v;
 		checkType(l,2,out v);
 		UnityEngine.Caching.maximumAvailableDiskSpace=v;
 		return 0;

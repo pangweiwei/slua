@@ -6,20 +6,16 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Camera o;
-		if(matchType(l,1)){
-			o=new UnityEngine.Camera();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.Camera();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetTargetBuffers(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.RenderBuffer),typeof(UnityEngine.RenderBuffer))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(UnityEngine.RenderBuffer),typeof(UnityEngine.RenderBuffer))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.RenderBuffer a1;
 				checkType(l,2,out a1);
@@ -28,7 +24,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 				self.SetTargetBuffers(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.RenderBuffer),typeof(UnityEngine.RenderBuffer))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.RenderBuffer[]),typeof(UnityEngine.RenderBuffer))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.RenderBuffer[] a1;
 				checkType(l,2,out a1);
@@ -272,7 +268,8 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RenderToCubemap(IntPtr l) {
 		try{
-			if(matchType(l,2,typeof(UnityEngine.Cubemap))){
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(UnityEngine.Cubemap))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.Cubemap a1;
 				checkType(l,2,out a1);
@@ -280,7 +277,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.Cubemap),typeof(System.Int32))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.Cubemap),typeof(int))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.Cubemap a1;
 				checkType(l,2,out a1);
@@ -290,7 +287,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.RenderTexture))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.RenderTexture))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.RenderTexture a1;
 				checkType(l,2,out a1);
@@ -298,7 +295,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,2,typeof(UnityEngine.RenderTexture),typeof(System.Int32))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.RenderTexture),typeof(int))){
 				UnityEngine.Camera self=(UnityEngine.Camera)checkSelf(l);
 				UnityEngine.RenderTexture a1;
 				checkType(l,2,out a1);
@@ -417,7 +414,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_renderingPath(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		pushValue(l,o.renderingPath);
+		pushEnum(l,(int)o.renderingPath);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -431,7 +428,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_actualRenderingPath(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		pushValue(l,o.actualRenderingPath);
+		pushEnum(l,(int)o.actualRenderingPath);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -479,7 +476,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_transparencySortMode(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		pushValue(l,o.transparencySortMode);
+		pushEnum(l,(int)o.transparencySortMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -671,7 +668,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_clearFlags(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		pushValue(l,o.clearFlags);
+		pushEnum(l,(int)o.clearFlags);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -759,7 +756,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_layerCullDistances(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		float[] v;
+		System.Single[] v;
 		checkType(l,2,out v);
 		o.layerCullDistances=v;
 		return 0;
@@ -781,7 +778,7 @@ public class Lua_UnityEngine_Camera : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_depthTextureMode(IntPtr l) {
 		UnityEngine.Camera o = (UnityEngine.Camera)checkSelf(l);
-		pushValue(l,o.depthTextureMode);
+		pushEnum(l,(int)o.depthTextureMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

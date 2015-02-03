@@ -13,7 +13,7 @@ public class Lua_UnityEngine_UI_Shadow : LuaObject {
 	static public int ModifyVertices(IntPtr l) {
 		try{
 			UnityEngine.UI.Shadow self=(UnityEngine.UI.Shadow)checkSelf(l);
-			List<UnityEngine.UIVertex> a1;
+			System.Collections.Generic.List<UnityEngine.UIVertex> a1;
 			checkType(l,2,out a1);
 			self.ModifyVertices(a1);
 			return 0;

@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_Texture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.Texture o;
-		if(matchType(l,1)){
-			o=new UnityEngine.Texture();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.Texture();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetNativeTexturePtr(IntPtr l) {
@@ -71,7 +66,7 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_anisotropicFiltering(IntPtr l) {
-		pushValue(l,UnityEngine.Texture.anisotropicFiltering);
+		pushEnum(l,(int)UnityEngine.Texture.anisotropicFiltering);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -112,7 +107,7 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_filterMode(IntPtr l) {
 		UnityEngine.Texture o = (UnityEngine.Texture)checkSelf(l);
-		pushValue(l,o.filterMode);
+		pushEnum(l,(int)o.filterMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -140,7 +135,7 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_wrapMode(IntPtr l) {
 		UnityEngine.Texture o = (UnityEngine.Texture)checkSelf(l);
-		pushValue(l,o.wrapMode);
+		pushEnum(l,(int)o.wrapMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

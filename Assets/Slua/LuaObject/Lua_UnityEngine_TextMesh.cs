@@ -6,15 +6,10 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_TextMesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		LuaDLL.lua_remove(l,1);
 		UnityEngine.TextMesh o;
-		if(matchType(l,1)){
-			o=new UnityEngine.TextMesh();
-			pushObject(l,o);
-			return 1;
-		}
-		LuaDLL.luaL_error(l,"New object failed.");
-		return 0;
+		o=new UnityEngine.TextMesh();
+		pushObject(l,o);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_text(IntPtr l) {
@@ -61,7 +56,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_fontStyle(IntPtr l) {
 		UnityEngine.TextMesh o = (UnityEngine.TextMesh)checkSelf(l);
-		pushValue(l,o.fontStyle);
+		pushEnum(l,(int)o.fontStyle);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -89,7 +84,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_alignment(IntPtr l) {
 		UnityEngine.TextMesh o = (UnityEngine.TextMesh)checkSelf(l);
-		pushValue(l,o.alignment);
+		pushEnum(l,(int)o.alignment);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -103,7 +98,7 @@ public class Lua_UnityEngine_TextMesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_anchor(IntPtr l) {
 		UnityEngine.TextMesh o = (UnityEngine.TextMesh)checkSelf(l);
-		pushValue(l,o.anchor);
+		pushEnum(l,(int)o.anchor);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
