@@ -972,7 +972,7 @@ namespace SLua
         foreach (ConstructorInfo ci in cons)
         {
                 ParameterInfo[] pars = ci.GetParameters();
-                if (!ContainGeneric(pars) && !IsObsolete(ci) && !DontExport(ci))
+                if (/*!ContainGeneric(pars) &&*/ !IsObsolete(ci) && !DontExport(ci))
                     ret.Add(ci);
         }
         return ret.ToArray();
