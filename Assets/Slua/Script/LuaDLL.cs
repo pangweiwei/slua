@@ -2,17 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-
-[AttributeUsage(AttributeTargets.Class)]
-public class CustomLuaClassAttribute : System.Attribute
-{
-    public CustomLuaClassAttribute()
-    {
-        //
-    }
-}
-
-
 namespace LuaInterface
 {
 

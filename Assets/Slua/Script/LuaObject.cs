@@ -28,6 +28,24 @@ using LuaInterface;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
+[AttributeUsage(AttributeTargets.Class)]
+public class CustomLuaClassAttribute : System.Attribute
+{
+    public CustomLuaClassAttribute()
+    {
+        //
+    }
+}
+
+public class DoNotToLuaAttribute : System.Attribute
+{
+    public DoNotToLuaAttribute()
+    {
+        //
+    }
+}
+
+
 namespace SLua
 {
 

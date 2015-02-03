@@ -676,6 +676,7 @@ namespace SLua
 
             if (mi.MemberType == MemberTypes.Method
                 && !IsObsolete(mi)
+                && !DontExport(mi)
                 && !funcname.Contains(fn)
                 && isUsefullMethod(mi)
                 && !MemberInFilter(t, mi))
@@ -795,6 +796,9 @@ namespace SLua
         FieldInfo[] fields = t.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance|BindingFlags.DeclaredOnly);
         foreach (FieldInfo fi in fields)
         {
+            if (DontExport(fi))
+                continue;
+
 			PropPair pp = new PropPair();
             pp.isInstance = !fi.IsStatic;
 
@@ -857,7 +861,7 @@ namespace SLua
         PropertyInfo[] props = t.GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         foreach (PropertyInfo fi in props)
         {
-            if (fi.Name == "Item" || IsObsolete(fi) || MemberInFilter(t,fi))
+            if (fi.Name == "Item" || IsObsolete(fi) || MemberInFilter(t,fi) || DontExport(fi))
                 continue;
 
             PropPair pp = new PropPair();
@@ -956,10 +960,15 @@ namespace SLua
         foreach (ConstructorInfo ci in cons)
         {
                 ParameterInfo[] pars = ci.GetParameters();
-                if (!containGeneric(pars) && !IsObsolete(ci))
+                if (!ContainGeneric(pars) && !IsObsolete(ci) && !DontExport(ci))
                     ret.Add(ci);
         }
         return ret.ToArray();
+    }
+
+    bool DontExport(MemberInfo mi)
+    {
+        return mi.GetCustomAttributes(typeof(DoNotToLuaAttribute), false).Length > 0;
     }
 
 
@@ -1128,6 +1137,7 @@ namespace SLua
         {
             if (m.MemberType == MemberTypes.Method
                 && !IsObsolete(m)
+                && !DontExport(m)
                 && isUsefullMethod((MethodInfo)m) )
                 methods.Add((MethodBase)m);
         }
@@ -1160,7 +1170,7 @@ namespace SLua
                     MethodInfo mi = cons[n] as MethodInfo;
 
                     ParameterInfo[] pars = mi.GetParameters();
-                    if (isUsefullMethod(mi) && !mi.ReturnType.ContainsGenericParameters && !containGeneric(pars)) // don't support generic method
+                    if (isUsefullMethod(mi) && !mi.ReturnType.ContainsGenericParameters && !ContainGeneric(pars)) // don't support generic method
                     {
                         if (isUniqueArgsCount(cons, mi))
                             Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", mi.GetParameters().Length);
@@ -1194,7 +1204,7 @@ namespace SLua
         return true;
     }
 
-    bool containGeneric(ParameterInfo[] pars)
+    bool ContainGeneric(ParameterInfo[] pars)
     {
         foreach (ParameterInfo p in pars)
         {
