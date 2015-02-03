@@ -45,6 +45,14 @@ public class DoNotToLuaAttribute : System.Attribute
     }
 }
 
+[AttributeUsage(AttributeTargets.Method)]
+public class StaticExportAttribute : System.Attribute 
+{
+	public StaticExportAttribute() 
+	{
+	}
+}
+
 
 namespace SLua
 {

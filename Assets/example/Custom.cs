@@ -33,7 +33,8 @@ public class Custom : MonoBehaviour {
     }
 
     // this exported function don't generate stub code, only register it
-    [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction),false)]
+    [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[StaticExport]
     static public int staticCustom(IntPtr l) {
         LuaDLL.lua_pushstring(l,vs);
         LuaObject.pushObject(l, c);

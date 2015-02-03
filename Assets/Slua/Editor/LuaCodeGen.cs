@@ -211,7 +211,7 @@ public class LuaCodeGen : MonoBehaviour
 
         // export 3rd dll
         List<string> assemblyList = new List<string>();
-        assemblyList.Add("NGUI");
+        //assemblyList.Add("NGUI"); 
         
         foreach( string assemblyItem in assemblyList )
         {
@@ -706,7 +706,7 @@ namespace SLua
         if (attrs.Length > 0)
         {
             MonoPInvokeCallbackAttribute p = attrs[0] as MonoPInvokeCallbackAttribute;
-            instanceFunc = p.instance;
+			instanceFunc = mi.GetCustomAttributes(typeof(StaticExportAttribute),false).Length==0;
             return true;
         }
         instanceFunc = true;

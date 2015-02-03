@@ -9,10 +9,8 @@ namespace LuaInterface
     public class MonoPInvokeCallbackAttribute : System.Attribute
     {
         private Type type;
-        public bool instance;
-        public MonoPInvokeCallbackAttribute(Type t,bool inst=true) { 
+        public MonoPInvokeCallbackAttribute(Type t) { 
             type = t;
-            instance = inst;
         }
     }
 #pragma warning restore 414
