@@ -211,7 +211,7 @@ public class LuaCodeGen : MonoBehaviour
 
         // export 3rd dll
         List<string> assemblyList = new List<string>();
-        //assemblyList.Add("DOTween");
+        assemblyList.Add("NGUI");
         
         foreach( string assemblyItem in assemblyList )
         {
@@ -369,7 +369,7 @@ class CodeGenerator
                 }
                 else
                 {
-                    f = LuaCodeGen.path + "LuaDelegate_" + t.Name + ".cs";
+                    f = LuaCodeGen.path + "LuaDelegate_" + _Name(t.FullName) + ".cs";
                 }
                 StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
                 WriteDelegate(t, file);
