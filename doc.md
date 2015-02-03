@@ -186,6 +186,23 @@ slua的delegate支持+=/-=操作, 例如
 >public static Action<int, Dictionary<int, object>> daction;
 
 
+###如何快速导出第三方库, 例如ngui等
+
+新建一个空工程,将第三方库的所有代码放入Assets内, 等待Unity编译完成;
+打开产生的sln工程,找到 Assembly-CSharp 工程, 修改工程"程序集名称"由Assembly-CSharp改为第三方库名称,例如NGUI;
+选择目标框架为".net Subset Base class Libraries";
+调整为Release版本, 然后生成对应的dll;
+将dll放入slua/3rdlib目录;
+打开LuaCodeGen.cs, 找到Custom() 函数
+
+在assemblyItem List内添加程序集名字, 例如:
+
+>     List<string> assemblyList = new List<string>();
+    assemblyList.Add("NGUI");
+
+保存, 等待编译完成, 点击Make custom,将会生成NGUI的全部接口文件.
+
+
 ##编译slua库
 
 编译slua库非常简单, 仅需要把slua加入 lua/luajit 的make文件, 按照对应平台的make方法就可以产生对应平台的库文件, 以 luajit2.1 生成 64位 iOS 系统的库文件为例:
