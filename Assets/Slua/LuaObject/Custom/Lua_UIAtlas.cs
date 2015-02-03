@@ -27,6 +27,33 @@ public class Lua_UIAtlas : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetRandomSprite(IntPtr l) {
+		try{
+			UIAtlas self=(UIAtlas)checkSelf(l);
+			System.String a1;
+			checkType(l,2,out a1);
+			System.String ret=self.GetRandomSprite(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int MarkSpriteListAsChanged(IntPtr l) {
+		try{
+			UIAtlas self=(UIAtlas)checkSelf(l);
+			self.MarkSpriteListAsChanged();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SortAlphabetically(IntPtr l) {
 		try{
 			UIAtlas self=(UIAtlas)checkSelf(l);
@@ -163,6 +190,8 @@ public class Lua_UIAtlas : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIAtlas");
 		addMember(l,GetSprite);
+		addMember(l,GetRandomSprite);
+		addMember(l,MarkSpriteListAsChanged);
 		addMember(l,SortAlphabetically);
 		addMember(l,GetListOfSprites);
 		addMember(l,MarkAsChanged);

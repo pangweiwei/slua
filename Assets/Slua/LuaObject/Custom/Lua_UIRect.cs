@@ -131,6 +131,38 @@ public class Lua_UIRect : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ResetAndUpdateAnchors(IntPtr l) {
+		try{
+			UIRect self=(UIRect)checkSelf(l);
+			self.ResetAndUpdateAnchors();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetRect(IntPtr l) {
+		try{
+			UIRect self=(UIRect)checkSelf(l);
+			System.Single a1;
+			checkType(l,2,out a1);
+			System.Single a2;
+			checkType(l,3,out a2);
+			System.Single a3;
+			checkType(l,4,out a3);
+			System.Single a4;
+			checkType(l,5,out a4);
+			self.SetRect(a1,a2,a3,a4);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ParentHasChanged(IntPtr l) {
 		try{
 			UIRect self=(UIRect)checkSelf(l);
@@ -196,6 +228,20 @@ public class Lua_UIRect : LuaObject {
 		UIRect.AnchorPoint v;
 		checkType(l,2,out v);
 		o.topAnchor=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_updateAnchors(IntPtr l) {
+		UIRect o = (UIRect)checkSelf(l);
+		pushEnum(l,(int)o.updateAnchors);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_updateAnchors(IntPtr l) {
+		UIRect o = (UIRect)checkSelf(l);
+		UIRect.AnchorUpdate v;
+		checkEnum(l,2,out v);
+		o.updateAnchors=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -307,11 +353,14 @@ public class Lua_UIRect : LuaObject {
 		addMember(l,UpdateAnchors);
 		addMember(l,SetAnchor);
 		addMember(l,ResetAnchors);
+		addMember(l,ResetAndUpdateAnchors);
+		addMember(l,SetRect);
 		addMember(l,ParentHasChanged);
 		addMember(l,"leftAnchor",get_leftAnchor,set_leftAnchor,true);
 		addMember(l,"rightAnchor",get_rightAnchor,set_rightAnchor,true);
 		addMember(l,"bottomAnchor",get_bottomAnchor,set_bottomAnchor,true);
 		addMember(l,"topAnchor",get_topAnchor,set_topAnchor,true);
+		addMember(l,"updateAnchors",get_updateAnchors,set_updateAnchors,true);
 		addMember(l,"finalAlpha",get_finalAlpha,set_finalAlpha,true);
 		addMember(l,"cachedGameObject",get_cachedGameObject,null,true);
 		addMember(l,"cachedTransform",get_cachedTransform,null,true);

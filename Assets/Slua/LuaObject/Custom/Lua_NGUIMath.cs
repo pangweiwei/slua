@@ -116,11 +116,39 @@ public class Lua_NGUIMath : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DecimalToHex_s(IntPtr l) {
+	static public int DecimalToHex8_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
-			System.String ret=NGUIMath.DecimalToHex(a1);
+			System.String ret=NGUIMath.DecimalToHex8(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int DecimalToHex24_s(IntPtr l) {
+		try{
+			System.Int32 a1;
+			checkType(l,1,out a1);
+			System.String ret=NGUIMath.DecimalToHex24(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int DecimalToHex32_s(IntPtr l) {
+		try{
+			System.Int32 a1;
+			checkType(l,1,out a1);
+			System.String ret=NGUIMath.DecimalToHex32(a1);
 			pushValue(l,ret);
 			return 1;
 		}
@@ -318,14 +346,16 @@ public class Lua_NGUIMath : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Transform a1;
 				checkType(l,1,out a1);
 				UnityEngine.Transform a2;
 				checkType(l,2,out a2);
 				System.Boolean a3;
 				checkType(l,3,out a3);
-				UnityEngine.Bounds ret=NGUIMath.CalculateRelativeWidgetBounds(a1,a2,a3);
+				System.Boolean a4;
+				checkType(l,4,out a4);
+				UnityEngine.Bounds ret=NGUIMath.CalculateRelativeWidgetBounds(a1,a2,a3,a4);
 				pushValue(l,ret);
 				return 1;
 			}
@@ -672,6 +702,114 @@ public class Lua_NGUIMath : LuaObject {
 			return 0;
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int AdjustByDPI_s(IntPtr l) {
+		try{
+			System.Single a1;
+			checkType(l,1,out a1);
+			System.Int32 ret=NGUIMath.AdjustByDPI(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ScreenToPixels_s(IntPtr l) {
+		try{
+			UnityEngine.Vector2 a1;
+			checkType(l,1,out a1);
+			UnityEngine.Transform a2;
+			checkType(l,2,out a2);
+			UnityEngine.Vector2 ret=NGUIMath.ScreenToPixels(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ScreenToParentPixels_s(IntPtr l) {
+		try{
+			UnityEngine.Vector2 a1;
+			checkType(l,1,out a1);
+			UnityEngine.Transform a2;
+			checkType(l,2,out a2);
+			UnityEngine.Vector2 ret=NGUIMath.ScreenToParentPixels(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int WorldToLocalPoint_s(IntPtr l) {
+		try{
+			UnityEngine.Vector3 a1;
+			checkType(l,1,out a1);
+			UnityEngine.Camera a2;
+			checkType(l,2,out a2);
+			UnityEngine.Camera a3;
+			checkType(l,3,out a3);
+			UnityEngine.Transform a4;
+			checkType(l,4,out a4);
+			UnityEngine.Vector3 ret=NGUIMath.WorldToLocalPoint(a1,a2,a3,a4);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int OverlayPosition_s(IntPtr l) {
+		try{
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==4){
+				UnityEngine.Transform a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Camera a3;
+				checkType(l,3,out a3);
+				UnityEngine.Camera a4;
+				checkType(l,4,out a4);
+				NGUIMath.OverlayPosition(a1,a2,a3,a4);
+				return 0;
+			}
+			else if(argc==3){
+				UnityEngine.Transform a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Camera a3;
+				checkType(l,3,out a3);
+				NGUIMath.OverlayPosition(a1,a2,a3);
+				return 0;
+			}
+			else if(argc==2){
+				UnityEngine.Transform a1;
+				checkType(l,1,out a1);
+				UnityEngine.Transform a2;
+				checkType(l,2,out a2);
+				NGUIMath.OverlayPosition(a1,a2);
+				return 0;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"NGUIMath");
 		addMember(l,Lerp_s);
@@ -681,7 +819,9 @@ public class Lua_NGUIMath : LuaObject {
 		addMember(l,Wrap01_s);
 		addMember(l,HexToDecimal_s);
 		addMember(l,DecimalToHexChar_s);
-		addMember(l,DecimalToHex_s);
+		addMember(l,DecimalToHex8_s);
+		addMember(l,DecimalToHex24_s);
+		addMember(l,DecimalToHex32_s);
 		addMember(l,ColorToInt_s);
 		addMember(l,IntToColor_s);
 		addMember(l,IntToBinary_s);
@@ -702,6 +842,11 @@ public class Lua_NGUIMath : LuaObject {
 		addMember(l,MoveRect_s);
 		addMember(l,ResizeWidget_s);
 		addMember(l,AdjustWidget_s);
+		addMember(l,AdjustByDPI_s);
+		addMember(l,ScreenToPixels_s);
+		addMember(l,ScreenToParentPixels_s);
+		addMember(l,WorldToLocalPoint_s);
+		addMember(l,OverlayPosition_s);
 		createTypeMetatable(l,constructor, typeof(NGUIMath));
 	}
 }

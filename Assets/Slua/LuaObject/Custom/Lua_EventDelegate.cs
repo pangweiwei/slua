@@ -104,6 +104,23 @@ public class Lua_EventDelegate : LuaObject {
 	static public int Set_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(List<EventDelegate>),typeof(EventDelegate.Callback))){
+				System.Collections.Generic.List<EventDelegate> a1;
+				checkType(l,1,out a1);
+				EventDelegate.Callback a2;
+				checkDelegate(l,2,out a2);
+				EventDelegate ret=EventDelegate.Set(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,argc,1,typeof(List<EventDelegate>),typeof(EventDelegate))){
+				System.Collections.Generic.List<EventDelegate> a1;
+				checkType(l,1,out a1);
+				EventDelegate a2;
+				checkType(l,2,out a2);
+				EventDelegate.Set(a1,a2);
+				return 0;
+			}
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}
@@ -116,6 +133,44 @@ public class Lua_EventDelegate : LuaObject {
 	static public int Add_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(List<EventDelegate>),typeof(EventDelegate.Callback))){
+				System.Collections.Generic.List<EventDelegate> a1;
+				checkType(l,1,out a1);
+				EventDelegate.Callback a2;
+				checkDelegate(l,2,out a2);
+				EventDelegate ret=EventDelegate.Add(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,argc,1,typeof(List<EventDelegate>),typeof(EventDelegate.Callback),typeof(bool))){
+				System.Collections.Generic.List<EventDelegate> a1;
+				checkType(l,1,out a1);
+				EventDelegate.Callback a2;
+				checkDelegate(l,2,out a2);
+				System.Boolean a3;
+				checkType(l,3,out a3);
+				EventDelegate ret=EventDelegate.Add(a1,a2,a3);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,argc,1,typeof(List<EventDelegate>),typeof(EventDelegate))){
+				System.Collections.Generic.List<EventDelegate> a1;
+				checkType(l,1,out a1);
+				EventDelegate a2;
+				checkType(l,2,out a2);
+				EventDelegate.Add(a1,a2);
+				return 0;
+			}
+			else if(matchType(l,argc,1,typeof(List<EventDelegate>),typeof(EventDelegate),typeof(bool))){
+				System.Collections.Generic.List<EventDelegate> a1;
+				checkType(l,1,out a1);
+				EventDelegate a2;
+				checkType(l,2,out a2);
+				System.Boolean a3;
+				checkType(l,3,out a3);
+				EventDelegate.Add(a1,a2,a3);
+				return 0;
+			}
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}
@@ -127,13 +182,27 @@ public class Lua_EventDelegate : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Remove_s(IntPtr l) {
 		try{
-			System.Collections.Generic.List<EventDelegate> a1;
-			checkType(l,1,out a1);
-			EventDelegate.Callback a2;
-			checkDelegate(l,2,out a2);
-			System.Boolean ret=EventDelegate.Remove(a1,a2);
-			pushValue(l,ret);
-			return 1;
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(List<EventDelegate>),typeof(EventDelegate.Callback))){
+				System.Collections.Generic.List<EventDelegate> a1;
+				checkType(l,1,out a1);
+				EventDelegate.Callback a2;
+				checkDelegate(l,2,out a2);
+				System.Boolean ret=EventDelegate.Remove(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,argc,1,typeof(List<EventDelegate>),typeof(EventDelegate))){
+				System.Collections.Generic.List<EventDelegate> a1;
+				checkType(l,1,out a1);
+				EventDelegate a2;
+				checkType(l,2,out a2);
+				System.Boolean ret=EventDelegate.Remove(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -183,6 +252,12 @@ public class Lua_EventDelegate : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_parameters(IntPtr l) {
+		EventDelegate o = (EventDelegate)checkSelf(l);
+		pushValue(l,o.parameters);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isValid(IntPtr l) {
 		EventDelegate o = (EventDelegate)checkSelf(l);
 		pushValue(l,o.isValid);
@@ -207,6 +282,7 @@ public class Lua_EventDelegate : LuaObject {
 		addMember(l,"oneShot",get_oneShot,set_oneShot,true);
 		addMember(l,"target",get_target,set_target,true);
 		addMember(l,"methodName",get_methodName,set_methodName,true);
+		addMember(l,"parameters",get_parameters,null,true);
 		addMember(l,"isValid",get_isValid,null,true);
 		addMember(l,"isEnabled",get_isEnabled,null,true);
 		createTypeMetatable(l,constructor, typeof(EventDelegate));

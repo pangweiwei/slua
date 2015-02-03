@@ -8,6 +8,7 @@ public class Lua_AnimationOrTween_EnableCondition : LuaObject {
 		getEnumTable(l,"AnimationOrTween.EnableCondition");
 		addMember(l,0,"DoNothing");
 		addMember(l,1,"EnableThenPlay");
+		addMember(l,2,"IgnoreDisabledState");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

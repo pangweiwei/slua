@@ -118,6 +118,15 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
+			else if(argc==2){
+				UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
+				System.Type a1;
+				checkType(l,2,out a1);
+				System.Collections.Generic.List<UnityEngine.Component> a2;
+				checkType(l,3,out a2);
+				self.GetComponents(a1,a2);
+				return 0;
+			}
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}

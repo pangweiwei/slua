@@ -76,6 +76,16 @@ public class Lua_UICenterOnChild : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onCenter(IntPtr l) {
+		UICenterOnChild o = (UICenterOnChild)checkSelf(l);
+		UICenterOnChild.OnCenterCallback v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onCenter=v;
+		else if(op==1) o.onCenter+=v;
+		else if(op==2) o.onCenter-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_centeredObject(IntPtr l) {
 		UICenterOnChild o = (UICenterOnChild)checkSelf(l);
 		pushValue(l,o.centeredObject);
@@ -88,6 +98,7 @@ public class Lua_UICenterOnChild : LuaObject {
 		addMember(l,"springStrength",get_springStrength,set_springStrength,true);
 		addMember(l,"nextPageThreshold",get_nextPageThreshold,set_nextPageThreshold,true);
 		addMember(l,"onFinished",null,set_onFinished,true);
+		addMember(l,"onCenter",null,set_onCenter,true);
 		addMember(l,"centeredObject",get_centeredObject,null,true);
 		createTypeMetatable(l,constructor, typeof(UICenterOnChild),typeof(UnityEngine.MonoBehaviour));
 	}

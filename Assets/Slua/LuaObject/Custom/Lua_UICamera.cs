@@ -78,15 +78,27 @@ public class Lua_UICamera : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int IsPressed_s(IntPtr l) {
+		try{
+			UnityEngine.GameObject a1;
+			checkType(l,1,out a1);
+			System.Boolean ret=UICamera.IsPressed(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Raycast_s(IntPtr l) {
 		try{
 			UnityEngine.Vector3 a1;
 			checkType(l,1,out a1);
-			UnityEngine.RaycastHit a2;
-			System.Boolean ret=UICamera.Raycast(a1,out a2);
+			System.Boolean ret=UICamera.Raycast(a1);
 			pushValue(l,ret);
-			pushValue(l,a2);
-			return 2;
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -192,6 +204,42 @@ public class Lua_UICamera : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_GetKeyDown(IntPtr l) {
+		UICamera.GetKeyStateFunc v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.GetKeyDown=v;
+		else if(op==1) UICamera.GetKeyDown+=v;
+		else if(op==2) UICamera.GetKeyDown-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_GetKeyUp(IntPtr l) {
+		UICamera.GetKeyStateFunc v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.GetKeyUp=v;
+		else if(op==1) UICamera.GetKeyUp+=v;
+		else if(op==2) UICamera.GetKeyUp-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_GetKey(IntPtr l) {
+		UICamera.GetKeyStateFunc v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.GetKey=v;
+		else if(op==1) UICamera.GetKey+=v;
+		else if(op==2) UICamera.GetKey-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_GetAxis(IntPtr l) {
+		UICamera.GetAxisFunc v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.GetAxis=v;
+		else if(op==1) UICamera.GetAxis+=v;
+		else if(op==2) UICamera.GetAxis-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_onScreenResize(IntPtr l) {
 		UICamera.OnScreenResize v;
 		int op=checkDelegate(l,2,out v);
@@ -212,6 +260,20 @@ public class Lua_UICamera : LuaObject {
 		UICamera.EventType v;
 		checkEnum(l,2,out v);
 		o.eventType=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_eventsGoToColliders(IntPtr l) {
+		UICamera o = (UICamera)checkSelf(l);
+		pushValue(l,o.eventsGoToColliders);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_eventsGoToColliders(IntPtr l) {
+		UICamera o = (UICamera)checkSelf(l);
+		System.Boolean v;
+		checkType(l,2,out v);
+		o.eventsGoToColliders=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -453,6 +515,20 @@ public class Lua_UICamera : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_commandClick(IntPtr l) {
+		UICamera o = (UICamera)checkSelf(l);
+		pushValue(l,o.commandClick);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_commandClick(IntPtr l) {
+		UICamera o = (UICamera)checkSelf(l);
+		System.Boolean v;
+		checkType(l,2,out v);
+		o.commandClick=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_submitKey0(IntPtr l) {
 		UICamera o = (UICamera)checkSelf(l);
 		pushEnum(l,(int)o.submitKey0);
@@ -539,6 +615,18 @@ public class Lua_UICamera : LuaObject {
 		UnityEngine.Vector2 v;
 		checkType(l,2,out v);
 		UICamera.lastTouchPosition=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_lastWorldPosition(IntPtr l) {
+		pushValue(l,UICamera.lastWorldPosition);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_lastWorldPosition(IntPtr l) {
+		UnityEngine.Vector3 v;
+		checkType(l,2,out v);
+		UICamera.lastWorldPosition=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -638,18 +726,6 @@ public class Lua_UICamera : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_genericEventHandler(IntPtr l) {
-		pushValue(l,UICamera.genericEventHandler);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_genericEventHandler(IntPtr l) {
-		UnityEngine.GameObject v;
-		checkType(l,2,out v);
-		UICamera.genericEventHandler=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_fallThrough(IntPtr l) {
 		pushValue(l,UICamera.fallThrough);
 		return 1;
@@ -659,6 +735,141 @@ public class Lua_UICamera : LuaObject {
 		UnityEngine.GameObject v;
 		checkType(l,2,out v);
 		UICamera.fallThrough=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onClick(IntPtr l) {
+		UICamera.VoidDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onClick=v;
+		else if(op==1) UICamera.onClick+=v;
+		else if(op==2) UICamera.onClick-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDoubleClick(IntPtr l) {
+		UICamera.VoidDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onDoubleClick=v;
+		else if(op==1) UICamera.onDoubleClick+=v;
+		else if(op==2) UICamera.onDoubleClick-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onHover(IntPtr l) {
+		UICamera.BoolDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onHover=v;
+		else if(op==1) UICamera.onHover+=v;
+		else if(op==2) UICamera.onHover-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onPress(IntPtr l) {
+		UICamera.BoolDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onPress=v;
+		else if(op==1) UICamera.onPress+=v;
+		else if(op==2) UICamera.onPress-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onSelect(IntPtr l) {
+		UICamera.BoolDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onSelect=v;
+		else if(op==1) UICamera.onSelect+=v;
+		else if(op==2) UICamera.onSelect-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onScroll(IntPtr l) {
+		UICamera.FloatDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onScroll=v;
+		else if(op==1) UICamera.onScroll+=v;
+		else if(op==2) UICamera.onScroll-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDrag(IntPtr l) {
+		UICamera.VectorDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onDrag=v;
+		else if(op==1) UICamera.onDrag+=v;
+		else if(op==2) UICamera.onDrag-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragStart(IntPtr l) {
+		UICamera.VoidDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onDragStart=v;
+		else if(op==1) UICamera.onDragStart+=v;
+		else if(op==2) UICamera.onDragStart-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragOver(IntPtr l) {
+		UICamera.ObjectDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onDragOver=v;
+		else if(op==1) UICamera.onDragOver+=v;
+		else if(op==2) UICamera.onDragOver-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragOut(IntPtr l) {
+		UICamera.ObjectDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onDragOut=v;
+		else if(op==1) UICamera.onDragOut+=v;
+		else if(op==2) UICamera.onDragOut-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragEnd(IntPtr l) {
+		UICamera.VoidDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onDragEnd=v;
+		else if(op==1) UICamera.onDragEnd+=v;
+		else if(op==2) UICamera.onDragEnd-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDrop(IntPtr l) {
+		UICamera.ObjectDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onDrop=v;
+		else if(op==1) UICamera.onDrop+=v;
+		else if(op==2) UICamera.onDrop-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onKey(IntPtr l) {
+		UICamera.KeyCodeDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onKey=v;
+		else if(op==1) UICamera.onKey+=v;
+		else if(op==2) UICamera.onKey-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onTooltip(IntPtr l) {
+		UICamera.BoolDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onTooltip=v;
+		else if(op==1) UICamera.onTooltip+=v;
+		else if(op==2) UICamera.onTooltip-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onMouseMove(IntPtr l) {
+		UICamera.MoveDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) UICamera.onMouseMove=v;
+		else if(op==1) UICamera.onMouseMove+=v;
+		else if(op==2) UICamera.onMouseMove-=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -709,6 +920,11 @@ public class Lua_UICamera : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isOverUI(IntPtr l) {
+		pushValue(l,UICamera.isOverUI);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_selectedObject(IntPtr l) {
 		pushValue(l,UICamera.selectedObject);
 		return 1;
@@ -747,6 +963,7 @@ public class Lua_UICamera : LuaObject {
 		addMember(l,ProcessOthers);
 		addMember(l,ProcessTouch);
 		addMember(l,ShowTooltip);
+		addMember(l,IsPressed_s);
 		addMember(l,Raycast_s);
 		addMember(l,IsHighlighted_s);
 		addMember(l,FindCameraForLayer_s);
@@ -755,8 +972,13 @@ public class Lua_UICamera : LuaObject {
 		addMember(l,GetTouch_s);
 		addMember(l,RemoveTouch_s);
 		addMember(l,"list",get_list,set_list,false);
+		addMember(l,"GetKeyDown",null,set_GetKeyDown,false);
+		addMember(l,"GetKeyUp",null,set_GetKeyUp,false);
+		addMember(l,"GetKey",null,set_GetKey,false);
+		addMember(l,"GetAxis",null,set_GetAxis,false);
 		addMember(l,"onScreenResize",null,set_onScreenResize,false);
 		addMember(l,"eventType",get_eventType,set_eventType,true);
+		addMember(l,"eventsGoToColliders",get_eventsGoToColliders,set_eventsGoToColliders,true);
 		addMember(l,"eventReceiverMask",get_eventReceiverMask,set_eventReceiverMask,true);
 		addMember(l,"debug",get_debug,set_debug,true);
 		addMember(l,"useMouse",get_useMouse,set_useMouse,true);
@@ -774,6 +996,7 @@ public class Lua_UICamera : LuaObject {
 		addMember(l,"scrollAxisName",get_scrollAxisName,set_scrollAxisName,true);
 		addMember(l,"verticalAxisName",get_verticalAxisName,set_verticalAxisName,true);
 		addMember(l,"horizontalAxisName",get_horizontalAxisName,set_horizontalAxisName,true);
+		addMember(l,"commandClick",get_commandClick,set_commandClick,true);
 		addMember(l,"submitKey0",get_submitKey0,set_submitKey0,true);
 		addMember(l,"submitKey1",get_submitKey1,set_submitKey1,true);
 		addMember(l,"cancelKey0",get_cancelKey0,set_cancelKey0,true);
@@ -781,6 +1004,7 @@ public class Lua_UICamera : LuaObject {
 		addMember(l,"onCustomInput",null,set_onCustomInput,false);
 		addMember(l,"showTooltips",get_showTooltips,set_showTooltips,false);
 		addMember(l,"lastTouchPosition",get_lastTouchPosition,set_lastTouchPosition,false);
+		addMember(l,"lastWorldPosition",get_lastWorldPosition,set_lastWorldPosition,false);
 		addMember(l,"lastHit",get_lastHit,set_lastHit,false);
 		addMember(l,"current",get_current,set_current,false);
 		addMember(l,"currentCamera",get_currentCamera,set_currentCamera,false);
@@ -789,13 +1013,28 @@ public class Lua_UICamera : LuaObject {
 		addMember(l,"currentKey",get_currentKey,set_currentKey,false);
 		addMember(l,"currentTouch",get_currentTouch,set_currentTouch,false);
 		addMember(l,"inputHasFocus",get_inputHasFocus,set_inputHasFocus,false);
-		addMember(l,"genericEventHandler",get_genericEventHandler,set_genericEventHandler,false);
 		addMember(l,"fallThrough",get_fallThrough,set_fallThrough,false);
+		addMember(l,"onClick",null,set_onClick,false);
+		addMember(l,"onDoubleClick",null,set_onDoubleClick,false);
+		addMember(l,"onHover",null,set_onHover,false);
+		addMember(l,"onPress",null,set_onPress,false);
+		addMember(l,"onSelect",null,set_onSelect,false);
+		addMember(l,"onScroll",null,set_onScroll,false);
+		addMember(l,"onDrag",null,set_onDrag,false);
+		addMember(l,"onDragStart",null,set_onDragStart,false);
+		addMember(l,"onDragOver",null,set_onDragOver,false);
+		addMember(l,"onDragOut",null,set_onDragOut,false);
+		addMember(l,"onDragEnd",null,set_onDragEnd,false);
+		addMember(l,"onDrop",null,set_onDrop,false);
+		addMember(l,"onKey",null,set_onKey,false);
+		addMember(l,"onTooltip",null,set_onTooltip,false);
+		addMember(l,"onMouseMove",null,set_onMouseMove,false);
 		addMember(l,"controller",get_controller,set_controller,false);
 		addMember(l,"isDragging",get_isDragging,set_isDragging,false);
 		addMember(l,"hoveredObject",get_hoveredObject,set_hoveredObject,false);
 		addMember(l,"currentRay",get_currentRay,null,false);
 		addMember(l,"cachedCamera",get_cachedCamera,null,true);
+		addMember(l,"isOverUI",get_isOverUI,null,false);
 		addMember(l,"selectedObject",get_selectedObject,set_selectedObject,false);
 		addMember(l,"touchCount",get_touchCount,null,false);
 		addMember(l,"dragCount",get_dragCount,null,false);

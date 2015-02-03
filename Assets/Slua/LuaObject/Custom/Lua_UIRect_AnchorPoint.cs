@@ -26,12 +26,28 @@ public class Lua_UIRect_AnchorPoint : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Set(IntPtr l) {
 		try{
-			UIRect.AnchorPoint self=(UIRect.AnchorPoint)checkSelf(l);
-			System.Single a1;
-			checkType(l,2,out a1);
-			System.Single a2;
-			checkType(l,3,out a2);
-			self.Set(a1,a2);
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
+				UIRect.AnchorPoint self=(UIRect.AnchorPoint)checkSelf(l);
+				System.Single a1;
+				checkType(l,2,out a1);
+				System.Single a2;
+				checkType(l,3,out a2);
+				self.Set(a1,a2);
+				return 0;
+			}
+			else if(argc==3){
+				UIRect.AnchorPoint self=(UIRect.AnchorPoint)checkSelf(l);
+				UnityEngine.Transform a1;
+				checkType(l,2,out a1);
+				System.Single a2;
+				checkType(l,3,out a2);
+				System.Single a3;
+				checkType(l,4,out a3);
+				self.Set(a1,a2,a3);
+				return 0;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}
 		catch(Exception e) {

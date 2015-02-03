@@ -12,11 +12,157 @@ public class Lua_UIGrid : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetChildList(IntPtr l) {
+		try{
+			UIGrid self=(UIGrid)checkSelf(l);
+			System.Collections.Generic.List<UnityEngine.Transform> ret=self.GetChildList();
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetChild(IntPtr l) {
+		try{
+			UIGrid self=(UIGrid)checkSelf(l);
+			System.Int32 a1;
+			checkType(l,2,out a1);
+			UnityEngine.Transform ret=self.GetChild(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetIndex(IntPtr l) {
+		try{
+			UIGrid self=(UIGrid)checkSelf(l);
+			UnityEngine.Transform a1;
+			checkType(l,2,out a1);
+			System.Int32 ret=self.GetIndex(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int AddChild(IntPtr l) {
+		try{
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
+				UIGrid self=(UIGrid)checkSelf(l);
+				UnityEngine.Transform a1;
+				checkType(l,2,out a1);
+				self.AddChild(a1);
+				return 0;
+			}
+			else if(argc==2){
+				UIGrid self=(UIGrid)checkSelf(l);
+				UnityEngine.Transform a1;
+				checkType(l,2,out a1);
+				System.Boolean a2;
+				checkType(l,3,out a2);
+				self.AddChild(a1,a2);
+				return 0;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RemoveChild(IntPtr l) {
+		try{
+			UIGrid self=(UIGrid)checkSelf(l);
+			UnityEngine.Transform a1;
+			checkType(l,2,out a1);
+			System.Boolean ret=self.RemoveChild(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Reposition(IntPtr l) {
 		try{
 			UIGrid self=(UIGrid)checkSelf(l);
 			self.Reposition();
 			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ConstrainWithinPanel(IntPtr l) {
+		try{
+			UIGrid self=(UIGrid)checkSelf(l);
+			self.ConstrainWithinPanel();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SortByName_s(IntPtr l) {
+		try{
+			UnityEngine.Transform a1;
+			checkType(l,1,out a1);
+			UnityEngine.Transform a2;
+			checkType(l,2,out a2);
+			System.Int32 ret=UIGrid.SortByName(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SortHorizontal_s(IntPtr l) {
+		try{
+			UnityEngine.Transform a1;
+			checkType(l,1,out a1);
+			UnityEngine.Transform a2;
+			checkType(l,2,out a2);
+			System.Int32 ret=UIGrid.SortHorizontal(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SortVertical_s(IntPtr l) {
+		try{
+			UnityEngine.Transform a1;
+			checkType(l,1,out a1);
+			UnityEngine.Transform a2;
+			checkType(l,2,out a2);
+			System.Int32 ret=UIGrid.SortVertical(a1,a2);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -35,6 +181,34 @@ public class Lua_UIGrid : LuaObject {
 		UIGrid.Arrangement v;
 		checkEnum(l,2,out v);
 		o.arrangement=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sorting(IntPtr l) {
+		UIGrid o = (UIGrid)checkSelf(l);
+		pushEnum(l,(int)o.sorting);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_sorting(IntPtr l) {
+		UIGrid o = (UIGrid)checkSelf(l);
+		UIGrid.Sorting v;
+		checkEnum(l,2,out v);
+		o.sorting=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_pivot(IntPtr l) {
+		UIGrid o = (UIGrid)checkSelf(l);
+		pushEnum(l,(int)o.pivot);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_pivot(IntPtr l) {
+		UIGrid o = (UIGrid)checkSelf(l);
+		UIWidget.Pivot v;
+		checkEnum(l,2,out v);
+		o.pivot=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -94,20 +268,6 @@ public class Lua_UIGrid : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_sorted(IntPtr l) {
-		UIGrid o = (UIGrid)checkSelf(l);
-		pushValue(l,o.sorted);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_sorted(IntPtr l) {
-		UIGrid o = (UIGrid)checkSelf(l);
-		System.Boolean v;
-		checkType(l,2,out v);
-		o.sorted=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_hideInactive(IntPtr l) {
 		UIGrid o = (UIGrid)checkSelf(l);
 		pushValue(l,o.hideInactive);
@@ -146,6 +306,16 @@ public class Lua_UIGrid : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onCustomSort(IntPtr l) {
+		UIGrid o = (UIGrid)checkSelf(l);
+		System.Comparison<UnityEngine.Transform> v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onCustomSort=v;
+		else if(op==1) o.onCustomSort+=v;
+		else if(op==2) o.onCustomSort-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_repositionNow(IntPtr l) {
 		UIGrid o = (UIGrid)checkSelf(l);
 		bool v;
@@ -155,16 +325,27 @@ public class Lua_UIGrid : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIGrid");
+		addMember(l,GetChildList);
+		addMember(l,GetChild);
+		addMember(l,GetIndex);
+		addMember(l,AddChild);
+		addMember(l,RemoveChild);
 		addMember(l,Reposition);
+		addMember(l,ConstrainWithinPanel);
+		addMember(l,SortByName_s);
+		addMember(l,SortHorizontal_s);
+		addMember(l,SortVertical_s);
 		addMember(l,"arrangement",get_arrangement,set_arrangement,true);
+		addMember(l,"sorting",get_sorting,set_sorting,true);
+		addMember(l,"pivot",get_pivot,set_pivot,true);
 		addMember(l,"maxPerLine",get_maxPerLine,set_maxPerLine,true);
 		addMember(l,"cellWidth",get_cellWidth,set_cellWidth,true);
 		addMember(l,"cellHeight",get_cellHeight,set_cellHeight,true);
 		addMember(l,"animateSmoothly",get_animateSmoothly,set_animateSmoothly,true);
-		addMember(l,"sorted",get_sorted,set_sorted,true);
 		addMember(l,"hideInactive",get_hideInactive,set_hideInactive,true);
 		addMember(l,"keepWithinPanel",get_keepWithinPanel,set_keepWithinPanel,true);
 		addMember(l,"onReposition",null,set_onReposition,true);
+		addMember(l,"onCustomSort",null,set_onCustomSort,true);
 		addMember(l,"repositionNow",null,set_repositionNow,true);
 		createTypeMetatable(l,constructor, typeof(UIGrid),typeof(UIWidgetContainer));
 	}

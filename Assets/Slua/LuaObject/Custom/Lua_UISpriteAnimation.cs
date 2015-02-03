@@ -12,10 +12,46 @@ public class Lua_UISpriteAnimation : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Reset(IntPtr l) {
+	static public int RebuildSpriteList(IntPtr l) {
 		try{
 			UISpriteAnimation self=(UISpriteAnimation)checkSelf(l);
-			self.Reset();
+			self.RebuildSpriteList();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Play(IntPtr l) {
+		try{
+			UISpriteAnimation self=(UISpriteAnimation)checkSelf(l);
+			self.Play();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Pause(IntPtr l) {
+		try{
+			UISpriteAnimation self=(UISpriteAnimation)checkSelf(l);
+			self.Pause();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ResetToBeginning(IntPtr l) {
+		try{
+			UISpriteAnimation self=(UISpriteAnimation)checkSelf(l);
+			self.ResetToBeginning();
 			return 0;
 		}
 		catch(Exception e) {
@@ -79,7 +115,10 @@ public class Lua_UISpriteAnimation : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UISpriteAnimation");
-		addMember(l,Reset);
+		addMember(l,RebuildSpriteList);
+		addMember(l,Play);
+		addMember(l,Pause);
+		addMember(l,ResetToBeginning);
 		addMember(l,"frames",get_frames,null,true);
 		addMember(l,"framesPerSecond",get_framesPerSecond,set_framesPerSecond,true);
 		addMember(l,"namePrefix",get_namePrefix,set_namePrefix,true);

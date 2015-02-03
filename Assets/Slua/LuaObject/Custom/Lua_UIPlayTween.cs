@@ -26,6 +26,18 @@ public class Lua_UIPlayTween : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_current(IntPtr l) {
+		pushValue(l,UIPlayTween.current);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_current(IntPtr l) {
+		UIPlayTween v;
+		checkType(l,2,out v);
+		UIPlayTween.current=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_tweenTarget(IntPtr l) {
 		UIPlayTween o = (UIPlayTween)checkSelf(l);
 		pushValue(l,o.tweenTarget);
@@ -168,6 +180,7 @@ public class Lua_UIPlayTween : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIPlayTween");
 		addMember(l,Play);
+		addMember(l,"current",get_current,set_current,false);
 		addMember(l,"tweenTarget",get_tweenTarget,set_tweenTarget,true);
 		addMember(l,"tweenGroup",get_tweenGroup,set_tweenGroup,true);
 		addMember(l,"trigger",get_trigger,set_trigger,true);

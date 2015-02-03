@@ -27,6 +27,21 @@ public class Lua_UIInput : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ProcessEvent(IntPtr l) {
+		try{
+			UIInput self=(UIInput)checkSelf(l);
+			UnityEngine.Event a1;
+			checkType(l,2,out a1);
+			System.Boolean ret=self.ProcessEvent(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Submit(IntPtr l) {
 		try{
 			UIInput self=(UIInput)checkSelf(l);
@@ -43,6 +58,42 @@ public class Lua_UIInput : LuaObject {
 		try{
 			UIInput self=(UIInput)checkSelf(l);
 			self.UpdateLabel();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RemoveFocus(IntPtr l) {
+		try{
+			UIInput self=(UIInput)checkSelf(l);
+			self.RemoveFocus();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SaveValue(IntPtr l) {
+		try{
+			UIInput self=(UIInput)checkSelf(l);
+			self.SaveValue();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LoadValue(IntPtr l) {
+		try{
+			UIInput self=(UIInput)checkSelf(l);
+			self.LoadValue();
 			return 0;
 		}
 		catch(Exception e) {
@@ -103,6 +154,20 @@ public class Lua_UIInput : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_onReturnKey(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		pushEnum(l,(int)o.onReturnKey);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onReturnKey(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		UIInput.OnReturnKey v;
+		checkEnum(l,2,out v);
+		o.onReturnKey=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_keyboardType(IntPtr l) {
 		UIInput o = (UIInput)checkSelf(l);
 		pushEnum(l,(int)o.keyboardType);
@@ -114,6 +179,34 @@ public class Lua_UIInput : LuaObject {
 		UIInput.KeyboardType v;
 		checkEnum(l,2,out v);
 		o.keyboardType=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_hideInput(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		pushValue(l,o.hideInput);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_hideInput(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		System.Boolean v;
+		checkType(l,2,out v);
+		o.hideInput=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_selectAllTextOnFocus(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		pushValue(l,o.selectAllTextOnFocus);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_selectAllTextOnFocus(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		System.Boolean v;
+		checkType(l,2,out v);
+		o.selectAllTextOnFocus=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -156,20 +249,6 @@ public class Lua_UIInput : LuaObject {
 		System.String v;
 		checkType(l,2,out v);
 		o.savedAs=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_selectOnTab(IntPtr l) {
-		UIInput o = (UIInput)checkSelf(l);
-		pushValue(l,o.selectOnTab);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_selectOnTab(IntPtr l) {
-		UIInput o = (UIInput)checkSelf(l);
-		UnityEngine.GameObject v;
-		checkType(l,2,out v);
-		o.selectOnTab=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -267,6 +346,12 @@ public class Lua_UIInput : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_inputShouldBeHidden(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		pushValue(l,o.inputShouldBeHidden);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_value(IntPtr l) {
 		UIInput o = (UIInput)checkSelf(l);
 		pushValue(l,o.value);
@@ -294,20 +379,74 @@ public class Lua_UIInput : LuaObject {
 		o.isSelected=v;
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_cursorPosition(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		pushValue(l,o.cursorPosition);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_cursorPosition(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		int v;
+		checkType(l,2,out v);
+		o.cursorPosition=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_selectionStart(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		pushValue(l,o.selectionStart);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_selectionStart(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		int v;
+		checkType(l,2,out v);
+		o.selectionStart=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_selectionEnd(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		pushValue(l,o.selectionEnd);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_selectionEnd(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		int v;
+		checkType(l,2,out v);
+		o.selectionEnd=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_caret(IntPtr l) {
+		UIInput o = (UIInput)checkSelf(l);
+		pushValue(l,o.caret);
+		return 1;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIInput");
 		addMember(l,Validate);
+		addMember(l,ProcessEvent);
 		addMember(l,Submit);
 		addMember(l,UpdateLabel);
+		addMember(l,RemoveFocus);
+		addMember(l,SaveValue);
+		addMember(l,LoadValue);
 		addMember(l,"current",get_current,set_current,false);
 		addMember(l,"selection",get_selection,set_selection,false);
 		addMember(l,"label",get_label,set_label,true);
 		addMember(l,"inputType",get_inputType,set_inputType,true);
+		addMember(l,"onReturnKey",get_onReturnKey,set_onReturnKey,true);
 		addMember(l,"keyboardType",get_keyboardType,set_keyboardType,true);
+		addMember(l,"hideInput",get_hideInput,set_hideInput,true);
+		addMember(l,"selectAllTextOnFocus",get_selectAllTextOnFocus,set_selectAllTextOnFocus,true);
 		addMember(l,"validation",get_validation,set_validation,true);
 		addMember(l,"characterLimit",get_characterLimit,set_characterLimit,true);
 		addMember(l,"savedAs",get_savedAs,set_savedAs,true);
-		addMember(l,"selectOnTab",get_selectOnTab,set_selectOnTab,true);
 		addMember(l,"activeTextColor",get_activeTextColor,set_activeTextColor,true);
 		addMember(l,"caretColor",get_caretColor,set_caretColor,true);
 		addMember(l,"selectionColor",get_selectionColor,set_selectionColor,true);
@@ -315,8 +454,13 @@ public class Lua_UIInput : LuaObject {
 		addMember(l,"onChange",get_onChange,set_onChange,true);
 		addMember(l,"onValidate",null,set_onValidate,true);
 		addMember(l,"defaultText",get_defaultText,set_defaultText,true);
+		addMember(l,"inputShouldBeHidden",get_inputShouldBeHidden,null,true);
 		addMember(l,"value",get_value,set_value,true);
 		addMember(l,"isSelected",get_isSelected,set_isSelected,true);
+		addMember(l,"cursorPosition",get_cursorPosition,set_cursorPosition,true);
+		addMember(l,"selectionStart",get_selectionStart,set_selectionStart,true);
+		addMember(l,"selectionEnd",get_selectionEnd,set_selectionEnd,true);
+		addMember(l,"caret",get_caret,null,true);
 		createTypeMetatable(l,constructor, typeof(UIInput),typeof(UnityEngine.MonoBehaviour));
 	}
 }

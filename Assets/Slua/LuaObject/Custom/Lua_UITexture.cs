@@ -90,6 +90,20 @@ public class Lua_UITexture : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_border(IntPtr l) {
+		UITexture o = (UITexture)checkSelf(l);
+		pushValue(l,o.border);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_border(IntPtr l) {
+		UITexture o = (UITexture)checkSelf(l);
+		UnityEngine.Vector4 v;
+		checkType(l,2,out v);
+		o.border=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_uvRect(IntPtr l) {
 		UITexture o = (UITexture)checkSelf(l);
 		pushValue(l,o.uvRect);
@@ -109,6 +123,20 @@ public class Lua_UITexture : LuaObject {
 		pushValue(l,o.drawingDimensions);
 		return 1;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_fixedAspect(IntPtr l) {
+		UITexture o = (UITexture)checkSelf(l);
+		pushValue(l,o.fixedAspect);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_fixedAspect(IntPtr l) {
+		UITexture o = (UITexture)checkSelf(l);
+		bool v;
+		checkType(l,2,out v);
+		o.fixedAspect=v;
+		return 0;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UITexture");
 		addMember(l,MakePixelPerfect);
@@ -117,8 +145,10 @@ public class Lua_UITexture : LuaObject {
 		addMember(l,"material",get_material,set_material,true);
 		addMember(l,"shader",get_shader,set_shader,true);
 		addMember(l,"premultipliedAlpha",get_premultipliedAlpha,null,true);
+		addMember(l,"border",get_border,set_border,true);
 		addMember(l,"uvRect",get_uvRect,set_uvRect,true);
 		addMember(l,"drawingDimensions",get_drawingDimensions,null,true);
-		createTypeMetatable(l,constructor, typeof(UITexture),typeof(UIWidget));
+		addMember(l,"fixedAspect",get_fixedAspect,set_fixedAspect,true);
+		createTypeMetatable(l,constructor, typeof(UITexture),typeof(UIBasicSprite));
 	}
 }

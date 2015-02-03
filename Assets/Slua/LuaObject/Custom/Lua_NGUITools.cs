@@ -49,34 +49,6 @@ public class Lua_NGUITools : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int OpenURL_s(IntPtr l) {
-		try{
-			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
-				System.String a1;
-				checkType(l,1,out a1);
-				UnityEngine.WWW ret=NGUITools.OpenURL(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(argc==2){
-				System.String a1;
-				checkType(l,1,out a1);
-				UnityEngine.WWWForm a2;
-				checkType(l,2,out a2);
-				UnityEngine.WWW ret=NGUITools.OpenURL(a1,a2);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RandomRange_s(IntPtr l) {
 		try{
 			System.Int32 a1;
@@ -127,18 +99,16 @@ public class Lua_NGUITools : LuaObject {
 			if(argc==1){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
-				UnityEngine.BoxCollider ret=NGUITools.AddWidgetCollider(a1);
-				pushValue(l,ret);
-				return 1;
+				NGUITools.AddWidgetCollider(a1);
+				return 0;
 			}
 			else if(argc==2){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
 				checkType(l,2,out a2);
-				UnityEngine.BoxCollider ret=NGUITools.AddWidgetCollider(a1,a2);
-				pushValue(l,ret);
-				return 1;
+				NGUITools.AddWidgetCollider(a1,a2);
+				return 0;
 			}
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
@@ -152,7 +122,7 @@ public class Lua_NGUITools : LuaObject {
 	static public int UpdateWidgetCollider_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(matchType(l,argc,1,typeof(UnityEngine.GameObject))){
+			if(argc==1){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				NGUITools.UpdateWidgetCollider(a1);
@@ -166,14 +136,16 @@ public class Lua_NGUITools : LuaObject {
 				NGUITools.UpdateWidgetCollider(a1,a2);
 				return 0;
 			}
-			else if(matchType(l,argc,1,typeof(UnityEngine.BoxCollider))){
-				UnityEngine.BoxCollider a1;
-				checkType(l,1,out a1);
-				NGUITools.UpdateWidgetCollider(a1);
-				return 0;
-			}
 			else if(matchType(l,argc,1,typeof(UnityEngine.BoxCollider),typeof(bool))){
 				UnityEngine.BoxCollider a1;
+				checkType(l,1,out a1);
+				System.Boolean a2;
+				checkType(l,2,out a2);
+				NGUITools.UpdateWidgetCollider(a1,a2);
+				return 0;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.BoxCollider2D),typeof(bool))){
+				UnityEngine.BoxCollider2D a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
 				checkType(l,2,out a2);
@@ -365,7 +337,24 @@ public class Lua_NGUITools : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int NormalizeWidgetDepths_s(IntPtr l) {
 		try{
-			NGUITools.NormalizeWidgetDepths();
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==0){
+				NGUITools.NormalizeWidgetDepths();
+				return 0;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.GameObject))){
+				UnityEngine.GameObject a1;
+				checkType(l,1,out a1);
+				NGUITools.NormalizeWidgetDepths(a1);
+				return 0;
+			}
+			else if(matchType(l,argc,1,typeof(UIWidget[]))){
+				UIWidget[] a1;
+				checkType(l,1,out a1);
+				NGUITools.NormalizeWidgetDepths(a1);
+				return 0;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}
 		catch(Exception e) {
@@ -541,11 +530,26 @@ public class Lua_NGUITools : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetActive_s(IntPtr l) {
 		try{
-			UnityEngine.GameObject a1;
-			checkType(l,1,out a1);
-			System.Boolean a2;
-			checkType(l,2,out a2);
-			NGUITools.SetActive(a1,a2);
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
+				UnityEngine.GameObject a1;
+				checkType(l,1,out a1);
+				System.Boolean a2;
+				checkType(l,2,out a2);
+				NGUITools.SetActive(a1,a2);
+				return 0;
+			}
+			else if(argc==3){
+				UnityEngine.GameObject a1;
+				checkType(l,1,out a1);
+				System.Boolean a2;
+				checkType(l,2,out a2);
+				System.Boolean a3;
+				checkType(l,3,out a3);
+				NGUITools.SetActive(a1,a2,a3);
+				return 0;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}
 		catch(Exception e) {
@@ -805,6 +809,35 @@ public class Lua_NGUITools : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetFuncName_s(IntPtr l) {
+		try{
+			System.Object a1;
+			checkType(l,1,out a1);
+			System.String a2;
+			checkType(l,2,out a2);
+			System.String ret=NGUITools.GetFuncName(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ImmediatelyCreateDrawCalls_s(IntPtr l) {
+		try{
+			UnityEngine.GameObject a1;
+			checkType(l,1,out a1);
+			NGUITools.ImmediatelyCreateDrawCalls(a1);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_soundVolume(IntPtr l) {
 		pushValue(l,NGUITools.soundVolume);
 		return 1;
@@ -833,10 +866,14 @@ public class Lua_NGUITools : LuaObject {
 		NGUITools.clipboard=v;
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_screenSize(IntPtr l) {
+		pushValue(l,NGUITools.screenSize);
+		return 1;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"NGUITools");
 		addMember(l,PlaySound_s);
-		addMember(l,OpenURL_s);
 		addMember(l,RandomRange_s);
 		addMember(l,GetHierarchy_s);
 		addMember(l,FindCameraForLayer_s);
@@ -875,9 +912,12 @@ public class Lua_NGUITools : LuaObject {
 		addMember(l,MarkParentAsChanged_s);
 		addMember(l,GetSides_s);
 		addMember(l,GetWorldCorners_s);
+		addMember(l,GetFuncName_s);
+		addMember(l,ImmediatelyCreateDrawCalls_s);
 		addMember(l,"soundVolume",get_soundVolume,set_soundVolume,false);
 		addMember(l,"fileAccess",get_fileAccess,null,false);
 		addMember(l,"clipboard",get_clipboard,set_clipboard,false);
+		addMember(l,"screenSize",get_screenSize,null,false);
 		createTypeMetatable(l,constructor, typeof(NGUITools));
 	}
 }

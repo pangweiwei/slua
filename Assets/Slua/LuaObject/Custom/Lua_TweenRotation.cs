@@ -82,6 +82,20 @@ public class Lua_TweenRotation : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_quaternionLerp(IntPtr l) {
+		TweenRotation o = (TweenRotation)checkSelf(l);
+		pushValue(l,o.quaternionLerp);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_quaternionLerp(IntPtr l) {
+		TweenRotation o = (TweenRotation)checkSelf(l);
+		System.Boolean v;
+		checkType(l,2,out v);
+		o.quaternionLerp=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_cachedTransform(IntPtr l) {
 		TweenRotation o = (TweenRotation)checkSelf(l);
 		pushValue(l,o.cachedTransform);
@@ -108,6 +122,7 @@ public class Lua_TweenRotation : LuaObject {
 		addMember(l,Begin_s);
 		addMember(l,"from",get_from,set_from,true);
 		addMember(l,"to",get_to,set_to,true);
+		addMember(l,"quaternionLerp",get_quaternionLerp,set_quaternionLerp,true);
 		addMember(l,"cachedTransform",get_cachedTransform,null,true);
 		addMember(l,"value",get_value,set_value,true);
 		createTypeMetatable(l,constructor, typeof(TweenRotation),typeof(UITweener));

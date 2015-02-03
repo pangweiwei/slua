@@ -12,6 +12,18 @@ public class Lua_ActiveAnimation : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Finish(IntPtr l) {
+		try{
+			ActiveAnimation self=(ActiveAnimation)checkSelf(l);
+			self.Finish();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Reset(IntPtr l) {
 		try{
 			ActiveAnimation self=(ActiveAnimation)checkSelf(l);
@@ -147,6 +159,7 @@ public class Lua_ActiveAnimation : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"ActiveAnimation");
+		addMember(l,Finish);
 		addMember(l,Reset);
 		addMember(l,Play_s);
 		addMember(l,"current",get_current,set_current,false);

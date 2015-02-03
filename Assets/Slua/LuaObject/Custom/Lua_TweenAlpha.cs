@@ -82,12 +82,6 @@ public class Lua_TweenAlpha : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_cachedRect(IntPtr l) {
-		TweenAlpha o = (TweenAlpha)checkSelf(l);
-		pushValue(l,o.cachedRect);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_value(IntPtr l) {
 		TweenAlpha o = (TweenAlpha)checkSelf(l);
 		pushValue(l,o.value);
@@ -108,7 +102,6 @@ public class Lua_TweenAlpha : LuaObject {
 		addMember(l,Begin_s);
 		addMember(l,"from",get_from,set_from,true);
 		addMember(l,"to",get_to,set_to,true);
-		addMember(l,"cachedRect",get_cachedRect,null,true);
 		addMember(l,"value",get_value,set_value,true);
 		createTypeMetatable(l,constructor, typeof(TweenAlpha),typeof(UITweener));
 	}

@@ -155,6 +155,12 @@ public class Lua_BMFont : LuaObject {
 		o.spriteName=v;
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_glyphs(IntPtr l) {
+		BMFont o = (BMFont)checkSelf(l);
+		pushValue(l,o.glyphs);
+		return 1;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"BMFont");
 		addMember(l,GetGlyph);
@@ -167,6 +173,7 @@ public class Lua_BMFont : LuaObject {
 		addMember(l,"texHeight",get_texHeight,set_texHeight,true);
 		addMember(l,"glyphCount",get_glyphCount,null,true);
 		addMember(l,"spriteName",get_spriteName,set_spriteName,true);
+		addMember(l,"glyphs",get_glyphs,null,true);
 		createTypeMetatable(l,constructor, typeof(BMFont));
 	}
 }

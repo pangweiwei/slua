@@ -145,6 +145,30 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 	static public int GetLayoutProperty_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
+			if(argc==3){
+				UnityEngine.RectTransform a1;
+				checkType(l,1,out a1);
+				System.Func<UnityEngine.UI.ILayoutElement,System.Single> a2;
+				checkDelegate(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				System.Single ret=UnityEngine.UI.LayoutUtility.GetLayoutProperty(a1,a2,a3);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(argc==4){
+				UnityEngine.RectTransform a1;
+				checkType(l,1,out a1);
+				System.Func<UnityEngine.UI.ILayoutElement,System.Single> a2;
+				checkDelegate(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				UnityEngine.UI.ILayoutElement a4;
+				System.Single ret=UnityEngine.UI.LayoutUtility.GetLayoutProperty(a1,a2,a3,out a4);
+				pushValue(l,ret);
+				pushValue(l,a4);
+				return 2;
+			}
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}

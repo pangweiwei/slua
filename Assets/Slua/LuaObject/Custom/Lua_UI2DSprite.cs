@@ -110,16 +110,30 @@ public class Lua_UI2DSprite : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_pixelSize(IntPtr l) {
+		UI2DSprite o = (UI2DSprite)checkSelf(l);
+		pushValue(l,o.pixelSize);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_drawingDimensions(IntPtr l) {
 		UI2DSprite o = (UI2DSprite)checkSelf(l);
 		pushValue(l,o.drawingDimensions);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_uvRect(IntPtr l) {
+	static public int get_border(IntPtr l) {
 		UI2DSprite o = (UI2DSprite)checkSelf(l);
-		pushValue(l,o.uvRect);
+		pushValue(l,o.border);
 		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_border(IntPtr l) {
+		UI2DSprite o = (UI2DSprite)checkSelf(l);
+		UnityEngine.Vector4 v;
+		checkType(l,2,out v);
+		o.border=v;
+		return 0;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UI2DSprite");
@@ -131,8 +145,9 @@ public class Lua_UI2DSprite : LuaObject {
 		addMember(l,"shader",get_shader,set_shader,true);
 		addMember(l,"mainTexture",get_mainTexture,null,true);
 		addMember(l,"premultipliedAlpha",get_premultipliedAlpha,null,true);
+		addMember(l,"pixelSize",get_pixelSize,null,true);
 		addMember(l,"drawingDimensions",get_drawingDimensions,null,true);
-		addMember(l,"uvRect",get_uvRect,null,true);
-		createTypeMetatable(l,constructor, typeof(UI2DSprite),typeof(UIWidget));
+		addMember(l,"border",get_border,set_border,true);
+		createTypeMetatable(l,constructor, typeof(UI2DSprite),typeof(UIBasicSprite));
 	}
 }

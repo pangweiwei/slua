@@ -135,6 +135,76 @@ public class Lua_UIEventTrigger : LuaObject {
 		o.onDoubleClick=v;
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_onDragStart(IntPtr l) {
+		UIEventTrigger o = (UIEventTrigger)checkSelf(l);
+		pushValue(l,o.onDragStart);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragStart(IntPtr l) {
+		UIEventTrigger o = (UIEventTrigger)checkSelf(l);
+		System.Collections.Generic.List<EventDelegate> v;
+		checkType(l,2,out v);
+		o.onDragStart=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_onDragEnd(IntPtr l) {
+		UIEventTrigger o = (UIEventTrigger)checkSelf(l);
+		pushValue(l,o.onDragEnd);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragEnd(IntPtr l) {
+		UIEventTrigger o = (UIEventTrigger)checkSelf(l);
+		System.Collections.Generic.List<EventDelegate> v;
+		checkType(l,2,out v);
+		o.onDragEnd=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_onDragOver(IntPtr l) {
+		UIEventTrigger o = (UIEventTrigger)checkSelf(l);
+		pushValue(l,o.onDragOver);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragOver(IntPtr l) {
+		UIEventTrigger o = (UIEventTrigger)checkSelf(l);
+		System.Collections.Generic.List<EventDelegate> v;
+		checkType(l,2,out v);
+		o.onDragOver=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_onDragOut(IntPtr l) {
+		UIEventTrigger o = (UIEventTrigger)checkSelf(l);
+		pushValue(l,o.onDragOut);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragOut(IntPtr l) {
+		UIEventTrigger o = (UIEventTrigger)checkSelf(l);
+		System.Collections.Generic.List<EventDelegate> v;
+		checkType(l,2,out v);
+		o.onDragOut=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_onDrag(IntPtr l) {
+		UIEventTrigger o = (UIEventTrigger)checkSelf(l);
+		pushValue(l,o.onDrag);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDrag(IntPtr l) {
+		UIEventTrigger o = (UIEventTrigger)checkSelf(l);
+		System.Collections.Generic.List<EventDelegate> v;
+		checkType(l,2,out v);
+		o.onDrag=v;
+		return 0;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIEventTrigger");
 		addMember(l,"current",get_current,set_current,false);
@@ -146,6 +216,11 @@ public class Lua_UIEventTrigger : LuaObject {
 		addMember(l,"onDeselect",get_onDeselect,set_onDeselect,true);
 		addMember(l,"onClick",get_onClick,set_onClick,true);
 		addMember(l,"onDoubleClick",get_onDoubleClick,set_onDoubleClick,true);
+		addMember(l,"onDragStart",get_onDragStart,set_onDragStart,true);
+		addMember(l,"onDragEnd",get_onDragEnd,set_onDragEnd,true);
+		addMember(l,"onDragOver",get_onDragOver,set_onDragOver,true);
+		addMember(l,"onDragOut",get_onDragOut,set_onDragOut,true);
+		addMember(l,"onDrag",get_onDrag,set_onDrag,true);
 		createTypeMetatable(l,constructor, typeof(UIEventTrigger),typeof(UnityEngine.MonoBehaviour));
 	}
 }

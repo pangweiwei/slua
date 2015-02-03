@@ -12,6 +12,8 @@ public class Lua_UIPlaySound_Trigger : LuaObject {
 		addMember(l,3,"OnPress");
 		addMember(l,4,"OnRelease");
 		addMember(l,5,"Custom");
+		addMember(l,6,"OnEnable");
+		addMember(l,7,"OnDisable");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

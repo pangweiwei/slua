@@ -138,6 +138,20 @@ public class Lua_UICamera_MouseOrTouch : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_pressTime(IntPtr l) {
+		UICamera.MouseOrTouch o = (UICamera.MouseOrTouch)checkSelf(l);
+		pushValue(l,o.pressTime);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_pressTime(IntPtr l) {
+		UICamera.MouseOrTouch o = (UICamera.MouseOrTouch)checkSelf(l);
+		System.Single v;
+		checkType(l,2,out v);
+		o.pressTime=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_clickTime(IntPtr l) {
 		UICamera.MouseOrTouch o = (UICamera.MouseOrTouch)checkSelf(l);
 		pushValue(l,o.clickTime);
@@ -207,6 +221,18 @@ public class Lua_UICamera_MouseOrTouch : LuaObject {
 		o.dragStarted=v;
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_deltaTime(IntPtr l) {
+		UICamera.MouseOrTouch o = (UICamera.MouseOrTouch)checkSelf(l);
+		pushValue(l,o.deltaTime);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isOverUI(IntPtr l) {
+		UICamera.MouseOrTouch o = (UICamera.MouseOrTouch)checkSelf(l);
+		pushValue(l,o.isOverUI);
+		return 1;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UICamera.MouseOrTouch");
 		addMember(l,"pos",get_pos,set_pos,true);
@@ -218,11 +244,14 @@ public class Lua_UICamera_MouseOrTouch : LuaObject {
 		addMember(l,"current",get_current,set_current,true);
 		addMember(l,"pressed",get_pressed,set_pressed,true);
 		addMember(l,"dragged",get_dragged,set_dragged,true);
+		addMember(l,"pressTime",get_pressTime,set_pressTime,true);
 		addMember(l,"clickTime",get_clickTime,set_clickTime,true);
 		addMember(l,"clickNotification",get_clickNotification,set_clickNotification,true);
 		addMember(l,"touchBegan",get_touchBegan,set_touchBegan,true);
 		addMember(l,"pressStarted",get_pressStarted,set_pressStarted,true);
 		addMember(l,"dragStarted",get_dragStarted,set_dragStarted,true);
+		addMember(l,"deltaTime",get_deltaTime,null,true);
+		addMember(l,"isOverUI",get_isOverUI,null,true);
 		createTypeMetatable(l,constructor, typeof(UICamera.MouseOrTouch));
 	}
 }

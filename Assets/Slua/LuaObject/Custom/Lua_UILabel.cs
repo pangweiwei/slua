@@ -39,6 +39,18 @@ public class Lua_UILabel : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ProcessText(IntPtr l) {
+		try{
+			UILabel self=(UILabel)checkSelf(l);
+			self.ProcessText();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int MakePixelPerfect(IntPtr l) {
 		try{
 			UILabel self=(UILabel)checkSelf(l);
@@ -66,19 +78,23 @@ public class Lua_UILabel : LuaObject {
 	static public int GetCharacterIndexAtPosition(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(matchType(l,argc,2,typeof(UnityEngine.Vector3))){
+			if(matchType(l,argc,2,typeof(UnityEngine.Vector3),typeof(bool))){
 				UILabel self=(UILabel)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
-				System.Int32 ret=self.GetCharacterIndexAtPosition(a1);
+				System.Boolean a2;
+				checkType(l,3,out a2);
+				System.Int32 ret=self.GetCharacterIndexAtPosition(a1,a2);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(matchType(l,argc,2,typeof(UnityEngine.Vector2))){
+			else if(matchType(l,argc,2,typeof(UnityEngine.Vector2),typeof(bool))){
 				UILabel self=(UILabel)checkSelf(l);
 				UnityEngine.Vector2 a1;
 				checkType(l,2,out a1);
-				System.Int32 ret=self.GetCharacterIndexAtPosition(a1);
+				System.Boolean a2;
+				checkType(l,3,out a2);
+				System.Int32 ret=self.GetCharacterIndexAtPosition(a1,a2);
 				pushValue(l,ret);
 				return 1;
 			}
@@ -228,6 +244,49 @@ public class Lua_UILabel : LuaObject {
 			BetterList<UnityEngine.Color32> a3;
 			checkType(l,4,out a3);
 			self.OnFill(a1,a2,a3);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ApplyOffset(IntPtr l) {
+		try{
+			UILabel self=(UILabel)checkSelf(l);
+			BetterList<UnityEngine.Vector3> a1;
+			checkType(l,2,out a1);
+			System.Int32 a2;
+			checkType(l,3,out a2);
+			UnityEngine.Vector2 ret=self.ApplyOffset(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ApplyShadow(IntPtr l) {
+		try{
+			UILabel self=(UILabel)checkSelf(l);
+			BetterList<UnityEngine.Vector3> a1;
+			checkType(l,2,out a1);
+			BetterList<UnityEngine.Vector2> a2;
+			checkType(l,3,out a2);
+			BetterList<UnityEngine.Color32> a3;
+			checkType(l,4,out a3);
+			System.Int32 a4;
+			checkType(l,5,out a4);
+			System.Int32 a5;
+			checkType(l,6,out a5);
+			System.Single a6;
+			checkType(l,7,out a6);
+			System.Single a7;
+			checkType(l,8,out a7);
+			self.ApplyShadow(a1,a2,a3,a4,a5,a6,a7);
 			return 0;
 		}
 		catch(Exception e) {
@@ -547,6 +606,60 @@ public class Lua_UILabel : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_useFloatSpacing(IntPtr l) {
+		UILabel o = (UILabel)checkSelf(l);
+		pushValue(l,o.useFloatSpacing);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_useFloatSpacing(IntPtr l) {
+		UILabel o = (UILabel)checkSelf(l);
+		bool v;
+		checkType(l,2,out v);
+		o.useFloatSpacing=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_floatSpacingX(IntPtr l) {
+		UILabel o = (UILabel)checkSelf(l);
+		pushValue(l,o.floatSpacingX);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_floatSpacingX(IntPtr l) {
+		UILabel o = (UILabel)checkSelf(l);
+		float v;
+		checkType(l,2,out v);
+		o.floatSpacingX=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_floatSpacingY(IntPtr l) {
+		UILabel o = (UILabel)checkSelf(l);
+		pushValue(l,o.floatSpacingY);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_floatSpacingY(IntPtr l) {
+		UILabel o = (UILabel)checkSelf(l);
+		float v;
+		checkType(l,2,out v);
+		o.floatSpacingY=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_effectiveSpacingY(IntPtr l) {
+		UILabel o = (UILabel)checkSelf(l);
+		pushValue(l,o.effectiveSpacingY);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_effectiveSpacingX(IntPtr l) {
+		UILabel o = (UILabel)checkSelf(l);
+		pushValue(l,o.effectiveSpacingX);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_supportEncoding(IntPtr l) {
 		UILabel o = (UILabel)checkSelf(l);
 		pushValue(l,o.supportEncoding);
@@ -698,6 +811,7 @@ public class Lua_UILabel : LuaObject {
 		getTypeTable(l,"UILabel");
 		addMember(l,GetSides);
 		addMember(l,MarkAsChanged);
+		addMember(l,ProcessText);
 		addMember(l,MakePixelPerfect);
 		addMember(l,AssumeNaturalSize);
 		addMember(l,GetCharacterIndexAtPosition);
@@ -708,6 +822,8 @@ public class Lua_UILabel : LuaObject {
 		addMember(l,GetCharacterIndex);
 		addMember(l,PrintOverlay);
 		addMember(l,OnFill);
+		addMember(l,ApplyOffset);
+		addMember(l,ApplyShadow);
 		addMember(l,CalculateOffsetToFit);
 		addMember(l,SetCurrentProgress);
 		addMember(l,SetCurrentPercent);
@@ -731,6 +847,11 @@ public class Lua_UILabel : LuaObject {
 		addMember(l,"gradientBottom",get_gradientBottom,set_gradientBottom,true);
 		addMember(l,"spacingX",get_spacingX,set_spacingX,true);
 		addMember(l,"spacingY",get_spacingY,set_spacingY,true);
+		addMember(l,"useFloatSpacing",get_useFloatSpacing,set_useFloatSpacing,true);
+		addMember(l,"floatSpacingX",get_floatSpacingX,set_floatSpacingX,true);
+		addMember(l,"floatSpacingY",get_floatSpacingY,set_floatSpacingY,true);
+		addMember(l,"effectiveSpacingY",get_effectiveSpacingY,null,true);
+		addMember(l,"effectiveSpacingX",get_effectiveSpacingX,null,true);
 		addMember(l,"supportEncoding",get_supportEncoding,set_supportEncoding,true);
 		addMember(l,"symbolStyle",get_symbolStyle,set_symbolStyle,true);
 		addMember(l,"overflowMethod",get_overflowMethod,set_overflowMethod,true);

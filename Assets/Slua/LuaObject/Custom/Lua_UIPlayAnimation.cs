@@ -40,6 +40,18 @@ public class Lua_UIPlayAnimation : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_current(IntPtr l) {
+		pushValue(l,UIPlayAnimation.current);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_current(IntPtr l) {
+		UIPlayAnimation v;
+		checkType(l,2,out v);
+		UIPlayAnimation.current=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_target(IntPtr l) {
 		UIPlayAnimation o = (UIPlayAnimation)checkSelf(l);
 		pushValue(l,o.target);
@@ -182,6 +194,7 @@ public class Lua_UIPlayAnimation : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIPlayAnimation");
 		addMember(l,Play);
+		addMember(l,"current",get_current,set_current,false);
 		addMember(l,"target",get_target,set_target,true);
 		addMember(l,"animator",get_animator,set_animator,true);
 		addMember(l,"clipName",get_clipName,set_clipName,true);

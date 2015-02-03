@@ -1182,7 +1182,9 @@ namespace SLua
                     MethodInfo mi = cons[n] as MethodInfo;
 
                     ParameterInfo[] pars = mi.GetParameters();
-                    if (isUsefullMethod(mi) && !mi.ReturnType.ContainsGenericParameters && !ContainGeneric(pars)) // don't support generic method
+                    if (isUsefullMethod(mi) 
+                        && !mi.ReturnType.ContainsGenericParameters 
+                        /*&& !ContainGeneric(pars)*/) // don't support generic method
                     {
                         if (isUniqueArgsCount(cons, mi))
                             Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", mi.GetParameters().Length);

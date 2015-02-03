@@ -12,6 +12,19 @@ public class Lua_UITable : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetChildList(IntPtr l) {
+		try{
+			UITable self=(UITable)checkSelf(l);
+			System.Collections.Generic.List<UnityEngine.Transform> ret=self.GetChildList();
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Reposition(IntPtr l) {
 		try{
 			UITable self=(UITable)checkSelf(l);
@@ -52,17 +65,45 @@ public class Lua_UITable : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_sorted(IntPtr l) {
+	static public int get_sorting(IntPtr l) {
 		UITable o = (UITable)checkSelf(l);
-		pushValue(l,o.sorted);
+		pushEnum(l,(int)o.sorting);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_sorted(IntPtr l) {
+	static public int set_sorting(IntPtr l) {
 		UITable o = (UITable)checkSelf(l);
-		System.Boolean v;
-		checkType(l,2,out v);
-		o.sorted=v;
+		UITable.Sorting v;
+		checkEnum(l,2,out v);
+		o.sorting=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_pivot(IntPtr l) {
+		UITable o = (UITable)checkSelf(l);
+		pushEnum(l,(int)o.pivot);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_pivot(IntPtr l) {
+		UITable o = (UITable)checkSelf(l);
+		UIWidget.Pivot v;
+		checkEnum(l,2,out v);
+		o.pivot=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_cellAlignment(IntPtr l) {
+		UITable o = (UITable)checkSelf(l);
+		pushEnum(l,(int)o.cellAlignment);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_cellAlignment(IntPtr l) {
+		UITable o = (UITable)checkSelf(l);
+		UIWidget.Pivot v;
+		checkEnum(l,2,out v);
+		o.cellAlignment=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -118,6 +159,16 @@ public class Lua_UITable : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onCustomSort(IntPtr l) {
+		UITable o = (UITable)checkSelf(l);
+		System.Comparison<UnityEngine.Transform> v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onCustomSort=v;
+		else if(op==1) o.onCustomSort+=v;
+		else if(op==2) o.onCustomSort-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_repositionNow(IntPtr l) {
 		UITable o = (UITable)checkSelf(l);
 		bool v;
@@ -125,24 +176,21 @@ public class Lua_UITable : LuaObject {
 		o.repositionNow=v;
 		return 0;
 	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_children(IntPtr l) {
-		UITable o = (UITable)checkSelf(l);
-		pushValue(l,o.children);
-		return 1;
-	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UITable");
+		addMember(l,GetChildList);
 		addMember(l,Reposition);
 		addMember(l,"columns",get_columns,set_columns,true);
 		addMember(l,"direction",get_direction,set_direction,true);
-		addMember(l,"sorted",get_sorted,set_sorted,true);
+		addMember(l,"sorting",get_sorting,set_sorting,true);
+		addMember(l,"pivot",get_pivot,set_pivot,true);
+		addMember(l,"cellAlignment",get_cellAlignment,set_cellAlignment,true);
 		addMember(l,"hideInactive",get_hideInactive,set_hideInactive,true);
 		addMember(l,"keepWithinPanel",get_keepWithinPanel,set_keepWithinPanel,true);
 		addMember(l,"padding",get_padding,set_padding,true);
 		addMember(l,"onReposition",null,set_onReposition,true);
+		addMember(l,"onCustomSort",null,set_onCustomSort,true);
 		addMember(l,"repositionNow",null,set_repositionNow,true);
-		addMember(l,"children",get_children,null,true);
 		createTypeMetatable(l,constructor, typeof(UITable),typeof(UIWidgetContainer));
 	}
 }

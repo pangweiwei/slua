@@ -56,6 +56,26 @@ public class Lua_UIPanel : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetRect(IntPtr l) {
+		try{
+			UIPanel self=(UIPanel)checkSelf(l);
+			System.Single a1;
+			checkType(l,2,out a1);
+			System.Single a2;
+			checkType(l,3,out a2);
+			System.Single a3;
+			checkType(l,4,out a3);
+			System.Single a4;
+			checkType(l,5,out a4);
+			self.SetRect(a1,a2,a3,a4);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsVisible(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
@@ -98,6 +118,21 @@ public class Lua_UIPanel : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Affects(IntPtr l) {
+		try{
+			UIPanel self=(UIPanel)checkSelf(l);
+			UIWidget a1;
+			checkType(l,2,out a1);
+			System.Boolean ret=self.Affects(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RebuildAllDrawCalls(IntPtr l) {
 		try{
 			UIPanel self=(UIPanel)checkSelf(l);
@@ -114,6 +149,18 @@ public class Lua_UIPanel : LuaObject {
 		try{
 			UIPanel self=(UIPanel)checkSelf(l);
 			self.SetDirty();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ParentHasChanged(IntPtr l) {
+		try{
+			UIPanel self=(UIPanel)checkSelf(l);
+			self.ParentHasChanged();
 			return 0;
 		}
 		catch(Exception e) {
@@ -241,6 +288,19 @@ public class Lua_UIPanel : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetWindowSize(IntPtr l) {
+		try{
+			UIPanel self=(UIPanel)checkSelf(l);
+			UnityEngine.Vector2 ret=self.GetWindowSize();
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetViewSize(IntPtr l) {
 		try{
 			UIPanel self=(UIPanel)checkSelf(l);
@@ -309,25 +369,13 @@ public class Lua_UIPanel : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetMainGameViewSize_s(IntPtr l) {
-		try{
-			UnityEngine.Vector2 ret=UIPanel.GetMainGameViewSize();
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_list(IntPtr l) {
 		pushValue(l,UIPanel.list);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_list(IntPtr l) {
-		BetterList<UIPanel> v;
+		System.Collections.Generic.List<UIPanel> v;
 		checkType(l,2,out v);
 		UIPanel.list=v;
 		return 0;
@@ -427,6 +475,20 @@ public class Lua_UIPanel : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_softBorderPadding(IntPtr l) {
+		UIPanel o = (UIPanel)checkSelf(l);
+		pushValue(l,o.softBorderPadding);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_softBorderPadding(IntPtr l) {
+		UIPanel o = (UIPanel)checkSelf(l);
+		System.Boolean v;
+		checkType(l,2,out v);
+		o.softBorderPadding=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_renderQueue(IntPtr l) {
 		UIPanel o = (UIPanel)checkSelf(l);
 		pushEnum(l,(int)o.renderQueue);
@@ -463,7 +525,7 @@ public class Lua_UIPanel : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_widgets(IntPtr l) {
 		UIPanel o = (UIPanel)checkSelf(l);
-		BetterList<UIWidget> v;
+		System.Collections.Generic.List<UIWidget> v;
 		checkType(l,2,out v);
 		o.widgets=v;
 		return 0;
@@ -477,7 +539,7 @@ public class Lua_UIPanel : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_drawCalls(IntPtr l) {
 		UIPanel o = (UIPanel)checkSelf(l);
-		BetterList<UIDrawCall> v;
+		System.Collections.Generic.List<UIDrawCall> v;
 		checkType(l,2,out v);
 		o.drawCalls=v;
 		return 0;
@@ -494,6 +556,30 @@ public class Lua_UIPanel : LuaObject {
 		UnityEngine.Matrix4x4 v;
 		checkType(l,2,out v);
 		o.worldToLocal=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_drawCallClipRange(IntPtr l) {
+		UIPanel o = (UIPanel)checkSelf(l);
+		pushValue(l,o.drawCallClipRange);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_drawCallClipRange(IntPtr l) {
+		UIPanel o = (UIPanel)checkSelf(l);
+		UnityEngine.Vector4 v;
+		checkType(l,2,out v);
+		o.drawCallClipRange=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onClipMove(IntPtr l) {
+		UIPanel o = (UIPanel)checkSelf(l);
+		UIPanel.OnClippingMoved v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onClipMove=v;
+		else if(op==1) o.onClipMove+=v;
+		else if(op==2) o.onClipMove-=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -533,6 +619,20 @@ public class Lua_UIPanel : LuaObject {
 		int v;
 		checkType(l,2,out v);
 		o.depth=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sortingOrder(IntPtr l) {
+		UIPanel o = (UIPanel)checkSelf(l);
+		pushValue(l,o.sortingOrder);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_sortingOrder(IntPtr l) {
+		UIPanel o = (UIPanel)checkSelf(l);
+		int v;
+		checkType(l,2,out v);
+		o.sortingOrder=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -580,9 +680,27 @@ public class Lua_UIPanel : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_clipsChildren(IntPtr l) {
+	static public int get_parentPanel(IntPtr l) {
 		UIPanel o = (UIPanel)checkSelf(l);
-		pushValue(l,o.clipsChildren);
+		pushValue(l,o.parentPanel);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_clipCount(IntPtr l) {
+		UIPanel o = (UIPanel)checkSelf(l);
+		pushValue(l,o.clipCount);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_hasClipping(IntPtr l) {
+		UIPanel o = (UIPanel)checkSelf(l);
+		pushValue(l,o.hasClipping);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_hasCumulativeClipping(IntPtr l) {
+		UIPanel o = (UIPanel)checkSelf(l);
+		pushValue(l,o.hasCumulativeClipping);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -597,6 +715,20 @@ public class Lua_UIPanel : LuaObject {
 		UnityEngine.Vector2 v;
 		checkType(l,2,out v);
 		o.clipOffset=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_clipTexture(IntPtr l) {
+		UIPanel o = (UIPanel)checkSelf(l);
+		pushValue(l,o.clipTexture);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_clipTexture(IntPtr l) {
+		UIPanel o = (UIPanel)checkSelf(l);
+		UnityEngine.Texture2D v;
+		checkType(l,2,out v);
+		o.clipTexture=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -650,9 +782,12 @@ public class Lua_UIPanel : LuaObject {
 		addMember(l,GetSides);
 		addMember(l,Invalidate);
 		addMember(l,CalculateFinalAlpha);
+		addMember(l,SetRect);
 		addMember(l,IsVisible);
+		addMember(l,Affects);
 		addMember(l,RebuildAllDrawCalls);
 		addMember(l,SetDirty);
+		addMember(l,ParentHasChanged);
 		addMember(l,SortWidgets);
 		addMember(l,FindDrawCall);
 		addMember(l,AddWidget);
@@ -660,10 +795,10 @@ public class Lua_UIPanel : LuaObject {
 		addMember(l,Refresh);
 		addMember(l,CalculateConstrainOffset);
 		addMember(l,ConstrainTargetToBounds);
+		addMember(l,GetWindowSize);
 		addMember(l,GetViewSize);
 		addMember(l,CompareFunc_s);
 		addMember(l,Find_s);
-		addMember(l,GetMainGameViewSize_s);
 		addMember(l,"list",get_list,set_list,false);
 		addMember(l,"onGeometryUpdated",null,set_onGeometryUpdated,true);
 		addMember(l,"showInPanelTool",get_showInPanelTool,set_showInPanelTool,true);
@@ -672,23 +807,31 @@ public class Lua_UIPanel : LuaObject {
 		addMember(l,"cullWhileDragging",get_cullWhileDragging,set_cullWhileDragging,true);
 		addMember(l,"alwaysOnScreen",get_alwaysOnScreen,set_alwaysOnScreen,true);
 		addMember(l,"anchorOffset",get_anchorOffset,set_anchorOffset,true);
+		addMember(l,"softBorderPadding",get_softBorderPadding,set_softBorderPadding,true);
 		addMember(l,"renderQueue",get_renderQueue,set_renderQueue,true);
 		addMember(l,"startingRenderQueue",get_startingRenderQueue,set_startingRenderQueue,true);
 		addMember(l,"widgets",get_widgets,set_widgets,true);
 		addMember(l,"drawCalls",get_drawCalls,set_drawCalls,true);
 		addMember(l,"worldToLocal",get_worldToLocal,set_worldToLocal,true);
+		addMember(l,"drawCallClipRange",get_drawCallClipRange,set_drawCallClipRange,true);
+		addMember(l,"onClipMove",null,set_onClipMove,true);
 		addMember(l,"nextUnusedDepth",get_nextUnusedDepth,null,false);
 		addMember(l,"canBeAnchored",get_canBeAnchored,null,true);
 		addMember(l,"alpha",get_alpha,set_alpha,true);
 		addMember(l,"depth",get_depth,set_depth,true);
+		addMember(l,"sortingOrder",get_sortingOrder,set_sortingOrder,true);
 		addMember(l,"width",get_width,null,true);
 		addMember(l,"height",get_height,null,true);
 		addMember(l,"halfPixelOffset",get_halfPixelOffset,null,true);
 		addMember(l,"usedForUI",get_usedForUI,null,true);
 		addMember(l,"drawCallOffset",get_drawCallOffset,null,true);
 		addMember(l,"clipping",get_clipping,set_clipping,true);
-		addMember(l,"clipsChildren",get_clipsChildren,null,true);
+		addMember(l,"parentPanel",get_parentPanel,null,true);
+		addMember(l,"clipCount",get_clipCount,null,true);
+		addMember(l,"hasClipping",get_hasClipping,null,true);
+		addMember(l,"hasCumulativeClipping",get_hasCumulativeClipping,null,true);
 		addMember(l,"clipOffset",get_clipOffset,set_clipOffset,true);
+		addMember(l,"clipTexture",get_clipTexture,set_clipTexture,true);
 		addMember(l,"baseClipRegion",get_baseClipRegion,set_baseClipRegion,true);
 		addMember(l,"finalClipRegion",get_finalClipRegion,null,true);
 		addMember(l,"clipSoftness",get_clipSoftness,set_clipSoftness,true);

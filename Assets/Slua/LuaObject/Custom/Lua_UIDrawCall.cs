@@ -12,20 +12,12 @@ public class Lua_UIDrawCall : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Set(IntPtr l) {
+	static public int UpdateGeometry(IntPtr l) {
 		try{
 			UIDrawCall self=(UIDrawCall)checkSelf(l);
-			BetterList<UnityEngine.Vector3> a1;
+			System.Int32 a1;
 			checkType(l,2,out a1);
-			BetterList<UnityEngine.Vector3> a2;
-			checkType(l,3,out a2);
-			BetterList<UnityEngine.Vector4> a3;
-			checkType(l,4,out a3);
-			BetterList<UnityEngine.Vector2> a4;
-			checkType(l,5,out a4);
-			BetterList<UnityEngine.Color32> a5;
-			checkType(l,6,out a5);
-			self.Set(a1,a2,a3,a4,a5);
+			self.UpdateGeometry(a1);
 			return 0;
 		}
 		catch(Exception e) {
@@ -114,6 +106,20 @@ public class Lua_UIDrawCall : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_widgetCount(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		pushValue(l,o.widgetCount);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_widgetCount(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		System.Int32 v;
+		checkType(l,2,out v);
+		o.widgetCount=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_depthStart(IntPtr l) {
 		UIDrawCall o = (UIDrawCall)checkSelf(l);
 		pushValue(l,o.depthStart);
@@ -170,6 +176,20 @@ public class Lua_UIDrawCall : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_clipTexture(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		pushValue(l,o.clipTexture);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_clipTexture(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		UnityEngine.Texture2D v;
+		checkType(l,2,out v);
+		o.clipTexture=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_alwaysOnScreen(IntPtr l) {
 		UIDrawCall o = (UIDrawCall)checkSelf(l);
 		pushValue(l,o.alwaysOnScreen);
@@ -184,6 +204,76 @@ public class Lua_UIDrawCall : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_verts(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		pushValue(l,o.verts);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_verts(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		BetterList<UnityEngine.Vector3> v;
+		checkType(l,2,out v);
+		o.verts=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_norms(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		pushValue(l,o.norms);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_norms(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		BetterList<UnityEngine.Vector3> v;
+		checkType(l,2,out v);
+		o.norms=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_tans(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		pushValue(l,o.tans);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_tans(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		BetterList<UnityEngine.Vector4> v;
+		checkType(l,2,out v);
+		o.tans=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_uvs(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		pushValue(l,o.uvs);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_uvs(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		BetterList<UnityEngine.Vector2> v;
+		checkType(l,2,out v);
+		o.uvs=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_cols(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		pushValue(l,o.cols);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_cols(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		BetterList<UnityEngine.Color32> v;
+		checkType(l,2,out v);
+		o.cols=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isDirty(IntPtr l) {
 		UIDrawCall o = (UIDrawCall)checkSelf(l);
 		pushValue(l,o.isDirty);
@@ -195,6 +285,16 @@ public class Lua_UIDrawCall : LuaObject {
 		System.Boolean v;
 		checkType(l,2,out v);
 		o.isDirty=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onRender(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		UIDrawCall.OnRenderCallback v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onRender=v;
+		else if(op==1) o.onRender+=v;
+		else if(op==2) o.onRender-=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -219,6 +319,20 @@ public class Lua_UIDrawCall : LuaObject {
 		int v;
 		checkType(l,2,out v);
 		o.renderQueue=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sortingOrder(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		pushValue(l,o.sortingOrder);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_sortingOrder(IntPtr l) {
+		UIDrawCall o = (UIDrawCall)checkSelf(l);
+		int v;
+		checkType(l,2,out v);
+		o.sortingOrder=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -307,66 +421,33 @@ public class Lua_UIDrawCall : LuaObject {
 		pushValue(l,o.isClipped);
 		return 1;
 	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_clipping(IntPtr l) {
-		UIDrawCall o = (UIDrawCall)checkSelf(l);
-		pushEnum(l,(int)o.clipping);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_clipping(IntPtr l) {
-		UIDrawCall o = (UIDrawCall)checkSelf(l);
-		UIDrawCall.Clipping v;
-		checkEnum(l,2,out v);
-		o.clipping=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_clipRange(IntPtr l) {
-		UIDrawCall o = (UIDrawCall)checkSelf(l);
-		pushValue(l,o.clipRange);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_clipRange(IntPtr l) {
-		UIDrawCall o = (UIDrawCall)checkSelf(l);
-		UnityEngine.Vector4 v;
-		checkType(l,2,out v);
-		o.clipRange=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_clipSoftness(IntPtr l) {
-		UIDrawCall o = (UIDrawCall)checkSelf(l);
-		pushValue(l,o.clipSoftness);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_clipSoftness(IntPtr l) {
-		UIDrawCall o = (UIDrawCall)checkSelf(l);
-		UnityEngine.Vector2 v;
-		checkType(l,2,out v);
-		o.clipSoftness=v;
-		return 0;
-	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIDrawCall");
-		addMember(l,Set);
+		addMember(l,UpdateGeometry);
 		addMember(l,Create_s);
 		addMember(l,ClearAll_s);
 		addMember(l,ReleaseAll_s);
 		addMember(l,ReleaseInactive_s);
 		addMember(l,Count_s);
 		addMember(l,Destroy_s);
+		addMember(l,"widgetCount",get_widgetCount,set_widgetCount,true);
 		addMember(l,"depthStart",get_depthStart,set_depthStart,true);
 		addMember(l,"depthEnd",get_depthEnd,set_depthEnd,true);
 		addMember(l,"manager",get_manager,set_manager,true);
 		addMember(l,"panel",get_panel,set_panel,true);
+		addMember(l,"clipTexture",get_clipTexture,set_clipTexture,true);
 		addMember(l,"alwaysOnScreen",get_alwaysOnScreen,set_alwaysOnScreen,true);
+		addMember(l,"verts",get_verts,set_verts,true);
+		addMember(l,"norms",get_norms,set_norms,true);
+		addMember(l,"tans",get_tans,set_tans,true);
+		addMember(l,"uvs",get_uvs,set_uvs,true);
+		addMember(l,"cols",get_cols,set_cols,true);
 		addMember(l,"isDirty",get_isDirty,set_isDirty,true);
+		addMember(l,"onRender",null,set_onRender,true);
 		addMember(l,"activeList",get_activeList,null,false);
 		addMember(l,"inactiveList",get_inactiveList,null,false);
 		addMember(l,"renderQueue",get_renderQueue,set_renderQueue,true);
+		addMember(l,"sortingOrder",get_sortingOrder,set_sortingOrder,true);
 		addMember(l,"finalRenderQueue",get_finalRenderQueue,null,true);
 		addMember(l,"isActive",get_isActive,set_isActive,true);
 		addMember(l,"cachedTransform",get_cachedTransform,null,true);
@@ -376,9 +457,6 @@ public class Lua_UIDrawCall : LuaObject {
 		addMember(l,"shader",get_shader,set_shader,true);
 		addMember(l,"triangles",get_triangles,null,true);
 		addMember(l,"isClipped",get_isClipped,null,true);
-		addMember(l,"clipping",get_clipping,set_clipping,true);
-		addMember(l,"clipRange",get_clipRange,set_clipRange,true);
-		addMember(l,"clipSoftness",get_clipSoftness,set_clipSoftness,true);
 		createTypeMetatable(l,constructor, typeof(UIDrawCall),typeof(UnityEngine.MonoBehaviour));
 	}
 }

@@ -58,10 +58,20 @@ public class Lua_UIScrollView : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int UpdateScrollbars(IntPtr l) {
 		try{
-			UIScrollView self=(UIScrollView)checkSelf(l);
-			System.Boolean a1;
-			checkType(l,2,out a1);
-			self.UpdateScrollbars(a1);
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==0){
+				UIScrollView self=(UIScrollView)checkSelf(l);
+				self.UpdateScrollbars();
+				return 0;
+			}
+			else if(argc==1){
+				UIScrollView self=(UIScrollView)checkSelf(l);
+				System.Boolean a1;
+				checkType(l,2,out a1);
+				self.UpdateScrollbars(a1);
+				return 0;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}
 		catch(Exception e) {
@@ -80,6 +90,18 @@ public class Lua_UIScrollView : LuaObject {
 			System.Boolean a3;
 			checkType(l,4,out a3);
 			self.SetDragAmount(a1,a2,a3);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int InvalidateBounds(IntPtr l) {
+		try{
+			UIScrollView self=(UIScrollView)checkSelf(l);
+			self.InvalidateBounds();
 			return 0;
 		}
 		catch(Exception e) {
@@ -386,13 +408,57 @@ public class Lua_UIScrollView : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragStarted(IntPtr l) {
+		UIScrollView o = (UIScrollView)checkSelf(l);
+		UIScrollView.OnDragNotification v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onDragStarted=v;
+		else if(op==1) o.onDragStarted+=v;
+		else if(op==2) o.onDragStarted-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_onDragFinished(IntPtr l) {
 		UIScrollView o = (UIScrollView)checkSelf(l);
-		UIScrollView.OnDragFinished v;
+		UIScrollView.OnDragNotification v;
 		int op=checkDelegate(l,2,out v);
 		if(op==0) o.onDragFinished=v;
 		else if(op==1) o.onDragFinished+=v;
 		else if(op==2) o.onDragFinished-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onMomentumMove(IntPtr l) {
+		UIScrollView o = (UIScrollView)checkSelf(l);
+		UIScrollView.OnDragNotification v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onMomentumMove=v;
+		else if(op==1) o.onMomentumMove+=v;
+		else if(op==2) o.onMomentumMove-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onStoppedMoving(IntPtr l) {
+		UIScrollView o = (UIScrollView)checkSelf(l);
+		UIScrollView.OnDragNotification v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onStoppedMoving=v;
+		else if(op==1) o.onStoppedMoving+=v;
+		else if(op==2) o.onStoppedMoving-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_centerOnChild(IntPtr l) {
+		UIScrollView o = (UIScrollView)checkSelf(l);
+		pushValue(l,o.centerOnChild);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_centerOnChild(IntPtr l) {
+		UIScrollView o = (UIScrollView)checkSelf(l);
+		UICenterOnChild v;
+		checkType(l,2,out v);
+		o.centerOnChild=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -457,6 +523,7 @@ public class Lua_UIScrollView : LuaObject {
 		addMember(l,DisableSpring);
 		addMember(l,UpdateScrollbars);
 		addMember(l,SetDragAmount);
+		addMember(l,InvalidateBounds);
 		addMember(l,ResetPosition);
 		addMember(l,UpdatePosition);
 		addMember(l,OnScrollBar);
@@ -479,7 +546,11 @@ public class Lua_UIScrollView : LuaObject {
 		addMember(l,"showScrollBars",get_showScrollBars,set_showScrollBars,true);
 		addMember(l,"customMovement",get_customMovement,set_customMovement,true);
 		addMember(l,"contentPivot",get_contentPivot,set_contentPivot,true);
+		addMember(l,"onDragStarted",null,set_onDragStarted,true);
 		addMember(l,"onDragFinished",null,set_onDragFinished,true);
+		addMember(l,"onMomentumMove",null,set_onMomentumMove,true);
+		addMember(l,"onStoppedMoving",null,set_onStoppedMoving,true);
+		addMember(l,"centerOnChild",get_centerOnChild,set_centerOnChild,true);
 		addMember(l,"panel",get_panel,null,true);
 		addMember(l,"isDragging",get_isDragging,null,true);
 		addMember(l,"bounds",get_bounds,null,true);

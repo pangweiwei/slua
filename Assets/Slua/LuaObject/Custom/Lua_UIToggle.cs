@@ -12,6 +12,20 @@ public class Lua_UIToggle : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Set(IntPtr l) {
+		try{
+			UIToggle self=(UIToggle)checkSelf(l);
+			System.Boolean a1;
+			checkType(l,2,out a1);
+			self.Set(a1);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetActiveToggle_s(IntPtr l) {
 		try{
 			System.Int32 a1;
@@ -148,6 +162,16 @@ public class Lua_UIToggle : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_validator(IntPtr l) {
+		UIToggle o = (UIToggle)checkSelf(l);
+		UIToggle.Validate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.validator=v;
+		else if(op==1) o.validator+=v;
+		else if(op==2) o.validator-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_value(IntPtr l) {
 		UIToggle o = (UIToggle)checkSelf(l);
 		pushValue(l,o.value);
@@ -163,6 +187,7 @@ public class Lua_UIToggle : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIToggle");
+		addMember(l,Set);
 		addMember(l,GetActiveToggle_s);
 		addMember(l,"list",get_list,set_list,false);
 		addMember(l,"current",get_current,set_current,false);
@@ -173,6 +198,7 @@ public class Lua_UIToggle : LuaObject {
 		addMember(l,"instantTween",get_instantTween,set_instantTween,true);
 		addMember(l,"optionCanBeNone",get_optionCanBeNone,set_optionCanBeNone,true);
 		addMember(l,"onChange",get_onChange,set_onChange,true);
+		addMember(l,"validator",null,set_validator,true);
 		addMember(l,"value",get_value,set_value,true);
 		createTypeMetatable(l,constructor, typeof(UIToggle),typeof(UIWidgetContainer));
 	}

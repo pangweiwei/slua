@@ -8,6 +8,7 @@ public class Lua_UIKeyBinding_Action : LuaObject {
 		getEnumTable(l,"UIKeyBinding.Action");
 		addMember(l,0,"PressAndClick");
 		addMember(l,1,"Select");
+		addMember(l,2,"All");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

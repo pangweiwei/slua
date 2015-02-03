@@ -12,18 +12,16 @@ public class Lua_LagRotation : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_updateOrder(IntPtr l) {
-		LagRotation o = (LagRotation)checkSelf(l);
-		pushValue(l,o.updateOrder);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_updateOrder(IntPtr l) {
-		LagRotation o = (LagRotation)checkSelf(l);
-		System.Int32 v;
-		checkType(l,2,out v);
-		o.updateOrder=v;
-		return 0;
+	static public int OnRepositionEnd(IntPtr l) {
+		try{
+			LagRotation self=(LagRotation)checkSelf(l);
+			self.OnRepositionEnd();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_speed(IntPtr l) {
@@ -55,7 +53,7 @@ public class Lua_LagRotation : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"LagRotation");
-		addMember(l,"updateOrder",get_updateOrder,set_updateOrder,true);
+		addMember(l,OnRepositionEnd);
 		addMember(l,"speed",get_speed,set_speed,true);
 		addMember(l,"ignoreTimeScale",get_ignoreTimeScale,set_ignoreTimeScale,true);
 		createTypeMetatable(l,constructor, typeof(LagRotation),typeof(UnityEngine.MonoBehaviour));

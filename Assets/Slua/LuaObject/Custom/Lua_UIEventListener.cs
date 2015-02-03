@@ -110,6 +110,16 @@ public class Lua_UIEventListener : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragStart(IntPtr l) {
+		UIEventListener o = (UIEventListener)checkSelf(l);
+		UIEventListener.VoidDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onDragStart=v;
+		else if(op==1) o.onDragStart+=v;
+		else if(op==2) o.onDragStart-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_onDrag(IntPtr l) {
 		UIEventListener o = (UIEventListener)checkSelf(l);
 		UIEventListener.VectorDelegate v;
@@ -117,6 +127,36 @@ public class Lua_UIEventListener : LuaObject {
 		if(op==0) o.onDrag=v;
 		else if(op==1) o.onDrag+=v;
 		else if(op==2) o.onDrag-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragOver(IntPtr l) {
+		UIEventListener o = (UIEventListener)checkSelf(l);
+		UIEventListener.VoidDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onDragOver=v;
+		else if(op==1) o.onDragOver+=v;
+		else if(op==2) o.onDragOver-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragOut(IntPtr l) {
+		UIEventListener o = (UIEventListener)checkSelf(l);
+		UIEventListener.VoidDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onDragOut=v;
+		else if(op==1) o.onDragOut+=v;
+		else if(op==2) o.onDragOut-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onDragEnd(IntPtr l) {
+		UIEventListener o = (UIEventListener)checkSelf(l);
+		UIEventListener.VoidDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onDragEnd=v;
+		else if(op==1) o.onDragEnd+=v;
+		else if(op==2) o.onDragEnd-=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -139,6 +179,16 @@ public class Lua_UIEventListener : LuaObject {
 		else if(op==2) o.onKey-=v;
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onTooltip(IntPtr l) {
+		UIEventListener o = (UIEventListener)checkSelf(l);
+		UIEventListener.BoolDelegate v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onTooltip=v;
+		else if(op==1) o.onTooltip+=v;
+		else if(op==2) o.onTooltip-=v;
+		return 0;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIEventListener");
 		addMember(l,Get_s);
@@ -150,9 +200,14 @@ public class Lua_UIEventListener : LuaObject {
 		addMember(l,"onPress",null,set_onPress,true);
 		addMember(l,"onSelect",null,set_onSelect,true);
 		addMember(l,"onScroll",null,set_onScroll,true);
+		addMember(l,"onDragStart",null,set_onDragStart,true);
 		addMember(l,"onDrag",null,set_onDrag,true);
+		addMember(l,"onDragOver",null,set_onDragOver,true);
+		addMember(l,"onDragOut",null,set_onDragOut,true);
+		addMember(l,"onDragEnd",null,set_onDragEnd,true);
 		addMember(l,"onDrop",null,set_onDrop,true);
 		addMember(l,"onKey",null,set_onKey,true);
+		addMember(l,"onTooltip",null,set_onTooltip,true);
 		createTypeMetatable(l,constructor, typeof(UIEventListener),typeof(UnityEngine.MonoBehaviour));
 	}
 }

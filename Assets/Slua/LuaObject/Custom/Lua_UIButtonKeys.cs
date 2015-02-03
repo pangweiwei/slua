@@ -12,18 +12,16 @@ public class Lua_UIButtonKeys : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_startsSelected(IntPtr l) {
-		UIButtonKeys o = (UIButtonKeys)checkSelf(l);
-		pushValue(l,o.startsSelected);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_startsSelected(IntPtr l) {
-		UIButtonKeys o = (UIButtonKeys)checkSelf(l);
-		System.Boolean v;
-		checkType(l,2,out v);
-		o.startsSelected=v;
-		return 0;
+	static public int Upgrade(IntPtr l) {
+		try{
+			UIButtonKeys self=(UIButtonKeys)checkSelf(l);
+			self.Upgrade();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_selectOnClick(IntPtr l) {
@@ -97,12 +95,12 @@ public class Lua_UIButtonKeys : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIButtonKeys");
-		addMember(l,"startsSelected",get_startsSelected,set_startsSelected,true);
+		addMember(l,Upgrade);
 		addMember(l,"selectOnClick",get_selectOnClick,set_selectOnClick,true);
 		addMember(l,"selectOnUp",get_selectOnUp,set_selectOnUp,true);
 		addMember(l,"selectOnDown",get_selectOnDown,set_selectOnDown,true);
 		addMember(l,"selectOnLeft",get_selectOnLeft,set_selectOnLeft,true);
 		addMember(l,"selectOnRight",get_selectOnRight,set_selectOnRight,true);
-		createTypeMetatable(l,constructor, typeof(UIButtonKeys),typeof(UnityEngine.MonoBehaviour));
+		createTypeMetatable(l,constructor, typeof(UIButtonKeys),typeof(UIKeyNavigation));
 	}
 }

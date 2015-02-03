@@ -152,10 +152,26 @@ public class Lua_UIFont : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_texWidth(IntPtr l) {
+		UIFont o = (UIFont)checkSelf(l);
+		int v;
+		checkType(l,2,out v);
+		o.texWidth=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_texHeight(IntPtr l) {
 		UIFont o = (UIFont)checkSelf(l);
 		pushValue(l,o.texHeight);
 		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_texHeight(IntPtr l) {
+		UIFont o = (UIFont)checkSelf(l);
+		int v;
+		checkType(l,2,out v);
+		o.texHeight=v;
+		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_hasSymbols(IntPtr l) {
@@ -328,8 +344,8 @@ public class Lua_UIFont : LuaObject {
 		addMember(l,UsesSprite);
 		addMember(l,CheckIfRelated_s);
 		addMember(l,"bmFont",get_bmFont,set_bmFont,true);
-		addMember(l,"texWidth",get_texWidth,null,true);
-		addMember(l,"texHeight",get_texHeight,null,true);
+		addMember(l,"texWidth",get_texWidth,set_texWidth,true);
+		addMember(l,"texHeight",get_texHeight,set_texHeight,true);
 		addMember(l,"hasSymbols",get_hasSymbols,null,true);
 		addMember(l,"symbols",get_symbols,null,true);
 		addMember(l,"atlas",get_atlas,set_atlas,true);

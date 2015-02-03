@@ -93,6 +93,20 @@ public class Lua_UIRoot : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_manualWidth(IntPtr l) {
+		UIRoot o = (UIRoot)checkSelf(l);
+		pushValue(l,o.manualWidth);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_manualWidth(IntPtr l) {
+		UIRoot o = (UIRoot)checkSelf(l);
+		System.Int32 v;
+		checkType(l,2,out v);
+		o.manualWidth=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_manualHeight(IntPtr l) {
 		UIRoot o = (UIRoot)checkSelf(l);
 		pushValue(l,o.manualHeight);
@@ -135,6 +149,74 @@ public class Lua_UIRoot : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_fitWidth(IntPtr l) {
+		UIRoot o = (UIRoot)checkSelf(l);
+		pushValue(l,o.fitWidth);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_fitWidth(IntPtr l) {
+		UIRoot o = (UIRoot)checkSelf(l);
+		System.Boolean v;
+		checkType(l,2,out v);
+		o.fitWidth=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_fitHeight(IntPtr l) {
+		UIRoot o = (UIRoot)checkSelf(l);
+		pushValue(l,o.fitHeight);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_fitHeight(IntPtr l) {
+		UIRoot o = (UIRoot)checkSelf(l);
+		System.Boolean v;
+		checkType(l,2,out v);
+		o.fitHeight=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_adjustByDPI(IntPtr l) {
+		UIRoot o = (UIRoot)checkSelf(l);
+		pushValue(l,o.adjustByDPI);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_adjustByDPI(IntPtr l) {
+		UIRoot o = (UIRoot)checkSelf(l);
+		System.Boolean v;
+		checkType(l,2,out v);
+		o.adjustByDPI=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_shrinkPortraitUI(IntPtr l) {
+		UIRoot o = (UIRoot)checkSelf(l);
+		pushValue(l,o.shrinkPortraitUI);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_shrinkPortraitUI(IntPtr l) {
+		UIRoot o = (UIRoot)checkSelf(l);
+		System.Boolean v;
+		checkType(l,2,out v);
+		o.shrinkPortraitUI=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_constraint(IntPtr l) {
+		UIRoot o = (UIRoot)checkSelf(l);
+		pushEnum(l,(int)o.constraint);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_activeScaling(IntPtr l) {
+		UIRoot o = (UIRoot)checkSelf(l);
+		pushEnum(l,(int)o.activeScaling);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_activeHeight(IntPtr l) {
 		UIRoot o = (UIRoot)checkSelf(l);
 		pushValue(l,o.activeHeight);
@@ -153,9 +235,16 @@ public class Lua_UIRoot : LuaObject {
 		addMember(l,Broadcast_s);
 		addMember(l,"list",get_list,set_list,false);
 		addMember(l,"scalingStyle",get_scalingStyle,set_scalingStyle,true);
+		addMember(l,"manualWidth",get_manualWidth,set_manualWidth,true);
 		addMember(l,"manualHeight",get_manualHeight,set_manualHeight,true);
 		addMember(l,"minimumHeight",get_minimumHeight,set_minimumHeight,true);
 		addMember(l,"maximumHeight",get_maximumHeight,set_maximumHeight,true);
+		addMember(l,"fitWidth",get_fitWidth,set_fitWidth,true);
+		addMember(l,"fitHeight",get_fitHeight,set_fitHeight,true);
+		addMember(l,"adjustByDPI",get_adjustByDPI,set_adjustByDPI,true);
+		addMember(l,"shrinkPortraitUI",get_shrinkPortraitUI,set_shrinkPortraitUI,true);
+		addMember(l,"constraint",get_constraint,null,true);
+		addMember(l,"activeScaling",get_activeScaling,null,true);
 		addMember(l,"activeHeight",get_activeHeight,null,true);
 		addMember(l,"pixelSizeAdjustment",get_pixelSizeAdjustment,null,true);
 		createTypeMetatable(l,constructor, typeof(UIRoot),typeof(UnityEngine.MonoBehaviour));

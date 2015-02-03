@@ -95,6 +95,22 @@ public class Lua_NGUIText : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ParseAlpha_s(IntPtr l) {
+		try{
+			System.String a1;
+			checkType(l,1,out a1);
+			System.Int32 a2;
+			checkType(l,2,out a2);
+			System.Single ret=NGUIText.ParseAlpha(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ParseColor_s(IntPtr l) {
 		try{
 			System.String a1;
@@ -102,6 +118,38 @@ public class Lua_NGUIText : LuaObject {
 			System.Int32 a2;
 			checkType(l,2,out a2);
 			UnityEngine.Color ret=NGUIText.ParseColor(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ParseColor24_s(IntPtr l) {
+		try{
+			System.String a1;
+			checkType(l,1,out a1);
+			System.Int32 a2;
+			checkType(l,2,out a2);
+			UnityEngine.Color ret=NGUIText.ParseColor24(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ParseColor32_s(IntPtr l) {
+		try{
+			System.String a1;
+			checkType(l,1,out a1);
+			System.Int32 a2;
+			checkType(l,2,out a2);
+			UnityEngine.Color ret=NGUIText.ParseColor32(a1,a2);
 			pushValue(l,ret);
 			return 1;
 		}
@@ -125,6 +173,48 @@ public class Lua_NGUIText : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int EncodeAlpha_s(IntPtr l) {
+		try{
+			System.Single a1;
+			checkType(l,1,out a1);
+			System.String ret=NGUIText.EncodeAlpha(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int EncodeColor24_s(IntPtr l) {
+		try{
+			UnityEngine.Color a1;
+			checkType(l,1,out a1);
+			System.String ret=NGUIText.EncodeColor24(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int EncodeColor32_s(IntPtr l) {
+		try{
+			UnityEngine.Color a1;
+			checkType(l,1,out a1);
+			System.String ret=NGUIText.EncodeColor32(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ParseSymbol_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
@@ -138,8 +228,54 @@ public class Lua_NGUIText : LuaObject {
 				pushValue(l,a2);
 				return 2;
 			}
+			else if(argc==10){
+				System.String a1;
+				checkType(l,1,out a1);
+				System.Int32 a2;
+				checkType(l,2,out a2);
+				BetterList<UnityEngine.Color> a3;
+				checkType(l,3,out a3);
+				System.Boolean a4;
+				checkType(l,4,out a4);
+				System.Int32 a5;
+				checkType(l,5,out a5);
+				System.Boolean a6;
+				checkType(l,6,out a6);
+				System.Boolean a7;
+				checkType(l,7,out a7);
+				System.Boolean a8;
+				checkType(l,8,out a8);
+				System.Boolean a9;
+				checkType(l,9,out a9);
+				System.Boolean a10;
+				checkType(l,10,out a10);
+				System.Boolean ret=NGUIText.ParseSymbol(a1,ref a2,a3,a4,ref a5,ref a6,ref a7,ref a8,ref a9,ref a10);
+				pushValue(l,ret);
+				pushValue(l,a2);
+				pushValue(l,a5);
+				pushValue(l,a6);
+				pushValue(l,a7);
+				pushValue(l,a8);
+				pushValue(l,a9);
+				pushValue(l,a10);
+				return 8;
+			}
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int IsHex_s(IntPtr l) {
+		try{
+			System.Char a1;
+			checkType(l,1,out a1);
+			System.Boolean ret=NGUIText.IsHex(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -178,13 +314,33 @@ public class Lua_NGUIText : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetClosestCharacter_s(IntPtr l) {
+	static public int GetExactCharacterIndex_s(IntPtr l) {
 		try{
 			BetterList<UnityEngine.Vector3> a1;
 			checkType(l,1,out a1);
-			UnityEngine.Vector2 a2;
+			BetterList<System.Int32> a2;
 			checkType(l,2,out a2);
-			System.Int32 ret=NGUIText.GetClosestCharacter(a1,a2);
+			UnityEngine.Vector2 a3;
+			checkType(l,3,out a3);
+			System.Int32 ret=NGUIText.GetExactCharacterIndex(a1,a2,a3);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetApproximateCharacterIndex_s(IntPtr l) {
+		try{
+			BetterList<UnityEngine.Vector3> a1;
+			checkType(l,1,out a1);
+			BetterList<System.Int32> a2;
+			checkType(l,2,out a2);
+			UnityEngine.Vector2 a3;
+			checkType(l,3,out a3);
+			System.Int32 ret=NGUIText.GetApproximateCharacterIndex(a1,a2,a3);
 			pushValue(l,ret);
 			return 1;
 		}
@@ -301,7 +457,7 @@ public class Lua_NGUIText : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int PrintCharacterPositions_s(IntPtr l) {
+	static public int PrintApproximateCharacterPositions_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
@@ -309,7 +465,24 @@ public class Lua_NGUIText : LuaObject {
 			checkType(l,2,out a2);
 			BetterList<System.Int32> a3;
 			checkType(l,3,out a3);
-			NGUIText.PrintCharacterPositions(a1,a2,a3);
+			NGUIText.PrintApproximateCharacterPositions(a1,a2,a3);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int PrintExactCharacterPositions_s(IntPtr l) {
+		try{
+			System.String a1;
+			checkType(l,1,out a1);
+			BetterList<UnityEngine.Vector3> a2;
+			checkType(l,2,out a2);
+			BetterList<System.Int32> a3;
+			checkType(l,3,out a3);
+			NGUIText.PrintExactCharacterPositions(a1,a2,a3);
 			return 0;
 		}
 		catch(Exception e) {
@@ -468,6 +641,30 @@ public class Lua_NGUIText : LuaObject {
 		System.Int32 v;
 		checkType(l,2,out v);
 		NGUIText.rectHeight=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_regionWidth(IntPtr l) {
+		pushValue(l,NGUIText.regionWidth);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_regionWidth(IntPtr l) {
+		System.Int32 v;
+		checkType(l,2,out v);
+		NGUIText.regionWidth=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_regionHeight(IntPtr l) {
+		pushValue(l,NGUIText.regionHeight);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_regionHeight(IntPtr l) {
+		System.Int32 v;
+		checkType(l,2,out v);
+		NGUIText.regionHeight=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -645,19 +842,28 @@ public class Lua_NGUIText : LuaObject {
 		addMember(l,GetSymbol_s);
 		addMember(l,GetGlyphWidth_s);
 		addMember(l,GetGlyph_s);
+		addMember(l,ParseAlpha_s);
 		addMember(l,ParseColor_s);
+		addMember(l,ParseColor24_s);
+		addMember(l,ParseColor32_s);
 		addMember(l,EncodeColor_s);
+		addMember(l,EncodeAlpha_s);
+		addMember(l,EncodeColor24_s);
+		addMember(l,EncodeColor32_s);
 		addMember(l,ParseSymbol_s);
+		addMember(l,IsHex_s);
 		addMember(l,StripSymbols_s);
 		addMember(l,Align_s);
-		addMember(l,GetClosestCharacter_s);
+		addMember(l,GetExactCharacterIndex_s);
+		addMember(l,GetApproximateCharacterIndex_s);
 		addMember(l,EndLine_s);
 		addMember(l,CalculatePrintedSize_s);
 		addMember(l,CalculateOffsetToFit_s);
 		addMember(l,GetEndOfLineThatFits_s);
 		addMember(l,WrapText_s);
 		addMember(l,Print_s);
-		addMember(l,PrintCharacterPositions_s);
+		addMember(l,PrintApproximateCharacterPositions_s);
+		addMember(l,PrintExactCharacterPositions_s);
 		addMember(l,PrintCaretAndSelection_s);
 		addMember(l,"bitmapFont",get_bitmapFont,set_bitmapFont,false);
 		addMember(l,"dynamicFont",get_dynamicFont,set_dynamicFont,false);
@@ -670,6 +876,8 @@ public class Lua_NGUIText : LuaObject {
 		addMember(l,"tint",get_tint,set_tint,false);
 		addMember(l,"rectWidth",get_rectWidth,set_rectWidth,false);
 		addMember(l,"rectHeight",get_rectHeight,set_rectHeight,false);
+		addMember(l,"regionWidth",get_regionWidth,set_regionWidth,false);
+		addMember(l,"regionHeight",get_regionHeight,set_regionHeight,false);
 		addMember(l,"maxLines",get_maxLines,set_maxLines,false);
 		addMember(l,"gradient",get_gradient,set_gradient,false);
 		addMember(l,"gradientBottom",get_gradientBottom,set_gradientBottom,false);

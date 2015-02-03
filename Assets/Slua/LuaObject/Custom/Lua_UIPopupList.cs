@@ -12,6 +12,70 @@ public class Lua_UIPopupList : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Clear(IntPtr l) {
+		try{
+			UIPopupList self=(UIPopupList)checkSelf(l);
+			self.Clear();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int AddItem(IntPtr l) {
+		try{
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
+				UIPopupList self=(UIPopupList)checkSelf(l);
+				System.String a1;
+				checkType(l,2,out a1);
+				self.AddItem(a1);
+				return 0;
+			}
+			else if(argc==2){
+				UIPopupList self=(UIPopupList)checkSelf(l);
+				System.String a1;
+				checkType(l,2,out a1);
+				System.Object a2;
+				checkType(l,3,out a2);
+				self.AddItem(a1,a2);
+				return 0;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Close(IntPtr l) {
+		try{
+			UIPopupList self=(UIPopupList)checkSelf(l);
+			self.Close();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Show(IntPtr l) {
+		try{
+			UIPopupList self=(UIPopupList)checkSelf(l);
+			self.Show();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_current(IntPtr l) {
 		pushValue(l,UIPopupList.current);
 		return 1;
@@ -136,6 +200,20 @@ public class Lua_UIPopupList : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_alignment(IntPtr l) {
+		UIPopupList o = (UIPopupList)checkSelf(l);
+		pushEnum(l,(int)o.alignment);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_alignment(IntPtr l) {
+		UIPopupList o = (UIPopupList)checkSelf(l);
+		NGUIText.Alignment v;
+		checkEnum(l,2,out v);
+		o.alignment=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_items(IntPtr l) {
 		UIPopupList o = (UIPopupList)checkSelf(l);
 		pushValue(l,o.items);
@@ -147,6 +225,20 @@ public class Lua_UIPopupList : LuaObject {
 		System.Collections.Generic.List<System.String> v;
 		checkType(l,2,out v);
 		o.items=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_itemData(IntPtr l) {
+		UIPopupList o = (UIPopupList)checkSelf(l);
+		pushValue(l,o.itemData);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_itemData(IntPtr l) {
+		UIPopupList o = (UIPopupList)checkSelf(l);
+		System.Collections.Generic.List<System.Object> v;
+		checkType(l,2,out v);
+		o.itemData=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -234,6 +326,20 @@ public class Lua_UIPopupList : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_openOn(IntPtr l) {
+		UIPopupList o = (UIPopupList)checkSelf(l);
+		pushEnum(l,(int)o.openOn);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_openOn(IntPtr l) {
+		UIPopupList o = (UIPopupList)checkSelf(l);
+		UIPopupList.OpenOn v;
+		checkEnum(l,2,out v);
+		o.openOn=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_onChange(IntPtr l) {
 		UIPopupList o = (UIPopupList)checkSelf(l);
 		pushValue(l,o.onChange);
@@ -281,8 +387,18 @@ public class Lua_UIPopupList : LuaObject {
 		o.value=v;
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_data(IntPtr l) {
+		UIPopupList o = (UIPopupList)checkSelf(l);
+		pushValue(l,o.data);
+		return 1;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIPopupList");
+		addMember(l,Clear);
+		addMember(l,AddItem);
+		addMember(l,Close);
+		addMember(l,Show);
 		addMember(l,"current",get_current,set_current,false);
 		addMember(l,"atlas",get_atlas,set_atlas,true);
 		addMember(l,"bitmapFont",get_bitmapFont,set_bitmapFont,true);
@@ -292,17 +408,21 @@ public class Lua_UIPopupList : LuaObject {
 		addMember(l,"backgroundSprite",get_backgroundSprite,set_backgroundSprite,true);
 		addMember(l,"highlightSprite",get_highlightSprite,set_highlightSprite,true);
 		addMember(l,"position",get_position,set_position,true);
+		addMember(l,"alignment",get_alignment,set_alignment,true);
 		addMember(l,"items",get_items,set_items,true);
+		addMember(l,"itemData",get_itemData,set_itemData,true);
 		addMember(l,"padding",get_padding,set_padding,true);
 		addMember(l,"textColor",get_textColor,set_textColor,true);
 		addMember(l,"backgroundColor",get_backgroundColor,set_backgroundColor,true);
 		addMember(l,"highlightColor",get_highlightColor,set_highlightColor,true);
 		addMember(l,"isAnimated",get_isAnimated,set_isAnimated,true);
 		addMember(l,"isLocalized",get_isLocalized,set_isLocalized,true);
+		addMember(l,"openOn",get_openOn,set_openOn,true);
 		addMember(l,"onChange",get_onChange,set_onChange,true);
 		addMember(l,"ambigiousFont",get_ambigiousFont,set_ambigiousFont,true);
 		addMember(l,"isOpen",get_isOpen,null,true);
 		addMember(l,"value",get_value,set_value,true);
+		addMember(l,"data",get_data,null,true);
 		createTypeMetatable(l,constructor, typeof(UIPopupList),typeof(UIWidgetContainer));
 	}
 }

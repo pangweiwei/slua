@@ -12,6 +12,48 @@ public class Lua_UIButtonColor : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ResetDefaultColor(IntPtr l) {
+		try{
+			UIButtonColor self=(UIButtonColor)checkSelf(l);
+			self.ResetDefaultColor();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetState(IntPtr l) {
+		try{
+			UIButtonColor self=(UIButtonColor)checkSelf(l);
+			UIButtonColor.State a1;
+			checkEnum(l,2,out a1);
+			System.Boolean a2;
+			checkType(l,3,out a2);
+			self.SetState(a1,a2);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int UpdateColor(IntPtr l) {
+		try{
+			UIButtonColor self=(UIButtonColor)checkSelf(l);
+			System.Boolean a1;
+			checkType(l,2,out a1);
+			self.UpdateColor(a1);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_tweenTarget(IntPtr l) {
 		UIButtonColor o = (UIButtonColor)checkSelf(l);
 		pushValue(l,o.tweenTarget);
@@ -82,6 +124,20 @@ public class Lua_UIButtonColor : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_state(IntPtr l) {
+		UIButtonColor o = (UIButtonColor)checkSelf(l);
+		pushEnum(l,(int)o.state);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_state(IntPtr l) {
+		UIButtonColor o = (UIButtonColor)checkSelf(l);
+		UIButtonColor.State v;
+		checkEnum(l,2,out v);
+		o.state=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_defaultColor(IntPtr l) {
 		UIButtonColor o = (UIButtonColor)checkSelf(l);
 		pushValue(l,o.defaultColor);
@@ -111,11 +167,15 @@ public class Lua_UIButtonColor : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIButtonColor");
+		addMember(l,ResetDefaultColor);
+		addMember(l,SetState);
+		addMember(l,UpdateColor);
 		addMember(l,"tweenTarget",get_tweenTarget,set_tweenTarget,true);
 		addMember(l,"hover",get_hover,set_hover,true);
 		addMember(l,"pressed",get_pressed,set_pressed,true);
 		addMember(l,"disabledColor",get_disabledColor,set_disabledColor,true);
 		addMember(l,"duration",get_duration,set_duration,true);
+		addMember(l,"state",get_state,set_state,true);
 		addMember(l,"defaultColor",get_defaultColor,set_defaultColor,true);
 		addMember(l,"isEnabled",get_isEnabled,set_isEnabled,true);
 		createTypeMetatable(l,constructor, typeof(UIButtonColor),typeof(UIWidgetContainer));

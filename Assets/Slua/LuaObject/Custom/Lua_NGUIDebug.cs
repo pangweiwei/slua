@@ -36,6 +36,17 @@ public class Lua_NGUIDebug : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Clear_s(IntPtr l) {
+		try{
+			NGUIDebug.Clear();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int DrawBounds_s(IntPtr l) {
 		try{
 			UnityEngine.Bounds a1;
@@ -64,6 +75,7 @@ public class Lua_NGUIDebug : LuaObject {
 		getTypeTable(l,"NGUIDebug");
 		addMember(l,CreateInstance_s);
 		addMember(l,Log_s);
+		addMember(l,Clear_s);
 		addMember(l,DrawBounds_s);
 		addMember(l,"debugRaycast",get_debugRaycast,set_debugRaycast,false);
 		createTypeMetatable(l,constructor, typeof(NGUIDebug),typeof(UnityEngine.MonoBehaviour));

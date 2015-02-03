@@ -50,6 +50,20 @@ public class Lua_UIDragObject : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_panelRegion(IntPtr l) {
+		UIDragObject o = (UIDragObject)checkSelf(l);
+		pushValue(l,o.panelRegion);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_panelRegion(IntPtr l) {
+		UIDragObject o = (UIDragObject)checkSelf(l);
+		UIPanel v;
+		checkType(l,2,out v);
+		o.panelRegion=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_scrollMomentum(IntPtr l) {
 		UIDragObject o = (UIDragObject)checkSelf(l);
 		pushValue(l,o.scrollMomentum);
@@ -138,6 +152,7 @@ public class Lua_UIDragObject : LuaObject {
 		addMember(l,CancelMovement);
 		addMember(l,CancelSpring);
 		addMember(l,"target",get_target,set_target,true);
+		addMember(l,"panelRegion",get_panelRegion,set_panelRegion,true);
 		addMember(l,"scrollMomentum",get_scrollMomentum,set_scrollMomentum,true);
 		addMember(l,"restrictWithinPanel",get_restrictWithinPanel,set_restrictWithinPanel,true);
 		addMember(l,"contentRect",get_contentRect,set_contentRect,true);

@@ -8,6 +8,7 @@ public class Lua_UIGrid_Arrangement : LuaObject {
 		getEnumTable(l,"UIGrid.Arrangement");
 		addMember(l,0,"Horizontal");
 		addMember(l,1,"Vertical");
+		addMember(l,2,"CellSnap");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

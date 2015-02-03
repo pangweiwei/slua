@@ -157,6 +157,18 @@ public class Lua_UIWidget : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RemoveFromPanel(IntPtr l) {
+		try{
+			UIWidget self=(UIWidget)checkSelf(l);
+			self.RemoveFromPanel();
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int MarkAsChanged(IntPtr l) {
 		try{
 			UIWidget self=(UIWidget)checkSelf(l);
@@ -347,6 +359,26 @@ public class Lua_UIWidget : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onPostFill(IntPtr l) {
+		UIWidget o = (UIWidget)checkSelf(l);
+		UIWidget.OnPostFillCallback v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.onPostFill=v;
+		else if(op==1) o.onPostFill+=v;
+		else if(op==2) o.onPostFill-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_mOnRender(IntPtr l) {
+		UIWidget o = (UIWidget)checkSelf(l);
+		UIDrawCall.OnRenderCallback v;
+		int op=checkDelegate(l,2,out v);
+		if(op==0) o.mOnRender=v;
+		else if(op==1) o.mOnRender+=v;
+		else if(op==2) o.mOnRender-=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_autoResizeBoxCollider(IntPtr l) {
 		UIWidget o = (UIWidget)checkSelf(l);
 		pushValue(l,o.autoResizeBoxCollider);
@@ -466,6 +498,16 @@ public class Lua_UIWidget : LuaObject {
 		UIDrawCall v;
 		checkType(l,2,out v);
 		o.drawCall=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_onRender(IntPtr l) {
+		LuaDLL.luaL_error(l,"Not support");
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onRender(IntPtr l) {
+		LuaDLL.luaL_error(l,"Not support");
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -617,9 +659,21 @@ public class Lua_UIWidget : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_localCenter(IntPtr l) {
+		UIWidget o = (UIWidget)checkSelf(l);
+		pushValue(l,o.localCenter);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_worldCorners(IntPtr l) {
 		UIWidget o = (UIWidget)checkSelf(l);
 		pushValue(l,o.worldCorners);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_worldCenter(IntPtr l) {
+		UIWidget o = (UIWidget)checkSelf(l);
+		pushValue(l,o.worldCenter);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -711,6 +765,14 @@ public class Lua_UIWidget : LuaObject {
 		pushValue(l,o.border);
 		return 1;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_border(IntPtr l) {
+		UIWidget o = (UIWidget)checkSelf(l);
+		UnityEngine.Vector4 v;
+		checkType(l,2,out v);
+		o.border=v;
+		return 0;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UIWidget");
 		addMember(l,SetDimensions);
@@ -722,6 +784,7 @@ public class Lua_UIWidget : LuaObject {
 		addMember(l,ResizeCollider);
 		addMember(l,CalculateBounds);
 		addMember(l,SetDirty);
+		addMember(l,RemoveFromPanel);
 		addMember(l,MarkAsChanged);
 		addMember(l,CreatePanel);
 		addMember(l,CheckLayer);
@@ -735,6 +798,8 @@ public class Lua_UIWidget : LuaObject {
 		addMember(l,FullCompareFunc_s);
 		addMember(l,PanelCompareFunc_s);
 		addMember(l,"onChange",null,set_onChange,true);
+		addMember(l,"onPostFill",null,set_onPostFill,true);
+		addMember(l,"mOnRender",null,set_mOnRender,true);
 		addMember(l,"autoResizeBoxCollider",get_autoResizeBoxCollider,set_autoResizeBoxCollider,true);
 		addMember(l,"hideIfOffScreen",get_hideIfOffScreen,set_hideIfOffScreen,true);
 		addMember(l,"keepAspectRatio",get_keepAspectRatio,set_keepAspectRatio,true);
@@ -744,6 +809,7 @@ public class Lua_UIWidget : LuaObject {
 		addMember(l,"geometry",get_geometry,set_geometry,true);
 		addMember(l,"fillGeometry",get_fillGeometry,set_fillGeometry,true);
 		addMember(l,"drawCall",get_drawCall,set_drawCall,true);
+		addMember(l,"onRender",get_onRender,set_onRender,true);
 		addMember(l,"drawRegion",get_drawRegion,set_drawRegion,true);
 		addMember(l,"pivotOffset",get_pivotOffset,null,true);
 		addMember(l,"width",get_width,set_width,true);
@@ -758,7 +824,9 @@ public class Lua_UIWidget : LuaObject {
 		addMember(l,"raycastDepth",get_raycastDepth,null,true);
 		addMember(l,"localCorners",get_localCorners,null,true);
 		addMember(l,"localSize",get_localSize,null,true);
+		addMember(l,"localCenter",get_localCenter,null,true);
 		addMember(l,"worldCorners",get_worldCorners,null,true);
+		addMember(l,"worldCenter",get_worldCenter,null,true);
 		addMember(l,"drawingDimensions",get_drawingDimensions,null,true);
 		addMember(l,"material",get_material,set_material,true);
 		addMember(l,"mainTexture",get_mainTexture,set_mainTexture,true);
@@ -768,7 +836,7 @@ public class Lua_UIWidget : LuaObject {
 		addMember(l,"showHandles",get_showHandles,null,false);
 		addMember(l,"minWidth",get_minWidth,null,true);
 		addMember(l,"minHeight",get_minHeight,null,true);
-		addMember(l,"border",get_border,null,true);
+		addMember(l,"border",get_border,set_border,true);
 		createTypeMetatable(l,constructor, typeof(UIWidget),typeof(UIRect));
 	}
 }

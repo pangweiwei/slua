@@ -12,11 +12,22 @@ public class Lua_UITooltip : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ShowText_s(IntPtr l) {
+	static public int Show_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
-			UITooltip.ShowText(a1);
+			UITooltip.Show(a1);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Hide_s(IntPtr l) {
+		try{
+			UITooltip.Hide();
 			return 0;
 		}
 		catch(Exception e) {
@@ -101,7 +112,8 @@ public class Lua_UITooltip : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UITooltip");
-		addMember(l,ShowText_s);
+		addMember(l,Show_s);
+		addMember(l,Hide_s);
 		addMember(l,"uiCamera",get_uiCamera,set_uiCamera,true);
 		addMember(l,"text",get_text,set_text,true);
 		addMember(l,"background",get_background,set_background,true);
