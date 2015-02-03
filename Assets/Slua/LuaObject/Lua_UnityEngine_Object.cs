@@ -28,7 +28,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 	static public int Instantiate_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==4){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -39,7 +39,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object ret=UnityEngine.Object.Instantiate(a1);
@@ -58,7 +58,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 	static public int Destroy_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 				UnityEngine.Object.Destroy(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object.Destroy(a1);
@@ -84,7 +84,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 	static public int DestroyImmediate_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -92,7 +92,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 				UnityEngine.Object.DestroyImmediate(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object.DestroyImmediate(a1);
@@ -151,7 +151,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 	static public int DestroyObject_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -159,7 +159,7 @@ public class Lua_UnityEngine_Object : LuaObject {
 				UnityEngine.Object.DestroyObject(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object.DestroyObject(a1);

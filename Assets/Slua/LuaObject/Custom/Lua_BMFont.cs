@@ -15,7 +15,7 @@ public class Lua_BMFont : LuaObject {
 	static public int GetGlyph(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				BMFont self=(BMFont)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -25,7 +25,7 @@ public class Lua_BMFont : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				BMFont self=(BMFont)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);

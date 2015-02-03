@@ -15,7 +15,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 	static public int SetResolution_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==5){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -27,7 +27,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 				UnityEngine.Screen.SetResolution(a1,a2,a3,a4);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;

@@ -15,7 +15,7 @@ public class Lua_UnityEngine_Caching : LuaObject {
 	static public int Authorize_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==5){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String a2;
@@ -28,7 +28,7 @@ public class Lua_UnityEngine_Caching : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==6){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String a2;

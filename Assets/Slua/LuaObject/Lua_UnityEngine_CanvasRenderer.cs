@@ -98,14 +98,14 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 	static public int SetVertices(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 				System.Collections.Generic.List<UnityEngine.UIVertex> a1;
 				checkType(l,2,out a1);
 				self.SetVertices(a1);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 				UnityEngine.UIVertex[] a1;
 				checkType(l,2,out a1);

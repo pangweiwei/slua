@@ -69,13 +69,13 @@ public class Lua_UIAtlas : LuaObject {
 	static public int GetListOfSprites(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UIAtlas self=(UIAtlas)checkSelf(l);
 				BetterList<System.String> ret=self.GetListOfSprites();
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UIAtlas self=(UIAtlas)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);

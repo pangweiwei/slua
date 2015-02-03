@@ -27,7 +27,7 @@ public class Lua_UIRect_AnchorPoint : LuaObject {
 	static public int Set(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UIRect.AnchorPoint self=(UIRect.AnchorPoint)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -36,7 +36,7 @@ public class Lua_UIRect_AnchorPoint : LuaObject {
 				self.Set(a1,a2);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UIRect.AnchorPoint self=(UIRect.AnchorPoint)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);
@@ -59,7 +59,7 @@ public class Lua_UIRect_AnchorPoint : LuaObject {
 	static public int SetToNearest(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==4){
 				UIRect.AnchorPoint self=(UIRect.AnchorPoint)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -70,7 +70,7 @@ public class Lua_UIRect_AnchorPoint : LuaObject {
 				self.SetToNearest(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==6){
+			else if(argc==7){
 				UIRect.AnchorPoint self=(UIRect.AnchorPoint)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);

@@ -122,13 +122,13 @@ public class Lua_UIWidget : LuaObject {
 	static public int CalculateBounds(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UIWidget self=(UIWidget)checkSelf(l);
 				UnityEngine.Bounds ret=self.CalculateBounds();
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UIWidget self=(UIWidget)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);

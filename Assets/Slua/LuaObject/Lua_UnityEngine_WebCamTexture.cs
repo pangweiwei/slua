@@ -124,13 +124,13 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	static public int GetPixels(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				UnityEngine.Color[] ret=self.GetPixels();
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==5){
 				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -156,7 +156,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 	static public int GetPixels32(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				UnityEngine.Color32[] a1;
 				checkType(l,2,out a1);
@@ -164,7 +164,7 @@ public class Lua_UnityEngine_WebCamTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.WebCamTexture self=(UnityEngine.WebCamTexture)checkSelf(l);
 				UnityEngine.Color32[] ret=self.GetPixels32();
 				pushValue(l,ret);

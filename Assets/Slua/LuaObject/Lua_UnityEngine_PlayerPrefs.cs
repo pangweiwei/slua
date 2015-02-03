@@ -30,7 +30,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 	static public int GetInt_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -39,7 +39,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 ret=UnityEngine.PlayerPrefs.GetInt(a1);
@@ -73,7 +73,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 	static public int GetFloat_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -82,7 +82,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Single ret=UnityEngine.PlayerPrefs.GetFloat(a1);
@@ -116,7 +116,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 	static public int GetString_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String a2;
@@ -125,7 +125,7 @@ public class Lua_UnityEngine_PlayerPrefs : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String ret=UnityEngine.PlayerPrefs.GetString(a1);

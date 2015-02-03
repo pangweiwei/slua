@@ -490,7 +490,7 @@ public class Lua_UnityEngine_Material : LuaObject {
 	static public int GetTag(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==4){
 				UnityEngine.Material self=(UnityEngine.Material)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -502,7 +502,7 @@ public class Lua_UnityEngine_Material : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Material self=(UnityEngine.Material)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);

@@ -42,7 +42,7 @@ public class Lua_PropertyReference : LuaObject {
 	static public int Set(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				PropertyReference self=(PropertyReference)checkSelf(l);
 				UnityEngine.Component a1;
 				checkType(l,2,out a1);
@@ -51,7 +51,7 @@ public class Lua_PropertyReference : LuaObject {
 				self.Set(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				PropertyReference self=(PropertyReference)checkSelf(l);
 				System.Object a1;
 				checkType(l,2,out a1);
@@ -126,7 +126,7 @@ public class Lua_PropertyReference : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				System.Object a1;
 				checkType(l,1,out a1);
 				System.Type a2;

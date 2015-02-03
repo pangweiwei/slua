@@ -69,7 +69,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	static public int GetAudioClip(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -77,7 +77,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -87,7 +87,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -137,14 +137,14 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	static public int EscapeURL_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String ret=UnityEngine.WWW.EscapeURL(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Text.Encoding a2;
@@ -165,14 +165,14 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	static public int UnEscapeURL_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String ret=UnityEngine.WWW.UnEscapeURL(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Text.Encoding a2;
@@ -193,7 +193,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	static public int LoadFromCacheOrDownload_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -202,7 +202,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;

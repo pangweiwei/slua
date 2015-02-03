@@ -15,7 +15,7 @@ public class Lua_UIScrollView : LuaObject {
 	static public int RestrictWithinBounds(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UIScrollView self=(UIScrollView)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -23,7 +23,7 @@ public class Lua_UIScrollView : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UIScrollView self=(UIScrollView)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -59,12 +59,12 @@ public class Lua_UIScrollView : LuaObject {
 	static public int UpdateScrollbars(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UIScrollView self=(UIScrollView)checkSelf(l);
 				self.UpdateScrollbars();
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UIScrollView self=(UIScrollView)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);

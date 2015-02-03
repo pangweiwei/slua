@@ -92,12 +92,12 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	static public int DiscardContents(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 				self.DiscardContents();
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -157,7 +157,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	static public int GetTemporary_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==7){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -174,7 +174,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==6){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -189,7 +189,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==5){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -202,7 +202,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -213,7 +213,7 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;

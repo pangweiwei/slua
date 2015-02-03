@@ -15,14 +15,14 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	static public int Play(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
 				System.UInt64 a1;
 				checkType(l,2,out a1);
 				self.Play(a1);
 				return 0;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
 				self.Play();
 				return 0;
@@ -119,7 +119,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	static public int PlayOneShot(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
 				UnityEngine.AudioClip a1;
 				checkType(l,2,out a1);
@@ -128,7 +128,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 				self.PlayOneShot(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
 				UnityEngine.AudioClip a1;
 				checkType(l,2,out a1);
@@ -181,7 +181,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	static public int PlayClipAtPoint_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.AudioClip a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -189,7 +189,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 				UnityEngine.AudioSource.PlayClipAtPoint(a1,a2);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.AudioClip a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;

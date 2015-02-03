@@ -63,7 +63,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.DrawMesh(a1,a2,a3,a4,a5);
 				return 0;
 			}
-			else if(argc==8){
+			else if(argc==9){
 				UnityEngine.Mesh a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -113,7 +113,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.DrawMesh(a1,a2,a3,a4,a5);
 				return 0;
 			}
-			else if(argc==4){
+			else if(argc==5){
 				UnityEngine.Mesh a1;
 				checkType(l,1,out a1);
 				UnityEngine.Matrix4x4 a2;
@@ -143,7 +143,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.DrawMesh(a1,a2,a3,a4,a5,a6,a7);
 				return 0;
 			}
-			else if(argc==10){
+			else if(argc==11){
 				UnityEngine.Mesh a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -167,7 +167,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.DrawMesh(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10);
 				return 0;
 			}
-			else if(argc==9){
+			else if(argc==10){
 				UnityEngine.Mesh a1;
 				checkType(l,1,out a1);
 				UnityEngine.Matrix4x4 a2;
@@ -211,7 +211,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.DrawMeshNow(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==4){
+			else if(argc==5){
 				UnityEngine.Mesh a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -223,7 +223,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.DrawMeshNow(a1,a2,a3,a4);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Mesh a1;
 				checkType(l,1,out a1);
 				UnityEngine.Matrix4x4 a2;
@@ -253,7 +253,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 	static public int DrawProcedural_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==4){
 				UnityEngine.MeshTopology a1;
 				checkEnum(l,1,out a1);
 				System.Int32 a2;
@@ -263,7 +263,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.DrawProcedural(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.MeshTopology a1;
 				checkEnum(l,1,out a1);
 				System.Int32 a2;
@@ -283,7 +283,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 	static public int DrawProceduralIndirect_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==4){
 				UnityEngine.MeshTopology a1;
 				checkEnum(l,1,out a1);
 				UnityEngine.ComputeBuffer a2;
@@ -293,7 +293,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.DrawProceduralIndirect(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.MeshTopology a1;
 				checkEnum(l,1,out a1);
 				UnityEngine.ComputeBuffer a2;
@@ -313,7 +313,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 	static public int DrawTexture_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.Rect a1;
 				checkType(l,1,out a1);
 				UnityEngine.Texture a2;
@@ -321,7 +321,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.DrawTexture(a1,a2);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Rect a1;
 				checkType(l,1,out a1);
 				UnityEngine.Texture a2;
@@ -331,7 +331,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.DrawTexture(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==6){
+			else if(argc==7){
 				UnityEngine.Rect a1;
 				checkType(l,1,out a1);
 				UnityEngine.Texture a2;
@@ -423,7 +423,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.DrawTexture(a1,a2,a3,a4,a5,a6,a7,a8);
 				return 0;
 			}
-			else if(argc==9){
+			else if(argc==10){
 				UnityEngine.Rect a1;
 				checkType(l,1,out a1);
 				UnityEngine.Texture a2;
@@ -475,7 +475,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.Blit(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==4){
+			else if(argc==5){
 				UnityEngine.Texture a1;
 				checkType(l,1,out a1);
 				UnityEngine.RenderTexture a2;
@@ -536,7 +536,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 	static public int SetRenderTarget_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.RenderTexture a1;
 				checkType(l,1,out a1);
 				UnityEngine.Graphics.SetRenderTarget(a1);
@@ -550,7 +550,7 @@ public class Lua_UnityEngine_Graphics : LuaObject {
 				UnityEngine.Graphics.SetRenderTarget(a1,a2);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.RenderTexture a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;

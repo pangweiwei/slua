@@ -13,14 +13,14 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	static public int SetParent(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);
 				self.SetParent(a1);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);
@@ -41,7 +41,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	static public int Translate(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -57,7 +57,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				self.Translate(a1,a2);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -115,7 +115,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	static public int Rotate(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -142,7 +142,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				self.Rotate(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==4){
+			else if(argc==5){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -249,7 +249,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	static public int TransformDirection(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -257,7 +257,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -281,7 +281,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	static public int InverseTransformDirection(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -289,7 +289,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -313,7 +313,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	static public int TransformVector(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -321,7 +321,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -345,7 +345,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	static public int InverseTransformVector(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -353,7 +353,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -377,7 +377,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	static public int TransformPoint(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -385,7 +385,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -409,7 +409,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 	static public int InverseTransformPoint(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -417,7 +417,7 @@ public class Lua_UnityEngine_Transform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Transform self=(UnityEngine.Transform)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);

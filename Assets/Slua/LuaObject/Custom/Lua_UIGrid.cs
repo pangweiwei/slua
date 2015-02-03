@@ -58,14 +58,14 @@ public class Lua_UIGrid : LuaObject {
 	static public int AddChild(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UIGrid self=(UIGrid)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);
 				self.AddChild(a1);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UIGrid self=(UIGrid)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);

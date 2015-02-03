@@ -15,7 +15,7 @@ public class Lua_TweenTransform : LuaObject {
 	static public int Begin_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==4){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -26,7 +26,7 @@ public class Lua_TweenTransform : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==5){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				System.Single a2;

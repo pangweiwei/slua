@@ -137,7 +137,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 	static public int IntersectRay(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 				UnityEngine.Ray a1;
 				checkType(l,2,out a1);
@@ -145,7 +145,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Bounds self=(UnityEngine.Bounds)checkSelf(l);
 				UnityEngine.Ray a1;
 				checkType(l,2,out a1);

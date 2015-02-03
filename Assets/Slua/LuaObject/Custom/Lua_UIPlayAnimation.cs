@@ -15,14 +15,14 @@ public class Lua_UIPlayAnimation : LuaObject {
 	static public int Play(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UIPlayAnimation self=(UIPlayAnimation)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
 				self.Play(a1);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UIPlayAnimation self=(UIPlayAnimation)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);

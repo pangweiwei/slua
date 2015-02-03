@@ -349,7 +349,7 @@ public class Lua_UILabel : LuaObject {
 	static public int Wrap(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UILabel self=(UILabel)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -359,7 +359,7 @@ public class Lua_UILabel : LuaObject {
 				pushValue(l,a2);
 				return 2;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UILabel self=(UILabel)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);

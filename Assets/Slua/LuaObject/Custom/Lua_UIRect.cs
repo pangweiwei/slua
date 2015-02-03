@@ -95,7 +95,7 @@ public class Lua_UIRect : LuaObject {
 				self.SetAnchor(a1);
 				return 0;
 			}
-			else if(argc==5){
+			else if(argc==6){
 				UIRect self=(UIRect)checkSelf(l);
 				UnityEngine.GameObject a1;
 				checkType(l,2,out a1);

@@ -72,7 +72,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 	static public int Overlaps(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
 				UnityEngine.Rect a1;
 				checkType(l,2,out a1);
@@ -102,7 +102,7 @@ public class Lua_UnityEngine_Rect : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Rect self=(UnityEngine.Rect)checkSelf(l);
 				UnityEngine.Rect a1;
 				checkType(l,2,out a1);

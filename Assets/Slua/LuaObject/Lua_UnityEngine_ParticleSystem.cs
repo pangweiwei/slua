@@ -63,7 +63,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	static public int Simulate(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -72,14 +72,14 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 				self.Simulate(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
 				self.Simulate(a1);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -102,12 +102,12 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	static public int Play(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				self.Play();
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -126,12 +126,12 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	static public int Stop(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				self.Stop();
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -150,12 +150,12 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	static public int Pause(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				self.Pause();
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -174,12 +174,12 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	static public int Clear(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				self.Clear();
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -198,13 +198,13 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 	static public int IsAlive(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Boolean ret=self.IsAlive();
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -231,7 +231,7 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 				self.Emit(a1);
 				return 0;
 			}
-			else if(argc==5){
+			else if(argc==6){
 				UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);

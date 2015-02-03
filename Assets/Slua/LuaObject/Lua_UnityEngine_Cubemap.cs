@@ -60,7 +60,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 	static public int GetPixels(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				UnityEngine.CubemapFace a1;
 				checkEnum(l,2,out a1);
@@ -70,7 +70,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				UnityEngine.CubemapFace a1;
 				checkEnum(l,2,out a1);
@@ -90,7 +90,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 	static public int SetPixels(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==4){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
@@ -101,7 +101,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 				self.SetPixels(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
@@ -122,7 +122,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 	static public int Apply(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -131,14 +131,14 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 				self.Apply(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
 				self.Apply(a1);
 				return 0;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				self.Apply();
 				return 0;
@@ -155,14 +155,14 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 	static public int SmoothEdges(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
 				self.SmoothEdges(a1);
 				return 0;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
 				self.SmoothEdges();
 				return 0;

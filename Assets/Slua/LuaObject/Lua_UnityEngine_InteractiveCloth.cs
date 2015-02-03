@@ -15,7 +15,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 	static public int AddForceAtPosition(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==5){
 				UnityEngine.InteractiveCloth self=(UnityEngine.InteractiveCloth)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -28,7 +28,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 				self.AddForceAtPosition(a1,a2,a3,a4);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.InteractiveCloth self=(UnityEngine.InteractiveCloth)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -51,7 +51,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 	static public int AttachToCollider(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==4){
 				UnityEngine.InteractiveCloth self=(UnityEngine.InteractiveCloth)checkSelf(l);
 				UnityEngine.Collider a1;
 				checkType(l,2,out a1);
@@ -62,7 +62,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 				self.AttachToCollider(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.InteractiveCloth self=(UnityEngine.InteractiveCloth)checkSelf(l);
 				UnityEngine.Collider a1;
 				checkType(l,2,out a1);
@@ -71,7 +71,7 @@ public class Lua_UnityEngine_InteractiveCloth : LuaObject {
 				self.AttachToCollider(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.InteractiveCloth self=(UnityEngine.InteractiveCloth)checkSelf(l);
 				UnityEngine.Collider a1;
 				checkType(l,2,out a1);

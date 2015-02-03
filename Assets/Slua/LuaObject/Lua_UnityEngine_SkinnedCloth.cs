@@ -15,7 +15,7 @@ public class Lua_UnityEngine_SkinnedCloth : LuaObject {
 	static public int SetEnabledFading(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.SkinnedCloth self=(UnityEngine.SkinnedCloth)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -24,7 +24,7 @@ public class Lua_UnityEngine_SkinnedCloth : LuaObject {
 				self.SetEnabledFading(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.SkinnedCloth self=(UnityEngine.SkinnedCloth)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);

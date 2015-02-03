@@ -85,14 +85,14 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	static public int Stop(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.NavMeshAgent self=(UnityEngine.NavMeshAgent)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
 				self.Stop(a1);
 				return 0;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.NavMeshAgent self=(UnityEngine.NavMeshAgent)checkSelf(l);
 				self.Stop();
 				return 0;

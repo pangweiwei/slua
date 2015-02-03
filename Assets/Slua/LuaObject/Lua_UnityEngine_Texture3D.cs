@@ -25,7 +25,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 	static public int GetPixels(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -33,7 +33,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				UnityEngine.Color[] ret=self.GetPixels();
 				pushValue(l,ret);
@@ -51,7 +51,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 	static public int SetPixels(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
@@ -60,7 +60,7 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 				self.SetPixels(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
@@ -79,14 +79,14 @@ public class Lua_UnityEngine_Texture3D : LuaObject {
 	static public int Apply(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
 				self.Apply(a1);
 				return 0;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.Texture3D self=(UnityEngine.Texture3D)checkSelf(l);
 				self.Apply();
 				return 0;

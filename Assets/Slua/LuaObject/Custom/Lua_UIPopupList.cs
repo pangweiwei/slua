@@ -27,14 +27,14 @@ public class Lua_UIPopupList : LuaObject {
 	static public int AddItem(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UIPopupList self=(UIPopupList)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
 				self.AddItem(a1);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UIPopupList self=(UIPopupList)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);

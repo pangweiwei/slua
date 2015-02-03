@@ -29,13 +29,13 @@ public class Lua_ByteReader : LuaObject {
 	static public int ReadLine(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				ByteReader self=(ByteReader)checkSelf(l);
 				System.String ret=self.ReadLine();
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				ByteReader self=(ByteReader)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);

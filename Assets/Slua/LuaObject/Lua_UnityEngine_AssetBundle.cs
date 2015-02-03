@@ -30,7 +30,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 	static public int Load(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -38,7 +38,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -77,7 +77,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 	static public int LoadAll(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 				System.Type a1;
 				checkType(l,2,out a1);
@@ -85,7 +85,7 @@ public class Lua_UnityEngine_AssetBundle : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.AssetBundle self=(UnityEngine.AssetBundle)checkSelf(l);
 				UnityEngine.Object[] ret=self.LoadAll();
 				pushValue(l,ret);

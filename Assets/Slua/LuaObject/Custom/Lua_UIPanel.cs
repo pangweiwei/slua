@@ -79,7 +79,7 @@ public class Lua_UIPanel : LuaObject {
 	static public int IsVisible(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==5){
 				UIPanel self=(UIPanel)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -256,7 +256,7 @@ public class Lua_UIPanel : LuaObject {
 	static public int ConstrainTargetToBounds(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==4){
 				UIPanel self=(UIPanel)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);
@@ -269,7 +269,7 @@ public class Lua_UIPanel : LuaObject {
 				pushValue(l,a2);
 				return 2;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UIPanel self=(UIPanel)checkSelf(l);
 				UnityEngine.Transform a1;
 				checkType(l,2,out a1);
@@ -333,14 +333,14 @@ public class Lua_UIPanel : LuaObject {
 	static public int Find_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Transform a1;
 				checkType(l,1,out a1);
 				UIPanel ret=UIPanel.Find(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Transform a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -349,7 +349,7 @@ public class Lua_UIPanel : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Transform a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;

@@ -118,14 +118,14 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	static public int SetPixels(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
 				self.SetPixels(a1);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				UnityEngine.Color[] a1;
 				checkType(l,2,out a1);
@@ -134,7 +134,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				self.SetPixels(a1,a2);
 				return 0;
 			}
-			else if(argc==6){
+			else if(argc==7){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -151,7 +151,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				self.SetPixels(a1,a2,a3,a4,a5,a6);
 				return 0;
 			}
-			else if(argc==5){
+			else if(argc==6){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -178,7 +178,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	static public int SetPixels32(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				UnityEngine.Color32[] a1;
 				checkType(l,2,out a1);
@@ -187,7 +187,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				self.SetPixels32(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				UnityEngine.Color32[] a1;
 				checkType(l,2,out a1);
@@ -235,13 +235,13 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	static public int GetPixels(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				UnityEngine.Color[] ret=self.GetPixels();
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -249,7 +249,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==6){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -265,7 +265,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==5){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -291,7 +291,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	static public int GetPixels32(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -299,7 +299,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				UnityEngine.Color32[] ret=self.GetPixels32();
 				pushValue(l,ret);
@@ -317,7 +317,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	static public int Apply(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
@@ -326,14 +326,14 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				self.Apply(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
 				self.Apply(a1);
 				return 0;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				self.Apply();
 				return 0;
@@ -350,7 +350,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	static public int Resize(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==5){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -364,7 +364,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -400,7 +400,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	static public int PackTextures(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==5){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				UnityEngine.Texture2D[] a1;
 				checkType(l,2,out a1);
@@ -414,7 +414,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				UnityEngine.Texture2D[] a1;
 				checkType(l,2,out a1);
@@ -426,7 +426,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				UnityEngine.Texture2D[] a1;
 				checkType(l,2,out a1);
@@ -448,7 +448,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	static public int ReadPixels(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==5){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				UnityEngine.Rect a1;
 				checkType(l,2,out a1);
@@ -461,7 +461,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				self.ReadPixels(a1,a2,a3,a4);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				UnityEngine.Rect a1;
 				checkType(l,2,out a1);
@@ -497,7 +497,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 	static public int EncodeToJPG(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
@@ -505,7 +505,7 @@ public class Lua_UnityEngine_Texture2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.Texture2D self=(UnityEngine.Texture2D)checkSelf(l);
 				System.Byte[] ret=self.EncodeToJPG();
 				pushValue(l,ret);
