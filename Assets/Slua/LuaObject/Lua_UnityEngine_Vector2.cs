@@ -239,7 +239,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 	static public int SmoothDamp_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -255,7 +255,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 				pushValue(l,a3);
 				return 2;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -269,7 +269,7 @@ public class Lua_UnityEngine_Vector2 : LuaObject {
 				pushValue(l,a3);
 				return 2;
 			}
-			else if(argc==7){
+			else if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;

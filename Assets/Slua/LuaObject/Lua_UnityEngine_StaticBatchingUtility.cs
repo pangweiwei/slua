@@ -15,13 +15,13 @@ public class Lua_UnityEngine_StaticBatchingUtility : LuaObject {
 	static public int Combine_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				UnityEngine.StaticBatchingUtility.Combine(a1);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.GameObject[] a1;
 				checkType(l,1,out a1);
 				UnityEngine.GameObject a2;

@@ -257,14 +257,14 @@ public class Lua_NGUIMath : LuaObject {
 	static public int MakePixelPerfect_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				UnityEngine.Rect a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect ret=NGUIMath.MakePixelPerfect(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Rect a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -321,7 +321,7 @@ public class Lua_NGUIMath : LuaObject {
 	static public int CalculateRelativeWidgetBounds_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				UnityEngine.Transform a1;
 				checkType(l,1,out a1);
 				UnityEngine.Bounds ret=NGUIMath.CalculateRelativeWidgetBounds(a1);
@@ -346,7 +346,7 @@ public class Lua_NGUIMath : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Transform a1;
 				checkType(l,1,out a1);
 				UnityEngine.Transform a2;
@@ -407,7 +407,7 @@ public class Lua_NGUIMath : LuaObject {
 	static public int SpringLerp_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				System.Single a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -498,7 +498,7 @@ public class Lua_NGUIMath : LuaObject {
 	static public int DistanceToRectangle_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				UnityEngine.Vector2[] a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -507,7 +507,7 @@ public class Lua_NGUIMath : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector3[] a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -592,7 +592,7 @@ public class Lua_NGUIMath : LuaObject {
 	static public int ResizeWidget_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==7){
+			if(argc==6){
 				UIWidget a1;
 				checkType(l,1,out a1);
 				UIWidget.Pivot a2;
@@ -608,7 +608,7 @@ public class Lua_NGUIMath : LuaObject {
 				NGUIMath.ResizeWidget(a1,a2,a3,a4,a5,a6);
 				return 0;
 			}
-			else if(argc==9){
+			else if(argc==8){
 				UIWidget a1;
 				checkType(l,1,out a1);
 				UIWidget.Pivot a2;
@@ -640,7 +640,7 @@ public class Lua_NGUIMath : LuaObject {
 	static public int AdjustWidget_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==5){
 				UIWidget a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -654,7 +654,7 @@ public class Lua_NGUIMath : LuaObject {
 				NGUIMath.AdjustWidget(a1,a2,a3,a4,a5);
 				return 0;
 			}
-			else if(argc==8){
+			else if(argc==7){
 				UIWidget a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -672,7 +672,7 @@ public class Lua_NGUIMath : LuaObject {
 				NGUIMath.AdjustWidget(a1,a2,a3,a4,a5,a6,a7);
 				return 0;
 			}
-			else if(argc==10){
+			else if(argc==9){
 				UIWidget a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -772,7 +772,7 @@ public class Lua_NGUIMath : LuaObject {
 	static public int OverlayPosition_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==5){
+			if(argc==4){
 				UnityEngine.Transform a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -784,7 +784,7 @@ public class Lua_NGUIMath : LuaObject {
 				NGUIMath.OverlayPosition(a1,a2,a3,a4);
 				return 0;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Transform a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -794,7 +794,7 @@ public class Lua_NGUIMath : LuaObject {
 				NGUIMath.OverlayPosition(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Transform a1;
 				checkType(l,1,out a1);
 				UnityEngine.Transform a2;

@@ -47,7 +47,7 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 	static public int Create_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==7){
+			if(argc==6){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -64,7 +64,7 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==8){
+			else if(argc==7){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -83,7 +83,7 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==9){
+			else if(argc==8){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;

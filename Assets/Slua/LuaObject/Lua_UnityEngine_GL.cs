@@ -189,11 +189,11 @@ public class Lua_UnityEngine_GL : LuaObject {
 	static public int LoadPixelMatrix_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==0){
 				UnityEngine.GL.LoadPixelMatrix();
 				return 0;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				System.Single a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -318,7 +318,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 	static public int Clear_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==3){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -328,7 +328,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 				UnityEngine.GL.Clear(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;

@@ -181,7 +181,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 	static public int PlayClipAtPoint_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				UnityEngine.AudioClip a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -189,7 +189,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 				UnityEngine.AudioSource.PlayClipAtPoint(a1,a2);
 				return 0;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.AudioClip a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;

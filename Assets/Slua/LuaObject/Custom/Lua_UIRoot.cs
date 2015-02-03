@@ -44,13 +44,13 @@ public class Lua_UIRoot : LuaObject {
 	static public int Broadcast_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				UIRoot.Broadcast(a1);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Object a2;

@@ -189,7 +189,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 	static public int CaptureScreenshot_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -197,7 +197,7 @@ public class Lua_UnityEngine_Application : LuaObject {
 				UnityEngine.Application.CaptureScreenshot(a1,a2);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Application.CaptureScreenshot(a1);

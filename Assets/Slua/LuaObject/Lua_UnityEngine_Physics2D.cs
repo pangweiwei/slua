@@ -15,7 +15,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int IgnoreCollision_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==3){
 				UnityEngine.Collider2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Collider2D a2;
@@ -25,7 +25,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Physics2D.IgnoreCollision(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Collider2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Collider2D a2;
@@ -61,7 +61,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int IgnoreLayerCollision_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==3){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -71,7 +71,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				UnityEngine.Physics2D.IgnoreLayerCollision(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -107,7 +107,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int Linecast_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==5){
+			if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -120,7 +120,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -131,7 +131,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -140,7 +140,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -167,7 +167,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int LinecastAll_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -182,7 +182,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -195,7 +195,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -206,7 +206,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -227,7 +227,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int LinecastNonAlloc_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==7){
+			if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -244,7 +244,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -259,7 +259,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -272,7 +272,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -295,7 +295,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int Raycast_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -310,7 +310,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -323,7 +323,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -334,7 +334,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -343,7 +343,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==7){
+			else if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -372,7 +372,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int RaycastAll_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==7){
+			if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -389,7 +389,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -404,7 +404,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -417,7 +417,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -428,7 +428,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -449,7 +449,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int RaycastNonAlloc_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==8){
+			if(argc==7){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -468,7 +468,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==7){
+			else if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -485,7 +485,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -500,7 +500,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -513,7 +513,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -536,7 +536,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int CircleCast_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==7){
+			if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -553,7 +553,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -568,7 +568,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -581,7 +581,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -592,7 +592,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==8){
+			else if(argc==7){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -623,7 +623,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int CircleCastAll_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==8){
+			if(argc==7){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -642,7 +642,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==7){
+			else if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -659,7 +659,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -674,7 +674,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -687,7 +687,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -710,7 +710,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int CircleCastNonAlloc_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==9){
+			if(argc==8){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -731,7 +731,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==8){
+			else if(argc==7){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -750,7 +750,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==7){
+			else if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -767,7 +767,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -782,7 +782,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -807,7 +807,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int BoxCast_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==8){
+			if(argc==7){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -826,7 +826,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==7){
+			else if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -843,7 +843,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -858,7 +858,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -871,7 +871,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==9){
+			else if(argc==8){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -904,7 +904,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int BoxCastAll_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==9){
+			if(argc==8){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -925,7 +925,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==8){
+			else if(argc==7){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -944,7 +944,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==7){
+			else if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -961,7 +961,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -976,7 +976,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1001,7 +1001,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int BoxCastNonAlloc_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==10){
+			if(argc==9){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1024,7 +1024,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==9){
+			else if(argc==8){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1045,7 +1045,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==8){
+			else if(argc==7){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1064,7 +1064,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==7){
+			else if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1081,7 +1081,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1108,7 +1108,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int GetRayIntersection_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				UnityEngine.Ray a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1117,14 +1117,14 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==1){
 				UnityEngine.Ray a1;
 				checkType(l,1,out a1);
 				UnityEngine.RaycastHit2D ret=UnityEngine.Physics2D.GetRayIntersection(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Ray a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1147,7 +1147,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int GetRayIntersectionAll_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==3){
 				UnityEngine.Ray a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1158,7 +1158,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Ray a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1167,7 +1167,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==1){
 				UnityEngine.Ray a1;
 				checkType(l,1,out a1);
 				UnityEngine.RaycastHit2D[] ret=UnityEngine.Physics2D.GetRayIntersectionAll(a1);
@@ -1186,7 +1186,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int GetRayIntersectionNonAlloc_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==5){
+			if(argc==4){
 				UnityEngine.Ray a1;
 				checkType(l,1,out a1);
 				UnityEngine.RaycastHit2D[] a2;
@@ -1199,7 +1199,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Ray a1;
 				checkType(l,1,out a1);
 				UnityEngine.RaycastHit2D[] a2;
@@ -1210,7 +1210,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Ray a1;
 				checkType(l,1,out a1);
 				UnityEngine.RaycastHit2D[] a2;
@@ -1231,7 +1231,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int OverlapPoint_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==5){
+			if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -1244,7 +1244,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -1255,7 +1255,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -1264,7 +1264,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==1){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Collider2D ret=UnityEngine.Physics2D.OverlapPoint(a1);
@@ -1283,7 +1283,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int OverlapPointAll_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==5){
+			if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -1296,7 +1296,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -1307,7 +1307,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -1316,7 +1316,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==1){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Collider2D[] ret=UnityEngine.Physics2D.OverlapPointAll(a1);
@@ -1335,7 +1335,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int OverlapPointNonAlloc_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Collider2D[] a2;
@@ -1350,7 +1350,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Collider2D[] a2;
@@ -1363,7 +1363,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Collider2D[] a2;
@@ -1374,7 +1374,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Collider2D[] a2;
@@ -1395,7 +1395,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int OverlapCircle_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1410,7 +1410,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1423,7 +1423,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1434,7 +1434,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1455,7 +1455,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int OverlapCircleAll_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1470,7 +1470,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1483,7 +1483,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1494,7 +1494,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1515,7 +1515,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int OverlapCircleNonAlloc_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==7){
+			if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1532,7 +1532,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1547,7 +1547,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1560,7 +1560,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -1583,7 +1583,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int OverlapArea_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1598,7 +1598,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1611,7 +1611,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1622,7 +1622,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1643,7 +1643,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int OverlapAreaAll_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1658,7 +1658,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1671,7 +1671,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1682,7 +1682,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1703,7 +1703,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 	static public int OverlapAreaNonAlloc_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==7){
+			if(argc==6){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1720,7 +1720,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1735,7 +1735,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;
@@ -1748,7 +1748,7 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector2 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector2 a2;

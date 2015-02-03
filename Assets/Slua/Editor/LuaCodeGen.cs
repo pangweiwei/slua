@@ -1187,7 +1187,7 @@ namespace SLua
                         /*&& !ContainGeneric(pars)*/) // don't support generic method
                     {
                         if (isUniqueArgsCount(cons, mi))
-                            Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", mi.GetParameters().Length+1);
+                            Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", mi.IsStatic?mi.GetParameters().Length:mi.GetParameters().Length+1);
                         else
                             Write(file, "{0}(matchType(l,argc,{1}{2})){{", first ? "if" : "else if", mi.IsStatic ? 1 : 2, TypeDecl(pars));
                         WriteFunctionCall(mi, file, t);

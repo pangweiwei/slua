@@ -145,7 +145,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 	static public int GetLayoutProperty_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==3){
 				UnityEngine.RectTransform a1;
 				checkType(l,1,out a1);
 				System.Func<UnityEngine.UI.ILayoutElement,System.Single> a2;
@@ -156,7 +156,7 @@ public class Lua_UnityEngine_UI_LayoutUtility : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.RectTransform a1;
 				checkType(l,1,out a1);
 				System.Func<UnityEngine.UI.ILayoutElement,System.Single> a2;

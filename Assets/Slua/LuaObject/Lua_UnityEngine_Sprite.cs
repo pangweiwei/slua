@@ -15,7 +15,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 	static public int Create_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==8){
+			if(argc==7){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;
@@ -34,7 +34,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==7){
+			else if(argc==6){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;
@@ -51,7 +51,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;
@@ -66,7 +66,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;
@@ -79,7 +79,7 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Texture2D a1;
 				checkType(l,1,out a1);
 				UnityEngine.Rect a2;

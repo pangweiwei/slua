@@ -13,14 +13,14 @@ public class Lua_NGUITools : LuaObject {
 	static public int PlaySound_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				UnityEngine.AudioClip a1;
 				checkType(l,1,out a1);
 				UnityEngine.AudioSource ret=NGUITools.PlaySound(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.AudioClip a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -29,7 +29,7 @@ public class Lua_NGUITools : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.AudioClip a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -96,13 +96,13 @@ public class Lua_NGUITools : LuaObject {
 	static public int AddWidgetCollider_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				NGUITools.AddWidgetCollider(a1);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -122,7 +122,7 @@ public class Lua_NGUITools : LuaObject {
 	static public int UpdateWidgetCollider_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				NGUITools.UpdateWidgetCollider(a1);
@@ -206,7 +206,7 @@ public class Lua_NGUITools : LuaObject {
 	static public int AddChild_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				UnityEngine.GameObject ret=NGUITools.AddChild(a1);
@@ -257,14 +257,14 @@ public class Lua_NGUITools : LuaObject {
 	static public int CalculateNextDepth_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				System.Int32 ret=NGUITools.CalculateNextDepth(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -338,7 +338,7 @@ public class Lua_NGUITools : LuaObject {
 	static public int NormalizeWidgetDepths_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==0){
 				NGUITools.NormalizeWidgetDepths();
 				return 0;
 			}
@@ -377,14 +377,14 @@ public class Lua_NGUITools : LuaObject {
 	static public int CreateUI_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				UIPanel ret=NGUITools.CreateUI(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -393,7 +393,7 @@ public class Lua_NGUITools : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Transform a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -489,13 +489,13 @@ public class Lua_NGUITools : LuaObject {
 	static public int Broadcast_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				NGUITools.Broadcast(a1);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Object a2;
@@ -531,7 +531,7 @@ public class Lua_NGUITools : LuaObject {
 	static public int SetActive_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -539,7 +539,7 @@ public class Lua_NGUITools : LuaObject {
 				NGUITools.SetActive(a1,a2);
 				return 0;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.GameObject a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -716,7 +716,7 @@ public class Lua_NGUITools : LuaObject {
 	static public int GetSides_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				UnityEngine.Camera a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3[] ret=NGUITools.GetSides(a1);
@@ -741,7 +741,7 @@ public class Lua_NGUITools : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Camera a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -764,7 +764,7 @@ public class Lua_NGUITools : LuaObject {
 	static public int GetWorldCorners_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				UnityEngine.Camera a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3[] ret=NGUITools.GetWorldCorners(a1);
@@ -789,7 +789,7 @@ public class Lua_NGUITools : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Camera a1;
 				checkType(l,1,out a1);
 				System.Single a2;

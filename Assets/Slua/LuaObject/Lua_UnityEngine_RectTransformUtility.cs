@@ -137,7 +137,7 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 	static public int CalculateRelativeRectTransformBounds_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				UnityEngine.Transform a1;
 				checkType(l,1,out a1);
 				UnityEngine.Transform a2;
@@ -146,7 +146,7 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==1){
 				UnityEngine.Transform a1;
 				checkType(l,1,out a1);
 				UnityEngine.Bounds ret=UnityEngine.RectTransformUtility.CalculateRelativeRectTransformBounds(a1);

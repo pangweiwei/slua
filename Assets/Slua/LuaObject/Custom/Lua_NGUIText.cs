@@ -13,11 +13,11 @@ public class Lua_NGUIText : LuaObject {
 	static public int Update_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==0){
 				NGUIText.Update();
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==1){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				NGUIText.Update(a1);
@@ -218,7 +218,7 @@ public class Lua_NGUIText : LuaObject {
 	static public int ParseSymbol_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -228,7 +228,7 @@ public class Lua_NGUIText : LuaObject {
 				pushValue(l,a2);
 				return 2;
 			}
-			else if(argc==11){
+			else if(argc==10){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -409,7 +409,7 @@ public class Lua_NGUIText : LuaObject {
 	static public int WrapText_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String a2;
@@ -418,7 +418,7 @@ public class Lua_NGUIText : LuaObject {
 				pushValue(l,a2);
 				return 2;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.String a2;

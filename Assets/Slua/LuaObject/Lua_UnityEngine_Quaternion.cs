@@ -156,7 +156,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 	static public int LookRotation_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -165,7 +165,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==1){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Quaternion ret=UnityEngine.Quaternion.LookRotation(a1);
@@ -268,7 +268,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 	static public int Euler_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==3){
 				System.Single a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -279,7 +279,7 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==1){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Quaternion ret=UnityEngine.Quaternion.Euler(a1);

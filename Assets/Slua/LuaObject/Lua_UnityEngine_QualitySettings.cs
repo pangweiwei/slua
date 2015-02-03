@@ -27,7 +27,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	static public int SetQualityLevel_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				System.Boolean a2;
@@ -35,7 +35,7 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 				UnityEngine.QualitySettings.SetQualityLevel(a1,a2);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==1){
 				System.Int32 a1;
 				checkType(l,1,out a1);
 				UnityEngine.QualitySettings.SetQualityLevel(a1);
@@ -53,13 +53,13 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	static public int IncreaseLevel_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				UnityEngine.QualitySettings.IncreaseLevel(a1);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==0){
 				UnityEngine.QualitySettings.IncreaseLevel();
 				return 0;
 			}
@@ -75,13 +75,13 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 	static public int DecreaseLevel_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				System.Boolean a1;
 				checkType(l,1,out a1);
 				UnityEngine.QualitySettings.DecreaseLevel(a1);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==0){
 				UnityEngine.QualitySettings.DecreaseLevel();
 				return 0;
 			}

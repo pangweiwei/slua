@@ -126,7 +126,7 @@ public class Lua_PropertyReference : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				System.Object a1;
 				checkType(l,1,out a1);
 				System.Type a2;

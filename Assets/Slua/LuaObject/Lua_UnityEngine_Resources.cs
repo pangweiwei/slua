@@ -29,14 +29,14 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	static public int Load_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object ret=UnityEngine.Resources.Load(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Type a2;
@@ -57,14 +57,14 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	static public int LoadAsync_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.ResourceRequest ret=UnityEngine.Resources.LoadAsync(a1);
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Type a2;
@@ -85,7 +85,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 	static public int LoadAll_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Type a2;
@@ -94,7 +94,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==1){
 				System.String a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object[] ret=UnityEngine.Resources.LoadAll(a1);

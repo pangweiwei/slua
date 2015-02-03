@@ -54,7 +54,7 @@ public class Lua_ActiveAnimation : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Animation a1;
 				checkType(l,1,out a1);
 				System.String a2;
@@ -65,7 +65,7 @@ public class Lua_ActiveAnimation : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Animation a1;
 				checkType(l,1,out a1);
 				AnimationOrTween.Direction a2;

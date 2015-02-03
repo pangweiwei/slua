@@ -118,7 +118,7 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 	static public int OrthoNormalize_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==2){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -128,7 +128,7 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 				pushValue(l,a2);
 				return 2;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -191,7 +191,7 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 	static public int SmoothDamp_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==5){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -207,7 +207,7 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 				pushValue(l,a3);
 				return 2;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -221,7 +221,7 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 				pushValue(l,a3);
 				return 2;
 			}
-			else if(argc==7){
+			else if(argc==6){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;

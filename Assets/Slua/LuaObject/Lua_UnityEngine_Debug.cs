@@ -15,7 +15,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 	static public int DrawLine_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==5){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -29,7 +29,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 				UnityEngine.Debug.DrawLine(a1,a2,a3,a4,a5);
 				return 0;
 			}
-			else if(argc==5){
+			else if(argc==4){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -41,7 +41,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 				UnityEngine.Debug.DrawLine(a1,a2,a3,a4);
 				return 0;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -51,7 +51,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 				UnityEngine.Debug.DrawLine(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -71,7 +71,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 	static public int DrawRay_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==5){
+			if(argc==4){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -83,7 +83,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 				UnityEngine.Debug.DrawRay(a1,a2,a3,a4);
 				return 0;
 			}
-			else if(argc==4){
+			else if(argc==3){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -93,7 +93,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 				UnityEngine.Debug.DrawRay(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -101,7 +101,7 @@ public class Lua_UnityEngine_Debug : LuaObject {
 				UnityEngine.Debug.DrawRay(a1,a2);
 				return 0;
 			}
-			else if(argc==6){
+			else if(argc==5){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -149,13 +149,13 @@ public class Lua_UnityEngine_Debug : LuaObject {
 	static public int Log_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				System.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Debug.Log(a1);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				System.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object a2;
@@ -175,13 +175,13 @@ public class Lua_UnityEngine_Debug : LuaObject {
 	static public int LogError_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				System.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Debug.LogError(a1);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				System.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object a2;
@@ -212,13 +212,13 @@ public class Lua_UnityEngine_Debug : LuaObject {
 	static public int LogException_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				System.Exception a1;
 				checkType(l,1,out a1);
 				UnityEngine.Debug.LogException(a1);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				System.Exception a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object a2;
@@ -238,13 +238,13 @@ public class Lua_UnityEngine_Debug : LuaObject {
 	static public int LogWarning_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==1){
 				System.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Debug.LogWarning(a1);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==2){
 				System.Object a1;
 				checkType(l,1,out a1);
 				UnityEngine.Object a2;
