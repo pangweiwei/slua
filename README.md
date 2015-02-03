@@ -96,7 +96,7 @@ see http://www.sineysoft.com/post/164 for detail (in chinese), compared with ulu
         test1	                test2	             test3	            test4 	         test5 
 		propery get and set		member method call   static func call   property set     create valuetype return
 				
-    slua	0.85		            0.19			   0.62				   0.081			0.82
+    slua	0.85		            0.19			   0.62				   0.081			0.62
 
     cstolua	3.8	                    0.98	           not support	        0.89	        2.3
 
