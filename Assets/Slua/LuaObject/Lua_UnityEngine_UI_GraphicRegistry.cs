@@ -44,7 +44,7 @@ public class Lua_UnityEngine_UI_GraphicRegistry : LuaObject {
 		try{
 			UnityEngine.Canvas a1;
 			checkType(l,1,out a1);
-			IList<UnityEngine.UI.Graphic> ret=UnityEngine.UI.GraphicRegistry.GetGraphicsForCanvas(a1);
+			System.Collections.Generic.IList<UnityEngine.UI.Graphic> ret=UnityEngine.UI.GraphicRegistry.GetGraphicsForCanvas(a1);
 			pushValue(l,ret);
 			return 1;
 		}

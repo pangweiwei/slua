@@ -55,7 +55,7 @@ public class Lua_UnityEngine_EventSystems_EventSystem : LuaObject {
 			UnityEngine.EventSystems.EventSystem self=(UnityEngine.EventSystems.EventSystem)checkSelf(l);
 			UnityEngine.EventSystems.PointerEventData a1;
 			checkType(l,2,out a1);
-			List<UnityEngine.EventSystems.RaycastResult> a2;
+			System.Collections.Generic.List<UnityEngine.EventSystems.RaycastResult> a2;
 			checkType(l,3,out a2);
 			self.RaycastAll(a1,a2);
 			return 0;

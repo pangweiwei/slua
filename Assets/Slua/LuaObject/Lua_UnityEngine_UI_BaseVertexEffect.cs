@@ -13,7 +13,7 @@ public class Lua_UnityEngine_UI_BaseVertexEffect : LuaObject {
 	static public int ModifyVertices(IntPtr l) {
 		try{
 			UnityEngine.UI.BaseVertexEffect self=(UnityEngine.UI.BaseVertexEffect)checkSelf(l);
-			List<UnityEngine.UIVertex> a1;
+			System.Collections.Generic.List<UnityEngine.UIVertex> a1;
 			checkType(l,2,out a1);
 			self.ModifyVertices(a1);
 			return 0;

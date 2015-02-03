@@ -190,25 +190,37 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Make custom")]
     static public void Custom()
     {
-        List<string> assemblyList = new List<string>();
+        
         List<Type> cust = new List<Type>{
             typeof(System.Func<int>),
             typeof(System.Action<int,string>),
-            typeof(System.Action<int, Dictionary<int,object>>)
+            typeof(System.Action<int, Dictionary<int,object>>),
         };
 
-        assemblyList.Add("Assembly-CSharp");
+        // export self-dll
+         Assembly assembly = Assembly.Load("Assembly-CSharp");
+         Type[] types = assembly.GetExportedTypes();
+ 
+         foreach (Type t in types)
+         {
+             if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0)
+             {
+                 cust.Add(t);
+             }
+         }
+
+        // export 3rd dll
+        List<string> assemblyList = new List<string>();
+        //assemblyList.Add("DOTween");
+        
         foreach( string assemblyItem in assemblyList )
         {
-            Assembly assembly = Assembly.Load(assemblyItem);
-            Type[] types = assembly.GetExportedTypes();
+            assembly = Assembly.Load(assemblyItem);
+            types = assembly.GetExportedTypes();
 
             foreach (Type t in types)
             {
-                if( t.GetCustomAttributes(typeof(CustomLuaClassAttribute),false).Length > 0 )
-                {
-                    cust.Add(t);
-                }
+                cust.Add(t);
             }
         }
 
@@ -352,7 +364,7 @@ class CodeGenerator
                     if (t.ContainsGenericParameters)
                         return false;
 
-                    string fn = string.Format("Lua{0}_{1}.cs", GenericBaseName(t), _Name(GenericName(t)));
+                    string fn = string.Format("Lua{0}_{1}.cs", _Name(GenericBaseName(t)), _Name(GenericName(t)));
                     f = LuaCodeGen.path + fn;
                 }
                 else
@@ -750,7 +762,7 @@ namespace SLua
             if (t.BaseType.Name.Contains("UnityEvent`1"))
                 Write(file, "createTypeMetatable(l,constructor, typeof({0}),typeof(LuaUnityEvent_{1}));", FullName(t), _Name(GenericName(t.BaseType)));
             else
-                Write(file, "createTypeMetatable(l,constructor, typeof({0}),typeof({1}));", FullName(t), FullName(t.BaseType));
+                Write(file, "createTypeMetatable(l,constructor, typeof({0}),typeof({1}));", FullName(t), TypeDecl(t.BaseType));
         }
         else
             Write(file, "createTypeMetatable(l,constructor, typeof({0}));", FullName(t));
@@ -1050,12 +1062,12 @@ namespace SLua
 
     string GenericBaseName(Type t)
     {
-        string n = t.Name;
+        string n = t.FullName;
         if (n.IndexOf('`')>0)
         {
-            return n.Substring(0, n.IndexOf('`'));
+            n = n.Substring(0, n.IndexOf('`'));
         }
-        return n;
+        return n.Replace("+", ".");
     }
     string GenericName(Type t)
     {
@@ -1387,7 +1399,10 @@ namespace SLua
             if (t.IsEnum)
                 Write(file, "checkEnum(l,{0},out a{1});", n + argstart, n + 1);
             else if (t.BaseType == typeof(System.MulticastDelegate))
+            {
+                tryMake(t);
                 Write(file, "checkDelegate(l,{0},out a{1});", n + argstart, n + 1);
+            }
             else if (isparams)
                 Write(file, "checkParams(l,{0},out a{1});", n + argstart, n + 1);
             else
@@ -1411,7 +1426,23 @@ namespace SLua
 
     string TypeDecl(Type t)
     {
-        return RemoveRef(t.ToString(), false);
+        if (t.IsGenericType)
+        {
+            string ret = "";
+            ret += GenericBaseName(t);
+            ret += "<";
+            Type[] types = t.GetGenericArguments();
+            for (int n = 0; n < types.Length; n++)
+            {
+                ret += TypeDecl(types[n]);
+                if(n<types.Length-1)
+                    ret += ",";
+            }
+            ret += ">";
+            return ret;
+        }
+        else
+            return RemoveRef(t.ToString(), false);
     }
 
     string ExportName(Type t)

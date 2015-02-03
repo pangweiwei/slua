@@ -68,7 +68,7 @@ public class Lua_UnityEngine_UI_ToggleGroup : LuaObject {
 	static public int ActiveToggles(IntPtr l) {
 		try{
 			UnityEngine.UI.ToggleGroup self=(UnityEngine.UI.ToggleGroup)checkSelf(l);
-			IEnumerable<UnityEngine.UI.Toggle> ret=self.ActiveToggles();
+			System.Collections.Generic.IEnumerable<UnityEngine.UI.Toggle> ret=self.ActiveToggles();
 			pushValue(l,ret);
 			return 1;
 		}

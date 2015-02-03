@@ -15,7 +15,7 @@ public class Lua_HelloWorld : LuaObject {
 	static public int foo(IntPtr l) {
 		try{
 			HelloWorld self=(HelloWorld)checkSelf(l);
-			Dictionary<System.String,UnityEngine.GameObject> ret=self.foo();
+			System.Collections.Generic.Dictionary<System.String,UnityEngine.GameObject> ret=self.foo();
 			pushValue(l,ret);
 			return 1;
 		}
@@ -28,7 +28,7 @@ public class Lua_HelloWorld : LuaObject {
 	static public int getList(IntPtr l) {
 		try{
 			HelloWorld self=(HelloWorld)checkSelf(l);
-			List<UnityEngine.GameObject> ret=self.getList();
+			System.Collections.Generic.List<UnityEngine.GameObject> ret=self.getList();
 			pushValue(l,ret);
 			return 1;
 		}
