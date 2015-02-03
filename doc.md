@@ -93,6 +93,27 @@ slua支持手动导出任何自定义接口, 为此你仅需要将对应的类�
         return 2;
     }
 
+####指定不导出
+
+对于某些public的成员, 可能并不需要导出, 导出对于lua也没有意义, 这个时候你可以添加[DoNotToLua]属性, 指定此成员不需要导出到lua,  例如:
+
+>     [DoNotToLua]
+    static public void dontexport()
+    {
+    }
+    [DoNotToLua]
+    public int a;
+    [DoNotToLua]
+    public int A
+    {
+        get
+        {
+            return a;
+        }
+    }
+
+以上方法, 数据, 属性都不会导出. 如果仅用于内部成员访问, 可以考虑使用internal可见性, 这样既能保证自己的代码可以访问到成员, 又不必添加[DoNotToLua]属性, 还能控制其不导出, 所以更推荐的做法是使用internal关键字.
+
 ####同名重载方法
 
 slua支持同名重载方法, 但对于自己实现的接口(非来自UnityEngine), 不建议采用同名重载方法, 因为这样会降低slua的运行效率, 因为它比不同名的方法多一步参数匹配的过程, 同时重载方法的参数匹配不能严格区别参数的类型(主要是因为lua的类型少于c#),所以导致部分同名的重载工作不正常.

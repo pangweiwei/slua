@@ -145,4 +145,6 @@ public class HelloWorld   {
             return a;
         }
     }
+
+    internal int b;
 }
