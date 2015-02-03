@@ -631,7 +631,7 @@ return index
         static internal bool checkType(IntPtr l, int p, out UInt64 v)
         {
 #if LUA_5_3
-            v = LuaDLL.luaL_checkinteger(l, p);
+            v = (UInt64)LuaDLL.luaL_checkinteger(l, p);
 #else
             v = (UInt64)LuaDLL.luaL_checknumber(l, p);
 #endif
