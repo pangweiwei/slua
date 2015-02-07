@@ -152,7 +152,8 @@ public class LuaCodeGen : MonoBehaviour
         List<string> noUseList = new List<string>
         {      
             "CoroutineTween",
-        };
+			"GraphicRebuildTracker",
+		};
 
         Assembly assembly = Assembly.Load("UnityEngine.UI");
         Type[] types = assembly.GetExportedTypes();

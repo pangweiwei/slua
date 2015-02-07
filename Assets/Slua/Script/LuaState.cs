@@ -158,26 +158,7 @@ namespace SLua
 
             LuaDLL.lua_remove(l, error); // pop error function
 
-            int top = LuaDLL.lua_gettop(l);
-            if (top == 0)
-                return null;
-            else if (top == 1)
-            {
-                object o = LuaObject.checkVar(l, 1);
-                LuaDLL.lua_pop(l, 1);
-                return o;
-            }
-            else
-            {
-                object[] o = new object[top];
-                for (int n = 1; n <= top; n++)
-                {
-                    o[n - 1] = LuaObject.checkVar(l, n);
-                    
-                }
-                LuaDLL.lua_pop(l, top);
-                return o;
-            }
+			return state.topObjects();
         }
         
     }
@@ -363,22 +344,31 @@ namespace SLua
         {
             string fileName = LuaDLL.lua_tostring(L, 1);
             byte[] bytes = loadFile(fileName);
-            LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fileName);
-            return 1;
+			if(bytes!=null) {
+            	LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fileName);
+            	return 1;
+			}
+			return 0;
         }
 
-        public void doFile(string fn)
+        public object doFile(string fn)
         {
             byte[] bytes = loadFile(fn);
+			if(bytes==null) {
+				Debug.LogError(string.Format("Can't find {0}",fn));
+				return null;
+			}
 
             LuaDLL.lua_pushstdcallcfunction(L, errorReport);
+			int errfunc = LuaDLL.lua_gettop(L);
             if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fn) == 0)
             {
                 if (LuaDLL.lua_pcall(L, 0, LuaDLL.LUA_MULTRET, -2) != 0)
                 {
                     LuaDLL.lua_pop(L, 1);
                 }
-                LuaDLL.lua_pop(L, 1); // pop error function
+                LuaDLL.lua_remove(L, errfunc); // pop error function
+				return topObjects();
             }
             else
             {
@@ -386,6 +376,7 @@ namespace SLua
                 Debug.LogError(err);
                 LuaDLL.lua_pop(L, 1);
             }
+			return null;
         }
 
         static byte[] loadFile(string fn)
@@ -397,20 +388,10 @@ namespace SLua
                     bytes = loaderDelegate(fn);
                 else
                 {
-                    if (fn.EndsWith(".txt") || fn.EndsWith(".lua"))
-                    {
-                        fn = WorkPath + fn;
-                    }
-                    else
-                    {
-                        fn = fn.Replace('.', '/');
-                        fn = WorkPath + fn;
-                    }
-                    FileStream fs = File.Open(fn, FileMode.Open);
-                    long length = fs.Length;
-                    bytes = new byte[length];
-                    fs.Read(bytes, 0, bytes.Length);
-                    fs.Close();
+					TextAsset asset = (TextAsset) Resources.Load(fn);
+					if(asset!=null)
+						return asset.bytes;                 
+					return null;
                 }
                 return bytes;
             }
@@ -502,17 +483,41 @@ namespace SLua
             LuaDLL.lua_settop(L, oldTop);
         }
 
-        object getObject(IntPtr l, int p)
-        {
-			return LuaObject.checkVar(l,p);
-        }
-
-        public LuaFunction getFunction(string key)
-        {
-            return (LuaFunction)this[key];
-        }
-
-        public LuaTable getTable(string key)
+		internal object topObjects() 
+		{
+			int top = LuaDLL.lua_gettop(L);
+			if (top == 0)
+				return null;
+			else if (top == 1)
+			{
+				object o = LuaObject.checkVar(L, 1);
+				LuaDLL.lua_pop(L, 1);
+				return o;
+			}
+			else
+			{
+				object[] o = new object[top];
+				for (int n = 1; n <= top; n++)
+				{
+					o[n - 1] = LuaObject.checkVar(L, n);
+					
+				}
+				LuaDLL.lua_pop(L, top);
+				return o;
+			}
+		}
+			
+			object getObject(IntPtr l, int p)
+			{
+				return LuaObject.checkVar(l,p);
+			}
+			
+			public LuaFunction getFunction(string key)
+			{
+				return (LuaFunction)this[key];
+			}
+			
+			public LuaTable getTable(string key)
         {
             return (LuaTable)this[key];
         }

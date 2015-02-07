@@ -6,13 +6,6 @@ local Time = UnityEngine.Time
 
 function main()
 
-	local n=0
-	-- delegate test
-	UnityEngine.Application.RegisterLogCallback(function(cond,traceback,t)
-		-- don't use print, it's caused dead loop
-		n=n+1
-	end)
-
 	local go = GameObject.Find("Canvas/Button")
 	local btn = go:GetComponent("Button")
 	
@@ -70,3 +63,5 @@ end
 function str()
 	return "slua"
 end
+
+return 1,2,3

@@ -7,6 +7,6 @@ public class VarObj : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        l = new LuaSvr("varobj.lua.txt");
+        l = new LuaSvr("varobj.lua");
     }
 }

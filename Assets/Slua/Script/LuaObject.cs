@@ -886,8 +886,18 @@ return index
             }
         }
 
-        // i don't know why c# find a wrong generic function
-        // push T will push object not a real push<T>
+		internal static void pushValue(IntPtr l, string[] o)
+		{
+			LuaDLL.lua_newtable(l);
+			for (int n = 0; n < o.Length; n++)
+			{
+				pushValue(l, o[n]);
+				LuaDLL.lua_rawseti(l, -2, n+1);
+			}
+		}
+		
+		// i don't know why c# find a wrong generic function
+		// push T will push object not a real push<T>
 
 //         internal static void pushValue<T>(IntPtr l, List<T> list)
 //         {
