@@ -1,3 +1,4 @@
+local somemodule = require 'module.some'
 
 local Vector3 = UnityEngine.Vector3
 local GameObject = UnityEngine.GameObject
@@ -5,6 +6,9 @@ local Profiler = UnityEngine.Profiler
 local Time = UnityEngine.Time
 
 function main()
+
+	-- test module require
+	print(somemodule.add(2,3))
 
 	local go = GameObject.Find("Canvas/Button")
 	local btn = go:GetComponent("Button")
@@ -16,7 +20,6 @@ function main()
 		label.text="hello world"
 	end)
 	
-
 
 	local go = GameObject.Find("Canvas/Panel2"):GetComponent("ScrollRect")
 	local go = GameObject.Find("Canvas/Panel2"):GetComponent("ScrollRect")

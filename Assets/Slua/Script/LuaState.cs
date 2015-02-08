@@ -201,7 +201,7 @@ namespace SLua
 
     public class LuaState : IDisposable
     {
-        static string WorkPath="Assets/lua/";
+        static string WorkPath="Assets/Resources/";
         IntPtr L;
 
         public delegate byte[] LoaderDelegate(string fn);
@@ -388,10 +388,9 @@ namespace SLua
                     bytes = loaderDelegate(fn);
                 else
                 {
-					TextAsset asset = (TextAsset) Resources.Load(fn);
-					if(asset!=null)
-						return asset.bytes;                 
-					return null;
+					fn=fn.Replace(".","/");
+					TextAsset asset=(TextAsset) Resources.Load(fn);
+					return asset.bytes;
                 }
                 return bytes;
             }

@@ -6,7 +6,7 @@ public class Perf : MonoBehaviour {
     LuaSvr l;
 	// Use this for initialization
 	void Start () {
-	    l = new LuaSvr("perf.lua");
+	    l = new LuaSvr("perf");
 	}
 
 

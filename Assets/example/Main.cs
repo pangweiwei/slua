@@ -11,7 +11,7 @@ public class Main : MonoBehaviour {
     void Start()
     {
 		Application.RegisterLogCallback( this.log );
-        l = new LuaSvr("main.lua");
+        l = new LuaSvr("main");
         
         object o = l.luaState.getFunction("foo").call(1, 2, 3);
         object[] array = (object[])o;
