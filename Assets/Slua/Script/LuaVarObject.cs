@@ -60,7 +60,17 @@ namespace SLua
                     case "Double":
                         return lt == LuaTypes.LUA_TNUMBER;
                     default:
-                        return lt == LuaTypes.LUA_TUSERDATA;
+						{
+							switch(lt) {
+							case LuaTypes.LUA_TFUNCTION:
+								return tn=="LuaFunction" || t.BaseType==typeof(MulticastDelegate);
+							case LuaTypes.LUA_TTABLE:
+								return t is LuaTable;
+							default:
+								return lt == LuaTypes.LUA_TUSERDATA;
+							}
+						}
+						break;
                 }
             }
 
@@ -84,7 +94,7 @@ namespace SLua
                         return LuaDLL.lua_toboolean(l, p);
 
                     default:
-                        return checkObj(l, p);
+                        return LuaObject.checkVar(l, p);
                 }
             }
 

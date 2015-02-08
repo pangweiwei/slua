@@ -57,6 +57,14 @@ function main()
 	HelloWorld.func6("aa",1,2,3,"bb")
 	HelloWorld.func6("aa",1,2,3,"bb",true,false)
 	HelloWorld.func6("aa")
+	
+	-- test luafunction
+	local h=HelloWorld()
+	h:func7(abc)
+end
+
+function abc()
+	print("call func7 callback")
 end
 
 function foo(a,b,c)

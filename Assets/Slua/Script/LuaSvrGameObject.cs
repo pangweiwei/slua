@@ -29,8 +29,8 @@ public class LuaSvrGameObject : MonoBehaviour {
 
     // make sure lua state finalize at last
     // make sure LuaSvrGameObject excute order is max(9999)
-    void OnDestroy()
-    {
+	void OnDestroy()
+	{
         if (state != null)
         {
             state.Close();
