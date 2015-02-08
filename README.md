@@ -6,9 +6,9 @@ QQ group: 15647305
 Mail to : sineysan#163.com
 
 
-##Release Note
+##Release Download
 
-[here.](release_note.md)
+[here.](https://github.com/pangweiwei/slua/releases/latest)
 
 ##Help
 
