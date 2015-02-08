@@ -61,18 +61,6 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int OnRebuildRequested(IntPtr l) {
-		try{
-			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
-			self.OnRebuildRequested();
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetTextAnchorPivot_s(IntPtr l) {
 		try{
 			UnityEngine.TextAnchor a1;
@@ -332,7 +320,6 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 		addMember(l,GetGenerationSettings);
 		addMember(l,CalculateLayoutInputHorizontal);
 		addMember(l,CalculateLayoutInputVertical);
-		addMember(l,OnRebuildRequested);
 		addMember(l,GetTextAnchorPivot_s);
 		addMember(l,"cachedTextGenerator",get_cachedTextGenerator,null,true);
 		addMember(l,"cachedTextGeneratorForLayout",get_cachedTextGeneratorForLayout,null,true);
