@@ -36,7 +36,7 @@ namespace SLua
         {
             luaState = new LuaState();
 
-            LuaObject.init(luaState.handle);
+            LuaObject.init(luaState.L);
             bind("BindUnity");
             bind("BindUnityUI");
             bind("BindCustom");
@@ -44,29 +44,32 @@ namespace SLua
             GameObject go = new GameObject("LuaSvrProxy");
             LuaSvrGameObject lgo = go.AddComponent<LuaSvrGameObject>();
             GameObject.DontDestroyOnLoad(go);
+            lgo.state = luaState;
             lgo.onUpdate = this.tick;
 
-            Timer.init();
+            LuaTimer.init();
+            LuaTimer.reg(luaState.L);
 
             luaState.doFile(main);
 
             LuaFunction func = (LuaFunction)luaState["main"];
             func.call();
 
-            if (LuaDLL.lua_gettop(luaState.handle) != 0)
+            if (LuaDLL.lua_gettop(luaState.L) != 0)
                 Debug.LogError("Some function not remove temp value from lua stack.");
         }
 
         void bind(string name)
         {
             MethodInfo mi = typeof(LuaObject).GetMethod(name,BindingFlags.Public|BindingFlags.Static);
-            if (mi != null) mi.Invoke(null, new object[] { luaState.handle });
+            if (mi != null) mi.Invoke(null, new object[] { luaState.L });
             else if(name=="BindUnity") Debug.LogError(string.Format("Miss {0}, click SLua=>Make to regenerate them",name));
         }
 
         void tick()
         {
             luaState.checkRef();
+            LuaTimer.tick(Time.deltaTime);
         }
     }
 }

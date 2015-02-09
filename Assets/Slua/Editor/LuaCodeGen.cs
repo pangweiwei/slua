@@ -152,7 +152,8 @@ public class LuaCodeGen : MonoBehaviour
         List<string> noUseList = new List<string>
         {      
             "CoroutineTween",
-        };
+			"GraphicRebuildTracker",
+		};
 
         Assembly assembly = Assembly.Load("UnityEngine.UI");
         Type[] types = assembly.GetExportedTypes();
@@ -211,7 +212,7 @@ public class LuaCodeGen : MonoBehaviour
 
         // export 3rd dll
         List<string> assemblyList = new List<string>();
-        assemblyList.Add("NGUI");
+        //assemblyList.Add("NGUI"); 
         
         foreach( string assemblyItem in assemblyList )
         {
@@ -294,6 +295,9 @@ class CodeGenerator
         "WWW.movie",
         "WebCamTexture.MarkNonReadable",
         "WebCamTexture.isReadable",
+		// i don't why below 2 functions missed in iOS platform
+		"Graphic.OnRebuildRequested",
+		"Text.OnRebuildRequested",
     };
 
     public static HashSet<string> InnerTypes = new HashSet<string>();
@@ -470,7 +474,7 @@ namespace SLua
         }
 
 
-        Write(file, "LuaDLL.lua_pop(l, 1);");
+        Write(file, "LuaDLL.lua_settop(l, error-1);");
         if (mi.ReturnType != typeof(void))
             Write(file, "return ret;");
 
@@ -705,8 +709,7 @@ namespace SLua
         object[] attrs = mi.GetCustomAttributes(typeof(MonoPInvokeCallbackAttribute), false);
         if (attrs.Length > 0)
         {
-            MonoPInvokeCallbackAttribute p = attrs[0] as MonoPInvokeCallbackAttribute;
-            instanceFunc = p.instance;
+			instanceFunc = mi.GetCustomAttributes(typeof(StaticExportAttribute),false).Length==0;
             return true;
         }
         instanceFunc = true;
@@ -971,8 +974,7 @@ namespace SLua
         ConstructorInfo[] cons = t.GetConstructors();
         foreach (ConstructorInfo ci in cons)
         {
-                ParameterInfo[] pars = ci.GetParameters();
-                if (/*!ContainGeneric(pars) &&*/ !IsObsolete(ci) && !DontExport(ci))
+                if (!IsObsolete(ci) && !DontExport(ci))
                     ret.Add(ci);
         }
         return ret.ToArray();

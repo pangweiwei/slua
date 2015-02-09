@@ -37,7 +37,6 @@ namespace SLua {
 			Lua_UnityEngine_UI_Graphic.reg(l);
 			Lua_UnityEngine_UI_GraphicRaycaster.reg(l);
 			Lua_UnityEngine_UI_GraphicRaycaster_BlockingObjects.reg(l);
-			Lua_UnityEngine_UI_GraphicRebuildTracker.reg(l);
 			Lua_UnityEngine_UI_GraphicRegistry.reg(l);
 			Lua_UnityEngine_UI_MaskableGraphic.reg(l);
 			Lua_UnityEngine_UI_Image.reg(l);

@@ -27,7 +27,7 @@ using UnityEngine;
 
 namespace SLua
 {
-    public class Timer
+    public class LuaTimer : LuaObject
     {
         class Timer
         {
@@ -90,7 +90,7 @@ namespace SLua
         {
             tm.deadline = deadline;
             int delay = Math.Max(0, deadline - now());
-            Wheel suitableWheel = wheels[wheels.Length - 1]; ;
+            Wheel suitableWheel = wheels[wheels.Length - 1];
             for (int i = 0; i < wheels.Length; ++i)
             {
                 var wheel = wheels[i];
@@ -135,12 +135,12 @@ namespace SLua
             innerAdd(tm.deadline + pauseTime, tm);
         }
 
-        public int now()
+        static int now()
         {
             return (int)(nowTime * 1000);
         }
 
-        public static void tick(float deltaTime)
+        internal static void tick(float deltaTime)
         {
             nowTime += deltaTime;
             pileSecs += deltaTime;
@@ -210,7 +210,7 @@ namespace SLua
             }
         }
 
-        public static void init()
+        internal static void init()
         {
             wheels = new Wheel[4];
             for (int i = 0; i < 4; ++i)
@@ -230,7 +230,7 @@ namespace SLua
             return ++nextSn;
         }
 
-        public static int add(int delay, Action<int> handler)
+        internal static int add(int delay, Action<int> handler)
         {
             return add(delay, 0, (int sn) =>
             {
@@ -239,7 +239,7 @@ namespace SLua
             });
         }
 
-        public static int add(int delay, int cycle, Func<int, bool> handler)
+        internal static int add(int delay, int cycle, Func<int, bool> handler)
         {
             Timer tm = new Timer();
             tm.sn = fetchSn();
@@ -250,13 +250,93 @@ namespace SLua
             return tm.sn;
         }
 
-        public static void del(int sn)
+        internal static void del(int sn)
         {
             Timer tm;
             if (mapSnTimer.TryGetValue(sn, out tm))
             {
                 innerDel(tm);
             }
+        }
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        public static int Delete(IntPtr l)
+        {
+            int id;
+            checkType(l, 1, out id);
+            del(id);
+            return 0;
+        }
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        public static int Add(IntPtr l)
+        {
+            int top = LuaDLL.lua_gettop(l);
+            if (top == 2)
+            {
+                int delay;
+                checkType(l, 1, out delay);
+                int r = LuaDLL.luaS_checkcallback(l, 2);
+                if (r < 0) LuaDLL.luaL_error(l, "expect function at arg 2");
+                Action<int> ua;
+                if (!getCacheDelegate<Action<int>>(r, out ua))
+                    
+                ua = (int id) =>
+                {
+                    int error = pushTry(l);
+                    LuaDLL.lua_getref(l, r);
+
+                    pushValue(l, id);
+                    if (LuaDLL.lua_pcall(l, 1, 0, error) != 0)
+                    {
+                        LuaDLL.lua_pop(l, 1);
+                    }
+                    LuaDLL.lua_remove(l, error);
+                };
+                cacheDelegate(r, ua);
+                pushValue(l, add(delay, ua));
+                return 1;
+            }
+            else if (top == 3)
+            {
+                int delay, cycle;
+                checkType(l, 1, out delay);
+                checkType(l, 2, out cycle);
+                int r = LuaDLL.luaS_checkcallback(l, 3);
+                if (r < 0) LuaDLL.luaL_error(l, "expect function at arg 3");
+                Func<int,bool> ua;
+                if (!getCacheDelegate<Func<int, bool>>(r, out ua))
+
+                    ua = (int id) =>
+                    {
+                        int error = pushTry(l);
+                        LuaDLL.lua_getref(l, r);
+
+                        pushValue(l, id);
+                        if (LuaDLL.lua_pcall(l, 1, 1, error) != 0)
+                        {
+                            LuaDLL.lua_pop(l, 1);
+                        }
+                        LuaDLL.lua_remove(l, error);
+                        bool ret = LuaDLL.lua_toboolean(l, -1);
+                        LuaDLL.lua_pop(l, 1);
+                        return ret;
+                    };
+                cacheDelegate(r, ua);
+                pushValue(l, add(delay, cycle, ua));
+                return 1;
+            }
+            LuaDLL.luaL_error(l,"Argument error");
+            return 0;
+        }
+
+
+        static public void reg(IntPtr l)
+        {
+            getTypeTable(l, "LuaTimer");
+            addMember(l, Add,false);
+            addMember(l, Delete,false);
+            createTypeMetatable(l, typeof(LuaTimer));
         }
     }
 

@@ -6,9 +6,9 @@ QQ group: 15647305
 Mail to : sineysan#163.com
 
 
-##Release Note
+##Release Download
 
-[here.](release_note.md)
+[here.](https://github.com/pangweiwei/slua/releases/latest)
 
 ##Help
 
@@ -62,7 +62,7 @@ Clear , not complete yet
 
 Slua/LuaObject contain pre-generated file for exported interface.
 
-Precompiled slua library in Plugins only included x86(32bit)/macosx(32bit)/iOS(64bit) platform using luajit, you should compile other platform/lua5.1/luajit by yourself, see build.txt for help.
+Precompiled slua library in Plugins only included x86(32bit)/macosx(32bit)/iOS(armv7,armv7s,arm64)/Android(armv7-a) platform using luajit, you should compile other platform/lua5.1/luajit by yourself, see build.txt for help.
 
 ##export custom class
 

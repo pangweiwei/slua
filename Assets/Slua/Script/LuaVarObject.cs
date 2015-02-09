@@ -60,7 +60,16 @@ namespace SLua
                     case "Double":
                         return lt == LuaTypes.LUA_TNUMBER;
                     default:
-                        return lt == LuaTypes.LUA_TUSERDATA;
+						{
+							switch(lt) {
+							case LuaTypes.LUA_TFUNCTION:
+								return tn == "LuaFunction" || t.BaseType==typeof(MulticastDelegate);
+							case LuaTypes.LUA_TTABLE:
+                                return tn == "LuaTable";
+							default:
+								return lt == LuaTypes.LUA_TUSERDATA;
+							}
+						}
                 }
             }
 
@@ -84,7 +93,7 @@ namespace SLua
                         return LuaDLL.lua_toboolean(l, p);
 
                     default:
-                        return checkObj(l, p);
+                        return LuaObject.checkVar(l, p);
                 }
             }
 
@@ -307,7 +316,7 @@ namespace SLua
             LuaDLL.lua_setfield(l, -2, "__index");
             LuaDLL.lua_pushstdcallcfunction(l, luaNewIndex);
             LuaDLL.lua_setfield(l, -2, "__newindex");
-            LuaDLL.lua_pushstdcallcfunction(l, luaGC);
+            LuaDLL.lua_pushstdcallcfunction(l, lua_gc);
             LuaDLL.lua_setfield(l, -2, "__gc");
             LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "LuaVarObject");
 

@@ -45,6 +45,14 @@ public class DoNotToLuaAttribute : System.Attribute
     }
 }
 
+[AttributeUsage(AttributeTargets.Method)]
+public class StaticExportAttribute : System.Attribute 
+{
+	public StaticExportAttribute() 
+	{
+	}
+}
+
 
 namespace SLua
 {
@@ -870,6 +878,11 @@ return index
 
         internal static void pushValue(IntPtr l, float[] o)
         {
+            if( o == null)
+            {
+                LuaDLL.lua_pushnil(l);
+                return;
+            }
             LuaDLL.lua_newtable(l);
             for (int n = 0; n < o.Length; n++)
             {
@@ -877,9 +890,9 @@ return index
                 LuaDLL.lua_rawseti(l, -2, n+1);
             }
         }
-
-        // i don't know why c# find a wrong generic function
-        // push T will push object not a real push<T>
+		
+		// i don't know why c# find a wrong generic function
+		// push T will push object not a real push<T>
 
 //         internal static void pushValue<T>(IntPtr l, List<T> list)
 //         {
@@ -907,14 +920,59 @@ return index
             LuaDLL.lua_pushboolean(l, b);
         }
 
+        internal static void pushValue(IntPtr l, bool[] o)
+        {
+            if( o == null)
+            {
+                LuaDLL.lua_pushnil(l);
+                return;
+            }
+            LuaDLL.lua_newtable(l);
+            for (int n = 0; n < o.Length; n++)
+            {
+                pushValue(l, o[n]);
+                LuaDLL.lua_rawseti(l, -2, n + 1);
+            }
+        }
+
         internal static void pushValue(IntPtr l, string s)
         {
             LuaDLL.lua_pushstring(l, s);
         }
 
+        internal static void pushValue(IntPtr l, string[] o)
+        {
+            if( o == null)
+            {
+                LuaDLL.lua_pushnil(l);
+                return;
+            }
+            LuaDLL.lua_newtable(l);
+            for (int n = 0; n < o.Length; n++)
+            {
+                pushValue(l, o[n]);
+                LuaDLL.lua_rawseti(l, -2, n+1);
+            }
+        }
+
         internal static void pushValue(IntPtr l, int i)
         {
             LuaDLL.lua_pushinteger(l, i);
+        }
+
+        internal static void pushValue(IntPtr l, int[] o)
+        {
+            if( o == null)
+            {
+                LuaDLL.lua_pushnil(l);
+                return;
+            }
+            LuaDLL.lua_newtable(l);
+            for (int n = 0; n < o.Length; n++)
+            {
+                pushValue(l, o[n]);
+                LuaDLL.lua_rawseti(l, -2, n + 1);
+            }
         }
 
         public static void pushValue(IntPtr l, Int64 i)
@@ -926,9 +984,39 @@ return index
 #endif
         }
 
+        internal static void pushValue(IntPtr l, Int64[] o)
+        {
+            if( o == null)
+            {
+                LuaDLL.lua_pushnil(l);
+                return;
+            }
+            LuaDLL.lua_newtable(l);
+            for (int n = 0; n < o.Length; n++)
+            {
+                pushValue(l, o[n]);
+                LuaDLL.lua_rawseti(l, -2, n + 1);
+            }
+        }
+
         internal static void pushValue(IntPtr l, double d)
         {
             LuaDLL.lua_pushnumber(l, d);
+        }
+
+        internal static void pushValue(IntPtr l, double[] o)
+        {
+            if( o == null)
+            {
+                LuaDLL.lua_pushnil(l);
+                return;
+            }
+            LuaDLL.lua_newtable(l);
+            for (int n = 0; n < o.Length; n++)
+            {
+                pushValue(l, o[n]);
+                LuaDLL.lua_rawseti(l, -2, n + 1);
+            }
         }
 
         internal static void pushValue(IntPtr l, UnityEngine.Object o)
@@ -936,10 +1024,34 @@ return index
             pushObject(l, o);
         }
 
+        internal static void pushValue(IntPtr l, UnityEngine.Object[] o)
+        {
+            if( o == null)
+            {
+                LuaDLL.lua_pushnil(l);
+                return;
+            }
+            LuaDLL.lua_newtable(l);
+            for (int n = 0; n < o.Length; n++)
+            {
+                pushValue(l, o[n]);
+                LuaDLL.lua_rawseti(l, -2, n + 1);
+            }
+        }
+
+        internal static void pushValue(IntPtr l, object o)
+        {
+            pushObject(l, o);
+        }
 
 
         internal static void pushValue(IntPtr l, object[] o)
         {
+            if( o == null)
+            {
+                LuaDLL.lua_pushnil(l);
+                return;
+            }
             LuaDLL.lua_newtable(l);
             for (int n = 0; n < o.Length; n++)
             {
@@ -1029,12 +1141,6 @@ return index
 //        }
 
 
-        internal static void pushValue(IntPtr l, object o)
-        {
-            pushObject(l, o);
-        }
-
-
         internal static void pushEnum(IntPtr l, int e)
         {
             pushValue(l, e);
@@ -1121,7 +1227,9 @@ return index
 			if(t==LuaTypes.LUA_TNIL)
 			{
 				op=0;
-			} else if(t==LuaTypes.LUA_TTABLE) {
+			} 
+            else if(t==LuaTypes.LUA_TTABLE) 
+            {
 				
 				LuaDLL.lua_rawgeti(l,p,1);
 				LuaDLL.lua_pushstring(l,"+=");

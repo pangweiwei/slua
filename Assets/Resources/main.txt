@@ -1,0 +1,86 @@
+local somemodule = require 'module.some'
+
+local Vector3 = UnityEngine.Vector3
+local GameObject = UnityEngine.GameObject
+local Profiler = UnityEngine.Profiler
+local Time = UnityEngine.Time
+
+function main()
+
+	-- test module require
+	print(somemodule.add(2,3))
+
+	local go = GameObject.Find("Canvas/Button")
+	local btn = go:GetComponent("Button")
+	
+
+	btn.onClick:AddListener(function()
+		local go = GameObject.Find("Canvas/Text")
+		local label = go:GetComponent("Text")
+		label.text="hello world"
+	end)
+	
+
+	local go = GameObject.Find("Canvas/Panel2"):GetComponent("ScrollRect")
+	local go = GameObject.Find("Canvas/Panel2"):GetComponent("ScrollRect")
+
+	go.onValueChanged:AddListener(function(v)
+		print("scroll value changed",v.x,v.y)
+	end)
+
+	local cube = GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube)
+	local cube2 = GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube)
+	cube.name="Script cube"
+	cube2.name="Script cube2"
+
+	cube.transform:SetParent(cube2.transform)
+
+	local pos = Vector3(10,10,10)+Vector3(1,1,1)
+	cube.transform.position = pos
+	cube.transform.localScale = Vector3(10,10,10)
+	print(cube==cube2)
+
+	LuaTimer.Add(0,20,function(id)
+		cube.transform.localScale = Vector3(10,10,10)*(0.1+math.sin(os.clock()))
+		cube2.transform.position = Vector3(math.sin(os.clock())*5,0,0)
+		return true
+	end)
+
+	print(UnityEngine.PrimitiveType.Cube,type(UnityEngine.PrimitiveType.Cube))
+
+
+	print("LogCallback occured",n)
+
+	-- test lua table
+	HelloWorld.setv({name="yes",value=12})
+	local t=HelloWorld.getv()
+	print(t.name,t.age)
+
+	-- test overload func
+	HelloWorld.ofunc(GameObject)
+	HelloWorld.ofunc(cube)
+
+	-- test variant number args
+	HelloWorld.func6("aa",1,2)
+	HelloWorld.func6("aa",1,2,3,"bb")
+	HelloWorld.func6("aa",1,2,3,"bb",true,false)
+	HelloWorld.func6("aa")
+	
+	-- test luafunction
+	local h=HelloWorld()
+	h:func7(abc)
+end
+
+function abc()
+	print("call func7 callback")
+end
+
+function foo(a,b,c)
+	return a,b,c,"slua"
+end
+
+function str()
+	return "slua"
+end
+
+return 1,2,3

@@ -31,7 +31,7 @@ namespace SLua
 				}
 				float ret;
 				checkType(l,error+1,out ret);
-				LuaDLL.lua_pop(l, 1);
+				LuaDLL.lua_settop(l, error-1);
 				return ret;
 			};
 			cacheDelegate(r,ua);

@@ -128,6 +128,16 @@ public class HelloWorld   {
         }
     }
 
+	LuaFunction f;
+	public void func7(LuaFunction func) {
+		f=func;
+		f.call();
+	}
+
+	public void func7(int a) {
+		Debug.Log(a);
+	}
+
     [DoNotToLua]
     static public void dontexport()
     {

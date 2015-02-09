@@ -31,7 +31,7 @@ namespace SLua
 				if (LuaDLL.lua_pcall(l, 3, -1, error) != 0) {
 					LuaDLL.lua_pop(l, 1);
 				}
-				LuaDLL.lua_pop(l, 1);
+				LuaDLL.lua_settop(l, error-1);
 			};
 			cacheDelegate(r,ua);
 			return op;
