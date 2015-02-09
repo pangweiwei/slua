@@ -936,10 +936,7 @@ return index
             pushObject(l, o);
         }
 
-        internal static void pushValue(IntPtr l, object o)
-        {
-            pushObject(l, o);
-        }
+
 
         internal static void pushValue(IntPtr l, object[] o)
         {
@@ -1030,6 +1027,12 @@ return index
 //            LuaDLL.lua_getglobal(l, "Vector4_mt");
 //            LuaDLL.lua_setmetatable(l, -2);
 //        }
+
+
+        internal static void pushValue(IntPtr l, object o)
+        {
+            pushObject(l, o);
+        }
 
 
         internal static void pushEnum(IntPtr l, int e)

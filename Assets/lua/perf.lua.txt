@@ -65,7 +65,7 @@ function test4()
 	local v = Vector3.one
 	local start = os.clock()
 	for i=1,200000 do
-		t.position = v
+		t.position=v
 	end
 	print("test4/lua " .. (os.clock() - start));
 end

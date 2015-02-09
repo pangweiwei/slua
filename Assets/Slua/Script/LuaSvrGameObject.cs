@@ -23,9 +23,10 @@
 using UnityEngine;
 using System.Collections;
 using SLua;
+using System;
 public class LuaSvrGameObject : MonoBehaviour {
 
-    public LuaState state;
+    public Action onUpdate;
 
     // make sure lua state finalize at last
     // make sure LuaSvrGameObject excute order is max(9999)
@@ -39,6 +40,6 @@ public class LuaSvrGameObject : MonoBehaviour {
 
     void Update()
     {
-        state.checkRef();
+        if (onUpdate) onUpdate();
     }
 }

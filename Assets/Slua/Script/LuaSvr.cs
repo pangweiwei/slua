@@ -44,7 +44,9 @@ namespace SLua
             GameObject go = new GameObject("LuaSvrProxy");
             LuaSvrGameObject lgo = go.AddComponent<LuaSvrGameObject>();
             GameObject.DontDestroyOnLoad(go);
-            lgo.state = luaState;
+            lgo.onUpdate = this.tick;
+
+            Timer.init();
 
             luaState.doFile(main);
 
@@ -60,6 +62,11 @@ namespace SLua
             MethodInfo mi = typeof(LuaObject).GetMethod(name,BindingFlags.Public|BindingFlags.Static);
             if (mi != null) mi.Invoke(null, new object[] { luaState.handle });
             else if(name=="BindUnity") Debug.LogError(string.Format("Miss {0}, click SLua=>Make to regenerate them",name));
+        }
+
+        void tick()
+        {
+            luaState.checkRef();
         }
     }
 }
