@@ -47,7 +47,6 @@ namespace SLua
             lgo.state = luaState;
             lgo.onUpdate = this.tick;
 
-            LuaTimer.init();
             LuaTimer.reg(luaState.L);
 
             luaState.doFile(main);

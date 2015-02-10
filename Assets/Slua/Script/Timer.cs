@@ -188,7 +188,7 @@ namespace SLua
             }
         }
 
-        internal static void init()
+        static void init()
         {
             wheels = new Wheel[4];
             for (int i = 0; i < 4; ++i)
@@ -311,6 +311,7 @@ namespace SLua
 
         static public void reg(IntPtr l)
         {
+            init();
             getTypeTable(l, "LuaTimer");
             addMember(l, Add,false);
             addMember(l, Delete,false);

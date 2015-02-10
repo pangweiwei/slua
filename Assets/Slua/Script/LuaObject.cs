@@ -442,7 +442,9 @@ return index
                     return t == typeof(Single) || t == typeof(double) || t == typeof(int) || t == typeof(Int16)
                         || t == typeof(UInt16) || t == typeof(UInt32) || t == typeof(byte) || t == typeof(Int64) || t.IsEnum;
                 case LuaTypes.LUA_TUSERDATA:
-                    return true;
+                    object o=checkObj(l, p);
+                    Type ot = o.GetType();
+                    return ot == t || ot.IsSubclassOf(t);
                 case LuaTypes.LUA_TSTRING:
                     return t.Name == "String";
                 case LuaTypes.LUA_TBOOLEAN:
