@@ -187,7 +187,33 @@ slua的delegate支持+=/-=操作, 例如
 >public static Action<int, Dictionary<int, object>> daction;
 
 
-###如何快速导出第三方库, 例如ngui等
+##LuaTimer
+
+LuaTimer用于在限定时间周期性的回调lua函数.
+
+###Add(delay,func) -> id
+
+增加一个一次性Timer, timer在delay时间后触发, 单位ms.
+
+###Add(delay,cycle,func) -> id
+
+增加一个Timer, delay表示延迟时间,单位ms, cycle表示周期时间,单位ms, func为回调的lua函数, Add函数返回一个timer id,用于Delete函数删除某个已经添加的Timer, 例如:
+
+>     LuaTimer.Add(0,20,function(id)
+		cube.transform.localScale = Vector3(10,10,10)*(0.1+math.sin(os.clock()))
+		cube2.transform.position = Vector3(math.sin(os.clock())*5,0,0)
+		return true
+	end)
+
+
+添加一个立刻开始,20ms回调一次的Timer,回调函数的id参数表示该timer的id, 如果需要持续回调返回true,返回false或者没有返回值, 表示该回调仅执行一次.
+
+###Delete(id)
+
+删除指定id的timer.
+
+
+##如何快速导出第三方库, 例如ngui等
 
 新建一个空工程,将第三方库的所有代码放入Assets内, 等待Unity编译完成;
 打开产生的sln工程,找到 Assembly-CSharp 工程, 修改工程"程序集名称"由Assembly-CSharp改为第三方库名称,例如NGUI;
@@ -258,7 +284,7 @@ slua的delegate支持+=/-=操作, 例如
 
 这样便在src目录生成了libluajit.a库文件, 修改文件为libslua.a, 放入Assets/Plugins/iOS 目录即可.
 
-#已知问题
+##已知问题
 不支持泛型函数导出, 但支持泛型代理
 
 UnityAction/UnityEvent目前仅支持1个泛型参数的版本,后续考虑完善.
