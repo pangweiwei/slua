@@ -36,7 +36,6 @@ namespace SLua
             internal int deadline;
             internal Func<int, bool> handler;
             internal bool delete;
-            internal int pause;
             internal LinkedList<Timer> container;
         }
         class Wheel
@@ -112,27 +111,6 @@ namespace SLua
                 tm.container = null;
             }
             mapSnTimer.Remove(tm.sn);
-        }
-
-        void innerPause(Timer tm)
-        {
-            if (tm.pause > 0)
-                return;
-            tm.pause = now();
-            if (tm.container != null)
-            {
-                tm.container.Remove(tm);
-                tm.container = null;
-            }
-        }
-
-        void innerResume(Timer tm)
-        {
-            if (tm.pause == 0)
-                return;
-            int pauseTime = now() - tm.pause;
-            tm.pause = 0;
-            innerAdd(tm.deadline + pauseTime, tm);
         }
 
         static int now()
