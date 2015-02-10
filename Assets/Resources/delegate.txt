@@ -74,7 +74,15 @@ function main()
 
 	-- out modifier
 
+	local f = Deleg.getFunc(function(i,s)
+		print(i,s)
+		return true
+	end)
 
+	-- passed as parameter again
+	local f2= Deleg.getFunc(f)
+
+	assert(f==f2)
 end
 
 

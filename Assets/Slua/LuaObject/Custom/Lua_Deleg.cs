@@ -73,6 +73,20 @@ public class Lua_Deleg : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int getFunc_s(IntPtr l) {
+		try{
+			System.Func<System.Int32,System.String,System.Boolean> a1;
+			checkDelegate(l,1,out a1);
+			System.Func<System.Int32,System.String,System.Boolean> ret=Deleg.getFunc(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_d(IntPtr l) {
 		Deleg.GetBundleInfoDelegate v;
 		int op=checkDelegate(l,2,out v);
@@ -106,6 +120,7 @@ public class Lua_Deleg : LuaObject {
 		addMember(l,testAction_s);
 		addMember(l,testDAction_s);
 		addMember(l,callDAction_s);
+		addMember(l,getFunc_s);
 		addMember(l,"d",null,set_d,false);
 		addMember(l,"s",null,set_s,false);
 		addMember(l,"daction",null,set_daction,false);

@@ -1228,6 +1228,10 @@ return index
 			{
 				op=0;
 			} 
+            else if(t==LuaTypes.LUA_TUSERDATA)
+            {
+                op = 0;
+            }
             else if(t==LuaTypes.LUA_TTABLE) 
             {
 				

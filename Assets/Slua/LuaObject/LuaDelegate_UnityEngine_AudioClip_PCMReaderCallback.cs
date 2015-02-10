@@ -15,6 +15,11 @@ namespace SLua
 				ua=null;
 				return op;
 			}
+            else if (LuaDLL.lua_isuserdata(l, p)==1)
+            {
+                ua = (UnityEngine.AudioClip.PCMReaderCallback)checkObj(l, p);
+                return op;
+            }
             int r = LuaDLL.luaS_checkcallback(l, -1);
 			if(r<0) LuaDLL.luaL_error(l,"expect function");
 			if(getCacheDelegate<UnityEngine.AudioClip.PCMReaderCallback>(r,out ua))
