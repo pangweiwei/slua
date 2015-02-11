@@ -51,6 +51,20 @@ function main()
 
 	print("LogCallback occured",n)
 
+	local c=coroutine.create(function()
+		print("coroutine start")
+		
+		UnityEngine.WaitForFixedUpdate()
+		print("coroutine WaitForFixedUpdate")
+
+		UnityEngine.WaitForSeconds(2)
+		print("coroutine WaitForSeconds 2")
+		
+		UnityEngine.WaitForEndOfFrame()
+		print("coroutine WaitForEndOfFrame")
+	end)
+	coroutine.resume(c)
+
 	-- test lua table
 	HelloWorld.setv({name="yes",value=12})
 	local t=HelloWorld.getv()

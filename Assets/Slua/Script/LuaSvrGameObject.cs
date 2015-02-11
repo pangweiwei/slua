@@ -44,4 +44,22 @@ public class LuaSvrGameObject : MonoBehaviour {
     {
         if (onUpdate!=null) onUpdate();
     }
+
+    public IEnumerator waitForSeconds(float t,Action act)
+    {
+        yield return new WaitForSeconds(t);
+        act();
+    }
+
+    public IEnumerator waitForEndOfFrame(Action act)
+    {
+        yield return new WaitForEndOfFrame();
+        act();
+    }
+
+    public IEnumerator waitForFixedUpdate(Action act)
+    {
+        yield return new WaitForFixedUpdate();
+        act();
+    }
 }
