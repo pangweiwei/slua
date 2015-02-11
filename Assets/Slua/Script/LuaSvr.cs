@@ -82,9 +82,9 @@ namespace SLua
             LuaObject.checkType(l,1, out sec);
 
             Action act = () =>
-                {
-                    LuaDLL.lua_resume(l, 0);
-                };
+            {
+                LuaDLL.lua_resume(l, 0);
+            };
 
             lgo.StartCoroutine(lgo.waitForSeconds(sec, act));
             return LuaDLL.lua_yield(l, 0);
@@ -94,9 +94,9 @@ namespace SLua
         static public int WaitForEndOfFrame(IntPtr l)
         {
             Action act = () =>
-                {
-                    LuaDLL.lua_resume(l, 0);
-                };
+            {
+                LuaDLL.lua_resume(l, 0);
+            };
 
             lgo.StartCoroutine(lgo.waitForEndOfFrame(act));
             return LuaDLL.lua_yield(l, 0);
