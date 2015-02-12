@@ -67,7 +67,62 @@ Precompiled slua library in Plugins only included x86(32bit)/macosx(32bit)/iOS(a
 
 ## usage at a glance
 
+~~~~~~~~~~lua
 
+-- import
+import "UnityEngine"
+
+function main()
+
+	-- create gameobject
+	local cube = GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube)
+
+	-- find gameobject
+	local go = GameObject.Find("Canvas/Button")
+	
+	-- get component by type name
+	local btn = go:GetComponent("Button")
+	
+	-- add event listener
+	btn.onClick:AddListener(function()
+		local go = GameObject.Find("Canvas/Text")
+		local label = go:GetComponent("Text")
+		label.text="hello world"
+	end)
+	
+	-- use vector3
+	local pos = Vector3(10,10,10)+Vector3(1,1,1)
+	cube.transform.position = pos
+	
+	-- use coroutine
+	local c=coroutine.create(function()
+		print("coroutine start")
+		
+		WaitForFixedUpdate()
+		print("coroutine WaitForFixedUpdate")
+
+		WaitForSeconds(2)
+		print("coroutine WaitForSeconds 2")
+		
+		WaitForEndOfFrame()
+		print("coroutine WaitForEndOfFrame")
+	end)
+	coroutine.resume(c)
+
+	-- add delegate
+	Deleg.daction = {"+=",self.actionD}
+	
+	-- remove delegate
+	Deleg.daction = {"-=",self.actionD}
+	
+	-- set delegate
+	Deleg.daction = function() print("callback") end
+	
+	-- remove all
+	Deleg.daction = nil
+end
+
+~~~~~~~~~~
 
 ##export custom class
 
