@@ -51,7 +51,7 @@ function main()
 	local c=coroutine.create(function()
 
 		local www = WWW("http://news.163.com")
-		YieldReturn(www)
+		Yield(www)
 		print(www.bytes,#www.bytes)
 	end)
 	coroutine.resume(c)
