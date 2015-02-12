@@ -166,16 +166,8 @@ see http://www.sineysoft.com/post/164 for detail (in chinese), compared with ulu
 **with luajit**
 
 
-        test1	                test2	             test3	            test4 	         test5 
-		propery get and set		member method call   static func call   property set     create valuetype return
-				
-    slua	0.85		            0.19			   0.62				   0.081			0.62
+![](benchmark.png)
 
-    cstolua	3.8	                    0.98	           not support	        0.89	        2.3
-
-    ulua	5.16	                0.93	           4.39	                1.72	        5.89
- 
-    mono	0.064	                0.011	           0.01	                0.03	        0.0025
 
 unit is secend, run 200k times / test, more smarller more better.
 
