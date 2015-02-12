@@ -68,6 +68,8 @@ Precompiled slua library in Plugins only included x86(32bit)/macosx(32bit)/iOS(a
 
 find code "static public void Custom()", add your custom class type into exports list, like HelloWorld, see below:
 
+~~~~~~~~~~c#
+
     [MenuItem("SLua/Make custom")]
     static public void Custom()
     {
@@ -84,7 +86,7 @@ find code "static public void Custom()", add your custom class type into exports
         GenerateBind(exports,"LuaCustom");
         AssetDatabase.Refresh();
     }
-    
+~~~~~~~~~~
     
 or
 
