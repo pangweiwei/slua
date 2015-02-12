@@ -121,16 +121,17 @@ namespace SLua
 
         internal static ObjectCache get(IntPtr l)
         {
-            if (oldl == l)
-                return oldoc;
-            ObjectCache oc;
-            if (multiState.TryGetValue(l, out oc))
-            {
-                oldl = l;
-                oldoc = oc;
-                return oc;
-            }
-            return null;
+//             if (oldl == l)
+//                 return oldoc;
+//             ObjectCache oc;
+//             if (multiState.TryGetValue(l, out oc))
+//             {
+//                 oldl = l;
+//                 oldoc = oc;
+//                 return oc;
+//             }
+//             return null;
+            return oldoc;
         }
 
         internal static void del(IntPtr l)

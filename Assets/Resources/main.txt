@@ -49,16 +49,10 @@ function main()
 	print("LogCallback occured",n)
 
 	local c=coroutine.create(function()
-		print("coroutine start")
-		
-		UnityEngine.WaitForFixedUpdate()
-		print("coroutine WaitForFixedUpdate")
 
-		UnityEngine.WaitForSeconds(2)
-		print("coroutine WaitForSeconds 2")
-		
-		UnityEngine.WaitForEndOfFrame()
-		print("coroutine WaitForEndOfFrame")
+		local www = WWW("http://news.163.com")
+		YieldReturn(www)
+		print(www.bytes,#www.bytes)
 	end)
 	coroutine.resume(c)
 

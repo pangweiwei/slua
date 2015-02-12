@@ -350,7 +350,7 @@ class CodeGenerator
             Directory.CreateDirectory(LuaCodeGen.path);
         }
         
-        if ((!t.IsGenericType && !IsObsolete(t) && !typeof(YieldInstruction).IsAssignableFrom(t))
+        if ((!t.IsGenericType && !IsObsolete(t))
             || (t.BaseType!=null && t.BaseType==typeof(System.MulticastDelegate)))
         {
             if (t.IsEnum)

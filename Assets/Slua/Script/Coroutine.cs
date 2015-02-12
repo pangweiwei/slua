@@ -36,10 +36,32 @@ namespace SLua
         static public void reg(IntPtr l, MonoBehaviour m)
         {
             mb = m;
-            reg(l, WaitForSeconds, "UnityEngine");
-            reg(l, WaitForEndOfFrame, "UnityEngine");
-            reg(l, WaitForFixedUpdate, "UnityEngine");
+//             reg(l, WaitForSeconds, "UnityEngine");
+//             reg(l, WaitForEndOfFrame, "UnityEngine");
+//             reg(l, WaitForFixedUpdate, "UnityEngine");
+            reg(l, YieldReturn, "UnityEngine");
         }
+
+        [MonoPInvokeCallback(typeof(LuaCSFunction))]
+        static public int YieldReturn(IntPtr l)
+        {
+            object y = checkObj(l, 1);
+
+            Action act = () =>
+            {
+                LuaDLL.lua_resume(l, 0);
+            };
+
+            mb.StartCoroutine(yieldReturn(y,act));
+            return LuaDLL.lua_yield(l, 0);
+        }
+
+        static public IEnumerator yieldReturn(object y, Action act)
+        {
+            yield return y;
+            act();
+        }
+
 
         [MonoPInvokeCallback(typeof(LuaCSFunction))]
         static public int WaitForSeconds(IntPtr l)
