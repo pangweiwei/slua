@@ -9,7 +9,7 @@ namespace SLua
     public partial class LuaObject
     {
 
-        static internal int checkDelegate(IntPtr l,int p,out UnityEngine.EventSystems.ExecuteEvents.EventFunction<UnityEngine.EventSystems.ISubmitHandler> ua) {
+        static internal int checkDelegate(IntPtr l,int p,out System.Func<System.Int32,System.String,System.Boolean> ua) {
             int op = extractFunction(l,p);
 			if(LuaDLL.lua_isnil(l,-1)) {
 				ua=null;
@@ -17,15 +17,15 @@ namespace SLua
 			}
             else if (LuaDLL.lua_isuserdata(l, p)==1)
             {
-                ua = (UnityEngine.EventSystems.ExecuteEvents.EventFunction<UnityEngine.EventSystems.ISubmitHandler>)checkObj(l, p);
+                ua = (System.Func<System.Int32,System.String,System.Boolean>)checkObj(l, p);
                 return op;
             }
             int r = LuaDLL.luaS_checkcallback(l, -1);
 			if(r<0) LuaDLL.luaL_error(l,"expect function");
-			if(getCacheDelegate<UnityEngine.EventSystems.ExecuteEvents.EventFunction<UnityEngine.EventSystems.ISubmitHandler>>(r,out ua))
+			if(getCacheDelegate<System.Func<System.Int32,System.String,System.Boolean>>(r,out ua))
 				return op;
 			LuaDLL.lua_pop(l,1);
-            ua = (UnityEngine.EventSystems.ISubmitHandler a1,UnityEngine.EventSystems.BaseEventData a2) =>
+            ua = (int a1,string a2) =>
             {
                 int error = pushTry(l);
                 LuaDLL.lua_getref(l, r);
@@ -35,7 +35,10 @@ namespace SLua
 				if (LuaDLL.lua_pcall(l, 2, -1, error) != 0) {
 					LuaDLL.lua_pop(l, 1);
 				}
-				LuaDLL.lua_pop(l, 1);
+				bool ret;
+				checkType(l,error+1,out ret);
+				LuaDLL.lua_settop(l, error-1);
+				return ret;
 			};
 			cacheDelegate(r,ua);
 			return op;

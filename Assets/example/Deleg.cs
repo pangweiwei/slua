@@ -54,4 +54,9 @@ public class Deleg : MonoBehaviour {
     }
 
     public static Action<int, Dictionary<int, object>> daction;
+
+    public static Func<int, string, bool> getFunc(Func<int, string, bool> f)
+    {
+        return f;
+    }
 }

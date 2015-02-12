@@ -84,9 +84,10 @@ slua支持手动导出任何自定义接口, 为此你仅需要将对应的类�
 
 仅仅自动注册到对应的lua接口里,不产生对应的包装方法再包装这个函数, 这使得你可以实现自己的任何lua函数, 用于自定义导出, 比如返回多个返回值.
 
-在默认情况下, 上面的函数产生的是成员方法, 即它需要接受一个self的ud, 在lua层面需要 self:instanceCustom 的方式调用, 如果你需要个静态方法, 需要多一个false参数, 例如:
+在默认情况下, 上面的函数产生的是成员方法, 即它需要接受一个self的ud, 在lua层面需要 self:instanceCustom 的方式调用, 如果你需要个静态方法, 需要多加一个[StaticExport], 例如:
 
->     [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction),false)]
+>     [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+>     [StaticExport]
     static public int staticCustom(IntPtr l) {
         LuaDLL.lua_pushstring(l,vs);
         LuaObject.pushObject(l, c);
@@ -184,6 +185,25 @@ slua的delegate支持+=/-=操作, 例如
 同时System.Action<>/System.Func<> 这种泛型代理也支持, slua会自动将遇到的泛型参数展开, 例如:
 
 >public static Action<int, Dictionary<int, object>> daction;
+
+
+###如何快速导出第三方库, 例如ngui等
+
+新建一个空工程,将第三方库的所有代码放入Assets内, 等待Unity编译完成;
+打开产生的sln工程,找到 Assembly-CSharp 工程, 修改工程"程序集名称"由Assembly-CSharp改为第三方库名称,例如NGUI;
+选择目标框架为".net Subset Base class Libraries";
+调整为Release版本, 然后生成对应的dll;
+将dll放入slua/3rdlib目录;
+打开LuaCodeGen.cs, 找到Custom() 函数
+
+在assemblyItem List内添加程序集名字, 例如:
+
+>     List<string> assemblyList = new List<string>();
+    assemblyList.Add("NGUI");
+
+保存, 等待编译完成, 点击Make custom,将会生成NGUI的全部接口文件.
+
+**注意去掉对UnityEditor的引用，否则发布的时候可能失败**
 
 
 ##编译slua库

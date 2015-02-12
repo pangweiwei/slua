@@ -37,6 +37,8 @@ function main()
 	cube.name="Script cube"
 	cube2.name="Script cube2"
 
+	cube.transform:SetParent(cube2.transform)
+
 	local pos = Vector3(10,10,10)+Vector3(1,1,1)
 	cube.transform.position = pos
 	cube.transform.localScale = Vector3(10,10,10)
