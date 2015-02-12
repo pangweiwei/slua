@@ -466,7 +466,7 @@ namespace LuaInterface
         public static extern void lua_pushstring(IntPtr luaState, string str);
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void lua_pushstring(IntPtr luaState, byte[] str);
+        public static extern void lua_pushlstring(IntPtr luaState, byte[] str, int size);
 
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]

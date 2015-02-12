@@ -420,14 +420,9 @@ return index
         }
 
         public static void pushObject(IntPtr l, object o)
-        {
-            IntPtr L = LuaState.main.L;
-            ObjectCache oc = ObjectCache.get(L);
-            oc.push(L, o);
-            if (L != l)
-            {
-                LuaDLL.lua_xmove(L, l, 1);
-            }
+		{
+			ObjectCache oc = ObjectCache.get(l);
+            oc.push(l, o);
         }
 
         public static int pushTry(IntPtr l)
@@ -908,7 +903,7 @@ return index
 
         internal static void pushValue(IntPtr l, byte[] o)
         {
-            LuaDLL.lua_pushstring(l, o);
+            LuaDLL.lua_pushlstring(l, o, o.Length);
         }
 		
 		// i don't know why c# find a wrong generic function

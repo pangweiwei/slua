@@ -121,16 +121,15 @@ namespace SLua
 
         internal static ObjectCache get(IntPtr l)
         {
-//             if (oldl == l)
-//                 return oldoc;
-//             ObjectCache oc;
-//             if (multiState.TryGetValue(l, out oc))
-//             {
-//                 oldl = l;
-//                 oldoc = oc;
-//                 return oc;
-//             }
-//             return null;
+             if (oldl == l)
+                 return oldoc;
+             ObjectCache oc;
+             if (multiState.TryGetValue(l, out oc))
+             {
+                 oldl = l;
+                 oldoc = oc;
+                 return oc;
+             }
             return oldoc;
         }
 
@@ -242,11 +241,9 @@ namespace SLua
             }
 
             LuaDLL.lua_setmetatable(l, -2);
-            
         }
 
-
-        static Dictionary<Type, string> aqnameMap = new Dictionary<Type, string>();
+		static Dictionary<Type, string> aqnameMap = new Dictionary<Type, string>();
         static string getAQName(object o)
         {
             Type t = o.GetType();
