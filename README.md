@@ -64,6 +64,11 @@ Slua/LuaObject contain pre-generated file for exported interface.
 
 Precompiled slua library in Plugins only included x86(32bit)/macosx(32bit)/iOS(armv7,armv7s,arm64)/Android(armv7-a) platform using luajit, you should compile other platform/lua5.1/luajit by yourself, see build.txt for help.
 
+
+## usage at a glance
+
+
+
 ##export custom class
 
 find code "static public void Custom()", add your custom class type into exports list, like HelloWorld, see below:
