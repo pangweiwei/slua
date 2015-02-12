@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using LuaInterface;
 using System.Reflection;
@@ -49,9 +49,7 @@ namespace SLua
             lgo.onUpdate = this.tick;
 
             LuaTimer.reg(luaState.L);
-            LuaObject.reg(luaState.L, WaitForSeconds, "UnityEngine");
-            LuaObject.reg(luaState.L, WaitForEndOfFrame, "UnityEngine");
-            LuaObject.reg(luaState.L, WaitForFixedUpdate, "UnityEngine");
+            LuaCoroutine.reg(luaState.L, lgo);
 
             luaState.doFile(main);
 
@@ -75,43 +73,6 @@ namespace SLua
             LuaTimer.tick(Time.deltaTime);
         }
 
-        [MonoPInvokeCallback(typeof(LuaCSFunction))]
-        static public int WaitForSeconds(IntPtr l)
-        {
-            float sec;
-            LuaObject.checkType(l,1, out sec);
-
-            Action act = () =>
-            {
-                LuaDLL.lua_resume(l, 0);
-            };
-
-            lgo.StartCoroutine(lgo.waitForSeconds(sec, act));
-            return LuaDLL.lua_yield(l, 0);
-        }
-
-        [MonoPInvokeCallback(typeof(LuaCSFunction))]
-        static public int WaitForEndOfFrame(IntPtr l)
-        {
-            Action act = () =>
-            {
-                LuaDLL.lua_resume(l, 0);
-            };
-
-            lgo.StartCoroutine(lgo.waitForEndOfFrame(act));
-            return LuaDLL.lua_yield(l, 0);
-        }
-
-        [MonoPInvokeCallback(typeof(LuaCSFunction))]
-        static public int WaitForFixedUpdate(IntPtr l)
-        {
-            Action act = () =>
-            {
-                LuaDLL.lua_resume(l, 0);
-            };
-
-            lgo.StartCoroutine(lgo.waitForFixedUpdate(act));
-            return LuaDLL.lua_yield(l, 0);
-        }
+        
     }
 }
