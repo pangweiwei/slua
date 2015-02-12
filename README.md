@@ -64,33 +64,100 @@ Slua/LuaObject contain pre-generated file for exported interface.
 
 Precompiled slua library in Plugins only included x86(32bit)/macosx(32bit)/iOS(armv7,armv7s,arm64)/Android(armv7-a) platform using luajit, you should compile other platform/lua5.1/luajit by yourself, see build.txt for help.
 
+
+## usage at a glance
+
+~~~~~~~~~~lua
+
+-- import
+import "UnityEngine"
+
+function main()
+
+	-- create gameobject
+	local cube = GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube)
+
+	-- find gameobject
+	local go = GameObject.Find("Canvas/Button")
+	
+	-- get component by type name
+	local btn = go:GetComponent("Button")
+	
+	-- add event listener
+	btn.onClick:AddListener(function()
+		local go = GameObject.Find("Canvas/Text")
+		local label = go:GetComponent("Text")
+		label.text="hello world"
+	end)
+	
+	-- use vector3
+	local pos = Vector3(10,10,10)+Vector3(1,1,1)
+	cube.transform.position = pos
+	
+	-- use coroutine
+	local c=coroutine.create(function()
+		print("coroutine start")
+		
+		WaitForFixedUpdate()
+		print("coroutine WaitForFixedUpdate")
+
+		WaitForSeconds(2)
+		print("coroutine WaitForSeconds 2")
+		
+		WaitForEndOfFrame()
+		print("coroutine WaitForEndOfFrame")
+	end)
+	coroutine.resume(c)
+
+	-- add delegate
+	Deleg.daction = {"+=",self.actionD}
+	
+	-- remove delegate
+	Deleg.daction = {"-=",self.actionD}
+	
+	-- set delegate
+	Deleg.daction = function() print("callback") end
+	
+	-- remove all
+	Deleg.daction = nil
+end
+
+~~~~~~~~~~
+
 ##export custom class
 
 find code "static public void Custom()", add your custom class type into exports list, like HelloWorld, see below:
 
 ~~~~~~~~~~c#
 
-    [MenuItem("SLua/Make custom")]
-    static public void Custom()
-    {
-        List<Type> exports = new List<Type>{
-			typeof(HelloWorld),
-			// your custom class here
-		};
-
-        foreach (Type t in exports)
-        {
-            Generate(t);
-        }
-
-        GenerateBind(exports,"LuaCustom");
-        AssetDatabase.Refresh();
-    }
+[MenuItem("SLua/Make custom")]
+static public void Custom()
+{
+	List<Type> exports = new List<Type>{
+		typeof(HelloWorld),
+		// your custom class here
+	};
+	
+	foreach (Type t in exports)
+	{
+	    Generate(t);
+	}
+	
+	GenerateBind(exports,"LuaCustom");
+	AssetDatabase.Refresh();
+}
 ~~~~~~~~~~
     
 or
 
-Add [CustomLuaClass] attribute to your class.
+~~~~~~~~~~c#
+
+[CustomLuaClass]
+public class HelloWorld   {
+
+}
+
+~~~~~~~~~~
 
 ###benchmark
 
