@@ -1,9 +1,6 @@
 local somemodule = require 'module.some'
 
-local Vector3 = UnityEngine.Vector3
-local GameObject = UnityEngine.GameObject
-local Profiler = UnityEngine.Profiler
-local Time = UnityEngine.Time
+import "UnityEngine"
 
 function main()
 
