@@ -28,7 +28,7 @@ using LuaInterface;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[AttributeUsage(AttributeTargets.Class)]
+[AttributeUsage(AttributeTargets.Class|AttributeTargets.Enum|AttributeTargets.Struct)]
 public class CustomLuaClassAttribute : System.Attribute
 {
     public CustomLuaClassAttribute()
@@ -50,6 +50,7 @@ public class StaticExportAttribute : System.Attribute
 {
 	public StaticExportAttribute() 
 	{
+		//
 	}
 }
 
