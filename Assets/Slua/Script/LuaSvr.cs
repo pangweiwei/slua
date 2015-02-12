@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using LuaInterface;
 using System.Reflection;
@@ -31,6 +31,7 @@ namespace SLua
     class LuaSvr
     {
         public LuaState luaState;
+        static LuaSvrGameObject lgo;
 
         public LuaSvr(string main)
         {
@@ -42,20 +43,18 @@ namespace SLua
             bind("BindCustom");
 
             GameObject go = new GameObject("LuaSvrProxy");
-            LuaSvrGameObject lgo = go.AddComponent<LuaSvrGameObject>();
+            lgo = go.AddComponent<LuaSvrGameObject>();
             GameObject.DontDestroyOnLoad(go);
             lgo.state = luaState;
             lgo.onUpdate = this.tick;
 
             LuaTimer.reg(luaState.L);
+            LuaCoroutine.reg(luaState.L, lgo);
 
             luaState.doFile(main);
 
             LuaFunction func = (LuaFunction)luaState["main"];
             func.call();
-
-            if (LuaDLL.lua_gettop(luaState.L) != 0)
-                Debug.LogError("Some function not remove temp value from lua stack.");
         }
 
         void bind(string name)
@@ -67,8 +66,13 @@ namespace SLua
 
         void tick()
         {
+            if (LuaDLL.lua_gettop(luaState.L) != 0)
+                Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
+
             luaState.checkRef();
             LuaTimer.tick(Time.deltaTime);
         }
+
+        
     }
 }

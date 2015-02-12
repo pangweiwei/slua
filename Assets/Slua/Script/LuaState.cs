@@ -246,6 +246,9 @@ namespace SLua
             LuaDLL.lua_pushstdcallcfunction(L, pcall);
             LuaDLL.lua_setglobal(L, "pcall");
 
+            LuaDLL.lua_pushstdcallcfunction(L, import);
+            LuaDLL.lua_setglobal(L, "import");
+
             LuaDLL.lua_pushstdcallcfunction(L, loader);
             int loaderFunc = LuaDLL.lua_gettop(L);
 
@@ -307,6 +310,29 @@ namespace SLua
             LuaDLL.lua_remove(L, -2);
             Debug.LogError(LuaDLL.lua_tostring(L, -1));
             LuaDLL.lua_pop(L, 1);
+            return 0;
+        }
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        internal static int import(IntPtr l)
+        {
+            LuaDLL.luaL_checktype(l, 1, LuaTypes.LUA_TSTRING);
+            string ns = LuaDLL.lua_tostring(l, 1);
+
+            LuaDLL.lua_getglobal(l, ns);
+            if (!LuaDLL.lua_istable(l, -1))
+            {
+                LuaDLL.luaL_error(l, "expect %s is type table", ns);
+                return 0;
+            }
+
+            LuaDLL.lua_pushnil(l);
+            while (LuaDLL.lua_next(l, -2)!=0) 
+            {
+                string key = LuaDLL.lua_tostring(l,-2);
+                LuaDLL.lua_setglobal(l, key);
+            }
+
             return 0;
         }
 
