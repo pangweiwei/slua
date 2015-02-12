@@ -100,6 +100,13 @@ public class Lua_UnityEngine_CanvasRenderer : LuaObject {
 			int argc = LuaDLL.lua_gettop(l);
 			if(argc==2){
 				UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
+				System.Collections.Generic.List<UnityEngine.UIVertex> a1;
+				checkType(l,2,out a1);
+				self.SetVertices(a1);
+				return 0;
+			}
+			else if(argc==3){
+				UnityEngine.CanvasRenderer self=(UnityEngine.CanvasRenderer)checkSelf(l);
 				UnityEngine.UIVertex[] a1;
 				checkType(l,2,out a1);
 				System.Int32 a2;

@@ -152,7 +152,8 @@ public class LuaCodeGen : MonoBehaviour
         List<string> noUseList = new List<string>
         {      
             "CoroutineTween",
-        };
+			"GraphicRebuildTracker",
+		};
 
         Assembly assembly = Assembly.Load("UnityEngine.UI");
         Type[] types = assembly.GetExportedTypes();
@@ -211,11 +212,7 @@ public class LuaCodeGen : MonoBehaviour
 
         // export 3rd dll
         List<string> assemblyList = new List<string>();
-<<<<<<< HEAD
-        //assemblyList.Add("DOTween");
-=======
         //assemblyList.Add("NGUI"); 
->>>>>>> 6ef11e4... remove NGUI.dll, DIY
         
         foreach( string assemblyItem in assemblyList )
         {
@@ -298,6 +295,9 @@ class CodeGenerator
         "WWW.movie",
         "WebCamTexture.MarkNonReadable",
         "WebCamTexture.isReadable",
+		// i don't why below 2 functions missed in iOS platform
+		"Graphic.OnRebuildRequested",
+		"Text.OnRebuildRequested",
     };
 
     public static HashSet<string> InnerTypes = new HashSet<string>();
@@ -373,7 +373,7 @@ class CodeGenerator
                 }
                 else
                 {
-                    f = LuaCodeGen.path + "LuaDelegate_" + t.Name + ".cs";
+                    f = LuaCodeGen.path + "LuaDelegate_" + _Name(t.FullName) + ".cs";
                 }
                 StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
                 WriteDelegate(t, file);
@@ -479,7 +479,7 @@ namespace SLua
         }
 
 
-        Write(file, "LuaDLL.lua_pop(l, 1);");
+        Write(file, "LuaDLL.lua_settop(l, error-1);");
         if (mi.ReturnType != typeof(void))
             Write(file, "return ret;");
 
@@ -714,7 +714,6 @@ namespace SLua
         object[] attrs = mi.GetCustomAttributes(typeof(MonoPInvokeCallbackAttribute), false);
         if (attrs.Length > 0)
         {
-            MonoPInvokeCallbackAttribute p = attrs[0] as MonoPInvokeCallbackAttribute;
 			instanceFunc = mi.GetCustomAttributes(typeof(StaticExportAttribute),false).Length==0;
             return true;
         }
@@ -980,8 +979,7 @@ namespace SLua
         ConstructorInfo[] cons = t.GetConstructors();
         foreach (ConstructorInfo ci in cons)
         {
-                ParameterInfo[] pars = ci.GetParameters();
-                if (!ContainGeneric(pars) && !IsObsolete(ci) && !DontExport(ci))
+                if (!IsObsolete(ci) && !DontExport(ci))
                     ret.Add(ci);
         }
         return ret.ToArray();
@@ -1191,10 +1189,12 @@ namespace SLua
                     MethodInfo mi = cons[n] as MethodInfo;
 
                     ParameterInfo[] pars = mi.GetParameters();
-                    if (isUsefullMethod(mi) && !mi.ReturnType.ContainsGenericParameters && !ContainGeneric(pars)) // don't support generic method
+                    if (isUsefullMethod(mi) 
+                        && !mi.ReturnType.ContainsGenericParameters 
+                        /*&& !ContainGeneric(pars)*/) // don't support generic method
                     {
                         if (isUniqueArgsCount(cons, mi))
-                            Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", mi.GetParameters().Length);
+                            Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", mi.IsStatic?mi.GetParameters().Length:mi.GetParameters().Length+1);
                         else
                             Write(file, "{0}(matchType(l,argc,{1}{2})){{", first ? "if" : "else if", mi.IsStatic ? 1 : 2, TypeDecl(pars));
                         WriteFunctionCall(mi, file, t);

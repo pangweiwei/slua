@@ -50,6 +50,32 @@ public class Lua_HelloWorld : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int func7(IntPtr l) {
+		try{
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(SLua.LuaFunction))){
+				HelloWorld self=(HelloWorld)checkSelf(l);
+				SLua.LuaFunction a1;
+				checkType(l,2,out a1);
+				self.func7(a1);
+				return 0;
+			}
+			else if(matchType(l,argc,2,typeof(int))){
+				HelloWorld self=(HelloWorld)checkSelf(l);
+				System.Int32 a1;
+				checkType(l,2,out a1);
+				self.func7(a1);
+				return 0;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int say_s(IntPtr l) {
 		try{
 			HelloWorld.say();
@@ -207,6 +233,7 @@ public class Lua_HelloWorld : LuaObject {
 		addMember(l,foo);
 		addMember(l,getList);
 		addMember(l,perf);
+		addMember(l,func7);
 		addMember(l,say_s);
 		addMember(l,setv_s);
 		addMember(l,getv_s);

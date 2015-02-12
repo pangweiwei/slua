@@ -49,12 +49,12 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	static public int CancelInvoke(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				self.CancelInvoke();
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -73,7 +73,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 	static public int IsInvoking(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -81,7 +81,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.Boolean ret=self.IsInvoking();
 				pushValue(l,ret);
@@ -107,7 +107,7 @@ public class Lua_UnityEngine_MonoBehaviour : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.MonoBehaviour self=(UnityEngine.MonoBehaviour)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);

@@ -27,19 +27,19 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	static public int Emit(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UnityEngine.ParticleEmitter self=(UnityEngine.ParticleEmitter)checkSelf(l);
 				self.Emit();
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.ParticleEmitter self=(UnityEngine.ParticleEmitter)checkSelf(l);
 				System.Int32 a1;
 				checkType(l,2,out a1);
 				self.Emit(a1);
 				return 0;
 			}
-			else if(argc==5){
+			else if(argc==6){
 				UnityEngine.ParticleEmitter self=(UnityEngine.ParticleEmitter)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -54,7 +54,7 @@ public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 				self.Emit(a1,a2,a3,a4,a5);
 				return 0;
 			}
-			else if(argc==7){
+			else if(argc==8){
 				UnityEngine.ParticleEmitter self=(UnityEngine.ParticleEmitter)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);

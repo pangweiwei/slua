@@ -42,7 +42,7 @@ public class Lua_UnityEngine_Font : LuaObject {
 	static public int RequestCharactersInTexture(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==3){
+			if(argc==4){
 				UnityEngine.Font self=(UnityEngine.Font)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -53,7 +53,7 @@ public class Lua_UnityEngine_Font : LuaObject {
 				self.RequestCharactersInTexture(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Font self=(UnityEngine.Font)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -62,7 +62,7 @@ public class Lua_UnityEngine_Font : LuaObject {
 				self.RequestCharactersInTexture(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.Font self=(UnityEngine.Font)checkSelf(l);
 				System.String a1;
 				checkType(l,2,out a1);
@@ -81,7 +81,7 @@ public class Lua_UnityEngine_Font : LuaObject {
 	static public int GetCharacterInfo(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==4){
+			if(argc==5){
 				UnityEngine.Font self=(UnityEngine.Font)checkSelf(l);
 				System.Char a1;
 				checkType(l,2,out a1);
@@ -95,7 +95,7 @@ public class Lua_UnityEngine_Font : LuaObject {
 				pushValue(l,a2);
 				return 2;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Font self=(UnityEngine.Font)checkSelf(l);
 				System.Char a1;
 				checkType(l,2,out a1);
@@ -107,7 +107,7 @@ public class Lua_UnityEngine_Font : LuaObject {
 				pushValue(l,a2);
 				return 2;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Font self=(UnityEngine.Font)checkSelf(l);
 				System.Char a1;
 				checkType(l,2,out a1);

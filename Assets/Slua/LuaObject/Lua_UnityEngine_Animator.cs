@@ -433,7 +433,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	static public int SetLookAtWeight(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==5){
+			if(argc==6){
 				UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -448,7 +448,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 				self.SetLookAtWeight(a1,a2,a3,a4,a5);
 				return 0;
 			}
-			else if(argc==4){
+			else if(argc==5){
 				UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -461,7 +461,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 				self.SetLookAtWeight(a1,a2,a3,a4);
 				return 0;
 			}
-			else if(argc==3){
+			else if(argc==4){
 				UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -472,7 +472,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 				self.SetLookAtWeight(a1,a2,a3);
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -481,7 +481,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 				self.SetLookAtWeight(a1,a2);
 				return 0;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -636,7 +636,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	static public int MatchTarget(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
+			if(argc==7){
 				UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -653,7 +653,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 				self.MatchTarget(a1,a2,a3,a4,a5,a6);
 				return 0;
 			}
-			else if(argc==5){
+			else if(argc==6){
 				UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 				UnityEngine.Vector3 a1;
 				checkType(l,2,out a1);
@@ -680,14 +680,14 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	static public int InterruptMatchTarget(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1){
+			if(argc==2){
 				UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
 				self.InterruptMatchTarget(a1);
 				return 0;
 			}
-			else if(argc==0){
+			else if(argc==1){
 				UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 				self.InterruptMatchTarget();
 				return 0;

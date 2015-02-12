@@ -72,18 +72,6 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int OnRebuildRequested(IntPtr l) {
-		try{
-			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
-			self.OnRebuildRequested();
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetNativeSize(IntPtr l) {
 		try{
 			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
@@ -344,7 +332,6 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		addMember(l,SetVerticesDirty);
 		addMember(l,SetMaterialDirty);
 		addMember(l,Rebuild);
-		addMember(l,OnRebuildRequested);
 		addMember(l,SetNativeSize);
 		addMember(l,Raycast);
 		addMember(l,PixelAdjustPoint);

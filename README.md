@@ -6,9 +6,9 @@ QQ group: 15647305
 Mail to : sineysan#163.com
 
 
-##Release Note
+##Release Download
 
-[here.](release_note.md)
+[here.](https://github.com/pangweiwei/slua/releases/latest)
 
 ##Help
 
@@ -62,7 +62,7 @@ Clear custom, delete all generated custom interface
 
 Slua/LuaObject contain pre-generated file for exported interface.
 
-Precompiled slua library in Plugins only included x86(32bit)/macosx(32bit)/iOS(64bit) platform using luajit, you should compile other platform/lua5.1/luajit by yourself, see build.txt for help.
+Precompiled slua library in Plugins only included x86(32bit)/macosx(32bit)/iOS(armv7,armv7s,arm64)/Android(armv7-a) platform using luajit, you should compile other platform/lua5.1/luajit by yourself, see build.txt for help.
 
 ##export custom class
 
@@ -100,7 +100,7 @@ see http://www.sineysoft.com/post/164 for detail (in chinese), compared with ulu
         test1	                test2	             test3	            test4 	         test5 
 		propery get and set		member method call   static func call   property set     create valuetype return
 				
-    slua	0.85		            0.19			   0.62				   0.081			0.82
+    slua	0.85		            0.19			   0.62				   0.081			0.62
 
     cstolua	3.8	                    0.98	           not support	        0.89	        2.3
 

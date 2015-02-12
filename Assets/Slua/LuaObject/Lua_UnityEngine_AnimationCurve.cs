@@ -42,7 +42,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 	static public int AddKey(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(argc==3){
 				UnityEngine.AnimationCurve self=(UnityEngine.AnimationCurve)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -52,7 +52,7 @@ public class Lua_UnityEngine_AnimationCurve : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==1){
+			else if(argc==2){
 				UnityEngine.AnimationCurve self=(UnityEngine.AnimationCurve)checkSelf(l);
 				UnityEngine.Keyframe a1;
 				checkType(l,2,out a1);

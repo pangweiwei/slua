@@ -92,12 +92,12 @@ public class Lua_UnityEngine_RenderTexture : LuaObject {
 	static public int DiscardContents(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==0){
+			if(argc==1){
 				UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 				self.DiscardContents();
 				return 0;
 			}
-			else if(argc==2){
+			else if(argc==3){
 				UnityEngine.RenderTexture self=(UnityEngine.RenderTexture)checkSelf(l);
 				System.Boolean a1;
 				checkType(l,2,out a1);
