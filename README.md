@@ -130,27 +130,34 @@ find code "static public void Custom()", add your custom class type into exports
 
 ~~~~~~~~~~c#
 
-    [MenuItem("SLua/Make custom")]
-    static public void Custom()
-    {
-        List<Type> exports = new List<Type>{
-			typeof(HelloWorld),
-			// your custom class here
-		};
-
-        foreach (Type t in exports)
-        {
-            Generate(t);
-        }
-
-        GenerateBind(exports,"LuaCustom");
-        AssetDatabase.Refresh();
-    }
+[MenuItem("SLua/Make custom")]
+static public void Custom()
+{
+	List<Type> exports = new List<Type>{
+		typeof(HelloWorld),
+		// your custom class here
+	};
+	
+	foreach (Type t in exports)
+	{
+	    Generate(t);
+	}
+	
+	GenerateBind(exports,"LuaCustom");
+	AssetDatabase.Refresh();
+}
 ~~~~~~~~~~
     
 or
 
-Add [CustomLuaClass] attribute to your class.
+~~~~~~~~~~c#
+
+[CustomLuaClass]
+public class HelloWorld   {
+
+}
+
+~~~~~~~~~~
 
 ###benchmark
 
