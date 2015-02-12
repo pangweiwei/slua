@@ -1,9 +1,6 @@
 local somemodule = require 'module.some'
 
-local Vector3 = UnityEngine.Vector3
-local GameObject = UnityEngine.GameObject
-local Profiler = UnityEngine.Profiler
-local Time = UnityEngine.Time
+import "UnityEngine"
 
 function main()
 
@@ -41,8 +38,8 @@ function main()
 	print(cube==cube2)
 
 	LuaTimer.Add(0,20,function(id)
-		cube.transform.localScale = Vector3(10,10,10)*(0.1+math.sin(os.clock()))
-		cube2.transform.position = Vector3(math.sin(os.clock())*5,0,0)
+		cube.transform.localScale = Vector3(10,10,10)*(0.1+math.sin(Time.time))
+		cube2.transform.position = Vector3(math.sin(Time.time)*5,0,0)
 		return true
 	end)
 
