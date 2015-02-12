@@ -50,9 +50,16 @@ function main()
 
 	local c=coroutine.create(function()
 
-		local www = WWW("http://news.163.com")
+		print "coroutine start"
+
+		Yield(WaitForSeconds(2))
+		print "coroutine WaitForSeconds 2"
+
+		local www = WWW("http://www.sineysoft.com")
 		Yield(www)
-		print(www.bytes,#www.bytes)
+		print(www.bytes)
+		print(#www.bytes)
+
 	end)
 	coroutine.resume(c)
 
