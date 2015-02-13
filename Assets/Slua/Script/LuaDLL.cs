@@ -507,7 +507,7 @@ namespace LuaInterface
 
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int luaS_newuserdata(IntPtr luaState, int val);
+        public static extern void luaS_newuserdata(IntPtr luaState, int val);
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int luaS_rawnetobj(IntPtr luaState, int obj);
 
