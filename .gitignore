@@ -1,3 +1,6 @@
 .DS_Store
 Library
 Temp
+UnityVS
+AssetStoreTools
+obj/*
