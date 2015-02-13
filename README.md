@@ -96,16 +96,15 @@ function main()
 	
 	-- use coroutine
 	local c=coroutine.create(function()
-		print("coroutine start")
-		
-		WaitForFixedUpdate()
-		print("coroutine WaitForFixedUpdate")
+		print "coroutine start"
 
-		WaitForSeconds(2)
-		print("coroutine WaitForSeconds 2")
-		
-		WaitForEndOfFrame()
-		print("coroutine WaitForEndOfFrame")
+		Yield(WaitForSeconds(2))
+		print "coroutine WaitForSeconds 2"
+
+		local www = WWW("http://www.sineysoft.com")
+		Yield(www)
+		print(www.bytes)
+		print(#www.bytes)
 	end)
 	coroutine.resume(c)
 
