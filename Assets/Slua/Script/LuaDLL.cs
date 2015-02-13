@@ -513,5 +513,8 @@ namespace LuaInterface
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int luaS_checkcallback(IntPtr luaState, int index);
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr lua_touserdata(IntPtr luaState, int index);
     }
 }

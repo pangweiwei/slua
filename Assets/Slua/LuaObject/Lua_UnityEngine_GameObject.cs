@@ -33,6 +33,22 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SampleAnimation(IntPtr l) {
+		try{
+			UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
+			UnityEngine.AnimationClip a1;
+			checkType(l,2,out a1);
+			System.Single a2;
+			checkType(l,3,out a2);
+			self.SampleAnimation(a1,a2);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetComponent(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
@@ -381,22 +397,6 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SampleAnimation(IntPtr l) {
-		try{
-			UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
-			UnityEngine.AnimationClip a1;
-			checkType(l,2,out a1);
-			System.Single a2;
-			checkType(l,3,out a2);
-			self.SampleAnimation(a1,a2);
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int CreatePrimitive_s(IntPtr l) {
 		try{
 			UnityEngine.PrimitiveType a1;
@@ -630,6 +630,7 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.GameObject");
+		addMember(l,SampleAnimation);
 		addMember(l,GetComponent);
 		addMember(l,GetComponentInChildren);
 		addMember(l,GetComponentInParent);
@@ -642,7 +643,6 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 		addMember(l,SendMessage);
 		addMember(l,BroadcastMessage);
 		addMember(l,AddComponent);
-		addMember(l,SampleAnimation);
 		addMember(l,CreatePrimitive_s);
 		addMember(l,FindGameObjectWithTag_s);
 		addMember(l,FindWithTag_s);

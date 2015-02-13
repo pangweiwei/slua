@@ -29,18 +29,36 @@ namespace SLua
 {
     class ObjectCache
     {
-
-        public ObjectCache(IntPtr l)
-        {
-            LuaDLL.lua_newtable(l);
-            LuaDLL.lua_newtable(l);
-            LuaDLL.lua_pushstring(l, "v");
-            LuaDLL.lua_setfield(l, -2, "__mode");
-            LuaDLL.lua_setmetatable(l, -2);
-            udCacheRef = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
-        }
-
         static Dictionary<IntPtr, ObjectCache> multiState = new Dictionary<IntPtr, ObjectCache>();
+
+        static IntPtr oldl = IntPtr.Zero;
+        static internal ObjectCache oldoc = null;
+
+        internal static ObjectCache get(IntPtr l)
+        {
+            if (oldl == l)
+                return oldoc;
+            ObjectCache oc;
+            if (multiState.TryGetValue(l, out oc))
+            {
+                oldl = l;
+                oldoc = oc;
+                return oc;
+            }
+
+            LuaDLL.lua_getglobal(l, "__main_state");
+            if (LuaDLL.lua_isnil(l,-1))
+            {
+                LuaDLL.lua_pop(l, 1);
+                return null;
+            }
+
+            IntPtr nl = LuaDLL.lua_touserdata(l, -1);
+            LuaDLL.lua_pop(l, 1);
+            if(nl!=l)
+                return get(nl);
+            return null;
+        }
 
         class ObjSlot
         {
@@ -116,21 +134,15 @@ namespace SLua
         Dictionary<object, int> objMap = new Dictionary<object, int>();
         int udCacheRef = 0;
 
-        static IntPtr oldl = IntPtr.Zero;
-        static internal ObjectCache oldoc = null;
 
-        internal static ObjectCache get(IntPtr l)
+        public ObjectCache(IntPtr l)
         {
-             if (oldl == l)
-                 return oldoc;
-             ObjectCache oc;
-             if (multiState.TryGetValue(l, out oc))
-             {
-                 oldl = l;
-                 oldoc = oc;
-                 return oc;
-             }
-            return oldoc;
+            LuaDLL.lua_newtable(l);
+            LuaDLL.lua_newtable(l);
+            LuaDLL.lua_pushstring(l, "v");
+            LuaDLL.lua_setfield(l, -2, "__mode");
+            LuaDLL.lua_setmetatable(l, -2);
+            udCacheRef = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
         }
 
         internal static void del(IntPtr l)
