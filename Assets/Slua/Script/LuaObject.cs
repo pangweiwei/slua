@@ -213,7 +213,7 @@ return index
             LuaDLL.lua_newtable(l);
         }
 
-        static void newTypeTable(IntPtr l, string t) {
+        internal static void newTypeTable(IntPtr l, string t) {
             string[] subt = t.Split(new Char[] { '.' });
 
 
@@ -421,8 +421,8 @@ return index
         }
 
         public static void pushObject(IntPtr l, object o)
-        {
-            ObjectCache oc = ObjectCache.get(l);
+		{
+			ObjectCache oc = ObjectCache.get(l);
             oc.push(l, o);
         }
 
@@ -900,6 +900,11 @@ return index
                 pushValue(l, o[n]);
                 LuaDLL.lua_rawseti(l, -2, n+1);
             }
+        }
+
+        internal static void pushValue(IntPtr l, byte[] o)
+        {
+            LuaDLL.lua_pushlstring(l, o, o.Length);
         }
 		
 		// i don't know why c# find a wrong generic function

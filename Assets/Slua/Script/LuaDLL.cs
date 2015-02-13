@@ -464,6 +464,11 @@ namespace LuaInterface
         public static extern void lua_pushlstring(IntPtr luaState, string str, int size);
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void lua_pushstring(IntPtr luaState, string str);
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void lua_pushlstring(IntPtr luaState, byte[] str, int size);
+
+
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int luaL_newmetatable(IntPtr luaState, string meta);
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
@@ -508,5 +513,8 @@ namespace LuaInterface
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int luaS_checkcallback(IntPtr luaState, int index);
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr lua_touserdata(IntPtr luaState, int index);
     }
 }

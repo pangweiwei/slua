@@ -32,6 +32,7 @@ namespace SLua
     {
         public LuaState luaState;
         static LuaSvrGameObject lgo;
+        bool errorReported = false;
 
         public LuaSvr(string main)
         {
@@ -66,8 +67,11 @@ namespace SLua
 
         void tick()
         {
-            if (LuaDLL.lua_gettop(luaState.L) != 0)
+            if (LuaDLL.lua_gettop(luaState.L) != 0 && !errorReported)
+            {
                 Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
+                errorReported = true;
+            }
 
             luaState.checkRef();
             LuaTimer.tick(Time.deltaTime);

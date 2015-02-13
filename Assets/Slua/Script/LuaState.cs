@@ -240,6 +240,9 @@ namespace SLua
 
             ObjectCache.make(L);
 
+            LuaDLL.lua_pushlightuserdata(L, L);
+            LuaDLL.lua_setglobal(L, "__main_state");
+
             LuaDLL.lua_pushstdcallcfunction(L, print);
             LuaDLL.lua_setglobal(L, "print");
 
