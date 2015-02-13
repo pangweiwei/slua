@@ -126,29 +126,7 @@ end
 
 ##export custom class
 
-find code "static public void Custom()", add your custom class type into exports list, like HelloWorld, see below:
-
-~~~~~~~~~~c#
-
-[MenuItem("SLua/Make custom")]
-static public void Custom()
-{
-	List<Type> exports = new List<Type>{
-		typeof(HelloWorld),
-		// your custom class here
-	};
-	
-	foreach (Type t in exports)
-	{
-	    Generate(t);
-	}
-	
-	GenerateBind(exports,"LuaCustom");
-	AssetDatabase.Refresh();
-}
-~~~~~~~~~~
-    
-or
+add CustomLuaClass attribute to your custom class, waiting for compile completed, click "Make custom", you will get interface file for lua.
 
 ~~~~~~~~~~c#
 
