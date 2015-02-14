@@ -133,6 +133,10 @@ return index
 
             LuaVarObject.init(l);
             //LuaValueType.init(l);
+
+
+			LuaDLL.lua_newtable(l);
+			LuaDLL.lua_setglobal(l,"__LuaDelegate");
         }
 
         static int luaOp(IntPtr l,string f, string tip)
@@ -663,16 +667,45 @@ return index
             return true;
         }
 
-        static internal bool checkType(IntPtr l, int p, out LuaFunction f)
-        {
+		static WeakDictionary<int,LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
+		static internal bool checkType(IntPtr l, int p, out LuaDelegate f)
+		{
+			p = LuaDLL.lua_absindex(l,p);
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
-            LuaDLL.lua_pushvalue(l, p);
-            int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
-            f = new LuaFunction(l, fref);
+            
+			LuaDLL.lua_getglobal(l,"__LuaDelegate");
+			LuaDLL.lua_pushvalue(l, p);
+			LuaDLL.lua_gettable(l,-2); // find function in __LuaDelegate table
+			if(LuaDLL.lua_isnil(l,-1)) { // not found
+				LuaDLL.lua_pop(l,1); // pop nil
+
+				LuaDLL.lua_pushvalue(l, p); // push function
+
+				int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX); // new ref function
+				f = new LuaDelegate(l, fref);
+				LuaDLL.lua_pushvalue(l,p);
+				LuaDLL.lua_pushinteger(l,fref);
+				LuaDLL.lua_settable(l, -3); // __LuaDelegate[func]= fref
+
+				delgateMap.Add(fref,f);
+			} else {
+				int fref = LuaDLL.lua_tointeger(l,-1);
+				LuaDLL.lua_pop(l,1); // pop ref value;
+				delgateMap.TryGetValue(fref,out f);
+			}
             return true;
         }
 
-        static internal bool checkType(IntPtr l, int p, out LuaTable t)
+		static internal bool checkType(IntPtr l, int p, out LuaFunction f)
+		{
+			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
+			LuaDLL.lua_pushvalue(l, p);
+			int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
+			f = new LuaFunction(l, fref);
+			return true;
+		}
+		
+		static internal bool checkType(IntPtr l, int p, out LuaTable t)
         {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
             LuaDLL.lua_pushvalue(l, p);

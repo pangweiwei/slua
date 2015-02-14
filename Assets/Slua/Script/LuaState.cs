@@ -95,7 +95,39 @@ namespace SLua
         }
     }
 
-    public class LuaFunction : LuaVar
+	public class LuaDelegate : LuaFunction {
+		public object d;
+		int refCount=0;
+
+
+		public LuaDelegate(IntPtr l, int r):base(l,r)
+		{
+		}
+
+		~LuaDelegate() {
+			Debug.Log("lua delegate gc");
+		}
+
+		public bool call(int nArgs,int errfunc) {
+			LuaDLL.lua_getref(L,valueref);
+			LuaDLL.lua_insert(L,-nArgs-1);
+			if (LuaDLL.lua_pcall(L, nArgs, -1, errfunc) != 0) {
+				LuaDLL.lua_pop(L, 1);
+				return false;
+			}
+			return true;
+		}
+
+		public void addRef() {
+			refCount++;
+		}
+
+		public void release() {
+			refCount--;
+		}
+	}
+	
+	public class LuaFunction : LuaVar
     {
         public LuaFunction(LuaState l, int r):base(l,r)
         {

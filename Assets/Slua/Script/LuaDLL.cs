@@ -516,5 +516,9 @@ namespace LuaInterface
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr lua_touserdata(IntPtr luaState, int index);
+
+		public static int lua_absindex(IntPtr luaState,int index) {
+			return index > 0 ? index : lua_gettop(luaState) + index + 1;
+		}
     }
 }
