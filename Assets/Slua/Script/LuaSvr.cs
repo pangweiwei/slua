@@ -76,7 +76,6 @@ namespace SLua
             luaState.checkRef();
             LuaTimer.tick(Time.deltaTime);
         }
-
-        
+       
     }
 }

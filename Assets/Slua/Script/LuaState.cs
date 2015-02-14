@@ -153,7 +153,7 @@ namespace SLua
 
 			LuaDLL.lua_remove(L, error); // pop error function
 
-			return state.topObjects();
+			return state.topObjects(error-1);
         }
         
     }
@@ -282,7 +282,7 @@ namespace SLua
 				// be careful, if you close lua vm, make sure you don't use lua state again,
 				// comment this line as default for avoid unexpected crash.
                 // LuaDLL.lua_close(L);
-                L = IntPtr.Zero;
+                // L = IntPtr.Zero;
             }
         }
 
@@ -406,7 +406,7 @@ namespace SLua
                     LuaDLL.lua_pop(L, 1);
                 }
                 LuaDLL.lua_remove(L, errfunc); // pop error function
-				return topObjects();
+				return topObjects(errfunc-1);
             }
             else
             {
@@ -491,6 +491,7 @@ namespace SLua
 
         internal void setObject(string[] remainingPath, object o)
         {
+            int top = LuaDLL.lua_gettop(L);
             for (int i = 0; i < remainingPath.Length - 1; i++)
             {
                 LuaDLL.lua_pushstring(L, remainingPath[i]);
@@ -499,6 +500,7 @@ namespace SLua
             LuaDLL.lua_pushstring(L, remainingPath[remainingPath.Length - 1]);
             LuaObject.pushVar(L, o);
             LuaDLL.lua_settable(L, -3);
+            LuaDLL.lua_settop(L, top);
         }
 
        
@@ -520,41 +522,42 @@ namespace SLua
             LuaDLL.lua_settop(L, oldTop);
         }
 
-		internal object topObjects() 
-		{
-			int top = LuaDLL.lua_gettop(L);
-			if (top == 0)
-				return null;
-			else if (top == 1)
-			{
-				object o = LuaObject.checkVar(L, 1);
-				LuaDLL.lua_pop(L, 1);
-				return o;
-			}
-			else
-			{
-				object[] o = new object[top];
-				for (int n = 1; n <= top; n++)
-				{
-					o[n - 1] = LuaObject.checkVar(L, n);
-					
-				}
-				LuaDLL.lua_pop(L, top);
-				return o;
-			}
-		}
-			
-			object getObject(IntPtr l, int p)
-			{
-				return LuaObject.checkVar(l,p);
-			}
-			
-			public LuaFunction getFunction(string key)
-			{
-				return (LuaFunction)this[key];
-			}
-			
-			public LuaTable getTable(string key)
+        internal object topObjects(int from)
+        {
+            int top = LuaDLL.lua_gettop(L);
+            int nArgs = top - from;
+            if (nArgs == 0)
+                return null;
+            else if (nArgs == 1)
+            {
+                object o = LuaObject.checkVar(L, top);
+                LuaDLL.lua_pop(L, 1);
+                return o;
+            }
+            else
+            {
+                object[] o = new object[nArgs];
+                for (int n = 1; n <= nArgs; n++)
+                {
+                    o[n - 1] = LuaObject.checkVar(L, from + n);
+
+                }
+                LuaDLL.lua_settop(L, from);
+                return o;
+            }
+        }
+
+        object getObject(IntPtr l, int p)
+        {
+            return LuaObject.checkVar(l, p);
+        }
+
+        public LuaFunction getFunction(string key)
+        {
+            return (LuaFunction)this[key];
+        }
+
+        public LuaTable getTable(string key)
         {
             return (LuaTable)this[key];
         }
