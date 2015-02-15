@@ -115,6 +115,7 @@ public class LuaCodeGen : MonoBehaviour
             "Flash",
             "ActionScript",
             "OnRequestRebuild",
+			"Ping",
         };
 
         Assembly assembly = Assembly.Load("UnityEngine");
@@ -298,6 +299,10 @@ class CodeGenerator
 		// i don't why below 2 functions missed in iOS platform
 		"Graphic.OnRebuildRequested",
 		"Text.OnRebuildRequested",
+		// il2cpp not exixts
+		"Application.ExternalEval",
+		"GameObject.networkView",
+		"Component.networkView",
     };
 
     public static HashSet<string> InnerTypes = new HashSet<string>();
