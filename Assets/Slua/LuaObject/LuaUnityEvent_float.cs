@@ -72,18 +72,25 @@ namespace SLua
 
         static bool checkType(IntPtr l,int p,out UnityEngine.Events.UnityAction<float> ua) {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
-            int r = LuaDLL.luaS_checkcallback(l, p);
+            LuaDelegate ld;
+            checkType(l, p, out ld);
+            if (ld.d != null)
+            {
+                ua = (UnityEngine.Events.UnityAction<float>)ld.d;
+                return true;
+            }
             ua = (float v) =>
             {
                 int error = pushTry(l);
-                LuaDLL.lua_getref(l, r);
                 pushValue(l, v);
+                ld.call(1, error);
                 if (LuaDLL.lua_pcall(l, 1, 0, error) != 0)
                 {
                     LuaDLL.lua_pop(l, 1); // pop error msg
                 }
-                LuaDLL.lua_pop(l, 1); // pop error function
+                LuaDLL.lua_settop(l,error - 1);
             };
+            ld.d = ua;
             return true;
         }
     }
