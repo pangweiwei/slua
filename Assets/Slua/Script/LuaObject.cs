@@ -669,33 +669,44 @@ return index
             return true;
         }
 
-		static WeakDictionary<int,LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
-		static internal bool checkType(IntPtr l, int p, out LuaDelegate f)
-		{
-			p = LuaDLL.lua_absindex(l,p);
+        static WeakDictionary<int, LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
+        static internal bool checkType(IntPtr l, int p, out LuaDelegate f)
+        {
+            p = LuaDLL.lua_absindex(l, p);
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
 
             LuaDLL.lua_getglobal(l, DelgateTable);
-			LuaDLL.lua_pushvalue(l, p);
-			LuaDLL.lua_gettable(l,-2); // find function in __LuaDelegate table
-			if(LuaDLL.lua_isnil(l,-1)) { // not found
-				LuaDLL.lua_pop(l,1); // pop nil
-
-				LuaDLL.lua_pushvalue(l, p); // push function
-
-				int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX); // new ref function
-				f = new LuaDelegate(l, fref);
-				LuaDLL.lua_pushvalue(l,p);
-				LuaDLL.lua_pushinteger(l,fref);
-				LuaDLL.lua_settable(l, -3); // __LuaDelegate[func]= fref
-
-                delgateMap[fref] = f;
-			} else {
-				int fref = LuaDLL.lua_tointeger(l,-1);
-				LuaDLL.lua_pop(l,1); // pop ref value;
+            LuaDLL.lua_pushvalue(l, p);
+            LuaDLL.lua_gettable(l, -2); // find function in __LuaDelegate table
+            if (LuaDLL.lua_isnil(l, -1))
+            { // not found
+                LuaDLL.lua_pop(l, 1); // pop nil
+                f = newDelegate(l, p);
+            }
+            else
+            {
+                int fref = LuaDLL.lua_tointeger(l, -1);
+                LuaDLL.lua_pop(l, 1); // pop ref value;
                 f = delgateMap[fref];
-			}
+                if (f == null)
+                {
+                    f = newDelegate(l, p);
+                }
+            }
             return true;
+        }
+
+        static LuaDelegate newDelegate(IntPtr l, int p)
+        {
+            LuaDLL.lua_pushvalue(l, p); // push function
+
+            int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX); // new ref function
+            LuaDelegate f = new LuaDelegate(l, fref);
+            LuaDLL.lua_pushvalue(l, p);
+            LuaDLL.lua_pushinteger(l, fref);
+            LuaDLL.lua_settable(l, -3); // __LuaDelegate[func]= fref
+            delgateMap[fref] = f;
+            return f;
         }
 
         static internal void removeDelgate(IntPtr l, int r)
