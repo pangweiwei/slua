@@ -20,26 +20,26 @@ namespace SLua
                 ua = (System.Func<UnityEngine.UI.ILayoutElement,System.Single>)checkObj(l, p);
                 return op;
             }
-            int r = LuaDLL.luaS_checkcallback(l, -1);
-			if(r<0) LuaDLL.luaL_error(l,"expect function");
-			if(getCacheDelegate<System.Func<UnityEngine.UI.ILayoutElement,System.Single>>(r,out ua))
-				return op;
+            LuaDelegate ld;
+            checkType(l, -1, out ld);
+            if(ld.d!=null)
+            {
+                ua = (System.Func<UnityEngine.UI.ILayoutElement,System.Single>)ld.d;
+                return op;
+            }
 			LuaDLL.lua_pop(l,1);
             ua = (UnityEngine.UI.ILayoutElement a1) =>
             {
                 int error = pushTry(l);
-                LuaDLL.lua_getref(l, r);
 
 				pushValue(l,a1);
-				if (LuaDLL.lua_pcall(l, 1, -1, error) != 0) {
-					LuaDLL.lua_pop(l, 1);
-				}
+				ld.call(1, error);
 				float ret;
 				checkType(l,error+1,out ret);
 				LuaDLL.lua_settop(l, error-1);
 				return ret;
 			};
-			cacheDelegate(r,ua);
+			ld.d=ua;
 			return op;
 		}
 	}

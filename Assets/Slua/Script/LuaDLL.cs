@@ -460,8 +460,7 @@ namespace LuaInterface
         public static extern void lua_pushnumber(IntPtr luaState, double number);
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void lua_pushboolean(IntPtr luaState, bool value);
-        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void lua_pushlstring(IntPtr luaState, string str, int size);
+
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void lua_pushstring(IntPtr luaState, string str);
 
@@ -516,5 +515,9 @@ namespace LuaInterface
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr lua_touserdata(IntPtr luaState, int index);
+
+		public static int lua_absindex(IntPtr luaState,int index) {
+			return index > 0 ? index : lua_gettop(luaState) + index + 1;
+		}
     }
 }

@@ -433,15 +433,17 @@ namespace SLua
                 ua = ($FN)checkObj(l, p);
                 return op;
             }
-            int r = LuaDLL.luaS_checkcallback(l, -1);
-			if(r<0) LuaDLL.luaL_error(l,""expect function"");
-			if(getCacheDelegate<$FN>(r,out ua))
-				return op;
+            LuaDelegate ld;
+            checkType(l, -1, out ld);
+            if(ld.d!=null)
+            {
+                ua = ($FN)ld.d;
+                return op;
+            }
 			LuaDLL.lua_pop(l,1);
             ua = ($ARGS) =>
             {
                 int error = pushTry(l);
-                LuaDLL.lua_getref(l, r);
 ";
         
         temp = temp.Replace("$TN", t.Name);
@@ -460,9 +462,7 @@ namespace SLua
                 Write(file, "pushValue(l,a{0});",n+1);
         }
 
-        Write(file, "if (LuaDLL.lua_pcall(l, {0}, -1, error) != 0) {{", mi.GetParameters().Length-outindex.Count);
-        Write(file, "LuaDLL.lua_pop(l, 1);");
-        Write(file,"}");
+        Write(file, "ld.call({0}, error);", mi.GetParameters().Length - outindex.Count);
 
         if (mi.ReturnType != typeof(void))
             WriteValueCheck(file, mi.ReturnType, 1, "ret", "error+");
@@ -484,7 +484,7 @@ namespace SLua
             Write(file, "return ret;");
 
         Write(file,"};");
-		Write(file,"cacheDelegate(r,ua);");
+		Write(file,"ld.d=ua;");
         Write(file,"return op;");
         Write(file,"}");
         Write(file,"}");

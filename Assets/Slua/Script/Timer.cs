@@ -254,24 +254,22 @@ namespace SLua
             {
                 int delay;
                 checkType(l, 1, out delay);
-                int r = LuaDLL.luaS_checkcallback(l, 2);
-                if (r < 0) LuaDLL.luaL_error(l, "expect function at arg 2");
+                LuaDelegate ld;
+                checkType(l, 2, out ld);
                 Action<int> ua;
-                if (!getCacheDelegate<Action<int>>(r, out ua))
-                    
-                ua = (int id) =>
+                if (ld.d != null)
+                    ua = (Action<int>)ld.d;
+                else
                 {
-                    int error = pushTry(l);
-                    LuaDLL.lua_getref(l, r);
-
-                    pushValue(l, id);
-                    if (LuaDLL.lua_pcall(l, 1, 0, error) != 0)
+                    ua = (int id) =>
                     {
-                        LuaDLL.lua_pop(l, 1);
-                    }
-                    LuaDLL.lua_remove(l, error);
-                };
-                cacheDelegate(r, ua);
+                        int error = pushTry(l);
+                        pushValue(l, id);
+                        ld.call(1, error);
+                        LuaDLL.lua_settop(l, error-1);
+                    };
+                }
+                ld.d = ua;
                 pushValue(l, add(delay, ua));
                 return 1;
             }
@@ -280,27 +278,25 @@ namespace SLua
                 int delay, cycle;
                 checkType(l, 1, out delay);
                 checkType(l, 2, out cycle);
-                int r = LuaDLL.luaS_checkcallback(l, 3);
-                if (r < 0) LuaDLL.luaL_error(l, "expect function at arg 3");
+                LuaDelegate ld;
+                checkType(l, 3, out ld);
                 Func<int,bool> ua;
-                if (!getCacheDelegate<Func<int, bool>>(r, out ua))
 
+                if (ld.d != null)
+                    ua = (Func<int, bool>)ld.d;
+                else
+                {
                     ua = (int id) =>
                     {
                         int error = pushTry(l);
-                        LuaDLL.lua_getref(l, r);
-
                         pushValue(l, id);
-                        if (LuaDLL.lua_pcall(l, 1, 1, error) != 0)
-                        {
-                            LuaDLL.lua_pop(l, 1);
-                        }
-                        LuaDLL.lua_remove(l, error);
+                        ld.call(1, error);
                         bool ret = LuaDLL.lua_toboolean(l, -1);
-                        LuaDLL.lua_pop(l, 1);
+                        LuaDLL.lua_settop(l, error - 1);
                         return ret;
                     };
-                cacheDelegate(r, ua);
+                }
+                ld.d = ua;
                 pushValue(l, add(delay, cycle, ua));
                 return 1;
             }
