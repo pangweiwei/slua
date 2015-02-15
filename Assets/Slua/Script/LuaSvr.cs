@@ -42,6 +42,7 @@ namespace SLua
             bind("BindUnity");
             bind("BindUnityUI");
             bind("BindCustom");
+            bind("BindExtend"); // if you want to extend slua, can implemented BindExtend function like BindCustom etc.
 
             GameObject go = new GameObject("LuaSvrProxy");
             lgo = go.AddComponent<LuaSvrGameObject>();
