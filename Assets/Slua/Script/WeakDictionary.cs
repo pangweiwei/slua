@@ -66,8 +66,18 @@ namespace SLua {
 
         void Add(K key, V value)
         {
-            WeakReference w = new WeakReference(value);
-            _dict.Add(key, w);
+            if (_dict.ContainsKey(key))
+            {
+                if (_dict[key].IsAlive)
+                    throw new ArgumentException("key exists");
+
+                _dict[key].Target = value;
+            }
+            else
+            {
+                WeakReference w = new WeakReference(value);
+                _dict.Add(key, w);
+            }
         }
 
         bool ContainsKey(K key)
