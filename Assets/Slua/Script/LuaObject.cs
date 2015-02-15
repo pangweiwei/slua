@@ -66,6 +66,7 @@ namespace SLua
         static protected LuaCSFunction lua_mul = new LuaCSFunction(luaMul);
         static protected LuaCSFunction lua_div = new LuaCSFunction(luaDiv);
         static protected LuaCSFunction lua_eq = new LuaCSFunction(luaEq);
+        const string DelgateTable = "__LuaDelegate";
 
         static protected int newindex_ref = 0;
         static protected int index_ref = 0;
@@ -136,7 +137,7 @@ return index
 
 
 			LuaDLL.lua_newtable(l);
-			LuaDLL.lua_setglobal(l,"__LuaDelegate");
+            LuaDLL.lua_setglobal(l, DelgateTable);
         }
 
         static int luaOp(IntPtr l,string f, string tip)
@@ -672,8 +673,8 @@ return index
 		{
 			p = LuaDLL.lua_absindex(l,p);
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
-            
-			LuaDLL.lua_getglobal(l,"__LuaDelegate");
+
+            LuaDLL.lua_getglobal(l, DelgateTable);
 			LuaDLL.lua_pushvalue(l, p);
 			LuaDLL.lua_gettable(l,-2); // find function in __LuaDelegate table
 			if(LuaDLL.lua_isnil(l,-1)) { // not found
@@ -687,13 +688,22 @@ return index
 				LuaDLL.lua_pushinteger(l,fref);
 				LuaDLL.lua_settable(l, -3); // __LuaDelegate[func]= fref
 
-				delgateMap.Add(fref,f);
+                delgateMap[fref] = f;
 			} else {
 				int fref = LuaDLL.lua_tointeger(l,-1);
 				LuaDLL.lua_pop(l,1); // pop ref value;
-				delgateMap.TryGetValue(fref,out f);
+                f = delgateMap[fref];
 			}
             return true;
+        }
+
+        static internal void removeDelgate(IntPtr l, int r)
+        {
+            LuaDLL.lua_getglobal(l, DelgateTable);
+            LuaDLL.lua_getref(l, r); // push key
+            LuaDLL.lua_pushnil(l); // push nil value
+            LuaDLL.lua_settable(l, -3); // remove function from __LuaDelegate table
+            LuaDLL.lua_pop(l, 1); // pop __LuaDelegate
         }
 
 		static internal bool checkType(IntPtr l, int p, out LuaFunction f)
@@ -1300,20 +1310,6 @@ return index
 			return op;
 		}
 
-		static Dictionary<int ,object> delegateCache = new Dictionary<int, object>();
-		static internal bool getCacheDelegate<T>(int r,out T ua) {
-			object o;
-			if(delegateCache.TryGetValue(r,out o)) {
-				ua=(T)o;
-				return true;
-			}
-			ua=default(T);
-			return false;
-		}
-
-		static internal void cacheDelegate(int r,object o) {
-			delegateCache[r]=o;
-		}
     }
 
 }

@@ -83,8 +83,11 @@ namespace SLua
         {
             if (valueref!=0)
             {
-                // move unref to luastate thread
-                state.gcRef(valueref);
+                LuaState.UnRefAction act = (IntPtr l,int r) =>
+                {
+                    LuaDLL.lua_unref(l,r);
+                };
+                state.gcRef(act,valueref);
                 valueref = 0;
             }
         }
@@ -104,9 +107,20 @@ namespace SLua
 		{
 		}
 
-		~LuaDelegate() {
-			Debug.Log("lua delegate gc");
-		}
+        public override void Dispose(bool disposeManagedResources)
+        {
+            if (valueref != 0)
+            {
+                LuaState.UnRefAction act = (IntPtr l,int r) =>
+                {
+                    LuaObject.removeDelgate(l,r);
+                    LuaDLL.lua_unref(l, r);
+                };
+                state.gcRef(act,valueref);
+                valueref = 0;
+            }
+            
+        }
 
 		public bool call(int nArgs,int errfunc) {
 			LuaDLL.lua_getref(L,valueref);
@@ -249,7 +263,14 @@ namespace SLua
         public delegate byte[] LoaderDelegate(string fn);
         static public LoaderDelegate loaderDelegate;
 
-        Queue<int> refQueue;
+
+        public delegate void UnRefAction(IntPtr l,int r);
+        struct UnrefPair
+        {
+            public UnRefAction act;
+            public int r;
+        }
+        Queue<UnrefPair> refQueue;
 
 
         public static LuaState main;
@@ -266,7 +287,7 @@ namespace SLua
             statemap[L] = this;
             if (main == null) main = this;
 
-            refQueue = new Queue<int>();
+            refQueue = new Queue<UnrefPair>();
 
             LuaDLL.luaL_openlibs(L);
 
@@ -604,23 +625,26 @@ namespace SLua
             }
         }
 
-        public void gcRef(int r)
+        public void gcRef(UnRefAction act,int r)
         {
             lock (refQueue)
             {
-                refQueue.Enqueue(r);    
+                UnrefPair u = new UnrefPair();
+                u.act = act;
+                u.r=r;
+                refQueue.Enqueue(u);    
             }
         }
 
         public void checkRef()
         {
             while( refQueue.Count> 0 ) {
-                int r;
+                UnrefPair u;
                 lock (refQueue)
                 {
-                    r = refQueue.Dequeue();
+                    u = refQueue.Dequeue();
                 }
-				LuaDLL.lua_unref(L, r);
+                u.act(L, u.r);
             }
         }
     }

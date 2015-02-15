@@ -28,21 +28,8 @@ function self.actionD()
 	end
 end
 
-function foo(path)
-	print(1,path)
-	--multi return for out flag parameter
-	return true,"http://www.sineysoft.com",1
-end
 
 function main()
-	Deleg.d={"+=",foo}
-	
-	Deleg.callD()
-
-	Deleg.d={"-=",foo}
-end
-
-function main1()
 	
 	Deleg.d=function(path)
 		print(1,path)
