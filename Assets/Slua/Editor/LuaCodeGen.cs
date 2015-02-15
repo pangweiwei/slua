@@ -619,10 +619,6 @@ namespace SLua
                 int error = pushTry(l);
                 pushValue(l, v);
                 ld.call(1, error);
-                if (LuaDLL.lua_pcall(l, 1, 0, error) != 0)
-                {
-                    LuaDLL.lua_pop(l, 1); // pop error msg
-                }
                 LuaDLL.lua_settop(l,error - 1);
             };
             ld.d = ua;
