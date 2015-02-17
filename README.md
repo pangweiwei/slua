@@ -16,7 +16,7 @@ See inner demo for help or [Document](doc.md) (in chinese).
 
 ##important
 
-pre-generated file need unity 4.6+, 
+pre-generated file need unity 4.6.1, 
 
 If you get many errors on different version:
 
@@ -46,7 +46,7 @@ export enum as integer
 
 return array as lua table
 
-using raw luajit, can be replaced with lua5.3/lua5.1, link with slua.c, if you switch to lua5.1/5.3, add LUA_5_3 macro in build setting.
+using raw luajit, can be replaced with lua5.3/lua5.1, link with slua.c, if you switch to lua5.3, add LUA_5_3 macro in build setting.
 
 ##usage
 
