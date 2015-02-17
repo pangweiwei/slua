@@ -444,14 +444,24 @@ namespace LuaInterface
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool lua_toboolean(IntPtr luaState, int index);
 
-        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr lua_tolstring(IntPtr luaState, int index, out int strLen);
+        
 
+#if UNITY_IPHONE && !UNITY_EDITOR
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern IntPtr luaS_tolstring32(IntPtr luaState, int index, out int strLen);
+#else
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern IntPtr lua_tolstring(IntPtr luaState, int index, out int strLen);
+#endif
 
         public static string lua_tostring(IntPtr luaState, int index)
         {
             int strlen;
-            IntPtr str = lua_tolstring(luaState, index, out strlen);
+#if UNITY_IPHONE && !UNITY_EDITOR
+			IntPtr str = luaS_tolstring32(luaState, index, out strlen); // fix il2cpp 64 bit
+#else
+			IntPtr str = lua_tolstring(luaState, index, out strlen);
+#endif
             if (str != IntPtr.Zero)
             {
                 return Marshal.PtrToStringAnsi(str, strlen);

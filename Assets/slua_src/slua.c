@@ -67,6 +67,15 @@ LUA_API int luaS_rawnetobj(lua_State *L,int index)
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+
+LUA_API const char* luaS_tolstring32(lua_State *L, int index, int* len) {
+    size_t l;
+    const char* ret = lua_tolstring(L,index, &l);
+    *len = (int)l;
+    return ret;
+}
+
+
 #define SLuaCallback "SLuaCallback"
 LUA_API int luaS_checkcallback(lua_State *L, int index) 
 {
