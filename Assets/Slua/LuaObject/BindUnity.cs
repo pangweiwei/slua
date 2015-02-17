@@ -288,7 +288,6 @@ namespace SLua {
 			Lua_UnityEngine_Ray.reg(l);
 			Lua_UnityEngine_Ray2D.reg(l);
 			Lua_UnityEngine_Plane.reg(l);
-			Lua_UnityEngine_Ping.reg(l);
 			Lua_UnityEngine_ParticleSystemRenderMode.reg(l);
 			Lua_UnityEngine_ParticleSystemSimulationSpace.reg(l);
 			Lua_UnityEngine_ParticleSystem.reg(l);
