@@ -541,12 +541,6 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_networkView(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.networkView);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_guiTexture(IntPtr l) {
 		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
 		pushValue(l,o.guiTexture);
@@ -659,7 +653,6 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 		addMember(l,"renderer",get_renderer,null,true);
 		addMember(l,"audio",get_audio,null,true);
 		addMember(l,"guiText",get_guiText,null,true);
-		addMember(l,"networkView",get_networkView,null,true);
 		addMember(l,"guiTexture",get_guiTexture,null,true);
 		addMember(l,"collider",get_collider,null,true);
 		addMember(l,"collider2D",get_collider2D,null,true);
