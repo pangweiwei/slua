@@ -32,6 +32,8 @@ If you get many errors on different version:
 
 static code generating, no reflection, no extra gc alloc, very fast
 
+full support iOS/iOS64, support il2cpp
+
 above 90% UnityEngine interface exported ( remove flash, platform dependented interface )
 
 100% UnityEngine.UI interface ( require Unity4.6+ )
