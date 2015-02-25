@@ -384,6 +384,12 @@ public class Lua_UnityEngine_Component : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_guiTexture(IntPtr l) {
+		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
+		pushValue(l,o.guiTexture);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_collider(IntPtr l) {
 		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
 		pushValue(l,o.collider);
