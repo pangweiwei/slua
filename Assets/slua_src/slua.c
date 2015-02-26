@@ -75,40 +75,17 @@ LUA_API const char* luaS_tolstring32(lua_State *L, int index, int* len) {
     return ret;
 }
 
-
-#define SLuaCallback "SLuaCallback"
-LUA_API int luaS_checkcallback(lua_State *L, int index) 
-{
-	int r;
-	lua_Debug ar;
-	index = index > 0 ? index : lua_gettop(L) + index + 1;
-
-	lua_pushvalue(L, index);
-	lua_getinfo(L, ">S", &ar);
-
-	char funcinfo[260];
-	sprintf(funcinfo, "%s:%d", ar.source, ar.linedefined);
-	lua_getfield(L, LUA_REGISTRYINDEX, SLuaCallback);
-	if (lua_isnil(L, -1)) {
-		lua_pop(L, 1);
-		lua_createtable(L, 0, 0);
-		lua_pushvalue(L, -1);
-		lua_setfield(L, LUA_REGISTRYINDEX, SLuaCallback);
-	}
-
-	lua_getfield(L, -1, funcinfo);
-	if (lua_isnil(L, -1)) {
-		lua_pop(L, 1);
-		lua_pushvalue(L, index);
-		r =luaL_ref(L, LUA_REGISTRYINDEX);
-		lua_pushinteger(L, r);
-		lua_setfield(L, -2, funcinfo);
-	}
-	else {
-		r = (int) lua_tointeger(L, -1);
-		lua_pop(L, 1);
-	}
-	lua_pop(L, 1); // pop SLuaCallback table
-
-	return r;
+#if LUA_VERSION_NUM==503
+static int k (lua_State *L, int status, lua_KContext ctx) {
+	return status;
 }
+
+LUA_API int luaS_yield(lua_State *L,int nrets) {
+	int ret = lua_yieldk(L,nrets,0,k);
+	return ret;
+}
+
+LUA_API int luaS_pcall(lua_State *L,int nargs,int nresults,int err) {
+	return k(L,lua_pcallk(L,nargs,nresults,err,0,k),0);
+}
+#endif

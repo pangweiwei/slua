@@ -59,11 +59,19 @@ namespace SLua
 
 	            Action act = () =>
 	            {
+#if LUA_5_3
+					LuaDLL.lua_resume(l,IntPtr.Zero,0);
+#else
 	                LuaDLL.lua_resume(l, 0);
+#endif
 	            };
 
 	            mb.StartCoroutine(yieldReturn(y,act));
-	            return LuaDLL.lua_yield(l, 0);
+#if LUA_5_3
+				return LuaDLL.luaS_yield(l, 0);
+#else
+                return LuaDLL.lua_yield(l, 0);
+#endif
 			}
 			catch(Exception e) {
 				LuaDLL.luaL_error(l,e.ToString());

@@ -91,8 +91,7 @@ namespace LuaInterface
         
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr lua_newthread(IntPtr L);
-        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int lua_resume(IntPtr L, int narg);
+        
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int lua_status(IntPtr L);
 
@@ -233,14 +232,17 @@ namespace LuaInterface
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int lua_pcallk(IntPtr luaState, int nArgs, int nResults, int errfunc,int ctx,IntPtr k);
 
-        public static int lua_call(IntPtr luaState, int nArgs, int nResults)
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int luaS_pcall(IntPtr luaState, int nArgs, int nResults, int errfunc);
+		
+		public static int lua_call(IntPtr luaState, int nArgs, int nResults)
         {
             return lua_callk(luaState, nArgs, nResults, 0, IntPtr.Zero);
         }
 
         public static int lua_pcall(IntPtr luaState, int nArgs, int nResults, int errfunc)
         {
-            return lua_pcallk(luaState, nArgs, nResults, errfunc, 0, IntPtr.Zero);
+			return luaS_pcall(luaState, nArgs, nResults, errfunc);
         }
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
@@ -278,8 +280,17 @@ namespace LuaInterface
         public static extern void lua_pushinteger(IntPtr luaState, Int64 i);
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern Int64 luaL_checkinteger(IntPtr luaState, int stackPos);   
+        public static extern Int64 luaL_checkinteger(IntPtr luaState, int stackPos); 
+
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int luaS_yield(IntPtr luaState,int nrets);
+
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int lua_resume(IntPtr L, IntPtr from, int narg);
 #else
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int lua_resume(IntPtr L, int narg);
+
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int lua_lessthan(IntPtr luaState, int stackPos1, int stackPos2);
 
