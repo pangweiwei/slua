@@ -72,6 +72,9 @@ namespace SLua
         static protected int newindex_ref = 0;
         static protected int index_ref = 0;
 
+		delegate void PushVarDelegate(IntPtr l,object o);
+		static Dictionary<Type,PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
+
         public static void init(IntPtr l)
         {
             string newindexfun = @"
@@ -139,7 +142,49 @@ return index
 
 			LuaDLL.lua_newtable(l);
             LuaDLL.lua_setglobal(l, DelgateTable);
+
+
+			setupPushVar();
         }
+
+		static void setupPushVar() {
+			typePushMap[typeof(float)] = (IntPtr L, object o) => {
+				LuaDLL.lua_pushnumber(L,(float) o);
+			};
+			typePushMap[typeof(double)] = (IntPtr L, object o) => {
+				LuaDLL.lua_pushnumber(L,(double) o);
+			};
+			
+			typePushMap[typeof(int)] = 
+				typePushMap[typeof(uint)] =
+				(IntPtr L, object o) => {
+					LuaDLL.lua_pushinteger(L,(int)o);
+				};
+			
+			typePushMap[typeof(Int64)] = 
+				typePushMap[typeof(UInt64)] =
+				(IntPtr L, object o) => {
+					#if LUA_5_3
+					LuaDLL.lua_pushinteger(L, (long)o);
+					#else
+					LuaDLL.lua_pushnumber(L, (double)o);
+					#endif
+				};
+			
+			typePushMap[typeof(string)] = (IntPtr L, object o) => {
+				LuaDLL.lua_pushstring(L,(string) o);
+			};
+			
+			typePushMap[typeof(bool)] = (IntPtr L, object o) => {
+				LuaDLL.lua_pushboolean(L,(bool) o);
+			};
+			
+			typePushMap[typeof(LuaTable)] = 
+				typePushMap[typeof(LuaFunction)] =
+				(IntPtr L, object o) => {
+					((LuaVar)o).push(L);
+				};
+		}
 
         static int luaOp(IntPtr l,string f, string tip)
         {
@@ -1111,7 +1156,7 @@ return index
 
         internal static void pushValue(IntPtr l, object o)
         {
-            pushObject(l, o);
+            pushVar(l, o);
         }
 
 
@@ -1225,43 +1270,13 @@ return index
                 return;
             }
 
-            string t = o.GetType().Name;
-            switch (t)
-            {
-                case "Single":
-                    LuaDLL.lua_pushnumber(l, (float)o);
-                    break;
-                case "Double":
-                    LuaDLL.lua_pushnumber(l, (double)o);
-                    break;
-                case "Int32":
-                case "Uint32":
-                    LuaDLL.lua_pushinteger(l, (int)o);
-                    break;
+			Type t = o.GetType();
 
-                case "Int64":
-                case "UInt64":
-#if LUA_5_3
-                    LuaDLL.lua_pushinteger(l, (long)o);
-#else
-                    LuaDLL.lua_pushnumber(l, (double)o);
-#endif
-                    break;
-
-                case "String":
-                    LuaDLL.lua_pushstring(l, (string)o);
-                    break;
-                case "Boolean":
-                    LuaDLL.lua_pushboolean(l, (bool)o);
-                    break;
-                case "LuaTable":
-                case "LuaFunction":
-                    ((LuaVar)o).push(l);
-                    break;
-                default:
-                    LuaObject.pushObject(l, o);
-                    break;
-            }
+			PushVarDelegate push;
+			if(typePushMap.TryGetValue(t,out push))
+				push(l,o);
+			else
+				pushObject(l,o);           
         }
 
 
