@@ -156,10 +156,40 @@ return index
 			};
 			
 			typePushMap[typeof(int)] = 
-				typePushMap[typeof(uint)] =
 				(IntPtr L, object o) => {
 					LuaDLL.lua_pushinteger(L,(int)o);
 				};
+
+            typePushMap[typeof(uint)] =
+                (IntPtr L, object o) =>
+                {
+                    LuaDLL.lua_pushinteger(L, (int)o);
+                };
+
+            typePushMap[typeof(short)] =
+                (IntPtr L, object o) =>
+                {
+                    LuaDLL.lua_pushinteger(L, (short)o);
+                };
+
+            typePushMap[typeof(ushort)] =
+               (IntPtr L, object o) =>
+               {
+                   LuaDLL.lua_pushinteger(L, (ushort)o);
+               };
+
+            typePushMap[typeof(sbyte)] =
+               (IntPtr L, object o) =>
+               {
+                   LuaDLL.lua_pushinteger(L, (sbyte)o);
+               };
+
+            typePushMap[typeof(byte)] =
+               (IntPtr L, object o) =>
+               {
+                   LuaDLL.lua_pushinteger(L, (byte)o);
+               };
+
 			
 			typePushMap[typeof(Int64)] = 
 				typePushMap[typeof(UInt64)] =
@@ -681,6 +711,18 @@ return index
             return true;
         }
 
+        static internal bool checkType(IntPtr l, int p, out short v)
+        {
+            v = (short)LuaDLL.luaL_checkinteger(l, p);
+            return true;
+        }
+
+        static internal bool checkType(IntPtr l, int p, out byte v)
+        {
+            v = (byte)LuaDLL.luaL_checkinteger(l, p);
+            return true;
+        }
+
         static internal bool checkType(IntPtr l, int p, out uint v)
         {
             v = (uint)LuaDLL.luaL_checkinteger(l, p);
@@ -1071,6 +1113,16 @@ return index
         }
 
         internal static void pushValue(IntPtr l, int i)
+        {
+            LuaDLL.lua_pushinteger(l, i);
+        }
+
+        internal static void pushValue(IntPtr l, short i)
+        {
+            LuaDLL.lua_pushinteger(l, i);
+        }
+
+        internal static void pushValue(IntPtr l, byte i)
         {
             LuaDLL.lua_pushinteger(l, i);
         }

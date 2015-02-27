@@ -378,12 +378,6 @@ public class Lua_UnityEngine_Component : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_networkView(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.networkView);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_guiTexture(IntPtr l) {
 		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
 		pushValue(l,o.guiTexture);

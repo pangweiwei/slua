@@ -515,7 +515,7 @@ namespace SLua
                 LuaDLL.lua_pushstring(L, remainingPath[i]);
                 LuaDLL.lua_gettable(L, -2);
                 returnValue = this.getObject(L, -1);
-                LuaDLL.lua_pop(L, 1);
+                LuaDLL.lua_remove(L, -2);
                 if (returnValue == null) break;
             }
             return returnValue;

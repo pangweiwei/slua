@@ -239,19 +239,6 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int ExternalEval_s(IntPtr l) {
-		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			UnityEngine.Application.ExternalEval(a1);
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OpenURL_s(IntPtr l) {
 		try{
 			System.String a1;
@@ -487,7 +474,6 @@ public class Lua_UnityEngine_Application : LuaObject {
 		addMember(l,CaptureScreenshot_s);
 		addMember(l,HasProLicense_s);
 		addMember(l,ExternalCall_s);
-		addMember(l,ExternalEval_s);
 		addMember(l,OpenURL_s);
 		addMember(l,RegisterLogCallback_s);
 		addMember(l,RegisterLogCallbackThreaded_s);
