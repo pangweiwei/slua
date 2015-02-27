@@ -20,22 +20,22 @@ namespace SLua
                 ua = (UnityEngine.Events.UnityAction)checkObj(l, p);
                 return op;
             }
-            int r = LuaDLL.luaS_checkcallback(l, -1);
-			if(r<0) LuaDLL.luaL_error(l,"expect function");
-			if(getCacheDelegate<UnityEngine.Events.UnityAction>(r,out ua))
-				return op;
+            LuaDelegate ld;
+            checkType(l, -1, out ld);
+            if(ld.d!=null)
+            {
+                ua = (UnityEngine.Events.UnityAction)ld.d;
+                return op;
+            }
 			LuaDLL.lua_pop(l,1);
             ua = () =>
             {
                 int error = pushTry(l);
-                LuaDLL.lua_getref(l, r);
 
-				if (LuaDLL.lua_pcall(l, 0, -1, error) != 0) {
-					LuaDLL.lua_pop(l, 1);
-				}
+				ld.call(0, error);
 				LuaDLL.lua_settop(l, error-1);
 			};
-			cacheDelegate(r,ua);
+			ld.d=ua;
 			return op;
 		}
 	}

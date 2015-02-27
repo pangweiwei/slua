@@ -178,6 +178,9 @@ namespace SLua {
 			Lua_UnityEngine_CanvasGroup.reg(l);
 			Lua_UnityEngine_UIVertex.reg(l);
 			Lua_UnityEngine_CanvasRenderer.reg(l);
+			Lua_UnityEngine_AsyncOperation.reg(l);
+			Lua_UnityEngine_AssetBundleCreateRequest.reg(l);
+			Lua_UnityEngine_AssetBundleRequest.reg(l);
 			Lua_UnityEngine_AssetBundle.reg(l);
 			Lua_UnityEngine_HideFlags.reg(l);
 			Lua_UnityEngine_SendMessageOptions.reg(l);
@@ -189,7 +192,11 @@ namespace SLua {
 			Lua_UnityEngine_LogType.reg(l);
 			Lua_UnityEngine_DeviceType.reg(l);
 			Lua_UnityEngine_SystemInfo.reg(l);
+			Lua_UnityEngine_WaitForSeconds.reg(l);
+			Lua_UnityEngine_WaitForFixedUpdate.reg(l);
+			Lua_UnityEngine_WaitForEndOfFrame.reg(l);
 			Lua_UnityEngine_ScriptableObject.reg(l);
+			Lua_UnityEngine_ResourceRequest.reg(l);
 			Lua_UnityEngine_Resources.reg(l);
 			Lua_UnityEngine_ThreadPriority.reg(l);
 			Lua_UnityEngine_Profiler.reg(l);
@@ -281,7 +288,6 @@ namespace SLua {
 			Lua_UnityEngine_Ray.reg(l);
 			Lua_UnityEngine_Ray2D.reg(l);
 			Lua_UnityEngine_Plane.reg(l);
-			Lua_UnityEngine_Ping.reg(l);
 			Lua_UnityEngine_ParticleSystemRenderMode.reg(l);
 			Lua_UnityEngine_ParticleSystemSimulationSpace.reg(l);
 			Lua_UnityEngine_ParticleSystem.reg(l);

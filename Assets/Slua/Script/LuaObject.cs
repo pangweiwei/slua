@@ -28,7 +28,7 @@ using LuaInterface;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[AttributeUsage(AttributeTargets.Class)]
+[AttributeUsage(AttributeTargets.Class|AttributeTargets.Enum|AttributeTargets.Struct)]
 public class CustomLuaClassAttribute : System.Attribute
 {
     public CustomLuaClassAttribute()
@@ -50,6 +50,7 @@ public class StaticExportAttribute : System.Attribute
 {
 	public StaticExportAttribute() 
 	{
+		//
 	}
 }
 
@@ -66,9 +67,13 @@ namespace SLua
         static protected LuaCSFunction lua_mul = new LuaCSFunction(luaMul);
         static protected LuaCSFunction lua_div = new LuaCSFunction(luaDiv);
         static protected LuaCSFunction lua_eq = new LuaCSFunction(luaEq);
+        const string DelgateTable = "__LuaDelegate";
 
         static protected int newindex_ref = 0;
         static protected int index_ref = 0;
+
+		delegate void PushVarDelegate(IntPtr l,object o);
+		static Dictionary<Type,PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
 
         public static void init(IntPtr l)
         {
@@ -133,7 +138,53 @@ return index
 
             LuaVarObject.init(l);
             //LuaValueType.init(l);
+
+
+			LuaDLL.lua_newtable(l);
+            LuaDLL.lua_setglobal(l, DelgateTable);
+
+
+			setupPushVar();
         }
+
+		static void setupPushVar() {
+			typePushMap[typeof(float)] = (IntPtr L, object o) => {
+				LuaDLL.lua_pushnumber(L,(float) o);
+			};
+			typePushMap[typeof(double)] = (IntPtr L, object o) => {
+				LuaDLL.lua_pushnumber(L,(double) o);
+			};
+			
+			typePushMap[typeof(int)] = 
+				typePushMap[typeof(uint)] =
+				(IntPtr L, object o) => {
+					LuaDLL.lua_pushinteger(L,(int)o);
+				};
+			
+			typePushMap[typeof(Int64)] = 
+				typePushMap[typeof(UInt64)] =
+				(IntPtr L, object o) => {
+					#if LUA_5_3
+					LuaDLL.lua_pushinteger(L, (long)o);
+					#else
+					LuaDLL.lua_pushnumber(L, (double)o);
+					#endif
+				};
+			
+			typePushMap[typeof(string)] = (IntPtr L, object o) => {
+				LuaDLL.lua_pushstring(L,(string) o);
+			};
+			
+			typePushMap[typeof(bool)] = (IntPtr L, object o) => {
+				LuaDLL.lua_pushboolean(L,(bool) o);
+			};
+			
+			typePushMap[typeof(LuaTable)] = 
+				typePushMap[typeof(LuaFunction)] =
+				(IntPtr L, object o) => {
+					((LuaVar)o).push(L);
+				};
+		}
 
         static int luaOp(IntPtr l,string f, string tip)
         {
@@ -212,7 +263,7 @@ return index
             LuaDLL.lua_newtable(l);
         }
 
-        static void newTypeTable(IntPtr l, string t) {
+        internal static void newTypeTable(IntPtr l, string t) {
             string[] subt = t.Split(new Char[] { '.' });
 
 
@@ -420,8 +471,8 @@ return index
         }
 
         public static void pushObject(IntPtr l, object o)
-        {
-            ObjectCache oc = ObjectCache.get(l);
+		{
+			ObjectCache oc = ObjectCache.get(l);
             oc.push(l, o);
         }
 
@@ -663,16 +714,65 @@ return index
             return true;
         }
 
-        static internal bool checkType(IntPtr l, int p, out LuaFunction f)
+        static WeakDictionary<int, LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
+        static internal bool checkType(IntPtr l, int p, out LuaDelegate f)
         {
+            p = LuaDLL.lua_absindex(l, p);
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
+
+            LuaDLL.lua_getglobal(l, DelgateTable);
             LuaDLL.lua_pushvalue(l, p);
-            int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
-            f = new LuaFunction(l, fref);
+            LuaDLL.lua_gettable(l, -2); // find function in __LuaDelegate table
+            if (LuaDLL.lua_isnil(l, -1))
+            { // not found
+                LuaDLL.lua_pop(l, 1); // pop nil
+                f = newDelegate(l, p);
+            }
+            else
+            {
+                int fref = LuaDLL.lua_tointeger(l, -1);
+                LuaDLL.lua_pop(l, 1); // pop ref value;
+                f = delgateMap[fref];
+                if (f == null)
+                {
+                    f = newDelegate(l, p);
+                }
+            }
             return true;
         }
 
-        static internal bool checkType(IntPtr l, int p, out LuaTable t)
+        static LuaDelegate newDelegate(IntPtr l, int p)
+        {
+            LuaDLL.lua_pushvalue(l, p); // push function
+
+            int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX); // new ref function
+            LuaDelegate f = new LuaDelegate(l, fref);
+            LuaDLL.lua_pushvalue(l, p);
+            LuaDLL.lua_pushinteger(l, fref);
+            LuaDLL.lua_settable(l, -3); // __LuaDelegate[func]= fref
+            delgateMap[fref] = f;
+            return f;
+        }
+
+        static internal void removeDelgate(IntPtr l, int r)
+        {
+            LuaDLL.lua_getglobal(l, DelgateTable);
+            LuaDLL.lua_getref(l, r); // push key
+            LuaDLL.lua_pushnil(l); // push nil value
+            LuaDLL.lua_settable(l, -3); // remove function from __LuaDelegate table
+            LuaDLL.lua_pop(l, 1); // pop __LuaDelegate
+        }
+
+		static internal bool checkType(IntPtr l, int p, out LuaFunction f)
+		{
+			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
+			LuaDLL.lua_pushvalue(l, p);
+			int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
+			f = new LuaFunction(l, fref);
+			return true;
+		}
+		
+		static internal bool checkType(IntPtr l, int p, out LuaTable t)
         {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
             LuaDLL.lua_pushvalue(l, p);
@@ -900,6 +1000,11 @@ return index
                 LuaDLL.lua_rawseti(l, -2, n+1);
             }
         }
+
+        internal static void pushValue(IntPtr l, byte[] o)
+        {
+            LuaDLL.lua_pushlstring(l, o, o.Length);
+        }
 		
 		// i don't know why c# find a wrong generic function
 		// push T will push object not a real push<T>
@@ -1051,7 +1156,7 @@ return index
 
         internal static void pushValue(IntPtr l, object o)
         {
-            pushObject(l, o);
+            pushVar(l, o);
         }
 
 
@@ -1165,43 +1270,13 @@ return index
                 return;
             }
 
-            string t = o.GetType().Name;
-            switch (t)
-            {
-                case "Single":
-                    LuaDLL.lua_pushnumber(l, (float)o);
-                    break;
-                case "Double":
-                    LuaDLL.lua_pushnumber(l, (double)o);
-                    break;
-                case "Int32":
-                case "Uint32":
-                    LuaDLL.lua_pushinteger(l, (int)o);
-                    break;
+			Type t = o.GetType();
 
-                case "Int64":
-                case "UInt64":
-#if LUA_5_3
-                    LuaDLL.lua_pushinteger(l, (long)o);
-#else
-                    LuaDLL.lua_pushnumber(l, (double)o);
-#endif
-                    break;
-
-                case "String":
-                    LuaDLL.lua_pushstring(l, (string)o);
-                    break;
-                case "Boolean":
-                    LuaDLL.lua_pushboolean(l, (bool)o);
-                    break;
-                case "LuaTable":
-                case "LuaFunction":
-                    ((LuaVar)o).push(l);
-                    break;
-                default:
-                    LuaObject.pushObject(l, o);
-                    break;
-            }
+			PushVarDelegate push;
+			if(typePushMap.TryGetValue(t,out push))
+				push(l,o);
+			else
+				pushObject(l,o);           
         }
 
 
@@ -1262,20 +1337,6 @@ return index
 			return op;
 		}
 
-		static Dictionary<int ,object> delegateCache = new Dictionary<int, object>();
-		static internal bool getCacheDelegate<T>(int r,out T ua) {
-			object o;
-			if(delegateCache.TryGetValue(r,out o)) {
-				ua=(T)o;
-				return true;
-			}
-			ua=default(T);
-			return false;
-		}
-
-		static internal void cacheDelegate(int r,object o) {
-			delegateCache[r]=o;
-		}
     }
 
 }

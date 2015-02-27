@@ -20,23 +20,23 @@ namespace SLua
                 ua = (UnityEngine.AudioClip.PCMReaderCallback)checkObj(l, p);
                 return op;
             }
-            int r = LuaDLL.luaS_checkcallback(l, -1);
-			if(r<0) LuaDLL.luaL_error(l,"expect function");
-			if(getCacheDelegate<UnityEngine.AudioClip.PCMReaderCallback>(r,out ua))
-				return op;
+            LuaDelegate ld;
+            checkType(l, -1, out ld);
+            if(ld.d!=null)
+            {
+                ua = (UnityEngine.AudioClip.PCMReaderCallback)ld.d;
+                return op;
+            }
 			LuaDLL.lua_pop(l,1);
             ua = (System.Single[] a1) =>
             {
                 int error = pushTry(l);
-                LuaDLL.lua_getref(l, r);
 
 				pushValue(l,a1);
-				if (LuaDLL.lua_pcall(l, 1, -1, error) != 0) {
-					LuaDLL.lua_pop(l, 1);
-				}
+				ld.call(1, error);
 				LuaDLL.lua_settop(l, error-1);
 			};
-			cacheDelegate(r,ua);
+			ld.d=ua;
 			return op;
 		}
 	}

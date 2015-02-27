@@ -461,7 +461,6 @@ public class Lua_UnityEngine_Component : LuaObject {
 		addMember(l,"renderer",get_renderer,null,true);
 		addMember(l,"audio",get_audio,null,true);
 		addMember(l,"guiText",get_guiText,null,true);
-		addMember(l,"networkView",get_networkView,null,true);
 		addMember(l,"guiTexture",get_guiTexture,null,true);
 		addMember(l,"collider",get_collider,null,true);
 		addMember(l,"collider2D",get_collider2D,null,true);

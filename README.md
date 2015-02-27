@@ -16,7 +16,7 @@ See inner demo for help or [Document](doc.md) (in chinese).
 
 ##important
 
-pre-generated file need unity 4.6+, 
+pre-generated file need unity 4.6.1, 
 
 If you get many errors on different version:
 
@@ -32,6 +32,8 @@ If you get many errors on different version:
 
 static code generating, no reflection, no extra gc alloc, very fast
 
+full support iOS/iOS64, support il2cpp
+
 above 90% UnityEngine interface exported ( remove flash, platform dependented interface )
 
 100% UnityEngine.UI interface ( require Unity4.6+ )
@@ -46,7 +48,7 @@ export enum as integer
 
 return array as lua table
 
-using raw luajit, can be replaced with lua5.3/lua5.1, link with slua.c, if you switch to lua5.1/5.3, add LUA_5_3 macro in build setting.
+using raw luajit, can be replaced with lua5.3/lua5.1, link with slua.c, if you switch to lua5.3, add LUA_5_3 macro in build setting.
 
 ##usage
 
@@ -96,16 +98,15 @@ function main()
 	
 	-- use coroutine
 	local c=coroutine.create(function()
-		print("coroutine start")
-		
-		WaitForFixedUpdate()
-		print("coroutine WaitForFixedUpdate")
+		print "coroutine start"
 
-		WaitForSeconds(2)
-		print("coroutine WaitForSeconds 2")
-		
-		WaitForEndOfFrame()
-		print("coroutine WaitForEndOfFrame")
+		Yield(WaitForSeconds(2))
+		print "coroutine WaitForSeconds 2"
+
+		local www = WWW("http://www.sineysoft.com")
+		Yield(www)
+		print(www.bytes)
+		print(#www.bytes)
 	end)
 	coroutine.resume(c)
 
@@ -126,29 +127,7 @@ end
 
 ##export custom class
 
-find code "static public void Custom()", add your custom class type into exports list, like HelloWorld, see below:
-
-~~~~~~~~~~c#
-
-[MenuItem("SLua/Make custom")]
-static public void Custom()
-{
-	List<Type> exports = new List<Type>{
-		typeof(HelloWorld),
-		// your custom class here
-	};
-	
-	foreach (Type t in exports)
-	{
-	    Generate(t);
-	}
-	
-	GenerateBind(exports,"LuaCustom");
-	AssetDatabase.Refresh();
-}
-~~~~~~~~~~
-    
-or
+add CustomLuaClass attribute to your custom class, waiting for compile completed, click "Make custom", you will get interface file for lua.
 
 ~~~~~~~~~~c#
 

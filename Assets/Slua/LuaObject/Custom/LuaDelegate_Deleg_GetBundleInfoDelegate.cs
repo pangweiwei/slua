@@ -20,20 +20,20 @@ namespace SLua
                 ua = (Deleg.GetBundleInfoDelegate)checkObj(l, p);
                 return op;
             }
-            int r = LuaDLL.luaS_checkcallback(l, -1);
-			if(r<0) LuaDLL.luaL_error(l,"expect function");
-			if(getCacheDelegate<Deleg.GetBundleInfoDelegate>(r,out ua))
-				return op;
+            LuaDelegate ld;
+            checkType(l, -1, out ld);
+            if(ld.d!=null)
+            {
+                ua = (Deleg.GetBundleInfoDelegate)ld.d;
+                return op;
+            }
 			LuaDLL.lua_pop(l,1);
             ua = (string a1,out System.String a2,out System.Int32 a3) =>
             {
                 int error = pushTry(l);
-                LuaDLL.lua_getref(l, r);
 
 				pushValue(l,a1);
-				if (LuaDLL.lua_pcall(l, 1, -1, error) != 0) {
-					LuaDLL.lua_pop(l, 1);
-				}
+				ld.call(1, error);
 				bool ret;
 				checkType(l,error+1,out ret);
 				checkType(l,error+2,out a2);
@@ -41,7 +41,7 @@ namespace SLua
 				LuaDLL.lua_settop(l, error-1);
 				return ret;
 			};
-			cacheDelegate(r,ua);
+			ld.d=ua;
 			return op;
 		}
 	}
