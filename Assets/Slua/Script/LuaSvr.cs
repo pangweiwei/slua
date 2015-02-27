@@ -57,6 +57,11 @@ namespace SLua
 
             LuaFunction func = (LuaFunction)luaState["main"];
             func.call();
+
+            if (LuaDLL.lua_gettop(luaState.L) != 0)
+            {
+                Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
+            }
         }
 
         void bind(string name)
