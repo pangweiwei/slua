@@ -14,6 +14,6 @@ public class Lua_UnityEngine_UI_Scrollbar_ScrollEvent : LuaObject {
 	static public void reg(IntPtr l) {
 		LuaUnityEvent_float.reg(l);
 		getTypeTable(l,"UnityEngine.UI.Scrollbar.ScrollEvent");
-		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Scrollbar.ScrollEvent));
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Scrollbar.ScrollEvent),typeof(LuaUnityEvent_float));
 	}
 }
