@@ -4,6 +4,12 @@ import "UnityEngine"
 
 function main()
 
+	if jit then
+		print("using luajit ",jit.version,jit.arch)
+	else
+		print("using lua")
+	end
+
 	-- test module require
 	print(somemodule.add(2,3))
 

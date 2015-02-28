@@ -4,3 +4,5 @@ Temp
 UnityVS
 AssetStoreTools
 obj/*
+/Assets/AssetStoreTools.meta
+/Assets/UnityVS.meta

@@ -378,7 +378,7 @@ namespace SLua
             LuaDLL.lua_getglobal(l, ns);
             if (!LuaDLL.lua_istable(l, -1))
             {
-                LuaDLL.luaL_error(l, "expect %s is type table", ns);
+                LuaDLL.luaL_error(l, "expect {0} is type table", ns);
                 return 0;
             }
 
