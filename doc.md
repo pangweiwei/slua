@@ -39,18 +39,16 @@ slua会自动导出UnityEngine的大部分接口, 导出UnityEngine.UI( 需要Un
 
 ###手动导出
 
-slua支持手动导出任何自定义接口, 为此你仅需要将对应的类加入LuaCodeGen Custom() 函数的 cust列表里, 例如:
->     List<Type> cust = new List<Type>{
- 			typeof(HelloWorld),
-            typeof(Custom),
-            typeof(System.Func<int>),
-            typeof(System.Action<int,string>),
-            typeof(System.Action<int, Dictionary<int,object>>),
-            typeof(Deleg),
-            // your custom class here
-		};
+slua支持手动导出任何自定义接口, 为此你仅需要将对应的类加入CustomExport OnAddCustomClass() 函数的 list列表里, 例如:
+>     public static void OnAddCustomClass(ref List<Type> list)
+    {
+        list.Add(typeof(System.Func<int>));
+        list.Add(typeof(System.Action<int,string>));
+        list.Add(typeof(System.Action<int, Dictionary<int, object>>));
+        // add your custom class here
+    }
 
-在新版中, 可以通过给类增加[CustomLuaClassAttribute]属性来标记需要导出的类, 而不需要添加代码到上面的cust列表, 感谢@luzexi提交了这个便捷的功能, 例如:
+也可以通过给类增加[CustomLuaClassAttribute]属性来标记需要导出的类, 而不需要添加代码到上面的List列表, 感谢@luzexi提交了这个便捷的功能, 例如:
 
 >     [CustomLuaClassAttribute]
     public class Custom : MonoBehaviour {
@@ -59,6 +57,8 @@ slua支持手动导出任何自定义接口, 为此你仅需要将对应的类�
 
 
 这样会导出Custom类.
+
+如果类型有基类,并且需要在lua中访问基类成员, 也需要导出基类, 如果基类是系统自带类或者第三方库类(不方便修改添加CustomLuaClassAttribute标签), 则可以使用第一种方法, 手动添加到导出列表.
 
 在自定义的类中, 所有public 成员方法/静态方法/属性/数据成员都会导出.
 
@@ -220,16 +220,15 @@ LuaTimer用于在限定时间周期性的回调lua函数.
 选择目标框架为".net Subset Base class Libraries";
 调整为Release版本, 然后生成对应的dll;
 将dll放入slua/3rdlib目录;
-打开LuaCodeGen.cs, 找到Custom() 函数
+打开CustomExport.cs, 找到OnAddCustomAssembly() 函数
 
-在assemblyItem List内添加程序集名字, 例如:
+在List内添加程序集名字, 例如:
 
->     List<string> assemblyList = new List<string>();
-    assemblyList.Add("NGUI");
+>     list.Add("NGUI");
 
 保存, 等待编译完成, 点击Make custom,将会生成NGUI的全部接口文件.
 
-**注意去掉对UnityEditor的引用，否则发布的时候可能失败**
+**注意去掉对UnityEditor的引用，否则发布的时候可能失败, 因为手机环境下没有UnityEditor的运行环境**
 
 
 ##编译slua库

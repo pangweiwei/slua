@@ -192,28 +192,25 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Make custom")]
     static public void Custom()
     {
-        
-        List<Type> cust = new List<Type>{
-            typeof(System.Func<int>),
-            typeof(System.Action<int,string>),
-            typeof(System.Action<int, Dictionary<int,object>>),
-        };
+
+        List<Type> cust = new List<Type>();
+        CustomExport.OnAddCustomClass(ref cust);
 
         // export self-dll
-         Assembly assembly = Assembly.Load("Assembly-CSharp");
-         Type[] types = assembly.GetExportedTypes();
- 
-         foreach (Type t in types)
-         {
-             if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0)
-             {
-                 cust.Add(t);
-             }
-         }
+        Assembly assembly = Assembly.Load("Assembly-CSharp");
+        Type[] types = assembly.GetExportedTypes();
+
+        foreach (Type t in types)
+        {
+            if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0)
+            {
+                cust.Add(t);
+            }
+        }
 
         // export 3rd dll
         List<string> assemblyList = new List<string>();
-        //assemblyList.Add("NGUI"); 
+        CustomExport.OnAddCustomAssembly(ref assemblyList);
         
         foreach( string assemblyItem in assemblyList )
         {
