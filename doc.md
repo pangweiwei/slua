@@ -283,6 +283,17 @@ LuaTimer用于在限定时间周期性的回调lua函数.
 
 这样便在src目录生成了libluajit.a库文件, 修改文件为libslua.a, 放入Assets/Plugins/iOS 目录即可.
 
+##常见问题
+
+1) “我用luajit编译的dll可以使用，但是我用lua5.3编译的dll会导致unity闪退，怎么办”
+
+增加lua_5_3的宏，删除Library目录，重新打开unity，就可以了，是因为之前的缓存代码是针对luajit的
+
+2) "Some function push more value to lua stack输出表示什么含义？"
+
+如果你修改了代码，说明你修改的代码push了数据到lua堆栈上，但没有把他们pop出来，导致堆栈上残留了这些数据，slua则给出一个warning，需要你找到对应的代码，修复它。如果你确定没有修改代码，请报告，这可能是一个bug。
+
+
 ##已知问题
 不支持泛型函数导出, 但支持泛型代理
 
