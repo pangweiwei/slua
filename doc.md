@@ -206,7 +206,7 @@ Slua支持unity yield指令,  需要配和lua coroutine, 例如:
 
 ##LuaTimer
 
-LuaTimer用于在限定时间周期性的回调lua函数.
+LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使用系统自带timer, slua timer会在lua虚拟机被关闭后停止timer工作,而一般系统自带timer可能会在lua虚拟机被关闭后任然触发timer,导致调用lua函数失败,从而产生闪退等.
 
 ###Add(delay,func) -> id
 
@@ -306,7 +306,7 @@ LuaTimer用于在限定时间周期性的回调lua函数.
 
 增加lua_5_3的宏，删除Library目录，重新打开unity，就可以了，是因为之前的缓存代码是针对luajit的
 
-2) "Some function push more value to lua stack输出表示什么含义？"
+2) "Some function push more value to lua stack" / "Some function not remove temp value from lua stack. You should fix it."输出表示什么含义？
 
 如果你修改了代码，说明你修改的代码push了数据到lua堆栈上，但没有把他们pop出来，导致堆栈上残留了这些数据，slua则给出一个warning，需要你找到对应的代码，修复它。如果你确定没有修改代码，请报告，这可能是一个bug。
 
