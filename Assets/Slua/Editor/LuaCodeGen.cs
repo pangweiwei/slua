@@ -143,6 +143,8 @@ public class LuaCodeGen : MonoBehaviour
         GenerateBind(exports,"BindUnity");
         
         AssetDatabase.Refresh();
+
+		Debug.Log("Generate engine interface finished");
     }
 
     [MenuItem("SLua/Make UI (for Unity4.6+)")]
@@ -182,6 +184,8 @@ public class LuaCodeGen : MonoBehaviour
         GenerateBind(exports, "BindUnityUI");
 
         AssetDatabase.Refresh();
+
+		Debug.Log("Generate UI interface finished");
     }
 
     static public bool IsObsolete(MemberInfo t)
@@ -241,6 +245,8 @@ public class LuaCodeGen : MonoBehaviour
         GenerateBind(exports,"BindCustom");
         AssetDatabase.Refresh();
         path = oldpath;
+
+		Debug.Log("Generate custom interface finished");
     }
 
     [MenuItem("SLua/Clear Custom")]
@@ -785,7 +791,7 @@ namespace SLua
 
     bool CutBase(Type t)
     {
-        if (t.FullName.Contains("System."))
+        if (t.FullName.StartsWith("System."))
             return true;
         return false;
     }

@@ -14,6 +14,6 @@ public class Lua_UnityEngine_UI_InputField_SubmitEvent : LuaObject {
 	static public void reg(IntPtr l) {
 		LuaUnityEvent_string.reg(l);
 		getTypeTable(l,"UnityEngine.UI.InputField.SubmitEvent");
-		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.InputField.SubmitEvent));
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.InputField.SubmitEvent),typeof(LuaUnityEvent_string));
 	}
 }

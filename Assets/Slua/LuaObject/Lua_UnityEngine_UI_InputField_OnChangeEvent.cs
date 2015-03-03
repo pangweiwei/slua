@@ -14,6 +14,6 @@ public class Lua_UnityEngine_UI_InputField_OnChangeEvent : LuaObject {
 	static public void reg(IntPtr l) {
 		LuaUnityEvent_string.reg(l);
 		getTypeTable(l,"UnityEngine.UI.InputField.OnChangeEvent");
-		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.InputField.OnChangeEvent));
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.InputField.OnChangeEvent),typeof(LuaUnityEvent_string));
 	}
 }
