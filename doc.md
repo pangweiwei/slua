@@ -187,6 +187,23 @@ slua的delegate支持+=/-=操作, 例如
 >public static Action<int, Dictionary<int, object>> daction;
 
 
+##Coroutine(Yield)
+
+Slua支持unity yield指令,  需要配和lua coroutine, 例如:
+
+>     local c=coroutine.create(function()
+		print "coroutine start"
+		Yield(WaitForSeconds(2))
+		print "coroutine WaitForSeconds 2"
+		local www = WWW("http://www.sineysoft.com")
+		Yield(www)
+		print(www.bytes)
+		print(#www.bytes)
+	end)
+	coroutine.resume(c)
+
+在lua coroutine内使用Yield函数,可以中断当前运行的coroutine,直到yield的对象完成操作才会继续回来执行下面的代码. 注意, Yield函数不能在主线程调用.
+
 ##LuaTimer
 
 LuaTimer用于在限定时间周期性的回调lua函数.
