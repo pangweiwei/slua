@@ -1,8 +1,4 @@
 /* 
-* Copyright (C) polynation games ltd - All Rights Reserved
-* Unauthorized copying of this file, via any medium is strictly prohibited
-* Proprietary and confidential
-* Written by Christopher Redden, December 2013
 * This file is based off of MonoLuaInterface's wrapping: https://github.com/stevedonovan/MonoLuaInterface
 */
 
