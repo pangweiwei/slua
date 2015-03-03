@@ -373,21 +373,39 @@ namespace SLua
         internal static int import(IntPtr l)
         {
             LuaDLL.luaL_checktype(l, 1, LuaTypes.LUA_TSTRING);
-            string ns = LuaDLL.lua_tostring(l, 1);
+            string str = LuaDLL.lua_tostring(l, 1);
 
-            LuaDLL.lua_getglobal(l, ns);
-            if (!LuaDLL.lua_istable(l, -1))
+            string[] ns = str.Split('.');
+
+            LuaDLL.lua_pushglobaltable(l);
+
+            for (int n=0; n < ns.Length; n++)
             {
-                LuaDLL.luaL_error(l, "expect {0} is type table", ns);
-                return 0;
+                LuaDLL.lua_getfield(l, -1,ns[n]);
+                if (!LuaDLL.lua_istable(l, -1))
+                {
+                    LuaDLL.luaL_error(l, "expect {0} is type table", ns);
+                    return 0;
+                }
+                LuaDLL.lua_remove(l, -2);
             }
 
             LuaDLL.lua_pushnil(l);
             while (LuaDLL.lua_next(l, -2)!=0) 
             {
                 string key = LuaDLL.lua_tostring(l,-2);
+                LuaDLL.lua_getglobal(l, key);
+                if (!LuaDLL.lua_isnil(l, -1))
+                {
+                    LuaDLL.lua_pop(l, 1);
+                    LuaDLL.luaL_error(l,"{0} had existed, import can't overload it.", key);
+                    return 0;
+                }
+                LuaDLL.lua_pop(l, 1);
                 LuaDLL.lua_setglobal(l, key);
             }
+
+            LuaDLL.lua_pop(l, 1);
 
             return 0;
         }
