@@ -35,7 +35,7 @@ public class LuaCodeGen : MonoBehaviour
 {
 
 
-    public static string path = "Assets/SLua/LuaObject/";
+    public static string path = "Assets/Slua/LuaObject/";
 
     
 
@@ -252,14 +252,26 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Clear Custom")]
     static public void ClearCustom()
     {
-        string[] assets = AssetDatabase.FindAssets("", new string[]{path+"Custom"});
+        clear(new string[]{path+"Custom"});
+        Debug.Log("Clear custom complete.");
+    }
+
+    [MenuItem("SLua/Clear All")]
+    static public void ClearALL()
+    {
+        clear(new string[] { path.Substring(0, path.Length - 1), path + "Custom" });
+        Debug.Log("Clear all complete.");
+    }
+
+    static void clear(string[] paths)
+    {
+        string[] assets = AssetDatabase.FindAssets("", paths);
         foreach (string asset in assets)
         {
             string p = AssetDatabase.GUIDToAssetPath(asset);
             AssetDatabase.DeleteAsset(p);
         }
         AssetDatabase.Refresh();
-        Debug.Log("Clear custom complete.");
     }
 
     static bool Generate(Type t)
