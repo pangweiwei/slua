@@ -827,7 +827,7 @@ namespace SLua
         FieldInfo[] fields = t.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance|BindingFlags.DeclaredOnly);
         foreach (FieldInfo fi in fields)
         {
-            if (DontExport(fi))
+            if (DontExport(fi) || IsObsolete(fi))
                 continue;
 
 			PropPair pp = new PropPair();
