@@ -42,6 +42,8 @@ support UnityEvent/UnityAction for event callback via lua function
 
 support delegate via lua function
 
+support yield call
+
 support custom class exported
 
 export enum as integer
