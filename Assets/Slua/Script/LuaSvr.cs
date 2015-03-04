@@ -32,7 +32,7 @@ namespace SLua
     {
         public LuaState luaState;
         static LuaSvrGameObject lgo;
-        bool errorReported = false;
+        int errorReported = 0;
 
         public LuaSvr(string main)
         {
@@ -58,9 +58,10 @@ namespace SLua
             LuaFunction func = (LuaFunction)luaState["main"];
             func.call();
 
-            if (LuaDLL.lua_gettop(luaState.L) != 0)
+            if (LuaDLL.lua_gettop(luaState.L) != errorReported)
             {
                 Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
+                errorReported = LuaDLL.lua_gettop(luaState.L);
             }
         }
 
@@ -73,10 +74,10 @@ namespace SLua
 
         void tick()
         {
-            if (LuaDLL.lua_gettop(luaState.L) != 0 && !errorReported)
+            if (LuaDLL.lua_gettop(luaState.L) != errorReported)
             {
                 Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
-                errorReported = true;
+                errorReported = LuaDLL.lua_gettop(luaState.L);
             }
 
             luaState.checkRef();
