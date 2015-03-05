@@ -24,8 +24,10 @@ public class HelloWorld   {
     }
 
     static public void setv(LuaTable t) {
-        Debug.Log(t["name"]);
-        Debug.Log(t["value"]);
+        foreach (LuaTable.TablePair pair in t)
+        {
+            Debug.Log(string.Format("{0}-{1}",pair.key,pair.value));
+        }
     }
 
     static public LuaTable getv()

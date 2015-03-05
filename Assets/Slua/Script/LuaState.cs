@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using LuaInterface;
 using UnityEngine;
 using System.IO;
@@ -204,8 +205,13 @@ namespace SLua
         
     }
 
-    public class LuaTable : LuaVar
+    public class LuaTable : LuaVar, IEnumerable<LuaTable.TablePair>
     {
+        public struct TablePair
+        {
+            public object key;
+            public object value;
+        }
         public LuaTable(IntPtr l, int r)
             : base(l, r)
         {
@@ -234,6 +240,69 @@ namespace SLua
                 state.setObject(valueref, key, value);
             }
         }
+
+        public class Enumerator : IEnumerator<TablePair>, IDisposable
+        {
+            LuaTable t;
+            int indext=-1;
+            public Enumerator(LuaTable table)
+            {
+                t = table;
+                Reset();
+            }
+
+            public bool MoveNext()
+            {
+                if(indext<0)
+                    return false;
+
+                return LuaDLL.lua_next(t.L, indext) > 0;
+            }
+
+            public void Reset()
+            {
+                LuaDLL.lua_getref(t.L, t.Ref);
+                indext=LuaDLL.lua_gettop(t.L);
+
+                LuaDLL.lua_pushnil(t.L);
+            }
+
+            public void Dispose()
+            {
+                LuaDLL.lua_remove(t.L, indext);
+            }
+
+            public TablePair Current
+            {
+                get
+                {
+                    TablePair p = new TablePair();
+                    p.key = LuaObject.checkVar(t.L, -2);
+                    p.value = LuaObject.checkVar(t.L, -1);
+                    LuaDLL.lua_pop(t.L, 1);
+                    return p;
+                }
+            }
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    return Current;
+                }
+            }
+        }
+
+        public IEnumerator<TablePair> GetEnumerator()
+        {
+            return new LuaTable.Enumerator(this);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
     }
 
 
