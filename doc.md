@@ -204,6 +204,32 @@ Slua支持unity yield指令,  需要配和lua coroutine, 例如:
 
 在lua coroutine内使用Yield函数,可以中断当前运行的coroutine,直到yield的对象完成操作才会继续回来执行下面的代码. 注意, Yield函数不能在主线程调用.
 
+##LuaVarObject
+
+当返回一个没有导出的类型时, slua将自动返回一个表示LuaVarObject的userdata, 通过LuaVarObject, 你任然可以访问没有导出的类的方法和成员, 但LuaVarObject使用的反射的方法来访问, 这在slua中是非常不推荐的, 这将显著降低slua运行的效率, 对于频繁使用的类型请导出它们再使用,但对于某些场合,使用LuaVarObject还是很方便的, 这包括:
+
+1) 你希望将一个没有导出的类, 仅作为函数参数传递, 而不在lua中调用其方法/成员;
+
+2) 你非频繁的使用某些泛型类, 例如:
+
+>     public Dictionary<string, GameObject> foo()
+    {
+        return new Dictionary<string, GameObject>();
+    }
+
+其中Dicionary<string,GameObject>并没有导出,但你可以在lua中调用其方法, 例如:
+
+>     local dict = obj:foo()
+	for i=1,10 do
+		dict:Add(tostring(i),GameObject("dict"..i)) -- add k,v to Dictionary<string,GameObject>
+	end
+	dict["hello"] = GameObject("world")
+	print("Dict count",dict.Count)
+
+但请记住,上面的访问过程都是经过反射操作来完成的,速度不理想,应该避免在频繁运行的代码中使用给他们.
+
+最后, ***LuaVarObject并没有完善, 仅满足最低使用需求, 如果你发现有任何bug, 需要自行完善他们, 作者欢迎你完善后提交pull request合并到slua主分支, 让你的代码成为slua的一部分.***
+
 ##LuaTimer
 
 LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使用系统自带timer, slua timer会在lua虚拟机被关闭后停止timer工作,而一般系统自带timer可能会在lua虚拟机被关闭后任然触发timer,导致调用lua函数失败,从而产生闪退等.
