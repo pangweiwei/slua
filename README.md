@@ -26,7 +26,7 @@ If you get many errors on different version:
 
 3)Click menu, SLua->Make, SLua->Make UI, SLua->Make custom, generate all interface file for your version of unity.
 
-
+***Had tested for Unity4.6.1/4.6.2/4.6.3/5.0***
 
 ##main feature
 
