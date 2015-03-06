@@ -72,7 +72,7 @@ function main()
 	-- test lua table
 	HelloWorld.setv({name="yes",value=12})
 	local t=HelloWorld.getv()
-	print(t.name,t.age)
+	print(t.name,t.xxx.yyy)
 
 	-- test overload func
 	HelloWorld.ofunc(GameObject)

@@ -34,7 +34,9 @@ public class HelloWorld   {
     {
         LuaTable t = new LuaTable(LuaState.main);
         t["name"] = "xiaoming";
-        t["age"] = 12;
+
+        t["xxx"] = new LuaTable(LuaState.main);
+        ((LuaTable)t["xxx"])["yyy"] = 1;
         return t;
     }
 
