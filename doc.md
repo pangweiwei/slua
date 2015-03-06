@@ -318,6 +318,18 @@ LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使�
 
 默认slua是针对unity4.6.1生成的wrap文件, 如果你使用其他版本, 可以有部分接口定义不同导致无法编译, 你可以删除luaobject目录后, ***等待编译完成,出现slua菜单***,重新make, make ui, make custom.
 
+5)为什么lua文件用txt后缀而不是lua?
+
+考虑到发布到UnityStore的需要,以及Resource目录的加载策略,使用txt是最方便的, 如果你自己重写loader,可以使用lua后缀.
+
+6)Lua文件是否可以使用二进制字节码形式?
+
+可以, 针对使用的lua版本(lua/5.1/jit), 需要找到对应的luac程序生成字节码.
+
+7)如何 require 动态更新的lua文件?
+
+如果你的lua文件是通过动态下载asset bundle获得或者直接http下载获得(即lua代码热更新),需要自己实现loader, 你可以添加LuaState.loaderDelegate代理完成自己的加载请求, 具体可以参考LusState.cs代码.
+
 
 ##已知问题
 不支持泛型函数导出, 但支持泛型代理
