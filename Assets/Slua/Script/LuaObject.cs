@@ -580,6 +580,21 @@ return index
             return true;
         }
 
+        public static bool matchType(IntPtr l, int total, int from, ParameterInfo[] pars)
+        {
+            if (total - from + 1 != pars.Length)
+                return false;
+
+            for (int n = 0; n < pars.Length; n++)
+            {
+                int p = n + from;
+                LuaTypes t = LuaDLL.lua_type(l, p);
+                if (!matchType(l, p, t, pars[n].ParameterType))
+                    return false;
+            }
+            return true;
+        }
+
 
 
         static internal bool checkType(IntPtr l, int p, out float v)

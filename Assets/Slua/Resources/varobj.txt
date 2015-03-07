@@ -44,4 +44,13 @@ function main()
 	end
 	print("Var obj prop get 200k, take time:",os.clock()-t)
 	-- you see, varobj is slow, use exported class instead
+
+	-- create class used reflection
+	local go=Slua.CreateClass("UnityEngine.GameObject,UnityEngine","VarGameObject")
+	print(go.name)
+	local array=Slua.CreateClass("System.Collections.ArrayList",10)
+	print(array.Capacity)
+	array:Add("slua")
+	array:Add("unity")
+	print(array.Count,array[0],array[1])
 end
