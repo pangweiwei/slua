@@ -549,7 +549,7 @@ namespace SLua
             return doBuffer(bytes,fn);
         }
 
-        object doBuffer(byte[] bytes,string fn)
+        public object doBuffer(byte[] bytes,string fn)
         {
             LuaDLL.lua_pushstdcallcfunction(L, errorReport);
             int errfunc = LuaDLL.lua_gettop(L);
