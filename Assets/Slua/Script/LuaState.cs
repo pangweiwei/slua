@@ -26,6 +26,7 @@ using System.Collections;
 using LuaInterface;
 using UnityEngine;
 using System.IO;
+using System.Text;
 
 namespace SLua
 {
@@ -207,6 +208,7 @@ namespace SLua
 
     public class LuaTable : LuaVar, IEnumerable<LuaTable.TablePair>
     {
+
         public struct TablePair
         {
             public object key;
@@ -529,6 +531,13 @@ namespace SLua
 			return 0;
         }
 
+        public object doString(string str)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(str);
+
+            return doBuffer(bytes,"temp buffer");
+        }
+
         public object doFile(string fn)
         {
             byte[] bytes = loadFile(fn);
@@ -537,8 +546,13 @@ namespace SLua
 				return null;
 			}
 
+            return doBuffer(bytes,fn);
+        }
+
+        object doBuffer(byte[] bytes,string fn)
+        {
             LuaDLL.lua_pushstdcallcfunction(L, errorReport);
-			int errfunc = LuaDLL.lua_gettop(L);
+            int errfunc = LuaDLL.lua_gettop(L);
             if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fn) == 0)
             {
                 if (LuaDLL.lua_pcall(L, 0, LuaDLL.LUA_MULTRET, -2) != 0)
@@ -546,7 +560,7 @@ namespace SLua
                     LuaDLL.lua_pop(L, 1);
                 }
                 LuaDLL.lua_remove(L, errfunc); // pop error function
-				return topObjects(errfunc-1);
+                return topObjects(errfunc - 1);
             }
             else
             {
@@ -554,7 +568,7 @@ namespace SLua
                 Debug.LogError(err);
                 LuaDLL.lua_pop(L, 1);
             }
-			return null;
+            return null;
         }
 
         static byte[] loadFile(string fn)
