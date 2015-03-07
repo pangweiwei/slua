@@ -39,11 +39,11 @@ PluginImporter:
     OSXIntel64:
       enabled: 1
       settings:
-        CPU: None
+        CPU: AnyCPU
     OSXUniversal:
       enabled: 1
       settings:
-        CPU: x86
+        CPU: AnyCPU
     WP8:
       enabled: 0
       settings:
