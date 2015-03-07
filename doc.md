@@ -4,7 +4,7 @@ slua是Unity3D导出为lua的自动化代码生成工具, 通过产生静态的�
 
 ##安装
 
-通过git clone复制一份代码到你的资源目录(Assets目录内), slua的发布版已经附带了Unity3D 4.6.1 的导出接口文件, 在Slua/LuaObject内, 你可以删除该目录内所有文件, 等待脚本编译完成, 点击slua菜单中 Make 命令 手动生成针对当前版本的U3d接口文件.
+通过git clone复制一份代码到你的资源目录(Assets目录内), slua的发布版已经附带了Unity3D 4.6.1 的导出接口文件, 在Slua/LuaObject内, 对于其他版本(比如5.0), 你可以删除该目录内所有文件, 等待脚本编译完成, 点击slua菜单中 Make 命令 手动生成针对当前版本的U3d接口文件, 如果你运行例子代码产生错误,记得要make ui,make custom,保证例子中使用到的接口都被导出了.
 
 
 
@@ -204,6 +204,32 @@ Slua支持unity yield指令,  需要配和lua coroutine, 例如:
 
 在lua coroutine内使用Yield函数,可以中断当前运行的coroutine,直到yield的对象完成操作才会继续回来执行下面的代码. 注意, Yield函数不能在主线程调用.
 
+##LuaVarObject
+
+当返回一个没有导出的类型时, slua将自动返回一个表示LuaVarObject的userdata, 通过LuaVarObject, 你任然可以访问没有导出的类的方法和成员, 但LuaVarObject使用的反射的方法来访问, 这在slua中是非常不推荐的, 这将显著降低slua运行的效率, 对于频繁使用的类型请导出它们再使用,但对于某些场合,使用LuaVarObject还是很方便的, 这包括:
+
+1) 你希望将一个没有导出的类, 在lua层面仅作为函数参数传递, 而不在lua中调用其方法/成员;
+
+2) 你非频繁的使用某些泛型类, 例如:
+
+>     public Dictionary<string, GameObject> foo()
+    {
+        return new Dictionary<string, GameObject>();
+    }
+
+其中Dicionary<string,GameObject>并没有导出,但你可以在lua中调用其方法, 例如:
+
+>     local dict = obj:foo()
+	for i=1,10 do
+		dict:Add(tostring(i),GameObject("dict"..i)) -- add k,v to Dictionary<string,GameObject>
+	end
+	dict["hello"] = GameObject("world")
+	print("Dict count",dict.Count)
+
+但请记住,上面的访问过程都是经过反射操作来完成的,速度不理想,应该避免在频繁运行的代码中使用给他们.
+
+最后, ***LuaVarObject并没有完善, 仅满足最低使用需求, 如果你发现有任何bug, 需要自行完善他们, 作者欢迎你完善后提交pull request合并到slua主分支, 让你的代码成为slua的一部分.***
+
 ##LuaTimer
 
 LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使用系统自带timer, slua timer会在lua虚拟机被关闭后停止timer工作,而一般系统自带timer可能会在lua虚拟机被关闭后任然触发timer,导致调用lua函数失败,从而产生闪退等.
@@ -309,6 +335,26 @@ LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使�
 2) "Some function push more value to lua stack" / "Some function not remove temp value from lua stack. You should fix it."输出表示什么含义？
 
 如果你修改了代码，说明你修改的代码push了数据到lua堆栈上，但没有把他们pop出来，导致堆栈上残留了这些数据，slua则给出一个warning，需要你找到对应的代码，修复它。如果你确定没有修改代码，请报告，这可能是一个bug。
+
+3)为什么我看不到slua菜单?
+
+如果存在任何编译器错误, 都可能导致slua菜单丢失, 这是unity editor自身的限制, 所以你需要解决编译错误.
+
+4)为什么我把slua放在assets目录后一堆编译错误?
+
+默认slua是针对unity4.6.1生成的wrap文件, 如果你使用其他版本, 可以有部分接口定义不同导致无法编译, 你可以删除luaobject目录后, ***等待编译完成,出现slua菜单***,重新make, make ui, make custom.
+
+5)为什么lua文件用txt后缀而不是lua?
+
+考虑到发布到UnityStore的需要,以及Resource目录的加载策略,使用txt是最方便的, 如果你自己重写loader,可以使用lua后缀.
+
+6)Lua文件是否可以使用二进制字节码形式?
+
+可以, 针对使用的lua版本(lua/5.1/jit), 需要找到对应的luac程序生成字节码.
+
+7)如何 require 动态更新的lua文件?
+
+如果你的lua文件是通过动态下载asset bundle获得或者直接http下载获得(即lua代码热更新),需要自己实现loader, 你可以添加LuaState.loaderDelegate代理完成自己的加载请求, 具体可以参考LusState.cs代码.
 
 
 ##已知问题

@@ -63,16 +63,14 @@ function main()
 
 		local www = WWW("http://www.sineysoft.com")
 		Yield(www)
-		print(www.bytes)
 		print(#www.bytes)
-
 	end)
 	coroutine.resume(c)
 
 	-- test lua table
 	HelloWorld.setv({name="yes",value=12})
 	local t=HelloWorld.getv()
-	print(t.name,t.age)
+	print(t.name,t.xxx.yyy)
 
 	-- test overload func
 	HelloWorld.ofunc(GameObject)
