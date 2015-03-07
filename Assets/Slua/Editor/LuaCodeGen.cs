@@ -37,10 +37,23 @@ public class LuaCodeGen : MonoBehaviour
 
     public static string path = "Assets/Slua/LuaObject/";
 
-    
 
-
-    [MenuItem("SLua/Make")]
+	[InitializeOnLoadMethod]
+	static void OnProjectLoadedInEditor() {
+		bool ok=System.IO.Directory.Exists(path);
+		if(!ok && EditorUtility.DisplayDialog("Slua","Not found lua interface for Unity, generate it now?","Generate","No")) {
+			GenerateAll();
+		}
+	}
+		
+	[MenuItem("SLua/Make ALL")]
+	static public void GenerateAll() {
+		Generate();
+		GenerateUI();
+		Custom();
+	}
+		
+	[MenuItem("SLua/Make UnityEngine")]
     static public void Generate()
     {
         CodeGenerator.InnerTypes.Clear();
