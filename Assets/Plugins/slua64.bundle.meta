@@ -1,6 +1,8 @@
 fileFormatVersion: 2
-guid: 520a99e6b3adc4a3798cda88b0dee08a
+guid: 6cec2a92d99bbb346b610cf9084c84fd
 folderAsset: yes
+timeCreated: 1425698107
+licenseType: Pro
 PluginImporter:
   serializedVersion: 1
   iconMap: {}
@@ -35,15 +37,15 @@ PluginImporter:
     OSXIntel:
       enabled: 1
       settings:
-        CPU: AnyCPU
+        CPU: None
     OSXIntel64:
       enabled: 1
       settings:
-        CPU: None
+        CPU: AnyCPU
     OSXUniversal:
       enabled: 1
       settings:
-        CPU: x86
+        CPU: x86_64
     WP8:
       enabled: 0
       settings:
