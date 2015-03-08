@@ -16,15 +16,9 @@ See inner demo for help or [Document](doc.md) (in chinese).
 
 ##important
 
-pre-generated file need unity 4.6.1, 
+You need generated lua wrap file by your self:
 
-If you get many errors on different version:
-
-1)delete all fills in LuaObject folder.
-
-2)waiting for unity building code, you will see Slua menu in main menu if no errors,
-
-3)Click menu, SLua->Make, SLua->Make UI, SLua->Make custom, generate all interface file for your version of unity.
+Click menu, SLua->Make ALL  generate all wrap file for your version of unity.
 
 ***Had tested for Unity4.6.1/4.6.2/4.6.3/5.0***
 
