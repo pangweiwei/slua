@@ -702,6 +702,7 @@ namespace SLua
                 LuaObject.pushVar(L, o);
                 LuaDLL.lua_rawseti(L, -2, index);
                 LuaDLL.lua_settop(L, oldTop);
+                return;
             }
             throw new IndexOutOfRangeException();
         }

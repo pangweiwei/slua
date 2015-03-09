@@ -70,7 +70,9 @@ function main()
 	-- test lua table
 	HelloWorld.setv({name="yes",value=12})
 	local t=HelloWorld.getv()
-	print(t.name,t.xxx.yyy)
+	for k,v in pairs(t) do
+		print("table value",k,v)
+	end
 
 	-- test overload func
 	HelloWorld.ofunc(GameObject)
