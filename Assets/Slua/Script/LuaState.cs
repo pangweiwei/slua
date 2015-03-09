@@ -243,6 +243,19 @@ namespace SLua
             }
         }
 
+        public object this[int index]
+        {
+            get
+            {
+                return state.getObject(valueref, index);
+            }
+
+            set
+            {
+                state.setObject(valueref, index, value);
+            }
+        }
+
         public class Enumerator : IEnumerator<TablePair>, IDisposable
         {
             LuaTable t;
@@ -631,6 +644,20 @@ namespace SLua
             LuaDLL.lua_settop(L, oldTop);
             return returnValue;
         }
+
+        internal object getObject(int reference, int index)
+        {
+            if (index >= 1)
+            {
+                int oldTop = LuaDLL.lua_gettop(L);
+                LuaDLL.lua_getref(L, reference);
+                LuaDLL.lua_rawgeti(L, -1, index);
+                object returnValue = LuaObject.checkVar(L, -1);
+                LuaDLL.lua_settop(L, oldTop);
+                return returnValue;
+            }
+            throw new IndexOutOfRangeException();
+        }
        
         internal object getObject(int reference, object field)
         {
@@ -664,6 +691,19 @@ namespace SLua
             LuaDLL.lua_getref(L, reference);
             setObject(field.Split(new char[] { '.' }), o);
             LuaDLL.lua_settop(L, oldTop);
+        }
+
+        internal void setObject(int reference, int index, object o)
+        {
+            if (index >= 1)
+            {
+                int oldTop = LuaDLL.lua_gettop(L);
+                LuaDLL.lua_getref(L, reference);
+                LuaObject.pushVar(L, o);
+                LuaDLL.lua_rawseti(L, -2, index);
+                LuaDLL.lua_settop(L, oldTop);
+            }
+            throw new IndexOutOfRangeException();
         }
         
         internal void setObject(int reference, object field, object o)
