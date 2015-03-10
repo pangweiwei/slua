@@ -538,7 +538,11 @@ namespace SLua
         {
             byte[] bytes = Encoding.UTF8.GetBytes(str);
 
-            return doBuffer(bytes,"temp buffer");
+            object obj;
+            if (doBuffer(bytes, "temp buffer", out obj))
+                return obj;
+            return null; ;
+            
         }
 
         public object doFile(string fn)
@@ -549,11 +553,15 @@ namespace SLua
 				return null;
 			}
 
-            return doBuffer(bytes,fn);
+            object obj;
+            if (doBuffer(bytes, fn, out obj))
+                return obj;
+            return null;
         }
 
-        public object doBuffer(byte[] bytes,string fn)
+        public bool doBuffer(byte[] bytes,string fn,out object ret)
         {
+            ret = null;
             LuaDLL.lua_pushstdcallcfunction(L, errorReport);
             int errfunc = LuaDLL.lua_gettop(L);
             if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fn) == 0)
@@ -561,17 +569,16 @@ namespace SLua
                 if (LuaDLL.lua_pcall(L, 0, LuaDLL.LUA_MULTRET, -2) != 0)
                 {
                     LuaDLL.lua_pop(L, 1);
+                    return false;
                 }
                 LuaDLL.lua_remove(L, errfunc); // pop error function
-                return topObjects(errfunc - 1);
+                ret = topObjects(errfunc - 1);
+                return true;
             }
-            else
-            {
-                string err = LuaDLL.lua_tostring(L, -1);
-                Debug.LogError(err);
-                LuaDLL.lua_pop(L, 1);
-            }
-            return null;
+            string err = LuaDLL.lua_tostring(L, -1);
+            Debug.LogError(err);
+            LuaDLL.lua_pop(L, 1);
+            return false;
         }
 
         static byte[] loadFile(string fn)

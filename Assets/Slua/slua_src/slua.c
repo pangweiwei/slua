@@ -71,6 +71,18 @@ LUA_API const char* luaS_tolstring32(lua_State *L, int index, int* len) {
     return ret;
 }
 
+static lua_stdcallCFunction panicf = NULL;
+static int atpanic(lua_State *L) {
+	if (panicf != NULL)
+		return panicf(L);
+	return 0;
+}
+
+LUA_API void luaS_atpanic(lua_State *L, lua_stdcallCFunction f) {
+	panicf = f;
+	lua_atpanic(L, atpanic);
+}
+
 #if LUA_VERSION_NUM==503
 static int k (lua_State *L, int status, lua_KContext ctx) {
 	return status;
