@@ -102,8 +102,6 @@ namespace SLua
 
 	public class LuaDelegate : LuaFunction {
 		public object d;
-		int refCount=0;
-
 
 		public LuaDelegate(IntPtr l, int r):base(l,r)
 		{
@@ -132,14 +130,6 @@ namespace SLua
 				return false;
 			}
 			return true;
-		}
-
-		public void addRef() {
-			refCount++;
-		}
-
-		public void release() {
-			refCount--;
 		}
 	}
 	
