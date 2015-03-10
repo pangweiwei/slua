@@ -401,10 +401,13 @@ namespace SLua
             LuaDLL.lua_settop(L, 0);
         }
 
-        internal void Close()
+        public void Close()
         {
             if (L != IntPtr.Zero)
             {
+                if (LuaState.main == this)
+                    LuaState.main = null;
+
                 Debug.Log("Finalizing Lua State.");
 				// be careful, if you close lua vm, make sure you don't use lua state again,
 				// comment this line as default for avoid unexpected crash.

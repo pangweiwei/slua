@@ -262,16 +262,18 @@ LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使�
 打开产生的sln工程,找到 Assembly-CSharp 工程, 修改工程"程序集名称"由Assembly-CSharp改为第三方库名称,例如NGUI;
 选择目标框架为".net Subset Base class Libraries";
 调整为Release版本, 然后生成对应的dll;
-将dll放入slua/3rdlib目录;
+将dll放入Assets目录;
 打开CustomExport.cs, 找到OnAddCustomAssembly() 函数
 
 在List内添加程序集名字, 例如:
 
 >     list.Add("NGUI");
 
-保存, 等待编译完成, 点击Make custom,将会生成NGUI的全部接口文件.
+保存, 等待编译完成, 点击Make custom,将会生成NGUI的全部接口文件,将产生的wrap文件复制到游戏工程内的Slua/LuaObject/custom内,
 
 **注意去掉对UnityEditor的引用，否则发布的时候可能失败, 因为手机环境下没有UnityEditor的运行环境**
+
+然后删除DLL,该DLL仅用于快捷生成wrap文件, 还需要ngui代码放在Assets目录内, 因为其有部分editor功能代码,需要在editor内运行.
 
 
 ##编译slua库
