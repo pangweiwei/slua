@@ -278,18 +278,17 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Clear All")]
     static public void ClearALL()
     {
-        clear(new string[] { path.Substring(0, path.Length - 1), path + "Custom" });
+        clear(new string[] { path.Substring(0, path.Length - 1) });
         Debug.Log("Clear all complete.");
     }
 
     static void clear(string[] paths)
     {
-        string[] assets = AssetDatabase.FindAssets("", paths);
-        foreach (string asset in assets)
+        foreach (string path in paths)
         {
-            string p = AssetDatabase.GUIDToAssetPath(asset);
-            AssetDatabase.DeleteAsset(p);
+            System.IO.Directory.Delete(path, true);
         }
+        
         AssetDatabase.Refresh();
     }
 
