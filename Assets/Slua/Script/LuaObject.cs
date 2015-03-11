@@ -443,18 +443,7 @@ return index
             LuaDLL.lua_setfield(l, instance?-2:-3, name);
         }
 
-        protected static void addMember(IntPtr l, string name, LuaCSFunction get, LuaCSFunction set)
-        {
-            addPropertyMember(l, name, get, set, true);
-
-        }
-
         protected static void addMember(IntPtr l, string name, LuaCSFunction get, LuaCSFunction set,bool instance)
-        {
-            addPropertyMember(l, name, get, set, instance);
-        }
-
-        static void addPropertyMember(IntPtr l, string name, LuaCSFunction get, LuaCSFunction set, bool instance)
         {
             int t = instance ? -2 : -3;
 
