@@ -36,67 +36,47 @@ namespace SLua
         static public void reg(IntPtr l, MonoBehaviour m)
         {
             mb = m;
-            reg(l, WaitForSeconds, "UnityEngine");
-            reg(l, WaitForEndOfFrame, "UnityEngine");
-            reg(l, WaitForFixedUpdate, "UnityEngine");
+            reg(l, Yield, "UnityEngine");
         }
 
         [MonoPInvokeCallback(typeof(LuaCSFunction))]
-        static public int WaitForSeconds(IntPtr l)
+        static public int Yield(IntPtr l)
         {
-            float sec;
-            checkType(l, 1, out sec);
+			try {
+                if (LuaDLL.lua_pushthread(l) == 1)
+                {
+                    LuaDLL.luaL_error(l, "should put Yield call into lua coroutine.");
+                    return 0;
+                }
+	           	object y = checkObj(l, 1);
 
-            Action act = () =>
-            {
-                LuaDLL.lua_resume(l, 0);
-            };
+	            Action act = () =>
+	            {
+#if LUA_5_3
+					LuaDLL.lua_resume(l,IntPtr.Zero,0);
+#else
+	                LuaDLL.lua_resume(l, 0);
+#endif
+	            };
 
-            mb.StartCoroutine(waitForSeconds(sec, act));
-            return LuaDLL.lua_yield(l, 0);
+	            mb.StartCoroutine(yieldReturn(y,act));
+#if LUA_5_3
+				return LuaDLL.luaS_yield(l, 0);
+#else
+                return LuaDLL.lua_yield(l, 0);
+#endif
+			}
+			catch(Exception e) {
+				LuaDLL.luaL_error(l,e.ToString());
+				return 0;
+			}
         }
 
-        [MonoPInvokeCallback(typeof(LuaCSFunction))]
-        static public int WaitForEndOfFrame(IntPtr l)
+        static public IEnumerator yieldReturn(object y, Action act)
         {
-            Action act = () =>
-            {
-                LuaDLL.lua_resume(l, 0);
-            };
-
-            mb.StartCoroutine(waitForEndOfFrame(act));
-            return LuaDLL.lua_yield(l, 0);
-        }
-
-        [MonoPInvokeCallback(typeof(LuaCSFunction))]
-        static public int WaitForFixedUpdate(IntPtr l)
-        {
-            Action act = () =>
-            {
-                LuaDLL.lua_resume(l, 0);
-            };
-
-            mb.StartCoroutine(waitForFixedUpdate(act));
-            return LuaDLL.lua_yield(l, 0);
-        }
-
-
-        static public IEnumerator waitForSeconds(float t, Action act)
-        {
-            yield return new WaitForSeconds(t);
+            yield return y;
             act();
         }
 
-        static public IEnumerator waitForEndOfFrame(Action act)
-        {
-            yield return new WaitForEndOfFrame();
-            act();
-        }
-
-        static public IEnumerator waitForFixedUpdate(Action act)
-        {
-            yield return new WaitForFixedUpdate();
-            act();
-        }
     }
 }

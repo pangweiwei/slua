@@ -35,12 +35,31 @@ public class LuaCodeGen : MonoBehaviour
 {
 
 
-    public static string path = "Assets/SLua/LuaObject/";
-
-    
+    public static string path = "Assets/Slua/LuaObject/";
 
 
-    [MenuItem("SLua/Make")]
+    [InitializeOnLoad]
+    public class Startup 
+    {
+
+        static Startup()
+        {
+            bool ok = System.IO.Directory.Exists(path);
+            if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
+            {
+                GenerateAll();
+            }
+        }
+    }
+		
+	[MenuItem("SLua/Make ALL")]
+	static public void GenerateAll() {
+		Generate();
+		GenerateUI();
+		Custom();
+	}
+		
+	[MenuItem("SLua/Make UnityEngine")]
     static public void Generate()
     {
         CodeGenerator.InnerTypes.Clear();
@@ -115,6 +134,7 @@ public class LuaCodeGen : MonoBehaviour
             "Flash",
             "ActionScript",
             "OnRequestRebuild",
+			"Ping",
         };
 
         Assembly assembly = Assembly.Load("UnityEngine");
@@ -142,6 +162,8 @@ public class LuaCodeGen : MonoBehaviour
         GenerateBind(exports,"BindUnity");
         
         AssetDatabase.Refresh();
+
+		Debug.Log("Generate engine interface finished");
     }
 
     [MenuItem("SLua/Make UI (for Unity4.6+)")]
@@ -181,6 +203,8 @@ public class LuaCodeGen : MonoBehaviour
         GenerateBind(exports, "BindUnityUI");
 
         AssetDatabase.Refresh();
+
+		Debug.Log("Generate UI interface finished");
     }
 
     static public bool IsObsolete(MemberInfo t)
@@ -191,28 +215,25 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Make custom")]
     static public void Custom()
     {
-        
-        List<Type> cust = new List<Type>{
-            typeof(System.Func<int>),
-            typeof(System.Action<int,string>),
-            typeof(System.Action<int, Dictionary<int,object>>),
-        };
+
+        List<Type> cust = new List<Type>();
+        CustomExport.OnAddCustomClass(ref cust);
 
         // export self-dll
-         Assembly assembly = Assembly.Load("Assembly-CSharp");
-         Type[] types = assembly.GetExportedTypes();
- 
-         foreach (Type t in types)
-         {
-             if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0)
-             {
-                 cust.Add(t);
-             }
-         }
+        Assembly assembly = Assembly.Load("Assembly-CSharp");
+        Type[] types = assembly.GetExportedTypes();
+
+        foreach (Type t in types)
+        {
+            if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0)
+            {
+                cust.Add(t);
+            }
+        }
 
         // export 3rd dll
         List<string> assemblyList = new List<string>();
-        //assemblyList.Add("NGUI"); 
+        CustomExport.OnAddCustomAssembly(ref assemblyList);
         
         foreach( string assemblyItem in assemblyList )
         {
@@ -243,19 +264,33 @@ public class LuaCodeGen : MonoBehaviour
         GenerateBind(exports,"BindCustom");
         AssetDatabase.Refresh();
         path = oldpath;
+
+		Debug.Log("Generate custom interface finished");
     }
 
     [MenuItem("SLua/Clear Custom")]
     static public void ClearCustom()
     {
-        string[] assets = AssetDatabase.FindAssets("", new string[]{path+"Custom"});
+        clear(new string[]{path+"Custom"});
+        Debug.Log("Clear custom complete.");
+    }
+
+    [MenuItem("SLua/Clear All")]
+    static public void ClearALL()
+    {
+        clear(new string[] { path.Substring(0, path.Length - 1), path + "Custom" });
+        Debug.Log("Clear all complete.");
+    }
+
+    static void clear(string[] paths)
+    {
+        string[] assets = AssetDatabase.FindAssets("", paths);
         foreach (string asset in assets)
         {
             string p = AssetDatabase.GUIDToAssetPath(asset);
             AssetDatabase.DeleteAsset(p);
         }
         AssetDatabase.Refresh();
-        Debug.Log("Clear custom complete.");
     }
 
     static bool Generate(Type t)
@@ -298,6 +333,10 @@ class CodeGenerator
 		// i don't why below 2 functions missed in iOS platform
 		"Graphic.OnRebuildRequested",
 		"Text.OnRebuildRequested",
+		// il2cpp not exixts
+		"Application.ExternalEval",
+		"GameObject.networkView",
+		"Component.networkView",
     };
 
     public static HashSet<string> InnerTypes = new HashSet<string>();
@@ -350,7 +389,7 @@ class CodeGenerator
             Directory.CreateDirectory(LuaCodeGen.path);
         }
         
-        if ((!t.IsGenericType && !IsObsolete(t) && !typeof(YieldInstruction).IsAssignableFrom(t))
+		if ((!t.IsGenericType && !IsObsolete(t) && t!=typeof(YieldInstruction) && t!=typeof(Coroutine))
             || (t.BaseType!=null && t.BaseType==typeof(System.MulticastDelegate)))
         {
             if (t.IsEnum)
@@ -433,15 +472,17 @@ namespace SLua
                 ua = ($FN)checkObj(l, p);
                 return op;
             }
-            int r = LuaDLL.luaS_checkcallback(l, -1);
-			if(r<0) LuaDLL.luaL_error(l,""expect function"");
-			if(getCacheDelegate<$FN>(r,out ua))
-				return op;
+            LuaDelegate ld;
+            checkType(l, -1, out ld);
+            if(ld.d!=null)
+            {
+                ua = ($FN)ld.d;
+                return op;
+            }
 			LuaDLL.lua_pop(l,1);
             ua = ($ARGS) =>
             {
                 int error = pushTry(l);
-                LuaDLL.lua_getref(l, r);
 ";
         
         temp = temp.Replace("$TN", t.Name);
@@ -460,9 +501,7 @@ namespace SLua
                 Write(file, "pushValue(l,a{0});",n+1);
         }
 
-        Write(file, "if (LuaDLL.lua_pcall(l, {0}, -1, error) != 0) {{", mi.GetParameters().Length-outindex.Count);
-        Write(file, "LuaDLL.lua_pop(l, 1);");
-        Write(file,"}");
+        Write(file, "ld.call({0}, error);", mi.GetParameters().Length - outindex.Count);
 
         if (mi.ReturnType != typeof(void))
             WriteValueCheck(file, mi.ReturnType, 1, "ret", "error+");
@@ -484,7 +523,7 @@ namespace SLua
             Write(file, "return ret;");
 
         Write(file,"};");
-		Write(file,"cacheDelegate(r,ua);");
+		Write(file,"ld.d=ua;");
         Write(file,"return op;");
         Write(file,"}");
         Write(file,"}");
@@ -607,18 +646,21 @@ namespace SLua
 
         static bool checkType(IntPtr l,int p,out UnityEngine.Events.UnityAction<$GN> ua) {
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
-            int r = LuaDLL.luaS_checkcallback(l, p);
+            LuaDelegate ld;
+            checkType(l, p, out ld);
+            if (ld.d != null)
+            {
+                ua = (UnityEngine.Events.UnityAction<$GN>)ld.d;
+                return true;
+            }
             ua = ($GN v) =>
             {
                 int error = pushTry(l);
-                LuaDLL.lua_getref(l, r);
                 pushValue(l, v);
-                if (LuaDLL.lua_pcall(l, 1, 0, error) != 0)
-                {
-                    LuaDLL.lua_pop(l, 1); // pop error msg
-                }
-                LuaDLL.lua_pop(l, 1); // pop error function
+                ld.call(1, error);
+                LuaDLL.lua_settop(l,error - 1);
             };
+            ld.d = ua;
             return true;
         }
     }
@@ -780,7 +822,7 @@ namespace SLua
 
     bool CutBase(Type t)
     {
-        if (t.FullName.Contains("System."))
+        if (t.FullName.StartsWith("System."))
             return true;
         return false;
     }
@@ -816,7 +858,7 @@ namespace SLua
         FieldInfo[] fields = t.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance|BindingFlags.DeclaredOnly);
         foreach (FieldInfo fi in fields)
         {
-            if (DontExport(fi))
+            if (DontExport(fi) || IsObsolete(fi))
                 continue;
 
 			PropPair pp = new PropPair();

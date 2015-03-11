@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>14B25</string>
+	<string>14C109</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>slua</string>
 	<key>CFBundleIdentifier</key>
-	<string>sineysoft.slua</string>
+	<string>com.sineysoft.slua</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -37,6 +37,6 @@
 	<key>DTXcodeBuild</key>
 	<string>6A2008a</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2015年 sineysoft. All rights reserved.</string>
+	<string>Copyright © 2015年 Pang Weiwei. All rights reserved.</string>
 </dict>
 </plist>
