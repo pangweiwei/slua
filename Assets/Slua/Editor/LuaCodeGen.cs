@@ -336,6 +336,10 @@ class CodeGenerator
 		"Application.ExternalEval",
 		"GameObject.networkView",
 		"Component.networkView",
+        // unity5
+        "AnimatorControllerParameter.name",
+        "Input.IsJoystickPreconfigured",
+        "Resources.LoadAssetAtPath",
     };
 
     public static HashSet<string> InnerTypes = new HashSet<string>();
