@@ -1,6 +1,7 @@
 local somemodule = require 'module.some'
 
 import "UnityEngine"
+local ffi = require "ffi"
 
 function main()
 
@@ -9,6 +10,8 @@ function main()
 	else
 		print("using lua")
 	end
+
+	print(ffi)
 
 	-- test module require
 	print(somemodule.add(2,3))

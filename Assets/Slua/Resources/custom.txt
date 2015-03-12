@@ -1,6 +1,9 @@
 
 MonoBehaviour = UnityEngine.MonoBehaviour
 GameObject = UnityEngine.MonoBehaviour
+local ffi = require("ffi")
+--local bit = require("bit")
+--local jit = require("jit")
 
 function main()
 

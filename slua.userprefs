@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Slua/Resources/custom.txt">
+    <Files>
+      <File FileName="Assets/Slua/example/Custom.cs" Line="44" Column="24" />
+      <File FileName="Assets/Slua/Resources/custom.txt" Line="6" Column="29" />
+      <File FileName="Assets/Slua/Script/LuaState.cs" Line="360" Column="34" />
+      <File FileName="Assets/Slua/Script/LuaSvr.cs" Line="73" Column="10" />
+      <File FileName="Assets/Slua/Script/LuaDLL.cs" Line="176" Column="48" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

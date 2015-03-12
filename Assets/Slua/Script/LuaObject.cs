@@ -54,7 +54,6 @@ public class StaticExportAttribute : System.Attribute
 	}
 }
 
-
 namespace SLua
 {
 
