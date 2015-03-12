@@ -595,7 +595,9 @@ namespace SLua
                 {
 					fn=fn.Replace(".","/");
 					TextAsset asset=(TextAsset) Resources.Load(fn);
-					return asset.bytes;
+                    if(asset!=null)
+					    return asset.bytes;
+                    return null;
                 }
                 return bytes;
             }
