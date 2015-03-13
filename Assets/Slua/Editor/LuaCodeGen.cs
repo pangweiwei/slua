@@ -271,15 +271,23 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Clear Custom")]
     static public void ClearCustom()
     {
-        clear(new string[]{path+"Custom"});
-        Debug.Log("Clear custom complete.");
+        DirectoryInfo dirInfo = new DirectoryInfo(Application.dataPath + "/Slua/LuaObject/Custom/");
+        if (dirInfo.Exists)
+        {
+            dirInfo.Delete(true);
+        }      
+        Debug.LogWarning("Clear custom complete.");
     }
 
     [MenuItem("SLua/Clear All")]
     static public void ClearALL()
-    {
-        clear(new string[] { path.Substring(0, path.Length - 1) });
-        Debug.Log("Clear all complete.");
+    {      
+        DirectoryInfo dirInfo = new DirectoryInfo(Application.dataPath + "/Slua/LuaObject/");
+        if (dirInfo.Exists)
+        {
+            dirInfo.Delete(true);
+        }      
+        Debug.LogWarning("Clear all complete.");
     }
 
     static void clear(string[] paths)
