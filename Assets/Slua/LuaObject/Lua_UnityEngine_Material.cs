@@ -596,6 +596,21 @@ public class Lua_UnityEngine_Material : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int IsKeywordEnabled(IntPtr l) {
+		try{
+			UnityEngine.Material self=(UnityEngine.Material)checkSelf(l);
+			System.String a1;
+			checkType(l,2,out a1);
+			System.Boolean ret=self.IsKeywordEnabled(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_shader(IntPtr l) {
 		UnityEngine.Material o = (UnityEngine.Material)checkSelf(l);
 		pushValue(l,o.shader);
@@ -699,6 +714,20 @@ public class Lua_UnityEngine_Material : LuaObject {
 		o.shaderKeywords=v;
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_globalIlluminationFlags(IntPtr l) {
+		UnityEngine.Material o = (UnityEngine.Material)checkSelf(l);
+		pushEnum(l,(int)o.globalIlluminationFlags);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_globalIlluminationFlags(IntPtr l) {
+		UnityEngine.Material o = (UnityEngine.Material)checkSelf(l);
+		UnityEngine.MaterialGlobalIlluminationFlags v;
+		checkEnum(l,2,out v);
+		o.globalIlluminationFlags=v;
+		return 0;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Material");
 		addMember(l,SetColor);
@@ -725,6 +754,7 @@ public class Lua_UnityEngine_Material : LuaObject {
 		addMember(l,CopyPropertiesFromMaterial);
 		addMember(l,EnableKeyword);
 		addMember(l,DisableKeyword);
+		addMember(l,IsKeywordEnabled);
 		addMember(l,"shader",get_shader,set_shader,true);
 		addMember(l,"color",get_color,set_color,true);
 		addMember(l,"mainTexture",get_mainTexture,set_mainTexture,true);
@@ -733,6 +763,7 @@ public class Lua_UnityEngine_Material : LuaObject {
 		addMember(l,"passCount",get_passCount,null,true);
 		addMember(l,"renderQueue",get_renderQueue,set_renderQueue,true);
 		addMember(l,"shaderKeywords",get_shaderKeywords,set_shaderKeywords,true);
+		addMember(l,"globalIlluminationFlags",get_globalIlluminationFlags,set_globalIlluminationFlags,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Material),typeof(UnityEngine.Object));
 	}
 }

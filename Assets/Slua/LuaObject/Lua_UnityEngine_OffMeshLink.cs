@@ -72,17 +72,17 @@ public class Lua_UnityEngine_OffMeshLink : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_navMeshLayer(IntPtr l) {
+	static public int get_area(IntPtr l) {
 		UnityEngine.OffMeshLink o = (UnityEngine.OffMeshLink)checkSelf(l);
-		pushValue(l,o.navMeshLayer);
+		pushValue(l,o.area);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_navMeshLayer(IntPtr l) {
+	static public int set_area(IntPtr l) {
 		UnityEngine.OffMeshLink o = (UnityEngine.OffMeshLink)checkSelf(l);
 		int v;
 		checkType(l,2,out v);
-		o.navMeshLayer=v;
+		o.area=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -134,7 +134,7 @@ public class Lua_UnityEngine_OffMeshLink : LuaObject {
 		addMember(l,"occupied",get_occupied,null,true);
 		addMember(l,"costOverride",get_costOverride,set_costOverride,true);
 		addMember(l,"biDirectional",get_biDirectional,set_biDirectional,true);
-		addMember(l,"navMeshLayer",get_navMeshLayer,set_navMeshLayer,true);
+		addMember(l,"area",get_area,set_area,true);
 		addMember(l,"autoUpdatePositions",get_autoUpdatePositions,set_autoUpdatePositions,true);
 		addMember(l,"startTransform",get_startTransform,set_startTransform,true);
 		addMember(l,"endTransform",get_endTransform,set_endTransform,true);

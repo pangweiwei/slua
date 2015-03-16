@@ -12,6 +12,12 @@ public class Lua_UnityEngine_Collision2D : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_enabled(IntPtr l) {
+		UnityEngine.Collision2D o = (UnityEngine.Collision2D)checkSelf(l);
+		pushValue(l,o.enabled);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rigidbody(IntPtr l) {
 		UnityEngine.Collision2D o = (UnityEngine.Collision2D)checkSelf(l);
 		pushValue(l,o.rigidbody);
@@ -49,6 +55,7 @@ public class Lua_UnityEngine_Collision2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Collision2D");
+		addMember(l,"enabled",get_enabled,null,true);
 		addMember(l,"rigidbody",get_rigidbody,null,true);
 		addMember(l,"collider",get_collider,null,true);
 		addMember(l,"transform",get_transform,null,true);

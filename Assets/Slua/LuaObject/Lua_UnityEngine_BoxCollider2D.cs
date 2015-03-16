@@ -12,20 +12,6 @@ public class Lua_UnityEngine_BoxCollider2D : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_center(IntPtr l) {
-		UnityEngine.BoxCollider2D o = (UnityEngine.BoxCollider2D)checkSelf(l);
-		pushValue(l,o.center);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_center(IntPtr l) {
-		UnityEngine.BoxCollider2D o = (UnityEngine.BoxCollider2D)checkSelf(l);
-		UnityEngine.Vector2 v;
-		checkType(l,2,out v);
-		o.center=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_size(IntPtr l) {
 		UnityEngine.BoxCollider2D o = (UnityEngine.BoxCollider2D)checkSelf(l);
 		pushValue(l,o.size);
@@ -41,7 +27,6 @@ public class Lua_UnityEngine_BoxCollider2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.BoxCollider2D");
-		addMember(l,"center",get_center,set_center,true);
 		addMember(l,"size",get_size,set_size,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.BoxCollider2D),typeof(UnityEngine.Collider2D));
 	}

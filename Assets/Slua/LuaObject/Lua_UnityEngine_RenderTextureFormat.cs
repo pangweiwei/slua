@@ -9,10 +9,12 @@ public class Lua_UnityEngine_RenderTextureFormat : LuaObject {
 		addMember(l,0,"ARGB32");
 		addMember(l,1,"Depth");
 		addMember(l,2,"ARGBHalf");
+		addMember(l,3,"Shadowmap");
 		addMember(l,4,"RGB565");
 		addMember(l,5,"ARGB4444");
 		addMember(l,6,"ARGB1555");
 		addMember(l,7,"Default");
+		addMember(l,8,"ARGB2101010");
 		addMember(l,9,"DefaultHDR");
 		addMember(l,11,"ARGBFloat");
 		addMember(l,12,"RGFloat");

@@ -66,13 +66,27 @@ public class Lua_UnityEngine_Caching : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsVersionCached_s(IntPtr l) {
 		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			System.Int32 a2;
-			checkType(l,2,out a2);
-			System.Boolean ret=UnityEngine.Caching.IsVersionCached(a1,a2);
-			pushValue(l,ret);
-			return 1;
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(string),typeof(int))){
+				System.String a1;
+				checkType(l,1,out a1);
+				System.Int32 a2;
+				checkType(l,2,out a2);
+				System.Boolean ret=UnityEngine.Caching.IsVersionCached(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,argc,1,typeof(string),typeof(UnityEngine.Hash128))){
+				System.String a1;
+				checkType(l,1,out a1);
+				UnityEngine.Hash128 a2;
+				checkType(l,2,out a2);
+				System.Boolean ret=UnityEngine.Caching.IsVersionCached(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -82,13 +96,27 @@ public class Lua_UnityEngine_Caching : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int MarkAsUsed_s(IntPtr l) {
 		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			System.Int32 a2;
-			checkType(l,2,out a2);
-			System.Boolean ret=UnityEngine.Caching.MarkAsUsed(a1,a2);
-			pushValue(l,ret);
-			return 1;
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(string),typeof(int))){
+				System.String a1;
+				checkType(l,1,out a1);
+				System.Int32 a2;
+				checkType(l,2,out a2);
+				System.Boolean ret=UnityEngine.Caching.MarkAsUsed(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,argc,1,typeof(string),typeof(UnityEngine.Hash128))){
+				System.String a1;
+				checkType(l,1,out a1);
+				UnityEngine.Hash128 a2;
+				checkType(l,2,out a2);
+				System.Boolean ret=UnityEngine.Caching.MarkAsUsed(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());

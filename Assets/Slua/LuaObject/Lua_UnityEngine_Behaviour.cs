@@ -25,9 +25,16 @@ public class Lua_UnityEngine_Behaviour : LuaObject {
 		o.enabled=v;
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isActiveAndEnabled(IntPtr l) {
+		UnityEngine.Behaviour o = (UnityEngine.Behaviour)checkSelf(l);
+		pushValue(l,o.isActiveAndEnabled);
+		return 1;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Behaviour");
 		addMember(l,"enabled",get_enabled,set_enabled,true);
+		addMember(l,"isActiveAndEnabled",get_isActiveAndEnabled,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Behaviour),typeof(UnityEngine.Component));
 	}
 }

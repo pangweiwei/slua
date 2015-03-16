@@ -12,6 +12,22 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int OverrideGeometry(IntPtr l) {
+		try{
+			UnityEngine.Sprite self=(UnityEngine.Sprite)checkSelf(l);
+			UnityEngine.Vector2[] a1;
+			checkType(l,2,out a1);
+			System.UInt16[] a2;
+			checkType(l,3,out a2);
+			self.OverrideGeometry(a1,a2);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Create_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
@@ -153,13 +169,38 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_pivot(IntPtr l) {
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
+		pushValue(l,o.pivot);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_border(IntPtr l) {
 		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
 		pushValue(l,o.border);
 		return 1;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_vertices(IntPtr l) {
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
+		pushValue(l,o.vertices);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_triangles(IntPtr l) {
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
+		pushValue(l,o.triangles);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_uv(IntPtr l) {
+		UnityEngine.Sprite o = (UnityEngine.Sprite)checkSelf(l);
+		pushValue(l,o.uv);
+		return 1;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Sprite");
+		addMember(l,OverrideGeometry);
 		addMember(l,Create_s);
 		addMember(l,"bounds",get_bounds,null,true);
 		addMember(l,"rect",get_rect,null,true);
@@ -170,7 +211,11 @@ public class Lua_UnityEngine_Sprite : LuaObject {
 		addMember(l,"packed",get_packed,null,true);
 		addMember(l,"packingMode",get_packingMode,null,true);
 		addMember(l,"packingRotation",get_packingRotation,null,true);
+		addMember(l,"pivot",get_pivot,null,true);
 		addMember(l,"border",get_border,null,true);
+		addMember(l,"vertices",get_vertices,null,true);
+		addMember(l,"triangles",get_triangles,null,true);
+		addMember(l,"uv",get_uv,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Sprite),typeof(UnityEngine.Object));
 	}
 }

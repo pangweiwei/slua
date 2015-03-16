@@ -110,6 +110,48 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_linearLimitSpring(IntPtr l) {
+		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
+		pushValue(l,o.linearLimitSpring);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_linearLimitSpring(IntPtr l) {
+		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
+		UnityEngine.SoftJointLimitSpring v;
+		checkType(l,2,out v);
+		o.linearLimitSpring=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_angularXLimitSpring(IntPtr l) {
+		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
+		pushValue(l,o.angularXLimitSpring);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_angularXLimitSpring(IntPtr l) {
+		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
+		UnityEngine.SoftJointLimitSpring v;
+		checkType(l,2,out v);
+		o.angularXLimitSpring=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_angularYZLimitSpring(IntPtr l) {
+		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
+		pushValue(l,o.angularYZLimitSpring);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_angularYZLimitSpring(IntPtr l) {
+		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
+		UnityEngine.SoftJointLimitSpring v;
+		checkType(l,2,out v);
+		o.angularYZLimitSpring=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_linearLimit(IntPtr l) {
 		UnityEngine.ConfigurableJoint o = (UnityEngine.ConfigurableJoint)checkSelf(l);
 		pushValue(l,o.linearLimit);
@@ -412,6 +454,9 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 		addMember(l,"angularXMotion",get_angularXMotion,set_angularXMotion,true);
 		addMember(l,"angularYMotion",get_angularYMotion,set_angularYMotion,true);
 		addMember(l,"angularZMotion",get_angularZMotion,set_angularZMotion,true);
+		addMember(l,"linearLimitSpring",get_linearLimitSpring,set_linearLimitSpring,true);
+		addMember(l,"angularXLimitSpring",get_angularXLimitSpring,set_angularXLimitSpring,true);
+		addMember(l,"angularYZLimitSpring",get_angularYZLimitSpring,set_angularYZLimitSpring,true);
 		addMember(l,"linearLimit",get_linearLimit,set_linearLimit,true);
 		addMember(l,"lowAngularXLimit",get_lowAngularXLimit,set_lowAngularXLimit,true);
 		addMember(l,"highAngularXLimit",get_highAngularXLimit,set_highAngularXLimit,true);

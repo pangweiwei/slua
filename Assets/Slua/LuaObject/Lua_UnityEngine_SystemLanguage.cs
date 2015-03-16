@@ -46,7 +46,9 @@ public class Lua_UnityEngine_SystemLanguage : LuaObject {
 		addMember(l,37,"Turkish");
 		addMember(l,38,"Ukrainian");
 		addMember(l,39,"Vietnamese");
-		addMember(l,40,"Unknown");
+		addMember(l,40,"ChineseSimplified");
+		addMember(l,41,"ChineseTraditional");
+		addMember(l,42,"Unknown");
 		addMember(l,18,"Hungarian");
 		LuaDLL.lua_pop(l, 1);
 	}

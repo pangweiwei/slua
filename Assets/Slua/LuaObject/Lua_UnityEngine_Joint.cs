@@ -123,6 +123,20 @@ public class Lua_UnityEngine_Joint : LuaObject {
 		o.enableCollision=v;
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_enablePreprocessing(IntPtr l) {
+		UnityEngine.Joint o = (UnityEngine.Joint)checkSelf(l);
+		pushValue(l,o.enablePreprocessing);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_enablePreprocessing(IntPtr l) {
+		UnityEngine.Joint o = (UnityEngine.Joint)checkSelf(l);
+		bool v;
+		checkType(l,2,out v);
+		o.enablePreprocessing=v;
+		return 0;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Joint");
 		addMember(l,"connectedBody",get_connectedBody,set_connectedBody,true);
@@ -133,6 +147,7 @@ public class Lua_UnityEngine_Joint : LuaObject {
 		addMember(l,"breakForce",get_breakForce,set_breakForce,true);
 		addMember(l,"breakTorque",get_breakTorque,set_breakTorque,true);
 		addMember(l,"enableCollision",get_enableCollision,set_enableCollision,true);
+		addMember(l,"enablePreprocessing",get_enablePreprocessing,set_enablePreprocessing,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Joint),typeof(UnityEngine.Component));
 	}
 }

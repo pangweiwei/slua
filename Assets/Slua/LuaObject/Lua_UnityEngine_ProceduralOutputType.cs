@@ -13,6 +13,11 @@ public class Lua_UnityEngine_ProceduralOutputType : LuaObject {
 		addMember(l,4,"Emissive");
 		addMember(l,5,"Specular");
 		addMember(l,6,"Opacity");
+		addMember(l,7,"Smoothness");
+		addMember(l,8,"AmbientOcclusion");
+		addMember(l,9,"DetailMask");
+		addMember(l,10,"Metallic");
+		addMember(l,11,"Roughness");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

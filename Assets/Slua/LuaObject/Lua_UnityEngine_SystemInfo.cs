@@ -26,6 +26,20 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SupportsTextureFormat_s(IntPtr l) {
+		try{
+			UnityEngine.TextureFormat a1;
+			checkEnum(l,1,out a1);
+			System.Boolean ret=UnityEngine.SystemInfo.SupportsTextureFormat(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_operatingSystem(IntPtr l) {
 		pushValue(l,UnityEngine.SystemInfo.operatingSystem);
 		return 1;
@@ -81,8 +95,8 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_graphicsPixelFillrate(IntPtr l) {
-		pushValue(l,UnityEngine.SystemInfo.graphicsPixelFillrate);
+	static public int get_graphicsMultiThreaded(IntPtr l) {
+		pushValue(l,UnityEngine.SystemInfo.graphicsMultiThreaded);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -133,11 +147,6 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_supportsStencil(IntPtr l) {
 		pushValue(l,UnityEngine.SystemInfo.supportsStencil);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_supportsVertexPrograms(IntPtr l) {
-		pushValue(l,UnityEngine.SystemInfo.supportsVertexPrograms);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -193,6 +202,7 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SystemInfo");
 		addMember(l,SupportsRenderTextureFormat_s);
+		addMember(l,SupportsTextureFormat_s);
 		addMember(l,"operatingSystem",get_operatingSystem,null,false);
 		addMember(l,"processorType",get_processorType,null,false);
 		addMember(l,"processorCount",get_processorCount,null,false);
@@ -204,7 +214,7 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 		addMember(l,"graphicsDeviceVendorID",get_graphicsDeviceVendorID,null,false);
 		addMember(l,"graphicsDeviceVersion",get_graphicsDeviceVersion,null,false);
 		addMember(l,"graphicsShaderLevel",get_graphicsShaderLevel,null,false);
-		addMember(l,"graphicsPixelFillrate",get_graphicsPixelFillrate,null,false);
+		addMember(l,"graphicsMultiThreaded",get_graphicsMultiThreaded,null,false);
 		addMember(l,"supportsShadows",get_supportsShadows,null,false);
 		addMember(l,"supportsRenderTextures",get_supportsRenderTextures,null,false);
 		addMember(l,"supportsRenderToCubemap",get_supportsRenderToCubemap,null,false);
@@ -215,7 +225,6 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 		addMember(l,"supportsSparseTextures",get_supportsSparseTextures,null,false);
 		addMember(l,"supportedRenderTargetCount",get_supportedRenderTargetCount,null,false);
 		addMember(l,"supportsStencil",get_supportsStencil,null,false);
-		addMember(l,"supportsVertexPrograms",get_supportsVertexPrograms,null,false);
 		addMember(l,"npotSupport",get_npotSupport,null,false);
 		addMember(l,"deviceUniqueIdentifier",get_deviceUniqueIdentifier,null,false);
 		addMember(l,"deviceName",get_deviceName,null,false);

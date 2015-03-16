@@ -110,9 +110,33 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isFiredByLegacy(IntPtr l) {
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
+		pushValue(l,o.isFiredByLegacy);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isFiredByAnimator(IntPtr l) {
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
+		pushValue(l,o.isFiredByAnimator);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_animationState(IntPtr l) {
 		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
 		pushValue(l,o.animationState);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_animatorStateInfo(IntPtr l) {
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
+		pushValue(l,o.animatorStateInfo);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_animatorClipInfo(IntPtr l) {
+		UnityEngine.AnimationEvent o = (UnityEngine.AnimationEvent)checkSelf(l);
+		pushValue(l,o.animatorClipInfo);
 		return 1;
 	}
 	static public void reg(IntPtr l) {
@@ -124,7 +148,11 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 		addMember(l,"functionName",get_functionName,set_functionName,true);
 		addMember(l,"time",get_time,set_time,true);
 		addMember(l,"messageOptions",get_messageOptions,set_messageOptions,true);
+		addMember(l,"isFiredByLegacy",get_isFiredByLegacy,null,true);
+		addMember(l,"isFiredByAnimator",get_isFiredByAnimator,null,true);
 		addMember(l,"animationState",get_animationState,null,true);
+		addMember(l,"animatorStateInfo",get_animatorStateInfo,null,true);
+		addMember(l,"animatorClipInfo",get_animatorClipInfo,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimationEvent));
 	}
 }

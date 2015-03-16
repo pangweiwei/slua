@@ -51,38 +51,9 @@ public class Lua_UnityEngine_Screen : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_GetResolution(IntPtr l) {
-		pushValue(l,UnityEngine.Screen.GetResolution);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_currentResolution(IntPtr l) {
 		pushValue(l,UnityEngine.Screen.currentResolution);
 		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_showCursor(IntPtr l) {
-		pushValue(l,UnityEngine.Screen.showCursor);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_showCursor(IntPtr l) {
-		bool v;
-		checkType(l,2,out v);
-		UnityEngine.Screen.showCursor=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_lockCursor(IntPtr l) {
-		pushValue(l,UnityEngine.Screen.lockCursor);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_lockCursor(IntPtr l) {
-		bool v;
-		checkType(l,2,out v);
-		UnityEngine.Screen.lockCursor=v;
-		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_width(IntPtr l) {
@@ -187,10 +158,7 @@ public class Lua_UnityEngine_Screen : LuaObject {
 		getTypeTable(l,"UnityEngine.Screen");
 		addMember(l,SetResolution_s);
 		addMember(l,"resolutions",get_resolutions,null,false);
-		addMember(l,"GetResolution",get_GetResolution,null,false);
 		addMember(l,"currentResolution",get_currentResolution,null,false);
-		addMember(l,"showCursor",get_showCursor,set_showCursor,false);
-		addMember(l,"lockCursor",get_lockCursor,set_lockCursor,false);
 		addMember(l,"width",get_width,null,false);
 		addMember(l,"height",get_height,null,false);
 		addMember(l,"dpi",get_dpi,null,false);

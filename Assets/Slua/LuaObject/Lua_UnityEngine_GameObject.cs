@@ -355,41 +355,12 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddComponent(IntPtr l) {
 		try{
-			int argc = LuaDLL.lua_gettop(l);
-			if(matchType(l,argc,2,typeof(string))){
-				UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
-				System.String a1;
-				checkType(l,2,out a1);
-				UnityEngine.Component ret=self.AddComponent(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			else if(matchType(l,argc,2,typeof(System.Type))){
-				UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
-				System.Type a1;
-				checkType(l,2,out a1);
-				UnityEngine.Component ret=self.AddComponent(a1);
-				pushValue(l,ret);
-				return 1;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SampleAnimation(IntPtr l) {
-		try{
 			UnityEngine.GameObject self=(UnityEngine.GameObject)checkSelf(l);
-			UnityEngine.AnimationClip a1;
+			System.Type a1;
 			checkType(l,2,out a1);
-			System.Single a2;
-			checkType(l,3,out a2);
-			self.SampleAnimation(a1,a2);
-			return 0;
+			UnityEngine.Component ret=self.AddComponent(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -467,113 +438,9 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_isStatic(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.isStatic);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_isStatic(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		bool v;
-		checkType(l,2,out v);
-		o.isStatic=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_transform(IntPtr l) {
 		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
 		pushValue(l,o.transform);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_rigidbody(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.rigidbody);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_rigidbody2D(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.rigidbody2D);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_camera(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.camera);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_light(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.light);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_animation(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.animation);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_constantForce(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.constantForce);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_renderer(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.renderer);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_audio(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.audio);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_guiText(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.guiText);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_guiTexture(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.guiTexture);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_collider(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.collider);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_collider2D(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.collider2D);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_hingeJoint(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.hingeJoint);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_particleEmitter(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.particleEmitter);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_particleSystem(IntPtr l) {
-		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
-		pushValue(l,o.particleSystem);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -601,6 +468,20 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
 		pushValue(l,o.activeInHierarchy);
 		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isStatic(IntPtr l) {
+		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
+		pushValue(l,o.isStatic);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_isStatic(IntPtr l) {
+		UnityEngine.GameObject o = (UnityEngine.GameObject)checkSelf(l);
+		bool v;
+		checkType(l,2,out v);
+		o.isStatic=v;
+		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_tag(IntPtr l) {
@@ -636,32 +517,16 @@ public class Lua_UnityEngine_GameObject : LuaObject {
 		addMember(l,SendMessage);
 		addMember(l,BroadcastMessage);
 		addMember(l,AddComponent);
-		addMember(l,SampleAnimation);
 		addMember(l,CreatePrimitive_s);
 		addMember(l,FindGameObjectWithTag_s);
 		addMember(l,FindWithTag_s);
 		addMember(l,FindGameObjectsWithTag_s);
 		addMember(l,Find_s);
-		addMember(l,"isStatic",get_isStatic,set_isStatic,true);
 		addMember(l,"transform",get_transform,null,true);
-		addMember(l,"rigidbody",get_rigidbody,null,true);
-		addMember(l,"rigidbody2D",get_rigidbody2D,null,true);
-		addMember(l,"camera",get_camera,null,true);
-		addMember(l,"light",get_light,null,true);
-		addMember(l,"animation",get_animation,null,true);
-		addMember(l,"constantForce",get_constantForce,null,true);
-		addMember(l,"renderer",get_renderer,null,true);
-		addMember(l,"audio",get_audio,null,true);
-		addMember(l,"guiText",get_guiText,null,true);
-		addMember(l,"guiTexture",get_guiTexture,null,true);
-		addMember(l,"collider",get_collider,null,true);
-		addMember(l,"collider2D",get_collider2D,null,true);
-		addMember(l,"hingeJoint",get_hingeJoint,null,true);
-		addMember(l,"particleEmitter",get_particleEmitter,null,true);
-		addMember(l,"particleSystem",get_particleSystem,null,true);
 		addMember(l,"layer",get_layer,set_layer,true);
 		addMember(l,"activeSelf",get_activeSelf,null,true);
 		addMember(l,"activeInHierarchy",get_activeInHierarchy,null,true);
+		addMember(l,"isStatic",get_isStatic,set_isStatic,true);
 		addMember(l,"tag",get_tag,set_tag,true);
 		addMember(l,"gameObject",get_gameObject,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.GameObject),typeof(UnityEngine.Object));

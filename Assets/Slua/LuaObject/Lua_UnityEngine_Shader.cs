@@ -52,6 +52,20 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int IsKeywordEnabled_s(IntPtr l) {
+		try{
+			System.String a1;
+			checkType(l,1,out a1);
+			System.Boolean ret=UnityEngine.Shader.IsKeywordEnabled(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetGlobalColor_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
@@ -220,36 +234,6 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetGlobalTexGenMode_s(IntPtr l) {
-		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			UnityEngine.TexGenMode a2;
-			checkEnum(l,2,out a2);
-			UnityEngine.Shader.SetGlobalTexGenMode(a1,a2);
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetGlobalTextureMatrixName_s(IntPtr l) {
-		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			System.String a2;
-			checkType(l,2,out a2);
-			UnityEngine.Shader.SetGlobalTextureMatrixName(a1,a2);
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetGlobalBuffer_s(IntPtr l) {
 		try{
 			System.String a1;
@@ -332,14 +316,13 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		addMember(l,Find_s);
 		addMember(l,EnableKeyword_s);
 		addMember(l,DisableKeyword_s);
+		addMember(l,IsKeywordEnabled_s);
 		addMember(l,SetGlobalColor_s);
 		addMember(l,SetGlobalVector_s);
 		addMember(l,SetGlobalFloat_s);
 		addMember(l,SetGlobalInt_s);
 		addMember(l,SetGlobalTexture_s);
 		addMember(l,SetGlobalMatrix_s);
-		addMember(l,SetGlobalTexGenMode_s);
-		addMember(l,SetGlobalTextureMatrixName_s);
 		addMember(l,SetGlobalBuffer_s);
 		addMember(l,PropertyToID_s);
 		addMember(l,WarmupAllShaders_s);

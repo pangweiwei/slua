@@ -322,17 +322,31 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_uv1(IntPtr l) {
+	static public int get_uv3(IntPtr l) {
 		UnityEngine.Mesh o = (UnityEngine.Mesh)checkSelf(l);
-		pushValue(l,o.uv1);
+		pushValue(l,o.uv3);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_uv1(IntPtr l) {
+	static public int set_uv3(IntPtr l) {
 		UnityEngine.Mesh o = (UnityEngine.Mesh)checkSelf(l);
 		UnityEngine.Vector2[] v;
 		checkType(l,2,out v);
-		o.uv1=v;
+		o.uv3=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_uv4(IntPtr l) {
+		UnityEngine.Mesh o = (UnityEngine.Mesh)checkSelf(l);
+		pushValue(l,o.uv4);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_uv4(IntPtr l) {
+		UnityEngine.Mesh o = (UnityEngine.Mesh)checkSelf(l);
+		UnityEngine.Vector2[] v;
+		checkType(l,2,out v);
+		o.uv4=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -467,7 +481,8 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		addMember(l,"tangents",get_tangents,set_tangents,true);
 		addMember(l,"uv",get_uv,set_uv,true);
 		addMember(l,"uv2",get_uv2,set_uv2,true);
-		addMember(l,"uv1",get_uv1,set_uv1,true);
+		addMember(l,"uv3",get_uv3,set_uv3,true);
+		addMember(l,"uv4",get_uv4,set_uv4,true);
 		addMember(l,"bounds",get_bounds,set_bounds,true);
 		addMember(l,"colors",get_colors,set_colors,true);
 		addMember(l,"colors32",get_colors32,set_colors32,true);

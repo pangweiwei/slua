@@ -69,12 +69,28 @@ public class Lua_UnityEngine_JointLimits : LuaObject {
 		setBack(l,o);
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_contactDistance(IntPtr l) {
+		UnityEngine.JointLimits o = (UnityEngine.JointLimits)checkSelf(l);
+		pushValue(l,o.contactDistance);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_contactDistance(IntPtr l) {
+		UnityEngine.JointLimits o = (UnityEngine.JointLimits)checkSelf(l);
+		float v;
+		checkType(l,2,out v);
+		o.contactDistance=v;
+		setBack(l,o);
+		return 0;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.JointLimits");
 		addMember(l,"min",get_min,set_min,true);
 		addMember(l,"minBounce",get_minBounce,set_minBounce,true);
 		addMember(l,"max",get_max,set_max,true);
 		addMember(l,"maxBounce",get_maxBounce,set_maxBounce,true);
+		addMember(l,"contactDistance",get_contactDistance,set_contactDistance,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.JointLimits));
 	}
 }

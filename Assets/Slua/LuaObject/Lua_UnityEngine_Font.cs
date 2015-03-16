@@ -126,6 +126,48 @@ public class Lua_UnityEngine_Font : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetOSInstalledFontNames_s(IntPtr l) {
+		try{
+			System.String[] ret=UnityEngine.Font.GetOSInstalledFontNames();
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int CreateDynamicFontFromOSFont_s(IntPtr l) {
+		try{
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,1,typeof(string),typeof(int))){
+				System.String a1;
+				checkType(l,1,out a1);
+				System.Int32 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Font ret=UnityEngine.Font.CreateDynamicFontFromOSFont(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,argc,1,typeof(System.String[]),typeof(int))){
+				System.String[] a1;
+				checkType(l,1,out a1);
+				System.Int32 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Font ret=UnityEngine.Font.CreateDynamicFontFromOSFont(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetMaxVertsForString_s(IntPtr l) {
 		try{
 			System.String a1;
@@ -182,19 +224,21 @@ public class Lua_UnityEngine_Font : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_textureRebuildCallback(IntPtr l) {
-		LuaDLL.luaL_error(l,"Not support");
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_textureRebuildCallback(IntPtr l) {
-		LuaDLL.luaL_error(l,"Not support");
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_dynamic(IntPtr l) {
 		UnityEngine.Font o = (UnityEngine.Font)checkSelf(l);
 		pushValue(l,o.dynamic);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_ascent(IntPtr l) {
+		UnityEngine.Font o = (UnityEngine.Font)checkSelf(l);
+		pushValue(l,o.ascent);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_lineHeight(IntPtr l) {
+		UnityEngine.Font o = (UnityEngine.Font)checkSelf(l);
+		pushValue(l,o.lineHeight);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -208,12 +252,15 @@ public class Lua_UnityEngine_Font : LuaObject {
 		addMember(l,HasCharacter);
 		addMember(l,RequestCharactersInTexture);
 		addMember(l,GetCharacterInfo);
+		addMember(l,GetOSInstalledFontNames_s);
+		addMember(l,CreateDynamicFontFromOSFont_s);
 		addMember(l,GetMaxVertsForString_s);
 		addMember(l,"material",get_material,set_material,true);
 		addMember(l,"fontNames",get_fontNames,set_fontNames,true);
 		addMember(l,"characterInfo",get_characterInfo,set_characterInfo,true);
-		addMember(l,"textureRebuildCallback",get_textureRebuildCallback,set_textureRebuildCallback,true);
 		addMember(l,"dynamic",get_dynamic,null,true);
+		addMember(l,"ascent",get_ascent,null,true);
+		addMember(l,"lineHeight",get_lineHeight,null,true);
 		addMember(l,"fontSize",get_fontSize,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Font),typeof(UnityEngine.Object));
 	}

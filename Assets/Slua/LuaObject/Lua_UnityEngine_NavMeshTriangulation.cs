@@ -40,17 +40,17 @@ public class Lua_UnityEngine_NavMeshTriangulation : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_layers(IntPtr l) {
+	static public int get_areas(IntPtr l) {
 		UnityEngine.NavMeshTriangulation o = (UnityEngine.NavMeshTriangulation)checkSelf(l);
-		pushValue(l,o.layers);
+		pushValue(l,o.areas);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_layers(IntPtr l) {
+	static public int set_areas(IntPtr l) {
 		UnityEngine.NavMeshTriangulation o = (UnityEngine.NavMeshTriangulation)checkSelf(l);
 		System.Int32[] v;
 		checkType(l,2,out v);
-		o.layers=v;
+		o.areas=v;
 		setBack(l,o);
 		return 0;
 	}
@@ -58,7 +58,7 @@ public class Lua_UnityEngine_NavMeshTriangulation : LuaObject {
 		getTypeTable(l,"UnityEngine.NavMeshTriangulation");
 		addMember(l,"vertices",get_vertices,set_vertices,true);
 		addMember(l,"indices",get_indices,set_indices,true);
-		addMember(l,"layers",get_layers,set_layers,true);
+		addMember(l,"areas",get_areas,set_areas,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.NavMeshTriangulation));
 	}
 }

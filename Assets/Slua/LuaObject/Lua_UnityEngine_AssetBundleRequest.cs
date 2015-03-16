@@ -17,9 +17,16 @@ public class Lua_UnityEngine_AssetBundleRequest : LuaObject {
 		pushValue(l,o.asset);
 		return 1;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_allAssets(IntPtr l) {
+		UnityEngine.AssetBundleRequest o = (UnityEngine.AssetBundleRequest)checkSelf(l);
+		pushValue(l,o.allAssets);
+		return 1;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AssetBundleRequest");
 		addMember(l,"asset",get_asset,null,true);
+		addMember(l,"allAssets",get_allAssets,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AssetBundleRequest),typeof(UnityEngine.AsyncOperation));
 	}
 }

@@ -12,6 +12,21 @@ public class Lua_UnityEngine_NavMeshPath : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetCornersNonAlloc(IntPtr l) {
+		try{
+			UnityEngine.NavMeshPath self=(UnityEngine.NavMeshPath)checkSelf(l);
+			UnityEngine.Vector3[] a1;
+			checkType(l,2,out a1);
+			System.Int32 ret=self.GetCornersNonAlloc(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ClearCorners(IntPtr l) {
 		try{
 			UnityEngine.NavMeshPath self=(UnityEngine.NavMeshPath)checkSelf(l);
@@ -37,6 +52,7 @@ public class Lua_UnityEngine_NavMeshPath : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.NavMeshPath");
+		addMember(l,GetCornersNonAlloc);
 		addMember(l,ClearCorners);
 		addMember(l,"corners",get_corners,null,true);
 		addMember(l,"status",get_status,null,true);

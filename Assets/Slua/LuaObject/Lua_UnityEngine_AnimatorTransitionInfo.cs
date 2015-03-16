@@ -40,6 +40,12 @@ public class Lua_UnityEngine_AnimatorTransitionInfo : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_fullPathHash(IntPtr l) {
+		UnityEngine.AnimatorTransitionInfo o = (UnityEngine.AnimatorTransitionInfo)checkSelf(l);
+		pushValue(l,o.fullPathHash);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_nameHash(IntPtr l) {
 		UnityEngine.AnimatorTransitionInfo o = (UnityEngine.AnimatorTransitionInfo)checkSelf(l);
 		pushValue(l,o.nameHash);
@@ -57,13 +63,21 @@ public class Lua_UnityEngine_AnimatorTransitionInfo : LuaObject {
 		pushValue(l,o.normalizedTime);
 		return 1;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_anyState(IntPtr l) {
+		UnityEngine.AnimatorTransitionInfo o = (UnityEngine.AnimatorTransitionInfo)checkSelf(l);
+		pushValue(l,o.anyState);
+		return 1;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimatorTransitionInfo");
 		addMember(l,IsName);
 		addMember(l,IsUserName);
+		addMember(l,"fullPathHash",get_fullPathHash,null,true);
 		addMember(l,"nameHash",get_nameHash,null,true);
 		addMember(l,"userNameHash",get_userNameHash,null,true);
 		addMember(l,"normalizedTime",get_normalizedTime,null,true);
+		addMember(l,"anyState",get_anyState,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimatorTransitionInfo));
 	}
 }

@@ -575,6 +575,20 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_maxDepenetrationVelocity(IntPtr l) {
+		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
+		pushValue(l,o.maxDepenetrationVelocity);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_maxDepenetrationVelocity(IntPtr l) {
+		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
+		float v;
+		checkType(l,2,out v);
+		o.maxDepenetrationVelocity=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isKinematic(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
 		pushValue(l,o.isKinematic);
@@ -763,31 +777,17 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_sleepVelocity(IntPtr l) {
+	static public int get_sleepThreshold(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		pushValue(l,o.sleepVelocity);
+		pushValue(l,o.sleepThreshold);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_sleepVelocity(IntPtr l) {
+	static public int set_sleepThreshold(IntPtr l) {
 		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
 		float v;
 		checkType(l,2,out v);
-		o.sleepVelocity=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_sleepAngularVelocity(IntPtr l) {
-		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		pushValue(l,o.sleepAngularVelocity);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_sleepAngularVelocity(IntPtr l) {
-		UnityEngine.Rigidbody o = (UnityEngine.Rigidbody)checkSelf(l);
-		float v;
-		checkType(l,2,out v);
-		o.sleepAngularVelocity=v;
+		o.sleepThreshold=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -829,6 +829,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 		addMember(l,"angularDrag",get_angularDrag,set_angularDrag,true);
 		addMember(l,"mass",get_mass,set_mass,true);
 		addMember(l,"useGravity",get_useGravity,set_useGravity,true);
+		addMember(l,"maxDepenetrationVelocity",get_maxDepenetrationVelocity,set_maxDepenetrationVelocity,true);
 		addMember(l,"isKinematic",get_isKinematic,set_isKinematic,true);
 		addMember(l,"freezeRotation",get_freezeRotation,set_freezeRotation,true);
 		addMember(l,"constraints",get_constraints,set_constraints,true);
@@ -843,8 +844,7 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 		addMember(l,"rotation",get_rotation,set_rotation,true);
 		addMember(l,"interpolation",get_interpolation,set_interpolation,true);
 		addMember(l,"solverIterationCount",get_solverIterationCount,set_solverIterationCount,true);
-		addMember(l,"sleepVelocity",get_sleepVelocity,set_sleepVelocity,true);
-		addMember(l,"sleepAngularVelocity",get_sleepAngularVelocity,set_sleepAngularVelocity,true);
+		addMember(l,"sleepThreshold",get_sleepThreshold,set_sleepThreshold,true);
 		addMember(l,"maxAngularVelocity",get_maxAngularVelocity,set_maxAngularVelocity,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Rigidbody),typeof(UnityEngine.Component));
 	}

@@ -36,18 +36,6 @@ public class Lua_UnityEngine_LightmapSettings : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_bakedColorSpace(IntPtr l) {
-		pushEnum(l,(int)UnityEngine.LightmapSettings.bakedColorSpace);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_bakedColorSpace(IntPtr l) {
-		UnityEngine.ColorSpace v;
-		checkEnum(l,2,out v);
-		UnityEngine.LightmapSettings.bakedColorSpace=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_lightProbes(IntPtr l) {
 		pushValue(l,UnityEngine.LightmapSettings.lightProbes);
 		return 1;
@@ -63,7 +51,6 @@ public class Lua_UnityEngine_LightmapSettings : LuaObject {
 		getTypeTable(l,"UnityEngine.LightmapSettings");
 		addMember(l,"lightmaps",get_lightmaps,set_lightmaps,false);
 		addMember(l,"lightmapsMode",get_lightmapsMode,set_lightmapsMode,false);
-		addMember(l,"bakedColorSpace",get_bakedColorSpace,set_bakedColorSpace,false);
 		addMember(l,"lightProbes",get_lightProbes,set_lightProbes,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LightmapSettings),typeof(UnityEngine.Object));
 	}

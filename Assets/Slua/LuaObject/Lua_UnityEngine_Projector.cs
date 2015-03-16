@@ -68,20 +68,6 @@ public class Lua_UnityEngine_Projector : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_isOrthoGraphic(IntPtr l) {
-		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		pushValue(l,o.isOrthoGraphic);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_isOrthoGraphic(IntPtr l) {
-		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		bool v;
-		checkType(l,2,out v);
-		o.isOrthoGraphic=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_orthographic(IntPtr l) {
 		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
 		pushValue(l,o.orthographic);
@@ -107,20 +93,6 @@ public class Lua_UnityEngine_Projector : LuaObject {
 		float v;
 		checkType(l,2,out v);
 		o.orthographicSize=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_orthoGraphicSize(IntPtr l) {
-		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		pushValue(l,o.orthoGraphicSize);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_orthoGraphicSize(IntPtr l) {
-		UnityEngine.Projector o = (UnityEngine.Projector)checkSelf(l);
-		float v;
-		checkType(l,2,out v);
-		o.orthoGraphicSize=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -157,10 +129,8 @@ public class Lua_UnityEngine_Projector : LuaObject {
 		addMember(l,"farClipPlane",get_farClipPlane,set_farClipPlane,true);
 		addMember(l,"fieldOfView",get_fieldOfView,set_fieldOfView,true);
 		addMember(l,"aspectRatio",get_aspectRatio,set_aspectRatio,true);
-		addMember(l,"isOrthoGraphic",get_isOrthoGraphic,set_isOrthoGraphic,true);
 		addMember(l,"orthographic",get_orthographic,set_orthographic,true);
 		addMember(l,"orthographicSize",get_orthographicSize,set_orthographicSize,true);
-		addMember(l,"orthoGraphicSize",get_orthoGraphicSize,set_orthoGraphicSize,true);
 		addMember(l,"ignoreLayers",get_ignoreLayers,set_ignoreLayers,true);
 		addMember(l,"material",get_material,set_material,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Projector),typeof(UnityEngine.Behaviour));

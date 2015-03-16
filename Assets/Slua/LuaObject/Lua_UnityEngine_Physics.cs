@@ -880,15 +880,15 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_minPenetrationForPenalty(IntPtr l) {
-		pushValue(l,UnityEngine.Physics.minPenetrationForPenalty);
+	static public int get_defaultContactOffset(IntPtr l) {
+		pushValue(l,UnityEngine.Physics.defaultContactOffset);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_minPenetrationForPenalty(IntPtr l) {
+	static public int set_defaultContactOffset(IntPtr l) {
 		float v;
 		checkType(l,2,out v);
-		UnityEngine.Physics.minPenetrationForPenalty=v;
+		UnityEngine.Physics.defaultContactOffset=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -904,42 +904,6 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_sleepVelocity(IntPtr l) {
-		pushValue(l,UnityEngine.Physics.sleepVelocity);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_sleepVelocity(IntPtr l) {
-		float v;
-		checkType(l,2,out v);
-		UnityEngine.Physics.sleepVelocity=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_sleepAngularVelocity(IntPtr l) {
-		pushValue(l,UnityEngine.Physics.sleepAngularVelocity);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_sleepAngularVelocity(IntPtr l) {
-		float v;
-		checkType(l,2,out v);
-		UnityEngine.Physics.sleepAngularVelocity=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_maxAngularVelocity(IntPtr l) {
-		pushValue(l,UnityEngine.Physics.maxAngularVelocity);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_maxAngularVelocity(IntPtr l) {
-		float v;
-		checkType(l,2,out v);
-		UnityEngine.Physics.maxAngularVelocity=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_solverIterationCount(IntPtr l) {
 		pushValue(l,UnityEngine.Physics.solverIterationCount);
 		return 1;
@@ -949,6 +913,18 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		int v;
 		checkType(l,2,out v);
 		UnityEngine.Physics.solverIterationCount=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sleepThreshold(IntPtr l) {
+		pushValue(l,UnityEngine.Physics.sleepThreshold);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_sleepThreshold(IntPtr l) {
+		float v;
+		checkType(l,2,out v);
+		UnityEngine.Physics.sleepThreshold=v;
 		return 0;
 	}
 	static public void reg(IntPtr l) {
@@ -973,12 +949,10 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		addMember(l,"DefaultRaycastLayers",get_DefaultRaycastLayers,null,false);
 		addMember(l,"AllLayers",get_AllLayers,null,false);
 		addMember(l,"gravity",get_gravity,set_gravity,false);
-		addMember(l,"minPenetrationForPenalty",get_minPenetrationForPenalty,set_minPenetrationForPenalty,false);
+		addMember(l,"defaultContactOffset",get_defaultContactOffset,set_defaultContactOffset,false);
 		addMember(l,"bounceThreshold",get_bounceThreshold,set_bounceThreshold,false);
-		addMember(l,"sleepVelocity",get_sleepVelocity,set_sleepVelocity,false);
-		addMember(l,"sleepAngularVelocity",get_sleepAngularVelocity,set_sleepAngularVelocity,false);
-		addMember(l,"maxAngularVelocity",get_maxAngularVelocity,set_maxAngularVelocity,false);
 		addMember(l,"solverIterationCount",get_solverIterationCount,set_solverIterationCount,false);
+		addMember(l,"sleepThreshold",get_sleepThreshold,set_sleepThreshold,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Physics));
 	}
 }

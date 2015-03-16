@@ -6,10 +6,8 @@ using System.Collections.Generic;
 public class Lua_UnityEngine_ParticleEmitter : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int constructor(IntPtr l) {
-		UnityEngine.ParticleEmitter o;
-		o=new UnityEngine.ParticleEmitter();
-		pushObject(l,o);
-		return 1;
+		LuaDLL.luaL_error(l,"New object failed.");
+		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int ClearParticles(IntPtr l) {

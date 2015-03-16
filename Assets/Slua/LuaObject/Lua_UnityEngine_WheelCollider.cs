@@ -12,6 +12,24 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ConfigureVehicleSubsteps(IntPtr l) {
+		try{
+			UnityEngine.WheelCollider self=(UnityEngine.WheelCollider)checkSelf(l);
+			System.Single a1;
+			checkType(l,2,out a1);
+			System.Int32 a2;
+			checkType(l,3,out a2);
+			System.Int32 a3;
+			checkType(l,4,out a3);
+			self.ConfigureVehicleSubsteps(a1,a2,a3);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetGroundHit(IntPtr l) {
 		try{
 			UnityEngine.WheelCollider self=(UnityEngine.WheelCollider)checkSelf(l);
@@ -19,6 +37,22 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 			System.Boolean ret=self.GetGroundHit(out a1);
 			pushValue(l,ret);
 			pushValue(l,a1);
+			return 2;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetWorldPose(IntPtr l) {
+		try{
+			UnityEngine.WheelCollider self=(UnityEngine.WheelCollider)checkSelf(l);
+			UnityEngine.Vector3 a1;
+			UnityEngine.Quaternion a2;
+			self.GetWorldPose(out a1,out a2);
+			pushValue(l,a1);
+			pushValue(l,a2);
 			return 2;
 		}
 		catch(Exception e) {
@@ -83,6 +117,20 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_forceAppPointDistance(IntPtr l) {
+		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
+		pushValue(l,o.forceAppPointDistance);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_forceAppPointDistance(IntPtr l) {
+		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
+		float v;
+		checkType(l,2,out v);
+		o.forceAppPointDistance=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mass(IntPtr l) {
 		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
 		pushValue(l,o.mass);
@@ -94,6 +142,20 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 		float v;
 		checkType(l,2,out v);
 		o.mass=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_wheelDampingRate(IntPtr l) {
+		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
+		pushValue(l,o.wheelDampingRate);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_wheelDampingRate(IntPtr l) {
+		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
+		float v;
+		checkType(l,2,out v);
+		o.wheelDampingRate=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -173,6 +235,12 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sprungMass(IntPtr l) {
+		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
+		pushValue(l,o.sprungMass);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rpm(IntPtr l) {
 		UnityEngine.WheelCollider o = (UnityEngine.WheelCollider)checkSelf(l);
 		pushValue(l,o.rpm);
@@ -180,18 +248,23 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.WheelCollider");
+		addMember(l,ConfigureVehicleSubsteps);
 		addMember(l,GetGroundHit);
+		addMember(l,GetWorldPose);
 		addMember(l,"center",get_center,set_center,true);
 		addMember(l,"radius",get_radius,set_radius,true);
 		addMember(l,"suspensionDistance",get_suspensionDistance,set_suspensionDistance,true);
 		addMember(l,"suspensionSpring",get_suspensionSpring,set_suspensionSpring,true);
+		addMember(l,"forceAppPointDistance",get_forceAppPointDistance,set_forceAppPointDistance,true);
 		addMember(l,"mass",get_mass,set_mass,true);
+		addMember(l,"wheelDampingRate",get_wheelDampingRate,set_wheelDampingRate,true);
 		addMember(l,"forwardFriction",get_forwardFriction,set_forwardFriction,true);
 		addMember(l,"sidewaysFriction",get_sidewaysFriction,set_sidewaysFriction,true);
 		addMember(l,"motorTorque",get_motorTorque,set_motorTorque,true);
 		addMember(l,"brakeTorque",get_brakeTorque,set_brakeTorque,true);
 		addMember(l,"steerAngle",get_steerAngle,set_steerAngle,true);
 		addMember(l,"isGrounded",get_isGrounded,null,true);
+		addMember(l,"sprungMass",get_sprungMass,null,true);
 		addMember(l,"rpm",get_rpm,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.WheelCollider),typeof(UnityEngine.Collider));
 	}

@@ -416,6 +416,68 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetIKHintPosition(IntPtr l) {
+		try{
+			UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
+			UnityEngine.AvatarIKHint a1;
+			checkEnum(l,2,out a1);
+			UnityEngine.Vector3 ret=self.GetIKHintPosition(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetIKHintPosition(IntPtr l) {
+		try{
+			UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
+			UnityEngine.AvatarIKHint a1;
+			checkEnum(l,2,out a1);
+			UnityEngine.Vector3 a2;
+			checkType(l,3,out a2);
+			self.SetIKHintPosition(a1,a2);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetIKHintPositionWeight(IntPtr l) {
+		try{
+			UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
+			UnityEngine.AvatarIKHint a1;
+			checkEnum(l,2,out a1);
+			System.Single ret=self.GetIKHintPositionWeight(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetIKHintPositionWeight(IntPtr l) {
+		try{
+			UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
+			UnityEngine.AvatarIKHint a1;
+			checkEnum(l,2,out a1);
+			System.Single a2;
+			checkType(l,3,out a2);
+			self.SetIKHintPositionWeight(a1,a2);
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetLookAtPosition(IntPtr l) {
 		try{
 			UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
@@ -433,22 +495,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	static public int SetLookAtWeight(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==6){
-				UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
-				System.Single a1;
-				checkType(l,2,out a1);
-				System.Single a2;
-				checkType(l,3,out a2);
-				System.Single a3;
-				checkType(l,4,out a3);
-				System.Single a4;
-				checkType(l,5,out a4);
-				System.Single a5;
-				checkType(l,6,out a5);
-				self.SetLookAtWeight(a1,a2,a3,a4,a5);
-				return 0;
-			}
-			else if(argc==5){
+			if(argc==5){
 				UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 				System.Single a1;
 				checkType(l,2,out a1);
@@ -488,6 +535,21 @@ public class Lua_UnityEngine_Animator : LuaObject {
 				self.SetLookAtWeight(a1);
 				return 0;
 			}
+			else if(argc==6){
+				UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
+				System.Single a1;
+				checkType(l,2,out a1);
+				System.Single a2;
+				checkType(l,3,out a2);
+				System.Single a3;
+				checkType(l,4,out a3);
+				System.Single a4;
+				checkType(l,5,out a4);
+				System.Single a5;
+				checkType(l,6,out a5);
+				self.SetLookAtWeight(a1,a2,a3,a4,a5);
+				return 0;
+			}
 			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}
@@ -503,6 +565,21 @@ public class Lua_UnityEngine_Animator : LuaObject {
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			System.String ret=self.GetLayerName(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetLayerIndex(IntPtr l) {
+		try{
+			UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
+			System.String a1;
+			checkType(l,2,out a1);
+			System.Int32 ret=self.GetLayerIndex(a1);
 			pushValue(l,ret);
 			return 1;
 		}
@@ -588,12 +665,12 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetCurrentAnimationClipState(IntPtr l) {
+	static public int GetCurrentAnimatorClipInfo(IntPtr l) {
 		try{
 			UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
-			UnityEngine.AnimationInfo[] ret=self.GetCurrentAnimationClipState(a1);
+			UnityEngine.AnimatorClipInfo[] ret=self.GetCurrentAnimatorClipInfo(a1);
 			pushValue(l,ret);
 			return 1;
 		}
@@ -603,12 +680,12 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetNextAnimationClipState(IntPtr l) {
+	static public int GetNextAnimatorClipInfo(IntPtr l) {
 		try{
 			UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
-			UnityEngine.AnimationInfo[] ret=self.GetNextAnimationClipState(a1);
+			UnityEngine.AnimatorClipInfo[] ret=self.GetNextAnimatorClipInfo(a1);
 			pushValue(l,ret);
 			return 1;
 		}
@@ -926,6 +1003,23 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int HasState(IntPtr l) {
+		try{
+			UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
+			System.Int32 a1;
+			checkType(l,2,out a1);
+			System.Int32 a2;
+			checkType(l,3,out a2);
+			System.Boolean ret=self.HasState(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Update(IntPtr l) {
 		try{
 			UnityEngine.Animator self=(UnityEngine.Animator)checkSelf(l);
@@ -1002,6 +1096,18 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_velocity(IntPtr l) {
+		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
+		pushValue(l,o.velocity);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_angularVelocity(IntPtr l) {
+		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
+		pushValue(l,o.angularVelocity);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rootPosition(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
 		pushValue(l,o.rootPosition);
@@ -1041,6 +1147,20 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		bool v;
 		checkType(l,2,out v);
 		o.applyRootMotion=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_linearVelocityBlending(IntPtr l) {
+		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
+		pushValue(l,o.linearVelocityBlending);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_linearVelocityBlending(IntPtr l) {
+		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
+		bool v;
+		checkType(l,2,out v);
+		o.linearVelocityBlending=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -1115,6 +1235,12 @@ public class Lua_UnityEngine_Animator : LuaObject {
 	static public int get_layerCount(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
 		pushValue(l,o.layerCount);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_parameters(IntPtr l) {
+		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
+		pushValue(l,o.parameters);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -1232,6 +1358,12 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_recorderMode(IntPtr l) {
+		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
+		pushEnum(l,(int)o.recorderMode);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_runtimeAnimatorController(IntPtr l) {
 		UnityEngine.Animator o = (UnityEngine.Animator)checkSelf(l);
 		pushValue(l,o.runtimeAnimatorController);
@@ -1332,16 +1464,21 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		addMember(l,SetIKPositionWeight);
 		addMember(l,GetIKRotationWeight);
 		addMember(l,SetIKRotationWeight);
+		addMember(l,GetIKHintPosition);
+		addMember(l,SetIKHintPosition);
+		addMember(l,GetIKHintPositionWeight);
+		addMember(l,SetIKHintPositionWeight);
 		addMember(l,SetLookAtPosition);
 		addMember(l,SetLookAtWeight);
 		addMember(l,GetLayerName);
+		addMember(l,GetLayerIndex);
 		addMember(l,GetLayerWeight);
 		addMember(l,SetLayerWeight);
 		addMember(l,GetCurrentAnimatorStateInfo);
 		addMember(l,GetNextAnimatorStateInfo);
 		addMember(l,GetAnimatorTransitionInfo);
-		addMember(l,GetCurrentAnimationClipState);
-		addMember(l,GetNextAnimationClipState);
+		addMember(l,GetCurrentAnimatorClipInfo);
+		addMember(l,GetNextAnimatorClipInfo);
 		addMember(l,IsInTransition);
 		addMember(l,MatchTarget);
 		addMember(l,InterruptMatchTarget);
@@ -1353,6 +1490,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		addMember(l,StopPlayback);
 		addMember(l,StartRecording);
 		addMember(l,StopRecording);
+		addMember(l,HasState);
 		addMember(l,Update);
 		addMember(l,Rebind);
 		addMember(l,StringToHash_s);
@@ -1362,9 +1500,12 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		addMember(l,"humanScale",get_humanScale,null,true);
 		addMember(l,"deltaPosition",get_deltaPosition,null,true);
 		addMember(l,"deltaRotation",get_deltaRotation,null,true);
+		addMember(l,"velocity",get_velocity,null,true);
+		addMember(l,"angularVelocity",get_angularVelocity,null,true);
 		addMember(l,"rootPosition",get_rootPosition,set_rootPosition,true);
 		addMember(l,"rootRotation",get_rootRotation,set_rootRotation,true);
 		addMember(l,"applyRootMotion",get_applyRootMotion,set_applyRootMotion,true);
+		addMember(l,"linearVelocityBlending",get_linearVelocityBlending,set_linearVelocityBlending,true);
 		addMember(l,"updateMode",get_updateMode,set_updateMode,true);
 		addMember(l,"hasTransformHierarchy",get_hasTransformHierarchy,null,true);
 		addMember(l,"gravityWeight",get_gravityWeight,null,true);
@@ -1372,6 +1513,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		addMember(l,"bodyRotation",get_bodyRotation,set_bodyRotation,true);
 		addMember(l,"stabilizeFeet",get_stabilizeFeet,set_stabilizeFeet,true);
 		addMember(l,"layerCount",get_layerCount,null,true);
+		addMember(l,"parameters",get_parameters,null,true);
 		addMember(l,"feetPivotActive",get_feetPivotActive,set_feetPivotActive,true);
 		addMember(l,"pivotWeight",get_pivotWeight,null,true);
 		addMember(l,"pivotPosition",get_pivotPosition,null,true);
@@ -1383,6 +1525,7 @@ public class Lua_UnityEngine_Animator : LuaObject {
 		addMember(l,"playbackTime",get_playbackTime,set_playbackTime,true);
 		addMember(l,"recorderStartTime",get_recorderStartTime,set_recorderStartTime,true);
 		addMember(l,"recorderStopTime",get_recorderStopTime,set_recorderStopTime,true);
+		addMember(l,"recorderMode",get_recorderMode,null,true);
 		addMember(l,"runtimeAnimatorController",get_runtimeAnimatorController,set_runtimeAnimatorController,true);
 		addMember(l,"avatar",get_avatar,set_avatar,true);
 		addMember(l,"layersAffectMassCenter",get_layersAffectMassCenter,set_layersAffectMassCenter,true);

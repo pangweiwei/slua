@@ -108,12 +108,34 @@ public class Lua_UnityEngine_WWW : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadImageIntoTexture(IntPtr l) {
+	static public int GetAudioClipCompressed(IntPtr l) {
 		try{
-			UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
-			UnityEngine.Texture2D a1;
-			checkType(l,2,out a1);
-			self.LoadImageIntoTexture(a1);
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
+				UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
+				UnityEngine.AudioClip ret=self.GetAudioClipCompressed();
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(argc==2){
+				UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
+				System.Boolean a1;
+				checkType(l,2,out a1);
+				UnityEngine.AudioClip ret=self.GetAudioClipCompressed(a1);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(argc==3){
+				UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
+				System.Boolean a1;
+				checkType(l,2,out a1);
+				UnityEngine.AudioType a2;
+				checkEnum(l,3,out a2);
+				UnityEngine.AudioClip ret=self.GetAudioClipCompressed(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
 			return 0;
 		}
 		catch(Exception e) {
@@ -122,10 +144,12 @@ public class Lua_UnityEngine_WWW : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadUnityWeb(IntPtr l) {
+	static public int LoadImageIntoTexture(IntPtr l) {
 		try{
 			UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
-			self.LoadUnityWeb();
+			UnityEngine.Texture2D a1;
+			checkType(l,2,out a1);
+			self.LoadImageIntoTexture(a1);
 			return 0;
 		}
 		catch(Exception e) {
@@ -193,7 +217,7 @@ public class Lua_UnityEngine_WWW : LuaObject {
 	static public int LoadFromCacheOrDownload_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
+			if(matchType(l,argc,1,typeof(string),typeof(int))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
@@ -202,10 +226,30 @@ public class Lua_UnityEngine_WWW : LuaObject {
 				pushValue(l,ret);
 				return 1;
 			}
-			else if(argc==3){
+			else if(matchType(l,argc,1,typeof(string),typeof(int),typeof(System.UInt32))){
 				System.String a1;
 				checkType(l,1,out a1);
 				System.Int32 a2;
+				checkType(l,2,out a2);
+				System.UInt32 a3;
+				checkType(l,3,out a3);
+				UnityEngine.WWW ret=UnityEngine.WWW.LoadFromCacheOrDownload(a1,a2,a3);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,argc,1,typeof(string),typeof(UnityEngine.Hash128))){
+				System.String a1;
+				checkType(l,1,out a1);
+				UnityEngine.Hash128 a2;
+				checkType(l,2,out a2);
+				UnityEngine.WWW ret=UnityEngine.WWW.LoadFromCacheOrDownload(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(matchType(l,argc,1,typeof(string),typeof(UnityEngine.Hash128),typeof(System.UInt32))){
+				System.String a1;
+				checkType(l,1,out a1);
+				UnityEngine.Hash128 a2;
 				checkType(l,2,out a2);
 				System.UInt32 a3;
 				checkType(l,3,out a3);
@@ -323,8 +367,8 @@ public class Lua_UnityEngine_WWW : LuaObject {
 		getTypeTable(l,"UnityEngine.WWW");
 		addMember(l,InitWWW);
 		addMember(l,GetAudioClip);
+		addMember(l,GetAudioClipCompressed);
 		addMember(l,LoadImageIntoTexture);
-		addMember(l,LoadUnityWeb);
 		addMember(l,EscapeURL_s);
 		addMember(l,UnEscapeURL_s);
 		addMember(l,LoadFromCacheOrDownload_s);

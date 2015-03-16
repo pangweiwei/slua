@@ -26,23 +26,23 @@ public class Lua_UnityEngine_AudioHighPassFilter : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_highpassResonaceQ(IntPtr l) {
+	static public int get_highpassResonanceQ(IntPtr l) {
 		UnityEngine.AudioHighPassFilter o = (UnityEngine.AudioHighPassFilter)checkSelf(l);
-		pushValue(l,o.highpassResonaceQ);
+		pushValue(l,o.highpassResonanceQ);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_highpassResonaceQ(IntPtr l) {
+	static public int set_highpassResonanceQ(IntPtr l) {
 		UnityEngine.AudioHighPassFilter o = (UnityEngine.AudioHighPassFilter)checkSelf(l);
 		float v;
 		checkType(l,2,out v);
-		o.highpassResonaceQ=v;
+		o.highpassResonanceQ=v;
 		return 0;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioHighPassFilter");
 		addMember(l,"cutoffFrequency",get_cutoffFrequency,set_cutoffFrequency,true);
-		addMember(l,"highpassResonaceQ",get_highpassResonaceQ,set_highpassResonaceQ,true);
+		addMember(l,"highpassResonanceQ",get_highpassResonanceQ,set_highpassResonanceQ,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioHighPassFilter),typeof(UnityEngine.Behaviour));
 	}
 }

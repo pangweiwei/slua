@@ -25,36 +25,6 @@ public class Lua_UnityEngine_SoftJointLimit : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_spring(IntPtr l) {
-		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
-		pushValue(l,o.spring);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_spring(IntPtr l) {
-		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
-		float v;
-		checkType(l,2,out v);
-		o.spring=v;
-		setBack(l,o);
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_damper(IntPtr l) {
-		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
-		pushValue(l,o.damper);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_damper(IntPtr l) {
-		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
-		float v;
-		checkType(l,2,out v);
-		o.damper=v;
-		setBack(l,o);
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_bounciness(IntPtr l) {
 		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
 		pushValue(l,o.bounciness);
@@ -69,12 +39,26 @@ public class Lua_UnityEngine_SoftJointLimit : LuaObject {
 		setBack(l,o);
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_contactDistance(IntPtr l) {
+		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
+		pushValue(l,o.contactDistance);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_contactDistance(IntPtr l) {
+		UnityEngine.SoftJointLimit o = (UnityEngine.SoftJointLimit)checkSelf(l);
+		float v;
+		checkType(l,2,out v);
+		o.contactDistance=v;
+		setBack(l,o);
+		return 0;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.SoftJointLimit");
 		addMember(l,"limit",get_limit,set_limit,true);
-		addMember(l,"spring",get_spring,set_spring,true);
-		addMember(l,"damper",get_damper,set_damper,true);
 		addMember(l,"bounciness",get_bounciness,set_bounciness,true);
+		addMember(l,"contactDistance",get_contactDistance,set_contactDistance,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SoftJointLimit));
 	}
 }

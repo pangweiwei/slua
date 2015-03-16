@@ -104,6 +104,50 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int IsTouching_s(IntPtr l) {
+		try{
+			UnityEngine.Collider2D a1;
+			checkType(l,1,out a1);
+			UnityEngine.Collider2D a2;
+			checkType(l,2,out a2);
+			System.Boolean ret=UnityEngine.Physics2D.IsTouching(a1,a2);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int IsTouchingLayers_s(IntPtr l) {
+		try{
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
+				UnityEngine.Collider2D a1;
+				checkType(l,1,out a1);
+				System.Int32 a2;
+				checkType(l,2,out a2);
+				System.Boolean ret=UnityEngine.Physics2D.IsTouchingLayers(a1,a2);
+				pushValue(l,ret);
+				return 1;
+			}
+			else if(argc==1){
+				UnityEngine.Collider2D a1;
+				checkType(l,1,out a1);
+				System.Boolean ret=UnityEngine.Physics2D.IsTouchingLayers(a1);
+				pushValue(l,ret);
+				return 1;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Linecast_s(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
@@ -1992,6 +2036,8 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 		addMember(l,GetIgnoreCollision_s);
 		addMember(l,IgnoreLayerCollision_s);
 		addMember(l,GetIgnoreLayerCollision_s);
+		addMember(l,IsTouching_s);
+		addMember(l,IsTouchingLayers_s);
 		addMember(l,Linecast_s);
 		addMember(l,LinecastAll_s);
 		addMember(l,LinecastNonAlloc_s);

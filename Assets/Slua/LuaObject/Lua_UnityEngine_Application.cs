@@ -252,32 +252,6 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RegisterLogCallback_s(IntPtr l) {
-		try{
-			UnityEngine.Application.LogCallback a1;
-			checkDelegate(l,1,out a1);
-			UnityEngine.Application.RegisterLogCallback(a1);
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RegisterLogCallbackThreaded_s(IntPtr l) {
-		try{
-			UnityEngine.Application.LogCallback a1;
-			checkDelegate(l,1,out a1);
-			UnityEngine.Application.RegisterLogCallbackThreaded(a1);
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RequestUserAuthorization_s(IntPtr l) {
 		try{
 			UnityEngine.UserAuthorization a1;
@@ -408,6 +382,41 @@ public class Lua_UnityEngine_Application : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_version(IntPtr l) {
+		pushValue(l,UnityEngine.Application.version);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_bundleIdentifier(IntPtr l) {
+		pushValue(l,UnityEngine.Application.bundleIdentifier);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_installMode(IntPtr l) {
+		pushEnum(l,(int)UnityEngine.Application.installMode);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sandboxType(IntPtr l) {
+		pushEnum(l,(int)UnityEngine.Application.sandboxType);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_productName(IntPtr l) {
+		pushValue(l,UnityEngine.Application.productName);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_companyName(IntPtr l) {
+		pushValue(l,UnityEngine.Application.companyName);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_cloudProjectId(IntPtr l) {
+		pushValue(l,UnityEngine.Application.cloudProjectId);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_webSecurityEnabled(IntPtr l) {
 		pushValue(l,UnityEngine.Application.webSecurityEnabled);
 		return 1;
@@ -475,8 +484,6 @@ public class Lua_UnityEngine_Application : LuaObject {
 		addMember(l,HasProLicense_s);
 		addMember(l,ExternalCall_s);
 		addMember(l,OpenURL_s);
-		addMember(l,RegisterLogCallback_s);
-		addMember(l,RegisterLogCallbackThreaded_s);
 		addMember(l,RequestUserAuthorization_s);
 		addMember(l,HasUserAuthorization_s);
 		addMember(l,"loadedLevel",get_loadedLevel,null,false);
@@ -498,6 +505,13 @@ public class Lua_UnityEngine_Application : LuaObject {
 		addMember(l,"srcValue",get_srcValue,null,false);
 		addMember(l,"absoluteURL",get_absoluteURL,null,false);
 		addMember(l,"unityVersion",get_unityVersion,null,false);
+		addMember(l,"version",get_version,null,false);
+		addMember(l,"bundleIdentifier",get_bundleIdentifier,null,false);
+		addMember(l,"installMode",get_installMode,null,false);
+		addMember(l,"sandboxType",get_sandboxType,null,false);
+		addMember(l,"productName",get_productName,null,false);
+		addMember(l,"companyName",get_companyName,null,false);
+		addMember(l,"cloudProjectId",get_cloudProjectId,null,false);
 		addMember(l,"webSecurityEnabled",get_webSecurityEnabled,null,false);
 		addMember(l,"webSecurityHostUrl",get_webSecurityHostUrl,null,false);
 		addMember(l,"targetFrameRate",get_targetFrameRate,set_targetFrameRate,false);

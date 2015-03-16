@@ -80,6 +80,20 @@ public class Lua_UnityEngine_Collider : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_contactOffset(IntPtr l) {
+		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
+		pushValue(l,o.contactOffset);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_contactOffset(IntPtr l) {
+		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
+		float v;
+		checkType(l,2,out v);
+		o.contactOffset=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_material(IntPtr l) {
 		UnityEngine.Collider o = (UnityEngine.Collider)checkSelf(l);
 		pushValue(l,o.material);
@@ -120,6 +134,7 @@ public class Lua_UnityEngine_Collider : LuaObject {
 		addMember(l,"enabled",get_enabled,set_enabled,true);
 		addMember(l,"attachedRigidbody",get_attachedRigidbody,null,true);
 		addMember(l,"isTrigger",get_isTrigger,set_isTrigger,true);
+		addMember(l,"contactOffset",get_contactOffset,set_contactOffset,true);
 		addMember(l,"material",get_material,set_material,true);
 		addMember(l,"sharedMaterial",get_sharedMaterial,set_sharedMaterial,true);
 		addMember(l,"bounds",get_bounds,null,true);

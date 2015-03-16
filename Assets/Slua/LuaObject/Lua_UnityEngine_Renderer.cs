@@ -40,12 +40,12 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int Render(IntPtr l) {
+	static public int GetClosestReflectionProbes(IntPtr l) {
 		try{
 			UnityEngine.Renderer self=(UnityEngine.Renderer)checkSelf(l);
-			System.Int32 a1;
+			System.Collections.Generic.List<UnityEngine.Rendering.ReflectionProbeBlendInfo> a1;
 			checkType(l,2,out a1);
-			self.Render(a1);
+			self.GetClosestReflectionProbes(a1);
 			return 0;
 		}
 		catch(Exception e) {
@@ -86,17 +86,17 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_castShadows(IntPtr l) {
+	static public int get_shadowCastingMode(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		pushValue(l,o.castShadows);
+		pushEnum(l,(int)o.shadowCastingMode);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_castShadows(IntPtr l) {
+	static public int set_shadowCastingMode(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		bool v;
-		checkType(l,2,out v);
-		o.castShadows=v;
+		UnityEngine.Rendering.ShadowCastingMode v;
+		checkEnum(l,2,out v);
+		o.shadowCastingMode=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -142,20 +142,6 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_sharedMaterials(IntPtr l) {
-		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		pushValue(l,o.sharedMaterials);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_sharedMaterials(IntPtr l) {
-		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		UnityEngine.Material[] v;
-		checkType(l,2,out v);
-		o.sharedMaterials=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_materials(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
 		pushValue(l,o.materials);
@@ -167,6 +153,20 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 		UnityEngine.Material[] v;
 		checkType(l,2,out v);
 		o.materials=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sharedMaterials(IntPtr l) {
+		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
+		pushValue(l,o.sharedMaterials);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_sharedMaterials(IntPtr l) {
+		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
+		UnityEngine.Material[] v;
+		checkType(l,2,out v);
+		o.sharedMaterials=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -190,17 +190,37 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_lightmapTilingOffset(IntPtr l) {
+	static public int get_realtimeLightmapIndex(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		pushValue(l,o.lightmapTilingOffset);
+		pushValue(l,o.realtimeLightmapIndex);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_lightmapTilingOffset(IntPtr l) {
+	static public int get_lightmapScaleOffset(IntPtr l) {
+		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
+		pushValue(l,o.lightmapScaleOffset);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_lightmapScaleOffset(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
 		UnityEngine.Vector4 v;
 		checkType(l,2,out v);
-		o.lightmapTilingOffset=v;
+		o.lightmapScaleOffset=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_realtimeLightmapScaleOffset(IntPtr l) {
+		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
+		pushValue(l,o.realtimeLightmapScaleOffset);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_realtimeLightmapScaleOffset(IntPtr l) {
+		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
+		UnityEngine.Vector4 v;
+		checkType(l,2,out v);
+		o.realtimeLightmapScaleOffset=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -224,17 +244,31 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_lightProbeAnchor(IntPtr l) {
+	static public int get_probeAnchor(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
-		pushValue(l,o.lightProbeAnchor);
+		pushValue(l,o.probeAnchor);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_lightProbeAnchor(IntPtr l) {
+	static public int set_probeAnchor(IntPtr l) {
 		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
 		UnityEngine.Transform v;
 		checkType(l,2,out v);
-		o.lightProbeAnchor=v;
+		o.probeAnchor=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_reflectionProbeUsage(IntPtr l) {
+		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
+		pushEnum(l,(int)o.reflectionProbeUsage);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_reflectionProbeUsage(IntPtr l) {
+		UnityEngine.Renderer o = (UnityEngine.Renderer)checkSelf(l);
+		UnityEngine.Rendering.ReflectionProbeUsage v;
+		checkEnum(l,2,out v);
+		o.reflectionProbeUsage=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -283,23 +317,26 @@ public class Lua_UnityEngine_Renderer : LuaObject {
 		getTypeTable(l,"UnityEngine.Renderer");
 		addMember(l,SetPropertyBlock);
 		addMember(l,GetPropertyBlock);
-		addMember(l,Render);
+		addMember(l,GetClosestReflectionProbes);
 		addMember(l,"isPartOfStaticBatch",get_isPartOfStaticBatch,null,true);
 		addMember(l,"worldToLocalMatrix",get_worldToLocalMatrix,null,true);
 		addMember(l,"localToWorldMatrix",get_localToWorldMatrix,null,true);
 		addMember(l,"enabled",get_enabled,set_enabled,true);
-		addMember(l,"castShadows",get_castShadows,set_castShadows,true);
+		addMember(l,"shadowCastingMode",get_shadowCastingMode,set_shadowCastingMode,true);
 		addMember(l,"receiveShadows",get_receiveShadows,set_receiveShadows,true);
 		addMember(l,"material",get_material,set_material,true);
 		addMember(l,"sharedMaterial",get_sharedMaterial,set_sharedMaterial,true);
-		addMember(l,"sharedMaterials",get_sharedMaterials,set_sharedMaterials,true);
 		addMember(l,"materials",get_materials,set_materials,true);
+		addMember(l,"sharedMaterials",get_sharedMaterials,set_sharedMaterials,true);
 		addMember(l,"bounds",get_bounds,null,true);
 		addMember(l,"lightmapIndex",get_lightmapIndex,set_lightmapIndex,true);
-		addMember(l,"lightmapTilingOffset",get_lightmapTilingOffset,set_lightmapTilingOffset,true);
+		addMember(l,"realtimeLightmapIndex",get_realtimeLightmapIndex,null,true);
+		addMember(l,"lightmapScaleOffset",get_lightmapScaleOffset,set_lightmapScaleOffset,true);
+		addMember(l,"realtimeLightmapScaleOffset",get_realtimeLightmapScaleOffset,set_realtimeLightmapScaleOffset,true);
 		addMember(l,"isVisible",get_isVisible,null,true);
 		addMember(l,"useLightProbes",get_useLightProbes,set_useLightProbes,true);
-		addMember(l,"lightProbeAnchor",get_lightProbeAnchor,set_lightProbeAnchor,true);
+		addMember(l,"probeAnchor",get_probeAnchor,set_probeAnchor,true);
+		addMember(l,"reflectionProbeUsage",get_reflectionProbeUsage,set_reflectionProbeUsage,true);
 		addMember(l,"sortingLayerName",get_sortingLayerName,set_sortingLayerName,true);
 		addMember(l,"sortingLayerID",get_sortingLayerID,set_sortingLayerID,true);
 		addMember(l,"sortingOrder",get_sortingOrder,set_sortingOrder,true);

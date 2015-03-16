@@ -84,20 +84,8 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Stop(IntPtr l) {
 		try{
-			int argc = LuaDLL.lua_gettop(l);
-			if(argc==2){
-				UnityEngine.NavMeshAgent self=(UnityEngine.NavMeshAgent)checkSelf(l);
-				System.Boolean a1;
-				checkType(l,2,out a1);
-				self.Stop(a1);
-				return 0;
-			}
-			else if(argc==1){
-				UnityEngine.NavMeshAgent self=(UnityEngine.NavMeshAgent)checkSelf(l);
-				self.Stop();
-				return 0;
-			}
-			LuaDLL.luaL_error(l,"No matched override function to call");
+			UnityEngine.NavMeshAgent self=(UnityEngine.NavMeshAgent)checkSelf(l);
+			self.Stop();
 			return 0;
 		}
 		catch(Exception e) {
@@ -213,14 +201,14 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetLayerCost(IntPtr l) {
+	static public int SetAreaCost(IntPtr l) {
 		try{
 			UnityEngine.NavMeshAgent self=(UnityEngine.NavMeshAgent)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
 			System.Single a2;
 			checkType(l,3,out a2);
-			self.SetLayerCost(a1,a2);
+			self.SetAreaCost(a1,a2);
 			return 0;
 		}
 		catch(Exception e) {
@@ -229,12 +217,12 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetLayerCost(IntPtr l) {
+	static public int GetAreaCost(IntPtr l) {
 		try{
 			UnityEngine.NavMeshAgent self=(UnityEngine.NavMeshAgent)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
-			System.Single ret=self.GetLayerCost(a1);
+			System.Single ret=self.GetAreaCost(a1);
 			pushValue(l,ret);
 			return 1;
 		}
@@ -436,17 +424,17 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_walkableMask(IntPtr l) {
+	static public int get_areaMask(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
-		pushValue(l,o.walkableMask);
+		pushValue(l,o.areaMask);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_walkableMask(IntPtr l) {
+	static public int set_areaMask(IntPtr l) {
 		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
 		int v;
 		checkType(l,2,out v);
-		o.walkableMask=v;
+		o.areaMask=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -575,6 +563,12 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 		o.avoidancePriority=v;
 		return 0;
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isOnNavMesh(IntPtr l) {
+		UnityEngine.NavMeshAgent o = (UnityEngine.NavMeshAgent)checkSelf(l);
+		pushValue(l,o.isOnNavMesh);
+		return 1;
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.NavMeshAgent");
 		addMember(l,SetDestination);
@@ -590,8 +584,8 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 		addMember(l,Raycast);
 		addMember(l,CalculatePath);
 		addMember(l,SamplePathPosition);
-		addMember(l,SetLayerCost);
-		addMember(l,GetLayerCost);
+		addMember(l,SetAreaCost);
+		addMember(l,GetAreaCost);
 		addMember(l,"destination",get_destination,set_destination,true);
 		addMember(l,"stoppingDistance",get_stoppingDistance,set_stoppingDistance,true);
 		addMember(l,"velocity",get_velocity,set_velocity,true);
@@ -612,7 +606,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 		addMember(l,"pathStatus",get_pathStatus,null,true);
 		addMember(l,"pathEndPosition",get_pathEndPosition,null,true);
 		addMember(l,"path",get_path,set_path,true);
-		addMember(l,"walkableMask",get_walkableMask,set_walkableMask,true);
+		addMember(l,"areaMask",get_areaMask,set_areaMask,true);
 		addMember(l,"speed",get_speed,set_speed,true);
 		addMember(l,"angularSpeed",get_angularSpeed,set_angularSpeed,true);
 		addMember(l,"acceleration",get_acceleration,set_acceleration,true);
@@ -622,6 +616,7 @@ public class Lua_UnityEngine_NavMeshAgent : LuaObject {
 		addMember(l,"height",get_height,set_height,true);
 		addMember(l,"obstacleAvoidanceType",get_obstacleAvoidanceType,set_obstacleAvoidanceType,true);
 		addMember(l,"avoidancePriority",get_avoidancePriority,set_avoidancePriority,true);
+		addMember(l,"isOnNavMesh",get_isOnNavMesh,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.NavMeshAgent),typeof(UnityEngine.Behaviour));
 	}
 }

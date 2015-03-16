@@ -43,23 +43,6 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetCollisionEvents(IntPtr l) {
-		try{
-			UnityEngine.ParticleSystem self=(UnityEngine.ParticleSystem)checkSelf(l);
-			UnityEngine.GameObject a1;
-			checkType(l,2,out a1);
-			UnityEngine.ParticleSystem.CollisionEvent[] a2;
-			checkType(l,3,out a2);
-			System.Int32 ret=self.GetCollisionEvents(a1,a2);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Simulate(IntPtr l) {
 		try{
 			int argc = LuaDLL.lua_gettop(l);
@@ -362,12 +345,6 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_safeCollisionEventSize(IntPtr l) {
-		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
-		pushValue(l,o.safeCollisionEventSize);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_enableEmission(IntPtr l) {
 		UnityEngine.ParticleSystem o = (UnityEngine.ParticleSystem)checkSelf(l);
 		pushValue(l,o.enableEmission);
@@ -525,7 +502,6 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 		getTypeTable(l,"UnityEngine.ParticleSystem");
 		addMember(l,SetParticles);
 		addMember(l,GetParticles);
-		addMember(l,GetCollisionEvents);
 		addMember(l,Simulate);
 		addMember(l,Play);
 		addMember(l,Stop);
@@ -543,7 +519,6 @@ public class Lua_UnityEngine_ParticleSystem : LuaObject {
 		addMember(l,"duration",get_duration,null,true);
 		addMember(l,"playbackSpeed",get_playbackSpeed,set_playbackSpeed,true);
 		addMember(l,"particleCount",get_particleCount,null,true);
-		addMember(l,"safeCollisionEventSize",get_safeCollisionEventSize,null,true);
 		addMember(l,"enableEmission",get_enableEmission,set_enableEmission,true);
 		addMember(l,"emissionRate",get_emissionRate,set_emissionRate,true);
 		addMember(l,"startSpeed",get_startSpeed,set_startSpeed,true);

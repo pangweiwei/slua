@@ -12,8 +12,44 @@ public class Lua_UnityEngine_Display : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Activate(IntPtr l) {
 		try{
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
+				UnityEngine.Display self=(UnityEngine.Display)checkSelf(l);
+				self.Activate();
+				return 0;
+			}
+			else if(argc==4){
+				UnityEngine.Display self=(UnityEngine.Display)checkSelf(l);
+				System.Int32 a1;
+				checkType(l,2,out a1);
+				System.Int32 a2;
+				checkType(l,3,out a2);
+				System.Int32 a3;
+				checkType(l,4,out a3);
+				self.Activate(a1,a2,a3);
+				return 0;
+			}
+			LuaDLL.luaL_error(l,"No matched override function to call");
+			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetParams(IntPtr l) {
+		try{
 			UnityEngine.Display self=(UnityEngine.Display)checkSelf(l);
-			self.Activate();
+			System.Int32 a1;
+			checkType(l,2,out a1);
+			System.Int32 a2;
+			checkType(l,3,out a2);
+			System.Int32 a3;
+			checkType(l,4,out a3);
+			System.Int32 a4;
+			checkType(l,5,out a4);
+			self.SetParams(a1,a2,a3,a4);
 			return 0;
 		}
 		catch(Exception e) {
@@ -31,6 +67,32 @@ public class Lua_UnityEngine_Display : LuaObject {
 			checkType(l,3,out a2);
 			self.SetRenderingResolution(a1,a2);
 			return 0;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int MultiDisplayLicense_s(IntPtr l) {
+		try{
+			System.Boolean ret=UnityEngine.Display.MultiDisplayLicense();
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RelativeMouseAt_s(IntPtr l) {
+		try{
+			UnityEngine.Vector3 a1;
+			checkType(l,1,out a1);
+			UnityEngine.Vector3 ret=UnityEngine.Display.RelativeMouseAt(a1);
+			pushValue(l,ret);
+			return 1;
 		}
 		catch(Exception e) {
 			LuaDLL.luaL_error(l, e.ToString());
@@ -93,7 +155,10 @@ public class Lua_UnityEngine_Display : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Display");
 		addMember(l,Activate);
+		addMember(l,SetParams);
 		addMember(l,SetRenderingResolution);
+		addMember(l,MultiDisplayLicense_s);
+		addMember(l,RelativeMouseAt_s);
 		addMember(l,"displays",get_displays,set_displays,false);
 		addMember(l,"renderingWidth",get_renderingWidth,null,true);
 		addMember(l,"renderingHeight",get_renderingHeight,null,true);

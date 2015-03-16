@@ -324,96 +324,6 @@ public class Lua_UnityEngine_Component : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_rigidbody(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.rigidbody);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_rigidbody2D(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.rigidbody2D);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_camera(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.camera);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_light(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.light);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_animation(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.animation);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_constantForce(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.constantForce);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_renderer(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.renderer);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_audio(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.audio);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_guiText(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.guiText);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_guiTexture(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.guiTexture);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_collider(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.collider);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_collider2D(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.collider2D);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_hingeJoint(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.hingeJoint);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_particleEmitter(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.particleEmitter);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_particleSystem(IntPtr l) {
-		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
-		pushValue(l,o.particleSystem);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_gameObject(IntPtr l) {
 		UnityEngine.Component o = (UnityEngine.Component)checkSelf(l);
 		pushValue(l,o.gameObject);
@@ -446,21 +356,6 @@ public class Lua_UnityEngine_Component : LuaObject {
 		addMember(l,SendMessage);
 		addMember(l,BroadcastMessage);
 		addMember(l,"transform",get_transform,null,true);
-		addMember(l,"rigidbody",get_rigidbody,null,true);
-		addMember(l,"rigidbody2D",get_rigidbody2D,null,true);
-		addMember(l,"camera",get_camera,null,true);
-		addMember(l,"light",get_light,null,true);
-		addMember(l,"animation",get_animation,null,true);
-		addMember(l,"constantForce",get_constantForce,null,true);
-		addMember(l,"renderer",get_renderer,null,true);
-		addMember(l,"audio",get_audio,null,true);
-		addMember(l,"guiText",get_guiText,null,true);
-		addMember(l,"guiTexture",get_guiTexture,null,true);
-		addMember(l,"collider",get_collider,null,true);
-		addMember(l,"collider2D",get_collider2D,null,true);
-		addMember(l,"hingeJoint",get_hingeJoint,null,true);
-		addMember(l,"particleEmitter",get_particleEmitter,null,true);
-		addMember(l,"particleSystem",get_particleSystem,null,true);
 		addMember(l,"gameObject",get_gameObject,null,true);
 		addMember(l,"tag",get_tag,set_tag,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Component),typeof(UnityEngine.Object));

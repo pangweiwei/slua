@@ -10,6 +10,7 @@ public class Lua_UnityEngine_RenderingPath : LuaObject {
 		addMember(l,0,"VertexLit");
 		addMember(l,1,"Forward");
 		addMember(l,2,"DeferredLighting");
+		addMember(l,3,"DeferredShading");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

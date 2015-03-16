@@ -90,13 +90,13 @@ public class Lua_UnityEngine_NavMesh : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetLayerCost_s(IntPtr l) {
+	static public int SetAreaCost_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
 			System.Single a2;
 			checkType(l,2,out a2);
-			UnityEngine.NavMesh.SetLayerCost(a1,a2);
+			UnityEngine.NavMesh.SetAreaCost(a1,a2);
 			return 0;
 		}
 		catch(Exception e) {
@@ -105,11 +105,11 @@ public class Lua_UnityEngine_NavMesh : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetLayerCost_s(IntPtr l) {
+	static public int GetAreaCost_s(IntPtr l) {
 		try{
 			System.Int32 a1;
 			checkType(l,1,out a1);
-			System.Single ret=UnityEngine.NavMesh.GetLayerCost(a1);
+			System.Single ret=UnityEngine.NavMesh.GetAreaCost(a1);
 			pushValue(l,ret);
 			return 1;
 		}
@@ -119,11 +119,11 @@ public class Lua_UnityEngine_NavMesh : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetNavMeshLayerFromName_s(IntPtr l) {
+	static public int GetAreaFromName_s(IntPtr l) {
 		try{
 			System.String a1;
 			checkType(l,1,out a1);
-			System.Int32 ret=UnityEngine.NavMesh.GetNavMeshLayerFromName(a1);
+			System.Int32 ret=UnityEngine.NavMesh.GetAreaFromName(a1);
 			pushValue(l,ret);
 			return 1;
 		}
@@ -145,26 +145,33 @@ public class Lua_UnityEngine_NavMesh : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int AddOffMeshLinks_s(IntPtr l) {
-		try{
-			UnityEngine.NavMesh.AddOffMeshLinks();
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
+	static public int get_AllAreas(IntPtr l) {
+		pushValue(l,UnityEngine.NavMesh.AllAreas);
+		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RestoreNavMesh_s(IntPtr l) {
-		try{
-			UnityEngine.NavMesh.RestoreNavMesh();
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
+	static public int get_avoidancePredictionTime(IntPtr l) {
+		pushValue(l,UnityEngine.NavMesh.avoidancePredictionTime);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_avoidancePredictionTime(IntPtr l) {
+		float v;
+		checkType(l,2,out v);
+		UnityEngine.NavMesh.avoidancePredictionTime=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_pathfindingIterationsPerFrame(IntPtr l) {
+		pushValue(l,UnityEngine.NavMesh.pathfindingIterationsPerFrame);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_pathfindingIterationsPerFrame(IntPtr l) {
+		int v;
+		checkType(l,2,out v);
+		UnityEngine.NavMesh.pathfindingIterationsPerFrame=v;
+		return 0;
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.NavMesh");
@@ -172,12 +179,13 @@ public class Lua_UnityEngine_NavMesh : LuaObject {
 		addMember(l,CalculatePath_s);
 		addMember(l,FindClosestEdge_s);
 		addMember(l,SamplePosition_s);
-		addMember(l,SetLayerCost_s);
-		addMember(l,GetLayerCost_s);
-		addMember(l,GetNavMeshLayerFromName_s);
+		addMember(l,SetAreaCost_s);
+		addMember(l,GetAreaCost_s);
+		addMember(l,GetAreaFromName_s);
 		addMember(l,CalculateTriangulation_s);
-		addMember(l,AddOffMeshLinks_s);
-		addMember(l,RestoreNavMesh_s);
-		createTypeMetatable(l,constructor, typeof(UnityEngine.NavMesh),typeof(UnityEngine.Object));
+		addMember(l,"AllAreas",get_AllAreas,null,false);
+		addMember(l,"avoidancePredictionTime",get_avoidancePredictionTime,set_avoidancePredictionTime,false);
+		addMember(l,"pathfindingIterationsPerFrame",get_pathfindingIterationsPerFrame,set_pathfindingIterationsPerFrame,false);
+		createTypeMetatable(l,constructor, typeof(UnityEngine.NavMesh));
 	}
 }

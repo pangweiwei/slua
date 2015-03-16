@@ -12,21 +12,6 @@ public class Lua_UnityEngine_AudioSettings : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetDSPBufferSize_s(IntPtr l) {
-		try{
-			System.Int32 a1;
-			checkType(l,1,out a1);
-			System.Int32 a2;
-			checkType(l,2,out a2);
-			UnityEngine.AudioSettings.SetDSPBufferSize(a1,a2);
-			return 0;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetDSPBufferSize_s(IntPtr l) {
 		try{
 			System.Int32 a1;
@@ -42,8 +27,34 @@ public class Lua_UnityEngine_AudioSettings : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_driverCaps(IntPtr l) {
-		pushEnum(l,(int)UnityEngine.AudioSettings.driverCaps);
+	static public int GetConfiguration_s(IntPtr l) {
+		try{
+			UnityEngine.AudioConfiguration ret=UnityEngine.AudioSettings.GetConfiguration();
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Reset_s(IntPtr l) {
+		try{
+			UnityEngine.AudioConfiguration a1;
+			checkType(l,1,out a1);
+			System.Boolean ret=UnityEngine.AudioSettings.Reset(a1);
+			pushValue(l,ret);
+			return 1;
+		}
+		catch(Exception e) {
+			LuaDLL.luaL_error(l, e.ToString());
+			return 0;
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_driverCapabilities(IntPtr l) {
+		pushEnum(l,(int)UnityEngine.AudioSettings.driverCapabilities);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -77,9 +88,10 @@ public class Lua_UnityEngine_AudioSettings : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioSettings");
-		addMember(l,SetDSPBufferSize_s);
 		addMember(l,GetDSPBufferSize_s);
-		addMember(l,"driverCaps",get_driverCaps,null,false);
+		addMember(l,GetConfiguration_s);
+		addMember(l,Reset_s);
+		addMember(l,"driverCapabilities",get_driverCapabilities,null,false);
 		addMember(l,"speakerMode",get_speakerMode,set_speakerMode,false);
 		addMember(l,"dspTime",get_dspTime,null,false);
 		addMember(l,"outputSampleRate",get_outputSampleRate,set_outputSampleRate,false);

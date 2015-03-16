@@ -70,6 +70,20 @@ public class Lua_UnityEngine_Light : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_bounceIntensity(IntPtr l) {
+		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
+		pushValue(l,o.bounceIntensity);
+		return 1;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_bounceIntensity(IntPtr l) {
+		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
+		float v;
+		checkType(l,2,out v);
+		o.bounceIntensity=v;
+		return 0;
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_shadows(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
 		pushEnum(l,(int)o.shadows);
@@ -112,31 +126,17 @@ public class Lua_UnityEngine_Light : LuaObject {
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_shadowSoftness(IntPtr l) {
+	static public int get_shadowNormalBias(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		pushValue(l,o.shadowSoftness);
+		pushValue(l,o.shadowNormalBias);
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_shadowSoftness(IntPtr l) {
+	static public int set_shadowNormalBias(IntPtr l) {
 		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
 		float v;
 		checkType(l,2,out v);
-		o.shadowSoftness=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_shadowSoftnessFade(IntPtr l) {
-		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		pushValue(l,o.shadowSoftnessFade);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_shadowSoftnessFade(IntPtr l) {
-		UnityEngine.Light o = (UnityEngine.Light)checkSelf(l);
-		float v;
-		checkType(l,2,out v);
-		o.shadowSoftnessFade=v;
+		o.shadowNormalBias=v;
 		return 0;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -257,11 +257,11 @@ public class Lua_UnityEngine_Light : LuaObject {
 		addMember(l,"type",get_type,set_type,true);
 		addMember(l,"color",get_color,set_color,true);
 		addMember(l,"intensity",get_intensity,set_intensity,true);
+		addMember(l,"bounceIntensity",get_bounceIntensity,set_bounceIntensity,true);
 		addMember(l,"shadows",get_shadows,set_shadows,true);
 		addMember(l,"shadowStrength",get_shadowStrength,set_shadowStrength,true);
 		addMember(l,"shadowBias",get_shadowBias,set_shadowBias,true);
-		addMember(l,"shadowSoftness",get_shadowSoftness,set_shadowSoftness,true);
-		addMember(l,"shadowSoftnessFade",get_shadowSoftnessFade,set_shadowSoftnessFade,true);
+		addMember(l,"shadowNormalBias",get_shadowNormalBias,set_shadowNormalBias,true);
 		addMember(l,"range",get_range,set_range,true);
 		addMember(l,"spotAngle",get_spotAngle,set_spotAngle,true);
 		addMember(l,"cookieSize",get_cookieSize,set_cookieSize,true);
