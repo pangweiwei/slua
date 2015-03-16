@@ -12,20 +12,6 @@ public class Lua_UnityEngine_AnimatorControllerParameter : LuaObject {
 		return 1;
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_name(IntPtr l) {
-		UnityEngine.AnimatorControllerParameter o = (UnityEngine.AnimatorControllerParameter)checkSelf(l);
-		pushValue(l,o.name);
-		return 1;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_name(IntPtr l) {
-		UnityEngine.AnimatorControllerParameter o = (UnityEngine.AnimatorControllerParameter)checkSelf(l);
-		string v;
-		checkType(l,2,out v);
-		o.name=v;
-		return 0;
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_nameHash(IntPtr l) {
 		UnityEngine.AnimatorControllerParameter o = (UnityEngine.AnimatorControllerParameter)checkSelf(l);
 		pushValue(l,o.nameHash);
@@ -89,7 +75,6 @@ public class Lua_UnityEngine_AnimatorControllerParameter : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AnimatorControllerParameter");
-		addMember(l,"name",get_name,set_name,true);
 		addMember(l,"nameHash",get_nameHash,null,true);
 		addMember(l,"type",get_type,set_type,true);
 		addMember(l,"defaultFloat",get_defaultFloat,set_defaultFloat,true);

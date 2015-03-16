@@ -126,22 +126,6 @@ public class Lua_UnityEngine_Resources : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadAssetAtPath_s(IntPtr l) {
-		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			System.Type a2;
-			checkType(l,2,out a2);
-			UnityEngine.Object ret=UnityEngine.Resources.LoadAssetAtPath(a1,a2);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int UnloadAsset_s(IntPtr l) {
 		try{
 			UnityEngine.Object a1;
@@ -173,7 +157,6 @@ public class Lua_UnityEngine_Resources : LuaObject {
 		addMember(l,LoadAsync_s);
 		addMember(l,LoadAll_s);
 		addMember(l,GetBuiltinResource_s);
-		addMember(l,LoadAssetAtPath_s);
 		addMember(l,UnloadAsset_s);
 		addMember(l,UnloadUnusedAssets_s);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Resources));

@@ -172,20 +172,6 @@ public class Lua_UnityEngine_Input : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int IsJoystickPreconfigured_s(IntPtr l) {
-		try{
-			System.String a1;
-			checkType(l,1,out a1);
-			System.Boolean ret=UnityEngine.Input.IsJoystickPreconfigured(a1);
-			pushValue(l,ret);
-			return 1;
-		}
-		catch(Exception e) {
-			LuaDLL.luaL_error(l, e.ToString());
-			return 0;
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetMouseButton_s(IntPtr l) {
 		try{
 			System.Int32 a1;
@@ -427,7 +413,6 @@ public class Lua_UnityEngine_Input : LuaObject {
 		addMember(l,GetKeyDown_s);
 		addMember(l,GetKeyUp_s);
 		addMember(l,GetJoystickNames_s);
-		addMember(l,IsJoystickPreconfigured_s);
 		addMember(l,GetMouseButton_s);
 		addMember(l,GetMouseButtonDown_s);
 		addMember(l,GetMouseButtonUp_s);
