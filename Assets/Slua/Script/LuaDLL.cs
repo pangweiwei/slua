@@ -537,10 +537,29 @@ namespace LuaInterface
         public static extern int luaS_rawnetobj(IntPtr luaState, int obj);
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void luaS_pushcclosure(IntPtr luaState, IntPtr func, int n);
+
+        public static void luaS_pushcclosure(IntPtr luaState, LuaCSFunction func, int n)
+        {
+            IntPtr p = Marshal.GetFunctionPointerForDelegate(func);
+            luaS_pushcclosure(luaState, p, n);
+        }
+
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr lua_touserdata(IntPtr luaState, int index);
 
 		public static int lua_absindex(IntPtr luaState,int index) {
 			return index > 0 ? index : lua_gettop(luaState) + index + 1;
 		}
+
+        public static int lua_upvalueindex(int i)
+        {
+#if LUA_5_3
+            return LuaIndexes.LUA_REGISTRYINDEX - i;
+#else
+            return LuaIndexes.LUA_GLOBALSINDEX - i;
+#endif
+        }
     }
 }
