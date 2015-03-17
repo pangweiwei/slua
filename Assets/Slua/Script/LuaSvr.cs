@@ -52,6 +52,7 @@ namespace SLua
 
             LuaTimer.reg(luaState.L);
             LuaCoroutine.reg(luaState.L, lgo);
+            Helper.reg(luaState.L);
 
             luaState.doFile(main);
 

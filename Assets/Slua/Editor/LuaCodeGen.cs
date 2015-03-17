@@ -329,13 +329,13 @@ class CodeGenerator
         "WWW.movie",
         "WebCamTexture.MarkNonReadable",
         "WebCamTexture.isReadable",
-		// i don't why below 2 functions missed in iOS platform
-		"Graphic.OnRebuildRequested",
-		"Text.OnRebuildRequested",
-		// il2cpp not exixts
-		"Application.ExternalEval",
-		"GameObject.networkView",
-		"Component.networkView",
+        // i don't why below 2 functions missed in iOS platform
+        "Graphic.OnRebuildRequested",
+        "Text.OnRebuildRequested",
+        // il2cpp not exixts
+        "Application.ExternalEval",
+        "GameObject.networkView",
+        "Component.networkView",
         // unity5
         "AnimatorControllerParameter.name",
         "Input.IsJoystickPreconfigured",
@@ -934,15 +934,12 @@ namespace SLua
 
             if (fi.CanRead)
             {
-                WriteFunctionAttr(file);
-                Write(file, "static public int get_{0}(IntPtr l) {{", fi.Name);
+                if (!IsNotSupport(fi.PropertyType))
+                {
+                    WriteFunctionAttr(file);
+                    Write(file, "static public int get_{0}(IntPtr l) {{", fi.Name);
 
-                if (IsNotSupport(fi.PropertyType))
-                {
-                    NotSupport(file);
-                }
-                else
-                {
+                
                     if (fi.GetGetMethod().IsStatic)
                     {
                         isInstance = false;
@@ -955,9 +952,10 @@ namespace SLua
                     }
 
                     Write(file, "return 1;");
+                    Write(file, "}");
+                    pp.get = "get_" + fi.Name;
                 }
-                Write(file, "}");
-                pp.get = "get_" + fi.Name;
+                
             }
 
             if (fi.CanWrite && fi.GetSetMethod()!=null)
@@ -965,28 +963,24 @@ namespace SLua
                 WriteFunctionAttr(file);
                 Write(file, "static public int set_{0}(IntPtr l) {{", fi.Name);
 
-                if (IsNotSupport(fi.PropertyType))
-                    NotSupport(file);
+                if (fi.GetSetMethod().IsStatic)
+                {
+                    WriteValueCheck(file, fi.PropertyType, 2);
+                    WriteSet(file, fi.PropertyType, t.FullName, fi.Name, true);
+                    isInstance = false;
+                }
                 else
                 {
-                    if (fi.GetSetMethod().IsStatic)
-                    {
-                        WriteValueCheck(file, fi.PropertyType, 2);
-						WriteSet(file,fi.PropertyType,t.FullName,fi.Name,true);
-                        isInstance = false;
-                    }
-                    else
-                    {
-                        Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
-                        WriteValueCheck(file, fi.PropertyType, 2);
-						WriteSet(file,fi.PropertyType,t.FullName,fi.Name);
-                    }
-
-                    if (t.IsValueType)
-                        Write(file, "setBack(l,o);");
-
-                    Write(file, "return 0;");
+                    Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
+                    WriteValueCheck(file, fi.PropertyType, 2);
+                    WriteSet(file, fi.PropertyType, t.FullName, fi.Name);
                 }
+
+                if (t.IsValueType)
+                    Write(file, "setBack(l,o);");
+
+                Write(file, "return 0;");
+
                 Write(file, "}");
                 pp.set = "set_" + fi.Name;
             }
