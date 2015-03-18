@@ -146,6 +146,12 @@ slua支持同名重载方法, 但对于自己实现的接口(非来自UnityEngin
 >     static public void ofunc(Type t) {
         Debug.Log(t.Name);
     }
+    
+再比如
+
+>    gameObject:AddComponent(UnityEngine.UI.LayoutElement)
+
+从Unity5开始AddComponent不再支持字符串作为类型参数, 可以使用上面的方面传递类型.
 
 对于没有导出的Type,原则上可以使用字符串来描述, 例如:
 
