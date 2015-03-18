@@ -1,4 +1,26 @@
 ﻿using UnityEngine;
+// The MIT License (MIT)
+
+// Copyright 2015 Siney/Pangweiwei siney@yeah.net
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -10,6 +32,41 @@ namespace SLua
 {
     class Helper : LuaObject
     {
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int _iter(IntPtr l)
+        {
+            object obj = checkObj(l, LuaDLL.lua_upvalueindex(1));
+            IEnumerator it = (IEnumerator)obj;
+            if (it.MoveNext())
+            {
+                pushVar(l, it.Current);
+                return 1;
+            }
+            else
+            {
+                if (obj is IDisposable)
+                    (obj as IDisposable).Dispose();
+            }
+            return 0;
+        }
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int iter(IntPtr l)
+        {
+            object o = checkObj(l, 1);
+            if (o is IEnumerable)
+            {
+                IEnumerable e = o as IEnumerable;
+                IEnumerator iter = e.GetEnumerator();
+
+                pushObject(l, iter);
+                LuaDLL.luaS_pushcclosure(l, _iter, 1);
+                return 1;
+            }
+            LuaDLL.luaL_error(l, "passed in object isn't enumerable");
+            return 0;
+        }
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int CreateClass(IntPtr l)
@@ -60,6 +117,7 @@ namespace SLua
         static new public void reg(IntPtr l)
         {
             reg(l, CreateClass, "Slua");
+            reg(l, iter, "Slua");
         }
     }
 }
