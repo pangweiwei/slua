@@ -34,6 +34,10 @@ namespace SLua
         static LuaSvrGameObject lgo;
         int errorReported = 0;
 
+        public LuaSvr():this(null) {
+
+        }
+
         public LuaSvr(string main)
         {
             luaState = new LuaState();

@@ -12,7 +12,7 @@ public class Main : MonoBehaviour {
     void Start()
     {
 		Application.RegisterLogCallback( this.log );
-        l = new LuaSvr(null);
+        l = new LuaSvr();
 
         l.start("main");
         object o = l.luaState.getFunction("foo").call(1, 2, 3);
