@@ -3,6 +3,7 @@ using System.Collections;
 using SLua;
 using UnityEngine.UI;
 
+
 public class Main : MonoBehaviour {
 
     LuaSvr l;
@@ -11,8 +12,9 @@ public class Main : MonoBehaviour {
     void Start()
     {
 		Application.RegisterLogCallback( this.log );
-        l = new LuaSvr("main");
-        
+        l = new LuaSvr(null);
+
+        l.start("main");
         object o = l.luaState.getFunction("foo").call(1, 2, 3);
         object[] array = (object[])o;
         for (int n = 0; n < array.Length; n++)

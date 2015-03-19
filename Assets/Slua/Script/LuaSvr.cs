@@ -54,15 +54,22 @@ namespace SLua
             LuaCoroutine.reg(luaState.L, lgo);
             Helper.reg(luaState.L);
 
-            luaState.doFile(main);
-
-            LuaFunction func = (LuaFunction)luaState["main"];
-            func.call();
+            start(main);
 
             if (LuaDLL.lua_gettop(luaState.L) != errorReported)
             {
                 Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
                 errorReported = LuaDLL.lua_gettop(luaState.L);
+            }
+        }
+
+        public void start(string main)
+        {
+            if (main != null)
+            {
+                luaState.doFile(main);
+                LuaFunction func = (LuaFunction)luaState["main"];
+                func.call();
             }
         }
 
