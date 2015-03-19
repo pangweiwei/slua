@@ -169,8 +169,6 @@ namespace SLua
         {
 			LuaDLL.lua_pushstdcallcfunction(L, LuaState.errorReport);
 			int error = LuaDLL.lua_gettop(L);
-            if (error != 1)
-                Debug.Log("Some function push more value to lua stack");
 
 			LuaDLL.lua_getref(L, valueref);
 			if (!LuaDLL.lua_isfunction(L, -1))
