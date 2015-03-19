@@ -57,7 +57,7 @@ namespace SLua
             }
         }
 
-        static new public void reg(IntPtr l)
+        static public void reg(IntPtr l)
         {
             reg(l, CreateClass, "Slua");
         }
