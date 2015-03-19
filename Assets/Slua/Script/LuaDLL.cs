@@ -536,13 +536,13 @@ namespace LuaInterface
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int luaS_rawnetobj(IntPtr luaState, int obj);
 
-        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void luaS_pushcclosure(IntPtr luaState, IntPtr func, int n);
+        //[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        //public static extern void luaS_pushcclosure(IntPtr luaState, IntPtr func, int n);
 
         public static void luaS_pushcclosure(IntPtr luaState, LuaCSFunction func, int n)
         {
             IntPtr p = Marshal.GetFunctionPointerForDelegate(func);
-            luaS_pushcclosure(luaState, p, n);
+            //luaS_pushcclosure(luaState, p, n);
         }
 
 
