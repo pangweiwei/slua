@@ -190,7 +190,8 @@ namespace SLua
             {
                 case MemberTypes.Property:
                     PropertyInfo p = (PropertyInfo)mi;
-                    pushVar(l, p.GetValue(self,null));
+                    MethodInfo get = p.GetGetMethod();
+                    pushVar(l, get.Invoke(self,null));
                     break;
                 case MemberTypes.Field:
                     FieldInfo f = (FieldInfo)mi;
@@ -229,7 +230,8 @@ namespace SLua
             {
                 case MemberTypes.Property:
                     PropertyInfo p = (PropertyInfo)mi;
-                    p.SetValue(self, v,null);
+                    MethodInfo set = p.GetSetMethod();
+                    set.Invoke(self,new object[]{v});
                     break;
                 case MemberTypes.Field:
                     FieldInfo f = (FieldInfo)mi;

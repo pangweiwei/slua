@@ -196,7 +196,7 @@ return index
 					#if LUA_5_3
 					LuaDLL.lua_pushinteger(L, (long)o);
 					#else
-					LuaDLL.lua_pushnumber(L, (double)o);
+					LuaDLL.lua_pushnumber(L, System.Convert.ToDouble(o));
 					#endif
 				};
 			
