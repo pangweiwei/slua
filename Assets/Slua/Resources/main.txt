@@ -27,6 +27,10 @@ function main()
 	print("data type ",type(data))
 	data = Slua.ToString(data)
 	print("data type ",type(data),data)
+
+	-- get out parameter
+	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1))
+	print("Physics Hitinfo",ok,hitinfo)
 	
 
 	btn.onClick:AddListener(function()

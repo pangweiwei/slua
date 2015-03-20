@@ -22,7 +22,7 @@ public class Main : MonoBehaviour {
 
         string s = (string)l.luaState.getFunction("str").call( new object[0] );
         Debug.Log(s);
-        
+
     }
 
 	void log(string cond,string trace,LogType lt) {
