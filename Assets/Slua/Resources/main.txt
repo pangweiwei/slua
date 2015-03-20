@@ -80,7 +80,7 @@ function main()
 
 		local www = WWW("http://www.sineysoft.com")
 		Yield(www)
-		print(#www.bytes)
+		print(#Slua.ToString(www.bytes))
 	end)
 	coroutine.resume(c)
 
