@@ -39,7 +39,7 @@ public class LuaCodeGen : MonoBehaviour
 
 
     [InitializeOnLoad]
-    public class Startup 
+    public class Startup
     {
 
         static Startup()
@@ -813,15 +813,22 @@ namespace SLua
         if (t.BaseType != null && !CutBase(t.BaseType))
         {
             if (t.BaseType.Name.Contains("UnityEvent`1"))
-                Write(file, "createTypeMetatable(l,constructor, typeof({0}),typeof(LuaUnityEvent_{1}));", FullName(t), _Name(GenericName(t.BaseType)));
+				Write(file, "createTypeMetatable(l,{2}, typeof({0}),typeof(LuaUnityEvent_{1}));", FullName(t), _Name(GenericName(t.BaseType)),constructorOrNot(t));
             else
-                Write(file, "createTypeMetatable(l,constructor, typeof({0}),typeof({1}));", FullName(t), TypeDecl(t.BaseType));
+				Write(file, "createTypeMetatable(l,{2}, typeof({0}),typeof({1}));", FullName(t), TypeDecl(t.BaseType),constructorOrNot(t));
         }
         else
-            Write(file, "createTypeMetatable(l,constructor, typeof({0}));", FullName(t));
+			Write(file, "createTypeMetatable(l,{1}, typeof({0}));", FullName(t),constructorOrNot(t));
         //Write(file, "LuaDLL.lua_pop(l, 1);");
         Write(file, "}");
     }
+
+	string constructorOrNot(Type t) {
+		ConstructorInfo[] cons = GetValidConstructor(t);
+		if(cons.Length>0)
+			return "constructor";
+		return "null";
+	}
 
     bool CutBase(Type t)
     {
@@ -1032,47 +1039,50 @@ namespace SLua
 
     private void WriteConstructor(Type t, StreamWriter file)
     {
-        WriteFunctionAttr(file);
-        Write(file, "static public int constructor(IntPtr l) {");
-        ConstructorInfo[] cons = GetValidConstructor(t);
-        if (cons.Length > 0)
-        {
-            if (cons.Length > 1)
-                Write(file, "int argc = LuaDLL.lua_gettop(l);");
-            Write(file, "{0} o;", FullName(t));
-            bool first = true;
-            for (int n = 0; n < cons.Length; n++)
-            {
-                ConstructorInfo ci = cons[n];
-                ParameterInfo[] pars = ci.GetParameters();
+		ConstructorInfo[] cons = GetValidConstructor(t);
+		if(cons.Length>0) {
+	        WriteFunctionAttr(file);
+	        Write(file, "static public int constructor(IntPtr l) {");
+	        
+	        if (cons.Length > 0)
+	        {
+	            if (cons.Length > 1)
+	                Write(file, "int argc = LuaDLL.lua_gettop(l);");
+	            Write(file, "{0} o;", FullName(t));
+	            bool first = true;
+	            for (int n = 0; n < cons.Length; n++)
+	            {
+	                ConstructorInfo ci = cons[n];
+	                ParameterInfo[] pars = ci.GetParameters();
 
-                if (cons.Length > 1)
-                {
-                    if (isUniqueArgsCount(cons, ci))
-                        Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", ci.GetParameters().Length + 1);
-                    else
-                        Write(file, "{0}(matchType(l,argc,2{1})){{", first ? "if" : "else if", TypeDecl(pars));
-                }
+	                if (cons.Length > 1)
+	                {
+	                    if (isUniqueArgsCount(cons, ci))
+	                        Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", ci.GetParameters().Length + 1);
+	                    else
+	                        Write(file, "{0}(matchType(l,argc,2{1})){{", first ? "if" : "else if", TypeDecl(pars));
+	                }
 
-                for (int k = 0; k < pars.Length; k++)
-                {
-                    CheckArgument(file, pars[k].ParameterType, k, 2, false, false);
-                }
-                Write(file, "o=new {0}({1});", FullName(t), FuncCall(ci));
-                Write(file, "pushObject(l,o);");
-                Write(file, "return 1;");
-                Write(file, "}");
-                first = false;
-            }
-            
-        }
+	                for (int k = 0; k < pars.Length; k++)
+	                {
+	                    CheckArgument(file, pars[k].ParameterType, k, 2, false, false);
+	                }
+	                Write(file, "o=new {0}({1});", FullName(t), FuncCall(ci));
+	                Write(file, "pushObject(l,o);");
+	                Write(file, "return 1;");
+	                Write(file, "}");
+	                first = false;
+	            }
+	            
+	        }
 
-        if (cons.Length!=1)
-        {
-            Write(file, "LuaDLL.luaL_error(l,\"New object failed.\");");
-            Write(file, "return 0;");
-            Write(file, "}");
-        }
+	        if (cons.Length!=1)
+	        {
+	            Write(file, "LuaDLL.luaL_error(l,\"New object failed.\");");
+	            Write(file, "return 0;");
+	            Write(file, "}");
+	        }
+		}
     }
 
     private void NotSupport(StreamWriter file)

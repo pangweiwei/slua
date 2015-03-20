@@ -17,6 +17,7 @@ function main()
 	local btn = go:GetComponent("Button")
 
 	local Canvas = GameObject.Find("Canvas")
+	-- foreach
 	for t in Slua.iter(Canvas.transform) do
 		print("foreach transorm",t)
 	end
