@@ -34,7 +34,7 @@ above 90% UnityEngine interface exported ( remove flash, platform dependented in
 
 support UnityEvent/UnityAction for event callback via lua function
 
-support delegate via lua function
+support delegate via lua function (include iOS)
 
 support yield call
 
@@ -111,19 +111,18 @@ function main()
 
 		local www = WWW("http://www.sineysoft.com")
 		Yield(www)
-		print(www.bytes)
-		print(#www.bytes)
+		print(#Slua.ToString(www.bytes))
 	end)
 	coroutine.resume(c)
 
 	-- add delegate
-	Deleg.daction = {"+=",self.actionD}
+	Deleg.daction = {"+=",self.actionD} --it's ok for iOS
 	
 	-- remove delegate
-	Deleg.daction = {"-=",self.actionD}
+	Deleg.daction = {"-=",self.actionD} --it's ok for iOS
 	
 	-- set delegate
-	Deleg.daction = function() print("callback") end
+	Deleg.daction = function() print("callback") end --it's ok for iOS
 	
 	-- remove all
 	Deleg.daction = nil
