@@ -361,11 +361,11 @@ return index
             LuaDLL.lua_getref(l, newindex_ref);
             LuaDLL.lua_setfield(l, -2, "__newindex");
 
-            if (con != null)
-            {
-                LuaDLL.lua_pushstdcallcfunction(l, con);
-                LuaDLL.lua_setfield(l, -2, "__call");
-            }
+            if (con == null) con = noConstructor;
+
+            LuaDLL.lua_pushstdcallcfunction(l, con);
+            LuaDLL.lua_setfield(l, -2, "__call");
+            
             LuaDLL.lua_pushvalue(l, -1);
             LuaDLL.lua_setmetatable(l, -3);
 
@@ -1411,6 +1411,14 @@ return index
 				LuaDLL.luaL_error(l,"expect valid Delegate ");
 			return op;
 		}
+
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int noConstructor(IntPtr l)
+        {
+            LuaDLL.luaL_error(l, "Can't new this object");
+            return 0;
+        }
 
     }
 
