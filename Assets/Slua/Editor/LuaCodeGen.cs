@@ -1165,9 +1165,12 @@ namespace SLua
         string ret = "";
         for (int n = 0; n < pars.Length; n++)
         {
-            ret += ",typeof(";
-            ret += SimpleType(pars[n].ParameterType);
-            ret += ")";
+            if (!pars[n].IsOut)
+            {
+                ret += ",typeof(";
+                ret += SimpleType(pars[n].ParameterType);
+                ret += ")";
+            }
         }
         return ret;
     }
