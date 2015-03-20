@@ -45,6 +45,7 @@ namespace SLua
             LuaObject.init(luaState.L);
             bind("BindUnity");
             bind("BindUnityUI");
+            bind("BindDll");
             bind("BindCustom");
             bind("BindExtend"); // if you want to extend slua, can implemented BindExtend function like BindCustom etc.
 

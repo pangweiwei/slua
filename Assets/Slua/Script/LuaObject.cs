@@ -89,6 +89,13 @@ local function newindex(ud,k,v)
         if h then
             h[2](ud,v)
             return
+        else
+			--for this[] = value
+            h = rawget(t,'__Item')
+            if h then 
+                h[2](ud,k,v)
+                return
+            end
         end
         t=rawget(t,'__parent')
     until t==nil
@@ -108,6 +115,16 @@ local function index(ud,k)
     repeat
         local fun=rawget(t,k)
         local tp=type(fun)
+		--for this[]
+        if fun == nil then 
+            fun = rawget(t,'__Item')
+            tp=type(fun)
+            if tp=='function' then 
+                return fun 
+            elseif tp=='table' then
+                return fun[1](ud,k)
+            end
+        end
         if tp=='function' then 
             return fun 
         elseif tp=='table' then

@@ -52,14 +52,16 @@ public class LuaCodeGen : MonoBehaviour
         }
     }
 		
-	[MenuItem("SLua/Make ALL")]
-	static public void GenerateAll() {
+    [MenuItem("SLua/All/Make")]
+    static public void GenerateAll()
+    {
 		Generate();
 		GenerateUI();
 		Custom();
+        Generate3drDll();
 	}
 		
-	[MenuItem("SLua/Make UnityEngine")]
+    [MenuItem("SLua/Unity/Make UnityEngine")]
     static public void Generate()
     {
         CodeGenerator.InnerTypes.Clear();
@@ -141,7 +143,8 @@ public class LuaCodeGen : MonoBehaviour
         Type[] types = assembly.GetExportedTypes();
 
         List<Type> exports = new List<Type>();
-
+        string oldpath = path;
+        path += "Unity/";
         foreach(Type t in types)
         {
             bool export=true;
@@ -162,11 +165,11 @@ public class LuaCodeGen : MonoBehaviour
         GenerateBind(exports,"BindUnity");
         
         AssetDatabase.Refresh();
-
+        path = oldpath;
 		Debug.Log("Generate engine interface finished");
     }
 
-    [MenuItem("SLua/Make UI (for Unity4.6+)")]
+    [MenuItem("SLua/Unity/Make UI (for Unity4.6+)")]
     static public void GenerateUI()
     {
         CodeGenerator.InnerTypes.Clear();
@@ -181,7 +184,8 @@ public class LuaCodeGen : MonoBehaviour
         Type[] types = assembly.GetExportedTypes();
 
         List<Type> exports = new List<Type>();
-
+        string oldpath = path;
+        path += "Unity/";
         foreach (Type t in types)
         {
             bool export = true;
@@ -203,16 +207,22 @@ public class LuaCodeGen : MonoBehaviour
         GenerateBind(exports, "BindUnityUI");
 
         AssetDatabase.Refresh();
-
+        path = oldpath;
 		Debug.Log("Generate UI interface finished");
     }
 
+    [MenuItem("SLua/Unity/Clear Uinty UI")]
+    static public void ClearUnity()
+    {
+        clear(new string[] { path + "Unity" });
+        Debug.Log("Clear Unity & UI complete.");
+    }
     static public bool IsObsolete(MemberInfo t)
     {
         return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0;
     }
 
-    [MenuItem("SLua/Make custom")]
+    [MenuItem("SLua/Custom/Make")]
     static public void Custom()
     {
 
@@ -232,19 +242,19 @@ public class LuaCodeGen : MonoBehaviour
         }
 
         // export 3rd dll
-        List<string> assemblyList = new List<string>();
-        CustomExport.OnAddCustomAssembly(ref assemblyList);
+        //List<string> assemblyList = new List<string>();
+        //CustomExport.OnAddCustomAssembly(ref assemblyList);
         
-        foreach( string assemblyItem in assemblyList )
-        {
-            assembly = Assembly.Load(assemblyItem);
-            types = assembly.GetExportedTypes();
+        //foreach (string assemblyItem in assemblyList)
+        //{
+        //    assembly = Assembly.Load(assemblyItem);
+        //    types = assembly.GetExportedTypes();
 
-            foreach (Type t in types)
-            {
-                cust.Add(t);
-            }
-        }
+        //    foreach (Type t in types)
+        //    {
+        //        cust.Add(t);
+        //    }
+        //}
 
         List<Type> exports = new List<Type>();
         string oldpath = path;
@@ -268,14 +278,54 @@ public class LuaCodeGen : MonoBehaviour
 		Debug.Log("Generate custom interface finished");
     }
 
-    [MenuItem("SLua/Clear Custom")]
+    [MenuItem("SLua/3drDll/Make")]
+    static public void Generate3drDll()
+    {
+        List<Type> cust = new List<Type>();
+        Assembly assembly = Assembly.Load("Assembly-CSharp");
+        Type[] types = assembly.GetExportedTypes();
+        List<string> assemblyList = new List<string>();
+        CustomExport.OnAddCustomAssembly(ref assemblyList);
+        foreach (string assemblyItem in assemblyList)
+        {
+            assembly = Assembly.Load(assemblyItem);
+            types = assembly.GetExportedTypes();
+            foreach (Type t in types)
+            {
+                cust.Add(t);
+            }
+        }
+        List<Type> exports = new List<Type>();
+        string oldpath = path;
+        path += "Dll/";
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+        foreach (Type t in cust)
+        {
+            if (Generate(t))
+                exports.Add(t);
+        }
+        GenerateBind(exports, "BindDll");
+        AssetDatabase.Refresh();
+        path = oldpath;
+        Debug.Log("Generate 3rdDll interface finished");
+    }
+    [MenuItem("SLua/3drDll/Clear")]
+    static public void Clear3drDll()
+    {
+        clear(new string[] { path + "Dll" });
+        Debug.Log("Clear AssemblyDll complete.");
+    }
+    [MenuItem("SLua/Custom/Clear")]
     static public void ClearCustom()
     {
         clear(new string[]{path+"Custom"});
         Debug.Log("Clear custom complete.");
     }
 
-    [MenuItem("SLua/Clear All")]
+    [MenuItem("SLua/All/Clear")]
     static public void ClearALL()
     {
         clear(new string[] { path.Substring(0, path.Length - 1) });
@@ -928,14 +978,28 @@ namespace SLua
             propname.Add(fi.Name, pp);
             tryMake(fi.FieldType);
         }
-
+		//for this[]
+        List<PropertyInfo> getter = new List<PropertyInfo>();
+        List<PropertyInfo> setter = new List<PropertyInfo>();
         // Write property set/get
         PropertyInfo[] props = t.GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         foreach (PropertyInfo fi in props)
         {
-            if (fi.Name == "Item" || IsObsolete(fi) || MemberInFilter(t,fi) || DontExport(fi))
+            //if (fi.Name == "Item" || IsObsolete(fi) || MemberInFilter(t,fi) || DontExport(fi))
+            if (IsObsolete(fi) || MemberInFilter(t, fi) || DontExport(fi))
                 continue;
-
+            if (fi.Name == "Item")
+            {
+				//for this[]
+                if (!fi.GetGetMethod().IsStatic && fi.GetIndexParameters().Length == 1)
+                {
+                    if (fi.CanRead && !IsNotSupport(fi.PropertyType))
+                        getter.Add(fi);
+                    if (fi.CanWrite && fi.GetSetMethod() != null)
+                        setter.Add(fi);
+                }                
+                continue;
+            }
             PropPair pp = new PropPair();
             bool isInstance = true;
 
@@ -996,8 +1060,101 @@ namespace SLua
             propname.Add(fi.Name, pp);
             tryMake(fi.PropertyType);
         }
+		//for this[]
+        WriteThisFunc(t, file, getter, setter);
     }
+    void WriteThisFunc(Type t, StreamWriter file, List<PropertyInfo> getter, List<PropertyInfo> setter)
+    {
 
+		//Write property this[] set/get
+        PropPair ppp = new PropPair();
+        if (getter.Count > 0)
+        {
+			//get
+            bool first_get = true;
+            WriteFunctionAttr(file);
+            Write(file, "static public int get__{0}(IntPtr l) {{", "Item");
+            Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
+            Write(file, "try {");
+            if (getter.Count == 1)
+            {
+                PropertyInfo _get = getter[0];
+                ParameterInfo[] infos = _get.GetIndexParameters();
+                WriteValueCheck(file, infos[0].ParameterType, 2, "v");
+                Write(file, "{0} ret = o[v];", _get.PropertyType);
+                WritePushValue(_get.PropertyType, file, "ret");
+                Write(file, "return 1;");
+            }
+            else
+            {
+                Write(file, "LuaTypes t = LuaDLL.lua_type(l, 2);");
+                for (int i = 0; i < getter.Count; i++)
+                {
+                    PropertyInfo fii = getter[i];
+                    ParameterInfo[] infos = fii.GetIndexParameters();
+                    Write(file, "{0}(matchType(l,2,t,typeof({1}))){{", first_get ? "if" : "else if", infos[0].ParameterType);
+                    WriteValueCheck(file, infos[0].ParameterType, 2, "v");
+                    Write(file, "{0} ret = o[v];", fii.PropertyType);
+                    WritePushValue(fii.PropertyType, file, "ret");
+                    Write(file, "return 1;");
+                    Write(file, "}");
+                    first_get = false;
+                }
+                Write(file, "LuaDLL.luaL_error(l,\"No matched override function to call\");");
+                Write(file, "return 0;");
+            }
+            Write(file, "}");
+            Write(file, "catch(Exception e) {");
+            Write(file, "LuaDLL.luaL_error(l, e.ToString());");
+            Write(file, "return 0;");
+            Write(file, "}");
+            Write(file, "}");
+            ppp.get = "get__Item";
+        }
+        if (setter.Count > 0)
+        {
+            bool first_set = true;
+            WriteFunctionAttr(file);
+            Write(file, "static public int set__{0}(IntPtr l) {{", "Item");
+            Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
+            if (setter.Count == 1)
+            {
+                PropertyInfo _set = setter[0];
+                ParameterInfo[] infos = _set.GetIndexParameters();
+                WriteValueCheck(file, infos[0].ParameterType, 2);
+                WriteValueCheck(file, _set.PropertyType, 3, "c");
+                Write(file, "o[v]=c;");
+            }
+            else
+            {
+                Write(file, "LuaTypes t = LuaDLL.lua_type(l, 2);");
+                for (int i = 0; i < setter.Count; i++)
+                {
+                    PropertyInfo fii = setter[i];
+                    if (t.BaseType != typeof(MulticastDelegate))
+                    {
+                        ParameterInfo[] infos = fii.GetIndexParameters();
+                        Write(file, "{0}(matchType(l,2,t,typeof({1}))){{", first_set ? "if" : "else if", infos[0].ParameterType);
+                        WriteValueCheck(file, infos[0].ParameterType, 2, "v");
+                        WriteValueCheck(file, fii.PropertyType, 3, "c");
+                        Write(file, "o[v]=c;");
+                        Write(file, "return 0;");
+                        Write(file, "}");
+                        first_set = false;
+                    }
+                    if (t.IsValueType)
+                        Write(file, "setBack(l,o);");
+                }
+                Write(file, "LuaDLL.luaL_error(l,\"No matched override function to call\");");
+            }
+            Write(file, "return 0;");
+            Write(file, "}");
+            ppp.set = "set__Item";
+            ppp.isInstance = true;
+        }
+        if (ppp.get == "null" && ppp.set == "null") return;
+        propname.Add("__Item", ppp);
+    }
     void WriteCheckType(StreamWriter file, Type t, int n, string v="v", string nprefix="")
     {
         if(t.IsEnum)
