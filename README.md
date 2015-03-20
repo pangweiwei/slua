@@ -81,6 +81,15 @@ function main()
 	-- get component by type name
 	local btn = go:GetComponent("Button")
 	
+	-- get out parameter
+	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1))
+	print("Physics Hitinfo",ok,hitinfo)
+	
+	-- foreach enumeratable object
+	for t in Slua.iter(Canvas.transform) do
+		print("foreach transorm",t)
+	end
+	
 	-- add event listener
 	btn.onClick:AddListener(function()
 		local go = GameObject.Find("Canvas/Text")
