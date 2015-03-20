@@ -114,10 +114,30 @@ namespace SLua
             }
         }
 
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int ToString(IntPtr l)
+		{
+			object o = checkObj(l, 1);
+			if(o==null)
+			{
+				LuaDLL.lua_pushnil(l);
+				return 1;
+			}
+
+			if(o is byte[]) {
+				byte[] b=(byte[])o;
+				LuaDLL.lua_pushlstring(l,b,b.Length);
+			} else {
+				pushValue(l,o.ToString());
+			}
+			return 1;
+		}
+
         static new public void reg(IntPtr l)
         {
             reg(l, CreateClass, "Slua");
             reg(l, iter, "Slua");
+			reg(l, ToString, "Slua");
         }
     }
 }

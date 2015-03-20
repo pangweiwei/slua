@@ -1066,10 +1066,10 @@ return index
             }
         }
 
-        public static void pushValue(IntPtr l, byte[] o)
-        {
-            LuaDLL.lua_pushlstring(l, o, o.Length);
-        }
+//        public static void pushValue(IntPtr l, byte[] o)
+//        {
+//            LuaDLL.lua_pushlstring(l, o, o.Length);
+//        }
 		
 		// i don't know why c# find a wrong generic function
 		// push T will push object not a real push<T>

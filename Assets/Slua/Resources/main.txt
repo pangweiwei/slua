@@ -22,6 +22,12 @@ function main()
 		print("foreach transorm",t)
 	end
 	
+	-- bytes return byte[]
+	local data = HelloWorld.bytes()
+	print("data type ",type(data))
+	data = Slua.ToString(data)
+	print("data type ",type(data),data)
+	
 
 	btn.onClick:AddListener(function()
 		local go = GameObject.Find("Canvas/Text")
