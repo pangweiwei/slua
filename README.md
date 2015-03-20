@@ -34,7 +34,7 @@ above 90% UnityEngine interface exported ( remove flash, platform dependented in
 
 support UnityEvent/UnityAction for event callback via lua function
 
-support delegate via lua function
+support delegate via lua function (include iOS)
 
 support yield call
 
