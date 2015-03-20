@@ -825,7 +825,7 @@ namespace SLua
 
 	string constructorOrNot(Type t) {
 		ConstructorInfo[] cons = GetValidConstructor(t);
-		if(cons.Length>0)
+		if(cons.Length>0 || t.IsValueType)
 			return "constructor";
 		return "null";
 	}
@@ -1022,7 +1022,12 @@ namespace SLua
     ConstructorInfo[] GetValidConstructor(Type t)
     {
         List<ConstructorInfo> ret = new List<ConstructorInfo>();
-        ConstructorInfo[] cons = t.GetConstructors();
+        if (t.GetConstructor(Type.EmptyTypes) == null && t.IsAbstract && t.IsSealed)
+            return ret.ToArray();
+        if(t.BaseType!=null && t.BaseType.Name=="MonoBehaviour")
+            return ret.ToArray();
+
+        ConstructorInfo[] cons = t.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
         foreach (ConstructorInfo ci in cons)
         {
                 if (!IsObsolete(ci) && !DontExport(ci))
@@ -1082,7 +1087,18 @@ namespace SLua
 	            Write(file, "return 0;");
 	            Write(file, "}");
 	        }
-		}
+        }
+        else if (t.IsValueType) // default constructor
+        {
+            WriteFunctionAttr(file);
+            Write(file, "static public int constructor(IntPtr l) {");
+
+            Write(file, "{0} o;", FullName(t));
+            Write(file, "o=new {0}();", FullName(t));
+            Write(file, "pushObject(l,o);");
+            Write(file, "return 1;");
+            Write(file, "}");
+        }
     }
 
     private void NotSupport(StreamWriter file)
@@ -1165,12 +1181,9 @@ namespace SLua
         string ret = "";
         for (int n = 0; n < pars.Length; n++)
         {
-            if (!pars[n].IsOut)
-            {
-                ret += ",typeof(";
-                ret += SimpleType(pars[n].ParameterType);
-                ret += ")";
-            }
+            ret += ",typeof(";
+            ret += SimpleType(pars[n].ParameterType);
+            ret += ")";
         }
         return ret;
     }
