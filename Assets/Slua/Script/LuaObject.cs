@@ -880,9 +880,18 @@ return index
             return oc.get(l, p);
         }
 
-        static public bool checkType(IntPtr l, int p, out object[] o)
+        static public bool checkType(IntPtr l, int p, out object[] t)
         {
-            throw new NotSupportedException();
+            LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
+            int n = LuaDLL.lua_rawlen(l, p);
+            t = new object[n];
+            for (int k = 0; k < n; k++)
+            {
+                LuaDLL.lua_rawgeti(l, p, k + 1);
+                t[k] = checkVar(l, -1);
+                LuaDLL.lua_pop(l, 1);
+            }
+            return true;
         }
 
         static public bool checkType(IntPtr l, int p, out Type[] t)
@@ -1057,10 +1066,10 @@ return index
             }
         }
 
-        public static void pushValue(IntPtr l, byte[] o)
-        {
-            LuaDLL.lua_pushlstring(l, o, o.Length);
-        }
+//        public static void pushValue(IntPtr l, byte[] o)
+//        {
+//            LuaDLL.lua_pushlstring(l, o, o.Length);
+//        }
 		
 		// i don't know why c# find a wrong generic function
 		// push T will push object not a real push<T>

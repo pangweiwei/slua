@@ -15,6 +15,18 @@ function main()
 
 	local go = GameObject.Find("Canvas/Button")
 	local btn = go:GetComponent("Button")
+
+	local Canvas = GameObject.Find("Canvas")
+	-- foreach
+	for t in Slua.iter(Canvas.transform) do
+		print("foreach transorm",t)
+	end
+	
+	-- bytes return byte[]
+	local data = HelloWorld.bytes()
+	print("data type ",type(data))
+	data = Slua.ToString(data)
+	print("data type ",type(data),data)
 	
 
 	btn.onClick:AddListener(function()

@@ -37,6 +37,10 @@ function main()
 
 	print("Dict count",dict.Count)
 
+	for v in Slua.iter(dict) do
+		print("for each",v)
+	end
+
 	-- now we simple benchmark varobj
 	local t = os.clock()
 	for i=1,200000 do

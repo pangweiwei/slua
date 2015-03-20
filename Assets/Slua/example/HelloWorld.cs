@@ -12,6 +12,10 @@ public class HelloWorld   {
 		Debug.Log ("hello world");
 	}
 
+	static public byte[] bytes() {
+		return new byte[]{51,52,53,53};
+	}
+
 
     public Dictionary<string, GameObject> foo()
     {
