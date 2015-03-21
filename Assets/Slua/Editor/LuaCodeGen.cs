@@ -1067,13 +1067,12 @@ namespace SLua
     {
 
 		//Write property this[] set/get
-        PropPair ppp = new PropPair();
         if (getter.Count > 0)
         {
 			//get
             bool first_get = true;
             WriteFunctionAttr(file);
-            Write(file, "static public int get__{0}(IntPtr l) {{", "Item");
+            Write(file, "static public int get{0}(IntPtr l) {{", "Item");
             Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
             Write(file, "try {");
             if (getter.Count == 1)
@@ -1109,13 +1108,13 @@ namespace SLua
             Write(file, "return 0;");
             Write(file, "}");
             Write(file, "}");
-            ppp.get = "get__Item";
+            funcname.Add("getItem");
         }
         if (setter.Count > 0)
         {
             bool first_set = true;
             WriteFunctionAttr(file);
-            Write(file, "static public int set__{0}(IntPtr l) {{", "Item");
+            Write(file, "static public int set{0}(IntPtr l) {{", "Item");
             Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
             if (setter.Count == 1)
             {
@@ -1149,11 +1148,8 @@ namespace SLua
             }
             Write(file, "return 0;");
             Write(file, "}");
-            ppp.set = "set__Item";
-            ppp.isInstance = true;
+            funcname.Add("setItem");
         }
-        if (ppp.get == "null" && ppp.set == "null") return;
-        propname.Add("__Item", ppp);
     }
     void WriteCheckType(StreamWriter file, Type t, int n, string v="v", string nprefix="")
     {
