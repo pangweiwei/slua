@@ -278,7 +278,7 @@ public class LuaCodeGen : MonoBehaviour
 		Debug.Log("Generate custom interface finished");
     }
 
-    [MenuItem("SLua/3drDll/Make")]
+    [MenuItem("SLua/3rdDll/Make")]
     static public void Generate3drDll()
     {
         List<Type> cust = new List<Type>();
