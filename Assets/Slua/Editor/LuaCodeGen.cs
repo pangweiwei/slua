@@ -58,7 +58,7 @@ public class LuaCodeGen : MonoBehaviour
 		Generate();
 		GenerateUI();
 		Custom();
-        Generate3drDll();
+        Generate3rdDll();
 	}
 		
     [MenuItem("SLua/Unity/Make UnityEngine")]
@@ -279,7 +279,7 @@ public class LuaCodeGen : MonoBehaviour
     }
 
     [MenuItem("SLua/3rdDll/Make")]
-    static public void Generate3drDll()
+    static public void Generate3rdDll()
     {
         List<Type> cust = new List<Type>();
         Assembly assembly = Assembly.Load("Assembly-CSharp");
@@ -295,25 +295,28 @@ public class LuaCodeGen : MonoBehaviour
                 cust.Add(t);
             }
         }
-        List<Type> exports = new List<Type>();
-        string oldpath = path;
-        path += "Dll/";
-        if (!Directory.Exists(path))
+        if (cust.Count > 0)
         {
-            Directory.CreateDirectory(path);
+            List<Type> exports = new List<Type>();
+            string oldpath = path;
+            path += "Dll/";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            foreach (Type t in cust)
+            {
+                if (Generate(t))
+                    exports.Add(t);
+            }
+            GenerateBind(exports, "BindDll");
+            AssetDatabase.Refresh();
+            path = oldpath;
+            Debug.Log("Generate 3rdDll interface finished");
         }
-        foreach (Type t in cust)
-        {
-            if (Generate(t))
-                exports.Add(t);
-        }
-        GenerateBind(exports, "BindDll");
-        AssetDatabase.Refresh();
-        path = oldpath;
-        Debug.Log("Generate 3rdDll interface finished");
     }
-    [MenuItem("SLua/3drDll/Clear")]
-    static public void Clear3drDll()
+    [MenuItem("SLua/3rdDll/Clear")]
+    static public void Clear3rdDll()
     {
         clear(new string[] { path + "Dll" });
         Debug.Log("Clear AssemblyDll complete.");
@@ -334,9 +337,14 @@ public class LuaCodeGen : MonoBehaviour
 
     static void clear(string[] paths)
     {
-        foreach (string path in paths)
+        try
         {
-            System.IO.Directory.Delete(path, true);
+            foreach (string path in paths)
+            {
+                System.IO.Directory.Delete(path, true);
+            }
+        } catch {
+
         }
         
         AssetDatabase.Refresh();
@@ -928,7 +936,7 @@ namespace SLua
 			{
 	            WriteFunctionAttr(file);
 	            Write(file, "static public int get_{0}(IntPtr l) {{", fi.Name);
-
+                WriteTry(file);
 	            if (fi.IsStatic)
 	            {
 	                WritePushValue(fi.FieldType, file, string.Format("{0}.{1}", t.FullName, fi.Name));
@@ -940,6 +948,7 @@ namespace SLua
 	            }
 
 	            Write(file, "return 1;");
+                WriteCatchExecption(file);
 	            Write(file, "}");
 	            
 	            pp.get = "get_" + fi.Name;
@@ -952,7 +961,7 @@ namespace SLua
             {
                 WriteFunctionAttr(file);
                 Write(file, "static public int set_{0}(IntPtr l) {{", fi.Name);
-
+                WriteTry(file);
                 if (fi.IsStatic)
                 {
                     Write(file, "{0} v;", TypeDecl(fi.FieldType));
@@ -970,6 +979,7 @@ namespace SLua
                 if(t.IsValueType && !fi.IsStatic)
                     Write(file, "setBack(l,o);");
                 Write(file, "return 0;");
+                WriteCatchExecption(file);
                 Write(file, "}");
 
                 pp.set = "set_" + fi.Name;
@@ -1009,7 +1019,7 @@ namespace SLua
                 {
                     WriteFunctionAttr(file);
                     Write(file, "static public int get_{0}(IntPtr l) {{", fi.Name);
-
+                    WriteTry(file);
                 
                     if (fi.GetGetMethod().IsStatic)
                     {
@@ -1023,6 +1033,7 @@ namespace SLua
                     }
 
                     Write(file, "return 1;");
+                    WriteCatchExecption(file);
                     Write(file, "}");
                     pp.get = "get_" + fi.Name;
                 }
@@ -1033,7 +1044,7 @@ namespace SLua
             {
                 WriteFunctionAttr(file);
                 Write(file, "static public int set_{0}(IntPtr l) {{", fi.Name);
-
+                WriteTry(file);
                 if (fi.GetSetMethod().IsStatic)
                 {
                     WriteValueCheck(file, fi.PropertyType, 2);
@@ -1051,7 +1062,7 @@ namespace SLua
                     Write(file, "setBack(l,o);");
 
                 Write(file, "return 0;");
-
+                WriteCatchExecption(file);
                 Write(file, "}");
                 pp.set = "set_" + fi.Name;
             }
@@ -1072,9 +1083,9 @@ namespace SLua
 			//get
             bool first_get = true;
             WriteFunctionAttr(file);
-            Write(file, "static public int get{0}(IntPtr l) {{", "Item");
+            Write(file, "static public int getItem(IntPtr l) {");
+            WriteTry(file);
             Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
-            Write(file, "try {");
             if (getter.Count == 1)
             {
                 PropertyInfo _get = getter[0];
@@ -1102,11 +1113,7 @@ namespace SLua
                 Write(file, "LuaDLL.luaL_error(l,\"No matched override function to call\");");
                 Write(file, "return 0;");
             }
-            Write(file, "}");
-            Write(file, "catch(Exception e) {");
-            Write(file, "LuaDLL.luaL_error(l, e.ToString());");
-            Write(file, "return 0;");
-            Write(file, "}");
+            WriteCatchExecption(file);
             Write(file, "}");
             funcname.Add("getItem");
         }
@@ -1114,7 +1121,8 @@ namespace SLua
         {
             bool first_set = true;
             WriteFunctionAttr(file);
-            Write(file, "static public int set{0}(IntPtr l) {{", "Item");
+            Write(file, "static public int setItem(IntPtr l) {");
+            WriteTry(file);
             Write(file, "{0} o = ({0})checkSelf(l);", FullName(t));
             if (setter.Count == 1)
             {
@@ -1147,10 +1155,26 @@ namespace SLua
                 Write(file, "LuaDLL.luaL_error(l,\"No matched override function to call\");");
             }
             Write(file, "return 0;");
+            WriteCatchExecption(file);
             Write(file, "}");
             funcname.Add("setItem");
         }
     }
+
+    void WriteTry(StreamWriter file)
+    {
+        Write(file, "try {");
+    }
+
+    void WriteCatchExecption(StreamWriter file)
+    {
+        Write(file, "}");
+        Write(file, "catch(Exception e) {");
+        Write(file, "LuaDLL.luaL_error(l, e.ToString());");
+        Write(file, "return 0;");
+        Write(file, "}");
+    }
+
     void WriteCheckType(StreamWriter file, Type t, int n, string v="v", string nprefix="")
     {
         if(t.IsEnum)
@@ -1201,7 +1225,7 @@ namespace SLua
 		if(cons.Length>0) {
 	        WriteFunctionAttr(file);
 	        Write(file, "static public int constructor(IntPtr l) {");
-	        
+            WriteTry(file);
 	        if (cons.Length > 0)
 	        {
 	            if (cons.Length > 1)
@@ -1228,16 +1252,19 @@ namespace SLua
 	                Write(file, "o=new {0}({1});", FullName(t), FuncCall(ci));
 	                Write(file, "pushObject(l,o);");
 	                Write(file, "return 1;");
+                    if(cons.Length==1)
+                        WriteCatchExecption(file);
 	                Write(file, "}");
 	                first = false;
 	            }
 	            
 	        }
 
-	        if (cons.Length!=1)
+	        if (cons.Length>1)
 	        {
 	            Write(file, "LuaDLL.luaL_error(l,\"New object failed.\");");
 	            Write(file, "return 0;");
+                WriteCatchExecption(file);
 	            Write(file, "}");
 	        }
         }
@@ -1245,11 +1272,12 @@ namespace SLua
         {
             WriteFunctionAttr(file);
             Write(file, "static public int constructor(IntPtr l) {");
-
+            WriteTry(file);
             Write(file, "{0} o;", FullName(t));
             Write(file, "o=new {0}();", FullName(t));
             Write(file, "pushObject(l,o);");
             Write(file, "return 1;");
+            WriteCatchExecption(file);
             Write(file, "}");
         }
     }
@@ -1383,7 +1411,7 @@ namespace SLua
 
     void WriteFunctionImpl(StreamWriter file, MethodInfo m, Type t, BindingFlags bf)
     {
-        Write(file, "try{");
+        WriteTry(file);
         MethodBase[] cons = GetMethods(t, m.Name, bf);
         if (cons.Length == 1) // no override function
         {
@@ -1424,11 +1452,7 @@ namespace SLua
             Write(file, "LuaDLL.luaL_error(l,\"No matched override function to call\");");
             Write(file, "return 0;");
         }
-        Write(file, "}");
-        Write(file, "catch(Exception e) {");
-        Write(file, "LuaDLL.luaL_error(l, e.ToString());");
-        Write(file, "return 0;");
-        Write(file, "}");
+        WriteCatchExecption(file);
         Write(file, "}");
     }
 
