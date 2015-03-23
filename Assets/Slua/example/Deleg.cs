@@ -30,7 +30,8 @@ public class Deleg : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        l = new LuaSvr("delegate");
+        l = new LuaSvr();
+        l.start("delegate");
     }
 
     static public void callD()
