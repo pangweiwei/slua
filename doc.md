@@ -364,6 +364,10 @@ LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使�
 
 如果你的lua文件是通过动态下载asset bundle获得或者直接http下载获得(即lua代码热更新),需要自己实现loader, 你可以添加LuaState.loaderDelegate代理完成自己的加载请求, 具体可以参考LusState.cs代码.
 
+8)如何导出this[]?
+
+this[] get/set会产生getItem/setItem成员函数,请使用他们.
+
 
 ##已知问题
 不支持泛型函数导出, 但支持泛型代理
@@ -375,5 +379,3 @@ UnityAction/UnityEvent目前仅支持1个泛型参数的版本,后续考虑完�
 返回没有导出的类型, 会采用LuaVarObject, 这个类退化为使用反射, 并且并没有完善, 不建议返回没有导出的类, 简单例子可以参考varobj工程.
 
 函数的默认参数不支持.
-
-不支持[]访问导出,可以自行封装get(key)/set(key,value)导出.
