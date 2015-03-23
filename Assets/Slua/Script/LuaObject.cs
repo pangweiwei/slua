@@ -107,7 +107,7 @@ local function index(ud,k)
     local t=getmetatable(ud)
     repeat
         local fun=rawget(t,k)
-        local tp=type(fun)
+        local tp=type(fun)	
         if tp=='function' then 
             return fun 
         elseif tp=='table' then

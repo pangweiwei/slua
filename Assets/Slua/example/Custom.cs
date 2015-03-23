@@ -40,7 +40,21 @@ public class Custom : MonoBehaviour {
         LuaObject.pushObject(l, c);
         return 2;
     }
-
+    public int this[string key]
+    {
+        get 
+        {  if(key == "test") 
+                return v;
+            return 0;
+        }
+        set
+        {
+            if(key == "test")
+            {
+                v = value;
+            }
+        }
+    }
     public string getTypeName(Type t)
     {
         return t.Name;
