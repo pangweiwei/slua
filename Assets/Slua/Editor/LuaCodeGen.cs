@@ -137,6 +137,7 @@ public class LuaCodeGen : MonoBehaviour
             "ActionScript",
             "OnRequestRebuild",
 			"Ping",
+            "ShaderVariantCollection",
         };
 
         Assembly assembly = Assembly.Load("UnityEngine");
