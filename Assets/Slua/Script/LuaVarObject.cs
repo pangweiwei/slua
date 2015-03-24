@@ -161,23 +161,36 @@ namespace SLua
                 case LuaTypes.LUA_TNUMBER:
                     return indexInt(l, self, LuaDLL.lua_tointeger(l,2));
                 default:
-                    LuaDLL.luaL_error(l, "Invalid member get");
-                    return 0;
+					return indexObject(l, self, checkObj(l,2));
             }
         }
+
+		static int indexObject(IntPtr l, object self, object key) {
+
+			if (self is IDictionary) {
+				object v = (self as IDictionary)[key];
+				pushVar(l,v);
+				return 1;
+			}
+			return 0;
+
+		}
 
         static int indexString(IntPtr l, object self, string key)
         {
             Type t = self.GetType();
 
-            if (self is IDictionary && t.GetGenericArguments()[0] == typeof(string))
-            {
-                object v = (self as IDictionary)[key];
-                if(v!=null) {
-                    pushVar(l,v);
-                    return 1;
-                }
-            }
+            if (self is IDictionary) {
+			    if(t.IsGenericType && t.GetGenericArguments()[0] != typeof(string) ) {
+					LuaDLL.luaL_error(l,"need string as key");
+					return 0;
+				}
+				object v = (self as IDictionary)[key];
+				if(v!=null) {
+					pushVar(l,v);
+					return 1;
+				}
+			}
             
             MemberInfo[] mis = t.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
             if (mis.Length == 0)
@@ -275,6 +288,14 @@ namespace SLua
             }
         }
 
+		static void newindexObject(IntPtr l, object self, object k,object v)
+		{
+			if (self is IDictionary)
+			{
+				(self as IDictionary)[k] = v;
+			}
+		}
+
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaNewIndex(IntPtr l)
         {
@@ -291,7 +312,7 @@ namespace SLua
                     newindexInt(l, self, LuaDLL.lua_tointeger(l, 2));
                     return 0;
                 default:
-                    LuaDLL.luaL_error(l, "Invalid member set");
+					newindexObject(l,self,checkVar(l,2),checkVar(l,3));
                     return 0;
             }
         }
