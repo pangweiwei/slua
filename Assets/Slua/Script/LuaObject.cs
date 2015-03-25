@@ -869,6 +869,14 @@ return index
             return t != null;
         }
 
+		static public bool checkType(IntPtr l, int p, out LayerMask lm) {
+			int v;
+			checkType (l,p,out v);
+			lm=v;
+			return true;
+		}
+
+
         static public bool checkType<T>(IntPtr l, int p, out T o) {
             o = (T)checkVar(l, p);
             return true;
