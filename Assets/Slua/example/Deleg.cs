@@ -14,6 +14,18 @@ public class Deleg : MonoBehaviour {
     static public GetBundleInfoDelegate d;
     static public SimpleDelegate s;
 
+    static public GetBundleInfoDelegate dx
+    {
+        get
+        {
+            return d;
+        }
+        set
+        {
+            d = value;
+        }
+    }
+
     LuaSvr l;
     // Use this for initialization
     void Start()

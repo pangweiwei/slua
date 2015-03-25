@@ -64,6 +64,27 @@ LUA_API int luaS_rawnetobj(lua_State *L,int index)
 // THE SOFTWARE.
 
 
+static int s_closure(lua_State *L)
+{
+	lua_Debug ar;
+	lua_stdcallCFunction fn;
+	int r;
+
+	lua_getstack(L, 0, &ar);
+	lua_getinfo(L, "u", &ar);
+	fn = (lua_stdcallCFunction)lua_touserdata(L, lua_upvalueindex(ar.nups));
+	r = fn(L);
+	return r;
+}
+
+
+LUA_API void luaS_pushcclosure(lua_State *L, lua_CFunction func,int n) {
+	if (func != NULL) {
+		lua_pushlightuserdata(L, func);
+		lua_pushcclosure(L, s_closure, n + 1);
+	}
+}
+
 LUA_API const char* luaS_tolstring32(lua_State *L, int index, int* len) {
     size_t l;
     const char* ret = lua_tolstring(L,index, &l);
@@ -83,7 +104,7 @@ LUA_API void luaS_atpanic(lua_State *L, lua_stdcallCFunction f) {
 	lua_atpanic(L, atpanic);
 }
 
-#if LUA_VERSION_NUM==503
+#if LUA_VERSION_NUM>=503
 static int k (lua_State *L, int status, lua_KContext ctx) {
 	return status;
 }

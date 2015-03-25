@@ -145,52 +145,7 @@ namespace SLua
                 }
             }
         }
-
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static public int CreateClass(IntPtr l)
-        {
-            try
-            {
-                string cls;
-                checkType(l, 1, out cls);
-                Type t = Type.GetType(cls);
-                if (t == null)
-                {
-                    LuaDLL.luaL_error(l, "Can't find {0} to create", cls);
-                    return 0;
-                }
-
-                ConstructorInfo[] cis = t.GetConstructors();
-                ConstructorInfo target = null;
-                for (int n = 0; n < cis.Length; n++)
-                {
-                    ConstructorInfo ci = cis[n];
-                    if (matchType(l, LuaDLL.lua_gettop(l), 2, ci.GetParameters()))
-                    {
-                        target = ci;
-                        break;
-                    }
-                }
-
-                if (target != null)
-                {
-                    ParameterInfo[] pis = target.GetParameters();
-                    object[] args = new object[pis.Length];
-                    for (int n = 0; n < pis.Length; n++)
-                        args[n] = Convert.ChangeType(checkVar(l, n + 2), pis[n].ParameterType);
-
-                    object ret = target.Invoke(args);
-                    pushVar(l, ret);
-                    return 1;
-                }
-                return 0;
-            }
-            catch (Exception e)
-            {
-                LuaDLL.luaL_error(l, e.ToString());
-                return 0;
-            }
-        }
+               
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaIndex(IntPtr l)
@@ -206,23 +161,36 @@ namespace SLua
                 case LuaTypes.LUA_TNUMBER:
                     return indexInt(l, self, LuaDLL.lua_tointeger(l,2));
                 default:
-                    LuaDLL.luaL_error(l, "Invalid member get");
-                    return 0;
+					return indexObject(l, self, checkObj(l,2));
             }
         }
+
+		static int indexObject(IntPtr l, object self, object key) {
+
+			if (self is IDictionary) {
+				object v = (self as IDictionary)[key];
+				pushVar(l,v);
+				return 1;
+			}
+			return 0;
+
+		}
 
         static int indexString(IntPtr l, object self, string key)
         {
             Type t = self.GetType();
 
-            if (self is IDictionary && t.GetGenericArguments()[0] == typeof(string))
-            {
-                object v = (self as IDictionary)[key];
-                if(v!=null) {
-                    pushVar(l,v);
-                    return 1;
-                }
-            }
+            if (self is IDictionary) {
+			    if(t.IsGenericType && t.GetGenericArguments()[0] != typeof(string) ) {
+					LuaDLL.luaL_error(l,"need string as key");
+					return 0;
+				}
+				object v = (self as IDictionary)[key];
+				if(v!=null) {
+					pushVar(l,v);
+					return 1;
+				}
+			}
             
             MemberInfo[] mis = t.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
             if (mis.Length == 0)
@@ -235,7 +203,8 @@ namespace SLua
             {
                 case MemberTypes.Property:
                     PropertyInfo p = (PropertyInfo)mi;
-                    pushVar(l, p.GetValue(self,null));
+                    MethodInfo get = p.GetGetMethod();
+                    pushVar(l, get.Invoke(self,null));
                     break;
                 case MemberTypes.Field:
                     FieldInfo f = (FieldInfo)mi;
@@ -274,7 +243,8 @@ namespace SLua
             {
                 case MemberTypes.Property:
                     PropertyInfo p = (PropertyInfo)mi;
-                    p.SetValue(self, v,null);
+                    MethodInfo set = p.GetSetMethod();
+                    set.Invoke(self,new object[]{v});
                     break;
                 case MemberTypes.Field:
                     FieldInfo f = (FieldInfo)mi;
@@ -318,6 +288,14 @@ namespace SLua
             }
         }
 
+		static void newindexObject(IntPtr l, object self, object k,object v)
+		{
+			if (self is IDictionary)
+			{
+				(self as IDictionary)[k] = v;
+			}
+		}
+
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaNewIndex(IntPtr l)
         {
@@ -334,7 +312,7 @@ namespace SLua
                     newindexInt(l, self, LuaDLL.lua_tointeger(l, 2));
                     return 0;
                 default:
-                    LuaDLL.luaL_error(l, "Invalid member set");
+					newindexObject(l,self,checkVar(l,2),checkVar(l,3));
                     return 0;
             }
         }
@@ -371,7 +349,6 @@ namespace SLua
             LuaDLL.lua_setfield(l, -2, "__call");
             LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, ObjectCache.getAQName(typeof(LuaCSFunction)));
 
-            reg(l, CreateClass, "Slua");
         }
     }
 }

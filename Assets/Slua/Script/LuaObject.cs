@@ -107,7 +107,7 @@ local function index(ud,k)
     local t=getmetatable(ud)
     repeat
         local fun=rawget(t,k)
-        local tp=type(fun)
+        local tp=type(fun)	
         if tp=='function' then 
             return fun 
         elseif tp=='table' then
@@ -162,7 +162,7 @@ return index
             typePushMap[typeof(uint)] =
                 (IntPtr L, object o) =>
                 {
-                    LuaDLL.lua_pushinteger(L, (int)o);
+					LuaDLL.lua_pushinteger(L, Convert.ToInt32(o));
                 };
 
             typePushMap[typeof(short)] =
@@ -196,7 +196,7 @@ return index
 					#if LUA_5_3
 					LuaDLL.lua_pushinteger(L, (long)o);
 					#else
-					LuaDLL.lua_pushnumber(L, (double)o);
+					LuaDLL.lua_pushnumber(L, System.Convert.ToDouble(o));
 					#endif
 				};
 			
@@ -361,11 +361,11 @@ return index
             LuaDLL.lua_getref(l, newindex_ref);
             LuaDLL.lua_setfield(l, -2, "__newindex");
 
-            if (con != null)
-            {
-                LuaDLL.lua_pushstdcallcfunction(l, con);
-                LuaDLL.lua_setfield(l, -2, "__call");
-            }
+            if (con == null) con = noConstructor;
+
+            LuaDLL.lua_pushstdcallcfunction(l, con);
+            LuaDLL.lua_setfield(l, -2, "__call");
+            
             LuaDLL.lua_pushvalue(l, -1);
             LuaDLL.lua_setmetatable(l, -3);
 
@@ -648,75 +648,7 @@ return index
             return true;
         }
 
-//         static public bool checkType(IntPtr l, int p, out Vector4 v)
-//         {
-//             v = Vector4.zero;
-//             if (!luaTypeCheck(l, p, "Vector4"))
-//                 return false;
-// 
-//             LuaDLL.lua_getfield(l, p, "x");
-//             v.x = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_getfield(l, p, "y");
-//             v.y = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_getfield(l, p, "z");
-//             v.z = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_getfield(l, p, "w");
-//             v.w = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_pop(l, 4);
-//             return true;
-//         }
 
-        
-//         static public bool checkType(IntPtr l, int p, out Vector3 v)
-//         {
-//             if (LuaDLL.lua_type(l, p) == LuaTypes.LUA_TUSERDATA)
-//                 return checkType<Vector3>(l, p, out v);
-// 
-//             v = Vector3.zero;
-//             if (!luaTypeCheck(l, p, "Vector3"))
-//                 return false;
-// 
-//             LuaDLL.lua_getfield(l, p, "x");
-//             v.x = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_getfield(l, p, "y");
-//             v.y = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_getfield(l, p, "z");
-//             v.z = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_pop(l, 3);
-//             return true;
-//         }
-
-//         static public bool checkType(IntPtr l, int p, out Vector2 v)
-//         {
-//             v = Vector3.zero;
-//             if (!luaTypeCheck(l, p, "Vector2"))
-//                 return false;
-// 
-//             LuaDLL.lua_getfield(l, p, "x");
-//             v.x = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_getfield(l, p, "y");
-//             v.y = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_pop(l, 2);
-//             return true;
-//         }
-// 
-//         static public bool checkType(IntPtr l, int p, out Quaternion q)
-//         {
-//             q = Quaternion.identity;
-//             if (!luaTypeCheck(l, p, "Quaternion"))
-//                 return false;
-// 
-//             LuaDLL.lua_getfield(l, p, "x");
-//             q.x = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_getfield(l, p, "y");
-//             q.y = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_getfield(l, p, "z");
-//             q.z = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_getfield(l, p, "w");
-//             q.w = (float)LuaDLL.lua_tonumber(l, -1);
-//             LuaDLL.lua_pop(l, 4);
-//             return true;
-//         }
         
 
         static public bool checkType(IntPtr l, int p, out int v)
@@ -869,6 +801,9 @@ return index
             return t != null;
         }
 
+
+
+
         static public bool checkType<T>(IntPtr l, int p, out T o) {
             o = (T)checkVar(l, p);
             return true;
@@ -880,9 +815,18 @@ return index
             return oc.get(l, p);
         }
 
-        static public bool checkType(IntPtr l, int p, out object[] o)
+        static public bool checkType(IntPtr l, int p, out object[] t)
         {
-            throw new NotSupportedException();
+            LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
+            int n = LuaDLL.lua_rawlen(l, p);
+            t = new object[n];
+            for (int k = 0; k < n; k++)
+            {
+                LuaDLL.lua_rawgeti(l, p, k + 1);
+                t[k] = checkVar(l, -1);
+                LuaDLL.lua_pop(l, 1);
+            }
+            return true;
         }
 
         static public bool checkType(IntPtr l, int p, out Type[] t)
@@ -967,21 +911,7 @@ return index
             return true;
         }
 
-        static internal bool checkParams(IntPtr l, int p, out Vector2[] pars)
-        {
-            int top = LuaDLL.lua_gettop(l);
-            if (top - p >= 0)
-            {
-                pars = new Vector2[top - p + 1];
-                for (int n = p, k = 0; n <= top; n++, k++)
-                {
-                    checkType(l, n, out pars[k]);
-                }
-                return true;
-            }
-            pars = new Vector2[0];
-            return true;
-        }
+        
 
         static public bool checkParams(IntPtr l, int p, out string[] pars)
         {
@@ -1056,35 +986,6 @@ return index
                 LuaDLL.lua_rawseti(l, -2, n+1);
             }
         }
-
-        public static void pushValue(IntPtr l, byte[] o)
-        {
-            LuaDLL.lua_pushlstring(l, o, o.Length);
-        }
-		
-		// i don't know why c# find a wrong generic function
-		// push T will push object not a real push<T>
-
-//         public static void pushValue<T>(IntPtr l, List<T> list)
-//         {
-//             LuaDLL.lua_newtable(l);
-//             for (int n = 0; n < list.Count; n++)
-//             {
-//                 pushValue(l, (T)list[n]);
-//                 LuaDLL.lua_rawseti(l, -2, n + 1);
-//             }
-//         }
-// 
-//         public static void pushValue<K,V>(IntPtr l, Dictionary<K,V> dict)
-//         {
-//             LuaDLL.lua_newtable(l);
-//             foreach (K k in dict.Keys)
-//             {
-//                 pushValue(l, (K)k);
-//                 pushValue(l, (V)dict[k]);
-//                 LuaDLL.lua_rawset(l, -3);
-//             }
-//         }
 
         public static void pushValue(IntPtr l, bool b)
         {
@@ -1186,26 +1087,6 @@ return index
         }
 
         public static void pushValue(IntPtr l, double[] o)
-        {
-            if( o == null)
-            {
-                LuaDLL.lua_pushnil(l);
-                return;
-            }
-            LuaDLL.lua_newtable(l);
-            for (int n = 0; n < o.Length; n++)
-            {
-                pushValue(l, o[n]);
-                LuaDLL.lua_rawseti(l, -2, n + 1);
-            }
-        }
-
-        public static void pushValue(IntPtr l, UnityEngine.Object o)
-        {
-            pushObject(l, o);
-        }
-
-        public static void pushValue(IntPtr l, UnityEngine.Object[] o)
         {
             if( o == null)
             {
@@ -1402,6 +1283,14 @@ return index
 				LuaDLL.luaL_error(l,"expect valid Delegate ");
 			return op;
 		}
+
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int noConstructor(IntPtr l)
+        {
+            LuaDLL.luaL_error(l, "Can't new this object");
+            return 0;
+        }
 
     }
 

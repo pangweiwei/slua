@@ -34,6 +34,10 @@ namespace SLua
         static LuaSvrGameObject lgo;
         int errorReported = 0;
 
+        public LuaSvr():this(null) {
+
+        }
+
         public LuaSvr(string main)
         {
             luaState = new LuaState();
@@ -41,6 +45,7 @@ namespace SLua
             LuaObject.init(luaState.L);
             bind("BindUnity");
             bind("BindUnityUI");
+            bind("BindDll");
             bind("BindCustom");
             bind("BindExtend"); // if you want to extend slua, can implemented BindExtend function like BindCustom etc.
 
@@ -52,16 +57,24 @@ namespace SLua
 
             LuaTimer.reg(luaState.L);
             LuaCoroutine.reg(luaState.L, lgo);
+            Helper.reg(luaState.L);
 
-            luaState.doFile(main);
-
-            LuaFunction func = (LuaFunction)luaState["main"];
-            func.call();
+            start(main);
 
             if (LuaDLL.lua_gettop(luaState.L) != errorReported)
             {
                 Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
                 errorReported = LuaDLL.lua_gettop(luaState.L);
+            }
+        }
+
+        public void start(string main)
+        {
+            if (main != null)
+            {
+                luaState.doFile(main);
+                LuaFunction func = (LuaFunction)luaState["main"];
+                func.call();
             }
         }
 

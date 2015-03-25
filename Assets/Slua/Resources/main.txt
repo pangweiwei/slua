@@ -15,6 +15,23 @@ function main()
 
 	local go = GameObject.Find("Canvas/Button")
 	local btn = go:GetComponent("Button")
+
+	local Canvas = GameObject.Find("Canvas")
+	-- foreach
+	for t in Slua.iter(Canvas.transform) do
+		print("foreach transorm",t)
+	end
+	
+	-- bytes return byte[]
+	local data = HelloWorld.bytes()
+	print("data type ",type(data))
+	data = Slua.ToString(data)
+	print("data type ",type(data),data)
+
+	-- get out parameter
+	local hitinfo = RaycastHit()
+	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1),hitinfo)
+	print("Physics Hitinfo",ok,hitinfo)
 	
 
 	btn.onClick:AddListener(function()
@@ -63,7 +80,7 @@ function main()
 
 		local www = WWW("http://www.sineysoft.com")
 		Yield(www)
-		print(#www.bytes)
+		print(#Slua.ToString(www.bytes))
 	end)
 	coroutine.resume(c)
 
