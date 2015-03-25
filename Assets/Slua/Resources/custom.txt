@@ -25,4 +25,10 @@ function main()
 	print("-->"..c:getItem("test"))
 	c:setItem("a",100)
 	print("-->"..c:getItem("test"))
+
+	-- Test loadstring
+	local str = Custom.loadstring('loadstring_lua')
+	local t = assert(loadstring(str))()
+	print(t)
+
 end

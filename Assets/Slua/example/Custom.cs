@@ -59,4 +59,21 @@ public class Custom : MonoBehaviour {
     {
         return t.Name;
     }
+
+    [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+    [StaticExport]
+    static public int loadstring(IntPtr l)
+    {
+        string filePath = LuaDLL.lua_tostring(l, 1);
+        TextAsset ta = Resources.Load(filePath, typeof(TextAsset)) as TextAsset;
+        if(ta == null)
+        {
+            Debug.LogError("the loadstring filePath not exist:" + filePath);
+            return -1;
+        }
+        
+        LuaDLL.lua_pushlstring(l, ta.bytes, ta.bytes.Length);
+
+        return 1;
+    }
 }
