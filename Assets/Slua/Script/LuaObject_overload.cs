@@ -51,24 +51,19 @@ namespace SLua
 		//         }
 		
 		
-		//         static public bool checkType(IntPtr l, int p, out Vector3 v)
-		//         {
-		//             if (LuaDLL.lua_type(l, p) == LuaTypes.LUA_TUSERDATA)
-		//                 return checkType<Vector3>(l, p, out v);
-		// 
-		//             v = Vector3.zero;
-		//             if (!luaTypeCheck(l, p, "Vector3"))
-		//                 return false;
-		// 
-		//             LuaDLL.lua_getfield(l, p, "x");
-		//             v.x = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_getfield(l, p, "y");
-		//             v.y = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_getfield(l, p, "z");
-		//             v.z = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_pop(l, 3);
-		//             return true;
-		//         }
+        static public bool checkType(IntPtr l, int p, out Vector3 v)
+        {
+            float x, y, z;
+            LuaDLL.lua_getref(l, LuaValueType.Vector3Check);
+            LuaDLL.lua_pushvalue(l, p);
+            LuaDLL.lua_call(l, 1, 3);
+            x = (float)LuaDLL.lua_tonumber(l, -3);
+            y = (float)LuaDLL.lua_tonumber(l, -2);
+            z = (float)LuaDLL.lua_tonumber(l, -1);
+            LuaDLL.lua_pop(l, 3);
+            v = new Vector3(x, y, z);
+            return true;
+        }
 		
 		//         static public bool checkType(IntPtr l, int p, out Vector2 v)
 		//         {
@@ -207,24 +202,17 @@ namespace SLua
 		//            LuaDLL.lua_getglobal(l, "Vector2_mt");
 		//            LuaDLL.lua_setmetatable(l, -2);
 		//        }
-		
-		
-		
-		//        public static void pushValue(IntPtr l, Vector3 o)
-		//        {
-		//            LuaDLL.lua_newtable(l);
-		//            LuaDLL.lua_pushnumber(l, o.x);
-		//            LuaDLL.lua_setfield(l, -2, "x");
-		//            LuaDLL.lua_pushnumber(l, o.y);
-		//            LuaDLL.lua_setfield(l, -2, "y");
-		//            LuaDLL.lua_pushnumber(l, o.z);
-		//            LuaDLL.lua_setfield(l, -2, "z");
-		//            LuaDLL.lua_pushstring(l, "Vector3");
-		//            LuaDLL.lua_setfield(l, -2, "__typename");
-		// 
-		//            LuaDLL.lua_getglobal(l, "Vector3_mt");
-		//            LuaDLL.lua_setmetatable(l, -2);
-		//        }
+
+
+
+        public static void pushValue(IntPtr l, Vector3 o)
+        {
+            LuaDLL.lua_getref(l, LuaValueType.Vector3Create);
+            LuaDLL.lua_pushnumber(l, o.x);
+            LuaDLL.lua_pushnumber(l, o.y);
+            LuaDLL.lua_pushnumber(l, o.z);
+            LuaDLL.lua_call(l, 3, 1);
+        }
 		
 		
 		
