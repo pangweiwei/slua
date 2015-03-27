@@ -152,7 +152,7 @@ static void setmetatable(lua_State *L, int p, int what) {
 	
 	lua_rawgeti(L, LUA_GLOBALSINDEX, what);
 	if (!lua_isnil(L, -1)) {
-		ref = lua_tointeger(L, -1);
+		ref = (int)lua_tointeger(L, -1);
 		lua_pop(L, 1);
 		if (ref != LUA_REFNIL)
 		{
@@ -189,9 +189,12 @@ static void setmetatable(lua_State *L, int p, int what) {
 
 
 LUA_API int luaS_checkluatype(lua_State *L, int p, const char *t) {
+	int top;
+	const char* b;
+
 	if (lua_type(L, p) != LUA_TTABLE)
 		return 0;
-	int top = lua_gettop(L);
+	top = lua_gettop(L);
 	if (lua_getmetatable(L, p) == 0)
 		return 0;
 
@@ -202,7 +205,7 @@ LUA_API int luaS_checkluatype(lua_State *L, int p, const char *t) {
 		lua_settop(L, top);
 		return 0;
 	}
-	const char* b=lua_tostring(L, -1);
+	b=lua_tostring(L, -1);
 	lua_settop(L, top);
 	return strcmp(t, b)==0;
 }
