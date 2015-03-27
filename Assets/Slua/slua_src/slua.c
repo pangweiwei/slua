@@ -66,10 +66,11 @@ LUA_API int luaS_rawnetobj(lua_State *L,int index)
 
 
 
-#include <float.h>
-
 #ifdef _WINDOWS
+#include <float.h>
 #define isnan _isnan
+#else
+#include <math.h>
 #endif
 
 #define MT_VEC2 1
