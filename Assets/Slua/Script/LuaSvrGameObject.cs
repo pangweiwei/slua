@@ -24,24 +24,25 @@ using UnityEngine;
 using System.Collections;
 using SLua;
 using System;
-public class LuaSvrGameObject : MonoBehaviour {
+public class LuaSvrGameObject : MonoBehaviour
+{
 
-    public LuaState state;
-    public Action onUpdate;
+	public LuaState state;
+	public Action onUpdate;
 
-    // make sure lua state finalize at last
-    // make sure LuaSvrGameObject excute order is max(9999)
+	// make sure lua state finalize at last
+	// make sure LuaSvrGameObject excute order is max(9999)
 	void OnDestroy()
 	{
-        if (state != null)
-        {
-            state.Close();
-            state = null;
-        }
-    }
+		if (state != null)
+		{
+			state.Close();
+			state = null;
+		}
+	}
 
-    void Update()
-    {
-        if (onUpdate!=null) onUpdate();
-    }
+	void Update()
+	{
+		if (onUpdate != null) onUpdate();
+	}
 }

@@ -28,58 +28,60 @@ using System;
 
 namespace SLua
 {
-    public class LuaCoroutine : LuaObject
-    {
+	public class LuaCoroutine : LuaObject
+	{
 
-        static MonoBehaviour mb;
+		static MonoBehaviour mb;
 
-        static public void reg(IntPtr l, MonoBehaviour m)
-        {
-            mb = m;
-            reg(l, Yield, "UnityEngine");
-        }
+		static public void reg(IntPtr l, MonoBehaviour m)
+		{
+			mb = m;
+			reg(l, Yield, "UnityEngine");
+		}
 
-        [MonoPInvokeCallback(typeof(LuaCSFunction))]
-        static public int Yield(IntPtr l)
-        {
-			try {
-                if (LuaDLL.lua_pushthread(l) == 1)
-                {
-                    LuaDLL.luaL_error(l, "should put Yield call into lua coroutine.");
-                    return 0;
-                }
-	           	object y = checkObj(l, 1);
+		[MonoPInvokeCallback(typeof(LuaCSFunction))]
+		static public int Yield(IntPtr l)
+		{
+			try
+			{
+				if (LuaDLL.lua_pushthread(l) == 1)
+				{
+					LuaDLL.luaL_error(l, "should put Yield call into lua coroutine.");
+					return 0;
+				}
+				object y = checkObj(l, 1);
 
-	            Action act = () =>
-	            {
+				Action act = () =>
+				{
 #if LUA_5_3
 					LuaDLL.lua_resume(l,IntPtr.Zero,0);
 #else
-	                LuaDLL.lua_resume(l, 0);
+					LuaDLL.lua_resume(l, 0);
 #endif
-	            };
+				};
 
-	            mb.StartCoroutine(yieldReturn(y,act));
+				mb.StartCoroutine(yieldReturn(y, act));
 #if LUA_5_3
 				return LuaDLL.luaS_yield(l, 0);
 #else
-                return LuaDLL.lua_yield(l, 0);
+				return LuaDLL.lua_yield(l, 0);
 #endif
 			}
-			catch(Exception e) {
-				LuaDLL.luaL_error(l,e.ToString());
+			catch (Exception e)
+			{
+				LuaDLL.luaL_error(l, e.ToString());
 				return 0;
 			}
-        }
+		}
 
-        static public IEnumerator yieldReturn(object y, Action act)
-        {
-            if (y is IEnumerator)
-                yield return mb.StartCoroutine((IEnumerator)y);
-            else
-                yield return y;
-            act();
-        }
+		static public IEnumerator yieldReturn(object y, Action act)
+		{
+			if (y is IEnumerator)
+				yield return mb.StartCoroutine((IEnumerator)y);
+			else
+				yield return y;
+			act();
+		}
 
-    }
+	}
 }

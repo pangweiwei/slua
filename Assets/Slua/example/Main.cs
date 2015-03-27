@@ -4,30 +4,32 @@ using SLua;
 using UnityEngine.UI;
 
 
-public class Main : MonoBehaviour {
+public class Main : MonoBehaviour
+{
 
-    LuaSvr l;
+	LuaSvr l;
 	public Text logText;
-    // Use this for initialization
-    void Start()
-    {
-		Application.RegisterLogCallback( this.log );
-        l = new LuaSvr();
+	// Use this for initialization
+	void Start()
+	{
+		Application.RegisterLogCallback(this.log);
+		l = new LuaSvr();
 
-        l.start("main");
-        object o = l.luaState.getFunction("foo").call(1, 2, 3);
-        object[] array = (object[])o;
-        for (int n = 0; n < array.Length; n++)
-            Debug.Log(array[n]);
+		l.start("main");
+		object o = l.luaState.getFunction("foo").call(1, 2, 3);
+		object[] array = (object[])o;
+		for (int n = 0; n < array.Length; n++)
+			Debug.Log(array[n]);
 
-        string s = (string)l.luaState.getFunction("str").call( new object[0] );
-        Debug.Log(s);
+		string s = (string)l.luaState.getFunction("str").call(new object[0]);
+		Debug.Log(s);
 
-    }
+	}
 
-	void log(string cond,string trace,LogType lt) {
-		logText.text+=(cond+"\n");
-        
+	void log(string cond, string trace, LogType lt)
+	{
+		logText.text += (cond + "\n");
+
 	}
 
 }

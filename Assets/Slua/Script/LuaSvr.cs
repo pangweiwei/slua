@@ -28,75 +28,77 @@ using System.Reflection;
 
 namespace SLua
 {
-    class LuaSvr
-    {
-        public LuaState luaState;
-        static LuaSvrGameObject lgo;
-        int errorReported = 0;
-        
+	class LuaSvr
+	{
+		public LuaState luaState;
+		static LuaSvrGameObject lgo;
+		int errorReported = 0;
 
-        public LuaSvr():this(null) {
 
-        }
+		public LuaSvr()
+			: this(null)
+		{
 
-        public LuaSvr(string main)
-        {
-            luaState = new LuaState();
+		}
 
-            LuaObject.init(luaState.L);
-            bind("BindUnity");
-            bind("BindUnityUI");
-            bind("BindDll");
-            bind("BindCustom");
-            bind("BindExtend"); // if you want to extend slua, can implemented BindExtend function like BindCustom etc.
+		public LuaSvr(string main)
+		{
+			luaState = new LuaState();
 
-            GameObject go = new GameObject("LuaSvrProxy");
-            lgo = go.AddComponent<LuaSvrGameObject>();
-            GameObject.DontDestroyOnLoad(go);
-            lgo.state = luaState;
-            lgo.onUpdate = this.tick;
+			LuaObject.init(luaState.L);
+			bind("BindUnity");
+			bind("BindUnityUI");
+			bind("BindDll");
+			bind("BindCustom");
+			bind("BindExtend"); // if you want to extend slua, can implemented BindExtend function like BindCustom etc.
 
-            LuaTimer.reg(luaState.L);
-            LuaCoroutine.reg(luaState.L, lgo);
-            Helper.reg(luaState.L);
+			GameObject go = new GameObject("LuaSvrProxy");
+			lgo = go.AddComponent<LuaSvrGameObject>();
+			GameObject.DontDestroyOnLoad(go);
+			lgo.state = luaState;
+			lgo.onUpdate = this.tick;
 
-            start(main);
+			LuaTimer.reg(luaState.L);
+			LuaCoroutine.reg(luaState.L, lgo);
+			Helper.reg(luaState.L);
 
-            if (LuaDLL.lua_gettop(luaState.L) != errorReported)
-            {
-                Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
-                errorReported = LuaDLL.lua_gettop(luaState.L);
-            }
-        }
+			start(main);
 
-        public void start(string main)
-        {
-            if (main != null)
-            {
-                luaState.doFile(main);
-                LuaFunction func = (LuaFunction)luaState["main"];
-                func.call();
-            }
-        }
+			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
+			{
+				Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
+				errorReported = LuaDLL.lua_gettop(luaState.L);
+			}
+		}
 
-        void bind(string name)
-        {
-            MethodInfo mi = typeof(LuaObject).GetMethod(name,BindingFlags.Public|BindingFlags.Static);
-            if (mi != null) mi.Invoke(null, new object[] { luaState.L });
-            else if(name=="BindUnity") Debug.LogError(string.Format("Miss {0}, click SLua=>Make to regenerate them",name));
-        }
+		public void start(string main)
+		{
+			if (main != null)
+			{
+				luaState.doFile(main);
+				LuaFunction func = (LuaFunction)luaState["main"];
+				func.call();
+			}
+		}
 
-        void tick()
-        {
-            if (LuaDLL.lua_gettop(luaState.L) != errorReported)
-            {
-                Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
-                errorReported = LuaDLL.lua_gettop(luaState.L);
-            }
+		void bind(string name)
+		{
+			MethodInfo mi = typeof(LuaObject).GetMethod(name, BindingFlags.Public | BindingFlags.Static);
+			if (mi != null) mi.Invoke(null, new object[] { luaState.L });
+			else if (name == "BindUnity") Debug.LogError(string.Format("Miss {0}, click SLua=>Make to regenerate them", name));
+		}
 
-            luaState.checkRef();
-            LuaTimer.tick(Time.deltaTime);
-        }
-       
-    }
+		void tick()
+		{
+			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
+			{
+				Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
+				errorReported = LuaDLL.lua_gettop(luaState.L);
+			}
+
+			luaState.checkRef();
+			LuaTimer.tick(Time.deltaTime);
+		}
+
+	}
 }

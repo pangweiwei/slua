@@ -30,45 +30,47 @@ using System.Runtime.InteropServices;
 
 namespace SLua
 {
-	public partial class LuaObject {
+	public partial class LuaObject
+	{
 
 		static public bool checkType(IntPtr l, int p, out Vector4 v)
 		{
-            float x, y, z,w;
-            LuaDLL.luaS_checkVector4(l, p, out x, out y, out z,out w);
-            v = new Vector4(x, y, z,w);
-            return true;
-		}
-		
-		
-        static public bool checkType(IntPtr l, int p, out Vector3 v)
-        {
-            float x, y, z;
-            LuaDLL.luaS_checkVector3(l, p,out x, out y, out z);
-            v = new Vector3(x, y, z);
-            return true;
-        }
-		
-		static public bool checkType(IntPtr l, int p, out Vector2 v)
-		{
-            float x, y;
-            LuaDLL.luaS_checkVector2(l, p, out x, out y);
-            v = new Vector2(x, y);
-            return true;
-		}
-		
-		static public bool checkType(IntPtr l, int p, out Quaternion q)
-		{
-            float x, y, z, w;
-            LuaDLL.luaS_checkQuaternion(l, p, out x, out y, out z, out w);
-            q = new Quaternion(x, y, z,w);
-            return true;
+			float x, y, z, w;
+			LuaDLL.luaS_checkVector4(l, p, out x, out y, out z, out w);
+			v = new Vector4(x, y, z, w);
+			return true;
 		}
 
-		static public bool checkType(IntPtr l, int p, out LayerMask lm) {
+
+		static public bool checkType(IntPtr l, int p, out Vector3 v)
+		{
+			float x, y, z;
+			LuaDLL.luaS_checkVector3(l, p, out x, out y, out z);
+			v = new Vector3(x, y, z);
+			return true;
+		}
+
+		static public bool checkType(IntPtr l, int p, out Vector2 v)
+		{
+			float x, y;
+			LuaDLL.luaS_checkVector2(l, p, out x, out y);
+			v = new Vector2(x, y);
+			return true;
+		}
+
+		static public bool checkType(IntPtr l, int p, out Quaternion q)
+		{
+			float x, y, z, w;
+			LuaDLL.luaS_checkQuaternion(l, p, out x, out y, out z, out w);
+			q = new Quaternion(x, y, z, w);
+			return true;
+		}
+
+		static public bool checkType(IntPtr l, int p, out LayerMask lm)
+		{
 			int v;
-			checkType (l,p,out v);
-			lm=v;
+			checkType(l, p, out v);
+			lm = v;
 			return true;
 		}
 
@@ -92,10 +94,10 @@ namespace SLua
 		//        {
 		//            LuaDLL.lua_pushlstring(l, o, o.Length);
 		//        }
-		
+
 		// i don't know why c# find a wrong generic function
 		// push T will push object not a real push<T>
-		
+
 		//         public static void pushValue<T>(IntPtr l, List<T> list)
 		//         {
 		//             LuaDLL.lua_newtable(l);
@@ -123,10 +125,10 @@ namespace SLua
 		{
 			pushObject(l, o);
 		}
-		
+
 		public static void pushValue(IntPtr l, UnityEngine.Object[] o)
 		{
-			if( o == null)
+			if (o == null)
 			{
 				LuaDLL.lua_pushnil(l);
 				return;
@@ -141,26 +143,26 @@ namespace SLua
 
 		public static void pushValue(IntPtr l, Quaternion o)
 		{
-            LuaDLL.luaS_pushQuaternion(l, o.x, o.y, o.z, o.w);
-		 }
-		
+			LuaDLL.luaS_pushQuaternion(l, o.x, o.y, o.z, o.w);
+		}
+
 		public static void pushValue(IntPtr l, Vector2 o)
 		{
-            LuaDLL.luaS_pushVector2(l, o.x, o.y);
+			LuaDLL.luaS_pushVector2(l, o.x, o.y);
 		}
 
 
 
-        public static void pushValue(IntPtr l, Vector3 o)
-        {
-            LuaDLL.luaS_pushVector3(l, o.x, o.y, o.z);
-        }
-		
-		
-		
+		public static void pushValue(IntPtr l, Vector3 o)
+		{
+			LuaDLL.luaS_pushVector3(l, o.x, o.y, o.z);
+		}
+
+
+
 		public static void pushValue(IntPtr l, Vector4 o)
 		{
-            LuaDLL.luaS_pushVector4(l, o.x, o.y, o.z, o.w);
+			LuaDLL.luaS_pushVector4(l, o.x, o.y, o.z, o.w);
 		}
 	}
 }
