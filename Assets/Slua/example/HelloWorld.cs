@@ -119,13 +119,14 @@ public class HelloWorld   {
         }
     }
 
-    static public void test5(GameObject go)
+    static public Vector3 test5(GameObject go)
     {
-        Vector3 v;
+        Vector3 v=Vector3.zero;
         for (int i = 0; i < 200000; i++)
         {
             v = new Vector3(i, i, i);
         }
+        return v;
     }
 
     // test variant number for arguments passed in

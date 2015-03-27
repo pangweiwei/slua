@@ -507,6 +507,12 @@ return index
 
         public static int pushTry(IntPtr l)
         {
+            if (!LuaState.get(l).isMainThread())
+            {
+                Debug.LogError("Can't call lua function in bg thread");
+                return 0;
+            }
+
             LuaDLL.lua_pushstdcallcfunction(l, LuaState.errorReport);
             return LuaDLL.lua_gettop(l);
         }

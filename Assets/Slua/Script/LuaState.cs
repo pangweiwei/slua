@@ -123,6 +123,13 @@ namespace SLua
 		}
 		
 		public bool call(int nArgs,int errfunc) {
+
+            if (!state.isMainThread())
+            {
+                Debug.LogError("Can't call lua function in bg thread");
+                return false;
+            }
+
 			LuaDLL.lua_getref(L,valueref);
 			LuaDLL.lua_insert(L,-nArgs-1);
 			if (LuaDLL.lua_pcall(L, nArgs, -1, errfunc) != 0) {
@@ -146,6 +153,12 @@ namespace SLua
 		
 		public void call()
 		{
+            if (!state.isMainThread())
+            {
+                Debug.LogError("Can't call lua function in bg thread");
+                return;
+            }
+
 			LuaDLL.lua_pushstdcallcfunction(L, LuaState.errorReport);
 			int error = LuaDLL.lua_gettop(L);
 			
@@ -167,6 +180,13 @@ namespace SLua
 		
 		public object call(params object[] args)
 		{
+
+            if (!state.isMainThread())
+            {
+                Debug.LogError("Can't call lua function in bg thread");
+                return null;
+            }
+
 			LuaDLL.lua_pushstdcallcfunction(L, LuaState.errorReport);
 			int error = LuaDLL.lua_gettop(L);
 			
@@ -315,10 +335,19 @@ namespace SLua
 	public class LuaState : IDisposable
 	{
 		IntPtr l_;
+        int mainThread = 0;
+
 		public IntPtr L {
 			get {
+
+                if (!isMainThread())
+                {
+                    throw new Exception("Can't access lua in bg thread");
+                }
+
 				if(l_==IntPtr.Zero) 
 					throw new Exception("LuaState had been destroyed, can't used yet");
+
 				return l_;
 			}
 			set {
@@ -347,6 +376,11 @@ namespace SLua
 		
 		public static LuaState main;
 		static Dictionary<IntPtr, LuaState> statemap = new Dictionary<IntPtr, LuaState>();
+
+        public bool isMainThread()
+        {
+            return System.Threading.Thread.CurrentThread.ManagedThreadId == mainThread;
+        }
 		
 		static public LuaState get(IntPtr l)
 		{
@@ -370,6 +404,8 @@ namespace SLua
 		
 		public LuaState()
 		{
+            mainThread = System.Threading.Thread.CurrentThread.ManagedThreadId;
+
 			L = LuaDLL.luaL_newstate();
 			statemap[L] = this;
 			if (main == null) main = this;
