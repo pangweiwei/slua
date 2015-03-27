@@ -13,7 +13,7 @@ local cube = GameObject("Script cube")
 
 
 function test1()
-		-- properset
+	-- properset
 	-- test1
 	local start = os.clock()
 	HelloWorld.testset(cube)

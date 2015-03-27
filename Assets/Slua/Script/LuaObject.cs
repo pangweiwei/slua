@@ -213,6 +213,26 @@ return index
 				(IntPtr L, object o) => {
 					((LuaVar)o).push(L);
 				};
+
+            typePushMap[typeof(Vector3)] = (IntPtr L, object o) =>
+            {
+                pushValue(L, (Vector3)o);
+            };
+
+            typePushMap[typeof(Vector2)] = (IntPtr L, object o) =>
+            {
+                pushValue(L, (Vector2)o);
+            };
+
+            typePushMap[typeof(Vector4)] = (IntPtr L, object o) =>
+            {
+                pushValue(L, (Vector4)o);
+            };
+
+            typePushMap[typeof(Quaternion)] = (IntPtr L, object o) =>
+            {
+                pushValue(L, (Quaternion)o);
+            };
 		}
 
         static int luaOp(IntPtr l,string f, string tip)
@@ -398,6 +418,11 @@ return index
             LuaDLL.lua_pushstdcallcfunction(l, lua_gc);
             LuaDLL.lua_setfield(l, -2, "__gc");
 
+            if (self.IsValueType)
+            {
+                LuaDLL.lua_pushvalue(l, -1);
+                LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, self.FullName+".Instance");
+            }
             LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, self.AssemblyQualifiedName);
         }
 
@@ -490,7 +515,6 @@ return index
 
         static public void checkLuaObject(IntPtr l, int p)
         {
-            LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TUSERDATA);
             LuaDLL.lua_getmetatable(l, p);
             if (LuaDLL.lua_isnil(l, -1))
             {
@@ -633,29 +657,8 @@ return index
 
         static internal bool luaTypeCheck(IntPtr l, int p, string t)
         {
-            if (LuaDLL.lua_type(l, p) != LuaTypes.LUA_TTABLE)
-                return false;
-
-            LuaDLL.lua_pushstring(l, "__typename");
-            LuaDLL.lua_rawget(l, p);
-            if (LuaDLL.lua_isnil(l, -1))
-            {
-                LuaDLL.lua_pop(l, 1);
-                return false;
-            }
-
-            LuaDLL.lua_pushstring(l, t);
-            int equal = LuaDLL.lua_rawequal(l, -1, -2);
-            LuaDLL.lua_pop(l, 2);
-
-            if (equal == 0)
-                return false;
-
-            return true;
+            return LuaDLL.luaS_checkluatype(l, p, t) != 0;
         }
-
-
-        
 
         static public bool checkType(IntPtr l, int p, out int v)
         {
@@ -960,10 +963,36 @@ return index
 			}
 			case LuaTypes.LUA_TTABLE:
 			{
-				LuaDLL.lua_pushvalue(l, p);
-				int r = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
-				LuaTable v = new LuaTable(l, r);
-				return v;
+                if(luaTypeCheck(l,p,"Vector2")) {
+                    Vector2 v;
+                    checkType(l,p,out v);
+                    return v;
+                }
+                else if (luaTypeCheck(l, p, "Vector3"))
+                {
+                    Vector3 v;
+                    checkType(l, p, out v);
+                    return v;
+                }
+                else if (luaTypeCheck(l, p, "Vector4"))
+                {
+                    Vector4 v;
+                    checkType(l, p, out v);
+                    return v;
+                }
+                else if (luaTypeCheck(l, p, "Quaternion"))
+                {
+                    Quaternion v;
+                    checkType(l, p, out v);
+                    return v;
+                }
+                else
+                {
+                    LuaDLL.lua_pushvalue(l, p);
+                    int r = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
+                    LuaTable v = new LuaTable(l, r);
+                    return v;
+                }
 			}
 			case LuaTypes.LUA_TUSERDATA:
 				return LuaObject.checkObj(l, p);
@@ -1186,6 +1215,26 @@ return index
         {
             ObjectCache t = ObjectCache.get(l);
             t.setBack(l, 1, o);
+        }
+
+        internal static void setBack(IntPtr l, Vector3 v)
+        {
+            LuaDLL.luaS_setData(l, 1, v.x, v.y, v.z, float.NaN);
+        }
+
+        internal static void setBack(IntPtr l, Vector2 v)
+        {
+            LuaDLL.luaS_setData(l, 1, v.x, v.y, float.NaN, float.NaN);
+        }
+
+        internal static void setBack(IntPtr l, Vector4 v)
+        {
+            LuaDLL.luaS_setData(l, 1, v.x, v.y,v.z,v.w);
+        }
+
+        internal static void setBack(IntPtr l, Quaternion v)
+        {
+            LuaDLL.luaS_setData(l, 1, v.x, v.y, v.z, v.w);
         }
 
 		internal static int extractFunction(IntPtr l,int p) {

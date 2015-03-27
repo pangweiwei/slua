@@ -16,6 +16,13 @@ public class HelloWorld   {
 		return new byte[]{51,52,53,53};
 	}
 
+    public IEnumerator y()
+    {
+        WWW www = new WWW("http://news.163.com");
+        yield return www;
+        Debug.Log("yield good");
+    }
+
 
     public Dictionary<string, GameObject> foo()
     {

@@ -32,70 +32,38 @@ namespace SLua
 {
 	public partial class LuaObject {
 
-		//         static public bool checkType(IntPtr l, int p, out Vector4 v)
-		//         {
-		//             v = Vector4.zero;
-		//             if (!luaTypeCheck(l, p, "Vector4"))
-		//                 return false;
-		// 
-		//             LuaDLL.lua_getfield(l, p, "x");
-		//             v.x = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_getfield(l, p, "y");
-		//             v.y = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_getfield(l, p, "z");
-		//             v.z = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_getfield(l, p, "w");
-		//             v.w = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_pop(l, 4);
-		//             return true;
-		//         }
+		static public bool checkType(IntPtr l, int p, out Vector4 v)
+		{
+            float x, y, z,w;
+            LuaDLL.luaS_checkVector4(l, p, out x, out y, out z,out w);
+            v = new Vector4(x, y, z,w);
+            return true;
+		}
 		
 		
         static public bool checkType(IntPtr l, int p, out Vector3 v)
         {
             float x, y, z;
-            LuaDLL.lua_getref(l, LuaValueType.Vector3Check);
-            LuaDLL.lua_pushvalue(l, p);
-            LuaDLL.lua_call(l, 1, 3);
-            x = (float)LuaDLL.lua_tonumber(l, -3);
-            y = (float)LuaDLL.lua_tonumber(l, -2);
-            z = (float)LuaDLL.lua_tonumber(l, -1);
-            LuaDLL.lua_pop(l, 3);
+            LuaDLL.luaS_checkVector3(l, p,out x, out y, out z);
             v = new Vector3(x, y, z);
             return true;
         }
 		
-		//         static public bool checkType(IntPtr l, int p, out Vector2 v)
-		//         {
-		//             v = Vector3.zero;
-		//             if (!luaTypeCheck(l, p, "Vector2"))
-		//                 return false;
-		// 
-		//             LuaDLL.lua_getfield(l, p, "x");
-		//             v.x = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_getfield(l, p, "y");
-		//             v.y = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_pop(l, 2);
-		//             return true;
-		//         }
-		// 
-		//         static public bool checkType(IntPtr l, int p, out Quaternion q)
-		//         {
-		//             q = Quaternion.identity;
-		//             if (!luaTypeCheck(l, p, "Quaternion"))
-		//                 return false;
-		// 
-		//             LuaDLL.lua_getfield(l, p, "x");
-		//             q.x = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_getfield(l, p, "y");
-		//             q.y = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_getfield(l, p, "z");
-		//             q.z = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_getfield(l, p, "w");
-		//             q.w = (float)LuaDLL.lua_tonumber(l, -1);
-		//             LuaDLL.lua_pop(l, 4);
-		//             return true;
-		//         }
+		static public bool checkType(IntPtr l, int p, out Vector2 v)
+		{
+            float x, y;
+            LuaDLL.luaS_checkVector2(l, p, out x, out y);
+            v = new Vector2(x, y);
+            return true;
+		}
+		
+		static public bool checkType(IntPtr l, int p, out Quaternion q)
+		{
+            float x, y, z, w;
+            LuaDLL.luaS_checkQuaternion(l, p, out x, out y, out z, out w);
+            q = new Quaternion(x, y, z,w);
+            return true;
+		}
 
 		static public bool checkType(IntPtr l, int p, out LayerMask lm) {
 			int v;
@@ -171,67 +139,28 @@ namespace SLua
 			}
 		}
 
-		//         public static void pushValue(IntPtr l, Quaternion o)
-		//         {
-		//             LuaDLL.lua_newtable(l);
-		//             LuaDLL.lua_pushnumber(l, o.x);
-		//             LuaDLL.lua_setfield(l, -2, "x");
-		//             LuaDLL.lua_pushnumber(l, o.y);
-		//             LuaDLL.lua_setfield(l, -2, "y");
-		//             LuaDLL.lua_pushnumber(l, o.z);
-		//             LuaDLL.lua_setfield(l, -2, "z");
-		//             LuaDLL.lua_pushnumber(l, o.w);
-		//             LuaDLL.lua_setfield(l, -2, "w");
-		//             LuaDLL.lua_pushstring(l, "Quaternion");
-		//             LuaDLL.lua_setfield(l, -2, "__typename");
-		// 
-		//             LuaDLL.lua_getglobal(l, "Quaternion_mt");
-		//             LuaDLL.lua_setmetatable(l, -2);
-		//         }
-		// 
-		//        public static void pushValue(IntPtr l, Vector2 o)
-		//        {
-		//            LuaDLL.lua_newtable(l);
-		//            LuaDLL.lua_pushnumber(l, o.x);
-		//            LuaDLL.lua_setfield(l, -2, "x");
-		//            LuaDLL.lua_pushnumber(l, o.y);
-		//            LuaDLL.lua_setfield(l, -2, "y");
-		//            LuaDLL.lua_pushstring(l, "Vector2");
-		//            LuaDLL.lua_setfield(l, -2, "__typename");
-		// 
-		//            LuaDLL.lua_getglobal(l, "Vector2_mt");
-		//            LuaDLL.lua_setmetatable(l, -2);
-		//        }
+		public static void pushValue(IntPtr l, Quaternion o)
+		{
+            LuaDLL.luaS_pushQuaternion(l, o.x, o.y, o.z, o.w);
+		 }
+		
+		public static void pushValue(IntPtr l, Vector2 o)
+		{
+            LuaDLL.luaS_pushVector2(l, o.x, o.y);
+		}
 
 
 
         public static void pushValue(IntPtr l, Vector3 o)
         {
-            LuaDLL.lua_getref(l, LuaValueType.Vector3Create);
-            LuaDLL.lua_pushnumber(l, o.x);
-            LuaDLL.lua_pushnumber(l, o.y);
-            LuaDLL.lua_pushnumber(l, o.z);
-            LuaDLL.lua_call(l, 3, 1);
+            LuaDLL.luaS_pushVector3(l, o.x, o.y, o.z);
         }
 		
 		
 		
-		//        public static void pushValue(IntPtr l, Vector4 o)
-		//        {
-		//            LuaDLL.lua_newtable(l);
-		//            LuaDLL.lua_pushnumber(l, o.x);
-		//            LuaDLL.lua_setfield(l, -2, "x");
-		//            LuaDLL.lua_pushnumber(l, o.y);
-		//            LuaDLL.lua_setfield(l, -2, "y");
-		//            LuaDLL.lua_pushnumber(l, o.z);
-		//            LuaDLL.lua_setfield(l, -2, "z");
-		//            LuaDLL.lua_pushnumber(l, o.w);
-		//            LuaDLL.lua_setfield(l, -2, "w");
-		//            LuaDLL.lua_pushstring(l, "Vector4");
-		//            LuaDLL.lua_setfield(l, -2, "__typename");
-		// 
-		//            LuaDLL.lua_getglobal(l, "Vector4_mt");
-		//            LuaDLL.lua_setmetatable(l, -2);
-		//        }
+		public static void pushValue(IntPtr l, Vector4 o)
+		{
+            LuaDLL.luaS_pushVector4(l, o.x, o.y, o.z, o.w);
+		}
 	}
 }

@@ -74,7 +74,10 @@ namespace SLua
 
         static public IEnumerator yieldReturn(object y, Action act)
         {
-            yield return y;
+            if (y is IEnumerator)
+                yield return mb.StartCoroutine((IEnumerator)y);
+            else
+                yield return y;
             act();
         }
 

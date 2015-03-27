@@ -10,6 +10,10 @@ function main()
 		print("using lua")
 	end
 
+	local x=Vector3(3,3,3)
+	x:Normalize()
+	print(x.x,x.y,x.z)
+
 	-- test module require
 	print(somemodule.add(2,3))
 
@@ -81,6 +85,11 @@ function main()
 		local www = WWW("http://www.sineysoft.com")
 		Yield(www)
 		print(#Slua.ToString(www.bytes))
+
+		local y = HelloWorld()
+		local y = y:y()
+		Yield(y)
+		print("Yield ok")
 	end)
 	coroutine.resume(c)
 

@@ -561,5 +561,35 @@ namespace LuaInterface
             return LuaIndexes.LUA_GLOBALSINDEX - i;
 #endif
         }
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void luaS_checkVector2(IntPtr l, int p, out float x, out float y);
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void luaS_checkVector3(IntPtr l, int p, out float x, out float y, out float z);
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void luaS_checkVector4(IntPtr l, int p, out float x, out float y, out float z, out float w);
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void luaS_checkQuaternion(IntPtr l, int p, out float x, out float y, out float z, out float w);
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void luaS_pushVector2(IntPtr l, float x, float y);
+
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void luaS_pushVector3(IntPtr l, float x, float y, float z);
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void luaS_pushVector4(IntPtr l, float x, float y, float z,float w);
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void luaS_pushQuaternion(IntPtr l, float x, float y, float z, float w);
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void luaS_setData(IntPtr l, int p,float x, float y, float z, float w);
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int luaS_checkluatype(IntPtr l, int p,string t);
     }
 }
