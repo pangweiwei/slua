@@ -326,3 +326,37 @@ LUA_API void luaS_setData(lua_State *L,int p, float x, float y, float z, float w
 	setelement(L, p, z, "z");
 	setelement(L, p, w, "w");
 }
+
+static void cacheud(lua_State *l, int index, int cref) {
+	lua_getref(l, cref);
+	lua_pushvalue(l, -2);
+	lua_rawseti(l, -2, index);
+	lua_pop(l, 1);
+}
+
+LUA_API void luaS_pushobject(lua_State *l,int index,const char* t,int gco,int cref) {
+	luaS_newuserdata(l, index);
+	if (gco) cacheud(l, index, cref);
+
+
+	luaL_getmetatable(l, t);
+	if (lua_isnil(l, -1))
+	{
+		lua_pop(l, 1);
+		luaL_getmetatable(l, "LuaVarObject");
+	}
+
+	lua_setmetatable(l, -2);
+}
+
+LUA_API int luaS_getcacheud(lua_State *l,int index,int cref) {
+	lua_getref(l, cref);
+	lua_rawgeti(l, -1, index);
+	if (!lua_isnil(l, -1))
+	{
+		lua_remove(l, -2);
+		return 1;
+	}
+	lua_pop(l, 2);
+	return 0;
+}

@@ -201,27 +201,6 @@ namespace SLua
 			}
         }
 
-        bool getUDCache(IntPtr l,int index)
-        {
-            LuaDLL.lua_getref(l, udCacheRef);
-            LuaDLL.lua_rawgeti(l, -1, index);
-            if (!LuaDLL.lua_isnil(l,-1))
-            {
-                LuaDLL.lua_remove(l, -2);
-                return true;
-            }
-            LuaDLL.lua_pop(l, 2);
-            return false;
-        }
-
-        void cacheUD(IntPtr l, int index)
-        {
-            LuaDLL.lua_getref(l, udCacheRef);
-            LuaDLL.lua_pushvalue(l, -2);
-            LuaDLL.lua_rawseti(l, -2, index);
-            LuaDLL.lua_pop(l, 1);
-        }
-
         internal void push(IntPtr l, object o)
         {
             if (o == null)
@@ -235,24 +214,12 @@ namespace SLua
             bool found = gco && objMap.TryGetValue(o, out index);
             if (found)
             {
-                if (getUDCache(l,index))
+                if (LuaDLL.luaS_getcacheud(l,index,udCacheRef)==1)
                     return;
             }
 
-            
             index = add(o);
-            LuaDLL.luaS_newuserdata(l, index);
-            if(gco) cacheUD(l, index);
-
-            
-            LuaDLL.luaL_getmetatable(l, getAQName(o));
-            if (LuaDLL.lua_isnil(l, -1))
-            {
-                LuaDLL.lua_pop(l, 1);
-                LuaDLL.luaL_getmetatable(l, "LuaVarObject");
-            }
-
-            LuaDLL.lua_setmetatable(l, -2);
+            LuaDLL.luaS_pushobject(l, index, getAQName(o), gco,udCacheRef);
         }
 
 		static Dictionary<Type, string> aqnameMap = new Dictionary<Type, string>();
