@@ -578,6 +578,9 @@ namespace LuaInterface
 		public static extern void luaS_checkQuaternion(IntPtr l, int p, out float x, out float y, out float z, out float w);
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void luaS_checkColor(IntPtr l, int p, out float x, out float y, out float z, out float w);
+
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void luaS_pushVector2(IntPtr l, float x, float y);
 
 
@@ -588,6 +591,9 @@ namespace LuaInterface
 		public static extern void luaS_pushVector4(IntPtr l, float x, float y, float z, float w);
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void luaS_pushQuaternion(IntPtr l, float x, float y, float z, float w);
+
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void luaS_pushColor(IntPtr l, float x, float y, float z, float w);
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void luaS_setData(IntPtr l, int p, float x, float y, float z, float w);
