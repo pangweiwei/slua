@@ -189,8 +189,7 @@ namespace SLua
 			{
 				if (t.IsGenericType && t.GetGenericArguments()[0] != typeof(string))
 				{
-					LuaDLL.luaL_error(l, "need string as key");
-					return 0;
+					goto IndexProperty;
 				}
 				object v = (self as IDictionary)[key];
 				if (v != null)
@@ -200,6 +199,7 @@ namespace SLua
 				}
 			}
 
+IndexProperty:
 			MemberInfo[] mis = t.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
 			if (mis.Length == 0)
 			{
