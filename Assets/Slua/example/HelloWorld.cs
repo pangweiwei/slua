@@ -32,6 +32,11 @@ public class HelloWorld
 		return new Dictionary<string, GameObject>();
 	}
 
+	public Dictionary<GameObject, string> too()
+	{
+		return new Dictionary<GameObject, string>();
+	}
+
 	public List<GameObject> getList()
 	{
 		return new List<GameObject> { new GameObject("1"), new GameObject("2") };

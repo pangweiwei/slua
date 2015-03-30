@@ -62,7 +62,8 @@ function main()
 	local pos = Vector3(10,10,10)+Vector3(1,1,1)
 	cube.transform.position = pos
 	cube.transform.localScale = Vector3(10,10,10)
-	print(cube==cube2)
+	print("cube==cube2",cube==cube2)
+	assert(cube.transform==cube.transform)
 
 	LuaTimer.Add(0,20,function(id)
 		cube.transform.localScale = Vector3(10,10,10)*(0.1+math.sin(Time.time))

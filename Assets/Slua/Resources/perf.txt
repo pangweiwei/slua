@@ -20,11 +20,11 @@ function test1()
 	print("test1/cs",os.clock()-start)
 
 	local transform = cube.transform
-
+	local obj=HelloWorld()
 	local start = os.clock()
 	for i=1,200000 do
-		local v = transform.position
-		transform.position=v
+		local x=obj:foo()
+		--local n=x.Count
 	end
 	print("test1/lua " .. (os.clock() - start));
 end

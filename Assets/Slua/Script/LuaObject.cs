@@ -514,12 +514,20 @@ return index
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaGC(IntPtr l)
 		{
+#if true
 			int index = LuaDLL.luaS_rawnetobj(l, 1);
 			if (index > 0)
 			{
 				ObjectCache t = ObjectCache.get(l);
 				t.gc(index);
 			}
+#else
+			IntPtr ptr = LuaDLL.luaS_objectptr(l,1);
+			if(ptr!=IntPtr.Zero){
+				GCHandle g = GCHandle.FromIntPtr(ptr);
+				g.Free();
+			}
+#endif
 			return 0;
 		}
 

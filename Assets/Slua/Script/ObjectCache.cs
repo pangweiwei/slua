@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using LuaInterface;
 using UnityEngine;
@@ -183,6 +184,7 @@ namespace SLua
 
 		internal object get(IntPtr l, int p)
 		{
+#if true
 			int index = LuaDLL.luaS_rawnetobj(l, p);
 			object o;
 			if (index != -1 && cache.get(index, out o))
@@ -190,6 +192,13 @@ namespace SLua
 				return o;
 			}
 			return null;
+#else
+			IntPtr ptr = LuaDLL.luaS_objectptr(l, p);
+			GCHandle g = GCHandle.FromIntPtr(ptr);
+			if(g.IsAllocated)
+				return g.Target;
+			return null;
+#endif
 		}
 
 		internal void setBack(IntPtr l, int p, object o)
@@ -201,6 +210,12 @@ namespace SLua
 			}
 		}
 
+		IntPtr addressOf(object o)
+		{
+			GCHandle g = GCHandle.Alloc(o);
+			return GCHandle.ToIntPtr(g);
+		}
+
 		internal void push(IntPtr l, object o)
 		{
 			if (o == null)
@@ -208,6 +223,7 @@ namespace SLua
 				LuaDLL.lua_pushnil(l);
 				return;
 			}
+#if true
 			int index = -1;
 
 			bool gco = isGcObject(o);
@@ -220,6 +236,11 @@ namespace SLua
 
 			index = add(o);
 			LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
+#else
+			IntPtr p = addressOf(o);
+
+			LuaDLL.luaS_pushobjectptr(l, p, getAQName(o), udCacheRef);
+#endif
 		}
 
 		static Dictionary<Type, string> aqnameMap = new Dictionary<Type, string>();

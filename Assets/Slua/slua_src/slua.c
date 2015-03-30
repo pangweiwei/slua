@@ -347,9 +347,53 @@ static void cacheud(lua_State *l, int index, int cref) {
 	lua_pop(l, 1);
 }
 
+static void cacheudptr(lua_State *l, void* p, int cref) {
+	lua_rawgeti(l, LUA_REGISTRYINDEX, cref);
+	lua_pushlightuserdata(l, p);
+	lua_pushvalue(l, -3);
+	lua_rawset(l, -3);
+	lua_pop(l, 1);
+}
+
 LUA_API void luaS_pushobject(lua_State *l, int index, const char* t, int gco, int cref) {
 	luaS_newuserdata(l, index);
 	if (gco) cacheud(l, index, cref);
+
+
+	luaL_getmetatable(l, t);
+	if (lua_isnil(l, -1))
+	{
+		lua_pop(l, 1);
+		luaL_getmetatable(l, "LuaVarObject");
+	}
+
+	lua_setmetatable(l, -2);
+}
+
+
+int luaS_getcacheudptr(lua_State *l, void* p, int cref) {
+	lua_rawgeti(l, LUA_REGISTRYINDEX, cref);
+	lua_pushlightuserdata(l, p);
+	lua_rawget(l, -2);
+	if (!lua_isnil(l, -1))
+	{
+		lua_remove(l, -2);
+		return 1;
+	}
+	lua_pop(l, 2);
+	return 0;
+}
+
+LUA_API void luaS_pushobjectptr(lua_State *l, void* p, const char* t, int cref) {
+
+	if (luaS_getcacheudptr(l, p, cref))
+		return;
+
+	
+	void** pointer = (void**)lua_newuserdata(l, sizeof(void*));
+	*pointer = p;
+
+	cacheudptr(l, p, cref);
 
 
 	luaL_getmetatable(l, t);
@@ -372,4 +416,11 @@ LUA_API int luaS_getcacheud(lua_State *l, int index, int cref) {
 	}
 	lua_pop(l, 2);
 	return 0;
+}
+
+LUA_API void* luaS_objectptr(lua_State *L, int index)
+{
+	void **udata = (void**)lua_touserdata(L, index);
+	if (udata != NULL) return *udata;
+	return NULL;
 }

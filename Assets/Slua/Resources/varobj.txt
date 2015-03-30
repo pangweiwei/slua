@@ -41,6 +41,11 @@ function main()
 		print("for each",v)
 	end
 
+	local dict2 = obj:too()
+	dict2[list[5]]="xxx"
+
+	print(dict2.Count)
+
 	-- now we simple benchmark varobj
 	local t = os.clock()
 	for i=1,200000 do
