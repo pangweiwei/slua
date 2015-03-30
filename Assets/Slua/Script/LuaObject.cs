@@ -514,7 +514,7 @@ return index
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaGC(IntPtr l)
 		{
-#if true
+#if PUSH_INDEX
 			int index = LuaDLL.luaS_rawnetobj(l, 1);
 			if (index > 0)
 			{

@@ -184,7 +184,7 @@ namespace SLua
 
 		internal object get(IntPtr l, int p)
 		{
-#if true
+#if PUSH_INDEX
 			int index = LuaDLL.luaS_rawnetobj(l, p);
 			object o;
 			if (index != -1 && cache.get(index, out o))
@@ -223,7 +223,7 @@ namespace SLua
 				LuaDLL.lua_pushnil(l);
 				return;
 			}
-#if true
+#if PUSH_INDEX
 			int index = -1;
 
 			bool gco = isGcObject(o);
