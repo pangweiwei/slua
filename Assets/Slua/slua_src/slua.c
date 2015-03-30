@@ -407,7 +407,7 @@ static void cacheudptr(lua_State *l, void* p, int cref) {
 	lua_pop(l, 1);
 }
 
-LUA_API void luaS_pushobject(lua_State *l, int index, const void* t, int gco, int cref) {
+LUA_API void luaS_pushobject(lua_State *l, int index, const char* t, int gco, int cref) {
 	luaS_newuserdata(l, index);
 	if (gco) cacheud(l, index, cref);
 

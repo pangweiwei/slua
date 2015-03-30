@@ -184,7 +184,7 @@ namespace SLua
 
 		internal object get(IntPtr l, int p)
 		{
-#if PUSH_INDEX
+#if !PUSH_PTR
 			int index = LuaDLL.luaS_rawnetobj(l, p);
 			object o;
 			if (index != -1 && cache.get(index, out o))
@@ -203,11 +203,20 @@ namespace SLua
 
 		internal void setBack(IntPtr l, int p, object o)
 		{
+#if !PUSH_PTR
 			int index = LuaDLL.luaS_rawnetobj(l, p);
 			if (index != -1)
 			{
 				cache.set(index, o);
 			}
+#else
+			IntPtr ptr = LuaDLL.luaS_objectptr(l, p);
+			GCHandle g = GCHandle.FromIntPtr(ptr);
+			if (g.IsAllocated && o.GetType()==g.Target.GetType())
+			{
+				g.Target = o;
+			}
+#endif
 		}
 
 		IntPtr addressOf(object o)
@@ -223,7 +232,7 @@ namespace SLua
 				LuaDLL.lua_pushnil(l);
 				return;
 			}
-#if PUSH_INDEX
+#if !PUSH_PTR
 			int index = -1;
 
 			bool gco = isGcObject(o);
@@ -238,7 +247,6 @@ namespace SLua
 			LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
 #else
 			IntPtr p = addressOf(o);
-
 			LuaDLL.luaS_pushobjectptr(l, p, getAQName(o), udCacheRef);
 #endif
 		}

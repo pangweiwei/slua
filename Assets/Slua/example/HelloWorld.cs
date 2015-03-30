@@ -6,6 +6,13 @@ using System;
 using LuaInterface;
 
 [CustomLuaClass]
+public struct foostruct
+{
+	public float x, y, z,w;
+	public int mode;
+}
+
+[CustomLuaClass]
 public class HelloWorld
 {
 

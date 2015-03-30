@@ -17,6 +17,10 @@ function main()
 
 	local c=Color(1,1,1,1)
 	print("color",c.r)
+	local fs=foostruct()
+	fs.mode=1
+	fs.x=11.1
+	assert(fs.mode==1)
 
 	-- test module require
 	print(somemodule.add(2,3))
