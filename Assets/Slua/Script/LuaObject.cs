@@ -1207,8 +1207,12 @@ return index
 			PushVarDelegate push;
 			if (typePushMap.TryGetValue(t, out push))
 				push(l, o);
+			else if (t.IsEnum)
+			{
+				pushEnum(l, Convert.ToInt32(o));
+			}
 			else
-				pushObject(l, o);
+				pushObject(l,o);           
 		}
 
 

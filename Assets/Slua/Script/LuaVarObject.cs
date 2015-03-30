@@ -288,11 +288,23 @@ IndexProperty:
 		{
 			if (self is IList)
 			{
-				(self as IList)[index] = checkVar(l, 3);
+				if(self.GetType().IsGenericType)
+				{
+					Type t=self.GetType().GetGenericArguments()[0];
+					(self as IList)[index] = Convert.ChangeType(checkVar(l, 3),t);
+				}
+				else
+					(self as IList)[index] = checkVar(l, 3);
 			}
 			else if (self is IDictionary)
 			{
-				(self as IDictionary)[index] = checkVar(l, 3);
+				if(self.GetType().IsGenericType)
+				{
+					Type t=self.GetType().GetGenericArguments()[1];
+					(self as IDictionary)[index] = Convert.ChangeType(checkVar(l, 3),t);
+				}
+				else
+					(self as IDictionary)[index] = checkVar(l, 3);
 			}
 		}
 

@@ -164,5 +164,10 @@ namespace SLua
 		{
 			LuaDLL.luaS_pushVector4(l, o.x, o.y, o.z, o.w);
 		}
+
+		public static void pushValue(IntPtr l, Color o)
+		{
+			pushObject(l,o);
+		}
 	}
 }

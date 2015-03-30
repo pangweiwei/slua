@@ -440,6 +440,12 @@ namespace SLua
 			LuaDLL.lua_pushstdcallcfunction(L, import);
 			LuaDLL.lua_setglobal(L, "import");
 
+			LuaDLL.lua_pushstdcallcfunction(L, dofile);
+			LuaDLL.lua_setglobal(L, "dofile");
+
+			LuaDLL.lua_pushstdcallcfunction(L, loadfile);
+			LuaDLL.lua_setglobal(L, "loadfile");
+
 			LuaDLL.lua_pushstdcallcfunction(L, loader);
 			int loaderFunc = LuaDLL.lua_gettop(L);
 
@@ -586,6 +592,23 @@ namespace SLua
 			return 0;
 		}
 
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		internal static int loadfile(IntPtr L)
+		{
+			return loader(L);
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		internal static int dofile(IntPtr L)
+		{
+			int n = LuaDLL.lua_gettop(L);
+
+			if (loader(L) != 0) return LuaDLL.lua_gettop(L) - n;
+
+			LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
+			return LuaDLL.lua_gettop(L) - n;
+		}
+		
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		internal static int loader(IntPtr L)
 		{
