@@ -66,6 +66,14 @@ namespace SLua
 			return true;
 		}
 
+		static public bool checkType(IntPtr l, int p, out Color c)
+		{
+			float x, y, z, w;
+			LuaDLL.luaS_checkQuaternion(l, p, out x, out y, out z, out w);
+			c = new Color(x, y, z, w);
+			return true;
+		}
+
 		static public bool checkType(IntPtr l, int p, out LayerMask lm)
 		{
 			int v;
@@ -167,7 +175,7 @@ namespace SLua
 
 		public static void pushValue(IntPtr l, Color o)
 		{
-			pushObject(l,o);
+			LuaDLL.luaS_pushColor(l, o.r, o.g, o.b, o.a);
 		}
 	}
 }

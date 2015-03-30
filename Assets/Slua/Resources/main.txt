@@ -10,9 +10,13 @@ function main()
 		print("using lua")
 	end
 
+	-- test value type
 	local x=Vector3(3,3,3)
 	x:Normalize()
 	print(x.x,x.y,x.z)
+
+	local c=Color(1,1,1,1)
+	print("color",c.r)
 
 	-- test module require
 	print(somemodule.add(2,3))
