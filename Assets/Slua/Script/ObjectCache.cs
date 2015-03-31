@@ -184,7 +184,7 @@ namespace SLua
 
 		internal object get(IntPtr l, int p)
 		{
-#if !PUSH_PTR
+
 			int index = LuaDLL.luaS_rawnetobj(l, p);
 			object o;
 			if (index != -1 && cache.get(index, out o))
@@ -192,37 +192,18 @@ namespace SLua
 				return o;
 			}
 			return null;
-#else
-			IntPtr ptr = LuaDLL.luaS_objectptr(l, p);
-			GCHandle g = GCHandle.FromIntPtr(ptr);
-			if(g.IsAllocated)
-				return g.Target;
-			return null;
-#endif
+
 		}
 
 		internal void setBack(IntPtr l, int p, object o)
 		{
-#if !PUSH_PTR
+
 			int index = LuaDLL.luaS_rawnetobj(l, p);
 			if (index != -1)
 			{
 				cache.set(index, o);
 			}
-#else
-			IntPtr ptr = LuaDLL.luaS_objectptr(l, p);
-			GCHandle g = GCHandle.FromIntPtr(ptr);
-			if (g.IsAllocated && o.GetType()==g.Target.GetType())
-			{
-				g.Target = o;
-			}
-#endif
-		}
 
-		IntPtr addressOf(object o)
-		{
-			GCHandle g = GCHandle.Alloc(o);
-			return GCHandle.ToIntPtr(g);
 		}
 
 		internal void push(IntPtr l, object o)
@@ -232,7 +213,7 @@ namespace SLua
 				LuaDLL.lua_pushnil(l);
 				return;
 			}
-#if !PUSH_PTR
+
 			int index = -1;
 
 			bool gco = isGcObject(o);
@@ -245,10 +226,7 @@ namespace SLua
 
 			index = add(o);
 			LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
-#else
-			IntPtr p = addressOf(o);
-			LuaDLL.luaS_pushobjectptr(l, p, getAQName(o), udCacheRef);
-#endif
+
 		}
 
 		static Dictionary<Type, string> aqnameMap = new Dictionary<Type, string>();

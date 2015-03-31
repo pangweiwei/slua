@@ -241,6 +241,11 @@ return index
 			{
 				pushValue(L, (Quaternion)o);
 			};
+
+			typePushMap[typeof(Color)] = (IntPtr L, object o) =>
+			{
+				pushValue(L, (Color)o);
+			};
 		}
 
 		static int luaOp(IntPtr l, string f, string tip)
@@ -514,20 +519,12 @@ return index
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaGC(IntPtr l)
 		{
-#if !PUSH_PTR
 			int index = LuaDLL.luaS_rawnetobj(l, 1);
 			if (index > 0)
 			{
 				ObjectCache t = ObjectCache.get(l);
 				t.gc(index);
 			}
-#else
-			IntPtr ptr = LuaDLL.luaS_objectptr(l,1);
-			if(ptr!=IntPtr.Zero){
-				GCHandle g = GCHandle.FromIntPtr(ptr);
-				g.Free();
-			}
-#endif
 			return 0;
 		}
 
@@ -888,6 +885,7 @@ return index
 			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TNUMBER);
 			int i = LuaDLL.lua_tointeger(l, p);
 			o = (T)Enum.ToObject(typeof(T), i);
+
 			return true;
 		}
 
@@ -1006,6 +1004,12 @@ return index
 							Quaternion v;
 							checkType(l, p, out v);
 							return v;
+						}
+						else if (luaTypeCheck(l, p, "Color"))
+						{
+							Color c;
+							checkType(l, p, out c);
+							return c;
 						}
 						else
 						{
