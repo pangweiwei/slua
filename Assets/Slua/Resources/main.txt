@@ -12,6 +12,9 @@ MyVector3=Slua.Class(Vector3,
 			self.y=self.y/l
 			self.z=self.z/l
 		end,
+		Set=function(self,x,y,z)
+			self.__base:Set(x,y,z)
+		end,
 	}
 )
 
@@ -27,6 +30,8 @@ function main()
 	-- test inherite class
 	local mv = MyVector3(1,2,3)
 	mv:Normalize()
+	print(mv.x,mv.y,mv.z)
+	mv:Set(0,0,0)
 	print(mv.x,mv.y,mv.z)
 
 	-- test value type
