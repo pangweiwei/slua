@@ -608,9 +608,8 @@ namespace LuaInterface
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int luaS_getcacheud(IntPtr l, int index, int cref);
 
+
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void luaS_pushobjectptr(IntPtr l, IntPtr p, string t,int cref);
-		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern IntPtr luaS_objectptr(IntPtr l, int index);
+		public static extern int luaS_subclassof(IntPtr l, int index, string t);
 	}
 }

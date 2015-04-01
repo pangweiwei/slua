@@ -181,9 +181,12 @@ LUA_API int luaS_checkluatype(lua_State *L, int p, const char *t) {
 		lua_settop(L, top);
 		return 0;
 	}
-	b = lua_tostring(L, -1);
-	lua_settop(L, top);
-	return strcmp(t, b) == 0;
+	if (t != NULL) {
+		b = lua_tostring(L, -1);
+		lua_settop(L, top);
+		return strcmp(t, b) == 0;
+	}
+	return 1;
 }
 
 
@@ -416,9 +419,34 @@ LUA_API int luaS_getcacheud(lua_State *l, int index, int cref) {
 	return 0;
 }
 
-LUA_API void* luaS_objectptr(lua_State *L, int index)
+LUA_API void* luaS_objectptr(lua_State *l, int index)
 {
-	void **udata = (void**)lua_touserdata(L, index);
+	void **udata = (void**)lua_touserdata(l, index);
 	if (udata != NULL) return *udata;
 	return NULL;
+}
+
+LUA_API int luaS_subclassof(lua_State *l, int p, const char* t) {
+	int top = lua_gettop(l);
+	lua_pushvalue(l, p);
+	while (lua_istable(l, -1))
+	{
+		lua_pushstring(l, "__base");
+		lua_rawget(l, -2);
+	}
+
+	if (lua_isnil(l, -1)) {
+		lua_settop(l, top);
+		return 0;
+	}
+
+	if (t != NULL) {
+		lua_getmetatable(l, -1);
+		lua_getfield(l, -1, "__typename");
+		const char* tname = lua_tostring(l, -1);
+		int ok = strcmp(tname, t);
+		lua_settop(l, top);
+		return ok == 0;
+	}
+	return 1;
 }

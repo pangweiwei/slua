@@ -566,7 +566,7 @@ return index
 			}
 			else if (t == typeof(Type))
 			{
-				return lt == LuaTypes.LUA_TTABLE;
+				return isTypeTable(l, p);
 			}
 
 			switch (lt)
@@ -586,6 +586,8 @@ return index
 					{
 						if (t.IsValueType)
 							return luaTypeCheck(l, p, t.Name);
+						else if (LuaDLL.luaS_subclassof(l, p, t.Name) == 1)
+							return true;
 						else
 							return t == typeof(LuaTable);
 					}
@@ -607,6 +609,16 @@ return index
 				return false;
 			}
 			return true;
+		}
+
+		static bool isLuaClass(IntPtr l, int p)
+		{
+			return LuaDLL.luaS_subclassof(l, p, null) == 1;
+		}
+
+		static bool isLuaValueType(IntPtr l, int p)
+		{
+			return LuaDLL.luaS_checkluatype(l, p, null) == 1;
 		}
 
 		public static bool matchType(IntPtr l, int total, int from, params Type[] types)
@@ -826,8 +838,6 @@ return index
 		}
 
 
-
-
 		static public bool checkType<T>(IntPtr l, int p, out T o)
 		{
 			o = (T)checkVar(l, p);
@@ -836,6 +846,21 @@ return index
 
 		static internal object checkObj(IntPtr l, int p)
 		{
+			if (LuaDLL.lua_istable(l, p))
+			{
+				LuaDLL.lua_pushvalue(l, p);
+				while (LuaDLL.lua_istable(l, -1))
+				{
+					LuaDLL.lua_pushstring(l, "__base");
+					LuaDLL.lua_rawget(l, -2);
+					LuaDLL.lua_remove(l, -2);
+				}
+				if (LuaDLL.lua_isuserdata(l, -1) > 0)
+					LuaDLL.lua_replace(l, p);
+				else
+					LuaDLL.luaL_error(l, "arg {0} expect object, but get a table",p);
+			}
+
 			ObjectCache oc = ObjectCache.get(l);
 			return oc.get(l, p);
 		}
@@ -981,35 +1006,44 @@ return index
 					}
 				case LuaTypes.LUA_TTABLE:
 					{
-						if (luaTypeCheck(l, p, "Vector2"))
+						if (isLuaValueType(l, p))
 						{
-							Vector2 v;
-							checkType(l, p, out v);
-							return v;
+							if (luaTypeCheck(l, p, "Vector2"))
+							{
+								Vector2 v;
+								checkType(l, p, out v);
+								return v;
+							}
+							else if (luaTypeCheck(l, p, "Vector3"))
+							{
+								Vector3 v;
+								checkType(l, p, out v);
+								return v;
+							}
+							else if (luaTypeCheck(l, p, "Vector4"))
+							{
+								Vector4 v;
+								checkType(l, p, out v);
+								return v;
+							}
+							else if (luaTypeCheck(l, p, "Quaternion"))
+							{
+								Quaternion v;
+								checkType(l, p, out v);
+								return v;
+							}
+							else if (luaTypeCheck(l, p, "Color"))
+							{
+								Color c;
+								checkType(l, p, out c);
+								return c;
+							}
+							LuaDLL.luaL_error(l, "unknown lua value type");
+							return null;
 						}
-						else if (luaTypeCheck(l, p, "Vector3"))
+						else if (isLuaClass(l, p))
 						{
-							Vector3 v;
-							checkType(l, p, out v);
-							return v;
-						}
-						else if (luaTypeCheck(l, p, "Vector4"))
-						{
-							Vector4 v;
-							checkType(l, p, out v);
-							return v;
-						}
-						else if (luaTypeCheck(l, p, "Quaternion"))
-						{
-							Quaternion v;
-							checkType(l, p, out v);
-							return v;
-						}
-						else if (luaTypeCheck(l, p, "Color"))
-						{
-							Color c;
-							checkType(l, p, out c);
-							return c;
+							return checkObj(l, p);
 						}
 						else
 						{
@@ -1018,6 +1052,7 @@ return index
 							LuaTable v = new LuaTable(l, r);
 							return v;
 						}
+						break;
 					}
 				case LuaTypes.LUA_TUSERDATA:
 					return LuaObject.checkObj(l, p);
@@ -1228,7 +1263,7 @@ return index
 			{
 				return (T)o;
 			}
-			LuaDLL.luaL_error(l, "expect self, but get null");
+			LuaDLL.luaL_error(l, "arg 1 expect self, but get null");
 			return default(T);
 		}
 
