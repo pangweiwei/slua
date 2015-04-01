@@ -262,6 +262,39 @@ LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使�
 删除指定id的timer.
 
 
+##在lua中继承c#的基类
+
+slua支持直接在lua中继承扩展c#的基类,例如:
+>     MyVector3=Slua.Class(Vector3,
+	nil, --static function
+	{ --instance member function
+		Normalize=function(self)
+			print "overloaded Normalize"
+			local l=math.sqrt(self.x*self.x+self.y*self.y,self.z*self.z)
+			self.x=self.x/l
+			self.y=self.y/l
+			self.z=self.z/l
+		end,
+		Set=function(self,x,y,z)
+			self.__base:Set(x,y,z)
+		end,
+	}
+    )
+
+在成员函数中,可以使用self.__base调用基类的成员方法.
+
+##在lua中遍历IEnumertable对象
+
+c#中使用foreach语句遍历IEnumertable,例如List,Array等, 在slua中,可以使用Slua.iter作为迭代函数遍历这些对象, 例如:
+
+>     for t in Slua.iter(Canvas.transform) do
+		print("foreach transorm",t)
+	end
+
+返回的t是Canvas.transform的一级子对象.
+
+
+
 ##如何快速导出第三方库, 例如ngui等
 
 新建一个空工程,将第三方库的所有代码放入Assets内, 等待Unity编译完成;
@@ -372,7 +405,7 @@ this[] get/set会产生getItem/setItem成员函数,请使用他们.
 ##已知问题
 不支持泛型函数导出, 但支持泛型代理
 
-UnityAction/UnityEvent目前仅支持1个泛型参数的版本,后续考虑完善.
+UnityAction/UnityEvent目前仅支持1个泛型参数的版本,目前UnityEngine也没有多个泛型参数的需要,后续考虑完善.
 
 部分同名重载参数类型检查可能会失败(因为lua的类型少于c#), 建议手写代码避免同名重载, 这样效率也更高.
 
