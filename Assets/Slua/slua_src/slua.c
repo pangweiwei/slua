@@ -372,7 +372,7 @@ static void setelement(lua_State* L, int p, float v, const char* key) {
 	if (!isnan(v)) {
 		lua_pushstring(L, key);
 		lua_pushnumber(L, v);
-		lua_rawset(L, p);
+		lua_settable(L, p);
 	}
 }
 

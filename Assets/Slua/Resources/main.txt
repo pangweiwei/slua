@@ -2,6 +2,20 @@ local somemodule = require 'module.some'
 
 import "UnityEngine"
 
+MyVector3=Slua.Class(Vector3,
+	nil, --static function
+	{ --instance member function
+		Normalize=function(self)
+			print "overloaded Normalize"
+			local l=math.sqrt(self.x*self.x+self.y*self.y,self.z*self.z)
+			self.x=self.x/l
+			self.y=self.y/l
+			self.z=self.z/l
+		end,
+	}
+)
+
+
 function main()
 
 	if jit then
@@ -9,6 +23,11 @@ function main()
 	else
 		print("using lua")
 	end
+
+	-- test inherite class
+	local mv = MyVector3(1,2,3)
+	mv:Normalize()
+	print(mv.x,mv.y,mv.z)
 
 	-- test value type
 	local x=Vector3(3,3,3)
@@ -99,6 +118,8 @@ function main()
 		local y = y:y()
 		Yield(y)
 		print("Yield ok")
+
+		HelloWorld.setv({name="yes",value=12})
 	end)
 	coroutine.resume(c)
 

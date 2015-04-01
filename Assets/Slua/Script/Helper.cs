@@ -33,6 +33,39 @@ namespace SLua
 	class Helper : LuaObject
 	{
 
+		static string classfunc = @"
+local getmetatable=getmetatable
+local function Class(base,static,instance)
+
+	local mt = getmetatable(base)
+
+	local class=static or {}
+	setmetatable(class, 
+		{
+			__call=function(...)
+				local r = mt.__call(...)
+				local ret = instance or {}
+				ret.__base=r
+
+				local ret = setmetatable(ret,{
+					__index=function(t,k)
+						return r[k]
+					end,
+
+					__newindex=function(t,k,v)
+						r[k]=v
+					end,
+				})
+
+				return ret
+			end,
+		}
+	)
+	return class
+end
+return Class
+";
+
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int _iter(IntPtr l)
 		{
@@ -142,6 +175,16 @@ namespace SLua
 			reg(l, CreateClass, "Slua");
 			reg(l, iter, "Slua");
 			reg(l, ToString, "Slua");
+
+
+			newTypeTable(l, "Slua");
+			if (LuaDLL.luaL_dostring(l, classfunc) != 0)
+			{
+				throwLuaError(l);
+				return;
+			}
+			LuaDLL.lua_setfield(l, -2, "Class");
+			LuaDLL.lua_pop(l, 1);
 		}
 	}
 }

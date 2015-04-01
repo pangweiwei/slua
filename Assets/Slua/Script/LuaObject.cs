@@ -508,7 +508,7 @@ return index
 			LuaDLL.lua_setfield(l, -2, name);
 		}
 
-		static void throwLuaError(IntPtr l)
+		internal static void throwLuaError(IntPtr l)
 		{
 			string err = LuaDLL.lua_tostring(l, -1);
 			LuaDLL.lua_pop(l, 1);
