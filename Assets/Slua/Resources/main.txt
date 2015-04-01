@@ -123,8 +123,6 @@ function main()
 		local y = y:y()
 		Yield(y)
 		print("Yield ok")
-
-		HelloWorld.setv({name="yes",value=12})
 	end)
 	coroutine.resume(c)
 

@@ -94,7 +94,7 @@ return Class
 				IEnumerator iter = e.GetEnumerator();
 
 				pushObject(l, iter);
-				LuaDLL.luaS_pushcclosure(l, _iter, 1);
+				LuaDLL.lua_pushcclosure(l, _iter, 1);
 				return 1;
 			}
 			LuaDLL.luaL_error(l, "passed in object isn't enumerable");

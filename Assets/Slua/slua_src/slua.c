@@ -1,33 +1,48 @@
-/*
-* This file is based off of MonoLuaInterface's wrapping: https://github.com/stevedonovan/MonoLuaInterface
-*/
+// The MIT License (MIT)
+
+// Copyright 2015 Siney/Pangweiwei siney@yeah.net
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+
+
+
+
+#define MT_VEC2 1
+#define MT_VEC3 2
+#define MT_VEC4 3
+#define MT_Q	4
+#define MT_COLOR	5
 
 #define LUA_LIB
+
 #include "lua.h"
 #include "lauxlib.h"
 #include <stdio.h>
 #include <string.h>
 
-/*  LUA INTERFACE SUPPORT  */
-#ifndef _WIN32
-#define __stdcall
+#ifdef _WINDOWS
+#include <float.h>
+#define isnan _isnan
+#else
+#include <math.h>
 #endif
-typedef int(__stdcall *lua_stdcallCFunction) (lua_State *L);
-
-static int stdcall_closure(lua_State *L)
-{
-	lua_stdcallCFunction fn = (lua_stdcallCFunction)lua_touserdata(L, lua_upvalueindex(1));
-	int r = fn(L);
-	return r;
-}
-
-
-LUA_API void lua_pushstdcallcfunction(lua_State *L, lua_stdcallCFunction fn)
-{
-	lua_pushlightuserdata(L, fn);
-	lua_pushcclosure(L, stdcall_closure, 1);
-}
-
 
 LUA_API void luaS_newuserdata(lua_State *L, int val)
 {
@@ -55,82 +70,12 @@ LUA_API void luaS_pushuserdata(lua_State *L, void* ptr)
 	*pointer = ptr;
 }
 
-// The MIT License (MIT)
-
-// Copyright 2015 Siney/Pangweiwei siney@yeah.net
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
-
-
-#ifdef _WINDOWS
-#include <float.h>
-#define isnan _isnan
-#else
-#include <math.h>
-#endif
-
-#define MT_VEC2 1
-#define MT_VEC3 2
-#define MT_VEC4 3
-#define MT_Q	4
-#define MT_COLOR	5
-
-
-static int s_closure(lua_State *L)
-{
-	lua_Debug ar;
-	lua_stdcallCFunction fn;
-	int r;
-
-	lua_getstack(L, 0, &ar);
-	lua_getinfo(L, "u", &ar);
-	fn = (lua_stdcallCFunction)lua_touserdata(L, lua_upvalueindex(ar.nups));
-	r = fn(L);
-	return r;
-}
-
-
-LUA_API void luaS_pushcclosure(lua_State *L, lua_CFunction func, int n) {
-	if (func != NULL) {
-		lua_pushlightuserdata(L, func);
-		lua_pushcclosure(L, s_closure, n + 1);
-	}
-}
 
 LUA_API const char* luaS_tolstring32(lua_State *L, int index, int* len) {
 	size_t l;
 	const char* ret = lua_tolstring(L, index, &l);
 	*len = (int)l;
 	return ret;
-}
-
-static lua_stdcallCFunction panicf = NULL;
-static int atpanic(lua_State *L) {
-	if (panicf != NULL)
-		return panicf(L);
-	return 0;
-}
-
-LUA_API void luaS_atpanic(lua_State *L, lua_stdcallCFunction f) {
-	panicf = f;
-	lua_atpanic(L, atpanic);
 }
 
 #if LUA_VERSION_NUM>=503
