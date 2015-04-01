@@ -4,7 +4,6 @@ using System.Text;
 
 namespace LuaInterface
 {
-
 #pragma warning disable 414
 	public class MonoPInvokeCallbackAttribute : System.Attribute
 	{
@@ -70,7 +69,13 @@ namespace LuaInterface
 		public bool finished;
 	}
 
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate int LuaCSFunction(IntPtr luaState);
+#else
+	public delegate int LuaCSFunction(IntPtr luaState);
+#endif
+
 	public delegate string LuaChunkReader(IntPtr luaState, ref ReaderInfo data, ref uint size);
 
 	public delegate int LuaFunctionCallback(IntPtr luaState);
@@ -165,11 +170,7 @@ namespace LuaInterface
 		public static extern int luaL_callmeta(IntPtr luaState, int stackPos, string name);
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr luaL_newstate();
-		/// <summary>DEPRECATED - use luaL_newstate() instead!</summary>
-		public static IntPtr lua_open()
-		{
-			return LuaDLL.luaL_newstate();
-		}
+
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void lua_close(IntPtr luaState);
@@ -447,7 +448,7 @@ namespace LuaInterface
 		public static void lua_pushstdcallcfunction(IntPtr luaState, LuaCSFunction function)
 		{
 			IntPtr fn = Marshal.GetFunctionPointerForDelegate(function);
-			lua_pushstdcallcfunction(luaState, fn);
+			lua_pushcclosure(luaState, fn, 0);
 		}
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
@@ -538,15 +539,6 @@ namespace LuaInterface
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int luaS_rawnetobj(IntPtr luaState, int obj);
 
-		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void luaS_pushcclosure(IntPtr luaState, IntPtr func, int n);
-
-		public static void luaS_pushcclosure(IntPtr luaState, LuaCSFunction func, int n)
-		{
-			IntPtr p = Marshal.GetFunctionPointerForDelegate(func);
-			luaS_pushcclosure(luaState, p, n);
-		}
-
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr lua_touserdata(IntPtr luaState, int index);
@@ -563,6 +555,15 @@ namespace LuaInterface
 #else
 			return LuaIndexes.LUA_GLOBALSINDEX - i;
 #endif
+		}
+
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void lua_pushcclosure(IntPtr l, IntPtr f, int nup);
+
+		public static void lua_pushcclosure(IntPtr l, LuaCSFunction f, int nup)
+		{
+			IntPtr fn = Marshal.GetFunctionPointerForDelegate(f);
+			lua_pushcclosure(l, fn, nup);
 		}
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
