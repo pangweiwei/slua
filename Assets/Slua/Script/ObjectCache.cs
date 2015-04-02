@@ -165,7 +165,8 @@ namespace SLua
 			object o;
 			if (cache.get(index, out o))
 			{
-				if (isGcObject(o))
+				int oldindex;
+				if (isGcObject(o) && objMap.TryGetValue(o,out oldindex) && oldindex==index)
 				{
 					objMap.Remove(o);
 				}
