@@ -278,7 +278,19 @@ IndexProperty:
 			}
 			else if (self is IDictionary)
 			{
-				pushVar(l, (self as IDictionary)[index]);
+				//support enumerate key
+				if(self.GetType().IsGenericType)
+				{
+					Type t = self.GetType().GetGenericArguments()[0];
+					if (t.IsEnum)
+					{
+						pushVar(l, (self as IDictionary)[Enum.Parse(t, index.ToString())]);
+                        return 1;
+					}
+				}
+
+                pushVar(l, (self as IDictionary)[index]);
+
 				return 1;
 			}
 			return 0;
