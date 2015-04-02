@@ -401,6 +401,10 @@ c#中使用foreach语句遍历IEnumertable,例如List,Array等, 在slua中,可�
 
 this[] get/set会产生getItem/setItem成员函数,请使用他们.
 
+9)iOS 链接报告错误 Unable to insert branch island. No insertion point available.  怎么办?
+
+iOS对dll的尺寸有大小限制, 出现这个错误可能是你的工程代码+第三方库代码+LuaWrap所产生的dll超过限制, 你可以把一些代码抽取出来作为一个独立的dll, 保证工程的dll尺寸在限制内. 新版的Slua可以把Script目录和LuaObject/Unity目录整体制作为一个dll,放入你的Assets目录, 让你的工程依赖这个dll,而不再包含slua(和动态产生的wrap代码),从而减少最终工程dll的尺寸.
+
 
 ##已知问题
 不支持泛型函数导出, 但支持泛型代理
