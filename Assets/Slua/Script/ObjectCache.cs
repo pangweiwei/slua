@@ -112,8 +112,9 @@ namespace SLua
 					throw new ArgumentOutOfRangeException();
 				}
 
-				o = this[i].v;
-				return true;
+				ObjSlot slot = this[i];
+				o = slot.v;
+				return o != null;
 			}
 
 			public object get(int i)
@@ -222,6 +223,8 @@ namespace SLua
 			{
 				if (LuaDLL.luaS_getcacheud(l, index, udCacheRef) == 1)
 					return;
+
+				gc(index);
 			}
 
 			index = add(o);
