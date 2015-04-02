@@ -223,8 +223,6 @@ namespace SLua
 			{
 				if (LuaDLL.luaS_getcacheud(l, index, udCacheRef) == 1)
 					return;
-
-				gc(index);
 			}
 
 			index = add(o);
