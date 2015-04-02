@@ -356,16 +356,16 @@ IndexProperty:
 		static new public void init(IntPtr l)
 		{
 			LuaDLL.lua_newtable(l);
-			LuaDLL.lua_pushstdcallcfunction(l, luaIndex);
+			LuaDLL.lua_pushcfunction(l, luaIndex);
 			LuaDLL.lua_setfield(l, -2, "__index");
-			LuaDLL.lua_pushstdcallcfunction(l, luaNewIndex);
+			LuaDLL.lua_pushcfunction(l, luaNewIndex);
 			LuaDLL.lua_setfield(l, -2, "__newindex");
-			LuaDLL.lua_pushstdcallcfunction(l, lua_gc);
+			LuaDLL.lua_pushcfunction(l, lua_gc);
 			LuaDLL.lua_setfield(l, -2, "__gc");
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "LuaVarObject");
 
 			LuaDLL.lua_newtable(l);
-			LuaDLL.lua_pushstdcallcfunction(l, methodWrapper);
+			LuaDLL.lua_pushcfunction(l, methodWrapper);
 			LuaDLL.lua_setfield(l, -2, "__call");
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, ObjectCache.getAQName(typeof(LuaCSFunction)));
 

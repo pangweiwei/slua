@@ -165,7 +165,7 @@ namespace SLua
 				return;
 			}
 
-			LuaDLL.lua_pushstdcallcfunction(L, LuaState.errorReport);
+			LuaDLL.lua_pushcfunction(L, LuaState.errorReport);
 			int error = LuaDLL.lua_gettop(L);
 
 			LuaDLL.lua_getref(L, valueref);
@@ -193,7 +193,7 @@ namespace SLua
 				return null;
 			}
 
-			LuaDLL.lua_pushstdcallcfunction(L, LuaState.errorReport);
+			LuaDLL.lua_pushcfunction(L, LuaState.errorReport);
 			int error = LuaDLL.lua_gettop(L);
 
 			LuaDLL.lua_getref(L, valueref);
@@ -443,22 +443,22 @@ namespace SLua
 			LuaDLL.lua_pushlightuserdata(L, L);
 			LuaDLL.lua_setglobal(L, "__main_state");
 
-			LuaDLL.lua_pushstdcallcfunction(L, print);
+			LuaDLL.lua_pushcfunction(L, print);
 			LuaDLL.lua_setglobal(L, "print");
 
-			LuaDLL.lua_pushstdcallcfunction(L, pcall);
+			LuaDLL.lua_pushcfunction(L, pcall);
 			LuaDLL.lua_setglobal(L, "pcall");
 
-			LuaDLL.lua_pushstdcallcfunction(L, import);
+			LuaDLL.lua_pushcfunction(L, import);
 			LuaDLL.lua_setglobal(L, "import");
 
-			LuaDLL.lua_pushstdcallcfunction(L, dofile);
+			LuaDLL.lua_pushcfunction(L, dofile);
 			LuaDLL.lua_setglobal(L, "dofile");
 
-			LuaDLL.lua_pushstdcallcfunction(L, loadfile);
+			LuaDLL.lua_pushcfunction(L, loadfile);
 			LuaDLL.lua_setglobal(L, "loadfile");
 
-			LuaDLL.lua_pushstdcallcfunction(L, loader);
+			LuaDLL.lua_pushcfunction(L, loader);
 			int loaderFunc = LuaDLL.lua_gettop(L);
 
 			LuaDLL.lua_getglobal(L, "package");
@@ -663,7 +663,7 @@ namespace SLua
 		public bool doBuffer(byte[] bytes, string fn, out object ret)
 		{
 			ret = null;
-			LuaDLL.lua_pushstdcallcfunction(L, errorReport);
+			LuaDLL.lua_pushcfunction(L, errorReport);
 			int errfunc = LuaDLL.lua_gettop(L);
 			if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fn) == 0)
 			{

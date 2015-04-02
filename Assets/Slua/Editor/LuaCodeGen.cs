@@ -421,8 +421,9 @@ class CodeGenerator
         StreamWriter file = new StreamWriter(f,false,Encoding.UTF8);
         Write(file, "using System;");
         Write(file, "namespace SLua {");
-        Write(file, "public partial class LuaObject {");
-        Write(file, "public static void {0}(IntPtr l) {{",name);
+		Write(file, "[LuaBinder]");
+        Write(file, "public class {0} {{",name);
+        Write(file, "public static void Bind(IntPtr l) {");
         foreach (Type t in list)
         {
             WriteBindType(file, t, list, exported);
@@ -520,7 +521,7 @@ using UnityEngine;
 
 namespace SLua
 {
-    public partial class LuaObject
+    public partial class LuaDelegation : LuaObject
     {
 
         static internal int checkDelegate(IntPtr l,int p,out $FN ua) {
@@ -1181,7 +1182,7 @@ namespace SLua
         if(t.IsEnum)
             Write(file, "checkEnum(l,{2}{0},out {1});", n,v,nprefix);
         else if(t.BaseType==typeof(System.MulticastDelegate))
-            Write(file, "int op=checkDelegate(l,{2}{0},out {1});", n, v,nprefix);
+			Write(file, "int op=LuaDelegation.checkDelegate(l,{2}{0},out {1});", n, v, nprefix);
         else
             Write(file, "checkType(l,{2}{0},out {1});", n, v,nprefix);
     }
@@ -1664,7 +1665,7 @@ namespace SLua
             else if (t.BaseType == typeof(System.MulticastDelegate))
             {
                 tryMake(t);
-                Write(file, "checkDelegate(l,{0},out a{1});", n + argstart, n + 1);
+                Write(file, "LuaDelegation.checkDelegate(l,{0},out a{1});", n + argstart, n + 1);
             }
             else if (isparams)
                 Write(file, "checkParams(l,{0},out a{1});", n + argstart, n + 1);

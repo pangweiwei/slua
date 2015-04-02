@@ -50,7 +50,7 @@ namespace LuaInterface
 		LUA_ERRERR = 5,
 	}
 
-	sealed class LuaIndexes
+	public sealed class LuaIndexes
 	{
 #if LUA_5_3
         // for lua5.3
@@ -440,12 +440,9 @@ namespace LuaInterface
 		public static extern void lua_pushnil(IntPtr luaState);
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void lua_pushstdcallcfunction(IntPtr luaState, IntPtr wrapper);
-
-		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void luaL_checktype(IntPtr luaState, int p, LuaTypes t);
 
-		public static void lua_pushstdcallcfunction(IntPtr luaState, LuaCSFunction function)
+		public static void lua_pushcfunction(IntPtr luaState, LuaCSFunction function)
 		{
 			IntPtr fn = Marshal.GetFunctionPointerForDelegate(function);
 			lua_pushcclosure(luaState, fn, 0);

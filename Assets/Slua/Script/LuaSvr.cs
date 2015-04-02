@@ -28,7 +28,7 @@ using System.Reflection;
 
 namespace SLua
 {
-	class LuaSvr
+	public class LuaSvr
 	{
 		public LuaState luaState;
 		static LuaSvrGameObject lgo;
@@ -46,11 +46,7 @@ namespace SLua
 			luaState = new LuaState();
 
 			LuaObject.init(luaState.L);
-			bind("BindUnity");
-			bind("BindUnityUI");
-			bind("BindDll");
-			bind("BindCustom");
-			bind("BindExtend"); // if you want to extend slua, can implemented BindExtend function like BindCustom etc.
+			bindAll(luaState.L);
 
 			GameObject go = new GameObject("LuaSvrProxy");
 			lgo = go.AddComponent<LuaSvrGameObject>();
@@ -81,13 +77,6 @@ namespace SLua
 			}
 		}
 
-		void bind(string name)
-		{
-			MethodInfo mi = typeof(LuaObject).GetMethod(name, BindingFlags.Public | BindingFlags.Static);
-			if (mi != null) mi.Invoke(null, new object[] { luaState.L });
-			else if (name == "BindUnity") Debug.LogError(string.Format("Miss {0}, click SLua=>Make to regenerate them", name));
-		}
-
 		void tick()
 		{
 			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
@@ -100,5 +89,21 @@ namespace SLua
 			LuaTimer.tick(Time.deltaTime);
 		}
 
+
+		void bindAll(IntPtr l)
+		{
+			Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
+			foreach(Assembly a in ams) 
+			{
+				Type[] ts=a.GetExportedTypes();
+				foreach (Type t in ts)
+				{
+					if (t.GetCustomAttributes(typeof(LuaBinderAttribute),false).Length > 0)
+					{
+						t.GetMethod("Bind").Invoke(null, new object[] { l });
+					}
+				}
+			}
+		}
 	}
 }
