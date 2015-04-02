@@ -223,6 +223,7 @@ namespace SLua
 	public class LuaTable : LuaVar, IEnumerable<LuaTable.TablePair>
 	{
 
+
 		public struct TablePair
 		{
 			public object key;
@@ -343,6 +344,8 @@ namespace SLua
 	{
 		IntPtr l_;
 		int mainThread = 0;
+		internal WeakDictionary<int, LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
+
 
 		public IntPtr L
 		{
@@ -388,6 +391,8 @@ namespace SLua
 
 		public static LuaState main;
 		static Dictionary<IntPtr, LuaState> statemap = new Dictionary<IntPtr, LuaState>();
+		static IntPtr oldptr = IntPtr.Zero;
+		static LuaState oldstate = null;
 
 		public bool isMainThread()
 		{
@@ -396,9 +401,16 @@ namespace SLua
 
 		static public LuaState get(IntPtr l)
 		{
+			if (l == oldptr)
+				return oldstate;
+
 			LuaState ls;
 			if (statemap.TryGetValue(l, out ls))
+			{
+				oldptr = l;
+				oldstate = ls;
 				return ls;
+			}
 
 			LuaDLL.lua_getglobal(l, "__main_state");
 			if (LuaDLL.lua_isnil(l, -1))

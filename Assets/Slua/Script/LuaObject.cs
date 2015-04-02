@@ -738,9 +738,10 @@ return index
 			return true;
 		}
 
-		static WeakDictionary<int, LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
 		static public bool checkType(IntPtr l, int p, out LuaDelegate f)
 		{
+			LuaState state = LuaState.get(l);
+
 			p = LuaDLL.lua_absindex(l, p);
 			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
 
@@ -756,7 +757,7 @@ return index
 			{
 				int fref = LuaDLL.lua_tointeger(l, -1);
 				LuaDLL.lua_pop(l, 1); // pop ref value;
-				f = delgateMap[fref];
+				f = state.delgateMap[fref];
 				if (f == null)
 				{
 					f = newDelegate(l, p);
@@ -767,6 +768,8 @@ return index
 
 		static LuaDelegate newDelegate(IntPtr l, int p)
 		{
+			LuaState state = LuaState.get(l);
+
 			LuaDLL.lua_pushvalue(l, p); // push function
 
 			int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX); // new ref function
@@ -774,7 +777,7 @@ return index
 			LuaDLL.lua_pushvalue(l, p);
 			LuaDLL.lua_pushinteger(l, fref);
 			LuaDLL.lua_settable(l, -3); // __LuaDelegate[func]= fref
-			delgateMap[fref] = f;
+			state.delgateMap[fref] = f;
 			return f;
 		}
 
@@ -1052,7 +1055,6 @@ return index
 							LuaTable v = new LuaTable(l, r);
 							return v;
 						}
-						break;
 					}
 				case LuaTypes.LUA_TUSERDATA:
 					return LuaObject.checkObj(l, p);
