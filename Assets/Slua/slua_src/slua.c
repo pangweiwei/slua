@@ -370,43 +370,6 @@ LUA_API void luaS_pushobject(lua_State *l, int index, const char* t, int gco, in
 	lua_setmetatable(l, -2);
 }
 
-
-
-int luaS_getcacheudptr(lua_State *l, void* p, int cref) {
-	lua_rawgeti(l, LUA_REGISTRYINDEX, cref);
-	lua_pushlightuserdata(l, p);
-	lua_rawget(l, -2);
-	if (!lua_isnil(l, -1))
-	{
-		lua_remove(l, -2);
-		return 1;
-	}
-	lua_pop(l, 2);
-	return 0;
-}
-
-LUA_API void luaS_pushobjectptr(lua_State *l, void* p, const char* t, int cref) {
-
-	if (luaS_getcacheudptr(l, p, cref))
-		return;
-
-
-	void** pointer = (void**)lua_newuserdata(l, sizeof(void*));
-	*pointer = p;
-
-	cacheudptr(l, p, cref);
-
-
-	luaL_getmetatable(l, t);
-	if (lua_isnil(l, -1))
-	{
-		lua_pop(l, 1);
-		luaL_getmetatable(l, "LuaVarObject");
-	}
-
-	lua_setmetatable(l, -2);
-}
-
 LUA_API int luaS_getcacheud(lua_State *l, int index, int cref) {
 	lua_rawgeti(l, LUA_REGISTRYINDEX, cref);
 	lua_rawgeti(l, -1, index);
@@ -419,15 +382,12 @@ LUA_API int luaS_getcacheud(lua_State *l, int index, int cref) {
 	return 0;
 }
 
-LUA_API void* luaS_objectptr(lua_State *l, int index)
-{
-	void **udata = (void**)lua_touserdata(l, index);
-	if (udata != NULL) return *udata;
-	return NULL;
-}
-
 LUA_API int luaS_subclassof(lua_State *l, int p, const char* t) {
-	int top = lua_gettop(l);
+	
+  const char* tname;
+  int ok;
+  int top = lua_gettop(l);
+
 	lua_pushvalue(l, p);
 	while (lua_istable(l, -1))
 	{
@@ -443,8 +403,8 @@ LUA_API int luaS_subclassof(lua_State *l, int p, const char* t) {
 	if (t != NULL) {
 		lua_getmetatable(l, -1);
 		lua_getfield(l, -1, "__typename");
-		const char* tname = lua_tostring(l, -1);
-		int ok = strcmp(tname, t);
+		tname = lua_tostring(l, -1);
+		ok = strcmp(tname, t);
 		lua_settop(l, top);
 		return ok == 0;
 	}
