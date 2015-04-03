@@ -47,9 +47,10 @@ public class DoNotToLuaAttribute : System.Attribute
 
 public class LuaBinderAttribute : System.Attribute
 {
-	public LuaBinderAttribute()
+	public int order;
+	public LuaBinderAttribute(int order)
 	{
-
+		this.order = order;
 	}
 }
 

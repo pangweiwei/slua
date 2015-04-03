@@ -163,7 +163,7 @@ public class LuaCodeGen : MonoBehaviour
             }
         }
 
-        GenerateBind(exports,"BindUnity");
+        GenerateBind(exports,"BindUnity",0);
         
         AssetDatabase.Refresh();
         path = oldpath;
@@ -205,7 +205,7 @@ public class LuaCodeGen : MonoBehaviour
 
         }
 
-        GenerateBind(exports, "BindUnityUI");
+        GenerateBind(exports, "BindUnityUI",1);
 
         AssetDatabase.Refresh();
         path = oldpath;
@@ -272,7 +272,7 @@ public class LuaCodeGen : MonoBehaviour
                 exports.Add(t);
         }
 
-        GenerateBind(exports,"BindCustom");
+        GenerateBind(exports,"BindCustom",3);
         AssetDatabase.Refresh();
         path = oldpath;
 
@@ -310,7 +310,7 @@ public class LuaCodeGen : MonoBehaviour
                 if (Generate(t))
                     exports.Add(t);
             }
-            GenerateBind(exports, "BindDll");
+            GenerateBind(exports, "BindDll",2);
             AssetDatabase.Refresh();
             path = oldpath;
             Debug.Log("Generate 3rdDll interface finished");
@@ -360,10 +360,10 @@ public class LuaCodeGen : MonoBehaviour
         return cg.Generate(t);
     }
 
-    static void GenerateBind(List<Type> list,string name)
+    static void GenerateBind(List<Type> list,string name,int order)
     {
         CodeGenerator cg = new CodeGenerator();
-        cg.GenerateBind(list,name);
+        cg.GenerateBind(list,name,order);
     }
 
 }
@@ -414,14 +414,14 @@ class CodeGenerator
 
     int indent = 0;
 
-    public void GenerateBind(List<Type> list,string name)
+    public void GenerateBind(List<Type> list,string name,int order)
     {
         HashSet<Type> exported = new HashSet<Type>();
         string f = LuaCodeGen.path + name+".cs";
         StreamWriter file = new StreamWriter(f,false,Encoding.UTF8);
         Write(file, "using System;");
         Write(file, "namespace SLua {");
-		Write(file, "[LuaBinder]");
+		Write(file, "[LuaBinder({0})]",order);
         Write(file, "public class {0} {{",name);
         Write(file, "public static void Bind(IntPtr l) {");
         foreach (Type t in list)

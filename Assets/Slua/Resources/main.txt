@@ -36,6 +36,11 @@ function main()
 		print("using lua")
 	end
 
+	-- test custom component
+	local x=UnityEngine.GameObject("OoOo")
+	x:AddComponent(SLuaTest)
+	local c=x:GetComponent(SLuaTest)
+	print(c, c.transform)
 
 
 	-- test inherite class

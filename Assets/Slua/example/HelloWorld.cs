@@ -13,6 +13,9 @@ public struct foostruct
 }
 
 [CustomLuaClass]
+public class SLuaTest : MonoBehaviour { }
+
+[CustomLuaClass]
 public class HelloWorld
 {
 

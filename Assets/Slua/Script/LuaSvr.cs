@@ -22,6 +22,8 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
+
 using UnityEngine;
 using LuaInterface;
 using System.Reflection;
@@ -93,6 +95,8 @@ namespace SLua
 		void bindAll(IntPtr l)
 		{
 			Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
+
+			List<Type> bindlist = new List<Type>();
 			foreach(Assembly a in ams) 
 			{
 				Type[] ts=a.GetExportedTypes();
@@ -100,9 +104,23 @@ namespace SLua
 				{
 					if (t.GetCustomAttributes(typeof(LuaBinderAttribute),false).Length > 0)
 					{
-						t.GetMethod("Bind").Invoke(null, new object[] { l });
+						bindlist.Add(t);
 					}
 				}
+			}
+
+			bindlist.Sort( new System.Comparison<Type>((Type a,Type b) =>
+			{
+				LuaBinderAttribute la = (LuaBinderAttribute)a.GetCustomAttributes(typeof(LuaBinderAttribute),false)[0];
+				LuaBinderAttribute lb = (LuaBinderAttribute)b.GetCustomAttributes(typeof(LuaBinderAttribute),false)[0];
+
+				return la.order.CompareTo(lb.order);
+			})
+			);
+
+			foreach (Type t in bindlist)
+			{
+				t.GetMethod("Bind").Invoke(null, new object[] { l });
 			}
 		}
 	}
