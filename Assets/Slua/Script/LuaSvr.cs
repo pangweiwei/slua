@@ -69,14 +69,16 @@ namespace SLua
 			}
 		}
 
-		public void start(string main)
+		public object start(string main)
 		{
 			if (main != null)
 			{
 				luaState.doFile(main);
 				LuaFunction func = (LuaFunction)luaState["main"];
-				func.call();
+				if(func!=null)
+					return func.call();
 			}
+			return null;
 		}
 
 		void tick()
