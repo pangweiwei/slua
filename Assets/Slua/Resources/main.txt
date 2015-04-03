@@ -101,6 +101,9 @@ function main()
 
 	local cube = GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube)
 	local cube2 = GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube)
+	local mat = cube:GetComponent(Renderer).material
+	mat.color=Color.red
+
 	cube.name="Script cube"
 	cube2.name="Script cube2"
 
@@ -115,6 +118,7 @@ function main()
 	LuaTimer.Add(0,20,function(id)
 		cube.transform.localScale = Vector3(10,10,10)*(0.1+math.sin(Time.time))
 		cube2.transform.position = Vector3(math.sin(Time.time)*5,0,0)
+		cube.transform.localRotation = Quaternion.Euler(0,0,math.sin(Time.time)*90)
 		return true
 	end)
 
