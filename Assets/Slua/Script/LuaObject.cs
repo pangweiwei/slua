@@ -561,7 +561,7 @@ return index
 				return 0;
 			}
 
-			LuaDLL.lua_pushcfunction(l, LuaState.errorReport);
+			LuaDLL.lua_pushcfunction(l, LuaState.errorFunc);
 			return LuaDLL.lua_gettop(l);
 		}
 
@@ -1252,8 +1252,10 @@ return index
 				return;
 			}
 
+			
 			Type t = o.GetType();
 
+			
 			PushVarDelegate push;
 			if (typePushMap.TryGetValue(t, out push))
 				push(l, o);
@@ -1262,7 +1264,8 @@ return index
 				pushEnum(l, Convert.ToInt32(o));
 			}
 			else
-				pushObject(l,o);           
+				pushObject(l,o);
+         
 		}
 
 

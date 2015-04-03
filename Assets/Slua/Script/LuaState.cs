@@ -27,6 +27,7 @@ using LuaInterface;
 using UnityEngine;
 using System.IO;
 using System.Text;
+using System.Runtime.InteropServices;
 
 namespace SLua
 {
@@ -123,25 +124,7 @@ namespace SLua
 			}
 
 		}
-
-		public bool call(int nArgs, int errfunc)
-		{
-
-			if (!state.isMainThread())
-			{
-				Debug.LogError("Can't call lua function in bg thread");
-				return false;
-			}
-
-			LuaDLL.lua_getref(L, valueref);
-			LuaDLL.lua_insert(L, -nArgs - 1);
-			if (LuaDLL.lua_pcall(L, nArgs, -1, errfunc) != 0)
-			{
-				LuaDLL.lua_pop(L, 1);
-				return false;
-			}
-			return true;
-		}
+		
 	}
 
 	public class LuaFunction : LuaVar
@@ -156,66 +139,106 @@ namespace SLua
 		{
 		}
 
-
-		public void call()
+		public bool call(int nArgs, int errfunc)
 		{
+
 			if (!state.isMainThread())
 			{
 				Debug.LogError("Can't call lua function in bg thread");
-				return;
+				return false;
 			}
 
-			LuaDLL.lua_pushcfunction(L, LuaState.errorReport);
-			int error = LuaDLL.lua_gettop(L);
-
 			LuaDLL.lua_getref(L, valueref);
+
 			if (!LuaDLL.lua_isfunction(L, -1))
 			{
 				LuaDLL.lua_pop(L, 1);
-				throw new Exception("Not a function");
+				throw new Exception("Call invalid function.");
 			}
 
-
-			if (LuaDLL.lua_pcall(L, 0, 0, error) != 0)
+			LuaDLL.lua_insert(L, -nArgs - 1);
+			if (LuaDLL.lua_pcall(L, nArgs, -1, errfunc) != 0)
 			{
 				LuaDLL.lua_pop(L, 1);
+				return false;
 			}
+			return true;
+		}
 
-			LuaDLL.lua_remove(L, error); // pop error function
+		bool innerCall(int nArgs, int errfunc)
+		{
+			bool ret = call(nArgs, errfunc);
+			LuaDLL.lua_remove(L, errfunc);
+			return ret;
+		}
+
+
+		public object call()
+		{
+			int error=LuaObject.pushTry(state.L);
+			if (innerCall(0, error))
+			{
+				return state.topObjects(error - 1);
+			}
+			return null;
 		}
 
 		public object call(params object[] args)
 		{
-
-			if (!state.isMainThread())
-			{
-				Debug.LogError("Can't call lua function in bg thread");
-				return null;
-			}
-
-			LuaDLL.lua_pushcfunction(L, LuaState.errorReport);
-			int error = LuaDLL.lua_gettop(L);
-
-			LuaDLL.lua_getref(L, valueref);
-			if (!LuaDLL.lua_isfunction(L, -1))
-			{
-				LuaDLL.lua_pop(L, 1);
-				throw new Exception("Not a function");
-			}
+			int error = LuaObject.pushTry(state.L);
 
 			for (int n = 0; args!=null && n < args.Length; n++)
 			{
 				LuaObject.pushVar(L, args[n]);
 			}
 
-			if (LuaDLL.lua_pcall(L, args.Length, LuaDLL.LUA_MULTRET, error) != 0)
+			if (innerCall(args != null ? args.Length : 0, error))
 			{
-				LuaDLL.lua_pop(L, 1);
+				return state.topObjects(error - 1);
 			}
 
-			LuaDLL.lua_remove(L, error); // pop error function
+			return null;
+		}
 
-			return state.topObjects(error - 1);
+		public object call(object a1)
+		{
+			int error=LuaObject.pushTry(state.L);
+
+			LuaObject.pushVar(state.L,a1);
+			if (innerCall(1, error))
+			{
+				return state.topObjects(error - 1);
+			}
+			
+
+			return null;
+		}
+
+		public object call(object a1,object a2)
+		{
+			int error = LuaObject.pushTry(state.L);
+
+			LuaObject.pushVar(state.L, a1);
+			LuaObject.pushVar(state.L, a2);
+			if (innerCall(2, error))
+			{
+				return state.topObjects(error - 1);
+			}
+			return null;
+		}
+
+		public object call(object a1,object a2,object a3)
+		{
+			int error = LuaObject.pushTry(state.L);
+
+			LuaObject.pushVar(state.L, a1);
+			LuaObject.pushVar(state.L, a2);
+			LuaObject.pushVar(state.L, a3);
+			if (innerCall(3, error))
+			{
+				return state.topObjects(error - 1);
+			}
+			return null;
 		}
 
 	}
@@ -270,6 +293,16 @@ namespace SLua
 			{
 				state.setObject(valueref, index, value);
 			}
+		}
+
+		public object invoke(string func,params object[] args)
+		{
+			LuaFunction f = (LuaFunction)this[func];
+			if (f != null)
+			{
+				return f.call(args);
+			}
+			throw new Exception(string.Format("Can't find {0} function", func));
 		}
 
 		public class Enumerator : IEnumerator<TablePair>, IDisposable
@@ -346,7 +379,6 @@ namespace SLua
 		int mainThread = 0;
 		internal WeakDictionary<int, LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
 
-
 		public IntPtr L
 		{
 			get
@@ -393,6 +425,7 @@ namespace SLua
 		static Dictionary<IntPtr, LuaState> statemap = new Dictionary<IntPtr, LuaState>();
 		static IntPtr oldptr = IntPtr.Zero;
 		static LuaState oldstate = null;
+		static public LuaCSFunction errorFunc = new LuaCSFunction(errorReport);
 
 		public bool isMainThread()
 		{
@@ -663,7 +696,7 @@ namespace SLua
 		public bool doBuffer(byte[] bytes, string fn, out object ret)
 		{
 			ret = null;
-			LuaDLL.lua_pushcfunction(L, errorReport);
+			LuaDLL.lua_pushcfunction(L, errorFunc);
 			int errfunc = LuaDLL.lua_gettop(L);
 			if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fn) == 0)
 			{
