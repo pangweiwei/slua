@@ -203,7 +203,7 @@ namespace SLua
 				throw new Exception("Not a function");
 			}
 
-			for (int n = 0; n < args.Length; n++)
+			for (int n = 0; args!=null && n < args.Length; n++)
 			{
 				LuaObject.pushVar(L, args[n]);
 			}
