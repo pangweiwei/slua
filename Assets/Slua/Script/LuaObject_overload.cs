@@ -69,7 +69,7 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Color c)
 		{
 			float x, y, z, w;
-			LuaDLL.luaS_checkQuaternion(l, p, out x, out y, out z, out w);
+			LuaDLL.luaS_checkColor(l, p, out x, out y, out z, out w);
 			c = new Color(x, y, z, w);
 			return true;
 		}
