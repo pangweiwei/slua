@@ -75,6 +75,8 @@ namespace SLua
 		static protected LuaCSFunction lua_mul = new LuaCSFunction(luaMul);
 		static protected LuaCSFunction lua_div = new LuaCSFunction(luaDiv);
 		static protected LuaCSFunction lua_eq = new LuaCSFunction(luaEq);
+        static protected LuaCSFunction lua_lt = new LuaCSFunction(luaLt);
+        static protected LuaCSFunction lua_le = new LuaCSFunction(luaLe);
 		const string DelgateTable = "__LuaDelegate";
 
 		static protected int newindex_ref = 0;
@@ -352,6 +354,18 @@ return index
 			return luaOp(l, "op_Equality", "eq");
 		}
 
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int luaLt(IntPtr l)
+        {
+            return luaOp(l, "op_LessThan", "lt");
+        }
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int luaLe(IntPtr l)
+        {
+            return luaOp(l, "op_LessThanOrEqual", "le");
+        }
+
 		public static void getEnumTable(IntPtr l, string t)
 		{
 			newTypeTable(l, t);
@@ -475,6 +489,10 @@ return index
 			LuaDLL.lua_setfield(l, -2, "__eq");
 			LuaDLL.lua_pushcfunction(l, lua_gc);
 			LuaDLL.lua_setfield(l, -2, "__gc");
+            LuaDLL.lua_pushcfunction(l, lua_le);
+            LuaDLL.lua_setfield(l, -2, "__le");
+            LuaDLL.lua_pushcfunction(l, lua_lt);
+            LuaDLL.lua_setfield(l, -2, "__lt");
 
 			if (self.IsValueType)
 			{
