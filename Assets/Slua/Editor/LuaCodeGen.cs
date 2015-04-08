@@ -66,82 +66,14 @@ public class LuaCodeGen : MonoBehaviour
     {
         CodeGenerator.InnerTypes.Clear();
 
-        List<string> noUseList = new List<string>
-        {      
-            "HideInInspector",
-            "ExecuteInEditMode",
-            "AddComponentMenu",
-            "ContextMenu",
-            "RequireComponent",
-            "DisallowMultipleComponent",
-            "SerializeField",
-            "AssemblyIsEditorAssembly",
-            "Attribute", 
-            "Types",
-            "UnitySurrogateSelector",
-            "TrackedReference",
-            "TypeInferenceRules",
-            "FFTWindow",
-            "RPC",
-            "Network",
-            "MasterServer",
-            "BitStream",
-            "HostData",
-            "ConnectionTesterStatus",
-            "GUI",
-            "EventType",
-            "EventModifiers",
-            "FontStyle",
-            "TextAlignment",
-            "TextEditor",
-            "TextEditorDblClickSnapping",
-            "TextGenerator",
-            "TextClipping",
-            "Gizmos",
-             "ADBannerView",
-            "ADInterstitialAd",            
-            "Android",
-            "jvalue",
-            "iPhone",
-            "iOS",
-            "CalendarIdentifier",
-            "CalendarUnit",
-            "CalendarUnit",
-            "FullScreenMovieControlMode",
-            "FullScreenMovieScalingMode",
-            "Handheld",
-            "LocalNotification",
-            "Motion",   
-            "NotificationServices",
-            "RemoteNotificationType",      
-            "RemoteNotification",
-            "SamsungTV",
-            "TextureCompressionQuality",
-            "TouchScreenKeyboardType",
-            "TouchScreenKeyboard",
-            "MovieTexture",
-            "UnityEngineInternal",
-            "Terrain",                            
-            "Tree",
-            "SplatPrototype",
-            "DetailPrototype",
-            "DetailRenderMode",
-            "MeshSubsetCombineUtility",
-            "AOT",
-            "Mathf",
-            "Social",
-            "Enumerator",       
-            "SendMouseEvents",               
-            "Cursor",
-            "Flash",
-            "ActionScript",
-            "OnRequestRebuild",
-			"Ping",
-            "ShaderVariantCollection",
-        };
-
         Assembly assembly = Assembly.Load("UnityEngine");
         Type[] types = assembly.GetExportedTypes();
+
+		List<string> uselist;
+		List<string> noUseList;
+
+		CustomExport.OnGetNoUseList(out noUseList);
+		CustomExport.OnGetUseList(out uselist);
 
         List<Type> exports = new List<Type>();
         string oldpath = path;
@@ -150,11 +82,31 @@ public class LuaCodeGen : MonoBehaviour
         {
             bool export=true;
 
-            foreach (string str in noUseList)
-            {
-                if (t.FullName.Contains(str))
-                    export = false;
-            }
+			// check type in uselist
+			if (uselist != null && uselist.Count > 0)
+			{
+				export = false;
+				foreach (string str in uselist)
+				{
+					if (t.FullName.Contains(str))
+					{
+						export = true;
+						break;
+					}
+				}
+			}
+			else
+			{
+				// check type not in nouselist
+				foreach (string str in noUseList)
+				{
+					if (t.FullName.Contains(str))
+					{
+						export = false;
+						break;
+					}
+				}
+			}
 
             if (export)
             {
