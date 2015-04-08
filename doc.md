@@ -6,6 +6,8 @@ slua是Unity3D导出为lua的自动化代码生成工具, 通过产生静态的�
 
 通过git clone复制一份代码到你的资源目录(Assets目录内), slua的发布版已经附带了Unity3D 4.6.1 的导出接口文件, 在Slua/LuaObject内, 对于其他版本(比如5.0), 你可以删除该目录内所有文件, 等待脚本编译完成, 点击slua菜单中 Make 命令 手动生成针对当前版本的U3d接口文件, 如果你运行例子代码产生错误,记得要make ui,make custom,保证例子中使用到的接口都被导出了.
 
+***每次更新slua版本，务必记得clear all，然后make all，否则可能运行不正确***
+
 
 
 ##导出接口
@@ -262,6 +264,39 @@ LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使�
 删除指定id的timer.
 
 
+##在lua中继承c#的基类
+
+slua支持直接在lua中继承扩展c#的基类,例如:
+>     MyVector3=Slua.Class(Vector3,
+	nil, --static function
+	{ --instance member function
+		Normalize=function(self)
+			print "overloaded Normalize"
+			local l=math.sqrt(self.x*self.x+self.y*self.y,self.z*self.z)
+			self.x=self.x/l
+			self.y=self.y/l
+			self.z=self.z/l
+		end,
+		Set=function(self,x,y,z)
+			self.__base:Set(x,y,z)
+		end,
+	}
+    )
+
+在成员函数中,可以使用self.__base调用基类的成员方法.
+
+##在lua中遍历IEnumertable对象
+
+c#中使用foreach语句遍历IEnumertable,例如List,Array等, 在slua中,可以使用Slua.iter作为迭代函数遍历这些对象, 例如:
+
+>     for t in Slua.iter(Canvas.transform) do
+		print("foreach transorm",t)
+	end
+
+返回的t是Canvas.transform的一级子对象.
+
+
+
 ##如何快速导出第三方库, 例如ngui等
 
 新建一个空工程,将第三方库的所有代码放入Assets内, 等待Unity编译完成;
@@ -368,11 +403,15 @@ LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使�
 
 this[] get/set会产生getItem/setItem成员函数,请使用他们.
 
+9)iOS 链接报告错误 Unable to insert branch island. No insertion point available.  怎么办?
+
+iOS对dll的尺寸有大小限制, 出现这个错误可能是你的工程代码+第三方库代码+LuaWrap所产生的dll超过限制, 你可以把一些代码抽取出来作为一个独立的dll, 保证工程的dll尺寸在限制内. 新版的Slua可以把Script目录和LuaObject/Unity目录整体制作为一个dll,放入你的Assets目录, 让你的工程依赖这个dll,而不再包含slua(和动态产生的wrap代码),从而减少最终工程dll的尺寸.
+
 
 ##已知问题
 不支持泛型函数导出, 但支持泛型代理
 
-UnityAction/UnityEvent目前仅支持1个泛型参数的版本,后续考虑完善.
+UnityAction/UnityEvent目前仅支持1个泛型参数的版本,目前UnityEngine也没有多个泛型参数的需要,后续考虑完善.
 
 部分同名重载参数类型检查可能会失败(因为lua的类型少于c#), 建议手写代码避免同名重载, 这样效率也更高.
 

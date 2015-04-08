@@ -2,6 +2,32 @@ local somemodule = require 'module.some'
 
 import "UnityEngine"
 
+MyVector3=Slua.Class(Vector3,
+	nil, --static function
+	{ --instance member function
+		Normalize=function(self)
+			print "overloaded Normalize"
+			local l=math.sqrt(self.x*self.x+self.y*self.y,self.z*self.z)
+			self.x=self.x/l
+			self.y=self.y/l
+			self.z=self.z/l
+		end,
+
+	}
+)
+
+My2=Slua.Class(MyVector3,nil,nil)
+
+MyGameObject=Slua.Class(GameObject,
+	nil,
+	{
+		AddComponent=function(self,t)
+			print "overloaded AddComponent"
+			self.__base:AddComponent(t)
+		end,
+	}	
+)
+
 function main()
 
 	if jit then
@@ -9,6 +35,36 @@ function main()
 	else
 		print("using lua")
 	end
+
+	-- test custom component
+	local x=UnityEngine.GameObject("OoOo")
+	x:AddComponent(SLuaTest)
+	local c=x:GetComponent(SLuaTest)
+	print(c, c.transform)
+
+
+	-- test inherite class
+	local mv = My2(1,2,3)
+	mv:Normalize()
+	print(mv.x,mv.y,mv.z)
+	mv:Set(0,0,0)
+	print(mv.x,mv.y,mv.z)
+
+	local x=MyGameObject("MyGameObject")
+	x:AddComponent(SphereCollider)
+	HelloWorld.ofunc(x)
+
+	-- test value type
+	local x=Vector3(3,3,3)
+	x:Normalize()
+	print(x.x,x.y,x.z)
+
+	local c=Color(1,1,1,1)
+	print("color",c.r)
+	local fs=foostruct()
+	fs.mode=1
+	fs.x=11.1
+	assert(fs.mode==1)
 
 	-- test module require
 	print(somemodule.add(2,3))
@@ -50,6 +106,9 @@ function main()
 
 	local cube = GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube)
 	local cube2 = GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube)
+	local mat = cube:GetComponent(Renderer).material
+	mat.color=Color.red
+
 	cube.name="Script cube"
 	cube2.name="Script cube2"
 
@@ -58,11 +117,13 @@ function main()
 	local pos = Vector3(10,10,10)+Vector3(1,1,1)
 	cube.transform.position = pos
 	cube.transform.localScale = Vector3(10,10,10)
-	print(cube==cube2)
+	print("cube==cube2",cube==cube2)
+	assert(cube.transform==cube.transform)
 
 	LuaTimer.Add(0,20,function(id)
 		cube.transform.localScale = Vector3(10,10,10)*(0.1+math.sin(Time.time))
 		cube2.transform.position = Vector3(math.sin(Time.time)*5,0,0)
+		cube.transform.localRotation = Quaternion.Euler(0,0,math.sin(Time.time)*90)
 		return true
 	end)
 
@@ -81,6 +142,11 @@ function main()
 		local www = WWW("http://www.sineysoft.com")
 		Yield(www)
 		print(#Slua.ToString(www.bytes))
+
+		local y = HelloWorld()
+		local y = y:y()
+		Yield(y)
+		print("Yield ok")
 	end)
 	coroutine.resume(c)
 
