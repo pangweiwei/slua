@@ -144,15 +144,46 @@ return index
 			}
 			index_ref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
 
-			LuaVarObject.init(l);
-			//LuaValueType.init(l);
+			// object method
 
+			LuaDLL.lua_newtable(l);
+			addMember(l, ToString);
+			addMember(l, GetHashCode);
+			addMember(l, Equals);
+			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "__luabaseobject");
+
+			LuaVarObject.init(l);
 
 			LuaDLL.lua_newtable(l);
 			LuaDLL.lua_setglobal(l, DelgateTable);
 
 
 			setupPushVar();
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int ToString(IntPtr l)
+		{
+			object obj = checkObj(l, 1);
+			pushValue(l,obj.ToString());
+			return 1;
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int GetHashCode(IntPtr l)
+		{
+			object obj = checkObj(l, 1);
+			pushValue(l, obj.GetHashCode());
+			return 1;
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int Equals(IntPtr l)
+		{
+			object obj = checkObj(l, 1);
+			object other = checkObj(l, 2);
+			pushValue(l, obj.Equals(other));
+			return 1;
 		}
 
 		static void setupPushVar()
@@ -378,13 +409,16 @@ return index
 				LuaDLL.lua_pushstring(l, "__parent");
 				LuaDLL.luaL_getmetatable(l, parent.AssemblyQualifiedName);
 				LuaDLL.lua_rawset(l, -3);
-			}
 
-			if (parent != null && parent != typeof(object))
-			{
 				LuaDLL.lua_pushstring(l, "__parent");
 				LuaDLL.luaL_getmetatable(l, parent.FullName);
 				LuaDLL.lua_rawset(l, -4);
+			}
+			else
+			{
+				LuaDLL.lua_pushstring(l, "__parent");
+				LuaDLL.luaL_getmetatable(l, "__luabaseobject");
+				LuaDLL.lua_rawset(l, -3);
 			}
 
 			completeInstanceMeta(l, self);
@@ -456,19 +490,6 @@ return index
 			LuaDLL.lua_pushcfunction(l, func);
 			LuaDLL.lua_setfield(l, -2, func.Method.Name);
 			LuaDLL.lua_pop(l, 1);
-		}
-
-		protected static void addMember(IntPtr l, ref List<LuaCSFunction> list, LuaCSFunction func, string name)
-		{
-			list.Add(func);
-			LuaDLL.lua_pushcfunction(l, func);
-			LuaDLL.lua_setfield(l, -2, name);
-		}
-
-		protected static void addMember(IntPtr l, LuaCSFunction func, string name)
-		{
-			LuaDLL.lua_pushcfunction(l, func);
-			LuaDLL.lua_setfield(l, -2, name);
 		}
 
 		protected static void addMember(IntPtr l, LuaCSFunction func)
