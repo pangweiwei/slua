@@ -12,7 +12,11 @@ public class Main : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+#if UNITY_5
+		Application.logMessageReceived += this.log;
+#else
 		Application.RegisterLogCallback(this.log);
+#endif
 		l = new LuaSvr();
 
 		l.start("main");

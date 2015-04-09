@@ -1319,7 +1319,10 @@ namespace SLua
 
     bool isUsefullMethod(MethodInfo method)
     {
-        if (method.Name != "op_Implicit" &&
+		if (method.Name != "GetType" && method.Name != "GetHashCode" && method.Name != "Equals" &&
+		    method.Name != "ToString" && method.Name != "Clone" && 
+		    method.Name != "GetEnumerator" && method.Name != "CopyTo" &&
+		    method.Name != "op_Implicit" &&
             !method.Name.StartsWith("get_", StringComparison.Ordinal) &&
             !method.Name.StartsWith("set_", StringComparison.Ordinal) &&
             !method.Name.StartsWith("add_", StringComparison.Ordinal) &&
