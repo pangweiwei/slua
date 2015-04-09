@@ -309,6 +309,9 @@ namespace SLua
 		{
 			LuaTable t;
 			int indext = -1;
+			TablePair current = new TablePair();
+			bool isfirst = true;
+
 			public Enumerator(LuaTable table)
 			{
 				t = table;
@@ -320,6 +323,14 @@ namespace SLua
 				if (indext < 0)
 					return false;
 
+				if (isfirst)
+				{
+					LuaDLL.lua_pushnil(t.L);
+					isfirst = false;
+				}
+				else
+					LuaDLL.lua_pop(t.L, 1);
+
 				return LuaDLL.lua_next(t.L, indext) > 0;
 			}
 
@@ -327,8 +338,6 @@ namespace SLua
 			{
 				LuaDLL.lua_getref(t.L, t.Ref);
 				indext = LuaDLL.lua_gettop(t.L);
-
-				LuaDLL.lua_pushnil(t.L);
 			}
 
 			public void Dispose()
@@ -340,11 +349,9 @@ namespace SLua
 			{
 				get
 				{
-					TablePair p = new TablePair();
-					p.key = LuaObject.checkVar(t.L, -2);
-					p.value = LuaObject.checkVar(t.L, -1);
-					LuaDLL.lua_pop(t.L, 1);
-					return p;
+					current.key = LuaObject.checkVar(t.L, -2);
+					current.value = LuaObject.checkVar(t.L, -1);
+					return current;
 				}
 			}
 
