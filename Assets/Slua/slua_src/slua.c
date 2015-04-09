@@ -412,3 +412,30 @@ LUA_API int luaS_subclassof(lua_State *l, int p, const char* t) {
 	}
 	return 1;
 }
+
+
+#if LUA_VERSION_NUM>=502
+LUALIB_API int luaS_rawlen(lua_State *L, int idx)
+{
+	size_t ret = lua_rawlen(L, idx);
+	return (int)ret;
+}
+#else
+LUALIB_API int luaS_objlen(lua_State *L, int idx)
+{
+	size_t ret = lua_objlen(L, idx);
+	return (int)ret;
+}
+#endif
+
+
+LUALIB_API void  luaS_pushlstring(lua_State *L, const char *s, int l)
+{
+	lua_pushlstring(L, s, (size_t)l);
+}
+
+LUALIB_API int luaLS_loadbuffer(lua_State *L, const char *buff, int sz, const char *name)
+{
+	return luaL_loadbuffer(L, buff, (size_t)sz, name);
+}
+

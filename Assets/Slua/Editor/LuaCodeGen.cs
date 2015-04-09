@@ -1488,6 +1488,14 @@ namespace SLua
                 Write(file, "{0}(a1==a2);", ret);
             else if (m.Name == "op_Inequality")
                 Write(file, "{0}(a1!=a2);", ret);
+            else if (m.Name == "op_LessThan")
+                Write(file, "{0}(a1<a2);", ret);
+            else if (m.Name == "op_GreaterThan")
+                Write(file, "{0}(a2<a1);", ret);
+            else if (m.Name == "op_LessThanOrEqual")
+                Write(file, "{0}(a1<=a2);", ret);
+            else if (m.Name == "op_GreaterThanOrEqual")
+                Write(file, "{0}(a2<=a1);", ret);
             else
                 Write(file, "{3}{2}.{0}({1});", m.Name, FuncCall(m), t.FullName, ret);
         }
