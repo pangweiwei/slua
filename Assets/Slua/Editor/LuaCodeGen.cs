@@ -478,7 +478,7 @@ namespace SLua
 
         static internal int checkDelegate(IntPtr l,int p,out $FN ua) {
             int op = extractFunction(l,p);
-			if(LuaDLL.lua_isnil(l,-1)) {
+			if(LuaDLL.lua_isnil(l,p)) {
 				ua=null;
 				return op;
 			}
