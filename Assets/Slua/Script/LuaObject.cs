@@ -74,6 +74,7 @@ namespace SLua
 		static protected LuaCSFunction lua_sub = new LuaCSFunction(luaSub);
 		static protected LuaCSFunction lua_mul = new LuaCSFunction(luaMul);
 		static protected LuaCSFunction lua_div = new LuaCSFunction(luaDiv);
+		static protected LuaCSFunction lua_unm = new LuaCSFunction(luaUnm);
 		static protected LuaCSFunction lua_eq = new LuaCSFunction(luaEq);
 		const string DelgateTable = "__LuaDelegate";
 
@@ -257,7 +258,7 @@ return index
 			};
 		}
 
-		static int luaOp(IntPtr l, string f, string tip)
+		static int getOpFunction(IntPtr l, string f, string tip)
 		{
 			int err = pushTry(l);
 			checkLuaObject(l, 1);
@@ -281,11 +282,32 @@ return index
 				LuaDLL.luaL_error(l, "No {0} operator", tip);
 				return 0;
 			}
+			return err;
+		}
 
+		static int luaOp(IntPtr l, string f, string tip)
+		{
+			int err = getOpFunction(l, f, tip);
+			if (err == 0)
+				return 0;
 
 			LuaDLL.lua_pushvalue(l, 1);
 			LuaDLL.lua_pushvalue(l, 2);
 			if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
+				LuaDLL.lua_pop(l, 1);
+			LuaDLL.lua_remove(l, err);
+			return 1;
+		}
+
+
+		static int luaUnaryOp(IntPtr l, string f, string tip)
+		{
+			int err = getOpFunction(l, f, tip);
+			if ( err == 0)
+				return 0;
+
+			LuaDLL.lua_pushvalue(l, 1);
+			if (LuaDLL.lua_pcall(l, 1, 1, err) != 0)
 				LuaDLL.lua_pop(l, 1);
 			LuaDLL.lua_remove(l, err);
 			return 1;
@@ -313,6 +335,12 @@ return index
 		static public int luaDiv(IntPtr l)
 		{
 			return luaOp(l, "op_Division", "div");
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int luaUnm(IntPtr l)
+		{
+			return luaUnaryOp(l, "op_UnaryNegation", "unm");
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -437,6 +465,8 @@ return index
 			LuaDLL.lua_setfield(l, -2, "__mul");
 			LuaDLL.lua_pushcfunction(l, lua_div);
 			LuaDLL.lua_setfield(l, -2, "__div");
+			LuaDLL.lua_pushcfunction(l, lua_unm);
+			LuaDLL.lua_setfield(l, -2, "__unm");
 			LuaDLL.lua_pushcfunction(l, lua_eq);
 			LuaDLL.lua_setfield(l, -2, "__eq");
 			LuaDLL.lua_pushcfunction(l, lua_gc);
