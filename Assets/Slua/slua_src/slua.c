@@ -349,14 +349,6 @@ static void cacheud(lua_State *l, int index, int cref) {
 }
 
 
-static void cacheudptr(lua_State *l, void* p, int cref) {
-	lua_rawgeti(l, LUA_REGISTRYINDEX, cref);
-	lua_pushlightuserdata(l, p);
-	lua_pushvalue(l, -3);
-	lua_rawset(l, -3);
-	lua_pop(l, 1);
-}
-
 LUA_API void luaS_pushobject(lua_State *l, int index, const char* t, int gco, int cref) {
 	luaS_newuserdata(l, index);
 	if (gco) cacheud(l, index, cref);
