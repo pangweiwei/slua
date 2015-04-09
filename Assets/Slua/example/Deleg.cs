@@ -48,6 +48,12 @@ public class Deleg : MonoBehaviour
 			s("GameObject", new GameObject("SimpleDelegate"));
 	}
 
+	static public void setcallback2(Action<int> a, Action<string> b)
+	{
+		if(a!=null) a(1);
+		if(b!=null) b("hello");
+	}
+
 	public static void testFunc(Func<int> f)
 	{
 		Debug.Log(string.Format("Func return {0}", f()));
