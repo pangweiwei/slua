@@ -64,8 +64,6 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Unity/Make UnityEngine")]
     static public void Generate()
     {
-        CodeGenerator.InnerTypes.Clear();
-
         Assembly assembly = Assembly.Load("UnityEngine");
         Type[] types = assembly.GetExportedTypes();
 
@@ -125,8 +123,6 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Unity/Make UI (for Unity4.6+)")]
     static public void GenerateUI()
     {
-        CodeGenerator.InnerTypes.Clear();
-
         List<string> noUseList = new List<string>
         {      
             "CoroutineTween",
@@ -353,7 +349,6 @@ class CodeGenerator
         "Resources.LoadAssetAtPath",
     };
 
-    public static HashSet<string> InnerTypes = new HashSet<string>();
     HashSet<string> funcname = new HashSet<string>();
     Dictionary<string, bool> directfunc = new Dictionary<string, bool>();
     class PropPair
@@ -831,7 +826,6 @@ namespace SLua
         }
         else
 			Write(file, "createTypeMetatable(l,{1}, typeof({0}));", FullName(t),constructorOrNot(t));
-        //Write(file, "LuaDLL.lua_pop(l, 1);");
         Write(file, "}");
     }
 
@@ -1325,10 +1319,7 @@ namespace SLua
 
     bool isUsefullMethod(MethodInfo method)
     {
-        if (method.Name != "GetType" && method.Name != "GetHashCode" && method.Name != "Equals" &&
-            method.Name != "ToString" && method.Name != "Clone" && method.Name != "Dispose" &&
-            method.Name != "GetEnumerator" && method.Name != "CopyTo" &&
-            method.Name != "op_Implicit" &&
+        if (method.Name != "op_Implicit" &&
             !method.Name.StartsWith("get_", StringComparison.Ordinal) &&
             !method.Name.StartsWith("set_", StringComparison.Ordinal) &&
             !method.Name.StartsWith("add_", StringComparison.Ordinal) &&

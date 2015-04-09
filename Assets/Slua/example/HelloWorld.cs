@@ -56,7 +56,7 @@ public class HelloWorld
 	{
 		foreach (LuaTable.TablePair pair in t)
 		{
-			Debug.Log(string.Format("{0}-{1}", pair.key, pair.value));
+			Debug.Log(string.Format("foreach LuaTable {0}-{1}", pair.key, pair.value));
 		}
 	}
 
