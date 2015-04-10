@@ -149,7 +149,7 @@ return Class
 
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-		static public int ToString(IntPtr l)
+		static public new int ToString(IntPtr l)
 		{
 			object o = checkObj(l, 1);
 			if (o == null)

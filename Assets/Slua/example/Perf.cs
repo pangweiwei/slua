@@ -10,7 +10,11 @@ public class Perf : MonoBehaviour
 	{
 		l = new LuaSvr("perf");
 
+#if UNITY_5
+		Application.logMessageReceived += this.log;
+#else
 		Application.RegisterLogCallback(this.log);
+#endif
 	}
 
 	string logText = "";

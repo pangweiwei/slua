@@ -84,6 +84,28 @@ function main()
 	local f2= Deleg.getFunc(f)
 
 	assert(f==f2)
+
+
+	-- test more than 1 deletegates
+	Deleg.setcallback2(function(a)
+		assert(a==1)
+		print(a)
+	end,
+	function(b)
+		assert(b=="hello")
+		print(b)
+	end
+	)
+
+	Deleg.setcallback2(function(a)
+		assert(a==1)
+		print(a)
+	end,nil)
+
+	Deleg.setcallback2(nil,function(b)
+		assert(b=="hello")
+		print(b)
+	end)
 end
 
 

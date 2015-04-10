@@ -349,14 +349,6 @@ static void cacheud(lua_State *l, int index, int cref) {
 }
 
 
-static void cacheudptr(lua_State *l, void* p, int cref) {
-	lua_rawgeti(l, LUA_REGISTRYINDEX, cref);
-	lua_pushlightuserdata(l, p);
-	lua_pushvalue(l, -3);
-	lua_rawset(l, -3);
-	lua_pop(l, 1);
-}
-
 LUA_API void luaS_pushobject(lua_State *l, int index, const char* t, int gco, int cref) {
 	luaS_newuserdata(l, index);
 	if (gco) cacheud(l, index, cref);
@@ -412,3 +404,30 @@ LUA_API int luaS_subclassof(lua_State *l, int p, const char* t) {
 	}
 	return 1;
 }
+
+
+#if LUA_VERSION_NUM>=502
+LUALIB_API int luaS_rawlen(lua_State *L, int idx)
+{
+	size_t ret = lua_rawlen(L, idx);
+	return (int)ret;
+}
+#else
+LUALIB_API int luaS_objlen(lua_State *L, int idx)
+{
+	size_t ret = lua_objlen(L, idx);
+	return (int)ret;
+}
+#endif
+
+
+LUALIB_API void  luaS_pushlstring(lua_State *L, const char *s, int l)
+{
+	lua_pushlstring(L, s, (size_t)l);
+}
+
+LUALIB_API int luaLS_loadbuffer(lua_State *L, const char *buff, int sz, const char *name)
+{
+	return luaL_loadbuffer(L, buff, (size_t)sz, name);
+}
+
