@@ -1264,9 +1264,9 @@ namespace SLua
     string GenericBaseName(Type t)
     {
         string n = t.FullName;
-        if (n.IndexOf('`')>0)
+        if (n.IndexOf('[')>0)
         {
-            n = n.Substring(0, n.IndexOf('`'));
+            n = n.Substring(0, n.IndexOf('['));
         }
         return n.Replace("+", ".");
     }
@@ -1637,26 +1637,25 @@ namespace SLua
         return RemoveRef(str.Replace("+", "."));
     }
 
-    string TypeName(Type t)
-    {
-        return RemoveRef(t.FullName, false);
-    }
-
     string TypeDecl(Type t)
     {
         if (t.IsGenericType)
         {
-            string ret = "";
-            ret += GenericBaseName(t);
-            ret += "<";
+            string ret =  GenericBaseName(t);
+
+			string gs = "";
+            gs += "<";
             Type[] types = t.GetGenericArguments();
             for (int n = 0; n < types.Length; n++)
             {
-                ret += TypeDecl(types[n]);
+                gs += TypeDecl(types[n]);
                 if(n<types.Length-1)
-                    ret += ",";
+                    gs += ",";
             }
-            ret += ">";
+            gs += ">";
+
+			ret = Regex.Replace(ret,@"`\d",gs);
+
             return ret;
         }
         else
