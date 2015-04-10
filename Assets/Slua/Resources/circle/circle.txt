@@ -1,0 +1,69 @@
+
+import "UnityEngine"
+
+local pi=math.pi
+local class={}
+
+function main()
+	class:init()
+	return class
+end
+
+function class:init() 
+	self.root = GameObject("root")
+	self.r=10
+	self.max=600
+	self.cubes={}
+	self.t=0
+	self.f=0
+	self.framet=0
+	self.ftext = GameObject.Find("Canvas/Text"):GetComponent(UnityEngine.UI.Text)
+	
+	self.colors={Color.red,Color.blue,Color.green,Color.cyan,Color.grey,Color.white,Color.yellow,Color.magenta,Color.black}
+
+	for i=0,self.max do
+		local cube = GameObject.CreatePrimitive(PrimitiveType.Cube)
+		cube.transform.position = Vector3(math.cos(i/self.max*pi*2)*self.r,math.sin( i/self.max*pi*2)*self.r,0)
+		cube.transform.parent=(self.root.transform)
+		local mat=cube:GetComponent(Renderer).material
+
+		local box=cube:GetComponent(BoxCollider)
+		GameObject.Destroy(box)
+
+		mat.color=self.colors[math.random(#self.colors)]
+		table.insert(self.cubes,{cube,mat})
+
+	end
+end
+
+function class:update() -- gc alloc is zero
+	
+	for i,v in ipairs(self.cubes) do
+		local offset = i%2==1 and 5 or -5
+		local r = self.r+math.sin(Time.time)*offset
+		local angle= i%2==1 and Time.time or -Time.time
+		local base=Vector3(math.cos(i/self.max*pi*2+angle)*r,
+			math.sin(i/self.max*pi*2+angle)*r,0)
+
+		v[1].transform.position = base
+		v[2].color=self.colors[math.random(#self.colors)]
+	end
+
+	if not self.fogStart or self.t>1 then
+		self.fogStart=Time.time
+		self.bgCurrent = Camera.main.backgroundColor
+		self.bgColor=self.colors[math.random(#self.colors)]
+	end
+
+	self.t=(Time.time-self.fogStart)/10
+	Camera.main.backgroundColor = Color.Lerp(self.bgCurrent,self.bgColor,self.t)
+
+	--calc fps
+	self.f=self.f+1
+	self.framet=self.framet+Time.deltaTime
+	if self.framet>=1 then
+		self.ftext.text=string.format("fps:%d",self.f)
+		self.f=0
+		self.framet=self.framet-1
+	end
+end

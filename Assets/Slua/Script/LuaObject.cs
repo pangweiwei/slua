@@ -74,6 +74,7 @@ namespace SLua
 		static protected LuaCSFunction lua_sub = new LuaCSFunction(luaSub);
 		static protected LuaCSFunction lua_mul = new LuaCSFunction(luaMul);
 		static protected LuaCSFunction lua_div = new LuaCSFunction(luaDiv);
+		static protected LuaCSFunction lua_unm = new LuaCSFunction(luaUnm);
 		static protected LuaCSFunction lua_eq = new LuaCSFunction(luaEq);
         static protected LuaCSFunction lua_lt = new LuaCSFunction(luaLt);
         static protected LuaCSFunction lua_le = new LuaCSFunction(luaLe);
@@ -146,15 +147,46 @@ return index
 			}
 			index_ref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
 
-			LuaVarObject.init(l);
-			//LuaValueType.init(l);
+			// object method
 
+			LuaDLL.lua_newtable(l);
+			addMember(l, ToString);
+			addMember(l, GetHashCode);
+			addMember(l, Equals);
+			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "__luabaseobject");
+
+			LuaVarObject.init(l);
 
 			LuaDLL.lua_newtable(l);
 			LuaDLL.lua_setglobal(l, DelgateTable);
 
 
 			setupPushVar();
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int ToString(IntPtr l)
+		{
+			object obj = checkObj(l, 1);
+			pushValue(l,obj.ToString());
+			return 1;
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int GetHashCode(IntPtr l)
+		{
+			object obj = checkObj(l, 1);
+			pushValue(l, obj.GetHashCode());
+			return 1;
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int Equals(IntPtr l)
+		{
+			object obj = checkObj(l, 1);
+			object other = checkObj(l, 2);
+			pushValue(l, obj.Equals(other));
+			return 1;
 		}
 
 		static void setupPushVar()
@@ -259,7 +291,7 @@ return index
 			};
 		}
 
-		static int luaOp(IntPtr l, string f, string tip)
+		static int getOpFunction(IntPtr l, string f, string tip)
 		{
 			int err = pushTry(l);
 			checkLuaObject(l, 1);
@@ -283,11 +315,32 @@ return index
 				LuaDLL.luaL_error(l, "No {0} operator", tip);
 				return 0;
 			}
+			return err;
+		}
 
+		static int luaOp(IntPtr l, string f, string tip)
+		{
+			int err = getOpFunction(l, f, tip);
+			if (err == 0)
+				return 0;
 
 			LuaDLL.lua_pushvalue(l, 1);
 			LuaDLL.lua_pushvalue(l, 2);
 			if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
+				LuaDLL.lua_pop(l, 1);
+			LuaDLL.lua_remove(l, err);
+			return 1;
+		}
+
+
+		static int luaUnaryOp(IntPtr l, string f, string tip)
+		{
+			int err = getOpFunction(l, f, tip);
+			if ( err == 0)
+				return 0;
+
+			LuaDLL.lua_pushvalue(l, 1);
+			if (LuaDLL.lua_pcall(l, 1, 1, err) != 0)
 				LuaDLL.lua_pop(l, 1);
 			LuaDLL.lua_remove(l, err);
 			return 1;
@@ -315,6 +368,12 @@ return index
 		static public int luaDiv(IntPtr l)
 		{
 			return luaOp(l, "op_Division", "div");
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int luaUnm(IntPtr l)
+		{
+			return luaUnaryOp(l, "op_UnaryNegation", "unm");
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -392,13 +451,16 @@ return index
 				LuaDLL.lua_pushstring(l, "__parent");
 				LuaDLL.luaL_getmetatable(l, parent.AssemblyQualifiedName);
 				LuaDLL.lua_rawset(l, -3);
-			}
 
-			if (parent != null && parent != typeof(object))
-			{
 				LuaDLL.lua_pushstring(l, "__parent");
 				LuaDLL.luaL_getmetatable(l, parent.FullName);
 				LuaDLL.lua_rawset(l, -4);
+			}
+			else
+			{
+				LuaDLL.lua_pushstring(l, "__parent");
+				LuaDLL.luaL_getmetatable(l, "__luabaseobject");
+				LuaDLL.lua_rawset(l, -3);
 			}
 
 			completeInstanceMeta(l, self);
@@ -451,6 +513,8 @@ return index
 			LuaDLL.lua_setfield(l, -2, "__mul");
 			LuaDLL.lua_pushcfunction(l, lua_div);
 			LuaDLL.lua_setfield(l, -2, "__div");
+			LuaDLL.lua_pushcfunction(l, lua_unm);
+			LuaDLL.lua_setfield(l, -2, "__unm");
 			LuaDLL.lua_pushcfunction(l, lua_eq);
 			LuaDLL.lua_setfield(l, -2, "__eq");
 			LuaDLL.lua_pushcfunction(l, lua_gc);
@@ -474,19 +538,6 @@ return index
 			LuaDLL.lua_pushcfunction(l, func);
 			LuaDLL.lua_setfield(l, -2, func.Method.Name);
 			LuaDLL.lua_pop(l, 1);
-		}
-
-		protected static void addMember(IntPtr l, ref List<LuaCSFunction> list, LuaCSFunction func, string name)
-		{
-			list.Add(func);
-			LuaDLL.lua_pushcfunction(l, func);
-			LuaDLL.lua_setfield(l, -2, name);
-		}
-
-		protected static void addMember(IntPtr l, LuaCSFunction func, string name)
-		{
-			LuaDLL.lua_pushcfunction(l, func);
-			LuaDLL.lua_setfield(l, -2, name);
 		}
 
 		protected static void addMember(IntPtr l, LuaCSFunction func)
@@ -579,7 +630,7 @@ return index
 				return 0;
 			}
 
-			LuaDLL.lua_pushcfunction(l, LuaState.errorReport);
+			LuaDLL.lua_pushcfunction(l, LuaState.errorFunc);
 			return LuaDLL.lua_gettop(l);
 		}
 
@@ -790,7 +841,7 @@ return index
 					f = newDelegate(l, p);
 				}
 			}
-            LuaDLL.lua_pop(l, 1); // pop DelgateTable
+			LuaDLL.lua_pop(l, 1); // pop DelgateTable
 			return true;
 		}
 
@@ -1271,8 +1322,10 @@ return index
 				return;
 			}
 
+			
 			Type t = o.GetType();
 
+			
 			PushVarDelegate push;
 			if (typePushMap.TryGetValue(t, out push))
 				push(l, o);
@@ -1281,7 +1334,8 @@ return index
 				pushEnum(l, Convert.ToInt32(o));
 			}
 			else
-				pushObject(l,o);           
+				pushObject(l,o);
+         
 		}
 
 

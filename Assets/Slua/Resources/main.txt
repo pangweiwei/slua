@@ -58,6 +58,8 @@ function main()
 	local x=Vector3(3,3,3)
 	x:Normalize()
 	print(x.x,x.y,x.z)
+	x=-x
+	print(x.x,x.y,x.z)
 
 	local c=Color(1,1,1,1)
 	print("color",c.r)
@@ -142,6 +144,7 @@ function main()
 		local www = WWW("http://www.sineysoft.com")
 		Yield(www)
 		print(#Slua.ToString(www.bytes))
+		www:Dispose()
 
 		local y = HelloWorld()
 		local y = y:y()

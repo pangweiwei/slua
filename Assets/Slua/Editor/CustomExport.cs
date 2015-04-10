@@ -20,4 +20,90 @@ public class CustomExport {
         //list.Add("NGUI");
     }
 
+	// if uselist return a white list, don't check noUseList(black list) again
+	public static void OnGetUseList(out List<string> list)
+	{
+		list = new List<string>
+		{
+		};
+	}
+
+	// black list if white list not given
+	public static void OnGetNoUseList(out List<string> list)
+	{
+		list = new List<string>
+        {      
+            "HideInInspector",
+            "ExecuteInEditMode",
+            "AddComponentMenu",
+            "ContextMenu",
+            "RequireComponent",
+            "DisallowMultipleComponent",
+            "SerializeField",
+            "AssemblyIsEditorAssembly",
+            "Attribute", 
+            "Types",
+            "UnitySurrogateSelector",
+            "TrackedReference",
+            "TypeInferenceRules",
+            "FFTWindow",
+            "RPC",
+            "Network",
+            "MasterServer",
+            "BitStream",
+            "HostData",
+            "ConnectionTesterStatus",
+            "GUI",
+            "EventType",
+            "EventModifiers",
+            "FontStyle",
+            "TextAlignment",
+            "TextEditor",
+            "TextEditorDblClickSnapping",
+            "TextGenerator",
+            "TextClipping",
+            "Gizmos",
+             "ADBannerView",
+            "ADInterstitialAd",            
+            "Android",
+            "jvalue",
+            "iPhone",
+            "iOS",
+            "CalendarIdentifier",
+            "CalendarUnit",
+            "CalendarUnit",
+            "FullScreenMovieControlMode",
+            "FullScreenMovieScalingMode",
+            "Handheld",
+            "LocalNotification",
+            "Motion",   
+            "NotificationServices",
+            "RemoteNotificationType",      
+            "RemoteNotification",
+            "SamsungTV",
+            "TextureCompressionQuality",
+            "TouchScreenKeyboardType",
+            "TouchScreenKeyboard",
+            "MovieTexture",
+            "UnityEngineInternal",
+            "Terrain",                            
+            "Tree",
+            "SplatPrototype",
+            "DetailPrototype",
+            "DetailRenderMode",
+            "MeshSubsetCombineUtility",
+            "AOT",
+            "Mathf",
+            "Social",
+            "Enumerator",       
+            "SendMouseEvents",               
+            "Cursor",
+            "Flash",
+            "ActionScript",
+            "OnRequestRebuild",
+			"Ping",
+            "ShaderVariantCollection",
+        };
+	}
+
 }

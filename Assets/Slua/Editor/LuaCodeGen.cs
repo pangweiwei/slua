@@ -64,84 +64,14 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Unity/Make UnityEngine")]
     static public void Generate()
     {
-        CodeGenerator.InnerTypes.Clear();
-
-        List<string> noUseList = new List<string>
-        {      
-            "HideInInspector",
-            "ExecuteInEditMode",
-            "AddComponentMenu",
-            "ContextMenu",
-            "RequireComponent",
-            "DisallowMultipleComponent",
-            "SerializeField",
-            "AssemblyIsEditorAssembly",
-            "Attribute", 
-            "Types",
-            "UnitySurrogateSelector",
-            "TrackedReference",
-            "TypeInferenceRules",
-            "FFTWindow",
-            "RPC",
-            "Network",
-            "MasterServer",
-            "BitStream",
-            "HostData",
-            "ConnectionTesterStatus",
-            "GUI",
-            "EventType",
-            "EventModifiers",
-            "FontStyle",
-            "TextAlignment",
-            "TextEditor",
-            "TextEditorDblClickSnapping",
-            "TextGenerator",
-            "TextClipping",
-            "Gizmos",
-             "ADBannerView",
-            "ADInterstitialAd",            
-            "Android",
-            "jvalue",
-            "iPhone",
-            "iOS",
-            "CalendarIdentifier",
-            "CalendarUnit",
-            "CalendarUnit",
-            "FullScreenMovieControlMode",
-            "FullScreenMovieScalingMode",
-            "Handheld",
-            "LocalNotification",
-            "Motion",   
-            "NotificationServices",
-            "RemoteNotificationType",      
-            "RemoteNotification",
-            "SamsungTV",
-            "TextureCompressionQuality",
-            "TouchScreenKeyboardType",
-            "TouchScreenKeyboard",
-            "MovieTexture",
-            "UnityEngineInternal",
-            "Terrain",                            
-            "Tree",
-            "SplatPrototype",
-            "DetailPrototype",
-            "DetailRenderMode",
-            "MeshSubsetCombineUtility",
-            "AOT",
-            "Mathf",
-            "Social",
-            "Enumerator",       
-            "SendMouseEvents",               
-            "Cursor",
-            "Flash",
-            "ActionScript",
-            "OnRequestRebuild",
-			"Ping",
-            "ShaderVariantCollection",
-        };
-
         Assembly assembly = Assembly.Load("UnityEngine");
         Type[] types = assembly.GetExportedTypes();
+
+		List<string> uselist;
+		List<string> noUseList;
+
+		CustomExport.OnGetNoUseList(out noUseList);
+		CustomExport.OnGetUseList(out uselist);
 
         List<Type> exports = new List<Type>();
         string oldpath = path;
@@ -150,11 +80,31 @@ public class LuaCodeGen : MonoBehaviour
         {
             bool export=true;
 
-            foreach (string str in noUseList)
-            {
-                if (t.FullName.Contains(str))
-                    export = false;
-            }
+			// check type in uselist
+			if (uselist != null && uselist.Count > 0)
+			{
+				export = false;
+				foreach (string str in uselist)
+				{
+					if (t.FullName.Contains(str))
+					{
+						export = true;
+						break;
+					}
+				}
+			}
+			else
+			{
+				// check type not in nouselist
+				foreach (string str in noUseList)
+				{
+					if (t.FullName.Contains(str))
+					{
+						export = false;
+						break;
+					}
+				}
+			}
 
             if (export)
             {
@@ -173,8 +123,6 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Unity/Make UI (for Unity4.6+)")]
     static public void GenerateUI()
     {
-        CodeGenerator.InnerTypes.Clear();
-
         List<string> noUseList = new List<string>
         {      
             "CoroutineTween",
@@ -401,7 +349,6 @@ class CodeGenerator
         "Resources.LoadAssetAtPath",
     };
 
-    public static HashSet<string> InnerTypes = new HashSet<string>();
     HashSet<string> funcname = new HashSet<string>();
     Dictionary<string, bool> directfunc = new Dictionary<string, bool>();
     class PropPair
@@ -526,7 +473,7 @@ namespace SLua
 
         static internal int checkDelegate(IntPtr l,int p,out $FN ua) {
             int op = extractFunction(l,p);
-			if(LuaDLL.lua_isnil(l,-1)) {
+			if(LuaDLL.lua_isnil(l,p)) {
 				ua=null;
 				return op;
 			}
@@ -879,7 +826,6 @@ namespace SLua
         }
         else
 			Write(file, "createTypeMetatable(l,{1}, typeof({0}));", FullName(t),constructorOrNot(t));
-        //Write(file, "LuaDLL.lua_pop(l, 1);");
         Write(file, "}");
     }
 
@@ -1373,10 +1319,10 @@ namespace SLua
 
     bool isUsefullMethod(MethodInfo method)
     {
-        if (method.Name != "GetType" && method.Name != "GetHashCode" && method.Name != "Equals" &&
-            method.Name != "ToString" && method.Name != "Clone" && method.Name != "Dispose" &&
-            method.Name != "GetEnumerator" && method.Name != "CopyTo" &&
-            method.Name != "op_Implicit" &&
+		if (method.Name != "GetType" && method.Name != "GetHashCode" && method.Name != "Equals" &&
+		    method.Name != "ToString" && method.Name != "Clone" && 
+		    method.Name != "GetEnumerator" && method.Name != "CopyTo" &&
+		    method.Name != "op_Implicit" &&
             !method.Name.StartsWith("get_", StringComparison.Ordinal) &&
             !method.Name.StartsWith("set_", StringComparison.Ordinal) &&
             !method.Name.StartsWith("add_", StringComparison.Ordinal) &&
