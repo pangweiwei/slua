@@ -446,7 +446,7 @@ namespace LuaInterface
 
 		public static bool lua_isstring(IntPtr luaState, int index)
         {
-            return LuaDLLWrapper.lua_isnumber(luaState, index) > 0;
+            return LuaDLLWrapper.lua_isstring(luaState, index) > 0;
         }
 
 		public static bool lua_iscfunction(IntPtr luaState, int index)
