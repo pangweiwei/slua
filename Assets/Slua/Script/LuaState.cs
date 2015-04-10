@@ -498,6 +498,17 @@ namespace SLua
 			LuaDLL.lua_pushcfunction(L, import);
 			LuaDLL.lua_setglobal(L, "import");
 
+			string resumefunc = @"
+local resume = coroutine.resume
+coroutine.resume=function(co,...)
+	local ok,err=resume(co,...)
+	if not ok then 	UnityEngine.Debug.LogError(debug.traceback(co,err)) end
+end
+";
+			// overload resume function for report error
+			if(LuaDLL.lua_dostring(L, resumefunc)!=0)
+				LuaObject.throwLuaError(L);
+
 			LuaDLL.lua_pushcfunction(L, dofile);
 			LuaDLL.lua_setglobal(L, "dofile");
 

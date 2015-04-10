@@ -41,7 +41,7 @@ namespace LuaInterface
 		LUA_GCSETSTEPMUL = 7,
 	}
 
-	public enum LuaThreadStatus
+	public enum LuaThreadStatus : int
 	{
 		LUA_YIELD = 1,
 		LUA_ERRRUN = 2,
@@ -189,7 +189,6 @@ namespace LuaInterface
 
 			return LuaDLL.lua_pcall(luaState, 0, -1, 0);
 		}
-		/// <summary>DEPRECATED - use luaL_dostring(IntPtr luaState, string chunk) instead!</summary>
 		public static int lua_dostring(IntPtr luaState, string chunk)
 		{
 			return LuaDLL.luaL_dostring(luaState, chunk);
