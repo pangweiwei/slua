@@ -54,16 +54,16 @@ namespace SLua
 				Action act = () =>
 				{
 #if LUA_5_3
-					if(LuaDLL.lua_resume(l,IntPtr.Zero,0) != 0)
-                    {
-                        LuaState.errorReport(l);
-                    }
+					if(LuaDLL.lua_resume(l,IntPtr.Zero,0) > (int) LuaThreadStatus.LUA_YIELD )
 #else
-                    if (LuaDLL.lua_resume(l, 0) != 0)
-                    {
-                        LuaState.errorReport(l);
-                    }
+					if (LuaDLL.lua_resume(l, 0) > (int) LuaThreadStatus.LUA_YIELD )
 #endif
+                    {
+						LuaObject.pushTry(l);
+						LuaDLL.lua_pushvalue(l, -2);
+						LuaDLL.lua_call(l, 1, 0);
+						LuaDLL.lua_pop(l, 1);
+                    }
 				};
 
 				mb.StartCoroutine(yieldReturn(y, act));
