@@ -54,9 +54,15 @@ namespace SLua
 				Action act = () =>
 				{
 #if LUA_5_3
-					LuaDLL.lua_resume(l,IntPtr.Zero,0);
+					if(LuaDLL.lua_resume(l,IntPtr.Zero,0) != 0)
+                    {
+                        LuaState.errorReport(l);
+                    }
 #else
-					LuaDLL.lua_resume(l, 0);
+                    if (LuaDLL.lua_resume(l, 0) != 0)
+                    {
+                        LuaState.errorReport(l);
+                    }
 #endif
 				};
 
