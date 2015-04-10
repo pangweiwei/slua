@@ -57,7 +57,17 @@ public class HelloWorld
 		foreach (LuaTable.TablePair pair in t)
 		{
 			Debug.Log(string.Format("foreach LuaTable {0}-{1}", pair.key, pair.value));
+			break;
 		}
+
+		var iter = t.GetEnumerator();
+		while(iter.MoveNext()) {
+			var pair = iter.Current;
+			Debug.Log(string.Format("foreach LuaTable {0}-{1}", pair.key, pair.value));
+			break;
+		}
+		iter.Dispose();
+
 	}
 
 	static public LuaTable getv()

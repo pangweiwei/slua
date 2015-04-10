@@ -310,7 +310,7 @@ namespace SLua
 			LuaTable t;
 			int indext = -1;
 			TablePair current = new TablePair();
-			bool isfirst = true;
+			int iterPhase = 0;
 
 			public Enumerator(LuaTable table)
 			{
@@ -323,15 +323,18 @@ namespace SLua
 				if (indext < 0)
 					return false;
 
-				if (isfirst)
+				if (iterPhase==0)
 				{
 					LuaDLL.lua_pushnil(t.L);
-					isfirst = false;
+					iterPhase = 1;
 				}
 				else
 					LuaDLL.lua_pop(t.L, 1);
 
-				return LuaDLL.lua_next(t.L, indext) > 0;
+				bool ret = LuaDLL.lua_next(t.L, indext) > 0;
+				if(!ret) iterPhase=2;
+
+				return ret;
 			}
 
 			public void Reset()
@@ -342,6 +345,9 @@ namespace SLua
 
 			public void Dispose()
 			{
+				if(iterPhase==1)
+					LuaDLL.lua_pop(t.L, 1);
+
 				LuaDLL.lua_remove(t.L, indext);
 			}
 

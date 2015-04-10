@@ -86,7 +86,7 @@ public class LuaCodeGen : MonoBehaviour
 				export = false;
 				foreach (string str in uselist)
 				{
-					if (t.FullName.Contains(str))
+					if (t.FullName==str)
 					{
 						export = true;
 						break;
