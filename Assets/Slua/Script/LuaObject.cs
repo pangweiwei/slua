@@ -776,7 +776,13 @@ return index
 			v = (short)LuaDLL.luaL_checkinteger(l, p);
 			return true;
 		}
-
+		
+		static public bool checkType(IntPtr l, int p, out UInt16 v)
+		{
+			v = (UInt16)LuaDLL.luaL_checkinteger(l, p);
+			return true;
+		}
+		
 		static public bool checkType(IntPtr l, int p, out byte v)
 		{
 			v = (byte)LuaDLL.luaL_checkinteger(l, p);
