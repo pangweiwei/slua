@@ -179,13 +179,11 @@ slua支持直接使用代理, 仅需要传入lua function, 这大大方便开发
 
 slua的delegate支持+=/-=操作, 例如
 >     self={}
-    function self.xxx()
-		return function(a,b,c)
-			self //here
-		end
+    function self.xxx(a,b,c)
+	// code
     end
-    h.d={"+=",self.xxx()}
-	h.d={"-=",self.xxx()}
+    h.d={"+=",self.xxx}
+	h.d={"-=",self.xxx}
 
 
 上面的例子演示了, 如何在回调函数内使用self, 同时演示了如果+=/-= 代理函数
