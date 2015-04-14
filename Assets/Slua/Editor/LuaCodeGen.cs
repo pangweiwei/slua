@@ -1039,7 +1039,7 @@ namespace SLua
                 PropertyInfo _get = getter[0];
                 ParameterInfo[] infos = _get.GetIndexParameters();
                 WriteValueCheck(file, infos[0].ParameterType, 2, "v");
-                Write(file, "{0} ret = self[v];", _get.PropertyType);
+                Write(file, "var ret = self[v];");
                 WritePushValue(_get.PropertyType, file, "ret");
                 Write(file, "return 1;");
             }
@@ -1052,7 +1052,7 @@ namespace SLua
                     ParameterInfo[] infos = fii.GetIndexParameters();
                     Write(file, "{0}(matchType(l,2,t,typeof({1}))){{", first_get ? "if" : "else if", infos[0].ParameterType);
                     WriteValueCheck(file, infos[0].ParameterType, 2, "v");
-                    Write(file, "{0} ret = self[v];", fii.PropertyType);
+                    Write(file, "var ret = self[v];");
                     WritePushValue(fii.PropertyType, file, "ret");
                     Write(file, "return 1;");
                     Write(file, "}");
@@ -1472,7 +1472,7 @@ namespace SLua
         string ret = "";
         if (m.ReturnType != typeof(void))
         {
-            ret = string.Format("{0} ret=", TypeDecl(m.ReturnType));
+			ret = "var ret=";
         }
 
         if (m.IsStatic)
