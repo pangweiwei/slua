@@ -4,7 +4,7 @@ slua是Unity3D导出为lua的自动化代码生成工具, 通过产生静态的�
 
 ##安装
 
-通过git clone复制一份代码到你的资源目录(Assets目录内), slua的发布版已经附带了Unity3D 4.6.1 的导出接口文件, 在Slua/LuaObject内, 对于其他版本(比如5.0), 你可以删除该目录内所有文件, 等待脚本编译完成, 点击slua菜单中 Make 命令 手动生成针对当前版本的U3d接口文件, 如果你运行例子代码产生错误,记得要make ui,make custom,保证例子中使用到的接口都被导出了.
+通过git clone复制一份代码到你的资源目录(Assets目录内),  点击slua菜单中 Make UnityEngine 命令 手动生成针对当前版本的U3d接口文件, 如果你运行例子代码产生错误,记得要make ui,make custom,保证例子中使用到的接口都被导出了.
 
 ***每次更新slua版本，务必记得clear all，然后make all，否则可能运行不正确***
 
