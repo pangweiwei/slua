@@ -405,6 +405,10 @@ this[] get/set会产生getItem/setItem成员函数,请使用他们.
 
 iOS对dll的尺寸有大小限制, 出现这个错误可能是你的工程代码+第三方库代码+LuaWrap所产生的dll超过限制, 你可以把一些代码抽取出来作为一个独立的dll, 保证工程的dll尺寸在限制内. 新版的Slua可以把Script目录和LuaObject/Unity目录整体制作为一个dll,放入你的Assets目录, 让你的工程依赖这个dll,而不再包含slua(和动态产生的wrap代码),从而减少最终工程dll的尺寸.
 
+10) 有没有更完整的demo?
+
+请参考 https://github.com/lulersoft/me_SLua 
+
 
 ##已知问题
 不支持泛型函数导出, 但支持泛型代理
