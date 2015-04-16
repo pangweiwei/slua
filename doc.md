@@ -236,6 +236,28 @@ Slua支持unity yield指令,  需要配和lua coroutine, 例如:
 
 最后, ***LuaVarObject并没有完善, 仅满足最低使用需求, 如果你发现有任何bug, 需要自行完善他们, 作者欢迎你完善后提交pull request合并到slua主分支, 让你的代码成为slua的一部分.***
 
+##创建未导出的类
+
+对于一个没有导出的类,slua不建议直接拿来使用(因为效率问题,并严重不推荐在最终产品中使用),但某些情况下临时使用方便开发调试, 为此你可以使用CreateClass函数来创建未导出的类, 例如
+
+>     -- create class used reflection
+	local go=Slua.CreateClass("UnityEngine.GameObject,UnityEngine","VarGameObject")
+	print(go.name)
+	local array=Slua.CreateClass("System.Collections.ArrayList",10)
+	print(array.Capacity)
+	array:Add("slua")
+	array:Add("unity")
+	print(array.Count,array[0],array[1])
+
+####CreateClass(type,args...) -> obj
+
+type参数为需要创建类的字符串描述,关于一个类的字符串描述,可以参考msdn上Type.Get方法的说明.
+
+args参数为类构造函数的传入参数
+
+如果一切正常将返回对应的类对象.
+
+
 ##LuaTimer
 
 LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使用系统自带timer, slua timer会在lua虚拟机被关闭后停止timer工作,而一般系统自带timer可能会在lua虚拟机被关闭后任然触发timer,导致调用lua函数失败,从而产生闪退等.
