@@ -40,7 +40,8 @@ function main()
 	local x=UnityEngine.GameObject("OoOo")
 	x:AddComponent(SLuaTest)
 	local c=x:GetComponent(SLuaTest)
-	print(c, c.transform)
+	print("test monobehaviour",c, c.transform)
+	assert(c.gameObject.name=="OoOo")
 
 
 	-- test inherite class
