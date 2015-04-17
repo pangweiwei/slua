@@ -43,7 +43,7 @@ function main()
 	print("test monobehaviour",c, c.transform)
 	assert(c.gameObject.name=="OoOo")
 	local c=x:GetComponent(UnityEngine.BoxCollider)
-	print("xxxxxx",c,type(c))
+	assert(c==null)
 
 
 	-- test inherite class
