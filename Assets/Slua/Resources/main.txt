@@ -45,6 +45,10 @@ function main()
 	local c=x:GetComponent(UnityEngine.BoxCollider)
 	assert(c==null)
 
+	local ll=XXList() -- it's List<int>
+	ll:Add(1)
+	print(ll.Count)
+
 
 	-- test inherite class
 	local mv = My2(1,2,3)
