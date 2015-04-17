@@ -16,6 +16,9 @@ public struct foostruct
 public class SLuaTest : MonoBehaviour { }
 
 [CustomLuaClass]
+public class XXList : List<int> { }
+
+[CustomLuaClass]
 public class HelloWorld
 {
 

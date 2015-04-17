@@ -2,7 +2,7 @@
 using System.Collections;
 using SLua;
 using UnityEngine.UI;
-
+using System.Collections.Generic;
 
 public class Main : MonoBehaviour
 {

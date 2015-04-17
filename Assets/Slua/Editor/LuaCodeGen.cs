@@ -34,6 +34,7 @@ using System.Text.RegularExpressions;
 public class LuaCodeGen : MonoBehaviour
 {
 
+	public delegate void ExportGenericDelegate(Type t,string ns);
 
     public static string path = "Assets/Slua/LuaObject/";
 
@@ -174,37 +175,6 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Custom/Make")]
     static public void Custom()
     {
-
-        List<Type> cust = new List<Type>();
-        CustomExport.OnAddCustomClass(ref cust);
-
-        // export self-dll
-        Assembly assembly = Assembly.Load("Assembly-CSharp");
-        Type[] types = assembly.GetExportedTypes();
-
-        foreach (Type t in types)
-        {
-            if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0)
-            {
-                cust.Add(t);
-            }
-        }
-
-        // export 3rd dll
-        //List<string> assemblyList = new List<string>();
-        //CustomExport.OnAddCustomAssembly(ref assemblyList);
-        
-        //foreach (string assemblyItem in assemblyList)
-        //{
-        //    assembly = Assembly.Load(assemblyItem);
-        //    types = assembly.GetExportedTypes();
-
-        //    foreach (Type t in types)
-        //    {
-        //        cust.Add(t);
-        //    }
-        //}
-
         List<Type> exports = new List<Type>();
         string oldpath = path;
         path += "Custom/";
@@ -214,11 +184,25 @@ public class LuaCodeGen : MonoBehaviour
             Directory.CreateDirectory(path);
         }
 
-        foreach (Type t in cust)
-        {
-            if (Generate(t))
-                exports.Add(t);
-        }
+ 		ExportGenericDelegate fun = (Type t,string ns) =>
+		{
+			if (Generate(t,ns))
+				exports.Add(t);
+		};
+
+		// export self-dll
+		Assembly assembly = Assembly.Load("Assembly-CSharp");
+		Type[] types = assembly.GetExportedTypes();
+
+		foreach (Type t in types)
+		{
+			if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0)
+			{
+				fun(t, null);
+			}
+		}
+
+		CustomExport.OnAddCustomClass(fun);
 
         GenerateBind(exports,"BindCustom",3);
         AssetDatabase.Refresh();
@@ -301,12 +285,18 @@ public class LuaCodeGen : MonoBehaviour
 
     static bool Generate(Type t)
     {
-        if (t.IsInterface)
-            return false;
-
-        CodeGenerator cg = new CodeGenerator();
-        return cg.Generate(t);
+		return Generate(t, null);
     }
+
+	static bool Generate(Type t,string ns)
+	{
+		if (t.IsInterface)
+			return false;
+
+		CodeGenerator cg = new CodeGenerator();
+		cg.givenNamespace = ns;
+		return cg.Generate(t);
+	}
 
     static void GenerateBind(List<Type> list,string name,int order)
     {
@@ -351,6 +341,9 @@ class CodeGenerator
 
     HashSet<string> funcname = new HashSet<string>();
     Dictionary<string, bool> directfunc = new Dictionary<string, bool>();
+
+	public string givenNamespace;
+
     class PropPair
     {
         public string get="null";
@@ -399,7 +392,7 @@ class CodeGenerator
             Directory.CreateDirectory(LuaCodeGen.path);
         }
         
-		if ((!t.IsGenericType && !IsObsolete(t) && t!=typeof(YieldInstruction) && t!=typeof(Coroutine))
+		if ((!IsObsolete(t) && t!=typeof(YieldInstruction) && t!=typeof(Coroutine))
             || (t.BaseType!=null && t.BaseType==typeof(System.MulticastDelegate)))
         {
             if (t.IsEnum)
@@ -429,7 +422,7 @@ class CodeGenerator
                 file.Close();
                 return false;
             }
-            else
+			else
             {
                 funcname.Clear();
                 propname.Clear();
@@ -703,11 +696,12 @@ namespace SLua
 
     StreamWriter Begin(Type t)
     {
-        string clsname = ExportName(t);
-        string f = LuaCodeGen.path + clsname + ".cs";
+		string clsname = ExportName(t);
+		string f = LuaCodeGen.path + clsname + ".cs";
         StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
         return file;
     }
+
     private void End(StreamWriter file)
     {
         Write(file, "}");
@@ -723,7 +717,6 @@ namespace SLua
         Write(file, "using SLua;");
         Write(file, "using System.Collections.Generic;");
         Write(file, "public class {0} : LuaObject {{", ExportName(t));
-        //Write(file, "static public List<LuaCSFunction> exportfuncs = new List<LuaCSFunction>();");
     }
     
 
@@ -801,7 +794,7 @@ namespace SLua
             Write(file, "LuaUnityEvent_{1}.reg(l);", FullName(t), _Name((GenericName(t.BaseType)) ));
         }
 
-        Write(file, "getTypeTable(l,\"{0}\");", FullName(t));
+        Write(file, "getTypeTable(l,\"{0}\");", givenNamespace!=null?givenNamespace:FullName(t));
         foreach (string f in funcname)
         {
             Write(file, "addMember(l,{0});", f);
@@ -820,12 +813,12 @@ namespace SLua
         if (t.BaseType != null && !CutBase(t.BaseType))
         {
             if (t.BaseType.Name.Contains("UnityEvent`1"))
-				Write(file, "createTypeMetatable(l,{2}, typeof({0}),typeof(LuaUnityEvent_{1}));", FullName(t), _Name(GenericName(t.BaseType)),constructorOrNot(t));
+				Write(file, "createTypeMetatable(l,{2}, typeof({0}),typeof(LuaUnityEvent_{1}));", TypeDecl(t), _Name(GenericName(t.BaseType)), constructorOrNot(t));
             else
-				Write(file, "createTypeMetatable(l,{2}, typeof({0}),typeof({1}));", FullName(t), TypeDecl(t.BaseType),constructorOrNot(t));
+				Write(file, "createTypeMetatable(l,{2}, typeof({0}),typeof({1}));", TypeDecl(t), TypeDecl(t.BaseType), constructorOrNot(t));
         }
         else
-			Write(file, "createTypeMetatable(l,{1}, typeof({0}));", FullName(t),constructorOrNot(t));
+			Write(file, "createTypeMetatable(l,{1}, typeof({0}));", TypeDecl(t), constructorOrNot(t));
         Write(file, "}");
     }
 
@@ -838,7 +831,7 @@ namespace SLua
 
     bool CutBase(Type t)
     {
-        if (t.FullName.StartsWith("System."))
+        if (t.FullName.StartsWith("System.Object"))
             return true;
         return false;
     }
@@ -1178,7 +1171,7 @@ namespace SLua
 	        {
 	            if (cons.Length > 1)
 	                Write(file, "int argc = LuaDLL.lua_gettop(l);");
-	            Write(file, "{0} o;", FullName(t));
+				Write(file, "{0} o;", TypeDecl(t));
 	            bool first = true;
 	            for (int n = 0; n < cons.Length; n++)
 	            {
@@ -1197,7 +1190,7 @@ namespace SLua
 	                {
 	                    CheckArgument(file, pars[k].ParameterType, k, 2, false, false);
 	                }
-	                Write(file, "o=new {0}({1});", FullName(t), FuncCall(ci));
+					Write(file, "o=new {0}({1});", TypeDecl(t), FuncCall(ci));
 	                Write(file, "pushValue(l,o);");
 	                Write(file, "return 1;");
                     if(cons.Length==1)
@@ -1434,7 +1427,7 @@ namespace SLua
             Write(file, "checkType(l,1,out self);");
         }
         else
-            Write(file, "{0} self=({0})checkSelf(l);", FullName(t));
+			Write(file, "{0} self=({0})checkSelf(l);", TypeDecl(t));
     }
     private void WriteFunctionCall(MethodInfo m, StreamWriter file, Type t)
     {
@@ -1664,9 +1657,16 @@ namespace SLua
 
     string ExportName(Type t)
     {
-        string name = RemoveRef(t.FullName, true);
-        name = "Lua_" + name;
-        return name.Replace(".", "_");
+		if (t.IsGenericType)
+		{
+			return string.Format("Lua_{0}_{1}", _Name(GenericBaseName(t)), _Name(GenericName(t)));
+		}
+		else
+		{
+			string name = RemoveRef(t.FullName, true);
+			name = "Lua_" + name;
+			return name.Replace(".", "_");
+		}
     }
 
     string FullName(Type t)

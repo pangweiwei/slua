@@ -3,11 +3,13 @@ using System;
 
 public class CustomExport {
 
-    public static void OnAddCustomClass(ref List<Type> list)
+	public static void OnAddCustomClass(LuaCodeGen.ExportGenericDelegate add)
     {
-        list.Add(typeof(System.Func<int>));
-        list.Add(typeof(System.Action<int,string>));
-        list.Add(typeof(System.Action<int, Dictionary<int, object>>));
+        add(typeof(System.Func<int>),null);
+        add(typeof(System.Action<int,string>),null);
+        add(typeof(System.Action<int, Dictionary<int, object>>),null);
+		add(typeof(List<int>), "ListInt");
+		add(typeof(Dictionary<int,string>), "DictIntStr");
         // add your custom class here
     }
 
