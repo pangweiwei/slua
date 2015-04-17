@@ -131,7 +131,10 @@ namespace SLua
 
 		public static void pushValue(IntPtr l, UnityEngine.Object o)
 		{
-			pushObject(l, o);
+			if (o == null)
+				LuaDLL.lua_pushnil(l);
+			else
+				pushObject(l, o);
 		}
 
 		public static void pushValue(IntPtr l, UnityEngine.Object[] o)
