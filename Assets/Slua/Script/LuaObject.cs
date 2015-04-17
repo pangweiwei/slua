@@ -1312,7 +1312,10 @@ return index
 
 		public static void pushValue(IntPtr l, LuaTable t)
 		{
-			t.push(l);
+			if (t == null)
+				LuaDLL.lua_pushnil(l);
+			else
+				t.push(l);
 		}
 
 		public static void pushEnum(IntPtr l, int e)
