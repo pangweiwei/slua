@@ -392,7 +392,7 @@ class CodeGenerator
             Directory.CreateDirectory(LuaCodeGen.path);
         }
         
-		if ((!IsObsolete(t) && t!=typeof(YieldInstruction) && t!=typeof(Coroutine))
+		if (!t.IsGenericTypeDefinition  && (!IsObsolete(t) && t!=typeof(YieldInstruction) && t!=typeof(Coroutine))
             || (t.BaseType!=null && t.BaseType==typeof(System.MulticastDelegate)))
         {
             if (t.IsEnum)
@@ -1651,6 +1651,10 @@ namespace SLua
 
             return ret;
         }
+		if (t.IsArray)
+		{
+			return TypeDecl(t.GetElementType())+"[]";
+		}
         else
             return RemoveRef(t.ToString(), false);
     }
