@@ -50,6 +50,11 @@ public class HelloWorld
 		return new Dictionary<string, GameObject>[]{};
 	}
 
+	public int gos(Dictionary<string, GameObject>[] x)
+	{
+		return x.Length;
+	}
+
 	public Dictionary<GameObject, string> too()
 	{
 		return new Dictionary<GameObject, string>();
