@@ -11,6 +11,9 @@ public class CustomExport {
 		add(typeof(List<int>), "ListInt");
 		add(typeof(Dictionary<int,string>), "DictIntStr");
         // add your custom class here
+		// add( type, typename)
+		// type is what you want to export
+		// typename used for simplify generic type name, like List<int> named to "ListInt", if not a generic type keep typename as null
     }
 
     public static void OnAddCustomAssembly(ref List<string> list)
