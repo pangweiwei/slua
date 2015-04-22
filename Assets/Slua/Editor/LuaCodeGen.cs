@@ -939,7 +939,8 @@ namespace SLua
             //if (fi.Name == "Item" || IsObsolete(fi) || MemberInFilter(t,fi) || DontExport(fi))
             if (IsObsolete(fi) || MemberInFilter(t, fi) || DontExport(fi))
                 continue;
-            if (fi.Name == "Item")
+            if (fi.Name == "Item" 
+				|| (t.Name=="String" && fi.Name=="Chars") ) // for string[]
             {
 				//for this[]
                 if (!fi.GetGetMethod().IsStatic && fi.GetIndexParameters().Length == 1)
@@ -1013,9 +1014,9 @@ namespace SLua
             tryMake(fi.PropertyType);
         }
 		//for this[]
-        WriteThisFunc(t, file, getter, setter);
+		WriteItemFunc(t, file, getter, setter);
     }
-    void WriteThisFunc(Type t, StreamWriter file, List<PropertyInfo> getter, List<PropertyInfo> setter)
+    void WriteItemFunc(Type t, StreamWriter file, List<PropertyInfo> getter, List<PropertyInfo> setter)
     {
 
 		//Write property this[] set/get
@@ -1148,11 +1149,20 @@ namespace SLua
         ConstructorInfo[] cons = t.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
         foreach (ConstructorInfo ci in cons)
         {
-                if (!IsObsolete(ci) && !DontExport(ci))
-                    ret.Add(ci);
+			if (!IsObsolete(ci) && !DontExport(ci) && !ContainUnsafe(ci))
+				ret.Add(ci);
         }
         return ret.ToArray();
     }
+
+	bool ContainUnsafe(MethodBase mi)
+	{
+		foreach(ParameterInfo p in mi.GetParameters()) {
+			if(p.ParameterType.FullName.Contains("*"))
+				return true;
+		}
+		return false;
+	}
 
     bool DontExport(MemberInfo mi)
     {
@@ -1191,7 +1201,10 @@ namespace SLua
 	                    CheckArgument(file, pars[k].ParameterType, k, 2, false, false);
 	                }
 					Write(file, "o=new {0}({1});", TypeDecl(t), FuncCall(ci));
-	                Write(file, "pushValue(l,o);");
+					if(t.Name=="String") // if export system.string, push string as ud not lua string
+						Write(file, "pushObject(l,o);");
+	                else
+						Write(file, "pushValue(l,o);");
 	                Write(file, "return 1;");
                     if(cons.Length==1)
                         WriteCatchExecption(file);

@@ -2,6 +2,11 @@ local somemodule = require 'module.some'
 
 import "UnityEngine"
 
+if not UnityEngine.GameObject then
+	error("Click Make/All to generate lua wrap file")
+end
+
+
 MyVector3=Slua.Class(Vector3,
 	nil, --static function
 	{ --instance member function
@@ -28,6 +33,7 @@ MyGameObject=Slua.Class(GameObject,
 	}	
 )
 
+
 function main()
 
 	if jit then
@@ -48,7 +54,6 @@ function main()
 	local ll=XXList() -- it's List<int>
 	ll:Add(1)
 	print(ll.Count)
-
 
 	-- test inherite class
 	local mv = My2(1,2,3)
@@ -175,6 +180,9 @@ function main()
 	HelloWorld.func6("aa",1,2,3,"bb")
 	HelloWorld.func6("aa",1,2,3,"bb",true,false)
 	HelloWorld.func6("aa")
+	local ss=String("bb")
+	HelloWorld.func6(ss,1,2) -- func6 accpet system.string as 1st parameter, you can pass "xx" or String("xx")
+	assert(ss~="bb") -- bb is luastring, ss is System.String
 	
 	-- test luafunction
 	local h=HelloWorld()

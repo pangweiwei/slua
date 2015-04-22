@@ -755,9 +755,23 @@ return index
 
 		static public bool checkType(IntPtr l, int p, out string v)
 		{
-			//LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TSTRING);
-			v = LuaDLL.lua_tostring(l, p);
-			return true;
+			if(LuaDLL.lua_isuserdata(l,p)>0)
+			{
+				object o = checkObj(l, p);
+				if (o is string)
+				{
+					v = o as string;
+					return true;
+				}
+			}
+			else if (LuaDLL.lua_isstring(l, p))
+			{
+				v = LuaDLL.lua_tostring(l, p);
+				return true;
+			}
+
+			v = null;
+			return false;
 		}
 
 		static public bool luaTypeCheck(IntPtr l, int p, string t)
@@ -993,6 +1007,15 @@ return index
 			return true;
 		}
 
+		static public bool checkType(IntPtr l, int p, out char[] pars)
+		{
+			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TSTRING);
+			string s;
+			checkType(l, p, out s);
+			pars = s.ToCharArray();
+			return true;
+		}
+
 		static public bool checkEnum<T>(IntPtr l, int p, out T o) where T : struct
 		{
 			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TNUMBER);
@@ -1065,6 +1088,15 @@ return index
 				return true;
 			}
 			pars = new string[0];
+			return true;
+		}
+
+		static public bool checkParams(IntPtr l, int p, out char[] pars)
+		{
+			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TSTRING);
+			string s;
+			checkType(l, p, out s);
+			pars = s.ToCharArray();
 			return true;
 		}
 

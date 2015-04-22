@@ -1,4 +1,9 @@
 
+
+if not UnityEngine.GameObject then
+	error("Click Make/All to generate lua wrap file")
+end
+
 local Vector3 = UnityEngine.Vector3
 local GameObject = UnityEngine.GameObject
 local Profiler = UnityEngine.Profiler
