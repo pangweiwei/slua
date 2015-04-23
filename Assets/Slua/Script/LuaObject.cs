@@ -99,8 +99,12 @@ local function newindex(ud,k,v)
     repeat
         local h=rawget(t,k)
         if h then
-            h[2](ud,v)
-            return
+			if h[2] then
+				h[2](ud,v)
+	            return
+			else
+				error('property '..k..' is read only')
+			end
         end
         t=rawget(t,'__parent')
     until t==nil
@@ -123,7 +127,11 @@ local function index(ud,k)
         if tp=='function' then 
             return fun 
         elseif tp=='table' then
-            return fun[1](ud)
+			if fun[1] then
+				return fun[1](ud)
+			else
+				error('property '..k..' is write only')
+			end
         end
         t = rawget(t,'__parent')
     until t==nil
