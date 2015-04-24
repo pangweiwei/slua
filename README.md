@@ -52,11 +52,11 @@ using raw luajit, can be replaced with lua5.3/lua5.1, link with slua.c, if you s
 
 copy Assets/Plugins Assets/Slua to your $Project$/Assets folder, you will see Slua menu, 
 
-click Make, regenerate UnityEngine interface for lua
+click Unity->Make UnityEngine, regenerate UnityEngine interface for lua
 
-click Make UI, regenerate UnityEngine.UI interface for lua
+click Unity->Make UI, regenerate UnityEngine.UI interface for lua
 
-click Make custom , generate custom class interface for lua
+click Custom->Make, generate custom class interface for lua
 
 Clear custom, delete all generated custom interface
 
