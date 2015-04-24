@@ -20,7 +20,7 @@ See inner demo for help or [Document](doc.md) (in chinese).
 
 You need generated lua wrap file by your self:
 
-Click menu, SLua->Make ALL  generate all wrap file for your version of unity.
+Click menu, SLua->All->Make  generate all wrap file for your version of unity.
 
 ***Had tested for Unity4.6.1/4.6.2/4.6.3/5.0***
 
