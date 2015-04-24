@@ -134,7 +134,7 @@ end
 
 ##export custom class
 
-add CustomLuaClass attribute to your custom class, waiting for compile completed, click "Make custom", you will get interface file for lua.
+add CustomLuaClass attribute to your custom class, waiting for compile completed, click "SLua->Custom->Make", you will get interface file for lua.
 
 ~~~~~~~~~~c#
 
