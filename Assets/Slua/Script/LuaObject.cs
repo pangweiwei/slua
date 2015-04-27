@@ -665,7 +665,7 @@ return index
 					Type ot = o.GetType();
 					return ot == t || ot.IsSubclassOf(t);
 				case LuaTypes.LUA_TSTRING:
-					return t.Name == "String";
+					return t == typeof(string);
 				case LuaTypes.LUA_TBOOLEAN:
 					return t == typeof(bool);
 				case LuaTypes.LUA_TTABLE:
