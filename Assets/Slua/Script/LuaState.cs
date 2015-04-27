@@ -20,17 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using LuaInterface;
-using UnityEngine;
-using System.IO;
-using System.Text;
-using System.Runtime.InteropServices;
+
 
 namespace SLua
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Collections;
+	using LuaInterface;
+	using UnityEngine;
+	using System.IO;
+	using System.Text;
+	using System.Runtime.InteropServices;
+
 	abstract public class LuaVar : IDisposable
 	{
 		protected LuaState state = null;
