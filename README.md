@@ -20,7 +20,7 @@ See inner demo for help or [Document](doc.md) (in chinese).
 
 You need generated lua wrap file by your self:
 
-Click menu, SLua->Make ALL  generate all wrap file for your version of unity.
+Click menu, SLua->All->Make  generate all wrap file for your version of unity.
 
 ***Had tested for Unity4.6.1/4.6.2/4.6.3/5.0***
 
@@ -52,11 +52,11 @@ using raw luajit, can be replaced with lua5.3/lua5.1, link with slua.c, if you s
 
 copy Assets/Plugins Assets/Slua to your $Project$/Assets folder, you will see Slua menu, 
 
-click Make, regenerate UnityEngine interface for lua
+click Unity->Make UnityEngine, regenerate UnityEngine interface for lua
 
-click Make UI, regenerate UnityEngine.UI interface for lua
+click Unity->Make UI, regenerate UnityEngine.UI interface for lua
 
-click Make custom , generate custom class interface for lua
+click Custom->Make, generate custom class interface for lua
 
 Clear custom, delete all generated custom interface
 
@@ -134,7 +134,7 @@ end
 
 ##export custom class
 
-add CustomLuaClass attribute to your custom class, waiting for compile completed, click "Make custom", you will get interface file for lua.
+add CustomLuaClass attribute to your custom class, waiting for compile completed, click "SLua->Custom->Make", you will get interface file for lua.
 
 ~~~~~~~~~~c#
 
