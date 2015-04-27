@@ -1,43 +1,68 @@
-﻿using System.Collections.Generic;
-using System;
+﻿// The MIT License (MIT)
 
-public class CustomExport {
+// Copyright 2015 Siney/Pangweiwei siney@yeah.net
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
-	public static void OnAddCustomClass(LuaCodeGen.ExportGenericDelegate add)
-    {
-        add(typeof(System.Func<int>),null);
-        add(typeof(System.Action<int,string>),null);
-        add(typeof(System.Action<int, Dictionary<int, object>>),null);
-		add(typeof(List<int>), "ListInt");
-		add(typeof(Dictionary<int,string>), "DictIntStr");
-		add(typeof(string), "String");
-        // add your custom class here
-		// add( type, typename)
-		// type is what you want to export
-		// typename used for simplify generic type name or rename, like List<int> named to "ListInt", if not a generic type keep typename as null or rename as new type name
-    }
+namespace SLua
+{
+	using System.Collections.Generic;
+	using System;
 
-    public static void OnAddCustomAssembly(ref List<string> list)
-    {
-        // add your custom assembly here
-        // you can build a dll for 3rd library like ngui titled assembly name "NGUI", put it in Assets folder
-        // add it's name into list, slua will generate all exported interface automatically for you
-
-        //list.Add("NGUI");
-    }
-
-	// if uselist return a white list, don't check noUseList(black list) again
-	public static void OnGetUseList(out List<string> list)
+	public class CustomExport
 	{
-		list = new List<string>
+
+		public static void OnAddCustomClass(LuaCodeGen.ExportGenericDelegate add)
 		{
-		};
-	}
+			add(typeof(System.Func<int>), null);
+			add(typeof(System.Action<int, string>), null);
+			add(typeof(System.Action<int, Dictionary<int, object>>), null);
+			add(typeof(List<int>), "ListInt");
+			add(typeof(Dictionary<int, string>), "DictIntStr");
+			add(typeof(string), "String");
+			// add your custom class here
+			// add( type, typename)
+			// type is what you want to export
+			// typename used for simplify generic type name or rename, like List<int> named to "ListInt", if not a generic type keep typename as null or rename as new type name
+		}
 
-	// black list if white list not given
-	public static void OnGetNoUseList(out List<string> list)
-	{
-		list = new List<string>
+		public static void OnAddCustomAssembly(ref List<string> list)
+		{
+			// add your custom assembly here
+			// you can build a dll for 3rd library like ngui titled assembly name "NGUI", put it in Assets folder
+			// add it's name into list, slua will generate all exported interface automatically for you
+
+			//list.Add("NGUI");
+		}
+
+		// if uselist return a white list, don't check noUseList(black list) again
+		public static void OnGetUseList(out List<string> list)
+		{
+			list = new List<string>
+			{
+			};
+		}
+
+		// black list if white list not given
+		public static void OnGetNoUseList(out List<string> list)
+		{
+			list = new List<string>
         {      
             "HideInInspector",
             "ExecuteInEditMode",
@@ -108,6 +133,7 @@ public class CustomExport {
 			"Ping",
             "ShaderVariantCollection",
         };
-	}
+		}
 
+	}
 }

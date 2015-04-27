@@ -20,14 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Runtime.InteropServices;
-using System.Collections.Generic;
-using LuaInterface;
-using UnityEngine;
 
 namespace SLua
 {
+	using System;
+	using System.Runtime.InteropServices;
+	using System.Collections.Generic;
+	using LuaInterface;
+	using UnityEngine;
+
 	class ObjectCache
 	{
 		static Dictionary<IntPtr, ObjectCache> multiState = new Dictionary<IntPtr, ObjectCache>();

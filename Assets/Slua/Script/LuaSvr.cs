@@ -20,16 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
-using LuaInterface;
-using System.Reflection;
 
 namespace SLua
 {
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+
+	using UnityEngine;
+	using LuaInterface;
+	using System.Reflection;
+	using System.Diagnostics;
+	using Debug = UnityEngine.Debug;
+
 	public class LuaSvr
 	{
 		public LuaState luaState;

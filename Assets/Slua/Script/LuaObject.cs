@@ -20,51 +20,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using LuaInterface;
-using System.Reflection;
-using System.Runtime.InteropServices;
-
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct)]
-public class CustomLuaClassAttribute : System.Attribute
-{
-	public CustomLuaClassAttribute()
-	{
-		//
-	}
-}
-
-public class DoNotToLuaAttribute : System.Attribute
-{
-	public DoNotToLuaAttribute()
-	{
-		//
-	}
-}
-
-public class LuaBinderAttribute : System.Attribute
-{
-	public int order;
-	public LuaBinderAttribute(int order)
-	{
-		this.order = order;
-	}
-}
-
-[AttributeUsage(AttributeTargets.Method)]
-public class StaticExportAttribute : System.Attribute
-{
-	public StaticExportAttribute()
-	{
-		//
-	}
-}
-
 namespace SLua
 {
+
+	using UnityEngine;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System;
+	using LuaInterface;
+	using System.Reflection;
+	using System.Runtime.InteropServices;
+
+	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct)]
+	public class CustomLuaClassAttribute : System.Attribute
+	{
+		public CustomLuaClassAttribute()
+		{
+			//
+		}
+	}
+
+	public class DoNotToLuaAttribute : System.Attribute
+	{
+		public DoNotToLuaAttribute()
+		{
+			//
+		}
+	}
+
+	public class LuaBinderAttribute : System.Attribute
+	{
+		public int order;
+		public LuaBinderAttribute(int order)
+		{
+			this.order = order;
+		}
+	}
+
+	[AttributeUsage(AttributeTargets.Method)]
+	public class StaticExportAttribute : System.Attribute
+	{
+		public StaticExportAttribute()
+		{
+			//
+		}
+	}
 
 	public partial class LuaObject
 	{
@@ -452,12 +452,11 @@ return index
 
 		public static void createTypeMetatable(IntPtr l, LuaCSFunction con, Type self, Type parent)
 		{
-
 			// set parent
 			if (parent != null && parent != typeof(object))
 			{
 				LuaDLL.lua_pushstring(l, "__parent");
-				LuaDLL.luaL_getmetatable(l, parent.AssemblyQualifiedName);
+				LuaDLL.luaL_getmetatable(l, ObjectCache.getAQName(parent));
 				LuaDLL.lua_rawset(l, -3);
 
 				LuaDLL.lua_pushstring(l, "__parent");
@@ -537,7 +536,7 @@ return index
 				LuaDLL.lua_pushvalue(l, -1);
 				LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, self.FullName + ".Instance");
 			}
-			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, self.AssemblyQualifiedName);
+			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX,  ObjectCache.getAQName(self));
 		}
 
 		public static void reg(IntPtr l, LuaCSFunction func, string ns)
