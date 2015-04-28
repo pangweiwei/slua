@@ -502,7 +502,7 @@ namespace SLua
 local resume = coroutine.resume
 coroutine.resume=function(co,...)
 	local ret={resume(co,...)}
-	if not ret[1] then UnityEngine.Debug.LogError(debug.traceback(co,err)) end
+	if not ret[1] then UnityEngine.Debug.LogError(debug.traceback(co,ret[2])) end
 	return unpack(ret)
 end
 ";
