@@ -675,7 +675,7 @@ end
 		{
 			int n = LuaDLL.lua_gettop(L);
 
-			if (loader(L) != 0) return LuaDLL.lua_gettop(L) - n;
+			if (loader(L) == 0) return LuaDLL.lua_gettop(L) - n;
 
 			LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
 			return LuaDLL.lua_gettop(L) - n;
