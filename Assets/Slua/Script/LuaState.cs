@@ -688,8 +688,13 @@ end
 			byte[] bytes = loadFile(fileName);
 			if (bytes != null)
 			{
-				LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fileName);
-				return 1;
+				if(LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fileName) == 0)
+				{
+					return 1;
+				}
+				string err = LuaDLL.lua_tostring(L, -1);
+				Debug.LogError(err);
+				return 0;
 			}
 			return 0;
 		}
