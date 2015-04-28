@@ -503,8 +503,9 @@ namespace SLua
 			string resumefunc = @"
 local resume = coroutine.resume
 coroutine.resume=function(co,...)
-	local ok,err=resume(co,...)
-	if not ok then 	UnityEngine.Debug.LogError(debug.traceback(co,err)) end
+	local ret={resume(co,...)}
+	if not ret[1] then UnityEngine.Debug.LogError(debug.traceback(co,ret[2])) end
+	return unpack(ret)
 end
 ";
 			// overload resume function for report error
