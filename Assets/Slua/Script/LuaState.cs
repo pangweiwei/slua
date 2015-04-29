@@ -675,10 +675,12 @@ end
 		{
 			int n = LuaDLL.lua_gettop(L);
 
-			if (loader(L) != 0) return LuaDLL.lua_gettop(L) - n;
-
-			LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
-			return LuaDLL.lua_gettop(L) - n;
+			if (loader(L) != 0)
+			{
+				LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
+				return LuaDLL.lua_gettop(L) - n;
+			}
+			return 0;
 		}
 		
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -688,8 +690,13 @@ end
 			byte[] bytes = loadFile(fileName);
 			if (bytes != null)
 			{
-				LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fileName);
-				return 1;
+				if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fileName) == 0)
+					return 1;
+				else
+				{
+					string errstr = LuaDLL.lua_tostring(L, -1);
+					LuaDLL.luaL_error(L, errstr);
+				}
 			}
 			return 0;
 		}
