@@ -141,7 +141,7 @@ namespace SLua
 		{
 		}
 
-		public bool call(int nArgs, int errfunc)
+		bool call(int nArgs, int errfunc)
 		{
 
 			if (!state.isMainThread())
@@ -348,7 +348,7 @@ namespace SLua
 			public void Dispose()
 			{
 				if(iterPhase==1)
-					LuaDLL.lua_pop(t.L, 1);
+					LuaDLL.lua_pop(t.L, 2);
 
 				LuaDLL.lua_remove(t.L, indext);
 			}
