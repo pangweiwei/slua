@@ -88,8 +88,8 @@ namespace SLua
 		{
 			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
 			{
-				Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
 				errorReported = LuaDLL.lua_gettop(luaState.L);
+				Debug.LogError(string.Format("Some function not remove temp value({0}) from lua stack. You should fix it.",LuaDLL.luaL_typename(luaState.L,errorReported)));
 			}
 
 			luaState.checkRef();
