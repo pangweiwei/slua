@@ -1214,7 +1214,9 @@ namespace SLua
 
 						for (int k = 0; k < pars.Length; k++)
 						{
-							CheckArgument(file, pars[k].ParameterType, k, 2, false, false);
+							ParameterInfo p = pars[k];
+							bool hasParams = p.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0;
+							CheckArgument(file, p.ParameterType, k, 2, p.IsOut, hasParams);
 						}
 						Write(file, "o=new {0}({1});", TypeDecl(t), FuncCall(ci));
 						if (t.Name == "String") // if export system.string, push string as ud not lua string

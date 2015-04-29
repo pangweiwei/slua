@@ -1034,19 +1034,19 @@ return index
 			return true;
 		}
 
-		static public bool checkParams(IntPtr l, int p, out object[] pars)
+		static public bool checkParams<T>(IntPtr l, int p, out T[] pars)
 		{
 			int top = LuaDLL.lua_gettop(l);
 			if (top - p >= 0)
 			{
-				pars = new object[top - p + 1];
+				pars = new T[top - p + 1];
 				for (int n = p, k = 0; n <= top; n++, k++)
 				{
-					pars[k] = checkVar(l, n);
+					checkType(l, n, out pars[k]);
 				}
 				return true;
 			}
-			pars = new object[0];
+			pars = new T[0];
 			return true;
 		}
 
