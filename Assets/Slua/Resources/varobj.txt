@@ -4,7 +4,7 @@ function main()
 
 	-- List<>,Dictionay<> not exported
 	-- so return as LuaVarObject
-	-- varobj access via reflection, try to avoid using not exported class
+	-- varobj access via reflection, try to avoid using non exported class
 
 	local obj = HelloWorld()
 
@@ -68,6 +68,7 @@ function main()
 	local cc=cls.one
 	cc=cls.Normalize(cc)
 	print(cc.x,cc.y,cc.z)
+
 end
 
 

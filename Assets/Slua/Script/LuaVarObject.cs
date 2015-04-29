@@ -81,7 +81,12 @@ namespace SLua
 				switch (tn)
 				{
 					case "String":
-						return LuaDLL.lua_tostring(l, p);
+						{
+							string str;
+							if(checkType(l, p, out str))
+								return str;
+						}
+						break;
 					case "Int32":
 						return (int)LuaDLL.lua_tointeger(l, p);
 					case "Uint32":
@@ -96,6 +101,7 @@ namespace SLua
 					default:
 						return LuaObject.checkVar(l, p);
 				}
+				return null;
 			}
 
 			internal bool matchType(IntPtr l, int from, ParameterInfo[] pis,bool isstatic)
