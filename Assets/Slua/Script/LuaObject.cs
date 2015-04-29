@@ -927,7 +927,9 @@ return index
 				LuaDLL.lua_pop(l, 1);
 			}
 			else if (lt == LuaTypes.LUA_TSTRING)
-				tname = LuaDLL.lua_tostring(l, p);
+			{
+				checkType(l,p, out tname);
+			}
 
 			if (tname == null)
 				LuaDLL.luaL_error(l, "expect string or type table");
@@ -1126,9 +1128,8 @@ return index
 					}
 				case LuaTypes.LUA_TFUNCTION:
 					{
-						LuaDLL.lua_pushvalue(l, p);
-						int r = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
-						LuaFunction v = new LuaFunction(l, r);
+						LuaFunction v;
+						LuaObject.checkType(l, p, out v);
 						return v;
 					}
 				case LuaTypes.LUA_TTABLE:
@@ -1174,9 +1175,8 @@ return index
 						}
 						else
 						{
-							LuaDLL.lua_pushvalue(l, p);
-							int r = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
-							LuaTable v = new LuaTable(l, r);
+							LuaTable v;
+							checkType(l,p,out v);
 							return v;
 						}
 					}
