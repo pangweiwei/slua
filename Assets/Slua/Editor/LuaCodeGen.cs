@@ -1254,11 +1254,6 @@ namespace SLua
 			}
 		}
 
-		private void NotSupport(StreamWriter file)
-		{
-			Write(file, "LuaDLL.luaL_error(l,\"Not support\");");
-			Write(file, "return 0;");
-		}
 		bool IsNotSupport(Type t)
 		{
 			if (t.IsSubclassOf(typeof(Delegate)))
@@ -1486,10 +1481,7 @@ namespace SLua
 					hasref = true;
 				}
 
-				bool hasParams = false;
-				if (pars.Length > 0)
-					hasParams = pars[n].GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0;
-
+				bool hasParams = p.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0;
 				CheckArgument(file, p.ParameterType, n, argIndex, p.IsOut, hasParams);
 			}
 
