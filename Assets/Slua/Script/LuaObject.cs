@@ -744,22 +744,6 @@ return index
 			return true;
 		}
 
-		static public bool checkType(IntPtr l, int p, out float[] v)
-		{
-			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
-			int n = LuaDLL.lua_rawlen(l, p);
-			v = new float[n];
-			for (int k = 0; k < n; k++)
-			{
-				LuaDLL.lua_rawgeti(l, p, k + 1);
-				float f;
-				checkType(l, -1, out f);
-				v[k] = f;
-				LuaDLL.lua_pop(l, 1);
-			}
-			return true;
-		}
-
 		static public bool checkType(IntPtr l, int p, out string v)
 		{
 			if(LuaDLL.lua_isuserdata(l,p)>0)
@@ -976,15 +960,15 @@ return index
 			return oc.get(l, p);
 		}
 
-		static public bool checkType(IntPtr l, int p, out object[] t)
+		static public bool checkType<T>(IntPtr l, int p, out T[] t)
 		{
 			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
 			int n = LuaDLL.lua_rawlen(l, p);
-			t = new object[n];
+			t = new T[n];
 			for (int k = 0; k < n; k++)
 			{
 				LuaDLL.lua_rawgeti(l, p, k + 1);
-				t[k] = checkVar(l, -1);
+				t[k] = (T)checkVar(l, -1);
 				LuaDLL.lua_pop(l, 1);
 			}
 			return true;
@@ -998,22 +982,6 @@ return index
 		static public bool checkType(IntPtr l, int p, out Array t)
 		{
 			throw new NotSupportedException();
-		}
-
-		static public bool checkType(IntPtr l, int p, out string[] t)
-		{
-			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
-			int n = LuaDLL.lua_rawlen(l, p);
-			t = new string[n];
-			for (int k = 0; k < n; k++)
-			{
-				LuaDLL.lua_rawgeti(l, p, k + 1);
-				string f;
-				checkType(l, -1, out f);
-				t[k] = f;
-				LuaDLL.lua_pop(l, 1);
-			}
-			return true;
 		}
 
 		static public bool checkType(IntPtr l, int p, out char[] pars)
@@ -1050,63 +1018,9 @@ return index
 			return true;
 		}
 
-		static public bool checkParams(IntPtr l, int p, out float[] pars)
-		{
-			int top = LuaDLL.lua_gettop(l);
-			if (top - p >= 0)
-			{
-				pars = new float[top - p + 1];
-				for (int n = p, k = 0; n <= top; n++, k++)
-				{
-					checkType(l, n, out pars[k]);
-				}
-				return true;
-			}
-			pars = new float[0];
-			return true;
-		}
-
-		static public bool checkParams(IntPtr l, int p, out int[] pars)
-		{
-			int top = LuaDLL.lua_gettop(l);
-			if (top - p >= 0)
-			{
-				pars = new int[top - p + 1];
-				for (int n = p, k = 0; n <= top; n++, k++)
-				{
-					checkType(l, n, out pars[k]);
-				}
-				return true;
-			}
-			pars = new int[0];
-			return true;
-		}
-
-
-
-		static public bool checkParams(IntPtr l, int p, out string[] pars)
-		{
-			int top = LuaDLL.lua_gettop(l);
-			if (top - p >= 0)
-			{
-				pars = new string[top - p + 1];
-				for (int n = p, k = 0; n <= top; n++, k++)
-				{
-					checkType(l, n, out pars[k]);
-				}
-				return true;
-			}
-			pars = new string[0];
-			return true;
-		}
-
 		static public bool checkParams(IntPtr l, int p, out char[] pars)
 		{
-			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TSTRING);
-			string s;
-			checkType(l, p, out s);
-			pars = s.ToCharArray();
-			return true;
+			return checkType(l, p, out pars);
 		}
 
 		static public object checkVar(IntPtr l, int p)
@@ -1401,11 +1315,7 @@ return index
 
 		public static object checkSelf(IntPtr l)
 		{
-			object o = checkObj(l, 1);
-			if (o != null)
-				return o;
-			LuaDLL.luaL_error(l, "expect self, but get null");
-			return null;
+			return checkSelf<object>(l);
 		}
 
 		public static void setBack(IntPtr l, object o)

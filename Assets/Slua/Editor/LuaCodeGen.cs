@@ -1193,43 +1193,40 @@ namespace SLua
 				WriteFunctionAttr(file);
 				Write(file, "static public int constructor(IntPtr l) {");
 				WriteTry(file);
-				if (cons.Length > 0)
+				
+				if (cons.Length > 1)
+					Write(file, "int argc = LuaDLL.lua_gettop(l);");
+				Write(file, "{0} o;", TypeDecl(t));
+				bool first = true;
+				for (int n = 0; n < cons.Length; n++)
 				{
+					ConstructorInfo ci = cons[n];
+					ParameterInfo[] pars = ci.GetParameters();
+
 					if (cons.Length > 1)
-						Write(file, "int argc = LuaDLL.lua_gettop(l);");
-					Write(file, "{0} o;", TypeDecl(t));
-					bool first = true;
-					for (int n = 0; n < cons.Length; n++)
 					{
-						ConstructorInfo ci = cons[n];
-						ParameterInfo[] pars = ci.GetParameters();
-
-						if (cons.Length > 1)
-						{
-							if (isUniqueArgsCount(cons, ci))
-								Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", ci.GetParameters().Length + 1);
-							else
-								Write(file, "{0}(matchType(l,argc,2{1})){{", first ? "if" : "else if", TypeDecl(pars));
-						}
-
-						for (int k = 0; k < pars.Length; k++)
-						{
-							ParameterInfo p = pars[k];
-							bool hasParams = p.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0;
-							CheckArgument(file, p.ParameterType, k, 2, p.IsOut, hasParams);
-						}
-						Write(file, "o=new {0}({1});", TypeDecl(t), FuncCall(ci));
-						if (t.Name == "String") // if export system.string, push string as ud not lua string
-							Write(file, "pushObject(l,o);");
+						if (isUniqueArgsCount(cons, ci))
+							Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", ci.GetParameters().Length + 1);
 						else
-							Write(file, "pushValue(l,o);");
-						Write(file, "return 1;");
-						if (cons.Length == 1)
-							WriteCatchExecption(file);
-						Write(file, "}");
-						first = false;
+							Write(file, "{0}(matchType(l,argc,2{1})){{", first ? "if" : "else if", TypeDecl(pars));
 					}
 
+					for (int k = 0; k < pars.Length; k++)
+					{
+						ParameterInfo p = pars[k];
+						bool hasParams = p.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0;
+						CheckArgument(file, p.ParameterType, k, 2, p.IsOut, hasParams);
+					}
+					Write(file, "o=new {0}({1});", TypeDecl(t), FuncCall(ci));
+					if (t.Name == "String") // if export system.string, push string as ud not lua string
+						Write(file, "pushObject(l,o);");
+					else
+						Write(file, "pushValue(l,o);");
+					Write(file, "return 1;");
+					if (cons.Length == 1)
+						WriteCatchExecption(file);
+					Write(file, "}");
+					first = false;
 				}
 
 				if (cons.Length > 1)
@@ -1486,9 +1483,7 @@ namespace SLua
 					hasref = true;
 				}
 
-				bool hasParams = false;
-				if (pars.Length > 0)
-					hasParams = pars[n].GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0;
+				bool hasParams = pars[n].GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0;
 
 				CheckArgument(file, p.ParameterType, n, argIndex, p.IsOut, hasParams);
 			}
