@@ -141,7 +141,7 @@ namespace SLua
 		{
 		}
 
-		bool call(int nArgs, int errfunc)
+		public bool call(int nArgs, int errfunc)
 		{
 
 			if (!state.isMainThread())
