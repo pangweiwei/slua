@@ -1438,33 +1438,32 @@ return index
 		{
 			int op = 0;
 			LuaTypes t = LuaDLL.lua_type(l, p);
-			if (t == LuaTypes.LUA_TNIL)
+			switch (t)
 			{
-				op = 0;
-			}
-			else if (t == LuaTypes.LUA_TUSERDATA)
-			{
-				op = 0;
-			}
-			else if (t == LuaTypes.LUA_TTABLE)
-			{
+				case LuaTypes.LUA_TNIL:
+				case LuaTypes.LUA_TUSERDATA:
+					op = 0;
+					break;
 
-				LuaDLL.lua_rawgeti(l, p, 1);
-				LuaDLL.lua_pushstring(l, "+=");
-				if (LuaDLL.lua_rawequal(l, -1, -2) == 1)
-					op = 1;
-				else
-					op = 2;
+				case LuaTypes.LUA_TTABLE:
 
-				LuaDLL.lua_pop(l, 2);
-				LuaDLL.lua_rawgeti(l, p, 2);
+					LuaDLL.lua_rawgeti(l, p, 1);
+					LuaDLL.lua_pushstring(l, "+=");
+					if (LuaDLL.lua_rawequal(l, -1, -2) == 1)
+						op = 1;
+					else
+						op = 2;
+
+					LuaDLL.lua_pop(l, 2);
+					LuaDLL.lua_rawgeti(l, p, 2);
+					break;
+				case LuaTypes.LUA_TFUNCTION:
+					LuaDLL.lua_pushvalue(l, p);
+					break;
+				default:
+					LuaDLL.luaL_error(l, "expect valid Delegate ");
+					break;
 			}
-			else if (t == LuaTypes.LUA_TFUNCTION)
-			{
-				LuaDLL.lua_pushvalue(l, p);
-			}
-			else
-				LuaDLL.luaL_error(l, "expect valid Delegate ");
 			return op;
 		}
 
