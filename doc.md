@@ -482,6 +482,11 @@ iOS对dll的尺寸有大小限制, 出现这个错误可能是你的工程代码
 请参考 https://github.com/lulersoft/me_SLua 
 
 
+11) slua支持protobuf/json/sqlite吗?
+
+slua仅专注解决lua和c#绑定的问题, 保证这部分功能足够内敛精简, 任何第三方lua库都可以用, 但这需要你自己编译进入slua库里, 不要问我如何编译他们, 当你打算使用这些库时, 一般情况你应该懂得如何编译他们了.
+
+
 ##已知问题
 
 UnityAction/UnityEvent目前仅支持1个泛型参数的版本,目前UnityEngine也没有多个泛型参数的需要,后续考虑完善.
