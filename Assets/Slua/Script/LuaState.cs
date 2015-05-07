@@ -485,6 +485,12 @@ namespace SLua
 			refQueue = new Queue<UnrefPair>();
 
 			LuaDLL.luaL_openlibs(L);
+			try
+			{
+				LuaDLL.luaS_openextlibs(L);
+			} catch(Exception) {
+				// do nothing
+			}
 
 			ObjectCache.make(L);
 
