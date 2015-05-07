@@ -63,6 +63,15 @@ namespace SLua
 			LuaCoroutine.reg(luaState.L, lgo);
 			Helper.reg(luaState.L);
 
+			try
+			{
+				LuaDLL.luaS_openextlibs(luaState.L);
+			}
+			catch (Exception)
+			{
+				// do nothing
+			}
+
 			start(main);
 
 			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
