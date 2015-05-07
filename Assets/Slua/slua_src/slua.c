@@ -46,6 +46,24 @@
 #include <math.h>
 #endif
 
+static const luaL_Reg s_lib_preload[] = {
+	// { "lpeg", luaopen_lpeg },
+  	// { "pb",    luaopen_pb }, // any 3rd lualibs added here
+  	{ NULL,        NULL }
+};
+
+LUA_API void luaS_openextlibs(lua_State *L) {
+	const luaL_Reg *lib;
+
+	luaL_findtable(L, LUA_REGISTRYINDEX, "_PRELOAD",
+		sizeof(s_lib_preload)/sizeof(s_lib_preload[0])-1);
+
+	for (lib = s_lib_preload; lib->func; lib++) {
+		lua_pushcfunction(L, lib->func);
+		lua_setfield(L, -2, lib->name);
+	}
+}
+
 LUA_API void luaS_newuserdata(lua_State *L, int val)
 {
 	int* pointer = (int*)lua_newuserdata(L, sizeof(int));
