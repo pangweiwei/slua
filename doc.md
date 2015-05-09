@@ -137,6 +137,17 @@ slua支持同名重载方法, 但对于自己实现的接口(非来自UnityEngin
 需要注意的是, 可变参数函数不支持任何同名重载, 并且params修饰符必须针对最后一个参数.
 
 
+####out参数
+
+out参数是c#特有的语法,lua并不支持out参数,为此此slua采用多返回值来处理out参数,即所有out的参数都会变成一个返回值, 例如:
+>     -- get out parameter
+	local hitinfo = RaycastHit()
+	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1),hitinfo)
+	print("Physics Hitinfo",ok,hitinfo)
+
+hitinfo先传入Raycast函数,然后通过返回值返回.
+
+
 #####Type参数
 
 在slua里,基于效率和易用性的原则, 不建议导出System空间下的类型, 而使用变通方法来表达类似需求, 对于Type参数的传入, 对于导出类型,比如UnityEngine.GameObject, HelloWorld等,可以直接使用对应的lua table来当作参数传入, 在c#会理解为Type, 例如:
@@ -151,7 +162,46 @@ slua支持同名重载方法, 但对于自己实现的接口(非来自UnityEngin
     
 再比如
 
->    gameObject:AddComponent(UnityEngine.UI.LayoutElement)
+>    gameObject:AddComponent(UnityEngine.UI.Lay
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    Element)
 
 从Unity5开始AddComponent不再支持字符串作为类型参数, 可以使用上面的方面传递类型.
 
@@ -430,6 +480,11 @@ iOS对dll的尺寸有大小限制, 出现这个错误可能是你的工程代码
 10) 有没有更完整的demo?
 
 请参考 https://github.com/lulersoft/me_SLua 
+
+
+11) slua支持protobuf/json/sqlite吗?
+
+slua仅专注解决lua和c#绑定的问题, 保证这部分功能足够内敛精简, 任何第三方lua库都可以用, 但这需要你自己编译进入slua库里, 不要问我如何编译他们, 当你打算使用这些库时, 一般情况你应该懂得如何编译他们了.
 
 
 ##已知问题

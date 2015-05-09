@@ -20,29 +20,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
-using System.Collections;
-using SLua;
-using System;
-public class LuaSvrGameObject : MonoBehaviour
+namespace SLua
 {
-
-	public LuaState state;
-	public Action onUpdate;
-
-	// make sure lua state finalize at last
-	// make sure LuaSvrGameObject excute order is max(9999)
-	void OnDestroy()
+	using UnityEngine;
+	using System.Collections;
+	using SLua;
+	using System;
+	public class LuaSvrGameObject : MonoBehaviour
 	{
-		if (state != null)
+
+		public LuaState state;
+		public Action onUpdate;
+
+		// make sure lua state finalize at last
+		// make sure LuaSvrGameObject excute order is max(9999)
+		void OnDestroy()
 		{
-			state.Close();
-			state = null;
+			if (state != null)
+			{
+				state.Close();
+				state = null;
+			}
 		}
-	}
 
-	void Update()
-	{
-		if (onUpdate != null) onUpdate();
+		void Update()
+		{
+			if (onUpdate != null) onUpdate();
+		}
 	}
 }

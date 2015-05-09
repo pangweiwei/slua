@@ -20,17 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using LuaInterface;
-using UnityEngine;
-using System.IO;
-using System.Text;
-using System.Runtime.InteropServices;
+
 
 namespace SLua
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Collections;
+	using LuaInterface;
+	using UnityEngine;
+	using System.IO;
+	using System.Text;
+	using System.Runtime.InteropServices;
+
 	abstract public class LuaVar : IDisposable
 	{
 		protected LuaState state = null;
@@ -346,7 +348,7 @@ namespace SLua
 			public void Dispose()
 			{
 				if(iterPhase==1)
-					LuaDLL.lua_pop(t.L, 1);
+					LuaDLL.lua_pop(t.L, 2);
 
 				LuaDLL.lua_remove(t.L, indext);
 			}
@@ -501,8 +503,9 @@ namespace SLua
 			string resumefunc = @"
 local resume = coroutine.resume
 coroutine.resume=function(co,...)
-	local ok,err=resume(co,...)
-	if not ok then 	UnityEngine.Debug.LogError(debug.traceback(co,err)) end
+	local ret={resume(co,...)}
+	if not ret[1] then UnityEngine.Debug.LogError(debug.traceback(co,ret[2])) end
+	return unpack(ret)
 end
 ";
 			// overload resume function for report error
@@ -672,10 +675,12 @@ end
 		{
 			int n = LuaDLL.lua_gettop(L);
 
-			if (loader(L) != 0) return LuaDLL.lua_gettop(L) - n;
-
-			LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
-			return LuaDLL.lua_gettop(L) - n;
+			if (loader(L) != 0)
+			{
+				LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
+				return LuaDLL.lua_gettop(L) - n;
+			}
+			return 0;
 		}
 		
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -685,8 +690,13 @@ end
 			byte[] bytes = loadFile(fileName);
 			if (bytes != null)
 			{
-				LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fileName);
-				return 1;
+				if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fileName) == 0)
+					return 1;
+				else
+				{
+					string errstr = LuaDLL.lua_tostring(L, -1);
+					LuaDLL.luaL_error(L, errstr);
+				}
 			}
 			return 0;
 		}

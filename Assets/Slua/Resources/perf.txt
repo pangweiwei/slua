@@ -8,7 +8,9 @@ local Vector3 = UnityEngine.Vector3
 local GameObject = UnityEngine.GameObject
 local Profiler = UnityEngine.Profiler
 local Time = UnityEngine.Time
-
+local Matrix4x4 = UnityEngine.Matrix4x4
+local Texture2D = UnityEngine.Texture2D
+local Quaternion = UnityEngine.Quaternion
 
 function main()
 	print(jit and "jit on" or "jit off, pls run test with luajit")
@@ -18,15 +20,7 @@ local cube = GameObject("Script cube")
 
 
 function test1()
-	-- properset
-	-- test1
-	local start = os.clock()
-	HelloWorld.testset(cube)
-	print("test1/cs",os.clock()-start)
-
 	local transform = cube.transform
-	local obj=HelloWorld()
-	
 	local start = os.clock()
 	for i=1,200000 do
         transform.position=transform.position
@@ -35,56 +29,53 @@ function test1()
 end
 
 function test2()
-	local start = os.clock()
-	HelloWorld.test2(cube)
-	print("test2/cs",os.clock()-start)
-
-	local v = cube.transform.position
+	local transform=cube.transform
 	local start = os.clock()
 	for i=1,200000 do
-		v:Normalize()
+		transform:Rotate(Vector3.up, 90)
 	end
 	print("test2/lua " .. (os.clock() - start));
 end
 
 function test3()
-	local start = os.clock()
-	HelloWorld.test3(cube)
-	print("test3/cs",os.clock()-start)
-
 	local v = cube.transform.position
 	local start = os.clock()
 	for i=1,200000 do
-		v = Vector3.Normalize(v)
+		v = Vector3(i,i,i)
 	end
 	print("test3/lua " .. (os.clock() - start));
 end
 
 function test4()
-	local start = os.clock()
-	HelloWorld.test4(cube)
-	print("test4/cs",os.clock()-start)
-
-
 	local t = cube.transform
 	local v = Vector3.one
 	local start = os.clock()
 	for i=1,200000 do
-		t.position=v
+		local v = GameObject()	
 	end
 	print("test4/lua " .. (os.clock() - start));
 end
 
 
 function test5()
-	local start = os.clock()
-	HelloWorld.test5(cube)
-	print("test5/cs",os.clock()-start)
-
 	local v = cube.transform.position
 	local start = os.clock()
-	for i=1,200000 do
-		v = Vector3(i,i,i)
+	for i=1,20000 do
+		local v = GameObject()
+		v:AddComponent("SkinnedMeshRenderer")
+		local c=v:GetComponent("SkinnedMeshRenderer")
+		c.castShadows=false
+		c.receiveShadows=false
 	end
 	print("test5/lua " .. (os.clock() - start));
+end
+
+function test6()
+	local transform=cube.transform
+	local start = os.clock()
+	for i=1,200000 do
+		local t=Quaternion.Euler(100,100,100)
+		local q=Quaternion.Slerp(Quaternion.identity,t,0.5)
+	end
+	print("test6/lua " .. (os.clock() - start));
 end

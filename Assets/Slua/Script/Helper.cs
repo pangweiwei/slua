@@ -21,15 +21,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using LuaInterface;
-using System.Reflection;
-using System.Runtime.InteropServices;
-
 namespace SLua
 {
+	using System.Collections;
+	using System.Collections.Generic;
+	using System;
+	using LuaInterface;
+	using System.Reflection;
+	using System.Runtime.InteropServices;
+
 	class Helper : LuaObject
 	{
 
@@ -148,6 +148,34 @@ return Class
 		}
 
 
+
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int GetClass(IntPtr l)
+		{
+			try
+			{
+				string cls;
+				checkType(l, 1, out cls);
+				Type t = Type.GetType(cls);
+				if (t == null)
+				{
+					LuaDLL.luaL_error(l, "Can't find {0} to create", cls);
+					return 0;
+				}
+
+				LuaClassObject co = new LuaClassObject(t);
+				LuaObject.pushObject(l,co);
+
+				return 1;
+			}
+			catch (Exception e)
+			{
+				LuaDLL.luaL_error(l, e.ToString());
+				return 0;
+			}
+		}
+
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public new int ToString(IntPtr l)
 		{
@@ -173,6 +201,7 @@ return Class
 		static public void reg(IntPtr l)
 		{
 			reg(l, CreateClass, "Slua");
+			reg(l, GetClass, "Slua");
 			reg(l, iter, "Slua");
 			reg(l, ToString, "Slua");
 

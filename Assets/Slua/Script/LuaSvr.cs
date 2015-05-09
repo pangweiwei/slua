@@ -20,16 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
-using LuaInterface;
-using System.Reflection;
 
 namespace SLua
 {
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+
+	using UnityEngine;
+	using LuaInterface;
+	using System.Reflection;
+	using System.Diagnostics;
+	using Debug = UnityEngine.Debug;
+
 	public class LuaSvr
 	{
 		public LuaState luaState;
@@ -60,6 +63,15 @@ namespace SLua
 			LuaCoroutine.reg(luaState.L, lgo);
 			Helper.reg(luaState.L);
 
+			try
+			{
+				LuaDLL.luaS_openextlibs(luaState.L);
+			}
+			catch (Exception)
+			{
+				// do nothing
+			}
+
 			start(main);
 
 			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
@@ -85,8 +97,8 @@ namespace SLua
 		{
 			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
 			{
-				Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
 				errorReported = LuaDLL.lua_gettop(luaState.L);
+				Debug.LogError(string.Format("Some function not remove temp value({0}) from lua stack. You should fix it.",LuaDLL.luaL_typename(luaState.L,errorReported)));
 			}
 
 			luaState.checkRef();

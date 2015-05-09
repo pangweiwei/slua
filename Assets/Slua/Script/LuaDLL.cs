@@ -89,6 +89,9 @@ namespace LuaInterface
 		const string LUADLL = "slua";
 #endif
 
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void luaS_openextlibs(IntPtr L);
+
 		// Thread Funcs
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int lua_tothread(IntPtr L, int index);
@@ -223,7 +226,7 @@ namespace LuaInterface
 
         public static int lua_rawlen(IntPtr luaState, int stackPos)
 		{
-			return luaS_rawlen(luaState, stackPos);
+			return LuaDLLWrapper.luaS_rawlen(luaState, stackPos);
 		}
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
@@ -290,8 +293,16 @@ namespace LuaInterface
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int lua_resume(IntPtr L, IntPtr from, int narg);
+
+		public static void lua_replace(IntPtr luaState, int index) {
+			lua_copy(luaState, -1, (index));
+			lua_pop(luaState, 1);
+		}
+
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void lua_copy(IntPtr luaState,int from,int toidx);
 #else
-        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int lua_resume(IntPtr L, int narg);
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
