@@ -487,10 +487,9 @@ namespace SLua
                 return op;
             }
 			LuaDLL.lua_pop(l,1);
-			
+			l = LuaState.get(l).L;
             ua = ($ARGS) =>
             {
-				l = LuaState.get(l).L;
                 int error = pushTry(l);
 ";
 
