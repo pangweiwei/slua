@@ -197,14 +197,28 @@ return Class
 			}
 			return 1;
 		}
-
+		
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int As(IntPtr l)
+		{
+			if (!isTypeTable (l, 2)) {
+				LuaDLL.luaL_error(l,"No matched type of param 2");
+				return 0;
+			}
+			string meta = LuaDLL.lua_tostring (l, -1);
+			LuaDLL.luaL_getmetatable (l, meta);
+			LuaDLL.lua_setmetatable (l, 1);
+			LuaDLL.lua_pushvalue (l, 1);
+			return 1;
+		}
+		
 		static public void reg(IntPtr l)
 		{
 			reg(l, CreateClass, "Slua");
 			reg(l, GetClass, "Slua");
 			reg(l, iter, "Slua");
 			reg(l, ToString, "Slua");
-
+			reg(l, As, "Slua");
 
 			newTypeTable(l, "Slua");
 			if (LuaDLL.luaL_dostring(l, classfunc) != 0)

@@ -685,7 +685,7 @@ return index
 			return false;
 		}
 
-		static bool isTypeTable(IntPtr l, int p)
+		public static bool isTypeTable(IntPtr l, int p)
 		{
 			if (LuaDLL.lua_type(l, p) != LuaTypes.LUA_TTABLE)
 				return false;
