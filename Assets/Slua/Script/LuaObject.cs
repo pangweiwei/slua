@@ -78,6 +78,7 @@ namespace SLua
 		static protected LuaCSFunction lua_eq = new LuaCSFunction(luaEq);
         static protected LuaCSFunction lua_lt = new LuaCSFunction(luaLt);
         static protected LuaCSFunction lua_le = new LuaCSFunction(luaLe);
+        static protected LuaCSFunction lua_tostring = new LuaCSFunction(ToString);
 		const string DelgateTable = "__LuaDelegate";
 
 		static protected int newindex_ref = 0;
@@ -530,7 +531,9 @@ return index
             LuaDLL.lua_setfield(l, -2, "__le");
             LuaDLL.lua_pushcfunction(l, lua_lt);
             LuaDLL.lua_setfield(l, -2, "__lt");
-
+			LuaDLL.lua_pushcfunction(l, lua_tostring);
+			LuaDLL.lua_setfield(l, -2, "__tostring");
+			
 			if (self.IsValueType)
 			{
 				LuaDLL.lua_pushvalue(l, -1);
@@ -682,7 +685,7 @@ return index
 			return false;
 		}
 
-		static bool isTypeTable(IntPtr l, int p)
+		public static bool isTypeTable(IntPtr l, int p)
 		{
 			if (LuaDLL.lua_type(l, p) != LuaTypes.LUA_TTABLE)
 				return false;

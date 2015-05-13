@@ -968,7 +968,7 @@ namespace SLua
 				PropPair pp = new PropPair();
 				bool isInstance = true;
 
-				if (fi.CanRead)
+				if (fi.CanRead && fi.GetGetMethod() != null)
 				{
 					if (!IsNotSupport(fi.PropertyType))
 					{

@@ -736,7 +736,7 @@ end
 			{
 				if (LuaDLL.lua_pcall(L, 0, LuaDLL.LUA_MULTRET, -2) != 0)
 				{
-					LuaDLL.lua_pop(L, 1);
+					LuaDLL.lua_pop(L, 2);
 					return false;
 				}
 				LuaDLL.lua_remove(L, errfunc); // pop error function
@@ -745,7 +745,7 @@ end
 			}
 			string err = LuaDLL.lua_tostring(L, -1);
 			Debug.LogError(err);
-			LuaDLL.lua_pop(L, 1);
+			LuaDLL.lua_pop(L, 2);
 			return false;
 		}
 
