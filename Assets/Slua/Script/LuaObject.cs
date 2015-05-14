@@ -184,7 +184,7 @@ return index
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int GetHashCode(IntPtr l)
 		{
-			object obj = checkObj(l, 1);
+			object obj = checkVar(l, 1);
 			pushValue(l, obj.GetHashCode());
 			return 1;
 		}
@@ -192,8 +192,8 @@ return index
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int Equals(IntPtr l)
 		{
-			object obj = checkObj(l, 1);
-			object other = checkObj(l, 2);
+			object obj = checkVar(l, 1);
+			object other = checkVar(l, 2);
 			pushValue(l, obj.Equals(other));
 			return 1;
 		}
@@ -454,7 +454,7 @@ return index
 		public static void createTypeMetatable(IntPtr l, LuaCSFunction con, Type self, Type parent)
 		{
 			// set parent
-			if (parent != null && parent != typeof(object))
+			if (parent != null && parent != typeof(object) && parent != typeof(ValueType))
 			{
 				LuaDLL.lua_pushstring(l, "__parent");
 				LuaDLL.luaL_getmetatable(l, ObjectCache.getAQName(parent));
