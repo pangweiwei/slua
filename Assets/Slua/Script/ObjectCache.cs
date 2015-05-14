@@ -175,6 +175,16 @@ namespace SLua
 			}
 		}
 
+        internal void gc(UnityEngine.Object o)
+        {
+            int index;
+            if(objMap.TryGetValue(o, out index))
+            {
+                objMap.Remove(o);
+                cache.del(index);
+            }
+        }
+
 		internal int add(object o)
 		{
 			int objIndex = cache.add(o);
