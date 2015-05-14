@@ -162,6 +162,7 @@ return index
 			addMember(l, ToString);
 			addMember(l, GetHashCode);
 			addMember(l, Equals);
+			addMember (l, GetType);
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "__luabaseobject");
 
 			LuaVarObject.init(l);
@@ -195,6 +196,26 @@ return index
 			object obj = checkVar(l, 1);
 			object other = checkVar(l, 2);
 			pushValue(l, obj.Equals(other));
+			return 1;
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int GetType(IntPtr l)
+		{
+			object obj = checkVar(l, 1);
+
+			string t = obj.GetType ().FullName;
+			string[] subt = t.Split(new Char[] { '.' });
+			
+			LuaDLL.lua_pushglobaltable(l);
+			
+			for (int n = 0; n < subt.Length; n++)
+			{
+				t = subt[n];
+				LuaDLL.lua_pushstring(l, t);
+				LuaDLL.lua_rawget(l, -2);
+				LuaDLL.lua_remove(l, -2);
+			}
 			return 1;
 		}
 
@@ -493,6 +514,9 @@ return index
 
 			LuaDLL.lua_pushcfunction(l, con);
 			LuaDLL.lua_setfield(l, -2, "__call");
+
+			LuaDLL.lua_pushcfunction(l, typeToString);
+			LuaDLL.lua_setfield(l, -2, "__tostring");
 
 			LuaDLL.lua_pushvalue(l, -1);
 			LuaDLL.lua_setmetatable(l, -3);
@@ -1478,6 +1502,13 @@ return index
 			return 0;
 		}
 
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int typeToString(IntPtr l)
+		{
+			LuaDLL.lua_pushstring (l, "__fullname");
+			LuaDLL.lua_rawget (l, -2);
+			return 1;
+		}
 	}
 
 }
