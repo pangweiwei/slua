@@ -487,9 +487,10 @@ namespace SLua
                 return op;
             }
 			LuaDLL.lua_pop(l,1);
-			l = LuaState.get(l).L;
+			
             ua = ($ARGS) =>
             {
+				l = LuaState.get(l).L;
                 int error = pushTry(l);
 ";
 
@@ -968,7 +969,7 @@ namespace SLua
 				PropPair pp = new PropPair();
 				bool isInstance = true;
 
-				if (fi.CanRead && fi.GetGetMethod() != null)
+				if (fi.CanRead)
 				{
 					if (!IsNotSupport(fi.PropertyType))
 					{
@@ -1516,8 +1517,14 @@ namespace SLua
 			else
 				Write(file, "{2}self.{0}({1});", m.Name, FuncCall(m), ret);
 
+            // for Destroy and DestroyImmediate
+            if(t.Name=="Object" && (m.Name== "Destroy" || m.Name== "DestroyImmediate"))
+            {
+                Write(file, "gc(l,a1);");
+            }
 
-			int retcount = 0;
+
+            int retcount = 0;
 			if (m.ReturnType != typeof(void))
 			{
 

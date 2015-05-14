@@ -613,6 +613,12 @@ return index
 			return 0;
 		}
 
+        static internal void gc(IntPtr l,UnityEngine.Object o)
+        {
+            ObjectCache t = ObjectCache.get(l);
+            t.gc(o);
+        }
+
 		static public void checkLuaObject(IntPtr l, int p)
 		{
 			LuaDLL.lua_getmetatable(l, p);
