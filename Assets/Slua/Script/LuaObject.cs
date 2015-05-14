@@ -176,7 +176,7 @@ return index
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int ToString(IntPtr l)
 		{
-			object obj = checkObj(l, 1);
+			object obj = checkVar(l, 1);
 			pushValue(l,obj.ToString());
 			return 1;
 		}
