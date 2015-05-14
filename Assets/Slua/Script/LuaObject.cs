@@ -616,8 +616,12 @@ return index
 			return 0;
 		}
 
-        static internal void gc(IntPtr l,UnityEngine.Object o)
+        static internal void gc(IntPtr l,int p,UnityEngine.Object o)
         {
+            // set ud's metatable is nil avoid gc again
+            LuaDLL.lua_pushnil(l);
+            LuaDLL.lua_setmetatable(l, p);
+
             ObjectCache t = ObjectCache.get(l);
             t.gc(o);
         }

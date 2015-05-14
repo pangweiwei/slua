@@ -1517,13 +1517,6 @@ namespace SLua
 			else
 				Write(file, "{2}self.{0}({1});", m.Name, FuncCall(m), ret);
 
-            // for Destroy and DestroyImmediate
-            if(t.Name=="Object" && (m.Name== "Destroy" || m.Name== "DestroyImmediate"))
-            {
-                Write(file, "gc(l,a1);");
-            }
-
-
             int retcount = 0;
 			if (m.ReturnType != typeof(void))
 			{
