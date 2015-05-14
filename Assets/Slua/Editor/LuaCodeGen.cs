@@ -488,9 +488,9 @@ namespace SLua
             }
 			LuaDLL.lua_pop(l,1);
 			
+			l = LuaState.get(l).L;
             ua = ($ARGS) =>
             {
-				l = LuaState.get(l).L;
                 int error = pushTry(l);
 ";
 
@@ -663,6 +663,7 @@ namespace SLua
                 ua = (UnityEngine.Events.UnityAction<$GN>)ld.d;
                 return true;
             }
+			l = LuaState.get(l).L;
             ua = ($GN v) =>
             {
                 int error = pushTry(l);
