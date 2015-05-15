@@ -36,11 +36,30 @@ namespace SLua
 		static public void reg(IntPtr l, MonoBehaviour m)
 		{
 			mb = m;
-			reg(l, Yield, "UnityEngine");
+			reg(l, Yieldk, "UnityEngine");
+
+			string yield =
+@"
+local Yield = UnityEngine.Yieldk
+UnityEngine.Yield = function(x)
+	local co,ismain=coroutine.running()
+	if ismain then error('Can not yield in main thread') end
+
+	Yield(x,function()
+		coroutine.resume(co)
+	end)
+	coroutine.yield()
+end
+return yield
+";
+				// overload resume function for report error
+			if(LuaDLL.lua_dostring(l, yield)!=0)
+				LuaObject.throwLuaError(l);
+			LuaDLL.lua_pop(l, 1);
 		}
 
 		[MonoPInvokeCallback(typeof(LuaCSFunction))]
-		static public int Yield(IntPtr l)
+		static public int Yieldk(IntPtr l)
 		{
 			try
 			{
@@ -50,28 +69,11 @@ namespace SLua
 					return 0;
 				}
 				object y = checkObj(l, 1);
+				LuaFunction f;
+				checkType(l, 2, out f);
 
-				Action act = () =>
-				{
-#if LUA_5_3
-					if(LuaDLL.lua_resume(l,IntPtr.Zero,0) > (int) LuaThreadStatus.LUA_YIELD )
-#else
-					if (LuaDLL.lua_resume(l, 0) > (int) LuaThreadStatus.LUA_YIELD )
-#endif
-                    {
-						LuaObject.pushTry(l);
-						LuaDLL.lua_pushvalue(l, -2);
-						LuaDLL.lua_call(l, 1, 0);
-						LuaDLL.lua_pop(l, 1);
-                    }
-				};
-
-				mb.StartCoroutine(yieldReturn(y, act));
-#if LUA_5_3
-				return LuaDLL.luaS_yield(l, 0);
-#else
-				return LuaDLL.lua_yield(l, 0);
-#endif
+				mb.StartCoroutine(yieldReturn(y, f));
+				return 0;
 			}
 			catch (Exception e)
 			{
@@ -80,13 +82,13 @@ namespace SLua
 			}
 		}
 
-		static public IEnumerator yieldReturn(object y, Action act)
+		static public IEnumerator yieldReturn(object y, LuaFunction f)
 		{
 			if (y is IEnumerator)
 				yield return mb.StartCoroutine((IEnumerator)y);
 			else
 				yield return y;
-			act();
+			f.call();
 		}
 
 	}
