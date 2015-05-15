@@ -25,7 +25,6 @@
 
 // *** 这个文件仅用于编译libslua.a，ios发布工程时，可以删除这个文件，避免编译错误。
 
-
 #define MT_VEC2 1
 #define MT_VEC3 2
 #define MT_VEC4 3
@@ -51,6 +50,35 @@ static const luaL_Reg s_lib_preload[] = {
   	// { "pb",    luaopen_pb }, // any 3rd lualibs added here
   	{ NULL,        NULL }
 };
+
+#ifndef luaL_findtable
+
+static const char *luaL_findtable(lua_State *L, int idx,
+	const char *fname, int szhint) {
+	const char *e;
+	if (idx) lua_pushvalue(L, idx);
+	do {
+		e = strchr(fname, '.');
+		if (e == NULL) e = fname + strlen(fname);
+		lua_pushlstring(L, fname, e - fname);
+		if (lua_rawget(L, -2) == LUA_TNIL) {  /* no such field? */
+			lua_pop(L, 1);  /* remove this nil */
+			lua_createtable(L, 0, (*e == '.' ? 1 : szhint)); /* new table for field */
+			lua_pushlstring(L, fname, e - fname);
+			lua_pushvalue(L, -2);
+			lua_settable(L, -4);  /* set new table into field */
+		}
+		else if (!lua_istable(L, -1)) {  /* field has a non-table value? */
+			lua_pop(L, 2);  /* remove table and value */
+			return fname;  /* return problematic part of the name */
+		}
+		lua_remove(L, -2);  /* remove previous table */
+		fname = e + 1;
+	} while (*e == '.');
+	return NULL;
+}
+
+#endif
 
 LUA_API void luaS_openextlibs(lua_State *L) {
 	const luaL_Reg *lib;
