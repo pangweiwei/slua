@@ -21,10 +21,6 @@
 // THE SOFTWARE.
 
 
-// *** you can remove slua.c file from xcode on build ios project ***
-
-// *** 这个文件仅用于编译libslua.a，ios发布工程时，可以删除这个文件，避免编译错误。
-
 #define MT_VEC2 1
 #define MT_VEC3 2
 #define MT_VEC4 3
@@ -51,7 +47,7 @@ static const luaL_Reg s_lib_preload[] = {
   	{ NULL,        NULL }
 };
 
-#ifndef luaL_findtable
+#if LUA_VERSION_NUM >= 503
 
 static const char *luaL_findtable(lua_State *L, int idx,
 	const char *fname, int szhint) {
