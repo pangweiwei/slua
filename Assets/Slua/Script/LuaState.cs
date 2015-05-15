@@ -500,25 +500,16 @@ namespace SLua
 			LuaDLL.lua_pushcfunction(L, import);
 			LuaDLL.lua_setglobal(L, "import");
 
-#if LUA_5_3
+
 			string resumefunc = @"
 local resume = coroutine.resume
-coroutine.resume=function(co,...)
-	local ret={resume(co,...)}
-	if not ret[1] then UnityEngine.Debug.LogError(debug.traceback(co,ret[2])) end
-	return table.unpack(ret)
-end
-";
-#else
-			string resumefunc = @"
-local resume = coroutine.resume
+local unpack = unpack or table.unpack
 coroutine.resume=function(co,...)
 	local ret={resume(co,...)}
 	if not ret[1] then UnityEngine.Debug.LogError(debug.traceback(co,ret[2])) end
 	return unpack(ret)
 end
 ";
-#endif
 			// overload resume function for report error
 			if(LuaDLL.lua_dostring(L, resumefunc)!=0)
 				LuaObject.throwLuaError(L);

@@ -291,6 +291,11 @@ namespace LuaInterface
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int luaS_yield(IntPtr luaState,int nrets);
 
+		public static int lua_yield(IntPtr luaState,int nrets) {
+			return luaS_yield(luaState,nrets);
+		}
+
+
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int lua_resume(IntPtr L, IntPtr from, int narg);
 

@@ -132,8 +132,7 @@ static int k(lua_State *L, int status, lua_KContext ctx) {
 }
 
 LUA_API int luaS_yield(lua_State *L, int nrets) {
-	int ret = lua_yieldk(L, nrets, 0, k);
-	return ret;
+	return k(L, lua_yieldk(L, nrets, 0, k), 0);
 }
 
 LUA_API int luaS_pcall(lua_State *L, int nargs, int nresults, int err) {
