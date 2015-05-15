@@ -99,36 +99,45 @@ namespace SLua
 			return true;
 		}
 
-		//        public static void pushValue(IntPtr l, byte[] o)
-		//        {
-		//            LuaDLL.lua_pushlstring(l, o, o.Length);
-		//        }
+		public static void pushValue(IntPtr l, RaycastHit2D r)
+		{
+			pushObject(l, r);
+		}
 
-		// i don't know why c# find a wrong generic function
-		// push T will push object not a real push<T>
+		public static void pushValue(IntPtr l, RaycastHit r)
+		{
+			pushObject(l, r);
+		}
 
-		//         public static void pushValue<T>(IntPtr l, List<T> list)
-		//         {
-		//             LuaDLL.lua_newtable(l);
-		//             for (int n = 0; n < list.Count; n++)
-		//             {
-		//                 pushValue(l, (T)list[n]);
-		//                 LuaDLL.lua_rawseti(l, -2, n + 1);
-		//             }
-		//         }
-		// 
-		//         public static void pushValue<K,V>(IntPtr l, Dictionary<K,V> dict)
-		//         {
-		//             LuaDLL.lua_newtable(l);
-		//             foreach (K k in dict.Keys)
-		//             {
-		//                 pushValue(l, (K)k);
-		//                 pushValue(l, (V)dict[k]);
-		//                 LuaDLL.lua_rawset(l, -3);
-		//             }
-		//         }
+		public static void pushValue(IntPtr l, RaycastHit[] r)
+		{
+			if (r == null)
+			{
+				LuaDLL.lua_pushnil(l);
+				return;
+			}
+			LuaDLL.lua_newtable(l);
+			for (int n = 0; n < r.Length; n++)
+			{
+				pushValue(l, r[n]);
+				LuaDLL.lua_rawseti(l, -2, n + 1);
+			}
+		}
 
-
+		public static void pushValue(IntPtr l, RaycastHit2D[] r)
+		{
+			if (r == null)
+			{
+				LuaDLL.lua_pushnil(l);
+				return;
+			}
+			LuaDLL.lua_newtable(l);
+			for (int n = 0; n < r.Length; n++)
+			{
+				pushValue(l, r[n]);
+				LuaDLL.lua_rawseti(l, -2, n + 1);
+			}
+		}
 
 		public static void pushValue(IntPtr l, UnityEngine.Object o)
 		{
