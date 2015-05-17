@@ -20,51 +20,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using LuaInterface;
-using System.Reflection;
-using System.Runtime.InteropServices;
-
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct)]
-public class CustomLuaClassAttribute : System.Attribute
-{
-	public CustomLuaClassAttribute()
-	{
-		//
-	}
-}
-
-public class DoNotToLuaAttribute : System.Attribute
-{
-	public DoNotToLuaAttribute()
-	{
-		//
-	}
-}
-
-public class LuaBinderAttribute : System.Attribute
-{
-	public int order;
-	public LuaBinderAttribute(int order)
-	{
-		this.order = order;
-	}
-}
-
-[AttributeUsage(AttributeTargets.Method)]
-public class StaticExportAttribute : System.Attribute
-{
-	public StaticExportAttribute()
-	{
-		//
-	}
-}
-
 namespace SLua
 {
+
+	using UnityEngine;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System;
+	using LuaInterface;
+	using System.Reflection;
+	using System.Runtime.InteropServices;
+
+	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct)]
+	public class CustomLuaClassAttribute : System.Attribute
+	{
+		public CustomLuaClassAttribute()
+		{
+			//
+		}
+	}
+
+	public class DoNotToLuaAttribute : System.Attribute
+	{
+		public DoNotToLuaAttribute()
+		{
+			//
+		}
+	}
+
+	public class LuaBinderAttribute : System.Attribute
+	{
+		public int order;
+		public LuaBinderAttribute(int order)
+		{
+			this.order = order;
+		}
+	}
+
+	[AttributeUsage(AttributeTargets.Method)]
+	public class StaticExportAttribute : System.Attribute
+	{
+		public StaticExportAttribute()
+		{
+			//
+		}
+	}
 
 	public partial class LuaObject
 	{
@@ -78,6 +78,7 @@ namespace SLua
 		static protected LuaCSFunction lua_eq = new LuaCSFunction(luaEq);
         static protected LuaCSFunction lua_lt = new LuaCSFunction(luaLt);
         static protected LuaCSFunction lua_le = new LuaCSFunction(luaLe);
+        static protected LuaCSFunction lua_tostring = new LuaCSFunction(ToString);
 		const string DelgateTable = "__LuaDelegate";
 
 		static protected int newindex_ref = 0;
@@ -99,8 +100,12 @@ local function newindex(ud,k,v)
     repeat
         local h=rawget(t,k)
         if h then
-            h[2](ud,v)
-            return
+			if h[2] then
+				h[2](ud,v)
+	            return
+			else
+				error('property '..k..' is read only')
+			end
         end
         t=rawget(t,'__parent')
     until t==nil
@@ -123,7 +128,11 @@ local function index(ud,k)
         if tp=='function' then 
             return fun 
         elseif tp=='table' then
-            return fun[1](ud)
+			if fun[1] then
+				return fun[1](ud)
+			else
+				error('property '..k..' is write only')
+			end
         end
         t = rawget(t,'__parent')
     until t==nil
@@ -153,6 +162,7 @@ return index
 			addMember(l, ToString);
 			addMember(l, GetHashCode);
 			addMember(l, Equals);
+			addMember (l, GetType);
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "__luabaseobject");
 
 			LuaVarObject.init(l);
@@ -167,7 +177,7 @@ return index
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int ToString(IntPtr l)
 		{
-			object obj = checkObj(l, 1);
+			object obj = checkVar(l, 1);
 			pushValue(l,obj.ToString());
 			return 1;
 		}
@@ -175,7 +185,7 @@ return index
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int GetHashCode(IntPtr l)
 		{
-			object obj = checkObj(l, 1);
+			object obj = checkVar(l, 1);
 			pushValue(l, obj.GetHashCode());
 			return 1;
 		}
@@ -183,9 +193,29 @@ return index
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int Equals(IntPtr l)
 		{
-			object obj = checkObj(l, 1);
-			object other = checkObj(l, 2);
+			object obj = checkVar(l, 1);
+			object other = checkVar(l, 2);
 			pushValue(l, obj.Equals(other));
+			return 1;
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int GetType(IntPtr l)
+		{
+			object obj = checkVar(l, 1);
+
+			string t = obj.GetType ().FullName;
+			string[] subt = t.Split(new Char[] { '.' });
+			
+			LuaDLL.lua_pushglobaltable(l);
+			
+			for (int n = 0; n < subt.Length; n++)
+			{
+				t = subt[n];
+				LuaDLL.lua_pushstring(l, t);
+				LuaDLL.lua_rawget(l, -2);
+				LuaDLL.lua_remove(l, -2);
+			}
 			return 1;
 		}
 
@@ -444,12 +474,11 @@ return index
 
 		public static void createTypeMetatable(IntPtr l, LuaCSFunction con, Type self, Type parent)
 		{
-
 			// set parent
-			if (parent != null && parent != typeof(object))
+			if (parent != null && parent != typeof(object) && parent != typeof(ValueType))
 			{
 				LuaDLL.lua_pushstring(l, "__parent");
-				LuaDLL.luaL_getmetatable(l, parent.AssemblyQualifiedName);
+				LuaDLL.luaL_getmetatable(l, ObjectCache.getAQName(parent));
 				LuaDLL.lua_rawset(l, -3);
 
 				LuaDLL.lua_pushstring(l, "__parent");
@@ -485,6 +514,9 @@ return index
 
 			LuaDLL.lua_pushcfunction(l, con);
 			LuaDLL.lua_setfield(l, -2, "__call");
+
+			LuaDLL.lua_pushcfunction(l, typeToString);
+			LuaDLL.lua_setfield(l, -2, "__tostring");
 
 			LuaDLL.lua_pushvalue(l, -1);
 			LuaDLL.lua_setmetatable(l, -3);
@@ -523,13 +555,15 @@ return index
             LuaDLL.lua_setfield(l, -2, "__le");
             LuaDLL.lua_pushcfunction(l, lua_lt);
             LuaDLL.lua_setfield(l, -2, "__lt");
-
+			LuaDLL.lua_pushcfunction(l, lua_tostring);
+			LuaDLL.lua_setfield(l, -2, "__tostring");
+			
 			if (self.IsValueType)
 			{
 				LuaDLL.lua_pushvalue(l, -1);
 				LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, self.FullName + ".Instance");
 			}
-			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, self.AssemblyQualifiedName);
+			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX,  ObjectCache.getAQName(self));
 		}
 
 		public static void reg(IntPtr l, LuaCSFunction func, string ns)
@@ -606,6 +640,16 @@ return index
 			return 0;
 		}
 
+        static internal void gc(IntPtr l,int p,UnityEngine.Object o)
+        {
+            // set ud's metatable is nil avoid gc again
+            LuaDLL.lua_pushnil(l);
+            LuaDLL.lua_setmetatable(l, p);
+
+            ObjectCache t = ObjectCache.get(l);
+            t.gc(o);
+        }
+
 		static public void checkLuaObject(IntPtr l, int p)
 		{
 			LuaDLL.lua_getmetatable(l, p);
@@ -657,7 +701,7 @@ return index
 					Type ot = o.GetType();
 					return ot == t || ot.IsSubclassOf(t);
 				case LuaTypes.LUA_TSTRING:
-					return t.Name == "String";
+					return t == typeof(string);
 				case LuaTypes.LUA_TBOOLEAN:
 					return t == typeof(bool);
 				case LuaTypes.LUA_TTABLE:
@@ -675,7 +719,7 @@ return index
 			return false;
 		}
 
-		static bool isTypeTable(IntPtr l, int p)
+		public static bool isTypeTable(IntPtr l, int p)
 		{
 			if (LuaDLL.lua_type(l, p) != LuaTypes.LUA_TTABLE)
 				return false;
@@ -755,9 +799,23 @@ return index
 
 		static public bool checkType(IntPtr l, int p, out string v)
 		{
-			//LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TSTRING);
-			v = LuaDLL.lua_tostring(l, p);
-			return true;
+			if(LuaDLL.lua_isuserdata(l,p)>0)
+			{
+				object o = checkObj(l, p);
+				if (o is string)
+				{
+					v = o as string;
+					return true;
+				}
+			}
+			else if (LuaDLL.lua_isstring(l, p))
+			{
+				v = LuaDLL.lua_tostring(l, p);
+				return true;
+			}
+
+			v = null;
+			return false;
 		}
 
 		static public bool luaTypeCheck(IntPtr l, int p, string t)
@@ -776,7 +834,13 @@ return index
 			v = (short)LuaDLL.luaL_checkinteger(l, p);
 			return true;
 		}
-
+		
+		static public bool checkType(IntPtr l, int p, out UInt16 v)
+		{
+			v = (UInt16)LuaDLL.luaL_checkinteger(l, p);
+			return true;
+		}
+		
 		static public bool checkType(IntPtr l, int p, out byte v)
 		{
 			v = (byte)LuaDLL.luaL_checkinteger(l, p);
@@ -900,7 +964,9 @@ return index
 				LuaDLL.lua_pop(l, 1);
 			}
 			else if (lt == LuaTypes.LUA_TSTRING)
-				tname = LuaDLL.lua_tostring(l, p);
+			{
+				checkType(l,p, out tname);
+			}
 
 			if (tname == null)
 				LuaDLL.luaL_error(l, "expect string or type table");
@@ -987,6 +1053,15 @@ return index
 			return true;
 		}
 
+		static public bool checkType(IntPtr l, int p, out char[] pars)
+		{
+			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TSTRING);
+			string s;
+			checkType(l, p, out s);
+			pars = s.ToCharArray();
+			return true;
+		}
+
 		static public bool checkEnum<T>(IntPtr l, int p, out T o) where T : struct
 		{
 			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TNUMBER);
@@ -996,19 +1071,19 @@ return index
 			return true;
 		}
 
-		static public bool checkParams(IntPtr l, int p, out object[] pars)
+		static public bool checkParams<T>(IntPtr l, int p, out T[] pars)
 		{
 			int top = LuaDLL.lua_gettop(l);
 			if (top - p >= 0)
 			{
-				pars = new object[top - p + 1];
+				pars = new T[top - p + 1];
 				for (int n = p, k = 0; n <= top; n++, k++)
 				{
-					pars[k] = checkVar(l, n);
+					checkType(l, n, out pars[k]);
 				}
 				return true;
 			}
-			pars = new object[0];
+			pars = new T[0];
 			return true;
 		}
 
@@ -1062,6 +1137,15 @@ return index
 			return true;
 		}
 
+		static public bool checkParams(IntPtr l, int p, out char[] pars)
+		{
+			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TSTRING);
+			string s;
+			checkType(l, p, out s);
+			pars = s.ToCharArray();
+			return true;
+		}
+
 		static public object checkVar(IntPtr l, int p)
 		{
 			LuaTypes type = LuaDLL.lua_type(l, p);
@@ -1081,9 +1165,8 @@ return index
 					}
 				case LuaTypes.LUA_TFUNCTION:
 					{
-						LuaDLL.lua_pushvalue(l, p);
-						int r = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
-						LuaFunction v = new LuaFunction(l, r);
+						LuaFunction v;
+						LuaObject.checkType(l, p, out v);
 						return v;
 					}
 				case LuaTypes.LUA_TTABLE:
@@ -1129,9 +1212,8 @@ return index
 						}
 						else
 						{
-							LuaDLL.lua_pushvalue(l, p);
-							int r = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
-							LuaTable v = new LuaTable(l, r);
+							LuaTable v;
+							checkType(l,p,out v);
 							return v;
 						}
 					}
@@ -1305,7 +1387,10 @@ return index
 
 		public static void pushValue(IntPtr l, LuaTable t)
 		{
-			t.push(l);
+			if (t == null)
+				LuaDLL.lua_pushnil(l);
+			else
+				t.push(l);
 		}
 
 		public static void pushEnum(IntPtr l, int e)
@@ -1390,33 +1475,32 @@ return index
 		{
 			int op = 0;
 			LuaTypes t = LuaDLL.lua_type(l, p);
-			if (t == LuaTypes.LUA_TNIL)
+			switch (t)
 			{
-				op = 0;
-			}
-			else if (t == LuaTypes.LUA_TUSERDATA)
-			{
-				op = 0;
-			}
-			else if (t == LuaTypes.LUA_TTABLE)
-			{
+				case LuaTypes.LUA_TNIL:
+				case LuaTypes.LUA_TUSERDATA:
+					op = 0;
+					break;
 
-				LuaDLL.lua_rawgeti(l, p, 1);
-				LuaDLL.lua_pushstring(l, "+=");
-				if (LuaDLL.lua_rawequal(l, -1, -2) == 1)
-					op = 1;
-				else
-					op = 2;
+				case LuaTypes.LUA_TTABLE:
 
-				LuaDLL.lua_pop(l, 2);
-				LuaDLL.lua_rawgeti(l, p, 2);
+					LuaDLL.lua_rawgeti(l, p, 1);
+					LuaDLL.lua_pushstring(l, "+=");
+					if (LuaDLL.lua_rawequal(l, -1, -2) == 1)
+						op = 1;
+					else
+						op = 2;
+
+					LuaDLL.lua_pop(l, 2);
+					LuaDLL.lua_rawgeti(l, p, 2);
+					break;
+				case LuaTypes.LUA_TFUNCTION:
+					LuaDLL.lua_pushvalue(l, p);
+					break;
+				default:
+					LuaDLL.luaL_error(l, "expect valid Delegate ");
+					break;
 			}
-			else if (t == LuaTypes.LUA_TFUNCTION)
-			{
-				LuaDLL.lua_pushvalue(l, p);
-			}
-			else
-				LuaDLL.luaL_error(l, "expect valid Delegate ");
 			return op;
 		}
 
@@ -1428,6 +1512,13 @@ return index
 			return 0;
 		}
 
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int typeToString(IntPtr l)
+		{
+			LuaDLL.lua_pushstring (l, "__fullname");
+			LuaDLL.lua_rawget (l, -2);
+			return 1;
+		}
 	}
 
 }

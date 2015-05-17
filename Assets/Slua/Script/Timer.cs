@@ -20,13 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using LuaInterface;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace SLua
 {
+	using LuaInterface;
+	using System;
+	using System.Collections.Generic;
+	using UnityEngine;
+
 	public class LuaTimer : LuaObject
 	{
 		class Timer
@@ -261,12 +261,13 @@ namespace SLua
 					ua = (Action<int>)ld.d;
 				else
 				{
+					IntPtr ml = LuaState.get(l).L;
 					ua = (int id) =>
 					{
-						int error = pushTry(l);
-						pushValue(l, id);
+						int error = pushTry(ml);
+						pushValue(ml, id);
 						ld.call(1, error);
-						LuaDLL.lua_settop(l, error - 1);
+						LuaDLL.lua_settop(ml, error - 1);
 					};
 				}
 				ld.d = ua;
@@ -286,13 +287,14 @@ namespace SLua
 					ua = (Func<int, bool>)ld.d;
 				else
 				{
+					IntPtr ml = LuaState.get(l).L;
 					ua = (int id) =>
 					{
-						int error = pushTry(l);
-						pushValue(l, id);
+						int error = pushTry(ml);
+						pushValue(ml, id);
 						ld.call(1, error);
-						bool ret = LuaDLL.lua_toboolean(l, -1);
-						LuaDLL.lua_settop(l, error - 1);
+						bool ret = LuaDLL.lua_toboolean(ml, -1);
+						LuaDLL.lua_settop(ml, error - 1);
 						return ret;
 					};
 				}

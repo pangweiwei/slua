@@ -4,7 +4,7 @@ slua是Unity3D导出为lua的自动化代码生成工具, 通过产生静态的�
 
 ##安装
 
-通过git clone复制一份代码到你的资源目录(Assets目录内), slua的发布版已经附带了Unity3D 4.6.1 的导出接口文件, 在Slua/LuaObject内, 对于其他版本(比如5.0), 你可以删除该目录内所有文件, 等待脚本编译完成, 点击slua菜单中 Make 命令 手动生成针对当前版本的U3d接口文件, 如果你运行例子代码产生错误,记得要make ui,make custom,保证例子中使用到的接口都被导出了.
+通过git clone复制一份代码到你的资源目录(Assets目录内),  点击slua菜单中 Make UnityEngine 命令 手动生成针对当前版本的U3d接口文件, 如果你运行例子代码产生错误,记得要make ui,make custom,保证例子中使用到的接口都被导出了.
 
 ***每次更新slua版本，务必记得clear all，然后make all，否则可能运行不正确***
 
@@ -137,6 +137,17 @@ slua支持同名重载方法, 但对于自己实现的接口(非来自UnityEngin
 需要注意的是, 可变参数函数不支持任何同名重载, 并且params修饰符必须针对最后一个参数.
 
 
+####out参数
+
+out参数是c#特有的语法,lua并不支持out参数,为此此slua采用多返回值来处理out参数,即所有out的参数都会变成一个返回值, 例如:
+>     -- get out parameter
+	local hitinfo = RaycastHit()
+	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1),hitinfo)
+	print("Physics Hitinfo",ok,hitinfo)
+
+hitinfo先传入Raycast函数,然后通过返回值返回.
+
+
 #####Type参数
 
 在slua里,基于效率和易用性的原则, 不建议导出System空间下的类型, 而使用变通方法来表达类似需求, 对于Type参数的传入, 对于导出类型,比如UnityEngine.GameObject, HelloWorld等,可以直接使用对应的lua table来当作参数传入, 在c#会理解为Type, 例如:
@@ -151,7 +162,46 @@ slua支持同名重载方法, 但对于自己实现的接口(非来自UnityEngin
     
 再比如
 
->    gameObject:AddComponent(UnityEngine.UI.LayoutElement)
+>    gameObject:AddComponent(UnityEngine.UI.Lay
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    
+>    Element)
 
 从Unity5开始AddComponent不再支持字符串作为类型参数, 可以使用上面的方面传递类型.
 
@@ -179,13 +229,11 @@ slua支持直接使用代理, 仅需要传入lua function, 这大大方便开发
 
 slua的delegate支持+=/-=操作, 例如
 >     self={}
-    function self.xxx()
-		return function(a,b,c)
-			self //here
-		end
+    function self.xxx(a,b,c)
+	// code
     end
-    h.d={"+=",self.xxx()}
-	h.d={"-=",self.xxx()}
+    h.d={"+=",self.xxx}
+	h.d={"-=",self.xxx}
 
 
 上面的例子演示了, 如何在回调函数内使用self, 同时演示了如果+=/-= 代理函数
@@ -237,6 +285,28 @@ Slua支持unity yield指令,  需要配和lua coroutine, 例如:
 但请记住,上面的访问过程都是经过反射操作来完成的,速度不理想,应该避免在频繁运行的代码中使用给他们.
 
 最后, ***LuaVarObject并没有完善, 仅满足最低使用需求, 如果你发现有任何bug, 需要自行完善他们, 作者欢迎你完善后提交pull request合并到slua主分支, 让你的代码成为slua的一部分.***
+
+##创建未导出的类
+
+对于一个没有导出的类,slua不建议直接拿来使用(因为效率问题,并严重不推荐在最终产品中使用),但某些情况下临时使用方便开发调试, 为此你可以使用CreateClass函数来创建未导出的类, 例如
+
+>     -- create class used reflection
+	local go=Slua.CreateClass("UnityEngine.GameObject,UnityEngine","VarGameObject")
+	print(go.name)
+	local array=Slua.CreateClass("System.Collections.ArrayList",10)
+	print(array.Capacity)
+	array:Add("slua")
+	array:Add("unity")
+	print(array.Count,array[0],array[1])
+
+####CreateClass(type,args...) -> obj
+
+type参数为需要创建类的字符串描述,关于一个类的字符串描述,可以参考msdn上Type.Get方法的说明.
+
+args参数为类构造函数的传入参数
+
+如果一切正常将返回对应的类对象.
+
 
 ##LuaTimer
 
@@ -407,9 +477,17 @@ this[] get/set会产生getItem/setItem成员函数,请使用他们.
 
 iOS对dll的尺寸有大小限制, 出现这个错误可能是你的工程代码+第三方库代码+LuaWrap所产生的dll超过限制, 你可以把一些代码抽取出来作为一个独立的dll, 保证工程的dll尺寸在限制内. 新版的Slua可以把Script目录和LuaObject/Unity目录整体制作为一个dll,放入你的Assets目录, 让你的工程依赖这个dll,而不再包含slua(和动态产生的wrap代码),从而减少最终工程dll的尺寸.
 
+10) 有没有更完整的demo?
+
+请参考 https://github.com/lulersoft/me_SLua 
+
+
+11) slua支持protobuf/json/sqlite吗?
+
+slua仅专注解决lua和c#绑定的问题, 保证这部分功能足够内敛精简, 任何第三方lua库都可以用, 但这需要你自己编译进入slua库里, 不要问我如何编译他们, 当你打算使用这些库时, 一般情况你应该懂得如何编译他们了.
+
 
 ##已知问题
-不支持泛型函数导出, 但支持泛型代理
 
 UnityAction/UnityEvent目前仅支持1个泛型参数的版本,目前UnityEngine也没有多个泛型参数的需要,后续考虑完善.
 

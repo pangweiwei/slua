@@ -16,6 +16,9 @@ public struct foostruct
 public class SLuaTest : MonoBehaviour { }
 
 [CustomLuaClass]
+public class XXList : List<int> { }
+
+[CustomLuaClass]
 public class HelloWorld
 {
 
@@ -42,6 +45,16 @@ public class HelloWorld
 		return new Dictionary<string, GameObject>();
 	}
 
+	public Dictionary<string, GameObject>[] foos()
+	{
+		return new Dictionary<string, GameObject>[]{};
+	}
+
+	public int gos(Dictionary<string, GameObject>[] x)
+	{
+		return x.Length;
+	}
+
 	public Dictionary<GameObject, string> too()
 	{
 		return new Dictionary<GameObject, string>();
@@ -57,7 +70,17 @@ public class HelloWorld
 		foreach (LuaTable.TablePair pair in t)
 		{
 			Debug.Log(string.Format("foreach LuaTable {0}-{1}", pair.key, pair.value));
+			break;
 		}
+
+		var iter = t.GetEnumerator();
+		while(iter.MoveNext()) {
+			var pair = iter.Current;
+			Debug.Log(string.Format("foreach LuaTable {0}-{1}", pair.key, pair.value));
+			break;
+		}
+		iter.Dispose();
+
 	}
 
 	static public LuaTable getv()
