@@ -20,16 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using LuaInterface;
-using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace SLua
 {
+	using UnityEngine;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System;
+	using LuaInterface;
+	using System.Reflection;
+	using System.Runtime.InteropServices;
 
 	// Try to avoid using this class for not export class
 	// This class use reflection and not completed, you should write your code for your purpose.
@@ -66,7 +66,7 @@ namespace SLua
 								case LuaTypes.LUA_TFUNCTION:
 									return tn == "LuaFunction" || t.BaseType == typeof(MulticastDelegate);
 								case LuaTypes.LUA_TTABLE:
-									return tn == "LuaTable";
+									return tn == "LuaTable" || LuaObject.luaTypeCheck(l, p, tn);
 								default:
 									return lt == LuaTypes.LUA_TUSERDATA || tn == "Object";
 							}
@@ -81,7 +81,12 @@ namespace SLua
 				switch (tn)
 				{
 					case "String":
-						return LuaDLL.lua_tostring(l, p);
+						{
+							string str;
+							if(checkType(l, p, out str))
+								return str;
+						}
+						break;
 					case "Int32":
 						return (int)LuaDLL.lua_tointeger(l, p);
 					case "Uint32":
@@ -96,11 +101,14 @@ namespace SLua
 					default:
 						return LuaObject.checkVar(l, p);
 				}
+				return null;
 			}
 
-			internal bool matchType(IntPtr l, int from, ParameterInfo[] pis)
+			internal bool matchType(IntPtr l, int from, ParameterInfo[] pis,bool isstatic)
 			{
 				int top = LuaDLL.lua_gettop(l);
+				from = isstatic ? from : from+1;
+
 				if (top - from + 1 != pis.Length)
 					return false;
 
@@ -119,11 +127,11 @@ namespace SLua
 				for (int k = 0; k < mis.Length; k++)
 				{
 					MethodInfo m = (MethodInfo)mis[k];
-					if (matchType(l, 3, m.GetParameters()))
+					if (matchType(l, 2, m.GetParameters(),m.IsStatic))
 					{
 						object[] args;
-						checkArgs(l, 3, m, out args);
-						object ret = m.Invoke(self, args);
+						checkArgs(l, 1, m, out args);
+						object ret = m.Invoke(m.IsStatic?null:self, args);
 						if (ret != null)
 						{
 							pushVar(l, ret);
@@ -141,10 +149,13 @@ namespace SLua
 				ParameterInfo[] ps = m.GetParameters();
 				args = new object[ps.Length];
 				int k = 0;
-				for (int n = from; n <= LuaDLL.lua_gettop(l); n++)
+				from = m.IsStatic ? from + 1 : from + 2;
+
+				for (int n = from; n <= LuaDLL.lua_gettop(l); n++,k++)
 				{
+					if (k + 1 > ps.Length)
+						break;
 					args[k] = checkVar(l, n, ps[k].ParameterType);
-					k++;
 				}
 			}
 		}
@@ -181,9 +192,16 @@ namespace SLua
 
 		}
 
+		static Type getType(object o)
+		{
+			if (o is LuaClassObject)
+				return (o as LuaClassObject).GetClsType();
+			return o.GetType();
+		}
+
 		static int indexString(IntPtr l, object self, string key)
 		{
-			Type t = self.GetType();
+			Type t = getType(self);
 
 			if (self is IDictionary)
 			{
@@ -239,7 +257,7 @@ IndexProperty:
 				return;
 			}
 
-			Type t = self.GetType();
+			Type t = getType(self);
 			MemberInfo[] mis = t.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
 			if (mis.Length == 0)
 			{
@@ -271,6 +289,7 @@ IndexProperty:
 
 		static int indexInt(IntPtr l, object self, int index)
 		{
+			Type type = getType(self);
 			if (self is IList)
 			{
 				pushVar(l, (self as IList)[index]);
@@ -279,9 +298,9 @@ IndexProperty:
 			else if (self is IDictionary)
 			{
 				//support enumerate key
-				if(self.GetType().IsGenericType)
+				if (type.IsGenericType)
 				{
-					Type t = self.GetType().GetGenericArguments()[0];
+					Type t = type.GetGenericArguments()[0];
 					if (t.IsEnum)
 					{
 						pushVar(l, (self as IDictionary)[Enum.Parse(t, index.ToString())]);
@@ -298,11 +317,12 @@ IndexProperty:
 
 		static void newindexInt(IntPtr l, object self, int index)
 		{
+			Type type = getType(self);
 			if (self is IList)
 			{
-				if(self.GetType().IsGenericType)
+				if (type.IsGenericType)
 				{
-					Type t=self.GetType().GetGenericArguments()[0];
+					Type t = type.GetGenericArguments()[0];
 					(self as IList)[index] = Convert.ChangeType(checkVar(l, 3),t);
 				}
 				else
@@ -310,9 +330,9 @@ IndexProperty:
 			}
 			else if (self is IDictionary)
 			{
-				if(self.GetType().IsGenericType)
+				if (type.IsGenericType)
 				{
-					Type t=self.GetType().GetGenericArguments()[1];
+					Type t = type.GetGenericArguments()[1];
 					(self as IDictionary)[index] = Convert.ChangeType(checkVar(l, 3),t);
 				}
 				else
@@ -381,6 +401,20 @@ IndexProperty:
 			LuaDLL.lua_setfield(l, -2, "__call");
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, ObjectCache.getAQName(typeof(LuaCSFunction)));
 
+		}
+	}
+
+	class LuaClassObject
+	{
+		Type cls;
+
+		public LuaClassObject(Type t) {
+			cls = t;
+		}
+
+		public Type GetClsType()
+		{
+			return cls;
 		}
 	}
 }

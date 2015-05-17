@@ -41,7 +41,7 @@ namespace LuaInterface
 		LUA_GCSETSTEPMUL = 7,
 	}
 
-	public enum LuaThreadStatus
+	public enum LuaThreadStatus : int
 	{
 		LUA_YIELD = 1,
 		LUA_ERRRUN = 2,
@@ -88,6 +88,9 @@ namespace LuaInterface
 
 		const string LUADLL = "slua";
 #endif
+
+		//[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		//public static extern void luaS_openextlibs(IntPtr L);
 
 		// Thread Funcs
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
@@ -189,7 +192,6 @@ namespace LuaInterface
 
 			return LuaDLL.lua_pcall(luaState, 0, -1, 0);
 		}
-		/// <summary>DEPRECATED - use luaL_dostring(IntPtr luaState, string chunk) instead!</summary>
 		public static int lua_dostring(IntPtr luaState, string chunk)
 		{
 			return LuaDLL.luaL_dostring(luaState, chunk);
@@ -224,7 +226,7 @@ namespace LuaInterface
 
         public static int lua_rawlen(IntPtr luaState, int stackPos)
 		{
-			return luaS_rawlen(luaState, stackPos);
+			return LuaDLLWrapper.luaS_rawlen(luaState, stackPos);
 		}
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
@@ -289,10 +291,23 @@ namespace LuaInterface
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int luaS_yield(IntPtr luaState,int nrets);
 
+		public static int lua_yield(IntPtr luaState,int nrets) {
+			return luaS_yield(luaState,nrets);
+		}
+
+
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int lua_resume(IntPtr L, IntPtr from, int narg);
+
+		public static void lua_replace(IntPtr luaState, int index) {
+			lua_copy(luaState, -1, (index));
+			lua_pop(luaState, 1);
+		}
+
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void lua_copy(IntPtr luaState,int from,int toidx);
 #else
-        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int lua_resume(IntPtr L, int narg);
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
@@ -447,7 +462,7 @@ namespace LuaInterface
 
 		public static bool lua_isstring(IntPtr luaState, int index)
         {
-            return LuaDLLWrapper.lua_isnumber(luaState, index) > 0;
+            return LuaDLLWrapper.lua_isstring(luaState, index) > 0;
         }
 
 		public static bool lua_iscfunction(IntPtr luaState, int index)

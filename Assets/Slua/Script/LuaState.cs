@@ -20,17 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using LuaInterface;
-using UnityEngine;
-using System.IO;
-using System.Text;
-using System.Runtime.InteropServices;
+
 
 namespace SLua
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Collections;
+	using LuaInterface;
+	using UnityEngine;
+	using System.IO;
+	using System.Text;
+	using System.Runtime.InteropServices;
+
 	abstract public class LuaVar : IDisposable
 	{
 		protected LuaState state = null;
@@ -310,7 +312,7 @@ namespace SLua
 			LuaTable t;
 			int indext = -1;
 			TablePair current = new TablePair();
-			bool isfirst = true;
+			int iterPhase = 0;
 
 			public Enumerator(LuaTable table)
 			{
@@ -323,15 +325,18 @@ namespace SLua
 				if (indext < 0)
 					return false;
 
-				if (isfirst)
+				if (iterPhase==0)
 				{
 					LuaDLL.lua_pushnil(t.L);
-					isfirst = false;
+					iterPhase = 1;
 				}
 				else
 					LuaDLL.lua_pop(t.L, 1);
 
-				return LuaDLL.lua_next(t.L, indext) > 0;
+				bool ret = LuaDLL.lua_next(t.L, indext) > 0;
+				if(!ret) iterPhase=2;
+
+				return ret;
 			}
 
 			public void Reset()
@@ -342,6 +347,9 @@ namespace SLua
 
 			public void Dispose()
 			{
+				if(iterPhase==1)
+					LuaDLL.lua_pop(t.L, 2);
+
 				LuaDLL.lua_remove(t.L, indext);
 			}
 
@@ -491,6 +499,20 @@ namespace SLua
 
 			LuaDLL.lua_pushcfunction(L, import);
 			LuaDLL.lua_setglobal(L, "import");
+
+
+			string resumefunc = @"
+local resume = coroutine.resume
+local unpack = unpack or table.unpack
+coroutine.resume=function(co,...)
+	local ret={resume(co,...)}
+	if not ret[1] then UnityEngine.Debug.LogError(debug.traceback(co,ret[2])) end
+	return unpack(ret)
+end
+";
+			// overload resume function for report error
+			if(LuaDLL.lua_dostring(L, resumefunc)!=0)
+				LuaObject.throwLuaError(L);
 
 			LuaDLL.lua_pushcfunction(L, dofile);
 			LuaDLL.lua_setglobal(L, "dofile");
@@ -655,10 +677,12 @@ namespace SLua
 		{
 			int n = LuaDLL.lua_gettop(L);
 
-			if (loader(L) != 0) return LuaDLL.lua_gettop(L) - n;
-
-			LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
-			return LuaDLL.lua_gettop(L) - n;
+			if (loader(L) != 0)
+			{
+				LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
+				return LuaDLL.lua_gettop(L) - n;
+			}
+			return 0;
 		}
 		
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -668,8 +692,13 @@ namespace SLua
 			byte[] bytes = loadFile(fileName);
 			if (bytes != null)
 			{
-				LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fileName);
-				return 1;
+				if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fileName) == 0)
+					return 1;
+				else
+				{
+					string errstr = LuaDLL.lua_tostring(L, -1);
+					LuaDLL.luaL_error(L, errstr);
+				}
 			}
 			return 0;
 		}
@@ -709,7 +738,7 @@ namespace SLua
 			{
 				if (LuaDLL.lua_pcall(L, 0, LuaDLL.LUA_MULTRET, -2) != 0)
 				{
-					LuaDLL.lua_pop(L, 1);
+					LuaDLL.lua_pop(L, 2);
 					return false;
 				}
 				LuaDLL.lua_remove(L, errfunc); // pop error function
@@ -718,7 +747,7 @@ namespace SLua
 			}
 			string err = LuaDLL.lua_tostring(L, -1);
 			Debug.LogError(err);
-			LuaDLL.lua_pop(L, 1);
+			LuaDLL.lua_pop(L, 2);
 			return false;
 		}
 
@@ -792,7 +821,7 @@ namespace SLua
 				int oldTop = LuaDLL.lua_gettop(L);
 				LuaDLL.lua_getref(L, reference);
 				LuaDLL.lua_rawgeti(L, -1, index);
-				object returnValue = LuaObject.checkVar(L, -1);
+				object returnValue = getObject(L, -1);
 				LuaDLL.lua_settop(L, oldTop);
 				return returnValue;
 			}
@@ -884,6 +913,7 @@ namespace SLua
 
 		object getObject(IntPtr l, int p)
 		{
+			p = LuaDLL.lua_absindex(l,p);
 			return LuaObject.checkVar(l, p);
 		}
 

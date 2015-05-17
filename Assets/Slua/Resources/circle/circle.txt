@@ -1,6 +1,10 @@
 
 import "UnityEngine"
 
+if not UnityEngine.GameObject then
+	error("Click Make/All to generate lua wrap file")
+end
+
 local pi=math.pi
 local class={}
 
