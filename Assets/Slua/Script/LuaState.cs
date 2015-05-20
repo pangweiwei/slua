@@ -821,7 +821,7 @@ end
 				int oldTop = LuaDLL.lua_gettop(L);
 				LuaDLL.lua_getref(L, reference);
 				LuaDLL.lua_rawgeti(L, -1, index);
-				object returnValue = LuaObject.checkVar(L, -1);
+				object returnValue = getObject(L, -1);
 				LuaDLL.lua_settop(L, oldTop);
 				return returnValue;
 			}
@@ -913,6 +913,7 @@ end
 
 		object getObject(IntPtr l, int p)
 		{
+			p = LuaDLL.lua_absindex(l,p);
 			return LuaObject.checkVar(l, p);
 		}
 

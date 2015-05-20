@@ -1203,7 +1203,7 @@ return index
 								checkType(l, p, out c);
 								return c;
 							}
-							LuaDLL.luaL_error(l, "unknown lua value type");
+							Debug.LogError("unknown lua value type");
 							return null;
 						}
 						else if (isLuaClass(l, p))
