@@ -229,6 +229,7 @@ LUA_API int luaS_checkluatype(lua_State *L, int p, const char *t) {
 		lua_settop(L, top);
 		return strcmp(t, b) == 0;
 	}
+	lua_settop(L, top);
 	return 1;
 }
 
