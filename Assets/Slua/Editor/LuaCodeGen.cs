@@ -884,6 +884,11 @@ namespace SLua
 			{
 				if (DontExport(fi) || IsObsolete(fi))
 					continue;
+                if (fi.IsStatic && fi.FieldType.BaseType == typeof(MulticastDelegate))
+                {
+                    Debug.LogWarning("static delegate field not support :" + fi.FieldType.ToString() + "." + fi.Name);
+                    continue;
+                }
 
 				PropPair pp = new PropPair();
 				pp.isInstance = !fi.IsStatic;
