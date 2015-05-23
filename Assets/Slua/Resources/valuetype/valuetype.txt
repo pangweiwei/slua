@@ -1,0 +1,12 @@
+
+
+function clamp(v,min,max)
+	return v>max and max or (v<min and min or v)
+end
+
+function  lerpf(a,b,t)
+	t=clamp(t,0,1)
+	return a+(b-a)*t
+end
+
+require 'valuetype/vector3'

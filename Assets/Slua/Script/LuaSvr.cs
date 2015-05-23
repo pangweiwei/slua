@@ -62,17 +62,9 @@ namespace SLua
 			LuaTimer.reg(luaState.L);
 			LuaCoroutine.reg(luaState.L, lgo);
 			Helper.reg(luaState.L);
+            LuaDLL.luaS_openextlibs(luaState.L);
 
-			// try
-			// {
-			// 	LuaDLL.luaS_openextlibs(luaState.L);
-			// }
-			// catch (Exception)
-			// {
-			// 	// do nothing
-			// }
-
-			start(main);
+            start(main);
 
 			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
 			{
