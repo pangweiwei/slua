@@ -561,7 +561,7 @@ return index
 			if (self.IsValueType)
 			{
 				LuaDLL.lua_pushvalue(l, -1);
-				LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, self.FullName + ".Instance");
+                LuaDLL.lua_setglobal(l, self.FullName + ".Instance");
 			}
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX,  ObjectCache.getAQName(self));
 		}
@@ -705,12 +705,14 @@ return index
 					return t == typeof(bool);
 				case LuaTypes.LUA_TTABLE:
 					{
-						if (t.IsValueType)
+						if (t == typeof(LuaTable))
+							return true;
+						else if (t.IsValueType)
 							return luaTypeCheck(l, p, t.Name);
 						else if (LuaDLL.luaS_subclassof(l, p, t.Name) == 1)
 							return true;
 						else
-							return t == typeof(LuaTable);
+							return false;
 					}
 				case LuaTypes.LUA_TFUNCTION:
 					return t == typeof(LuaFunction) || t.BaseType == typeof(MulticastDelegate);

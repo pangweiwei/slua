@@ -1,0 +1,21 @@
+
+require 'valuetype.valuetype'
+
+function main()
+
+	local Vector3 = UnityEngine.Vector3
+	local v=Vector3(0,0,0)
+	v.y=2
+	assert(v.x==0)
+	assert(v.y==2)
+	assert(v.y==2 and v[2]==2)
+	local x1=Vector3.RotateTowards(Vector3.up,Vector3.right,0.45,0.2)
+	local x2=Vector3.__raw.RotateTowards(Vector3.up,Vector3.right,0.45,0.2)
+	assert(x1==x2)
+
+	local v1=Vector3.MoveTowards(Vector3.zero,Vector3.one,0.3)
+	local v2=Vector3.__raw.MoveTowards(Vector3.zero,Vector3.one,0.3)
+	assert(v1==v2)
+	assert(-v1+v2==Vector3.zero)
+
+end

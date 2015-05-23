@@ -86,6 +86,8 @@ LUA_API void luaS_openextlibs(lua_State *L) {
 		lua_pushcfunction(L, lib->func);
 		lua_setfield(L, -2, lib->name);
 	}
+
+	lua_pop(L, 1);
 }
 
 LUA_API void luaS_newuserdata(lua_State *L, int val)
@@ -146,7 +148,7 @@ static void getmetatable(lua_State *L, const char* key) {
 	snprintf(ns, 256, "UnityEngine.%s.Instance", key);
 #endif
 
-	lua_getfield(L, LUA_REGISTRYINDEX, ns);
+	lua_getglobal(L, ns);
 }
 
 static void setmetatable(lua_State *L, int p, int what) {
@@ -263,11 +265,11 @@ LUA_API void luaS_pushVector4(lua_State *L, float x, float y, float z, float w) 
 
 LUA_API void luaS_checkVector3(lua_State *L, int p, float* x, float *y, float *z) {
 	luaL_checktype(L, p, LUA_TTABLE);
-	lua_getfield(L, p, "x");
+	lua_rawgeti(L, p, 1);
 	*x = (float)lua_tonumber(L, -1);
-	lua_getfield(L, p, "y");
+	lua_rawgeti(L, p, 2);
 	*y = (float)lua_tonumber(L, -1);
-	lua_getfield(L, p, "z");
+	lua_rawgeti(L, p, 3);
 	*z = (float)lua_tonumber(L, -1);
 	lua_pop(L, 3);
 }
@@ -275,13 +277,11 @@ LUA_API void luaS_checkVector3(lua_State *L, int p, float* x, float *y, float *z
 LUA_API void luaS_pushVector3(lua_State *L, float x, float y, float z) {
 	lua_newtable(L);
 	lua_pushnumber(L, x);
-	lua_setfield(L, -2, "x");
+	lua_rawseti(L, -2, 1);
 	lua_pushnumber(L, y);
-	lua_setfield(L, -2, "y");
+	lua_rawseti(L, -2, 2);
 	lua_pushnumber(L, z);
-	lua_setfield(L, -2, "z");
-
-
+	lua_rawseti(L, -2, 3);
 	setmetatable(L, -2, MT_VEC3);
 }
 

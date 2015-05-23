@@ -89,8 +89,8 @@ namespace LuaInterface
 		const string LUADLL = "slua";
 #endif
 
-		//[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		//public static extern void luaS_openextlibs(IntPtr L);
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void luaS_openextlibs(IntPtr L);
 
 		// Thread Funcs
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
