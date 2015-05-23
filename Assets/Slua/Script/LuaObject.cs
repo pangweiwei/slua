@@ -694,8 +694,7 @@ return index
 			switch (lt)
 			{
 				case LuaTypes.LUA_TNUMBER:
-					return t == typeof(Single) || t == typeof(double) || t == typeof(int) || t == typeof(Int16)
-						|| t == typeof(UInt16) || t == typeof(UInt32) || t == typeof(byte) || t == typeof(Int64) || t.IsEnum;
+					return t.IsPrimitive || t.IsEnum;
 				case LuaTypes.LUA_TUSERDATA:
 					object o = checkObj(l, p);
 					Type ot = o.GetType();
@@ -743,6 +742,45 @@ return index
 			return LuaDLL.luaS_checkluatype(l, p, null) == 1;
 		}
 
+		public static bool matchType(IntPtr l, int p, Type t1)
+		{
+			LuaTypes t = LuaDLL.lua_type(l, p);
+			return matchType(l, p, t, t1);
+		}
+
+		public static bool matchType(IntPtr l, int total, int from, Type t1)
+		{
+			if (total - from + 1 != 1)
+				return false;
+
+			return matchType(l, from, t1);
+		}
+
+		public static bool matchType(IntPtr l, int total, int from, Type t1, Type t2)
+		{
+			if (total - from + 1 != 2)
+				return false;
+
+			return matchType(l, from, t1) && matchType(l, from + 1, t2);
+		}
+
+		public static bool matchType(IntPtr l, int total, int from, Type t1, Type t2, Type t3)
+		{
+			if (total - from + 1 != 3)
+				return false;
+
+			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3);
+		}
+
+		public static bool matchType(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4)
+		{
+			if (total - from + 1 != 4)
+				return false;
+
+			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4);
+		}
+
+		// more than 4 args
 		public static bool matchType(IntPtr l, int total, int from, params Type[] types)
 		{
 			if (total - from + 1 != types.Length)
