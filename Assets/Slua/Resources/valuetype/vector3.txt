@@ -14,7 +14,7 @@ local ToAngle=57.29578
 local Epsilon=0.00001
 
 local Raw=UnityEngine.Vector3
-local Vector3={__typname="Vector3",__raw=Raw}
+local Vector3={__typename="Vector3",__raw=Raw}
 _G["UnityEngine.Vector3.Instance"]=Vector3
 UnityEngine.Vector3=Vector3
 local T=Vector3
@@ -135,15 +135,12 @@ function Vector3.Angle(a,b)
 	return acos()*ToAngle
 end
 
--- copy reflector code from unityengine.dll
 function Vector3.Normalize(v)
 	local m = T.Magnitude(v)
 	if m==1 then
 		return v
 	elseif m>Epsilon then
-		v[1]=v[1]/m
-		v[2]=v[2]/m
-		v[3]=v[3]/m
+		v[1],v[2],v[3]=v[1]/m,v[2]/m,v[3]/m
 	else
 		v:Set(0,0,0)
 	end
@@ -222,6 +219,32 @@ end
 -- TODO
 function Vector3.RotateTowards(a,b,angle,mag)
 	return Raw.RotateTowards(a,b,angle,mag)
+end
+
+function Vector3.Distance(a,b)
+	a=T.Clone(a)
+	T.Sub(a,b)
+	return T.Magnitude(a)
+end
+
+function Vector3.OrthoNormalize(u,v,w)
+	T.Normalize(u)
+
+	local dot0 = T.Dot(u,v)
+	local tu=T.Clone(u)
+	T.Mul(tu,dot0)
+	T.Sub(v,tu)
+	T.Normalize(v)
+
+	if w then
+		local dot1 = T.Dot(v,w)
+		local dot0 = T.Dot(u,w)
+		local tw=T.__mul(u,dot0)
+		local tv=T.__mul(v,dot1)
+		T.Add(tv,tw)
+		T.Sub(w,tv)
+		T.Normalize(w)
+	end
 end
 
 setmetatable(Vector3,Vector3)
