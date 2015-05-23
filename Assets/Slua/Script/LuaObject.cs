@@ -632,6 +632,7 @@ return index
 		static public int luaGC(IntPtr l)
 		{
 			int index = LuaDLL.luaS_rawnetobj(l, 1);
+            Debug.Log(index);
 			if (index > 0)
 			{
 				ObjectCache t = ObjectCache.get(l);

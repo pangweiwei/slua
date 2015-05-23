@@ -1,5 +1,6 @@
 
 require 'valuetype.valuetype'
+import "UnityEngine"
 
 function main()
 
@@ -18,4 +19,20 @@ function main()
 	assert(v1==v2)
 	assert(-v1+v2==Vector3.zero)
 
+	local n1,t1=Vector3(0.5,1,1),Vector3(1,0.5,0.5)
+	Vector3.OrthoNormalize(n1,t1)
+	local n2,t2=Vector3(0.5,1,1),Vector3(1,0.5,0.5)
+	n2,t2=Vector3.__raw.OrthoNormalize(n2,t2)
+	print(n1,n2,t1,t2)
+	assert(n1==n2)
+	assert(t1==t2)
+
+	local n1,t1,b1=Vector3(0.5,1,1),Vector3(1,0.5,0.5),Vector3(1,2,0)
+	Vector3.OrthoNormalize(n1,t1,b1)
+	local n2,t2,b2=Vector3(0.5,1,1),Vector3(1,0.5,0.5),Vector3(1,2,0)
+	n2,t2,b2=Vector3.__raw.OrthoNormalize(n2,t2,b2)
+	print(n1,n2,t1,t2,b1,b2)
+	assert(n1==n2)
+	assert(t1==t2)
+	assert(b1==b2)
 end
