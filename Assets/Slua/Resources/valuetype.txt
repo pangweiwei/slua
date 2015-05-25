@@ -6,6 +6,7 @@ function main()
 
 	local Vector3 = UnityEngine.Vector3
 	local v=Vector3(0,0,0)
+	assert(v.y==0)
 	v.y=2
 	assert(v.x==0)
 	assert(v.y==2)

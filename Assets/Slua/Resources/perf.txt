@@ -10,6 +10,7 @@ local Time = UnityEngine.Time
 local Matrix4x4 = UnityEngine.Matrix4x4
 local Texture2D = UnityEngine.Texture2D
 local Quaternion = UnityEngine.Quaternion
+local SkinnedMeshRenderer = UnityEngine.SkinnedMeshRenderer
 
 function main()
 	print(jit and "jit on" or "jit off, pls run test with luajit")
@@ -40,6 +41,7 @@ function test3()
 	local start = os.clock()
 	for i=1,20000000 do 
 		local v = Vector3(i,i,i)
+		Vector3.Normalize(v)
 	end
 	print("test3/lua " .. (os.clock() - start));
 end
@@ -60,8 +62,8 @@ function test5()
 	local start = os.clock()
 	for i=1,20000 do
 		local v = GameObject()
-		v:AddComponent("SkinnedMeshRenderer")
-		local c=v:GetComponent("SkinnedMeshRenderer")
+		v:AddComponent(SkinnedMeshRenderer)
+		local c=v:GetComponent(SkinnedMeshRenderer)
 		c.castShadows=false
 		c.receiveShadows=false
 	end
