@@ -41,7 +41,6 @@ local Raw=UnityEngine.Vector3
 local Vector3={__typename="Vector3",__raw=Raw}
 _G["UnityEngine.Vector3.Instance"]=Vector3
 UnityEngine.Vector3=Vector3
-local T=Vector3
 local get={}
 local set={}
 

@@ -1,5 +1,5 @@
 
-require 'valuetype.valuetype'
+--require 'valuetype.valuetype'
 import "UnityEngine"
 
 -- unit test
