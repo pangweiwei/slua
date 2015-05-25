@@ -50,4 +50,23 @@ function main()
 	local r2=Vector3.__raw.ProjectOnPlane(Vector3(0.5,0.5,0),Vector3.up)
 	print(r,r2)
 	assert(r==r2)
+
+	local r=Vector3.Slerp(Vector3.up,Vector3.zero,0.5)
+	local r2=Vector3.__raw.Slerp(Vector3.up,Vector3.zero,0.5)
+	assert(r==r2)
+
+	local r=Vector3.Slerp(Vector3.up,Vector3(0.5,-1,0),0.1)
+	local r2=Vector3.__raw.Slerp(Vector3.up,Vector3(0.5,-1,0),0.1)
+	assert(r==r2)
+
+	local st=os.clock()
+	for i=1,200000 do
+		local r=Vector3.Slerp(Vector3.up,Vector3.down,0.1)
+	end
+	print("slerp time",os.clock()-st)
+	local st=os.clock()
+	for i=1,200000 do
+		local r2=Vector3.__raw.Slerp(Vector3.up,Vector3.down,0.1)
+	end
+	print("slerp raw time",os.clock()-st)
 end

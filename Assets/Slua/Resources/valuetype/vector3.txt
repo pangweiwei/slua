@@ -1,3 +1,22 @@
+-- The MIT License (MIT)-- Copyright 2015 Siney/Pangweiwei siney@yeah.net
+-- 
+-- Permission is hereby granted, free of charge, to any person obtaining a copy
+-- of this software and associated documentation files (the "Software"), to deal
+-- in the Software without restriction, including without limitation the rights
+-- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+-- copies of the Software, and to permit persons to whom the Software is
+-- furnished to do so, subject to the following conditions:
+-- 
+-- The above copyright notice and this permission notice shall be included in
+-- all copies or substantial portions of the Software.
+-- 
+-- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+-- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+-- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+-- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+-- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+-- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+-- THE SOFTWARE.
 
 local setmetatable=setmetatable
 local clamp=clamp
@@ -10,10 +29,13 @@ local min=math.min
 local max=math.max
 local abs=math.abs
 local Time=UnityEngine.Time
+local Matrix3x3=UnityEngine.Matrix3x3
 
 local ToAngle=57.29578
 local Epsilon=0.00001
 local Infinite=1/0
+local Sqrt2=0.7071067811865475244008443621048490
+local PI=3.14159265358979323846264338327950
 
 local Raw=UnityEngine.Vector3
 local Vector3={__typename="Vector3",__raw=Raw}
@@ -166,25 +188,59 @@ function Vector3.Cross(a,b)
 		, (a[1] * b[2]) - (a[2] * b[1]))
 end
 
+function Vector3.OrthoNormalVector(n)
+	local res=Vector3.New(0,0,0)
+	if abs(n[3]) > Sqrt2 then
+		local a = n[2]^2 + n[3]^2
+		local k = 1 / sqrt (a)
+		res[1],res[2],res[3] = 0,-n[3]*k,n[2]*k
+	else
+		local a = n[1]^2 + n[2]^2
+		local k = 1 / sqrt (a)
+		res[1],res[2],res[3] = -n[2]*k,n[1]*k,0
+	end
+	return res
+end
+
+-- reference code from unity
 function Vector3.Slerp(a,b,t)
 	if t<=0 then return T.Clone(a) end
 	if t>=1 then return T.Clone(b) end
 
-	local dot=Vector3.Dot(a,b)
-	dot=clamp(dot,-1,1)
-	local theta = acos(dot)*t
-	a=T.Clone(a)
-	b=T.Clone(b)
-	local v=T.Clone(a)
+	-- if almost is zero
+	local ma=T.Magnitude(a)
+	local mb=T.Magnitude(b)
+	if ma<Epsilon or mb<Epsilon then
+		return T.Lerp(a,b,t)
+	end
 
-	T.Mul(v,dot)
-	T.Sub(b,v)
-	T.Normalize(b)
-	T.Mul(b,sin(theta))	
-	T.Mul(a,cos(theta))
-	T.Add(a,b)
+	-- if dir is same
+	local dot=T.Dot(a,b)/(ma*mb)
+	if dot>1-Epsilon then
+		return T.Lerp(a,b,t)
+	
+	elseif dot<-1+Epsilon then -- dirs are almost opposite
+		local lerpedMagnitude = lerpf (ma, mb, t)
+		local na = T.__div(a,ma)
+		local axis = T.OrthoNormalVector(na)
+		local m=Matrix3x3.New()
+		Matrix3x3.SetAxisAngle(m,axis,PI*t)
+		local slerped = Matrix3x3.Mul(m,na)
+		T.Mul(slerped,lerpedMagnitude)
+		return slerped
 
-	return a
+	else -- normal case
+		local lerpedMagnitude = lerpf (ma, mb, t)
+		local axis = T.Cross(a,b)
+		local na = a/ma
+		T.Normalize(axis)
+		local angle=acos(dot)*t
+		local m=Matrix3x3.New()
+		Matrix3x3.SetAxisAngle(m,axis,angle)
+		local slerped = Matrix3x3.Mul(m,na)
+		T.Mul(slerped,lerpedMagnitude)
+		return slerped
+	end
 end
 
 function Vector3.Lerp(a,b,t)
