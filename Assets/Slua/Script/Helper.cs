@@ -34,34 +34,46 @@ namespace SLua
 	{
 
 		static string classfunc = @"
-local getmetatable=getmetatable
+local getmetatable = getmetatable
 local function Class(base,static,instance)
 
-	local mt = getmetatable(base)
+    local mt = getmetatable(base)
 
-	local class=static or {}
-	setmetatable(class, 
-		{
-			__call=function(...)
-				local r = mt.__call(...)
-				local ret = instance or {}
-				ret.__base=r
+    local class = static or {}
+    setmetatable(class, 
+        {
+            __index = base,
+            __call = function(...)
+                local r = mt.__call(...)
+                local ret = instance or {}
 
-				local ret = setmetatable(ret,{
-					__index=function(t,k)
-						return r[k]
-					end,
+                local ins_ret = setmetatable(
+                    {
+                        __base = r,
+                    },
 
-					__newindex=function(t,k,v)
-						r[k]=v
-					end,
-				})
+                    {
+                        __index = function(t, k)
+                            local ret_field
+                            ret_field = ret[k]
+                            if nil == ret_field then
+                                ret_field = r[k]
+                            end
 
-				return ret
-			end,
-		}
-	)
-	return class
+                            t[k] = ret_field
+                            return ret_field
+                        end,
+                    })
+
+                if ret.ctor then
+                    ret.ctor(ins_ret, ...)
+                end
+
+                return ins_ret
+            end,
+        }
+    )
+    return class
 end
 return Class
 ";
