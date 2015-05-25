@@ -2,6 +2,7 @@
 require 'valuetype.valuetype'
 import "UnityEngine"
 
+-- unit test
 function main()
 
 	local Vector3 = UnityEngine.Vector3
@@ -39,4 +40,14 @@ function main()
 	local currentV=Vector3(0,0.1,0)
 	local v4=Vector3.SmoothDamp(Vector3.zero,Vector3.up,currentV,5)
 	print(v4,currentV)
+
+	local r=Vector3.Reflect(Vector3(0.5,0.5,0),Vector3.up)
+	local r2=Vector3.__raw.Reflect(Vector3(0.5,0.5,0),Vector3.up)
+	print(r,r2)
+	assert(r==r2)
+
+	local r=Vector3.ProjectOnPlane(Vector3(0.5,0.5,0),Vector3.up)
+	local r2=Vector3.__raw.ProjectOnPlane(Vector3(0.5,0.5,0),Vector3.up)
+	print(r,r2)
+	assert(r==r2)
 end

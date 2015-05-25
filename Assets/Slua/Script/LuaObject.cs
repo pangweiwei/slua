@@ -1493,7 +1493,7 @@ return index
 
 		public static void setBack(IntPtr l, Vector3 v)
 		{
-			LuaDLL.luaS_setData(l, 1, v.x, v.y, v.z, float.NaN);
+			LuaDLL.luaS_setDataVec(l, 1, v.x, v.y, v.z, float.NaN);
 		}
 
 		public static void setBack(IntPtr l, Vector2 v)
