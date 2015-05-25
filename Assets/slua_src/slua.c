@@ -369,11 +369,25 @@ static void setelement(lua_State* L, int p, float v, const char* key) {
 }
 
 
+static void setelementid(lua_State* L, int p, float v, int id) {
+	if (!isnan(v)) {
+		lua_pushnumber(L, v);
+		lua_rawseti(L, p, id);
+	}
+}
+
 LUA_API void luaS_setData(lua_State *L, int p, float x, float y, float z, float w) {
 	setelement(L, p, x, "x");
 	setelement(L, p, y, "y");
 	setelement(L, p, z, "z");
 	setelement(L, p, w, "w");
+}
+
+LUA_API void luaS_setDataVec(lua_State *L, int p, float x, float y, float z, float w) {
+	setelementid(L, p, x, 1);
+	setelementid(L, p, y, 2);
+	setelementid(L, p, z, 3);
+	setelementid(L, p, w, 4);
 }
 
 LUA_API void luaS_setColor(lua_State *L, int p, float x, float y, float z, float w) {
