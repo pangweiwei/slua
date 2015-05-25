@@ -1370,6 +1370,10 @@ namespace SLua
 					&& isUsefullMethod((MethodInfo)m))
 					methods.Add((MethodBase)m);
 			}
+            methods.Sort((a, b) =>
+           {
+               return a.GetParameters().Length - b.GetParameters().Length;
+           });
 			return methods.ToArray();
 		}
 
