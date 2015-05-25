@@ -203,19 +203,7 @@ return index
 		static public int GetType(IntPtr l)
 		{
 			object obj = checkVar(l, 1);
-
-			string t = obj.GetType ().FullName;
-			string[] subt = t.Split(new Char[] { '.' });
-			
-			LuaDLL.lua_pushglobaltable(l);
-			
-			for (int n = 0; n < subt.Length; n++)
-			{
-				t = subt[n];
-				LuaDLL.lua_pushstring(l, t);
-				LuaDLL.lua_rawget(l, -2);
-				LuaDLL.lua_remove(l, -2);
-			}
+            pushObject(l, obj.GetType());
 			return 1;
 		}
 
@@ -693,6 +681,8 @@ return index
 
 			switch (lt)
 			{
+                case LuaTypes.LUA_TNIL:
+                    return !t.IsValueType && !t.IsPrimitive;
 				case LuaTypes.LUA_TNUMBER:
 					return t.IsPrimitive || t.IsEnum;
 				case LuaTypes.LUA_TUSERDATA:
@@ -716,6 +706,7 @@ return index
 					}
 				case LuaTypes.LUA_TFUNCTION:
 					return t == typeof(LuaFunction) || t.BaseType == typeof(MulticastDelegate);
+                    
 			}
 			return false;
 		}
@@ -991,37 +982,51 @@ return index
 			return true;
 		}
 
-		static Dictionary<string, Type> typeCache = new Dictionary<string, Type>();
 		static public bool checkType(IntPtr l, int p, out Type t)
 		{
 			string tname = null;
 			LuaTypes lt = LuaDLL.lua_type(l, p);
-			if (lt == LuaTypes.LUA_TTABLE)
-			{
-				LuaDLL.lua_pushstring(l, "__fullname");
-				LuaDLL.lua_rawget(l, p);
-				tname = LuaDLL.lua_tostring(l, -1);
-				LuaDLL.lua_pop(l, 1);
-			}
-			else if (lt == LuaTypes.LUA_TSTRING)
-			{
-				checkType(l,p, out tname);
-			}
+            switch (lt)
+            {
+                case LuaTypes.LUA_TUSERDATA:
+                    object o = checkObj(l, p);
+                    if (o.GetType() != typeof(Type))
+                        LuaDLL.luaL_error(l, "{0} expect Type, got {1}", p, o.GetType().Name);
+                    t = (Type)o;
+                    break;
+                case LuaTypes.LUA_TTABLE:
+                    LuaDLL.lua_pushstring(l, "__type");
+                    LuaDLL.lua_rawget(l, p);
+                    if (!LuaDLL.lua_isnil(l, -1))
+                    {
+                        t = (Type)checkObj(l, -1);
+                        LuaDLL.lua_pop(l, 1);
+                        return true;
+                    }
+                    else
+                    {
+                        LuaDLL.lua_pushstring(l, "__fullname");
+                        LuaDLL.lua_rawget(l, p);
+                        tname = LuaDLL.lua_tostring(l, -1);
+                        LuaDLL.lua_pop(l, 1);
+                    }
+                    break;
+
+                case LuaTypes.LUA_TSTRING:
+                    checkType(l, p, out tname);
+                    break;
+            }
 
 			if (tname == null)
 				LuaDLL.luaL_error(l, "expect string or type table");
 
-			if (typeCache.TryGetValue(tname, out t))
-			{
-				return true;
-			}
-
-
 			t = Type.GetType(tname);
-			if (t != null)
-			{
-				typeCache[tname] = t;
-			}
+            if (t != null)
+            {
+                LuaDLL.lua_pushstring(l, "__type");
+                pushObject(l, t);
+                LuaDLL.lua_rawset(l, p);
+            }
 			return t != null;
 		}
 
