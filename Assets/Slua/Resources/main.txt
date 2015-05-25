@@ -1,5 +1,4 @@
 local somemodule = require 'module.some'
-
 import "UnityEngine"
 
 if not UnityEngine.GameObject then

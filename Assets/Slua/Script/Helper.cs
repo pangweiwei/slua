@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 
 // Copyright 2015 Siney/Pangweiwei siney@yeah.net
 // 
@@ -29,8 +28,9 @@ namespace SLua
 	using LuaInterface;
 	using System.Reflection;
 	using System.Runtime.InteropServices;
+    using UnityEngine;
 
-	class Helper : LuaObject
+    class Helper : LuaObject
 	{
 
 		static string classfunc = @"
