@@ -1,5 +1,4 @@
 
-
 if not UnityEngine.GameObject then
 	error("Click Make/All to generate lua wrap file")
 end
@@ -38,10 +37,9 @@ function test2()
 end
 
 function test3()
-	local v = cube.transform.position
 	local start = os.clock()
-	for i=1,200000 do
-		v = Vector3(i,i,i)
+	for i=1,20000000 do 
+		local v = Vector3(i,i,i)
 	end
 	print("test3/lua " .. (os.clock() - start));
 end
