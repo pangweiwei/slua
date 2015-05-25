@@ -35,4 +35,8 @@ function main()
 	assert(n1==n2)
 	assert(t1==t2)
 	assert(b1==b2)
+
+	local currentV=Vector3(0,0.1,0)
+	local v4=Vector3.SmoothDamp(Vector3.zero,Vector3.up,currentV,5)
+	print(v4,currentV)
 end

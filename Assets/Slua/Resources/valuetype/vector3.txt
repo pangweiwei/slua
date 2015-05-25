@@ -9,9 +9,11 @@ local error=error
 local min=math.min
 local max=math.max
 local abs=math.abs
+local Time=UnityEngine.Time
 
 local ToAngle=57.29578
 local Epsilon=0.00001
+local Infinite=1/0
 
 local Raw=UnityEngine.Vector3
 local Vector3={__typename="Vector3",__raw=Raw}
@@ -245,6 +247,42 @@ function Vector3.OrthoNormalize(u,v,w)
 		T.Sub(w,tv)
 		T.Normalize(w)
 	end
+end
+
+function Vector3.Scale(a,b)
+	return Vector3.New(a[1]*b[1],a[2]*b[2],a[3]*b[3])
+end
+
+-- code copy from reflactor of UnityEgnine
+function Vector3.SmoothDamp(current,target,currentVelocity,smoothTime,maxSpeed,deltaTime)
+	local deltaTime = deltaTime or Time.deltaTime
+	local maxSpeed = maxSpeed or Infinite
+	smoothTime = max(Epsilon,smoothTime)
+	local float num = 2 / smoothTime
+    local float num2 = num * deltaTime
+    local float num3 = 1 / (((1 + num2) + ((0.48 * num2) * num2)) + (((0.235 * num2) * num2) * num2))
+    local vector = current - target;
+    local vector2 = target
+    local maxLength = maxSpeed * smoothTime
+    vector = T.ClampMagnitude(vector, maxLength)
+    target = current - vector
+    local vector3 = currentVelocity +  vector * deltaTime * num
+    local newv = currentVelocity -  vector3 * num3 * num
+    local vector4 = target + (vector + vector3) * num3
+    if T.Dot(vector2 - current, vector4 - vector2) > 0 then
+        vector4 = vector2
+        newv = (vector4 - vector2) / deltaTime
+    end
+    currentVelocity:Set(newv.x,newv.y,newv.z)
+    return vector4
+end
+
+-- code copy from reflactor of UnityEgnine
+function Vector3.ClampMagnitude(vector,maxLength)
+    if T.SqrMagnitude(vector) > (maxLength^2) then
+        return vector.normalized * maxLength
+    end
+    return T.Clone(vector)
 end
 
 setmetatable(Vector3,Vector3)
