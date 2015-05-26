@@ -355,9 +355,46 @@ function Vector3.MoveTowards(a,b,adv)
 	return Vector3.Clone(b)
 end
 
--- TODO
-function Vector3.RotateTowards(a,b,angle,mag)
-	return Raw.RotateTowards(a,b,angle,mag)
+local function ClampedMove(a,b,mag)
+	local delta = b-a
+	if delta > 0 then
+		return a + min (delta, mag)
+	else
+		return a - min (-delta, mag)
+	end
+end
+
+function Vector3.RotateTowards(a,b,angleMove,mag)
+	local ma = Vector3.Magnitude(a)
+	local mb = Vector3.Magnitude (b)
+	
+	if ma > Epsilon and mb > Epsilon then
+		local na = a / ma
+		local nb = b / mb
+		
+		local dot = Vector3.Dot(na, nb)
+		if dot > 1.0 - Epsilon then
+			return Vector3.MoveTowards (a, b, mag)
+		elseif dot < -1.0 + Epsilon then
+			local axis = Vector3.OrthoNormalVector(na)
+			local m=Matrix3x3.New()
+			Matrix3x3.SetAxisAngle(m, axis, angleMove)
+			local rotated = Matrix3x3.Mul(m,na)
+			Vector3.Mul(rotated,ClampedMove(ma, mb, mag))
+			return rotated
+		else
+			local angle = acos(dot);
+			local axis = Vector3.Cross(na, nb)
+			Vector3.Normalize(axis)
+			local m=Matrix3x3.New()
+			Matrix3x3.SetAxisAngle(m,axis, min(angleMove, angle))
+			local rotated = Matrix3x3.Mul(m,na)
+			Vector3.Mul(rotated,ClampedMove(ma, mb, mag))
+			return rotated
+		end
+	else
+		return Vector3.MoveTowards (a,b,mag)
+	end
 end
 
 function Vector3.Distance(a,b)
