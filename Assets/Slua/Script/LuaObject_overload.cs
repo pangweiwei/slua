@@ -139,7 +139,15 @@ namespace SLua
 			}
 		}
 
-		public static void pushValue(IntPtr l, UnityEngine.Object o)
+        public static void pushValue(IntPtr l, UnityEngine.AnimationState o)
+        {
+            if (o == null)
+                LuaDLL.lua_pushnil(l);
+            else
+                pushObject(l, o);
+        }
+
+        public static void pushValue(IntPtr l, UnityEngine.Object o)
 		{
 			if (o == null)
 				LuaDLL.lua_pushnil(l);
