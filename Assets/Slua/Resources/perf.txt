@@ -39,7 +39,7 @@ end
 
 function test3()
 	local start = os.clock()
-	for i=1,20000000 do 
+	for i=1,2000000 do 
 		local v = Vector3(i,i,i)
 		Vector3.Normalize(v)
 	end

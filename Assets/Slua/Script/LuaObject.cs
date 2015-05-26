@@ -1503,17 +1503,17 @@ return index
 
 		public static void setBack(IntPtr l, Vector2 v)
 		{
-			LuaDLL.luaS_setData(l, 1, v.x, v.y, float.NaN, float.NaN);
+			LuaDLL.luaS_setDataVec(l, 1, v.x, v.y, float.NaN, float.NaN);
 		}
 
 		public static void setBack(IntPtr l, Vector4 v)
 		{
-			LuaDLL.luaS_setData(l, 1, v.x, v.y, v.z, v.w);
+			LuaDLL.luaS_setDataVec(l, 1, v.x, v.y, v.z, v.w);
 		}
 
 		public static void setBack(IntPtr l, Quaternion v)
 		{
-			LuaDLL.luaS_setData(l, 1, v.x, v.y, v.z, v.w);
+			LuaDLL.luaS_setDataVec(l, 1, v.x, v.y, v.z, v.w);
 		}
 
         public static void setBack(IntPtr l, Color v)

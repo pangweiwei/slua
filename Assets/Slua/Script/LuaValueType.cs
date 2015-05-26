@@ -28,6 +28,8 @@ namespace SLua
     {
         static string script = @"
 local setmetatable=setmetatable
+local getmetatable=getmetatable
+local type=type
 local clamp=clamp
 local acos=math.acos
 local sin=math.sin
@@ -41,6 +43,7 @@ local pow=math.pow
 local Time=UnityEngine.Time
 
 local ToAngle=57.29578
+local ToRad=0.01745329
 local Epsilon=0.00001
 local Infinite=1/0
 local Sqrt2=0.7071067811865475244008443621048490
@@ -605,6 +608,301 @@ do
 
 	setmetatable(Color,Color)
 
+end
+
+do
+	local Raw=UnityEngine.Vector2
+	local Vector2={__typename='Vector2',__raw=Raw}
+	_G['UnityEngine.Vector2.Instance']=Vector2
+	UnityEngine.Vector2=Vector2
+	local get={}
+	local set={}
+
+	Vector2.__index = function(t,k)
+		local f=rawget(Vector2,k)
+		if f then return f end
+		local f=rawget(get,k)
+		if f then return f(t) end
+		error('Not found '..k)
+	end
+
+	Vector2.__newindex = function(t,k,v)
+		local f=rawget(set,k)
+		if f then return f(t,v) end
+		error('Not found '..k)
+	end
+
+	Vector2.__tostring = function(self)
+		return string.format('Vector2(%f,%f)',self[1],self[2])
+	end
+
+	function Vector2.New(x,y)
+		return setmetatable({x,y},Vector2)
+	end
+
+	function Vector2.__call(t,x,y)
+		return Vector2.New(x,y)
+	end
+
+	function get:x() return self[1] end
+	function get:y() return self[2] end
+	function set:x(v) self[1]=v	end
+	function set:y(v) self[2]=v	end
+
+	setmetatable(Vector2,Vector2)
+end
+
+do
+	local Raw=UnityEngine.Vector4
+	local Vector4={__typename='Vector4',__raw=Raw}
+	_G['UnityEngine.Vector4.Instance']=Vector4
+	UnityEngine.Vector4=Vector4
+	local get={}
+	local set={}
+
+	Vector4.__index = function(t,k)
+		local f=rawget(Vector4,k)
+		if f then return f end
+		local f=rawget(get,k)
+		if f then return f(t) end
+		error('Not found '..k)
+	end
+
+	Vector4.__newindex = function(t,k,v)
+		local f=rawget(set,k)
+		if f then return f(t,v) end
+		error('Not found '..k)
+	end
+
+	Vector4.__tostring = function(self)
+		return string.format('Vector4(%f,%f,%f,%f)',self[1],self[2],self[3],self[4])
+	end
+
+	function Vector4.New(x,y,z,w)
+		return setmetatable({x,y,z,w},Vector4)
+	end
+
+	function Vector4.__call(t,x,y,z,w)
+		return Vector4.New(x,y,z,w)
+	end
+
+	function get:x() return self[1]	end
+	function get:y() return self[2]	end
+	function get:z() return self[3]	end
+	function get:w() return self[4]	end
+	function set:x(v) self[1]=v	end
+	function set:y(v) self[2]=v	end
+	function set:z(v) self[3]=v	end
+	function set:w(v) self[4]=v	end
+
+	setmetatable(Vector4,Vector4)
+end
+
+do
+	local Raw=UnityEngine.Quaternion
+	local Inst=_G['UnityEngine.Quaternion.Instance']
+	local Quaternion={__typename='Quaternion',__raw=Raw}
+	_G['UnityEngine.Quaternion.Instance']=Quaternion
+	UnityEngine.Quaternion=Quaternion
+	local get={}
+	local set={}
+
+	Quaternion.__index = function(t,k)
+		local f=rawget(Quaternion,k)
+		if f then return f end
+		local f=rawget(get,k)
+		if f then return f(t) end
+		error('Not found '..k)
+	end
+
+	Quaternion.__newindex = function(t,k,v)
+		local f=rawget(set,k)
+		if f then return f(t,v) end
+		error('Not found '..k)
+	end
+
+	Quaternion.__tostring = function(self)
+		return string.format('Quaternion(%f,%f,%f,%f)',self[1],self[2],self[3],self[4])
+	end
+
+	Quaternion.__div = function(a,b)
+		return Quaternion.New(a[1]/b,a[2]/b,a[3]/b,a[4]/b)
+	end
+
+	-- reflector code
+	Quaternion.__mul = function(a,b,target)
+		if getmetatable(b).__typename=='Vector3' then
+			    local vector=Vector3.New(0,0,0)
+			    local num = a[1] * 2
+			    local num2 = a[2] * 2
+			    local num3 = a[3] * 2
+			    local num4 = a[1] * num
+			    local num5 = a[2] * num2
+			    local num6 = a[3] * num3
+			    local num7 = a[1] * num2
+			    local num8 = a[1] * num3
+			    local num9 = a[2] * num3
+			    local num10 = a.w * num
+			    local num11 = a.w * num2
+			    local num12 = a.w * num3
+			    vector[1] = (((1 - (num5 + num6)) * b[1]) + ((num7 - num12) * b[2])) + ((num8 + num11) * b[3])
+			    vector[2] = (((num7 + num12) * b[1]) + ((1 - (num4 + num6)) * b[2])) + ((num9 - num10) * b[3])
+			    vector[3] = (((num8 - num11) * b[1]) + ((num9 + num10) * b[2])) + ((1 - (num4 + num5)) * b[3])
+			    return vector
+		else
+			local x,y,z,w =
+				(((a[4] * b[1]) + (a[1] * b[4])) + (a[2] * b[3])) - (a[3] * b[2]),
+			 	(((a[4] * b[2]) + (a[2] * b[4])) + (a[3] * b[1])) - (a[1] * b[3]),
+			 	(((a[4] * b[3]) + (a[3] * b[4])) + (a[1] * b[2])) - (a[2] * b[1]),
+			 	(((a[4] * b[4]) - (a[1] * b[1])) - (a[2] * b[2])) - (a[3] * b[3])
+
+			 if target then
+			 	target[1],target[2],target[3],target[4]=x,y,z,w
+			 else
+			 	return Quaternion.New(x,y,z,w)
+			 end
+		end
+	end
+
+	function Quaternion.Mul(a,b)
+		return Quaternion.__mul(a,b,a)
+	end
+
+	-- reflector code
+	Quaternion.__eq = function(a,b)
+		return Quaternion.Dot(a,b)>0.999999
+	end
+
+
+	function Quaternion.New(x,y,z,w)
+		return setmetatable({x,y,z,w},Quaternion)
+	end
+
+	function Quaternion.__call(t,x,y,z,w)
+		return Quaternion.New(x,y,z,w)
+	end
+
+	function get.identity() return Quaternion.New(0,0,0,1)	end
+	function get:x() return self[1]	end
+	function get:y() return self[2]	end
+	function get:z() return self[3]	end
+	function get:w() return self[4]	end
+	function set:x(v) self[1]=v	end
+	function set:y(v) self[2]=v	end
+	function set:z(v) self[3]=v	end
+	function set:w(v) self[4]=v	end
+
+	function Quaternion:Set(x,y,z,w)
+		self[1],self[2],self[3],self[4]=x,y,z,w
+	end
+
+	function Quaternion:Clone()
+		return Quaternion.New(self[1],self[2],self[3],self[4])
+	end
+
+	--TODO
+	function Quaternion:ToAngleAxis()
+		local angel,axis = Inst.ToAngleAxis(self)
+		return angel,axis
+	end
+
+	--TODO
+	function Quaternion:SetFromToRotation(from,to)
+		Inst.SetFromToRotation(self,from,to)
+	end
+
+	--TODO
+	function Quaternion:SetLookRotation(view,up)
+		up = up or Vector3.up
+		Inst.SetLookRotation(self,view,up)
+	end
+
+	for k,v in pairs(getmetatable(Raw)) do
+		if k:sub(1,2)~='__' and  k:sub(1,1)>='A' and k:sub(1,1)<='Z' then
+			Quaternion[k]=v
+		end
+	end
+
+	function Quaternion.Euler( x,y,z )
+		if type(x)=='table' then
+			x,y,z=x[1],x[2],x[3]
+		end
+		x,y,z=x*ToRad,y*ToRad,z*ToRad
+
+		local cX=cos(x/2)
+		local sX=sin(x/2)
+		local cY=cos(y/2)
+		local sY=sin(y/2)
+		local cZ=cos(z/2)
+		local sZ=sin(z/2)
+		
+		local qX=Quaternion.New(sX, 0, 0, cX)
+		local qY=Quaternion.New(0, sY, 0, cY)
+		local qZ=Quaternion.New(0, 0.0, sZ, cZ)
+		
+		Quaternion.Mul(qY,qX)
+		Quaternion.Mul(qY,qZ)
+		return qY
+	end
+
+	-- code from reflector unityengine
+	function Quaternion.Dot( a,b )
+		return a[1] * b[1] + a[2] * b[2] + a[3] * b[3] + a[4] * b[4]
+	end
+
+	function Quaternion.Normalize(q)
+		q=Quaternion.Clone(q)
+		local m=Quaternion.Dot(q,q)
+		q[1],q[2],q[3],q[4]=q[1]/m,q[2]/m,q[3]/m,q[4]/m
+		return q
+	end
+
+	function Quaternion.Lerp( q1,q2,t )
+		local tmpQuat=Quaternion.New(0,0,0,1)
+		if Quaternion.Dot(q1, q2) < 0 then
+			tmpQuat:Set(q1[1] + t * (-q2[1] - q1[1]),
+			            q1[2] + t * (-q2[2] - q1[2]),
+			            q1[3] + t * (-q2[3] - q1[3]),
+			            q1[4] + t * (-q2[4] - q1[4]))
+		else
+			tmpQuat:Set(q1[1] + t * (q2[1] - q1[1]),
+			            q1[2] + t * (q2[2] - q1[2]),
+			            q1[3] + t * (q2[3] - q1[3]),
+			            q1[4] + t * (q2[4] - q1[4]))
+		end
+		return Quaternion.Normalize(tmpQuat)
+	end
+
+	-- code from unityengine
+	function Quaternion.Slerp( q1,q2,t )
+		t=clamp(t)
+		local dot = Quaternion.Dot( q1, q2 )
+		local tmpQuat=Quaternion.New(0,0,0,1)
+		if dot < 0 then
+			dot = -dot
+			tmpQuat:Set( -q2[1],-q2[2],-q2[3],-q2[4] )
+		else
+			tmpQuat = q2
+		end
+
+		
+		if dot < 0.95 then
+			local angle = acos(dot)
+			local sinadiv, sinat, sinaomt
+			sinadiv = 1/sin(angle)
+			sinat   = sin(angle*t)
+			sinaomt = sin(angle*(1-t))
+			tmpQuat:Set( (q1[1]*sinaomt+tmpQuat[1]*sinat)*sinadiv,
+				     (q1[2]*sinaomt+tmpQuat[2]*sinat)*sinadiv,
+				     (q1[3]*sinaomt+tmpQuat[3]*sinat)*sinadiv, 
+				     (q1[4]*sinaomt+tmpQuat[4]*sinat)*sinadiv  )
+			return tmpQuat
+		else
+			return Quaternion.Lerp(q1,tmpQuat,t)
+		end
+	end
+
+	setmetatable(Quaternion,Quaternion)
 end
 
 ";
