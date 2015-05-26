@@ -57,7 +57,13 @@ public class Perf : MonoBehaviour
 			l.luaState.getFunction("test5").call();
 		}
 
-		if (GUI.Button(new Rect(10, 400, 300, 50), "Click here for detail(in Chinese)"))
+        if (GUI.Button(new Rect(200, 100, 120, 50), "Test6"))
+        {
+            logText = "";
+            l.luaState.getFunction("test6").call();
+        }
+
+        if (GUI.Button(new Rect(10, 400, 300, 50), "Click here for detail(in Chinese)"))
 		{
 			Application.OpenURL("http://www.sineysoft.com/post/164");
 		}
