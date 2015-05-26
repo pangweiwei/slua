@@ -341,6 +341,16 @@ namespace SLua
         "AnimatorControllerParameter.name",
         "Input.IsJoystickPreconfigured",
         "Resources.LoadAssetAtPath",
+#if UNITY_4_6
+			"Motion.ValidateIfRetargetable",
+			"Motion.averageDuration",
+			"Motion.averageAngularSpeed",
+			"Motion.averageSpeed",
+			"Motion.apparentSpeed",
+			"Motion.isLooping",
+			"Motion.isAnimatorMotion",
+			"Motion.isHumanMotion",
+#endif
     };
 
 		HashSet<string> funcname = new HashSet<string>();
