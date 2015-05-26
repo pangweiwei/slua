@@ -486,7 +486,7 @@ end
 do
 
 
-	local Raw=UnityEngine.Vector3
+	local Raw=UnityEngine.Color
 	local Color={__typename='Color',__raw=Raw}
 	_G['UnityEngine.Color.Instance']=Color
 	UnityEngine.Color=Color
@@ -494,7 +494,7 @@ do
 	local set={}
 
 	Color.__index = function(t,k)
-		local f=rawget(Vector3,k)
+		local f=rawget(Color,k)
 		if f then return f end
 		local f=rawget(get,k)
 		if f then return f(t) end
