@@ -1,14 +1,14 @@
-
+--require 'valuetype/valuetype'
 import "UnityEngine"
 
 -- unit test
 function main()
 
 	local Vector3 = UnityEngine.Vector3
-	local v=Vector3(0,0,0)
-	assert(v.y==0)
+	local v=Vector3(0,0,0)+Vector3.one*2/2
+	assert(v.y==1)
 	v.y=2
-	assert(v.x==0)
+	assert(v.x==1)
 	assert(v.y==2)
 	assert(v.y==2 and v[2]==2)
 	local x1=Vector3.RotateTowards(Vector3.up,Vector3.right,0.45,0.2)
@@ -74,4 +74,19 @@ function main()
 	local r2=Vector3.__raw.RotateTowards(Vector3.up,Vector3.down,0.1,0.1)
 	print(r,r2)
 	assert(r==r2)
+
+	local Color=UnityEngine.Color
+
+	local r=Color.red
+	print(r,r.linear,r.gamma)
+
+	local r=Color(0.2,0.8,1,1)
+	print(r,r.linear,r.gamma)
+
+	r.r=1
+	assert(r.r==1 and r[1]==1)
+
+	local r = Color.Lerp(Color.clear,Color.white,0.3)
+	print(r)
+	assert(r==Color(0.3,0.3,0.3,0.3))
 end
