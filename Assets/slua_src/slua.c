@@ -319,13 +319,13 @@ LUA_API void luaS_checkQuaternion(lua_State *L, int p, float* x, float *y, float
 
 LUA_API void luaS_checkColor(lua_State *L, int p, float* x, float *y, float *z, float* w) {
 	luaL_checktype(L, p, LUA_TTABLE);
-	lua_getfield(L, p, "r");
+	lua_rawgeti(L, p, 1);
 	*x = (float)lua_tonumber(L, -1);
-	lua_getfield(L, p, "g");
+	lua_rawgeti(L, p, 2);
 	*y = (float)lua_tonumber(L, -1);
-	lua_getfield(L, p, "b");
+	lua_rawgeti(L, p, 3);
 	*z = (float)lua_tonumber(L, -1);
-	lua_getfield(L, p, "a");
+	lua_rawgeti(L, p, 4);
 	*w = (float)lua_tonumber(L, -1);
 	lua_pop(L, 4);
 }
@@ -347,14 +347,13 @@ LUA_API void luaS_pushQuaternion(lua_State *L, float x, float y, float z, float 
 LUA_API void luaS_pushColor(lua_State *L, float x, float y, float z, float w) {
 	lua_newtable(L);
 	lua_pushnumber(L, x);
-	lua_setfield(L, -2, "r");
+	lua_rawseti(L, -2, 1);
 	lua_pushnumber(L, y);
-	lua_setfield(L, -2, "g");
+	lua_rawseti(L, -2, 2);
 	lua_pushnumber(L, z);
-	lua_setfield(L, -2, "b");
+	lua_rawseti(L, -2, 3);
 	lua_pushnumber(L, w);
-	lua_setfield(L, -2, "a");
-
+	lua_rawseti(L, -2, 4);
 	setmetatable(L, -2, MT_COLOR);
 }
 

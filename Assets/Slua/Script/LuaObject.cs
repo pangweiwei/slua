@@ -1516,7 +1516,12 @@ return index
 			LuaDLL.luaS_setData(l, 1, v.x, v.y, v.z, v.w);
 		}
 
-		public static int extractFunction(IntPtr l, int p)
+        public static void setBack(IntPtr l, Color v)
+        {
+            LuaDLL.luaS_setDataVec(l, 1, v.r, v.g, v.b, v.a);
+        }
+
+        public static int extractFunction(IntPtr l, int p)
 		{
 			int op = 0;
 			LuaTypes t = LuaDLL.lua_type(l, p);
