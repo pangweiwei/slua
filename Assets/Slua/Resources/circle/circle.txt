@@ -23,6 +23,8 @@ function class:init()
 	self.framet=0
 	self.ftext = GameObject.Find("Canvas/Text"):GetComponent(UnityEngine.UI.Text)
 	
+	local P = Resources.Load("Particle System")
+	
 	self.colors={Color.red,Color.blue,Color.green,Color.cyan,Color.grey,Color.white,Color.yellow,Color.magenta,Color.black}
 
 	for i=0,self.max do
@@ -33,6 +35,9 @@ function class:init()
 
 		local box=cube:GetComponent(BoxCollider)
 		GameObject.Destroy(box)
+		
+		local p = GameObject.Instantiate(P,Vector3.zero,Quaternion.identity)
+		p.transform:SetParent( cube.transform )
 
 		mat.color=self.colors[math.random(#self.colors)]
 		table.insert(self.cubes,{cube,mat})
@@ -50,7 +55,7 @@ function class:update() -- gc alloc is zero
 			math.sin(i/self.max*pi*2+angle)*r,0)
 
 		v[1].transform.position = base
-		v[2].color=self.colors[math.random(#self.colors)]
+		--v[2].color=self.colors[math.random(#self.colors)]
 	end
 
 	if not self.fogStart or self.t>1 then
