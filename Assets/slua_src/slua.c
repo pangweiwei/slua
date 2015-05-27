@@ -86,6 +86,8 @@ LUA_API void luaS_openextlibs(lua_State *L) {
 		lua_pushcfunction(L, lib->func);
 		lua_setfield(L, -2, lib->name);
 	}
+	
+	lua_pop(L,1);
 }
 
 LUA_API void luaS_newuserdata(lua_State *L, int val)
