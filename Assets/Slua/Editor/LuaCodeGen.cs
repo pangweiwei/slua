@@ -43,7 +43,7 @@ namespace SLua
 		static bool IsCompiling {
 			get {
 				if (EditorApplication.isCompiling) {
-					Debug.Log("Unity Editor is compiling, please wait.")
+                    Debug.Log("Unity Editor is compiling, please wait.");
 				}
 				return EditorApplication.isCompiling;
 			}
