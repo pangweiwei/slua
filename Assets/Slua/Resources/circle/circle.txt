@@ -9,19 +9,36 @@ local pi=math.pi
 local class={}
 
 function main()
+	local slider = GameObject.Find("Canvas/Slider"):GetComponent(UI.Slider)
+	local counttxt = GameObject.Find("Canvas/Count"):GetComponent(UI.Text)
+	slider.onValueChanged:AddListener(
+		function(v)
+			class:init(v)
+			counttxt.text=string.format("cube:%d",v)
+		end
+	)
+	
+	class.root = GameObject("root")
+	class.ftext = GameObject.Find("Canvas/Text"):GetComponent(UI.Text)
+	class.r=10
+	class.cubes={}
+	class.t=0
+	class.f=0
+	class.framet=0
+	class.max=0
+	
 	class:init()
 	return class
 end
 
-function class:init() 
-	self.root = GameObject("root")
-	self.r=10
-	self.max=600
+function class:init(count)
+
+	for _,v in ipairs(self.cubes) do
+		GameObject.Destroy(v[1])
+	end
+
 	self.cubes={}
-	self.t=0
-	self.f=0
-	self.framet=0
-	self.ftext = GameObject.Find("Canvas/Text"):GetComponent(UnityEngine.UI.Text)
+	self.max=count or 400
 	
 	local P = Resources.Load("Particle System")
 	
