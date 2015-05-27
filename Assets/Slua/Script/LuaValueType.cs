@@ -60,6 +60,14 @@ local function  lerpf(a,b,t)
 	return a+(b-a)*t
 end
 
+local function inherite(cls,base)
+	for k,v in pairs(getmetatable(base)) do
+		if k:sub(1,2)~='__' and  k:sub(1,1)>='A' and k:sub(1,1)<='Z' then
+			cls[k]=v
+		end
+	end
+end
+
 local Matrix3x3={}
 
 do
@@ -644,10 +652,60 @@ do
 		return Vector2.New(x,y)
 	end
 
+	function Vector2.__add( a,b )
+		return Vector2.New(a[1]+b[1],a[2]+b[2])
+	end
+
+	function Vector2.__sub( a,b )
+		return Vector2.New(a[1]-b[1],a[2]-b[2])
+	end
+
+	function Vector2.__eq( a,b )
+		return abs(a[1]-b[1])<Epsilon
+		 	and abs(a[2]-b[2])<Epsilon
+	end
+
+	function Vector2.__mul( a,b )
+		return Vector2.New(a[1]*b,a[2]*b)
+	end
+
+	function Vector2.__div( a,b )
+		return Vector2.New(a[1]/b,a[2]/b)
+	end
+
+	function Vector2.__unm( a )
+		return Vector2.New(-a[1],-a[2])
+	end
+
+	function get.one() return Vector2.New(1,1) end
+	function get.zero() return Vector2.New(0,0) end
+	function get.up() return Vector2.New(0,1) end
+	function get.right() return Vector2.New(1,0) end
+	function get:magnitude() return sqrt(self[1]^2+self[2]^2) end
+	function get:sqrMagnitude() return self[1]^2+self[2]^2 end
+	function get:normalized() 
+		local m = self.magnitude
+		return Vector2.New(self[1]/m,self[2]/m)
+	end
 	function get:x() return self[1] end
 	function get:y() return self[2] end
 	function set:x(v) self[1]=v	end
 	function set:y(v) self[2]=v	end
+
+	inherite(Vector2,Raw)
+
+	function Vector2.Normalize( v )
+		local m = Vector2.Magnitude(v)
+		v[1],v[2]=v[1]/m,v[2]/m
+	end
+
+	function Vector2:Set( x,y )
+		self[1],self[2]=x,y
+	end
+
+	function Vector2:ToString( )
+		return Vector2.__tostring(self)
+	end
 
 	setmetatable(Vector2,Vector2)
 end
@@ -686,14 +744,59 @@ do
 		return Vector4.New(x,y,z,w)
 	end
 
+	function Vector4.__add( a,b )
+		return Vector4.New(a[1]+b[1],a[2]+b[2],a[3]+b[3],a[4]+b[4])
+	end
+
+	function Vector4.__sub( a,b )
+		return Vector4.New(a[1]-b[1],a[2]-b[2],a[3]-b[3],a[4]-b[4])
+	end
+
+	function Vector4.__eq( a,b )
+		return abs(a[1]-b[1])<Epsilon
+		 	and abs(a[2]-b[2])<Epsilon
+		 	and abs(a[3]-b[3])<Epsilon
+		 	and abs(a[4]-b[4])<Epsilon
+	end
+
+	function Vector4.__mul( a,b )
+		return Vector4.New(a[1]*b,a[2]*b,a[3]*b,a[4]*b)
+	end
+
+	function Vector4.__div( a,b )
+		return Vector4.New(a[1]/b,a[2]/b,a[3]/b,a[4]/b)
+	end
+
+	function Vector4.__unm( a )
+		return Vector4.New(-a[1],-a[2],-a[3],-a[4])
+	end
+
+	function get.one() return Vector4.New(1,1,1,1) end
+	function get.zero() return Vector4.New(0,0,0,0) end
 	function get:x() return self[1]	end
 	function get:y() return self[2]	end
 	function get:z() return self[3]	end
 	function get:w() return self[4]	end
+	function get:magnitude() return sqrt(self[1]^2+self[2]^2+self[3]^2+self[4]^2) end
+	function get:sqrMagnitude() return self[1]^2+self[2]^2+self[3]^2+self[4]^2 end
+	function get:normalized() 
+		local m = self.magnitude
+		return Vector4.New(self[1]/m,self[2]/m,self[3]/m,self[4]/m)
+	end
 	function set:x(v) self[1]=v	end
 	function set:y(v) self[2]=v	end
 	function set:z(v) self[3]=v	end
 	function set:w(v) self[4]=v	end
+
+	function Vector4:Set( x,y,z,w )
+		self[1],self[2],self[3],self[4]=x,y,z,w
+	end
+
+	function Vector4:ToString( ... )
+		return Vector4.__tostring(self)
+	end
+
+	inherite(Vector4,Raw)
 
 	setmetatable(Vector4,Vector4)
 end
@@ -817,11 +920,7 @@ do
 		Inst.SetLookRotation(self,view,up)
 	end
 
-	for k,v in pairs(getmetatable(Raw)) do
-		if k:sub(1,2)~='__' and  k:sub(1,1)>='A' and k:sub(1,1)<='Z' then
-			Quaternion[k]=v
-		end
-	end
+	inherite(Quaternion,Raw)
 
 	function Quaternion.Euler( x,y,z )
 		if type(x)=='table' then
