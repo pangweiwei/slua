@@ -108,4 +108,12 @@ function main()
 	local r=Quaternion.Euler(30,30,30)
 	local r2=Quaternion.__raw.Euler(30,30,30)
 	assert(r==r2)
+
+	local Vector2 = UnityEngine.Vector2
+	local r = Vector2.one
+	assert(r==Vector2(1,1))
+	assert(Vector2.Dot(Vector2.one,Vector2(0.5,0.5))==1)
+	local r=Vector2.Lerp(Vector2.zero,Vector2.one,0.3)
+	assert(r==Vector2(1,1)*0.3)
+	print(r.normalized)
 end
