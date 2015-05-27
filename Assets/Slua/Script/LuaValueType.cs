@@ -26,6 +26,7 @@ namespace SLua
     using LuaInterface;
     class LuaValueType : LuaObject
     {
+#if !UNITY_IPHONE && !LUA_5_3
         static string script = @"
 local setmetatable=setmetatable
 local getmetatable=getmetatable
@@ -1005,13 +1006,17 @@ do
 end
 
 ";
+#endif
         public static void reg(IntPtr l)
         {
+#if !UNITY_IPHONE && !LUA_5_3
+            // lua implemented valuetype isn't faster than raw under non-jit.
             if (LuaDLL.luaL_dostring(l, script) != 0)
             {
                 throwLuaError(l);
                 return;
             }
+#endif
         }
     }
 }
