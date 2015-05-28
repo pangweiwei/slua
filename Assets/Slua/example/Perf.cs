@@ -57,11 +57,23 @@ public class Perf : MonoBehaviour
 			l.luaState.getFunction("test5").call();
 		}
 
-		if (GUI.Button(new Rect(10, 400, 300, 50), "Click here for detail(in Chinese)"))
+        if (GUI.Button(new Rect(200, 100, 120, 50), "Test6 jit"))
+        {
+            logText = "";
+            l.luaState.getFunction("test6").call();
+        }
+
+		if (GUI.Button(new Rect(200, 200, 120, 50), "Test6 non-jit"))
+		{
+			logText = "";
+			l.luaState.getFunction("test7").call();
+		}
+
+        if (GUI.Button(new Rect(10, 400, 300, 50), "Click here for detail(in Chinese)"))
 		{
 			Application.OpenURL("http://www.sineysoft.com/post/164");
 		}
 
-		GUI.Label(new Rect(200, 200, 300, 50), logText);
+		GUI.Label(new Rect(400, 200, 300, 50), logText);
 	}
 }

@@ -89,8 +89,8 @@ namespace LuaInterface
 		const string LUADLL = "slua";
 #endif
 
-		//[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		//public static extern void luaS_openextlibs(IntPtr L);
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void luaS_openextlibs(IntPtr L);
 
 		// Thread Funcs
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
@@ -636,7 +636,10 @@ namespace LuaInterface
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void luaS_setData(IntPtr l, int p, float x, float y, float z, float w);
 
-		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void luaS_setDataVec(IntPtr l, int p, float x, float y, float z, float w);
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int luaS_checkluatype(IntPtr l, int p, string t);
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
