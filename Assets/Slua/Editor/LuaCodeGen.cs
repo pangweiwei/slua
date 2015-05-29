@@ -39,8 +39,9 @@ namespace SLua
 		public delegate void ExportGenericDelegate(Type t, string ns);
 		
 		public static string path = "Assets/Slua/LuaObject/";
-		
-		static bool IsCompiling {
+        static bool autoRefresh = true;
+
+        static bool IsCompiling {
 			get {
 				if (EditorApplication.isCompiling) {
                     Debug.Log("Unity Editor is compiling, please wait.");
@@ -66,15 +67,17 @@ namespace SLua
 		[MenuItem("SLua/All/Make")]
 		static public void GenerateAll()
 		{
-			Generate(false);
-			GenerateUI(false);
-			Custom(false);
-			Generate3rdDll(false);
+            autoRefresh = false;
+            Generate();
+			GenerateUI();
+			Custom();
+			Generate3rdDll();
+            autoRefresh = true;
             AssetDatabase.Refresh();
         }
 
         [MenuItem("SLua/Unity/Make UnityEngine")]
-        static public void Generate(bool autoRefresh = true)
+        static public void Generate()
 		{
 			if (IsCompiling) {
 				return;
@@ -90,7 +93,7 @@ namespace SLua
 			CustomExport.OnGetUseList(out uselist);
 			
 			List<Type> exports = new List<Type>();
-			string oldpath = path;
+            string oldpath = path.Clone() as string;
 			path += "Unity/";
 			foreach (Type t in types)
 			{
@@ -137,7 +140,7 @@ namespace SLua
 		}
 		
 		[MenuItem("SLua/Unity/Make UI (for Unity4.6+)")]
-		static public void GenerateUI(bool autoRefresh = true)
+		static public void GenerateUI()
 		{
 			if (IsCompiling) {
 				return;
@@ -153,8 +156,8 @@ namespace SLua
 			Type[] types = assembly.GetExportedTypes();
 			
 			List<Type> exports = new List<Type>();
-			string oldpath = path;
-			path += "Unity/";
+			string oldpath = path.Clone() as string;
+            path += "Unity/";
 			foreach (Type t in types)
 			{
 				bool export = true;
@@ -192,15 +195,15 @@ namespace SLua
 		}
 		
 		[MenuItem("SLua/Custom/Make")]
-		static public void Custom(bool autoRefresh = true)
+		static public void Custom()
 		{
 			if (IsCompiling) {
 				return;
 			}
 
 			List<Type> exports = new List<Type>();
-			string oldpath = path;
-			path += "Custom/";
+			string oldpath = path.Clone() as string;
+            path += "Custom/";
 			
 			if (!Directory.Exists(path))
 			{
@@ -236,7 +239,7 @@ namespace SLua
 		}
 		
 		[MenuItem("SLua/3rdDll/Make")]
-		static public void Generate3rdDll(bool autoRefresh = true)
+		static public void Generate3rdDll()
 		{
 			if (IsCompiling) {
 				return;
@@ -259,8 +262,8 @@ namespace SLua
 			if (cust.Count > 0)
 			{
 				List<Type> exports = new List<Type>();
-				string oldpath = path;
-				path += "Dll/";
+				string oldpath = path.Clone() as string;
+                path += "Dll/";
 				if (!Directory.Exists(path))
 				{
 					Directory.CreateDirectory(path);
@@ -931,7 +934,7 @@ namespace SLua
 					WriteTry(file);
 					if (fi.IsStatic)
 					{
-						WritePushValue(fi.FieldType, file, string.Format("{0}.{1}", t.FullName, fi.Name));
+						WritePushValue(fi.FieldType, file, string.Format("{0}.{1}", TypeDecl(t), fi.Name));
 					}
 					else
 					{
@@ -958,7 +961,7 @@ namespace SLua
 					{
 						Write(file, "{0} v;", TypeDecl(fi.FieldType));
 						WriteCheckType(file, fi.FieldType, 2);
-						WriteSet(file, fi.FieldType, t.FullName, fi.Name, true);
+						WriteSet(file, fi.FieldType, TypeDecl(t), fi.Name, true);
 					}
 					else
 					{
