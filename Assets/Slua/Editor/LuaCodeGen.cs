@@ -66,14 +66,15 @@ namespace SLua
 		[MenuItem("SLua/All/Make")]
 		static public void GenerateAll()
 		{
-			Generate();
-			GenerateUI();
-			Custom();
-			Generate3rdDll();
-		}
-		
-		[MenuItem("SLua/Unity/Make UnityEngine")]
-		static public void Generate()
+			Generate(false);
+			GenerateUI(false);
+			Custom(false);
+			Generate3rdDll(false);
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("SLua/Unity/Make UnityEngine")]
+        static public void Generate(bool autoRefresh = true)
 		{
 			if (IsCompiling) {
 				return;
@@ -129,14 +130,14 @@ namespace SLua
 			}
 			
 			GenerateBind(exports, "BindUnity", 0);
-			
-			AssetDatabase.Refresh();
+			if(autoRefresh)
+			    AssetDatabase.Refresh();
 			path = oldpath;
 			Debug.Log("Generate engine interface finished");
 		}
 		
 		[MenuItem("SLua/Unity/Make UI (for Unity4.6+)")]
-		static public void GenerateUI()
+		static public void GenerateUI(bool autoRefresh = true)
 		{
 			if (IsCompiling) {
 				return;
@@ -173,8 +174,8 @@ namespace SLua
 			}
 			
 			GenerateBind(exports, "BindUnityUI", 1);
-			
-			AssetDatabase.Refresh();
+			if(autoRefresh)
+			    AssetDatabase.Refresh();
 			path = oldpath;
 			Debug.Log("Generate UI interface finished");
 		}
@@ -191,7 +192,7 @@ namespace SLua
 		}
 		
 		[MenuItem("SLua/Custom/Make")]
-		static public void Custom()
+		static public void Custom(bool autoRefresh = true)
 		{
 			if (IsCompiling) {
 				return;
@@ -227,14 +228,15 @@ namespace SLua
 			CustomExport.OnAddCustomClass(fun);
 			
 			GenerateBind(exports, "BindCustom", 3);
-			AssetDatabase.Refresh();
+            if(autoRefresh)
+			    AssetDatabase.Refresh();
 			path = oldpath;
 			
 			Debug.Log("Generate custom interface finished");
 		}
 		
 		[MenuItem("SLua/3rdDll/Make")]
-		static public void Generate3rdDll()
+		static public void Generate3rdDll(bool autoRefresh = true)
 		{
 			if (IsCompiling) {
 				return;
@@ -269,7 +271,8 @@ namespace SLua
 						exports.Add(t);
 				}
 				GenerateBind(exports, "BindDll", 2);
-				AssetDatabase.Refresh();
+                if(autoRefresh)
+				    AssetDatabase.Refresh();
 				path = oldpath;
 				Debug.Log("Generate 3rdDll interface finished");
 			}
