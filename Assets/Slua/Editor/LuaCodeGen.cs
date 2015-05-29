@@ -32,13 +32,14 @@ namespace SLua
 	using LuaInterface;
 	using System.Text;
 	using System.Text.RegularExpressions;
-	
-	public class LuaCodeGen : MonoBehaviour
+
+
+
+    public class LuaCodeGen : MonoBehaviour
 	{
+        public const string Path = "Assets/Slua/LuaObject/";
+        public delegate void ExportGenericDelegate(Type t, string ns);
 		
-		public delegate void ExportGenericDelegate(Type t, string ns);
-		
-		public static string path = "Assets/Slua/LuaObject/";
         static bool autoRefresh = true;
 
         static bool IsCompiling {
@@ -56,7 +57,7 @@ namespace SLua
 			
 			static Startup()
 			{
-				bool ok = System.IO.Directory.Exists(path);
+				bool ok = System.IO.Directory.Exists(Path);
 				if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
 				{
 					GenerateAll();
@@ -93,8 +94,7 @@ namespace SLua
 			CustomExport.OnGetUseList(out uselist);
 			
 			List<Type> exports = new List<Type>();
-            string oldpath = path.Clone() as string;
-			path += "Unity/";
+            string path = Path + "Unity/";
 			foreach (Type t in types)
 			{
 				bool export = true;
@@ -127,15 +127,14 @@ namespace SLua
 				
 				if (export)
 				{
-					if (Generate(t))
+					if (Generate(t,path))
 						exports.Add(t);
 				}
 			}
 			
-			GenerateBind(exports, "BindUnity", 0);
+			GenerateBind(exports, "BindUnity", 0,path);
 			if(autoRefresh)
 			    AssetDatabase.Refresh();
-			path = oldpath;
 			Debug.Log("Generate engine interface finished");
 		}
 		
@@ -156,8 +155,7 @@ namespace SLua
 			Type[] types = assembly.GetExportedTypes();
 			
 			List<Type> exports = new List<Type>();
-			string oldpath = path.Clone() as string;
-            path += "Unity/";
+            string path = Path + "Unity/";
 			foreach (Type t in types)
 			{
 				bool export = true;
@@ -170,23 +168,22 @@ namespace SLua
 				
 				if (export)
 				{
-					if (Generate(t))
+					if (Generate(t, path))
 						exports.Add(t);
 				}
 				
 			}
 			
-			GenerateBind(exports, "BindUnityUI", 1);
+			GenerateBind(exports, "BindUnityUI", 1,path);
 			if(autoRefresh)
 			    AssetDatabase.Refresh();
-			path = oldpath;
 			Debug.Log("Generate UI interface finished");
 		}
 		
 		[MenuItem("SLua/Unity/Clear Uinty UI")]
 		static public void ClearUnity()
 		{
-			clear(new string[] { path + "Unity" });
+			clear(new string[] { Path + "Unity" });
 			Debug.Log("Clear Unity & UI complete.");
 		}
 		static public bool IsObsolete(MemberInfo t)
@@ -202,8 +199,7 @@ namespace SLua
 			}
 
 			List<Type> exports = new List<Type>();
-			string oldpath = path.Clone() as string;
-            path += "Custom/";
+            string path = Path + "Custom/";
 			
 			if (!Directory.Exists(path))
 			{
@@ -212,7 +208,7 @@ namespace SLua
 			
 			ExportGenericDelegate fun = (Type t, string ns) =>
 			{
-				if (Generate(t, ns))
+				if (Generate(t, ns, path))
 				exports.Add(t);
 			};
 			
@@ -230,10 +226,9 @@ namespace SLua
 			
 			CustomExport.OnAddCustomClass(fun);
 			
-			GenerateBind(exports, "BindCustom", 3);
+			GenerateBind(exports, "BindCustom", 3,path);
             if(autoRefresh)
 			    AssetDatabase.Refresh();
-			path = oldpath;
 			
 			Debug.Log("Generate custom interface finished");
 		}
@@ -262,41 +257,39 @@ namespace SLua
 			if (cust.Count > 0)
 			{
 				List<Type> exports = new List<Type>();
-				string oldpath = path.Clone() as string;
-                path += "Dll/";
+                string path = Path + "Dll/";
 				if (!Directory.Exists(path))
 				{
 					Directory.CreateDirectory(path);
 				}
 				foreach (Type t in cust)
 				{
-					if (Generate(t))
+					if (Generate(t,path))
 						exports.Add(t);
 				}
-				GenerateBind(exports, "BindDll", 2);
+				GenerateBind(exports, "BindDll", 2, path);
                 if(autoRefresh)
 				    AssetDatabase.Refresh();
-				path = oldpath;
 				Debug.Log("Generate 3rdDll interface finished");
 			}
 		}
 		[MenuItem("SLua/3rdDll/Clear")]
 		static public void Clear3rdDll()
 		{
-			clear(new string[] { path + "Dll" });
+			clear(new string[] { Path + "Dll" });
 			Debug.Log("Clear AssemblyDll complete.");
 		}
 		[MenuItem("SLua/Custom/Clear")]
 		static public void ClearCustom()
 		{
-			clear(new string[] { path + "Custom" });
+			clear(new string[] { Path + "Custom" });
 			Debug.Log("Clear custom complete.");
 		}
 		
 		[MenuItem("SLua/All/Clear")]
 		static public void ClearALL()
 		{
-			clear(new string[] { path.Substring(0, path.Length - 1) });
+			clear(new string[] { Path.Substring(0, Path.Length - 1) });
 			Debug.Log("Clear all complete.");
 		}
 		
@@ -317,24 +310,26 @@ namespace SLua
 			AssetDatabase.Refresh();
 		}
 		
-		static bool Generate(Type t)
+		static bool Generate(Type t, string path)
 		{
-			return Generate(t, null);
+			return Generate(t, null, path);
 		}
 		
-		static bool Generate(Type t, string ns)
+		static bool Generate(Type t, string ns, string path)
 		{
 			if (t.IsInterface)
 				return false;
 			
 			CodeGenerator cg = new CodeGenerator();
 			cg.givenNamespace = ns;
+            cg.path = path;
 			return cg.Generate(t);
 		}
 		
-		static void GenerateBind(List<Type> list, string name, int order)
+		static void GenerateBind(List<Type> list, string name, int order,string path)
 		{
 			CodeGenerator cg = new CodeGenerator();
+            cg.path = path;
 			cg.GenerateBind(list, name, order);
 		}
 		
@@ -386,6 +381,7 @@ namespace SLua
 		Dictionary<string, bool> directfunc = new Dictionary<string, bool>();
 		
 		public string givenNamespace;
+        public string path;
 		
 		class PropPair
 		{
@@ -400,7 +396,7 @@ namespace SLua
 		public void GenerateBind(List<Type> list, string name, int order)
 		{
 			HashSet<Type> exported = new HashSet<Type>();
-			string f = LuaCodeGen.path + name + ".cs";
+			string f = path + name + ".cs";
 			StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
 			Write(file, "using System;");
 			Write(file, "namespace SLua {");
@@ -430,9 +426,9 @@ namespace SLua
 		
 		public bool Generate(Type t)
 		{
-			if (!Directory.Exists(LuaCodeGen.path))
+			if (!Directory.Exists(path))
 			{
-				Directory.CreateDirectory(LuaCodeGen.path);
+				Directory.CreateDirectory(path);
 			}
 			
 			if (!t.IsGenericTypeDefinition && (!IsObsolete(t) && t != typeof(YieldInstruction) && t != typeof(Coroutine))
@@ -453,12 +449,11 @@ namespace SLua
 						if (t.ContainsGenericParameters)
 							return false;
 						
-						string fn = string.Format("Lua{0}_{1}.cs", _Name(GenericBaseName(t)), _Name(GenericName(t)));
-						f = LuaCodeGen.path + fn;
+						f = path + string.Format("Lua{0}_{1}.cs", _Name(GenericBaseName(t)), _Name(GenericName(t)));
 					}
 					else
 					{
-						f = LuaCodeGen.path + "LuaDelegate_" + _Name(t.FullName) + ".cs";
+						f = path + "LuaDelegate_" + _Name(t.FullName) + ".cs";
 					}
 					StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
 					WriteDelegate(t, file);
@@ -482,7 +477,7 @@ namespace SLua
 					
 					if (t.BaseType != null && t.BaseType.Name == "UnityEvent`1")
 					{
-						string f = LuaCodeGen.path + "LuaUnityEvent_" + _Name(GenericName(t.BaseType)) + ".cs";
+						string f = path + "LuaUnityEvent_" + _Name(GenericName(t.BaseType)) + ".cs";
 						file = new StreamWriter(f, false, Encoding.UTF8);
 						WriteEvent(t, file);
 						file.Close();
@@ -615,6 +610,7 @@ namespace SLua
 			if (t.BaseType == typeof(System.MulticastDelegate))
 			{
 				CodeGenerator cg = new CodeGenerator();
+                cg.path = this.path;
 				cg.Generate(t);
 			}
 		}
@@ -744,7 +740,7 @@ namespace SLua
 		StreamWriter Begin(Type t)
 		{
 			string clsname = ExportName(t);
-			string f = LuaCodeGen.path + clsname + ".cs";
+			string f = path + clsname + ".cs";
 			StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
 			return file;
 		}
