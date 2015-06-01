@@ -66,6 +66,8 @@ namespace SLua
 		}
 	}
 
+    public class LuaOut { }
+
 	public partial class LuaObject
 	{
 
