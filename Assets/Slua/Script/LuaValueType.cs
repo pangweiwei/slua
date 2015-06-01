@@ -904,10 +904,13 @@ do
 		return Quaternion.New(self[1],self[2],self[3],self[4])
 	end
 
-	--TODO
 	function Quaternion:ToAngleAxis()
-		local angel,axis = Inst.ToAngleAxis(self)
-		return angel,axis
+		local angle = acos(self[4])*2
+		if abs(angle-0)<Epsilon then
+			return angle,Vector3.New(1,0,0)
+		end
+		local div = 1/sqrt(1-self[4]^2)
+		return angle,Vector3.New(self[1]*div,self[2]*div,self[3]*div)
 	end
 
 	--TODO
