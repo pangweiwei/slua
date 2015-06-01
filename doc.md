@@ -141,11 +141,10 @@ slua支持同名重载方法, 但对于自己实现的接口(非来自UnityEngin
 
 out参数是c#特有的语法,lua并不支持out参数,为此此slua采用多返回值来处理out参数,即所有out的参数都会变成一个返回值, 例如:
 >     -- get out parameter
-	local hitinfo = RaycastHit()
-	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1),hitinfo)
+	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1),Slua.out)
 	print("Physics Hitinfo",ok,hitinfo)
 
-hitinfo先传入Raycast函数,然后通过返回值返回.
+将Slua.out作为out参数传入Raycast函数,然后通过返回值返回.
 
 
 #####Type参数
