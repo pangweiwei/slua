@@ -223,23 +223,34 @@ return Class
 			LuaDLL.lua_pushvalue (l, 1);
 			return 1;
 		}
-		
-		static public void reg(IntPtr l)
-		{
-			reg(l, CreateClass, "Slua");
-			reg(l, GetClass, "Slua");
-			reg(l, iter, "Slua");
-			reg(l, ToString, "Slua");
-			reg(l, As, "Slua");
 
-			newTypeTable(l, "Slua");
+        static LuaOut luaOut = new LuaOut();
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int get_out(IntPtr l)
+        {
+            pushObject(l, luaOut);
+            return 1;
+        }
+
+        static public void reg(IntPtr l)
+		{
+            getTypeTable(l, "Slua");
+            addMember(l, CreateClass, false);
+            addMember(l, GetClass, false);
+            addMember(l, iter, false);
+            addMember(l, ToString, false);
+            addMember(l, As, false);
+            addMember(l, "out", get_out, null, false);
+
 			if (LuaDLL.luaL_dostring(l, classfunc) != 0)
 			{
 				throwLuaError(l);
 				return;
 			}
-			LuaDLL.lua_setfield(l, -2, "Class");
-			LuaDLL.lua_pop(l, 1);
-		}
+			LuaDLL.lua_setfield(l, -3, "Class");
+
+
+            createTypeMetatable(l, null, typeof(Helper));
+        }
 	}
 }

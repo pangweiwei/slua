@@ -1362,7 +1362,10 @@ namespace SLua
 			for (int n = 0; n < pars.Length; n++)
 			{
 				ret += ",typeof(";
-				ret += SimpleType(pars[n].ParameterType);
+                if (pars[n].IsOut)
+                    ret += "LuaOut";
+                else
+				    ret += SimpleType(pars[n].ParameterType);
 				ret += ")";
 			}
 			return ret;
