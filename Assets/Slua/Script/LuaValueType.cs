@@ -269,7 +269,7 @@ do
 		return acos()*ToAngle
 	end
 
-	function Vector3.Normalize(v)
+	function Vector3.Normalized(v)
 		local m = Vector3.Magnitude(v)
 		if m==1 then
 			return v
@@ -278,6 +278,12 @@ do
 		else
 			v:Set(0,0,0)
 		end
+	end
+
+    function Vector3.Normalize(v)
+        local v=Vector3.Clone(v)
+        Vector3.Normalized(v)
+        return v
 	end
 
 	function Vector3.Magnitude(v)
@@ -338,7 +344,7 @@ do
 			local lerpedMagnitude = lerpf (ma, mb, t)
 			local axis = Vector3.Cross(a,b)
 			local na = a/ma
-			Vector3.Normalize(axis)
+			Vector3.Normalized(axis)
 			local angle=acos(dot)*t
 			local m=Matrix3x3.New()
 			Matrix3x3.SetAxisAngle(m,axis,angle)
@@ -409,7 +415,7 @@ do
 			else
 				local angle = acos(dot);
 				local axis = Vector3.Cross(na, nb)
-				Vector3.Normalize(axis)
+				Vector3.Normalized(axis)
 				local m=Matrix3x3.New()
 				Matrix3x3.SetAxisAngle(m,axis, min(angleMove, angle))
 				local rotated = Matrix3x3.Mul(m,na)
@@ -428,13 +434,13 @@ do
 	end
 
 	function Vector3.OrthoNormalize(u,v,w)
-		Vector3.Normalize(u)
+		Vector3.Normalized(u)
 
 		local dot0 = Vector3.Dot(u,v)
 		local tu=Vector3.Clone(u)
 		Vector3.Mul(tu,dot0)
 		Vector3.Sub(v,tu)
-		Vector3.Normalize(v)
+		Vector3.Normalized(v)
 
 		if w then
 			local dot1 = Vector3.Dot(v,w)
@@ -443,7 +449,7 @@ do
 			local tv=Vector3.__mul(v,dot1)
 			Vector3.Add(tv,tw)
 			Vector3.Sub(w,tv)
-			Vector3.Normalize(w)
+			Vector3.Normalized(w)
 		end
 	end
 
