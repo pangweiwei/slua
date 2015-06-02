@@ -132,6 +132,18 @@ do
 		res[3] = m[3] * v[1] + m[6] * v[2] + m[9] * v[3]
 		return res
 	end
+
+	function Matrix3x3:SetIdentity()
+		self[1],self[2],self[3]=1,0,0
+		self[4],self[5],self[6]=0,1,0
+		self[7],self[8],self[9]=0,0,1
+	end
+
+	function Matrix3x3:SetOrthoNormal( x,y,z )
+		self[1],self[2],self[3]=x[1],y[1],z[1]
+		self[4],self[5],self[6]=x[2],y[2],z[2]
+		self[7],self[8],self[9]=x[3],y[3],z[3]
+	end
 end
 
 do
@@ -159,7 +171,7 @@ do
 
 
 	Vector3.New=function (x,y,z)
-		local v={x,y,z}
+		local v={x or 0,y or 0,z or 0}
 		return setmetatable(v,Vector3)
 	end
 
@@ -526,7 +538,7 @@ do
 
 	function Color.New(r,g,b,a)
 		a=a or 1
-		local c={r,g,b,a}
+		local c={r or 0,g or 0,b or 0,a or 0}
 		return setmetatable(c,Color)
 	end
 
@@ -646,7 +658,7 @@ do
 	end
 
 	function Vector2.New(x,y)
-		return setmetatable({x,y},Vector2)
+		return setmetatable({x or 0,y or 0},Vector2)
 	end
 
 	function Vector2.__call(t,x,y)
@@ -738,7 +750,7 @@ do
 	end
 
 	function Vector4.New(x,y,z,w)
-		return setmetatable({x,y,z,w},Vector4)
+		return setmetatable({x or 0,y or 0,z or 0,w or 0},Vector4)
 	end
 
 	function Vector4.__call(t,x,y,z,w)
@@ -879,7 +891,7 @@ do
 
 
 	function Quaternion.New(x,y,z,w)
-		return setmetatable({x,y,z,w},Quaternion)
+		return setmetatable({x or 0,y or 0,z or 0,w or 0},Quaternion)
 	end
 
 	function Quaternion.__call(t,x,y,z,w)
@@ -950,6 +962,7 @@ do
 
 	-- code from reflector unityengine
 	function Quaternion.Dot( a,b )
+		print(a,b)
 		return a[1] * b[1] + a[2] * b[2] + a[3] * b[3] + a[4] * b[4]
 	end
 
@@ -1003,6 +1016,19 @@ do
 		else
 			return Quaternion.Lerp(q1,tmpQuat,t)
 		end
+	end
+
+	function Quaternion.LookRotation( forward,up )
+		up = up or Vector3.up
+		local q = Quaternion.New(0,0,0,1)
+		if not LookRotateToQuaternion(foward,up,q) then
+			local m = Vector3.Magnitude(forward)
+			if m>Epsilon then
+				local matrix = Matrix3x3.New()
+				matrix:SetFromToRotation(Vector3.New(0,0,1),for)
+			end
+		end
+		return q
 	end
 
 	setmetatable(Quaternion,Quaternion)
