@@ -150,7 +150,8 @@ do
 	local Raw=UnityEngine.Vector3
 	local Vector3={__typename='Vector3',__raw=Raw}
 	local T=Vector3
-	_G['UnityEngine.Vector3.Instance']=Vector3
+	local I={__typename='Vector3'}
+	_G['UnityEngine.Vector3.Instance']=I
 	UnityEngine.Vector3=Vector3
 	local get={}
 	local set={}
@@ -172,42 +173,56 @@ do
 
 	Vector3.New=function (x,y,z)
 		local v={x or 0,y or 0,z or 0}
-		return setmetatable(v,Vector3)
+		return setmetatable(v,I)
 	end
 
 	Vector3.__call = function(t,x,y,z)
 		return Vector3.New(x,y,z)
 	end
 
-	Vector3.__eq = function(a,b)
+	I.__index = function(t,k)
+		local f=rawget(I,k)
+		if f then return f end
+		local f=rawget(get,k)
+		if f then return f(t) end
+		error('Not found '..k)
+	end
+
+	I.__newindex = function(t,k,v)
+		local f=rawget(set,k)
+		if f then return f(t,v) end
+		error('Not found '..k)
+	end
+
+	I.__eq = function(a,b)
 		return abs(a[1]-b[1])<Epsilon
 		 	and abs(a[2]-b[2])<Epsilon
 		 	and abs(a[3]-b[3])<Epsilon
 	end
 
-	Vector3.__unm = function(a)
+	I.__unm = function(a)
 		local ca=Vector3.New(-a[1],-a[2],-a[3])
 		return ca
 	end
 
 
-	Vector3.__tostring = function(self)
+	I.__tostring = function(self)
 		return string.format('Vector3(%f,%f,%f)',self[1],self[2],self[3])
 	end
 
-	Vector3.__mul = function(a,b)
+	I.__mul = function(a,b)
 		return Vector3.New(a[1]*b,a[2]*b,a[3]*b)
 	end
 
-	Vector3.__add = function(a,b)
+	I.__add = function(a,b)
 		return Vector3.New(a[1]+b[1],a[2]+b[2],a[3]+b[3])
 	end
 
-	Vector3.__sub = function(a,b)
+	I.__sub = function(a,b)
 		return Vector3.New(a[1]-b[1],a[2]-b[2],a[3]-b[3])
 	end
 
-	Vector3.__div = function(a,b)
+	I.__div = function(a,b)
 		return Vector3.New(a[1]/b,a[2]/b,a[3]/b)
 	end
 
@@ -246,9 +261,7 @@ do
 	function get:magnitude() return Vector3.Magnitude(self) end
 	function get:sqrMagnitude() return Vector3.SqrMagnitude(self) end
 	function get:normalized() 
-		local cv=self:Clone()
-		Vector3.Normalize(cv)
-		return cv
+		return Vector3.Normalize(cv)
 	end
 
 
@@ -256,11 +269,11 @@ do
 		return Vector3.New(self[1],self[2],self[3])
 	end
 		
-	function Vector3:Set(x,y,z)	
+	function I:Set(x,y,z)	
 		self[1],self[2],self[3]=x or 0,y or 0,z or 0
 	end
 
-	function Vector3:ToString()
+	function I:ToString()
 		return self:__tostring()
 	end
 
@@ -284,6 +297,10 @@ do
         local v=Vector3.Clone(v)
         Vector3.Normalized(v)
         return v
+	end
+
+	function I:Normalize()
+		Vector3.Normalized(self)
 	end
 
 	function Vector3.Magnitude(v)
@@ -333,7 +350,7 @@ do
 			return Vector3.Lerp(a,b,t)
 		elseif dot<-1+Epsilon then
 			local lerpedMagnitude = lerpf (ma, mb, t)
-			local na = Vector3.__div(a,ma)
+			local na = I.__div(a,ma)
 			local axis = Vector3.OrthoNormalVector(na)
 			local m=Matrix3x3.New()
 			Matrix3x3.SetAxisAngle(m,axis,PI*t)
@@ -374,7 +391,7 @@ do
 	end
 
 	function Vector3.MoveTowards(a,b,adv)
-		local v = Vector3.__sub(b,a)
+		local v = I.__sub(b,a)
 		local m = Vector3.Magnitude(v)
 		if m>adv and m~=0 then
 			Vector3.Div(v,m)
@@ -445,8 +462,8 @@ do
 		if w then
 			local dot1 = Vector3.Dot(v,w)
 			local dot0 = Vector3.Dot(u,w)
-			local tw=Vector3.__mul(u,dot0)
-			local tv=Vector3.__mul(v,dot1)
+			local tw=I.__mul(u,dot0)
+			local tv=I.__mul(v,dot1)
 			Vector3.Add(tv,tw)
 			Vector3.Sub(w,tv)
 			Vector3.Normalized(w)
@@ -455,6 +472,10 @@ do
 
 	function Vector3.Scale(a,b)
 		return Vector3.New(a[1]*b[1],a[2]*b[2],a[3]*b[3])
+	end
+
+	function I:Scale( self,b )
+		return Vector3.Scale(self,b)
 	end
 
 	-- code copy from reflactor of UnityEgnine
@@ -491,7 +512,7 @@ do
 
 	function Vector3.Reflect(dir,nml)
 		local dot=Vector3.Dot(nml,dir)*-2
-		local v=Vector3.__mul(nml,dot)
+		local v=I.__mul(nml,dot)
 		Vector3.Add(v,dir)
 		return v
 	end
