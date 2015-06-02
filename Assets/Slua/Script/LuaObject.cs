@@ -1023,7 +1023,7 @@ return index
 				LuaDLL.luaL_error(l, "expect string or type table");
 
 			t = Type.GetType(tname);
-            if (t != null)
+            if (t != null && lt==LuaTypes.LUA_TTABLE)
             {
                 LuaDLL.lua_pushstring(l, "__type");
                 pushObject(l, t);

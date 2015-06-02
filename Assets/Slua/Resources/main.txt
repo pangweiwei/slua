@@ -110,7 +110,8 @@ function main()
 	
 
 	local go = GameObject.Find("Canvas/Panel2"):GetComponent("ScrollRect")
-	local go = GameObject.Find("Canvas/Panel2"):GetComponent("ScrollRect")
+	local go2 = GameObject.Find("Canvas/Panel2"):GetComponent("ScrollRect")
+	assert(go==go2)
 
 	go.onValueChanged:AddListener(function(v)
 		print("scroll value changed",v.x,v.y)
