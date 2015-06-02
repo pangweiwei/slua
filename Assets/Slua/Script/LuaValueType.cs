@@ -1018,19 +1018,6 @@ do
 		end
 	end
 
-	function Quaternion.LookRotation( forward,up )
-		up = up or Vector3.up
-		local q = Quaternion.New(0,0,0,1)
-		if not LookRotateToQuaternion(foward,up,q) then
-			local m = Vector3.Magnitude(forward)
-			if m>Epsilon then
-				local matrix = Matrix3x3.New()
-				matrix:SetFromToRotation(Vector3.New(0,0,1),for)
-			end
-		end
-		return q
-	end
-
 	setmetatable(Quaternion,Quaternion)
 end
 
