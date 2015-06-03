@@ -101,7 +101,13 @@ namespace SLua
 
 		void bindAll(IntPtr l)
 		{
-			Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
+#if UNITY_IOS || UNITY_ANDROID
+            BindUnity.Bind(l);
+            BindUnityUI.Bind(l); // delete this line if not found
+            BindDll.Bind(l); // delete this line if not found
+            BindCustom.Bind(l); 
+#else
+            Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
 
 			List<Type> bindlist = new List<Type>();
 			foreach(Assembly a in ams) 
@@ -129,6 +135,7 @@ namespace SLua
 			{
 				t.GetMethod("Bind").Invoke(null, new object[] { l });
 			}
-		}
+#endif
+        }
 	}
 }
