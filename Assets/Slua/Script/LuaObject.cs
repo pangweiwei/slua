@@ -146,14 +146,14 @@ return index
 
 			if (LuaDLL.luaL_dostring(l, newindexfun) != 0)
 			{
-				throwLuaError(l);
+				lastError(l);
 				return;
 			}
 			newindex_ref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
 
 			if (LuaDLL.luaL_dostring(l, indexfun) != 0)
 			{
-				throwLuaError(l);
+                lastError(l);
 				return;
 			}
 			index_ref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
@@ -610,13 +610,11 @@ return index
 			LuaDLL.lua_setfield(l, -2, name);
 		}
 
-		public static void throwLuaError(IntPtr l)
-		{
-			string err = LuaDLL.lua_tostring(l, -1);
-			LuaDLL.lua_pop(l, 1);
-
-			throw new InvalidProgramException(err);
-		}
+        internal static void lastError(IntPtr l)
+        {
+            string err = LuaDLL.lua_tostring(l, -1);
+            LuaDLL.luaL_error(l, err);
+        }
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaGC(IntPtr l)
