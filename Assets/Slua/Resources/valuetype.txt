@@ -17,9 +17,14 @@ function main()
 	assert(x1==x2)
 
 	local v=Vector3(2,0,0)
+	v:Set(3,0,0)
+	assert(v.x==v[1] and v.x==3)
 	v:Normalize()
 	local v2=Vector3.Normalize(v)
 	assert(v.x==1 and v2==v)
+
+	local dir = (Vector3.up - Vector3.zero).normalized
+	assert(dir==Vector3.up)
 
 	local v1=Vector3.MoveTowards(Vector3.zero,Vector3.one,0.3)
 	local v2=Vector3.__raw.MoveTowards(Vector3.zero,Vector3.one,0.3)
