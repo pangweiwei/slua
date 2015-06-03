@@ -244,7 +244,7 @@ return Class
 
 			if (LuaDLL.luaL_dostring(l, classfunc) != 0)
 			{
-				throwLuaError(l);
+				lastError(l);
 				return;
 			}
 			LuaDLL.lua_setfield(l, -3, "Class");

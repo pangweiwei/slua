@@ -1056,7 +1056,7 @@ end
             // lua implemented valuetype isn't faster than raw under non-jit.
             if (LuaDLL.luaL_dostring(l, script) != 0)
             {
-                throwLuaError(l);
+                lastError(l);
                 return;
             }
 #endif
