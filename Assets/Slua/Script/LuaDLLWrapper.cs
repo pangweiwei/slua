@@ -42,7 +42,7 @@
 
 
     **/
-
+#if SLUA
     public class LuaDLLWrapper
     {
 
@@ -100,5 +100,5 @@
         public static extern int lua_checkstack(IntPtr luaState, int extra);
     }
 
-
+#endif
 }

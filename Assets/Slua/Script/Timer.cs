@@ -27,6 +27,7 @@ using UnityEngine;
 
 namespace SLua
 {
+#if SLUA
 	public class LuaTimer : LuaObject
 	{
 		class Timer
@@ -265,7 +266,7 @@ namespace SLua
 					{
 						int error = pushTry(l);
 						pushValue(l, id);
-						ld.call(1, error);
+						ld.Call(1, error);
 						LuaDLL.lua_settop(l, error - 1);
 					};
 				}
@@ -290,7 +291,7 @@ namespace SLua
 					{
 						int error = pushTry(l);
 						pushValue(l, id);
-						ld.call(1, error);
+						ld.Call(1, error);
 						bool ret = LuaDLL.lua_toboolean(l, -1);
 						LuaDLL.lua_settop(l, error - 1);
 						return ret;
@@ -314,5 +315,5 @@ namespace SLua
 			createTypeMetatable(l, typeof(LuaTimer));
 		}
 	}
-
+#endif
 }

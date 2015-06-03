@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace SLua
 {
-
+#if SLUA
 	public class WeakDictionary<K, V>
 	{
 		Dictionary<K, WeakReference> _dict = new Dictionary<K, WeakReference>();
@@ -104,4 +104,5 @@ namespace SLua
 
 		}
 	}
+#endif
 }

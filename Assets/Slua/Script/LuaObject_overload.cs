@@ -30,6 +30,7 @@ using System.Runtime.InteropServices;
 
 namespace SLua
 {
+#if SLUA
 	public partial class LuaObject
 	{
 
@@ -178,4 +179,5 @@ namespace SLua
 			LuaDLL.luaS_pushColor(l, o.r, o.g, o.b, o.a);
 		}
 	}
+#endif
 }

@@ -24,6 +24,7 @@ using UnityEngine;
 using System.Collections;
 using SLua;
 using System;
+#if SLUA
 public class LuaSvrGameObject : MonoBehaviour
 {
 
@@ -46,3 +47,4 @@ public class LuaSvrGameObject : MonoBehaviour
 		if (onUpdate != null) onUpdate();
 	}
 }
+#endif

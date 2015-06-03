@@ -28,6 +28,7 @@ using UnityEngine;
 
 namespace SLua
 {
+#if SLUA
 	class ObjectCache
 	{
 		static Dictionary<IntPtr, ObjectCache> multiState = new Dictionary<IntPtr, ObjectCache>();
@@ -256,5 +257,6 @@ namespace SLua
 			return obj.GetType().IsValueType == false;
 		}
 	}
+#endif
 }
 

@@ -27,10 +27,144 @@ using System.IO;
 using System;
 using System.Reflection;
 using UnityEditor;
+#if SLUA || ULUA
 using LuaInterface;
+#endif
+
 using System.Text;
 using System.Text.RegularExpressions;
 
+public static class TemplateLuaBindCode
+{
+    public static string tempEvent = @"
+using System;
+using System.Collections.Generic;
+using LuaInterface;
+using UnityEngine;
+using UnityEngine.EventSystems;
+#if SLUA
+
+namespace SLua
+{
+    public class LuaUnityEvent_$CLS : LuaObject
+    {
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int AddListener(IntPtr l)
+        {
+            try
+            {
+                UnityEngine.Events.UnityEvent<$GN> self = checkSelf<UnityEngine.Events.UnityEvent<$GN>>(l);
+                UnityEngine.Events.UnityAction<$GN> a1;
+                checkType(l, 2, out a1);
+                self.AddListener(a1);
+                return 0;
+            }
+            catch (Exception e)
+            {
+                LuaDLL.luaL_error(l, e.ToString());
+                return 0;
+            }
+        }
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int RemoveListener(IntPtr l)
+        {
+            try
+            {
+                UnityEngine.Events.UnityEvent<$GN> self = checkSelf<UnityEngine.Events.UnityEvent<$GN>>(l);
+                UnityEngine.Events.UnityAction<$GN> a1;
+                checkType(l, 2, out a1);
+                self.RemoveListener(a1);
+                return 0;
+            }
+            catch (Exception e)
+            {
+                LuaDLL.luaL_error(l, e.ToString());
+                return 0;
+            }
+        }
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int Invoke(IntPtr l)
+        {
+            try
+            {
+                UnityEngine.Events.UnityEvent<$GN> self = checkSelf<UnityEngine.Events.UnityEvent<$GN>>(l);
+                $GN o;
+                checkType(l,2,out o);
+                self.Invoke(o);
+                return 0;
+            }
+            catch (Exception e)
+            {
+                LuaDLL.luaL_error(l, e.ToString());
+                return 0;
+            }
+        }
+        static public void reg(IntPtr l)
+        {
+            getTypeTable(l, typeof(LuaUnityEvent_$CLS).FullName);
+            addMember(l, AddListener);
+            addMember(l, RemoveListener);
+            addMember(l, Invoke);
+            createTypeMetatable(l, typeof(LuaUnityEvent_$CLS));
+        }
+
+        static bool checkType(IntPtr l,int p,out UnityEngine.Events.UnityAction<$GN> ua) {
+            LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
+            LuaDelegate ld;
+            checkType(l, p, out ld);
+            if (ld.d != null)
+            {
+                ua = (UnityEngine.Events.UnityAction<$GN>)ld.d;
+                return true;
+            }
+            ua = ($GN v) =>
+            {
+                int error = pushTry(l);
+                pushValue(l, v);
+                ld.Call(1, error);
+                LuaDLL.lua_settop(l,error - 1);
+            };
+            ld.d = ua;
+            return true;
+        }
+    }
+}
+#endif
+";
+    public static string tempDelegate = @"
+namespace SLua
+{
+    
+    public partial class LuaDelegation : LuaObject
+    {
+
+        static internal int checkDelegate(IntPtr l,int p,out $FN ua) {
+            int op = extractFunction(l,p);
+			if(LuaDLL.lua_isnil(l,p)) {
+				ua=null;
+				return op;
+			}
+            else if (LuaDLL.lua_isuserdata(l, p)==1)
+            {
+                ua = ($FN)checkObj(l, p);
+                return op;
+            }
+            LuaDelegate ld;
+            checkType(l, -1, out ld);
+            if(ld.d!=null)
+            {
+                ua = ($FN)ld.d;
+                return op;
+            }
+			LuaDLL.lua_pop(l,1);
+            ua = ($ARGS) =>
+            {
+                int error = pushTry(l);
+";
+}
+
+#if SLUA
 public class LuaCodeGen : MonoBehaviour
 {
 
@@ -56,7 +190,7 @@ public class LuaCodeGen : MonoBehaviour
     static public void GenerateAll()
     {
 		Generate();
-		GenerateUI();
+		//GenerateUI();
 		Custom();
         Generate3rdDll();
 	}
@@ -67,15 +201,21 @@ public class LuaCodeGen : MonoBehaviour
         Assembly assembly = Assembly.Load("UnityEngine");
         Type[] types = assembly.GetExportedTypes();
 
-		List<string> uselist;
+		List<string> uselist = null;
 		List<string> noUseList;
 
 		CustomExport.OnGetNoUseList(out noUseList);
-		CustomExport.OnGetUseList(out uselist);
+		CustomExport.OnGetUseList(ref uselist);
 
         List<Type> exports = new List<Type>();
         string oldpath = path;
         path += "Unity/";
+
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+
         foreach(Type t in types)
         {
             bool export=true;
@@ -174,19 +314,19 @@ public class LuaCodeGen : MonoBehaviour
     [MenuItem("SLua/Custom/Make")]
     static public void Custom()
     {
-
-        List<Type> cust = new List<Type>();
+        List<string> cust = new List<string>();
         CustomExport.OnAddCustomClass(ref cust);
 
         // export self-dll
         Assembly assembly = Assembly.Load("Assembly-CSharp");
         Type[] types = assembly.GetExportedTypes();
 
+        List<Type> StaticBindedTypes = new List<Type>();
         foreach (Type t in types)
         {
-            if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0)
+            if (cust.Contains(t.FullName))
             {
-                cust.Add(t);
+                StaticBindedTypes.Add(t);
             }
         }
 
@@ -214,7 +354,7 @@ public class LuaCodeGen : MonoBehaviour
             Directory.CreateDirectory(path);
         }
 
-        foreach (Type t in cust)
+        foreach (Type t in StaticBindedTypes)
         {
             if (Generate(t))
                 exports.Add(t);
@@ -232,18 +372,26 @@ public class LuaCodeGen : MonoBehaviour
     {
         List<Type> cust = new List<Type>();
         Assembly assembly = Assembly.Load("Assembly-CSharp");
+
         Type[] types = assembly.GetExportedTypes();
         List<string> assemblyList = new List<string>();
-        CustomExport.OnAddCustomAssembly(ref assemblyList);
+        CustomExport.OnAdd3rdPartyAssembly(ref assemblyList);
+        List<string> StaticBindedTypes = new List<string>();
+        CustomExport.OnAdd3rdPartyClass(ref StaticBindedTypes);
+
         foreach (string assemblyItem in assemblyList)
         {
             assembly = Assembly.Load(assemblyItem);
             types = assembly.GetExportedTypes();
             foreach (Type t in types)
             {
-                cust.Add(t);
+                if (true == StaticBindedTypes.Contains(t.FullName))
+                {
+                    cust.Add(t);
+                }
             }
         }
+
         if (cust.Count > 0)
         {
             List<Type> exports = new List<Type>();
@@ -253,10 +401,24 @@ public class LuaCodeGen : MonoBehaviour
             {
                 Directory.CreateDirectory(path);
             }
+            
+            Debug.Log("total 3rd type number is " + cust.Count.ToString());
+            int nIndex = 0;
             foreach (Type t in cust)
             {
-                if (Generate(t))
-                    exports.Add(t);
+                try
+                {
+                    if (Generate(t))
+                    {
+                        exports.Add(t);
+                        Debug.Log("exports.Add(t) current index is " + nIndex.ToString() + " content is " + t.ToString());
+                        nIndex += 1;
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.Log("3rd DLL error, exception is " + ex.ToString());
+                }
             }
             GenerateBind(exports, "BindDll",2);
             AssetDatabase.Refresh();
@@ -367,6 +529,7 @@ class CodeGenerator
         string f = LuaCodeGen.path + name+".cs";
         StreamWriter file = new StreamWriter(f,false,Encoding.UTF8);
         Write(file, "using System;");
+        Write(file, "#if SLUA");
         Write(file, "namespace SLua {");
 		Write(file, "[LuaBinder({0})]",order);
         Write(file, "public class {0} {{",name);
@@ -378,6 +541,7 @@ class CodeGenerator
         Write(file, "}");
         Write(file, "}");
         Write(file, "}");
+        Write(file, "#endif");
         file.Close();
     }
 
@@ -460,47 +624,18 @@ class CodeGenerator
 
     void WriteDelegate(Type t, StreamWriter file)
     {
-        string temp = @"
-using System;
-using System.Collections.Generic;
-using LuaInterface;
-using UnityEngine;
-
-namespace SLua
-{
-    public partial class LuaDelegation : LuaObject
-    {
-
-        static internal int checkDelegate(IntPtr l,int p,out $FN ua) {
-            int op = extractFunction(l,p);
-			if(LuaDLL.lua_isnil(l,p)) {
-				ua=null;
-				return op;
-			}
-            else if (LuaDLL.lua_isuserdata(l, p)==1)
-            {
-                ua = ($FN)checkObj(l, p);
-                return op;
-            }
-            LuaDelegate ld;
-            checkType(l, -1, out ld);
-            if(ld.d!=null)
-            {
-                ua = ($FN)ld.d;
-                return op;
-            }
-			LuaDLL.lua_pop(l,1);
-            ua = ($ARGS) =>
-            {
-                int error = pushTry(l);
-";
-        
+        string temp = TemplateLuaBindCode.tempDelegate;
         temp = temp.Replace("$TN", t.Name);
         temp = temp.Replace("$FN", SimpleType(t));
         MethodInfo mi = t.GetMethod("Invoke");
         List<int> outindex = new List<int>();
         List<int> refindex = new List<int>();
         temp = temp.Replace("$ARGS", ArgsList(mi, ref outindex, ref refindex));
+        Write(file, "using System;");
+        Write(file, "using System.Collections.Generic;");
+        Write(file, "using LuaInterface;");
+        Write(file, "using UnityEngine;");
+        Write(file, "#if SLUA");
         Write(file, temp);
 
         this.indent = 4;
@@ -511,7 +646,7 @@ namespace SLua
                 Write(file, "pushValue(l,a{0});",n+1);
         }
 
-        Write(file, "ld.call({0}, error);", mi.GetParameters().Length - outindex.Count);
+        Write(file, "ld.Call({0}, error);", mi.GetParameters().Length - outindex.Count);
 
         if (mi.ReturnType != typeof(void))
             WriteValueCheck(file, mi.ReturnType, 1, "ret", "error+");
@@ -538,6 +673,7 @@ namespace SLua
         Write(file,"}");
         Write(file,"}");
         Write(file, "}");
+        Write(file, "#endif");
     }
 
     string ArgsList(MethodInfo m, ref List<int> outindex, ref List<int> refindex)
@@ -582,101 +718,7 @@ namespace SLua
 
     void WriteEvent(Type t, StreamWriter file)
     {
-        string temp = @"
-using System;
-using System.Collections.Generic;
-using LuaInterface;
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-namespace SLua
-{
-    public class LuaUnityEvent_$CLS : LuaObject
-    {
-
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static public int AddListener(IntPtr l)
-        {
-            try
-            {
-                UnityEngine.Events.UnityEvent<$GN> self = checkSelf<UnityEngine.Events.UnityEvent<$GN>>(l);
-                UnityEngine.Events.UnityAction<$GN> a1;
-                checkType(l, 2, out a1);
-                self.AddListener(a1);
-                return 0;
-            }
-            catch (Exception e)
-            {
-                LuaDLL.luaL_error(l, e.ToString());
-                return 0;
-            }
-        }
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static public int RemoveListener(IntPtr l)
-        {
-            try
-            {
-                UnityEngine.Events.UnityEvent<$GN> self = checkSelf<UnityEngine.Events.UnityEvent<$GN>>(l);
-                UnityEngine.Events.UnityAction<$GN> a1;
-                checkType(l, 2, out a1);
-                self.RemoveListener(a1);
-                return 0;
-            }
-            catch (Exception e)
-            {
-                LuaDLL.luaL_error(l, e.ToString());
-                return 0;
-            }
-        }
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static public int Invoke(IntPtr l)
-        {
-            try
-            {
-                UnityEngine.Events.UnityEvent<$GN> self = checkSelf<UnityEngine.Events.UnityEvent<$GN>>(l);
-                $GN o;
-                checkType(l,2,out o);
-                self.Invoke(o);
-                return 0;
-            }
-            catch (Exception e)
-            {
-                LuaDLL.luaL_error(l, e.ToString());
-                return 0;
-            }
-        }
-        static public void reg(IntPtr l)
-        {
-            getTypeTable(l, typeof(LuaUnityEvent_$CLS).FullName);
-            addMember(l, AddListener);
-            addMember(l, RemoveListener);
-            addMember(l, Invoke);
-            createTypeMetatable(l, typeof(LuaUnityEvent_$CLS));
-        }
-
-        static bool checkType(IntPtr l,int p,out UnityEngine.Events.UnityAction<$GN> ua) {
-            LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
-            LuaDelegate ld;
-            checkType(l, p, out ld);
-            if (ld.d != null)
-            {
-                ua = (UnityEngine.Events.UnityAction<$GN>)ld.d;
-                return true;
-            }
-            ua = ($GN v) =>
-            {
-                int error = pushTry(l);
-                pushValue(l, v);
-                ld.call(1, error);
-                LuaDLL.lua_settop(l,error - 1);
-            };
-            ld.d = ua;
-            return true;
-        }
-    }
-}";
-
-
+        string temp = TemplateLuaBindCode.tempEvent;
         temp = temp.Replace("$CLS", _Name(GenericName(t.BaseType)));
         temp = temp.Replace("$FNAME", FullName(t));
         temp = temp.Replace("$GN", GenericName(t.BaseType));
@@ -711,6 +753,7 @@ namespace SLua
     private void End(StreamWriter file)
     {
         Write(file, "}");
+        Write(file, "#endif");
         file.Flush();
         file.Close();
     }
@@ -722,6 +765,7 @@ namespace SLua
         Write(file, "using LuaInterface;");
         Write(file, "using SLua;");
         Write(file, "using System.Collections.Generic;");
+        Write(file, "#if SLUA");
         Write(file, "public class {0} : LuaObject {{", ExportName(t));
         //Write(file, "static public List<LuaCSFunction> exportfuncs = new List<LuaCSFunction>();");
     }
@@ -1699,5 +1743,5 @@ namespace SLua
         }
         return str;
     }
-
 }
+#endif

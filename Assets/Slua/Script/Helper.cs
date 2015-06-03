@@ -30,6 +30,7 @@ using System.Runtime.InteropServices;
 
 namespace SLua
 {
+#if SLUA
 	class Helper : LuaObject
 	{
 
@@ -187,4 +188,5 @@ return Class
 			LuaDLL.lua_pop(l, 1);
 		}
 	}
+#endif
 }

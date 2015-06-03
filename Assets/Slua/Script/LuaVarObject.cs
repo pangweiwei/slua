@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 
 namespace SLua
 {
-
+#if SLUA
 	// Try to avoid using this class for not export class
 	// This class use reflection and not completed, you should write your code for your purpose.
 	class LuaVarObject : LuaObject
@@ -55,7 +55,7 @@ namespace SLua
 					case "String":
 						return lt == LuaTypes.LUA_TSTRING;
 					case "Int32":
-					case "Uint32":
+					case "UInt32":
 					case "Single":
 					case "Double":
 						return lt == LuaTypes.LUA_TNUMBER;
@@ -84,7 +84,7 @@ namespace SLua
 						return LuaDLL.lua_tostring(l, p);
 					case "Int32":
 						return (int)LuaDLL.lua_tointeger(l, p);
-					case "Uint32":
+					case "UInt32":
 						return (uint)LuaDLL.lua_tointeger(l, p);
 					case "Single":
 						return (float)LuaDLL.lua_tonumber(l, p);
@@ -282,14 +282,32 @@ IndexProperty:
 				if(self.GetType().IsGenericType)
 				{
 					Type t = self.GetType().GetGenericArguments()[0];
-					if (t.IsEnum)
-					{
-						pushVar(l, (self as IDictionary)[Enum.Parse(t, index.ToString())]);
+                    if (t.IsEnum)
+                    {
+                        pushVar(l, (self as IDictionary)[Enum.Parse(t, index.ToString())]);
                         return 1;
-					}
-				}
+                    }
+                    else
+                    {
+                        Type self_type = self.GetType();
+                        MethodInfo kInfo = self_type.GetMethod("get_Item");
+                        object result = null;
+                        try
+                        {
+                            result = kInfo.Invoke(self, new object[] { (uint)index });
+                        }
+                        catch (System.ArgumentException)
+                        {
+                            result = kInfo.Invoke(self, new object[] { index });
+                        }
 
-                pushVar(l, (self as IDictionary)[index]);
+                        pushVar(l, result);
+                    }
+				}
+                else
+                {
+                    pushVar(l, (self as IDictionary)[index]);
+                }
 
 				return 1;
 			}
@@ -383,4 +401,5 @@ IndexProperty:
 
 		}
 	}
+#endif
 }

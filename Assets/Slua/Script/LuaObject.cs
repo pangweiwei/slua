@@ -66,6 +66,7 @@ public class StaticExportAttribute : System.Attribute
 namespace SLua
 {
 
+#if SLUA
 	public partial class LuaObject
 	{
 
@@ -1429,5 +1430,5 @@ return index
 		}
 
 	}
-
+#endif
 }

@@ -1,9 +1,12 @@
+//#define SLUA
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
 namespace LuaInterface
 {
+#if SLUA
+
 #pragma warning disable 414
 	public class MonoPInvokeCallbackAttribute : System.Attribute
 	{
@@ -634,4 +637,5 @@ namespace LuaInterface
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int luaS_subclassof(IntPtr l, int index, string t);
 	}
+#endif
 }

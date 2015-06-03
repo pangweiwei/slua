@@ -28,6 +28,7 @@ using System;
 
 namespace SLua
 {
+#if SLUA
 	public class LuaCoroutine : LuaObject
 	{
 
@@ -84,4 +85,5 @@ namespace SLua
 		}
 
 	}
+#endif
 }

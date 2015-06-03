@@ -30,6 +30,7 @@ using System.Reflection;
 
 namespace SLua
 {
+#if SLUA
 	public class LuaSvr
 	{
 		public LuaState luaState;
@@ -48,7 +49,7 @@ namespace SLua
 			luaState = new LuaState();
 
 			LuaObject.init(luaState.L);
-			bindAll(luaState.L);
+			bindAll(luaState.L);   
 
 			GameObject go = new GameObject("LuaSvrProxy");
 			lgo = go.AddComponent<LuaSvrGameObject>();
@@ -73,10 +74,10 @@ namespace SLua
 		{
 			if (main != null)
 			{
-				luaState.doFile(main);
+				luaState.DoFile(main);
 				LuaFunction func = (LuaFunction)luaState["main"];
 				if(func!=null)
-					return func.call();
+					return func.Call()[0];
 			}
 			return null;
 		}
@@ -126,4 +127,5 @@ namespace SLua
 			}
 		}
 	}
+#endif
 }
