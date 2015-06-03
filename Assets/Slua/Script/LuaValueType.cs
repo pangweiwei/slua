@@ -261,7 +261,7 @@ do
 	function get:magnitude() return Vector3.Magnitude(self) end
 	function get:sqrMagnitude() return Vector3.SqrMagnitude(self) end
 	function get:normalized() 
-		return Vector3.Normalize(cv)
+		return Vector3.Normalize(self)
 	end
 
 
