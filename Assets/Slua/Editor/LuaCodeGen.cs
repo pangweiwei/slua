@@ -686,7 +686,7 @@ namespace SLua
             addMember(l, AddListener);
             addMember(l, RemoveListener);
             addMember(l, Invoke);
-            createTypeMetatable(l, typeof(LuaUnityEvent_$CLS));
+            createTypeMetatable(l, null, typeof(LuaUnityEvent_$CLS), typeof(UnityEngine.Events.UnityEventBase));
         }
 
         static bool checkType(IntPtr l,int p,out UnityEngine.Events.UnityAction<$GN> ua) {

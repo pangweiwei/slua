@@ -52,7 +52,7 @@ UnityEngine.Yield = function(x)
 end
 return yield
 ";
-				// overload resume function for report error
+            // overload resume function for report error
 			if(LuaDLL.lua_dostring(l, yield)!=0)
 				LuaObject.lastError(l);
 			LuaDLL.lua_pop(l, 1);
