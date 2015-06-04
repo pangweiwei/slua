@@ -84,8 +84,7 @@ function main()
 	local btn = go:GetComponent("Button")
 	
 	-- get out parameter
-	local hitinfo = RaycastHit()
-	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1),hitinfo)
+	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1),Slua.out)
 	print("Physics Hitinfo",ok,hitinfo)
 	
 	-- foreach enumeratable object
