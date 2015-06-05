@@ -224,6 +224,26 @@ return Class
 			return 1;
 		}
 
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int IsNull(IntPtr l)
+        {
+            LuaTypes t = LuaDLL.lua_type(l, 1);
+            if (t == LuaTypes.LUA_TNIL)
+                pushValue(l, true);
+            else if (t == LuaTypes.LUA_TUSERDATA)
+            {
+                object o = checkObj(l, 1);
+                if (o is UnityEngine.Object)
+                    pushValue(l, (o as UnityEngine.Object) == null);
+                else
+                    pushValue(l, o == null);
+            }
+            else
+                pushValue(l, false);
+
+            return 1;
+        }
+
         static LuaOut luaOut = new LuaOut();
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int get_out(IntPtr l)
@@ -240,6 +260,7 @@ return Class
             addMember(l, iter, false);
             addMember(l, ToString, false);
             addMember(l, As, false);
+            addMember(l, IsNull, false);
             addMember(l, "out", get_out, null, false);
 
 			if (LuaDLL.luaL_dostring(l, classfunc) != 0)
