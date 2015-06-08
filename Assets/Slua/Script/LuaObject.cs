@@ -462,8 +462,20 @@ return index
 			createTypeMetatable(l, con, self, null);
 		}
 
+        static void checkMethodValid(LuaCSFunction f)
+        {
+#if UNITY_EDITOR
+            if (f != null && !Attribute.IsDefined(f.Method, typeof(MonoPInvokeCallbackAttribute)))
+            {
+                Debug.LogError(string.Format("MonoPInvokeCallbackAttribute not defined for LuaCSFunction {0}.", f.Method));
+            }
+#endif
+        }
+
 		public static void createTypeMetatable(IntPtr l, LuaCSFunction con, Type self, Type parent)
 		{
+            checkMethodValid(con);
+
 			// set parent
 			if (parent != null && parent != typeof(object) && parent != typeof(ValueType))
 			{
@@ -558,7 +570,9 @@ return index
 
 		public static void reg(IntPtr l, LuaCSFunction func, string ns)
 		{
-			newTypeTable(l, ns);
+            checkMethodValid(func);
+
+            newTypeTable(l, ns);
 			LuaDLL.lua_pushcfunction(l, func);
 			LuaDLL.lua_setfield(l, -2, func.Method.Name);
 			LuaDLL.lua_pop(l, 1);
@@ -566,7 +580,9 @@ return index
 
 		protected static void addMember(IntPtr l, LuaCSFunction func)
 		{
-			LuaDLL.lua_pushcfunction(l, func);
+            checkMethodValid(func);
+
+            LuaDLL.lua_pushcfunction(l, func);
 			string name = func.Method.Name;
 			if (name.EndsWith("_s"))
 			{
@@ -579,14 +595,19 @@ return index
 
 		protected static void addMember(IntPtr l, LuaCSFunction func, bool instance)
 		{
-			LuaDLL.lua_pushcfunction(l, func);
+            checkMethodValid(func);
+
+            LuaDLL.lua_pushcfunction(l, func);
 			string name = func.Method.Name;
 			LuaDLL.lua_setfield(l, instance ? -2 : -3, name);
 		}
 
 		protected static void addMember(IntPtr l, string name, LuaCSFunction get, LuaCSFunction set, bool instance)
 		{
-			int t = instance ? -2 : -3;
+            checkMethodValid(get);
+            checkMethodValid(set);
+
+            int t = instance ? -2 : -3;
 
 			LuaDLL.lua_newtable(l);
 			if (get == null)
