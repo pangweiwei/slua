@@ -6,22 +6,6 @@ if not UnityEngine.GameObject then
 end
 
 
-MyVector3=Slua.Class(Vector3,
-	nil, --static function
-	{ --instance member function
-		Normalize=function(self)
-			print "overloaded Normalize"
-			local l=math.sqrt(self.x*self.x+self.y*self.y,self.z*self.z)
-			self.x=self.x/l
-			self.y=self.y/l
-			self.z=self.z/l
-		end,
-
-	}
-)
-
-My2=Slua.Class(MyVector3,nil,nil)
-
 MyGameObject=Slua.Class(GameObject,
 	nil,
 	{
@@ -41,6 +25,11 @@ function main()
 		print("using lua")
 	end
 
+	HelloWorld.depth= "a"
+	print(HelloWorld.depth)
+	HelloWorld.priority=1
+	print(HelloWorld.priority)
+
 	-- test custom component
 	local x=UnityEngine.GameObject("OoOo")
 	x:AddComponent(SLuaTest)
@@ -53,13 +42,6 @@ function main()
 	local ll=XXList() -- it's List<int>
 	ll:Add(1)
 	print(ll.Count)
-
-	-- test inherite class
-	local mv = My2(1,2,3)
-	mv:Normalize()
-	print(mv.x,mv.y,mv.z)
-	mv:Set(0,0,0)
-	print(mv.x,mv.y,mv.z)
 
 	local x=MyGameObject("MyGameObject")
 	x:AddComponent(SphereCollider)
