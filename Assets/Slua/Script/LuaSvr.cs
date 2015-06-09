@@ -53,6 +53,7 @@ namespace SLua
             LuaCoroutine.reg(L, lgo);
             Helper.reg(L);
             LuaValueType.reg(L);
+            SLuaDebug.reg(L);
             LuaDLL.luaS_openextlibs(L);
             return 0;
         }

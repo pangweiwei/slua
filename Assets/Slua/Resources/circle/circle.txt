@@ -1,7 +1,7 @@
 
 import "UnityEngine"
 
-if not UnityEngine.GameObject then
+if not UnityEngine.GameObject or not  UnityEngine.UI then
 	error("Click Make/All to generate lua wrap file")
 end
 
@@ -58,7 +58,6 @@ function class:init(count)
 
 		mat.color=self.colors[math.random(#self.colors)]
 		table.insert(self.cubes,{cube,mat})
-
 	end
 end
 
