@@ -35,7 +35,7 @@ namespace SLua
         List<string> history;
         int historyIndex;
         Vector2 scrollPoition;
-        const int MaxLine = 10000;
+        const int MaxLength = 10000;
         static bool regConsoleFunction = false;
         static LuaConsole console;
 
@@ -65,18 +65,6 @@ namespace SLua
             Repaint();
         }
 
-        void OnEnable()
-        {
-        }
-
-        void OnDisable()
-        {
-        }
-
-        void OnDestroy()
-        {
-        }
-
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int outputConsole(IntPtr l)
         {
@@ -95,90 +83,96 @@ namespace SLua
 
         void OnGUI()
         {
-            float totalAreaHeight = Screen.height;
-            float outputAreaHeight = totalAreaHeight-50;
+            try {
+                float totalAreaHeight = Screen.height;
+                float outputAreaHeight = totalAreaHeight - 50;
 
-            LuaSvrGameObject lua = FindObjectOfType<LuaSvrGameObject>();
-            if(!regConsoleFunction)
-            {
-                regConsoleFunction = true;
-                RegConsoleFunction(lua.state.L);
-            }
-
-            scrollPoition = GUILayout.BeginScrollView(scrollPoition, GUILayout.Width(Screen.width), GUILayout.Height(outputAreaHeight));
-            if (outputText.Length > MaxLine)
-            {
-                outputText = outputText.Substring(outputText.Length - MaxLine);
-            }
-            if (lua != null)
-                EditorGUILayout.TextArea(outputText, GUILayout.ExpandHeight(true));
-            else
-                EditorGUILayout.LabelField("Start game to active this console.", GUILayout.ExpandHeight(true));
-            GUILayout.EndScrollView();
-
-            GUI.SetNextControlName("Input");
-            if (lua != null)
-                inputText = EditorGUILayout.TextField(inputText,GUILayout.ExpandHeight(true));
-            else
-                EditorGUILayout.LabelField("Waiting for lua VM start", GUILayout.ExpandHeight(true));
-
-            if (Event.current.isKey && Event.current.type == EventType.KeyUp)
-            {
-                bool refresh = false;
-                if (Event.current.keyCode == KeyCode.Return)
+                LuaSvrGameObject lua = FindObjectOfType<LuaSvrGameObject>();
+                if (!regConsoleFunction)
                 {
-                    if (inputText != "")
-                    {
-                        if (history.Count == 0 || history[history.Count - 1] != inputText)
-                        {
-                            history.Add(inputText);
-                        }
-                        consolePrint(inputText);
-                        doCommand(inputText);
-                        inputText = "";
-                        refresh = true;
-                        historyIndex = history.Count;
-                    }
+                    regConsoleFunction = true;
+                    RegConsoleFunction(lua.state.L);
                 }
-                else if (Event.current.keyCode == KeyCode.UpArrow)
+
+                scrollPoition = GUILayout.BeginScrollView(scrollPoition, GUILayout.ExpandWidth(true), GUILayout.Height(outputAreaHeight));
+                if (outputText.Length > MaxLength)
                 {
-                    if (history.Count > 0)
+                    outputText = outputText.Substring(outputText.Length - MaxLength);
+                }
+                if (lua != null)
+                    EditorGUILayout.TextArea(outputText, GUILayout.ExpandHeight(true));
+                else
+                    EditorGUILayout.LabelField("Start game to active this console.", GUILayout.ExpandHeight(true));
+                GUILayout.EndScrollView();
+
+                GUI.SetNextControlName("Input");
+                if (lua != null)
+                    inputText = EditorGUILayout.TextField(inputText, GUILayout.ExpandHeight(true));
+                else
+                    EditorGUILayout.LabelField("Waiting for lua VM start", GUILayout.ExpandHeight(true));
+
+                if (Event.current.isKey && Event.current.type == EventType.KeyUp)
+                {
+                    bool refresh = false;
+                    if (Event.current.keyCode == KeyCode.Return)
                     {
-                        historyIndex = historyIndex - 1;
-                        if (historyIndex < 0)
+                        if (inputText != "")
                         {
-                            historyIndex = 0;
-                        }
-                        else
-                        {
-                            inputText = history[historyIndex];
+                            if (history.Count == 0 || history[history.Count - 1] != inputText)
+                            {
+                                history.Add(inputText);
+                            }
+                            consolePrint(inputText);
+                            doCommand(inputText);
+                            inputText = "";
                             refresh = true;
+                            historyIndex = history.Count;
                         }
                     }
-                }
-                else if (Event.current.keyCode == KeyCode.DownArrow)
-                {
-                    if (history.Count > 0)
+                    else if (Event.current.keyCode == KeyCode.UpArrow)
                     {
-                        historyIndex = historyIndex + 1;
-                        if (historyIndex > history.Count - 1)
+                        if (history.Count > 0)
                         {
-                            historyIndex = history.Count - 1;
-                        }
-                        else
-                        {
-                            inputText = history[historyIndex];
-                            refresh = true;
+                            historyIndex = historyIndex - 1;
+                            if (historyIndex < 0)
+                            {
+                                historyIndex = 0;
+                            }
+                            else
+                            {
+                                inputText = history[historyIndex];
+                                refresh = true;
+                            }
                         }
                     }
-                }
+                    else if (Event.current.keyCode == KeyCode.DownArrow)
+                    {
+                        if (history.Count > 0)
+                        {
+                            historyIndex = historyIndex + 1;
+                            if (historyIndex > history.Count - 1)
+                            {
+                                historyIndex = history.Count - 1;
+                            }
+                            else
+                            {
+                                inputText = history[historyIndex];
+                                refresh = true;
+                            }
+                        }
+                    }
 
-                if (refresh)
-                {
-                    Repaint();
-                    EditorGUIUtility.editingTextField = false;
-                    GUI.FocusControl("Input");
+                    if (refresh)
+                    {
+                        Repaint();
+                        EditorGUIUtility.editingTextField = false;
+                        GUI.FocusControl("Input");
+                    }
                 }
+            }
+            catch(Exception)
+            {
+                // ignore
             }
         }
 
@@ -211,6 +205,10 @@ namespace SLua
             else if (cmd == "reload")
             {
                 // TODO
+            }
+            else if (cmd=="cls")
+            {
+                outputText = "";
             }
             else
             {
