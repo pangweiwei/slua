@@ -43,62 +43,7 @@ do
 
     local function buildEnv()
 		local localEnv = setmetatable({}, {__index=_G})
-		setVariable = _G
-		if breakMode then
-			local level
-			if jit then
-				level = getCallDepth() - stackDepth + 2
-			else
-				level = 5
-			end
-			local upvalueIndex = {}
-			--copy upvalue
-			local info = debug.getinfo(level)
-			if info then
-				local clouse = info.func
-				local i = 1
-				while true do
-					local varname,varvalue = debug.getupvalue(clouse, i)
-					if not varname then
-						break
-					end
-					localEnv[varname] = varvalue
-					upvalueIndex[varname] = i
-					i = i + 1
-				end
-			end
-			local localIndex = {}
-			--copy local var
-			local i = 1
-			while true do
-				local varname,varvalue = debug.getlocal(level, i)
-				if not varname then
-					break
-				end
-				localEnv[varname] = varvalue
-				localIndex[varname] = i
-				i = i + 1
-			end
-
-			setVariable = function(t, k, v)
-				local i = upvalueIndex[k]
-				if i then
-					local name = debug.setupvalue(clouse, i, v)
-					print(string.format('set upvalue %s = %s', name, tostring(v)))
-					return
-				end
-
-				i = localIndex[k]
-				if i then
-					local name = debug.setlocal(level+1, i, v)
-					print(string.format('set local %s = %s', name, tostring(v)))
-					return
-				end
-
-				_G[k] = v
-				print(string.format('set global %s = %s', k, tostring(v)))
-			end
-		end
+		local setVariable = _G
 		local env = setmetatable({}, {__index=localEnv, __newindex=setVariable})
 		return env
 	end
