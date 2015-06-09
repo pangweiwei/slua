@@ -191,18 +191,8 @@ namespace SLua
                 cmd = str.Substring(0, index).Trim().ToLower();
                 tail = str.Substring(index + 1);
             }
-            if (cmd == "p")
-            {
-                if (tail == "")
-                {
-                    consolePrint("usage:p variant");
-                    return;
-                }
 
-                var luaFunc = luaState.getFunction("Slua.ldb.printExpr");
-                luaFunc.call(tail);
-            }
-            else if (cmd == "reload")
+            if (cmd == "reload")
             {
                 // TODO
             }
@@ -214,7 +204,7 @@ namespace SLua
             {
                 if (!string.IsNullOrEmpty(str))
                 {
-                    var luaFunc = luaState.getFunction("Slua.ldb.exec");
+                    var luaFunc = luaState.getFunction("Slua.ldb.printExpr");
                     if (luaFunc != null)
                         luaFunc.call(str);
                     else

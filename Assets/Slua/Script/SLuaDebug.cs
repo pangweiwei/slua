@@ -48,32 +48,6 @@ do
 		return env
 	end
 
-    function Slua.ldb.exec(str)
-	    xpcall(function()
-            if loadstring then
-		        local func,err = loadstring(str)
-		        if not func then
-			        error(err)
-			        return
-		        end
-		        local env = buildEnv()
-		        setfenv(func, env)
-		        func()
-            else
-                local env = buildEnv()
-                local func,err = load(str,'console','t',env)
-		        if not func then
-			        error(err)
-			        return
-		        end
-		        func()
-            end
-	    end,
-	    function(err)
-		    error( err )
-	    end)
-    end
-
     local visited = nil
 	function prettyTabToStr(tab, level, path)
 		local result = ''
@@ -158,6 +132,20 @@ do
 		end
 	end
 
+    local function compile(str,env)
+        if loadstring then
+			local func,err = loadstring(str,'=console')
+			if not func then
+				return func,err
+			end
+			setfenv(func, env)
+            return func,err
+        else
+            local func,err = load(str,'@console','t',env)
+            return func,err
+        end
+    end
+
     function Slua.ldb.printExpr(value)
 		local env = buildEnv()
 		if value:match('^[_%a][_%w]*$') then
@@ -166,25 +154,31 @@ do
 
 		else
 			xpcall(function()
-                if loadstring then
-				    local func,err = loadstring('return ' .. value)
-				    if not func then
-					    error(err)
-					    return
-				    end
-				    setfenv(func, env)
-				    local result = func()
-				    printVar(result)
-                else
-                    local env = buildEnv()
-                    local func,err = load('return '..value,'console','t',env)
-		            if not func then
-			            error(err)
-			            return
-		            end
-		            local result=func()
-                    printVar(result)
+
+                local env = buildEnv()
+                local iscmd=false
+                local func,err = compile('return '..value,env)
+                if not func then
+			        func,err = compile(value,env)
+                    iscmd=true
+		        end
+
+		        if not func then
+			        error(err)
+			        return
+		        end
+                
+		        local result={func()}
+                if not iscmd then 
+                    if #result==0 then
+                        printVar(nil) 
+                    elseif #result==1 then
+                        printVar(result[1])
+                    else
+                        printVar(result)
+                    end
                 end
+
 			end,
 			function(err)
 				error( err )
