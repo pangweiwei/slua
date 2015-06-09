@@ -103,7 +103,14 @@ namespace SLua
 		}
 	}
 
-	public class LuaDelegate : LuaFunction
+    public class LuaThread : LuaVar
+    {
+        public LuaThread(IntPtr l, int r)
+            : base(l, r)
+        { }
+    }
+
+    public class LuaDelegate : LuaFunction
 	{
 		public object d;
 

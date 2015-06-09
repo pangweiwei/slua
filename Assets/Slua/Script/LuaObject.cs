@@ -280,7 +280,8 @@ return index
 
 			typePushMap[typeof(LuaTable)] =
 				typePushMap[typeof(LuaFunction)] =
-				(IntPtr L, object o) =>
+                typePushMap[typeof(LuaThread)] =
+                (IntPtr L, object o) =>
 				{
 					((LuaVar)o).push(L);
 				};
@@ -727,6 +728,8 @@ return index
 					}
 				case LuaTypes.LUA_TFUNCTION:
 					return t == typeof(LuaFunction) || t.BaseType == typeof(MulticastDelegate);
+                case LuaTypes.LUA_TTHREAD:
+                    return t == typeof(LuaThread);
                     
 			}
 			return false;
@@ -985,7 +988,16 @@ return index
 			LuaDLL.lua_pop(l, 1); // pop __LuaDelegate
 		}
 
-		static public bool checkType(IntPtr l, int p, out LuaFunction f)
+        static public bool checkType(IntPtr l, int p, out LuaThread lt)
+        {
+            LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTHREAD);
+            LuaDLL.lua_pushvalue(l, p);
+            int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
+            lt = new LuaThread(l, fref);
+            return true;
+        }
+
+        static public bool checkType(IntPtr l, int p, out LuaFunction f)
 		{
 			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
 			LuaDLL.lua_pushvalue(l, p);
@@ -1285,6 +1297,12 @@ return index
 					}
 				case LuaTypes.LUA_TUSERDATA:
 					return LuaObject.checkObj(l, p);
+                case LuaTypes.LUA_TTHREAD:
+                    {
+                        LuaThread lt;
+                        LuaObject.checkType(l, p, out lt);
+                        return lt;
+                    }
 				default:
 					return null;
 			}

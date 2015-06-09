@@ -185,11 +185,9 @@ namespace SLua
             LuaState luaState = lua.state;
             int index = str.IndexOf(" ");
             string cmd = str;
-            string tail = "";
             if (index > 0)
             {
                 cmd = str.Substring(0, index).Trim().ToLower();
-                tail = str.Substring(index + 1);
             }
 
             if (cmd == "reload")
