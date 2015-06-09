@@ -26,6 +26,7 @@ namespace SLua
 
     class SLuaDebug : LuaObject
     {
+#if UNITY_EDITOR
         static string script = @"
 do
     local xpcall=xpcall
@@ -251,6 +252,7 @@ do
     
 end
 ";
+#endif
 
         public static void reg(IntPtr l)
         {
