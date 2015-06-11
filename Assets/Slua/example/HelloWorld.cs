@@ -18,6 +18,22 @@ public class SLuaTest : MonoBehaviour { }
 [CustomLuaClass]
 public class XXList : List<int> { }
 
+
+public class Ref
+{
+    int mDepth;
+    public int depth
+    {
+        get
+        {
+            return mDepth;
+        }
+        set {
+            mDepth = value;
+        }
+    }
+}
+
 [CustomLuaClass]
 public class HelloWorld
 {

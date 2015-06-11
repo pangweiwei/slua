@@ -69,6 +69,9 @@ function main()
 	cc=cls.Normalize(cc)
 	print(cc.x,cc.y,cc.z)
 
+	local r=Slua.CreateClass("Ref")
+	r.depth=10
+	print(r,r.depth)
 end
 
 

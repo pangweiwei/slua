@@ -1224,6 +1224,19 @@ return index
 			return true;
 		}
 
+        static public object checkVar(IntPtr l, int p, Type t)
+        {
+            object obj = checkVar(l, p);
+            try
+            {
+                return Convert.ChangeType(obj, t);
+            }
+            catch(Exception) { 
+                LuaDLL.luaL_error(l, "parameter {0} expected {1}, got {2}", p, t.Name, obj==null?"null":obj.GetType().Name);
+            }
+            return null;
+        }
+
 		static public object checkVar(IntPtr l, int p)
 		{
 			LuaTypes type = LuaDLL.lua_type(l, p);
