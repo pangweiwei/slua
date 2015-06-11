@@ -756,11 +756,10 @@ end
 		public bool doBuffer(byte[] bytes, string fn, out object ret)
 		{
 			ret = null;
-			LuaDLL.lua_pushcfunction(L, errorFunc);
-			int errfunc = LuaDLL.lua_gettop(L);
+            int errfunc = LuaObject.pushTry(L);
 			if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fn) == 0)
 			{
-				if (LuaDLL.lua_pcall(L, 0, LuaDLL.LUA_MULTRET, -2) != 0)
+				if (LuaDLL.lua_pcall(L, 0, LuaDLL.LUA_MULTRET, errfunc) != 0)
 				{
 					LuaDLL.lua_pop(L, 2);
 					return false;

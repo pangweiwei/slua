@@ -268,14 +268,20 @@ IndexProperty:
 			switch (mi.MemberType)
 			{
 				case MemberTypes.Property:
-					PropertyInfo p = (PropertyInfo)mi;
-					MethodInfo set = p.GetSetMethod();
-					set.Invoke(self, new object[] { v });
-					break;
+                    {
+                        PropertyInfo p = (PropertyInfo)mi;
+                        MethodInfo set = p.GetSetMethod();
+                        var value = Convert.ChangeType(v, p.PropertyType);
+                        set.Invoke(self, new object[] { value });
+                        break;
+                    }
 				case MemberTypes.Field:
-					FieldInfo f = (FieldInfo)mi;
-					f.SetValue(self, v);
-					break;
+                    {
+                        FieldInfo f = (FieldInfo)mi;
+                        var value = Convert.ChangeType(v, f.FieldType);
+                        f.SetValue(self, value);
+                        break;
+                    }
 				case MemberTypes.Method:
 					LuaDLL.luaL_error(l, "Method can't set");
 					break;
