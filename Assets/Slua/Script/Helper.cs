@@ -23,12 +23,9 @@
 namespace SLua
 {
 	using System.Collections;
-	using System.Collections.Generic;
 	using System;
 	using LuaInterface;
 	using System.Reflection;
-	using System.Runtime.InteropServices;
-    using UnityEngine;
 
     class Helper : LuaObject
 	{
@@ -60,8 +57,13 @@ local function Class(base,static,instance)
                                 ret_field = r[k]
                             end
 
-                            t[k] = ret_field
                             return ret_field
+                        end,
+
+                        __newindex = function(t,k,v)
+                            if not pcall(function() r[k]=v end) then
+                                rawset(t,k,v)
+                            end
                         end,
                     })
 
