@@ -16,15 +16,15 @@ Mail to : sineysan#163.com (both of chinese/english)
 
 See inner demo for help or [Document](doc.md) (in chinese).
 
-##important
+##Important
 
-You need generated lua wrap file by your self:
+For running demo sucessful, you should generate lua wrap file by your self:
 
 Click menu, SLua->All->Make  generate all wrap file for your version of unity.
 
 ***Had tested for Unity4.6.1/4.6.2/4.6.3/5.0***
 
-##main feature
+##Main feature
 
 static code generating, no reflection, no extra gc alloc, very fast
 
@@ -50,7 +50,7 @@ return array as lua table
 
 using raw luajit, can be replaced with lua5.3/lua5.1, link with slua.c, if you switch to lua5.3, add LUA_5_3 macro in build setting.
 
-##usage
+##Usage
 
 copy Assets/Plugins Assets/Slua to your $Project$/Assets folder, you will see Slua menu, 
 
@@ -67,7 +67,7 @@ Slua/LuaObject contain pre-generated file for exported interface.
 Precompiled slua library in Plugins only included x86(32bit)/macosx(32bit)/iOS(armv7,armv7s,arm64)/Android(armv7-a) platform using luajit, you should compile other platform/lua5.1/luajit by yourself, see build.txt for help.
 
 
-## usage at a glance
+##Usage at a glance
 
 ~~~~~~~~~~lua
 
@@ -133,7 +133,7 @@ end
 
 ~~~~~~~~~~
 
-##export custom class
+##Export custom class
 
 add CustomLuaClass attribute to your custom class, waiting for compile completed, click "SLua->Custom->Make", you will get interface file for lua.
 
@@ -146,7 +146,7 @@ public class HelloWorld   {
 
 ~~~~~~~~~~
 
-###benchmark
+###Benchmark
 
 see http://www.sineysoft.com/post/164 for detail (in chinese), compared with ulua/raw mono.
 
