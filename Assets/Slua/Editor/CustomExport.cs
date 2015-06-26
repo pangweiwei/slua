@@ -132,6 +132,7 @@ namespace SLua
             "OnRequestRebuild",
 			"Ping",
             "ShaderVariantCollection",
+			"SimpleJson.Reflection",
         };
 		}
 
