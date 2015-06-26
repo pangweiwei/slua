@@ -364,6 +364,18 @@ c#中使用foreach语句遍历IEnumertable,例如List,Array等, 在slua中,可�
 
 返回的t是Canvas.transform的一级子对象.
 
+##判断GameObject是否为null
+
+因为Unity GameObject被destroy后，并不是真正的null，而是一个被标记了为destroyed的GameObject，而GameObject重载了==操作符，在c#中可以==判断是否为null（虽然它不是null），而这个gameobject被push到lua后，并不能判断==nil，所以slua提供IsNuall函数，用于判断是否GameObject被Destory，或者GetComponent的返回值其实不存在，也可以通过IsNull判断，例如：
+
+>     local go = GameObject()
+	local comp=go.GetComponent(SomeNotExistsComponent)
+	Slua.IsNull(comp) --true
+    GameObject.Destroy(go)
+    Slua.IsNull(go) -- true
+	
+	    
+
 
 ##LuaConsole 调试控制台
 
