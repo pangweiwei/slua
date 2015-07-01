@@ -106,7 +106,8 @@ namespace SLua
 
 		static void bindAll(IntPtr l)
 		{
-#if UNITY_IOS || UNITY_ANDROID
+			// add RELEASE macro to switch on below codes
+#if RELEASE && (UNITY_IOS || UNITY_ANDROID)
             BindUnity.Bind(l);
             BindUnityUI.Bind(l); // delete this line if not found
             BindDll.Bind(l); // delete this line if not found
