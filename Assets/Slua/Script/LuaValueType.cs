@@ -935,6 +935,9 @@ do
 	function set:z(v) self[3]=v	end
 	function set:w(v) self[4]=v	end
 
+	function get:eulerAngles() return Inst.eulerAngles[1](self) end
+	function set:eulerAngles(v) Inst.eulerAngles[2](self,v) end
+
 	function Quaternion:Set(x,y,z,w)
 		self[1],self[2],self[3],self[4]=x,y,z,w
 	end

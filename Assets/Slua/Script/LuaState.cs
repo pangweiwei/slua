@@ -727,17 +727,6 @@ end
 			return 0;
 		}
 
-		public object doString(string str)
-		{
-			byte[] bytes = Encoding.UTF8.GetBytes(str);
-
-			object obj;
-			if (doBuffer(bytes, "temp buffer", out obj))
-				return obj;
-			return null; ;
-
-		}
-
 		public object doFile(string fn)
 		{
 			byte[] bytes = loadFile(fn);

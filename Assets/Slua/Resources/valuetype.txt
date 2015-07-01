@@ -122,6 +122,9 @@ function main()
 	local r=Quaternion.Euler(30,30,30)
 	local r2=Quaternion.__raw.Euler(30,30,30)
 	assert(r==r2)
+	print("xxx",r2.eulerAngles)
+	r2.eulerAngles=Vector3(40,40,40)
+	print("yyy",r2.eulerAngles)
 
 	local Vector2 = UnityEngine.Vector2
 	local r = Vector2.one
