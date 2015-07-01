@@ -522,10 +522,10 @@ coroutine.resume=function(co,...)
 	return unpack(ret)
 end
 ";
-            // overload resume function for report error
-            if (LuaDLL.lua_dostring(L, resumefunc) != 0)
-                LuaObject.lastError(L);
 
+			// overload resume function for report error
+			LuaState.get(L).doString(resumefunc);
+            
             LuaDLL.lua_pushcfunction(L, dofile);
             LuaDLL.lua_setglobal(L, "dofile");
 
@@ -707,6 +707,17 @@ end
 				return LuaDLL.lua_gettop(L) - n;
 			}
 			return 0;
+		}
+
+		public object doString(string str)
+		{
+			byte[] bytes = Encoding.UTF8.GetBytes(str);
+			
+			object obj;
+			if (doBuffer(bytes, "temp buffer", out obj))
+				return obj;
+			return null; ;
+			
 		}
 		
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
