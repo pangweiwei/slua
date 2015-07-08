@@ -1019,7 +1019,7 @@ namespace SLua
 						if (fi.GetGetMethod().IsStatic)
 						{
 							isInstance = false;
-							WritePushValue(fi.PropertyType, file, string.Format("{0}.{1}", t.FullName, fi.Name));
+							WritePushValue(fi.PropertyType, file, string.Format("{0}.{1}", TypeDecl(t), fi.Name));
 						}
 						else
 						{
@@ -1043,14 +1043,14 @@ namespace SLua
 					if (fi.GetSetMethod().IsStatic)
 					{
 						WriteValueCheck(file, fi.PropertyType, 2);
-						WriteSet(file, fi.PropertyType, t.FullName, fi.Name, true);
+						WriteSet(file, fi.PropertyType, TypeDecl(t), fi.Name, true);
 						isInstance = false;
 					}
 					else
 					{
 						WriteCheckSelf(file, t);
 						WriteValueCheck(file, fi.PropertyType, 2);
-						WriteSet(file, fi.PropertyType, t.FullName, fi.Name);
+						WriteSet(file, fi.PropertyType, TypeDecl(t), fi.Name);
 					}
 					
 					if (t.IsValueType)
@@ -1558,7 +1558,7 @@ namespace SLua
 				else if (m.Name == "op_GreaterThanOrEqual")
 					Write(file, "{0}(a2<=a1);", ret);
 				else
-					Write(file, "{3}{2}.{0}({1});", m.Name, FuncCall(m), t.FullName, ret);
+					Write(file, "{3}{2}.{0}({1});", m.Name, FuncCall(m), TypeDecl(t), ret);
 			}
 			else
 				Write(file, "{2}self.{0}({1});", m.Name, FuncCall(m), ret);
