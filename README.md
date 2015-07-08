@@ -22,7 +22,7 @@ For running demo sucessful, you should generate lua wrap file by your self:
 
 Click menu, SLua->All->Make  generate all wrap file for your version of unity.
 
-***Had tested for Unity4.6.1/4.6.2/4.6.3/5.0***
+***Had tested for Unity4.6.1/4.6.2/4.6.3/5.0/5.1***
 
 ##Main feature
 
