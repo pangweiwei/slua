@@ -726,7 +726,7 @@ namespace SLua
 		{
 			// Write export function
 			Write(file, "static public void reg(IntPtr l) {");
-			Write(file, "getEnumTable(l,\"{0}\");", FullName(t));
+			Write(file, "getEnumTable(l,\"{0}\");", string.IsNullOrEmpty(givenNamespace) ? FullName(t) : givenNamespace);
 			
 			FieldInfo[] fields = t.GetFields();
 			foreach (FieldInfo f in fields)
@@ -840,7 +840,7 @@ namespace SLua
 				Write(file, "LuaUnityEvent_{1}.reg(l);", FullName(t), _Name((GenericName(t.BaseType))));
 			}
 			
-			Write(file, "getTypeTable(l,\"{0}\");", givenNamespace != null ? givenNamespace : FullName(t));
+			Write(file, "getTypeTable(l,\"{0}\");", string.IsNullOrEmpty(givenNamespace) ? FullName(t) : givenNamespace);
 			foreach (string f in funcname)
 			{
 				Write(file, "addMember(l,{0});", f);
@@ -1491,7 +1491,7 @@ namespace SLua
 		{
 			if (t.IsValueType)
 			{
-				Write(file, "{0} self;", FullName(t));
+				Write(file, "{0} self;", TypeDecl(t));
 				Write(file, "checkType(l,1,out self);");
 			}
 			else
