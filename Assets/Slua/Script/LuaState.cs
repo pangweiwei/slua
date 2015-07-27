@@ -521,6 +521,14 @@ coroutine.resume=function(co,...)
 	if not ret[1] then UnityEngine.Debug.LogError(debug.traceback(co,ret[2])) end
 	return unpack(ret)
 end
+
+coroutine.wrap = function(func)
+	local co = coroutine.create(func)
+	return function(...)
+		local ret={coroutine.resume(co,...)}
+		return unpack(ret, 2)
+	end
+end
 ";
 
 			// overload resume function for report error
