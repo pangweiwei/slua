@@ -148,7 +148,7 @@ namespace SLua
 		{
 		}
 
-		public bool call(int nArgs, int errfunc)
+		internal bool pcall(int nArgs, int errfunc)
 		{
 
 			if (!state.isMainThread())
@@ -176,7 +176,7 @@ namespace SLua
 
 		bool innerCall(int nArgs, int errfunc)
 		{
-			bool ret = call(nArgs, errfunc);
+			bool ret = pcall(nArgs, errfunc);
 			LuaDLL.lua_remove(L, errfunc);
 			return ret;
 		}
