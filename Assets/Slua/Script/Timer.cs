@@ -266,7 +266,7 @@ namespace SLua
 					{
 						int error = pushTry(ml);
 						pushValue(ml, id);
-						ld.call(1, error);
+						ld.pcall(1, error);
 						LuaDLL.lua_settop(ml, error - 1);
 					};
 				}
@@ -292,7 +292,7 @@ namespace SLua
 					{
 						int error = pushTry(ml);
 						pushValue(ml, id);
-						ld.call(1, error);
+						ld.pcall(1, error);
 						bool ret = LuaDLL.lua_toboolean(ml, -1);
 						LuaDLL.lua_settop(ml, error - 1);
 						return ret;

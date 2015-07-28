@@ -547,7 +547,7 @@ namespace SLua
 					Write(file, "pushValue(l,a{0});", n + 1);
 			}
 			
-			Write(file, "ld.call({0}, error);", mi.GetParameters().Length - outindex.Count);
+			Write(file, "ld.pcall({0}, error);", mi.GetParameters().Length - outindex.Count);
 			
 			if (mi.ReturnType != typeof(void))
 				WriteValueCheck(file, mi.ReturnType, 1, "ret", "error+");
@@ -706,7 +706,7 @@ namespace SLua
             {
                 int error = pushTry(l);
                 pushValue(l, v);
-                ld.call(1, error);
+                ld.pcall(1, error);
                 LuaDLL.lua_settop(l,error - 1);
             };
             ld.d = ua;
