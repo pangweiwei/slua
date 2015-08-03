@@ -1140,6 +1140,13 @@ return index
 			return true;
 		}
 
+		static public bool checkType(IntPtr l, int p, out byte[] pars)
+		{
+			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TSTRING);
+			pars = LuaDLL.lua_tolstring(l, p);
+			return true;
+		}
+
 		static public bool checkEnum<T>(IntPtr l, int p, out T o) where T : struct
 		{
 			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TNUMBER);
@@ -1395,6 +1402,11 @@ return index
 		public static void pushValue(IntPtr l, byte i)
 		{
 			LuaDLL.lua_pushinteger(l, i);
+		}
+
+		public static void pushValue(IntPtr l, byte[] buffer)
+		{
+			LuaDLL.lua_pushlstring(l, buffer, buffer.Length);
 		}
 
 		public static void pushValue(IntPtr l, int[] o)
