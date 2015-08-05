@@ -172,6 +172,16 @@ out参数是c#特有的语法,lua并不支持out参数,为此此slua采用多返
 但目前采用同Type做为参数的方法如果存在重载方法, 则可能工作不正常, 建议避免使用同名重载.
 
 
+####类型转换
+
+正常使用情况，一般不会在lua层面做类型转换，因为所有的对象到了lua里都是userdata，在c#层面维护了一张表保存每个userdata的类型，在少数情况下需要downcast为子类的时候，需要在lua层面转换c#的数据类型，可以使用As方法，例如：
+
+>     local v = CreateBase() -- 返回BaseObject
+    local x = Slua.As(v,Child) -- Child继承自Base
+
+这样将会把userdata v的metatable ChildObject，这意味着你可以在lua层面调用ChildObject的方法。
+
+
 ####代理(delegate)
 
 slua支持直接使用代理, 仅需要传入lua function, 这大大方便开发工作, 例如, 存在如下代理:
