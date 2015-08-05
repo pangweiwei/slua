@@ -159,54 +159,15 @@ out参数是c#特有的语法,lua并不支持out参数,为此此slua采用多返
         Debug.Log(t.Name);
     }
     
-再比如
-
->    gameObject:AddComponent(UnityEngine.UI.Lay
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    
->    Element)
 
 从Unity5开始AddComponent不再支持字符串作为类型参数, 可以使用上面的方面传递类型.
 
 对于没有导出的Type,原则上可以使用字符串来描述, 例如:
 
 >     HelloWorld.ofunc("UnityEngine.GameObject,UnityEngine")
+
+
+当作Type传入的string需要符合c#的描述规则，请参考Type.GetType方法的帮助，获得如何通过字符串描述type。
 
 但目前采用同Type做为参数的方法如果存在重载方法, 则可能工作不正常, 建议避免使用同名重载.
 
