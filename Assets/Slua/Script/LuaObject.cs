@@ -1536,10 +1536,17 @@ return index
 		public static object checkSelf(IntPtr l)
 		{
 			object o = checkObj(l, 1);
-			if (o != null)
-				return o;
-			LuaDLL.luaL_error(l, "expect self, but get null");
-			return null;
+			if (o == null)
+				LuaDLL.luaL_error(l, "expect self, but get null");
+			return o;
+		}
+
+		public static UnityEngine.Object checkUOSelf(IntPtr l)
+		{
+			UnityEngine.Object o = (UnityEngine.Object) checkObj(l, 1);
+			if(o==null)
+				LuaDLL.luaL_error(l, "expect self, but get null");
+			return o;
 		}
 
 		public static void setBack(IntPtr l, object o)
