@@ -20,33 +20,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections;
-using UnityEngine;
-using LuaInterface;
-using System.Reflection;
 
 namespace SLua
 {
-    class LuaSvr
-    {
-        public LuaState luaState;
-        static LuaSvrGameObject lgo;
-        int errorReported = 0;
+	using System;
+	using System.Collections.Generic;
 
-        public LuaSvr():this(null) {
+	using UnityEngine;
+	using LuaInterface;
+	using System.Reflection;
+	using Debug = UnityEngine.Debug;
 
+	public class LuaSvr
+	{
+		public LuaState luaState;
+		static LuaSvrGameObject lgo;
+		int errorReported = 0;
+
+
+		public LuaSvr()
+			: this(null)
+		{
+
+		}
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int init(IntPtr L)
+        {
+            LuaObject.init(L);
+            bindAll(L);
+            LuaTimer.reg(L);
+            LuaCoroutine.reg(L, lgo);
+            Helper.reg(L);
+            LuaValueType.reg(L);
+            SLuaDebug.reg(L);
+            LuaDLL.luaS_openextlibs(L);
+            return 0;
         }
 
-        public LuaSvr(string main)
-        {
-            luaState = new LuaState();
-
-            LuaObject.init(luaState.L);
-            bind("BindUnity");
-            bind("BindUnityUI");
-            bind("BindCustom");
-            bind("BindExtend"); // if you want to extend slua, can implemented BindExtend function like BindCustom etc.
+		public LuaSvr(string main)
+		{
+			luaState = new LuaState();
 
             GameObject go = new GameObject("LuaSvrProxy");
             lgo = go.AddComponent<LuaSvrGameObject>();
@@ -54,47 +68,80 @@ namespace SLua
             lgo.state = luaState;
             lgo.onUpdate = this.tick;
 
-            LuaTimer.reg(luaState.L);
-            LuaCoroutine.reg(luaState.L, lgo);
-            Helper.reg(luaState.L);
+            LuaState.pcall(luaState.L, init);
 
             start(main);
 
-            if (LuaDLL.lua_gettop(luaState.L) != errorReported)
-            {
-                Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
-                errorReported = LuaDLL.lua_gettop(luaState.L);
-            }
-        }
+			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
+			{
+				Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
+				errorReported = LuaDLL.lua_gettop(luaState.L);
+			}
+		}
 
-        public void start(string main)
-        {
-            if (main != null)
-            {
-                luaState.doFile(main);
-                LuaFunction func = (LuaFunction)luaState["main"];
-                func.call();
-            }
-        }
+		public object start(string main)
+		{
+			if (main != null)
+			{
+				luaState.doFile(main);
+				LuaFunction func = (LuaFunction)luaState["main"];
+				if(func!=null)
+					return func.call();
+			}
+			return null;
+		}
 
-        void bind(string name)
-        {
-            MethodInfo mi = typeof(LuaObject).GetMethod(name,BindingFlags.Public|BindingFlags.Static);
-            if (mi != null) mi.Invoke(null, new object[] { luaState.L });
-            else if(name=="BindUnity") Debug.LogError(string.Format("Miss {0}, click SLua=>Make to regenerate them",name));
-        }
+		void tick()
+		{
+			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
+			{
+				errorReported = LuaDLL.lua_gettop(luaState.L);
+				Debug.LogError(string.Format("Some function not remove temp value({0}) from lua stack. You should fix it.",LuaDLL.luaL_typename(luaState.L,errorReported)));
+			}
 
-        void tick()
-        {
-            if (LuaDLL.lua_gettop(luaState.L) != errorReported)
-            {
-                Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
-                errorReported = LuaDLL.lua_gettop(luaState.L);
-            }
+			luaState.checkRef();
+			LuaTimer.tick(Time.deltaTime);
+		}
 
-            luaState.checkRef();
-            LuaTimer.tick(Time.deltaTime);
+
+		static void bindAll(IntPtr l)
+		{
+			// add RELEASE macro to switch on below codes
+#if RELEASE && (UNITY_IOS || UNITY_ANDROID)
+            BindUnity.Bind(l);
+            BindUnityUI.Bind(l); // delete this line if not found
+            BindDll.Bind(l); // delete this line if not found
+            BindCustom.Bind(l); 
+#else
+            Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
+
+			List<Type> bindlist = new List<Type>();
+			foreach(Assembly a in ams) 
+			{
+				Type[] ts=a.GetExportedTypes();
+				foreach (Type t in ts)
+				{
+					if (t.GetCustomAttributes(typeof(LuaBinderAttribute),false).Length > 0)
+					{
+						bindlist.Add(t);
+					}
+				}
+			}
+
+			bindlist.Sort( new System.Comparison<Type>((Type a,Type b) =>
+			{
+				LuaBinderAttribute la = (LuaBinderAttribute)a.GetCustomAttributes(typeof(LuaBinderAttribute),false)[0];
+				LuaBinderAttribute lb = (LuaBinderAttribute)b.GetCustomAttributes(typeof(LuaBinderAttribute),false)[0];
+
+				return la.order.CompareTo(lb.order);
+			})
+			);
+
+			foreach (Type t in bindlist)
+			{
+				t.GetMethod("Bind").Invoke(null, new object[] { l });
+			}
+#endif
         }
-       
-    }
+	}
 }

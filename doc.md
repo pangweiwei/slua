@@ -4,7 +4,9 @@ slua是Unity3D导出为lua的自动化代码生成工具, 通过产生静态的�
 
 ##安装
 
-通过git clone复制一份代码到你的资源目录(Assets目录内), slua的发布版已经附带了Unity3D 4.6.1 的导出接口文件, 在Slua/LuaObject内, 对于其他版本(比如5.0), 你可以删除该目录内所有文件, 等待脚本编译完成, 点击slua菜单中 Make 命令 手动生成针对当前版本的U3d接口文件, 如果你运行例子代码产生错误,记得要make ui,make custom,保证例子中使用到的接口都被导出了.
+通过git clone复制一份代码到你的资源目录(Assets目录内),  点击slua菜单中 Make UnityEngine 命令 手动生成针对当前版本的U3d接口文件, 如果你运行例子代码产生错误,记得要make ui,make custom,保证例子中使用到的接口都被导出了.
+
+***每次更新slua版本，务必记得clear all，然后make all，否则可能运行不正确***
 
 
 
@@ -135,6 +137,16 @@ slua支持同名重载方法, 但对于自己实现的接口(非来自UnityEngin
 需要注意的是, 可变参数函数不支持任何同名重载, 并且params修饰符必须针对最后一个参数.
 
 
+####out参数
+
+out参数是c#特有的语法,lua并不支持out参数,为此此slua采用多返回值来处理out参数,即所有out的参数都会变成一个返回值, 例如:
+>     -- get out parameter
+	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1),Slua.out)
+	print("Physics Hitinfo",ok,hitinfo)
+
+将Slua.out作为out参数传入Raycast函数,然后通过返回值返回.
+
+
 #####Type参数
 
 在slua里,基于效率和易用性的原则, 不建议导出System空间下的类型, 而使用变通方法来表达类似需求, 对于Type参数的传入, 对于导出类型,比如UnityEngine.GameObject, HelloWorld等,可以直接使用对应的lua table来当作参数传入, 在c#会理解为Type, 例如:
@@ -147,9 +159,6 @@ slua支持同名重载方法, 但对于自己实现的接口(非来自UnityEngin
         Debug.Log(t.Name);
     }
     
-再比如
-
->    gameObject:AddComponent(UnityEngine.UI.LayoutElement)
 
 从Unity5开始AddComponent不再支持字符串作为类型参数, 可以使用上面的方面传递类型.
 
@@ -157,7 +166,20 @@ slua支持同名重载方法, 但对于自己实现的接口(非来自UnityEngin
 
 >     HelloWorld.ofunc("UnityEngine.GameObject,UnityEngine")
 
+
+当作Type传入的string需要符合c#的描述规则，请参考Type.GetType方法的帮助，获得如何通过字符串描述type。
+
 但目前采用同Type做为参数的方法如果存在重载方法, 则可能工作不正常, 建议避免使用同名重载.
+
+
+####类型转换
+
+正常使用情况，一般不会在lua层面做类型转换，因为所有的对象到了lua里都是userdata，在c#层面维护了一张表保存每个userdata的类型，在少数情况下需要downcast为子类的时候，需要在lua层面转换c#的数据类型，可以使用As方法，例如：
+
+>     local v = CreateBase() -- 返回BaseObject
+    local x = Slua.As(v,Child) -- Child继承自Base
+
+这样将会把userdata v的metatable ChildObject，这意味着你可以在lua层面调用ChildObject的方法。
 
 
 ####代理(delegate)
@@ -177,13 +199,11 @@ slua支持直接使用代理, 仅需要传入lua function, 这大大方便开发
 
 slua的delegate支持+=/-=操作, 例如
 >     self={}
-    function self.xxx()
-		return function(a,b,c)
-			self //here
-		end
+    function self.xxx(a,b,c)
+	// code
     end
-    h.d={"+=",self.xxx()}
-	h.d={"-=",self.xxx()}
+    h.d={"+=",self.xxx}
+	h.d={"-=",self.xxx}
 
 
 上面的例子演示了, 如何在回调函数内使用self, 同时演示了如果+=/-= 代理函数
@@ -236,6 +256,28 @@ Slua支持unity yield指令,  需要配和lua coroutine, 例如:
 
 最后, ***LuaVarObject并没有完善, 仅满足最低使用需求, 如果你发现有任何bug, 需要自行完善他们, 作者欢迎你完善后提交pull request合并到slua主分支, 让你的代码成为slua的一部分.***
 
+##创建未导出的类
+
+对于一个没有导出的类,slua不建议直接拿来使用(因为效率问题,并严重不推荐在最终产品中使用),但某些情况下临时使用方便开发调试, 为此你可以使用CreateClass函数来创建未导出的类, 例如
+
+>     -- create class used reflection
+	local go=Slua.CreateClass("UnityEngine.GameObject,UnityEngine","VarGameObject")
+	print(go.name)
+	local array=Slua.CreateClass("System.Collections.ArrayList",10)
+	print(array.Capacity)
+	array:Add("slua")
+	array:Add("unity")
+	print(array.Count,array[0],array[1])
+
+####CreateClass(type,args...) -> obj
+
+type参数为需要创建类的字符串描述,关于一个类的字符串描述,可以参考msdn上Type.Get方法的说明.
+
+args参数为类构造函数的传入参数
+
+如果一切正常将返回对应的类对象.
+
+
 ##LuaTimer
 
 LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使用系统自带timer, slua timer会在lua虚拟机被关闭后停止timer工作,而一般系统自带timer可能会在lua虚拟机被关闭后任然触发timer,导致调用lua函数失败,从而产生闪退等.
@@ -260,6 +302,74 @@ LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使�
 ###Delete(id)
 
 删除指定id的timer.
+
+
+##在lua中继承c#的基类
+
+slua支持直接在lua中继承扩展c#的基类,例如:
+>     MyVector3=Slua.Class(Vector3,
+	nil, --static function
+	{ --instance member function
+		Normalize=function(self)
+			print "overloaded Normalize"
+			local l=math.sqrt(self.x*self.x+self.y*self.y,self.z*self.z)
+			self.x=self.x/l
+			self.y=self.y/l
+			self.z=self.z/l
+		end,
+		Set=function(self,x,y,z)
+			self.__base:Set(x,y,z)
+		end,
+	}
+    )
+
+在成员函数中,可以使用self.__base调用基类的成员方法.
+
+##在lua中遍历IEnumertable对象
+
+c#中使用foreach语句遍历IEnumertable,例如List,Array等, 在slua中,可以使用Slua.iter作为迭代函数遍历这些对象, 例如:
+
+>     for t in Slua.iter(Canvas.transform) do
+		print("foreach transorm",t)
+	end
+
+返回的t是Canvas.transform的一级子对象.
+
+##判断GameObject是否为null
+
+因为Unity GameObject被destroy后，并不是真正的null，而是一个被标记了为destroyed的GameObject，而GameObject重载了==操作符，在c#中可以==判断是否为null（虽然它不是null），而这个gameobject被push到lua后，并不能判断==nil，所以slua提供IsNuall函数，用于判断是否GameObject被Destory，或者GetComponent的返回值其实不存在，也可以通过IsNull判断，例如：
+
+>     local go = GameObject()
+	local comp=go.GetComponent(SomeNotExistsComponent)
+	Slua.IsNull(comp) --true
+    GameObject.Destroy(go)
+    Slua.IsNull(go) -- true
+	
+	    
+
+
+##LuaConsole 调试控制台
+
+Slua从v0.82开始提供了一个lua控制台, 在该控制台内可以敲入一些调试指令, 用于快速和lua虚拟机交互,方便调试. 通过Slua->LuaConsole菜单可以打开lua控制台.
+
+控制台内上方为输出窗口,下方为命令输入窗口, 目前支持如下调试指令:
+
+1)任何有效的lua语句, 运行该lua语句, 如果语句有返回值,则输出返回值, 例如:
+
+a=1 --赋值_G['a']=1
+
+a --输出a的值为1
+
+b=2 --赋值_G['b']=2
+
+a,b --输出a,b的值
+
+UnityEngine --输出UnityEngine的内容
+
+for i=1,100 do UnityEngine.GameObject() end -- 创建100个GameObject
+
+2)cls 清屏 
+
 
 
 ##如何快速导出第三方库, 例如ngui等
@@ -364,16 +474,43 @@ LuaTimer用于在限定时间周期性的回调lua函数, 强烈建议不要使�
 
 如果你的lua文件是通过动态下载asset bundle获得或者直接http下载获得(即lua代码热更新),需要自己实现loader, 你可以添加LuaState.loaderDelegate代理完成自己的加载请求, 具体可以参考LusState.cs代码.
 
+8)如何导出this[]?
+
+this[] get/set会产生getItem/setItem成员函数,请使用他们.
+
+9)iOS 链接报告错误 Unable to insert branch island. No insertion point available.  怎么办?
+
+iOS对dll的尺寸有大小限制, 出现这个错误可能是你的工程代码+第三方库代码+LuaWrap所产生的dll超过限制, 你可以把一些代码抽取出来作为一个独立的dll, 保证工程的dll尺寸在限制内. 新版的Slua可以把Script目录和LuaObject/Unity目录整体制作为一个dll,放入你的Assets目录, 让你的工程依赖这个dll,而不再包含slua(和动态产生的wrap代码),从而减少最终工程dll的尺寸.
+
+10) 有没有更完整的demo?
+
+请参考 https://github.com/lulersoft/me_SLua 
+
+
+11) slua支持protobuf/json/sqlite吗?
+
+slua仅专注解决lua和c#绑定的问题, 保证这部分功能足够内敛精简, 任何第三方lua库都可以用, 但这需要你自己编译进入slua库里, 不要问我如何编译他们, 当你打算使用这些库时, 一般情况你应该懂得如何编译他们了.
+
+12) slua能不能读取luajit编译过的lua文件呢？
+
+可以，但需要针对性的编译对应平台的bytecode，不同平台不兼容.
+
+slua 不同平台采用的luajit版本也不相同，主要在不同平台间选择最适合的版本(建议在目标平台上编译，比如发布iOS版，就需要iOS的luajit来编译），列表如下：
+
+win/android 平台 luajit 2.0.4 32bit
+
+iOS luajit 2.1 universal
+
+mac lua 5.1.5 （不采用jit的原因是，luajit 64bit嵌入的兼容性问题导致不支持unity5)
+
+
 
 ##已知问题
-不支持泛型函数导出, 但支持泛型代理
 
-UnityAction/UnityEvent目前仅支持1个泛型参数的版本,后续考虑完善.
+UnityAction/UnityEvent目前仅支持1个泛型参数的版本,目前UnityEngine也没有多个泛型参数的需要,后续考虑完善.
 
 部分同名重载参数类型检查可能会失败(因为lua的类型少于c#), 建议手写代码避免同名重载, 这样效率也更高.
 
 返回没有导出的类型, 会采用LuaVarObject, 这个类退化为使用反射, 并且并没有完善, 不建议返回没有导出的类, 简单例子可以参考varobj工程.
 
 函数的默认参数不支持.
-
-不支持[]访问导出,可以自行封装get(key)/set(key,value)导出.
