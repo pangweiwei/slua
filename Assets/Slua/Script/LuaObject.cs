@@ -1091,8 +1091,14 @@ return index
 
 		static public bool checkType<T>(IntPtr l, int p, out T o) where T:class
 		{
-			o = checkVar(l, p) as T;
+			object obj = checkVar(l, p);
+			if (obj == null)
+			{
+				o = null;
+				return true;
+			}
 
+			o = obj as T;
 			if (o == null)
 				LuaDLL.luaL_error(l, "arg {0} is not type of {1}", p, typeof(T).Name);
 
