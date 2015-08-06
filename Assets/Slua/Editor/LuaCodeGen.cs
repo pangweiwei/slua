@@ -1494,6 +1494,10 @@ namespace SLua
 				Write(file, "{0} self;", TypeDecl(t));
 				Write(file, "checkType(l,1,out self);");
 			}
+			else if (t==typeof(UnityEngine.Object) || t.IsSubclassOf(typeof(UnityEngine.Object)))
+			{
+				Write(file, "{0} self=({0})checkUOSelf(l);", TypeDecl(t));
+			}
 			else
 				Write(file, "{0} self=({0})checkSelf(l);", TypeDecl(t));
 		}
