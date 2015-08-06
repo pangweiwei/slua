@@ -34,17 +34,18 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdef _WINDOWS
+#ifdef _WIN32
 #include <float.h>
 #define isnan _isnan
+#define snprintf _snprintf
 #else
 #include <math.h>
 #endif
 
 static const luaL_Reg s_lib_preload[] = {
 	// { "lpeg", luaopen_lpeg },
-  	// { "pb",    luaopen_pb }, // any 3rd lualibs added here
-  	{ NULL,        NULL }
+	// { "pb",    luaopen_pb }, // any 3rd lualibs added here
+		{ NULL, NULL }
 };
 
 #if LUA_VERSION_NUM >= 503
@@ -80,7 +81,7 @@ LUA_API void luaS_openextlibs(lua_State *L) {
 	const luaL_Reg *lib;
 
 	luaL_findtable(L, LUA_REGISTRYINDEX, "_PRELOAD",
-		sizeof(s_lib_preload)/sizeof(s_lib_preload[0])-1);
+		sizeof(s_lib_preload) / sizeof(s_lib_preload[0]) - 1);
 
 	for (lib = s_lib_preload; lib->func; lib++) {
 		lua_pushcfunction(L, lib->func);
@@ -99,16 +100,27 @@ LUA_API void luaS_newuserdata(lua_State *L, int val)
 
 LUA_API int luaS_rawnetobj(lua_State *L, int index)
 {
-	int *udata = lua_touserdata(L, index);
+	int *udata;
+
+	if (lua_istable(L, index))
+	{
+		lua_pushvalue(L, index);
+		while (lua_istable(L, -1))
+		{
+			lua_pushstring(L, "__base");
+			lua_rawget(L, -2);
+			lua_remove(L, -2);
+		}
+		if (lua_isuserdata(L, -1) > 0)
+			lua_replace(L, index);
+		else
+			luaL_error(L, "arg %d expect object, but get a table", index);
+	}
+
+
+	udata = lua_touserdata(L, index);
 	if (udata != NULL) return *udata;
 	return -1;
-}
-
-LUA_API void* luaS_rawobj(lua_State *L, int index)
-{
-	void **udata = (void**)lua_touserdata(L, index);
-	if (udata != NULL) return *udata;
-	return NULL;
 }
 
 LUA_API void luaS_pushuserdata(lua_State *L, void* ptr)
@@ -143,11 +155,7 @@ LUA_API int luaS_pcall(lua_State *L, int nargs, int nresults, int err) {
 
 static void getmetatable(lua_State *L, const char* key) {
 	char ns[256];
-#ifdef _WINDOWS
-	_snprintf(ns, 256, "UnityEngine.%s.Instance", key);
-#else
 	snprintf(ns, 256, "UnityEngine.%s.Instance", key);
-#endif
 
 	lua_getglobal(L, ns);
 }
@@ -430,10 +438,10 @@ LUA_API int luaS_getcacheud(lua_State *l, int index, int cref) {
 }
 
 LUA_API int luaS_subclassof(lua_State *l, int p, const char* t) {
-	
-  const char* tname;
-  int ok;
-  int top = lua_gettop(l);
+
+	const char* tname;
+	int ok;
+	int top = lua_gettop(l);
 
 	lua_pushvalue(l, p);
 	while (lua_istable(l, -1))

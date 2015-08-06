@@ -1073,21 +1073,6 @@ return index
 
 		static public object checkObj(IntPtr l, int p)
 		{
-			if (LuaDLL.lua_istable(l, p))
-			{
-				LuaDLL.lua_pushvalue(l, p);
-				while (LuaDLL.lua_istable(l, -1))
-				{
-					LuaDLL.lua_pushstring(l, "__base");
-					LuaDLL.lua_rawget(l, -2);
-					LuaDLL.lua_remove(l, -2);
-				}
-				if (LuaDLL.lua_isuserdata(l, -1) > 0)
-					LuaDLL.lua_replace(l, p);
-				else
-					LuaDLL.luaL_error(l, "arg {0} expect object, but get a table",p);
-			}
-
 			ObjectCache oc = ObjectCache.get(l);
 			return oc.get(l, p);
 		}
