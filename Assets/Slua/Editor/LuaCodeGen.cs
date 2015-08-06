@@ -1155,16 +1155,16 @@ namespace SLua
 		
 		void WriteTry(StreamWriter file)
 		{
-			Write(file, "try {");
+			//Write(file, "try {");
 		}
 		
 		void WriteCatchExecption(StreamWriter file)
 		{
-			Write(file, "}");
-			Write(file, "catch(Exception e) {");
-			Write(file, "LuaDLL.luaL_error(l, e.ToString());");
-			Write(file, "return 0;");
-			Write(file, "}");
+// 			Write(file, "}");
+// 			Write(file, "catch(Exception e) {");
+// 			Write(file, "LuaDLL.luaL_error(l, e.ToString());");
+// 			Write(file, "return 0;");
+// 			Write(file, "}");
 		}
 		
 		void WriteCheckType(StreamWriter file, Type t, int n, string v = "v", string nprefix = "")
@@ -1173,6 +1173,8 @@ namespace SLua
 				Write(file, "checkEnum(l,{2}{0},out {1});", n, v, nprefix);
 			else if (t.BaseType == typeof(System.MulticastDelegate))
 				Write(file, "int op=LuaDelegation.checkDelegate(l,{2}{0},out {1});", n, v, nprefix);
+			else if (t.IsValueType && !IsBaseType(t))
+				Write(file, "checkValueType(l,{2}{0},out {1});", n, v, nprefix);
 			else
 				Write(file, "checkType(l,{2}{0},out {1});", n, v, nprefix);
 		}
@@ -1489,11 +1491,7 @@ namespace SLua
 			if (t.IsValueType)
 			{
 				Write(file, "{0} self;", TypeDecl(t));
-				Write(file, "checkType(l,1,out self);");
-			}
-			else if (t==typeof(UnityEngine.Object) || t.IsSubclassOf(typeof(UnityEngine.Object)))
-			{
-				Write(file, "{0} self=({0})checkUOSelf(l);", TypeDecl(t));
+				Write(file, "checkValueType(l,1,out self);");
 			}
 			else
 				Write(file, "{0} self=({0})checkSelf(l);", TypeDecl(t));
@@ -1680,10 +1678,27 @@ namespace SLua
 					Write(file, "LuaDelegation.checkDelegate(l,{0},out a{1});", n + argstart, n + 1);
 				}
 				else if (isparams)
-					Write(file, "checkParams(l,{0},out a{1});", n + argstart, n + 1);
+				{
+					if(t.GetElementType().IsValueType)
+						Write(file, "checkValueParams(l,{0},out a{1});", n + argstart, n + 1);
+					else
+						Write(file, "checkParams(l,{0},out a{1});", n + argstart, n + 1);
+				}
+				else if (t.IsValueType && IsBaseType(t)==false)
+					Write(file, "checkValueType(l,{0},out a{1});", n + argstart, n + 1);
 				else
 					Write(file, "checkType(l,{0},out a{1});", n + argstart, n + 1);
 			}
+		}
+
+		bool IsBaseType(Type t)
+		{
+			return t.IsPrimitive
+				|| t == typeof(Color)
+				|| t == typeof(Vector2)
+				|| t == typeof(Vector3)
+				|| t == typeof(Vector4)
+				|| t == typeof(Quaternion);
 		}
 		
 		string FullName(string str)
