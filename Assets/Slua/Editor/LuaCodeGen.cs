@@ -1683,12 +1683,12 @@ namespace SLua
 				}
 				else if (isparams)
 				{
-					if(t.GetElementType().IsValueType)
+					if(t.GetElementType().IsValueType && !IsBaseType(t.GetElementType()))
 						Write(file, "checkValueParams(l,{0},out a{1});", n + argstart, n + 1);
 					else
 						Write(file, "checkParams(l,{0},out a{1});", n + argstart, n + 1);
 				}
-				else if (t.IsValueType && IsBaseType(t)==false)
+				else if (t.IsValueType && !IsBaseType(t))
 					Write(file, "checkValueType(l,{0},out a{1});", n + argstart, n + 1);
 				else
 					Write(file, "checkType(l,{0},out a{1});", n + argstart, n + 1);
