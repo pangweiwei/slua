@@ -830,9 +830,21 @@ return index
 
 
 
+		static public bool checkType(IntPtr l, int p, out IntPtr v)
+		{
+			v = LuaDLL.lua_touserdata(l, p);
+			return true;
+		}
+
 		static public bool checkType(IntPtr l, int p, out float v)
 		{
 			v = (float)LuaDLL.luaL_checknumber(l, p);
+			return true;
+		}
+
+		static public bool checkType(IntPtr l, int p, out double v)
+		{
+			v = LuaDLL.luaL_checknumber(l, p);
 			return true;
 		}
 
@@ -932,6 +944,18 @@ return index
 		{
 			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TBOOLEAN);
 			v = LuaDLL.lua_toboolean(l, p);
+			return true;
+		}
+
+		static public bool checkType(IntPtr l, int p,out char c)
+		{
+			c = (char)LuaDLL.luaL_checkinteger(l, p);
+			return true;
+		}
+
+		static public bool checkValueType<T>(IntPtr l, int p, out T v) where T:struct
+		{
+			v = (T) checkObj(l, p);
 			return true;
 		}
 
@@ -1065,9 +1089,13 @@ return index
 		}
 
 
-		static public bool checkType<T>(IntPtr l, int p, out T o)
+		static public bool checkType<T>(IntPtr l, int p, out T o) where T:class
 		{
-			o = (T)checkVar(l, p);
+			o = checkVar(l, p) as T;
+
+			if (o == null)
+				LuaDLL.luaL_error(l, "arg {0} is not type of {1}", p, typeof(T).Name);
+
 			return true;
 		}
 
@@ -1135,7 +1163,7 @@ return index
 			return true;
 		}
 
-		static public bool checkParams<T>(IntPtr l, int p, out T[] pars)
+		static public bool checkParams<T>(IntPtr l, int p, out T[] pars) where T:class
 		{
 			int top = LuaDLL.lua_gettop(l);
 			if (top - p >= 0)
@@ -1144,6 +1172,22 @@ return index
 				for (int n = p, k = 0; n <= top; n++, k++)
 				{
 					checkType(l, n, out pars[k]);
+				}
+				return true;
+			}
+			pars = new T[0];
+			return true;
+		}
+
+		static public bool checkValueParams<T>(IntPtr l, int p, out T[] pars) where T : struct
+		{
+			int top = LuaDLL.lua_gettop(l);
+			if (top - p >= 0)
+			{
+				pars = new T[top - p + 1];
+				for (int n = p, k = 0; n <= top; n++, k++)
+				{
+					checkValueType(l, n, out pars[k]);
 				}
 				return true;
 			}
