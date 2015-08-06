@@ -1495,7 +1495,10 @@ namespace SLua
 			if (t.IsValueType)
 			{
 				Write(file, "{0} self;", TypeDecl(t));
-				Write(file, "checkValueType(l,1,out self);");
+				if(IsBaseType(t))
+					Write(file, "checkType(l,1,out self);");
+				else
+					Write(file, "checkValueType(l,1,out self);");
 			}
 			else
 				Write(file, "{0} self=({0})checkSelf(l);", TypeDecl(t));
