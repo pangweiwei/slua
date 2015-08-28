@@ -237,7 +237,8 @@ IndexProperty:
 					pushVar(l, f.GetValue(self));
 					break;
 				case MemberTypes.Method:
-					pushValue(l, new MethodWrapper(self, mis).invoke);
+					LuaCSFunction ff = new MethodWrapper(self, mis).invoke;
+					pushObject(l, ff);
 					break;
 				case MemberTypes.Event:
 					break;

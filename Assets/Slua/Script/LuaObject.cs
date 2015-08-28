@@ -310,6 +310,11 @@ return index
 			{
 				pushValue(L, (Color)o);
 			};
+
+			typePushMap[typeof(LuaCSFunction)] = (IntPtr L, object o) =>
+			{
+				pushValue(L, (LuaCSFunction)o);
+			};
 		}
 
 		static int getOpFunction(IntPtr l, string f, string tip)
@@ -1514,7 +1519,7 @@ return index
 
 		public static void pushValue(IntPtr l, LuaCSFunction f)
 		{
-			pushObject(l, f);
+			LuaDLL.lua_pushcfunction(l,f);
 		}
 
 		public static void pushValue(IntPtr l, LuaTable t)

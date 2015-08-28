@@ -279,7 +279,7 @@ do
 
 	function Vector3.Angle(a,b)
 		local dot = Dot(Vector3.Normalize(a), Vector3.Normalize(b))
-		return acos()*ToAngle
+		return acos(dot)*ToAngle
 	end
 
 	function Vector3.Normalized(v)
