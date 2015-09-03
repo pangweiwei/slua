@@ -1,0 +1,1 @@
+compile and link with lua/luajit src code and output slua library, put library into Plugins folder.

@@ -1,0 +1,25 @@
+
+MonoBehaviour = UnityEngine.MonoBehaviour
+GameObject = UnityEngine.MonoBehaviour
+
+function main()
+
+
+	local s,c=Custom.staticCustom();
+	print(s,c)
+
+	local a,b,x=c:instanceCustom()
+	print(a,b,x)
+
+	-- Type parameter can be pass in as string/type table
+	print(c:getTypeName("UnityEngine.MonoBehaviour,UnityEngine"))
+	print(c:getTypeName(MonoBehaviour))
+	print(c:getTypeName(Custom))
+
+	-- Test getItem setItem
+	print("---<"..c:getItem("test"))
+	c:setItem("test",10)
+	print("-->"..c:getItem("test"))
+	c:setItem("a",100)
+	print("-->"..c:getItem("test"))
+end

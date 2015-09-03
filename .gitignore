@@ -1,0 +1,8 @@
+.DS_Store
+Library
+Temp
+UnityVS
+AssetStoreTools
+obj/*
+/Assets/AssetStoreTools.meta
+/Assets/UnityVS.meta
