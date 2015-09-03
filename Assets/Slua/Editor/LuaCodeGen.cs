@@ -339,6 +339,7 @@ namespace SLua
 	{
 		static List<string> memberFilter = new List<string>
 
+
 	    {
 	        "AnimationClip.averageDuration",
 	        "AnimationClip.averageAngularSpeed",
@@ -367,6 +368,7 @@ namespace SLua
 	        "AnimatorControllerParameter.name",
 	        "Input.IsJoystickPreconfigured",
 	        "Resources.LoadAssetAtPath",
+
 #if UNITY_4_6
 			"Motion.ValidateIfRetargetable",
 			"Motion.averageDuration",
@@ -377,7 +379,9 @@ namespace SLua
 			"Motion.isAnimatorMotion",
 			"Motion.isHumanMotion",
 #endif
+
     	};
+
 
 
 		HashSet<string> funcname = new HashSet<string>();

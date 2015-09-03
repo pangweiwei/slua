@@ -985,7 +985,7 @@ return index
 				}
 
 			}
-            LuaDLL.lua_pop(l, 1); // pop DelgateTable 
+			LuaDLL.lua_pop(l, 1); // pop DelgateTable
 			return true;
 		}
 
