@@ -841,6 +841,8 @@ end
 						return null;
 					bytes = asset.bytes;
 				}
+
+				DebugInterface.require(fn, bytes);
 				return bytes;
 			}
 			catch (Exception e)

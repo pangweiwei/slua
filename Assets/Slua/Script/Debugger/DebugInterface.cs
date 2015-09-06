@@ -20,6 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+// Comment out this line to switch off remote debugger for slua
+#define LuaDebugger
+
 namespace SLua
 {
 	using UnityEngine;
@@ -34,7 +37,6 @@ namespace SLua
 	using System.Text.RegularExpressions;
 	using System.Reflection;
 
-
 	class DebugInterface : LuaObject
 	{
 		LuaState state;
@@ -47,6 +49,7 @@ namespace SLua
 		bool debugMode = false;
 		int packageLen = 0;
 		Dictionary<string, string[]> luaSource = new Dictionary<string, string[]>();
+		static Dictionary<string, string> sourceMd5 = new Dictionary<string, string>();
 
 		const int DebugPort = 10240;
 		static Regex re = new Regex(@"\$\((\w+)\)");
@@ -78,6 +81,25 @@ namespace SLua
 			addMember(l, fetchLuaSource, false);
 			addMember(l, onBreak, false);
 			createTypeMetatable(l, typeof(DebugInterface));
+		}
+
+		public static void require(string f,byte[] bytes)
+		{
+#if LuaDebugger
+			System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+			byte[] hashBytes = md5.ComputeHash(bytes);
+
+			// Convert the encrypted bytes back to a string (base 16)
+			string hashString = "";
+
+			for (int i = 0; i < hashBytes.Length; i++)
+			{
+				hashString += System.Convert.ToString(hashBytes[i], 16).PadLeft(2, '0');
+			}
+
+			string m = hashString.PadLeft(32, '0');
+			sourceMd5[m] = f;
+#endif
 		}
 
 
@@ -159,6 +181,7 @@ namespace SLua
 
 		public void init()
 		{
+#if LuaDebugger
 			try
 			{
 				IPEndPoint localEP = new IPEndPoint(IPAddress.Parse("0.0.0.0"), DebugPort);
@@ -178,14 +201,17 @@ namespace SLua
 			{
 				Debug.LogError(string.Format("LuaDebugger listened failed for reason:：{0}", e.Message));
 			}
+#endif
 		}
 
 		public void update()
 		{
+#if LuaDebugger
 			if (client == null || !client.Connected)
 				return;
 
 			process();
+#endif
 		}
 
 		bool process()
@@ -396,6 +422,29 @@ namespace SLua
 			string fileName = fileNameAndLine[0];
 			int line = int.Parse(fileNameAndLine[1]);
 			var luaFunc = state.getFunction("Slua.ldb.addBreakPoint");
+			luaFunc.call(fileName, line);
+			return false;
+		}
+
+
+		bool cmdb5(string tail)
+		{
+			if (tail == "")
+			{
+				debugPrint("usage:b5 [file md5]:123\n");
+				return false;
+			}
+
+			string[] fileNameAndLine = tail.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+			string md5 = fileNameAndLine[0];
+			string fileName;
+			if(!sourceMd5.TryGetValue(md5, out fileName))
+			{
+				debugPrint(string.Format("Can't find file hashed {0}\n", md5));
+				return false;
+			}
+			int line = int.Parse(fileNameAndLine[1]);
+			var luaFunc = state.getFunction("Slua.ldb.addBreakPointMD5");
 			luaFunc.call(fileName, line);
 			return false;
 		}
