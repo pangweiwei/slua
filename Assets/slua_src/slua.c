@@ -91,11 +91,6 @@ LUA_API void luaS_openextlibs(lua_State *L) {
 		lua_pushcfunction(L, lib->func);
 		lua_setfield(L, -2, lib->name);
 	}
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 6f837bf0e2bdd34c591f0849312ab237af43fe86
 	lua_pop(L, 1);
 }
 
@@ -509,8 +504,3 @@ LUALIB_API int luaLS_loadbuffer(lua_State *L, const char *buff, int sz, const ch
 {
 	return luaL_loadbuffer(L, buff, (size_t)sz, name);
 }
-
-
-
-=======
->>>>>>> 6f837bf0e2bdd34c591f0849312ab237af43fe86
