@@ -80,8 +80,6 @@ end
 return Class
 ";
 
-		const int VersionNumber = 0x0804;
-
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int _iter(IntPtr l)
 		{

@@ -165,7 +165,6 @@ static void setmetatable(lua_State *L, int p, int what) {
 
 	int ref;
 	
-	p=lua_absindex(L,p);
 #if LUA_VERSION_NUM>=503
 	lua_pushglobaltable(L);
 	lua_rawgeti(L, -1, what);
@@ -374,7 +373,6 @@ LUA_API void luaS_pushColor(lua_State *L, float x, float y, float z, float w) {
 
 
 static void setelement(lua_State* L, int p, float v, const char* key) {
-	p=lua_absindex(L,p);
 	if (!isnan(v)) {
 		lua_pushstring(L, key);
 		lua_pushnumber(L, v);
@@ -384,7 +382,6 @@ static void setelement(lua_State* L, int p, float v, const char* key) {
 
 
 static void setelementid(lua_State* L, int p, float v, int id) {
-	p=lua_absindex(L,p);
 	if (!isnan(v)) {
 		lua_pushnumber(L, v);
 		lua_rawseti(L, p, id);
@@ -392,7 +389,6 @@ static void setelementid(lua_State* L, int p, float v, int id) {
 }
 
 LUA_API void luaS_setData(lua_State *L, int p, float x, float y, float z, float w) {
-	p=lua_absindex(L,p);
 	setelement(L, p, x, "x");
 	setelement(L, p, y, "y");
 	setelement(L, p, z, "z");
