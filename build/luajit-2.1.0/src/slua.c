@@ -77,6 +77,10 @@ static const char *luaL_findtable(lua_State *L, int idx,
 
 #endif
 
+static int lua_absindex(lua_State *L,int index) {
+	return index > 0 ? index : lua_gettop(L) + index + 1;
+}
+
 LUA_API void luaS_openextlibs(lua_State *L) {
 	const luaL_Reg *lib;
 
@@ -99,7 +103,7 @@ LUA_API void luaS_newuserdata(lua_State *L, int val)
 
 LUA_API int luaS_rawnetobj(lua_State *L, int index)
 {
-	int *udata;
+	int *ud;
 
 	if (lua_istable(L, index))
 	{
@@ -116,10 +120,8 @@ LUA_API int luaS_rawnetobj(lua_State *L, int index)
 			luaL_error(L, "arg %d expect object, but get a table", index);
 	}
 
-
-	udata = lua_touserdata(L, index);
-	if (udata != NULL) return *udata;
-	return -1;
+	ud = lua_touserdata(L, index);
+	return (ud != NULL)?*ud:-1;
 }
 
 LUA_API void luaS_pushuserdata(lua_State *L, void* ptr)
@@ -162,7 +164,8 @@ static void getmetatable(lua_State *L, const char* key) {
 static void setmetatable(lua_State *L, int p, int what) {
 
 	int ref;
-
+	
+	p=lua_absindex(L,p);
 #if LUA_VERSION_NUM>=503
 	lua_pushglobaltable(L);
 	lua_rawgeti(L, -1, what);
@@ -221,6 +224,7 @@ LUA_API int luaS_checkluatype(lua_State *L, int p, const char *t) {
 	int top;
 	const char* b;
 
+	p=lua_absindex(L,p);
 	if (lua_type(L, p) != LUA_TTABLE)
 		return 0;
 	top = lua_gettop(L);
@@ -245,6 +249,7 @@ LUA_API int luaS_checkluatype(lua_State *L, int p, const char *t) {
 
 
 LUA_API void luaS_checkVector4(lua_State *L, int p, float* x, float *y, float *z, float *w) {
+	p=lua_absindex(L,p);
 	luaL_checktype(L, p, LUA_TTABLE);
 	lua_rawgeti(L, p, 1);
 	*x = (float)lua_tonumber(L, -1);
@@ -271,6 +276,7 @@ LUA_API void luaS_pushVector4(lua_State *L, float x, float y, float z, float w) 
 }
 
 LUA_API void luaS_checkVector3(lua_State *L, int p, float* x, float *y, float *z) {
+	p=lua_absindex(L,p);
 	luaL_checktype(L, p, LUA_TTABLE);
 	lua_rawgeti(L, p, 1);
 	*x = (float)lua_tonumber(L, -1);
@@ -293,6 +299,7 @@ LUA_API void luaS_pushVector3(lua_State *L, float x, float y, float z) {
 }
 
 LUA_API void luaS_checkVector2(lua_State *L, int p, float* x, float *y) {
+	p=lua_absindex(L,p);
 	luaL_checktype(L, p, LUA_TTABLE);
 	lua_rawgeti(L, p, 1);
 	*x = (float)lua_tonumber(L, -1);
@@ -311,6 +318,7 @@ LUA_API void luaS_pushVector2(lua_State *L, float x, float y) {
 }
 
 LUA_API void luaS_checkQuaternion(lua_State *L, int p, float* x, float *y, float *z, float* w) {
+	p=lua_absindex(L,p);
 	luaL_checktype(L, p, LUA_TTABLE);
 	lua_rawgeti(L, p, 1);
 	*x = (float)lua_tonumber(L, -1);
@@ -324,6 +332,7 @@ LUA_API void luaS_checkQuaternion(lua_State *L, int p, float* x, float *y, float
 }
 
 LUA_API void luaS_checkColor(lua_State *L, int p, float* x, float *y, float *z, float* w) {
+	p=lua_absindex(L,p);
 	luaL_checktype(L, p, LUA_TTABLE);
 	lua_rawgeti(L, p, 1);
 	*x = (float)lua_tonumber(L, -1);
@@ -365,6 +374,7 @@ LUA_API void luaS_pushColor(lua_State *L, float x, float y, float z, float w) {
 
 
 static void setelement(lua_State* L, int p, float v, const char* key) {
+	p=lua_absindex(L,p);
 	if (!isnan(v)) {
 		lua_pushstring(L, key);
 		lua_pushnumber(L, v);
@@ -374,6 +384,7 @@ static void setelement(lua_State* L, int p, float v, const char* key) {
 
 
 static void setelementid(lua_State* L, int p, float v, int id) {
+	p=lua_absindex(L,p);
 	if (!isnan(v)) {
 		lua_pushnumber(L, v);
 		lua_rawseti(L, p, id);
@@ -381,6 +392,7 @@ static void setelementid(lua_State* L, int p, float v, int id) {
 }
 
 LUA_API void luaS_setData(lua_State *L, int p, float x, float y, float z, float w) {
+	p=lua_absindex(L,p);
 	setelement(L, p, x, "x");
 	setelement(L, p, y, "y");
 	setelement(L, p, z, "z");
@@ -388,6 +400,7 @@ LUA_API void luaS_setData(lua_State *L, int p, float x, float y, float z, float 
 }
 
 LUA_API void luaS_setDataVec(lua_State *L, int p, float x, float y, float z, float w) {
+	p=lua_absindex(L,p);
 	setelementid(L, p, x, 1);
 	setelementid(L, p, y, 2);
 	setelementid(L, p, z, 3);
@@ -395,6 +408,7 @@ LUA_API void luaS_setDataVec(lua_State *L, int p, float x, float y, float z, flo
 }
 
 LUA_API void luaS_setColor(lua_State *L, int p, float x, float y, float z, float w) {
+	p=lua_absindex(L,p);
 	setelement(L, p, x, "r");
 	setelement(L, p, y, "g");
 	setelement(L, p, z, "b");
