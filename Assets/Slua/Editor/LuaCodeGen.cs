@@ -1162,20 +1162,16 @@ namespace SLua
 		
 		void WriteTry(StreamWriter file)
 		{
-#if _LUADEBUG
 			Write(file, "try {");
-#endif
 		}
 		
 		void WriteCatchExecption(StreamWriter file)
 		{
-#if _LUADEBUG
 			Write(file, "}");
 			Write(file, "catch(Exception e) {");
 			Write(file, "LuaDLL.luaL_error(l, e.ToString());");
 			Write(file, "return 0;");
 			Write(file, "}");
-#endif
 		}
 		
 		void WriteCheckType(StreamWriter file, Type t, int n, string v = "v", string nprefix = "")
