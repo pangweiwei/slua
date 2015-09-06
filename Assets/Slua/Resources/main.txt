@@ -1,6 +1,5 @@
 local somemodule = require 'module.some'
 import "UnityEngine"
-
 if not UnityEngine.GameObject then
 	error("Click Make/All to generate lua wrap file")
 end
@@ -18,6 +17,10 @@ MyGameObject=Slua.Class(GameObject,
 
 
 function main()
+
+	local t=dofile('module/some')
+	assert(type(t)=='table')
+	assert(t.add(1,2)==3)
 
 	if jit then
 		print("using luajit ",jit.version,jit.arch)

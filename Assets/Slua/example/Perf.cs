@@ -8,7 +8,8 @@ public class Perf : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		l = new LuaSvr("perf");
+		l = new LuaSvr();
+		l.start("perf");
 
 #if UNITY_5
 		Application.logMessageReceived += this.log;

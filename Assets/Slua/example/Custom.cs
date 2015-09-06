@@ -31,10 +31,11 @@ public class Custom : MonoBehaviour
 	static public int instanceCustom(IntPtr l)
 	{
 		Custom self = (Custom)LuaObject.checkSelf(l);
+		LuaObject.pushValue(l, true);
 		LuaDLL.lua_pushstring(l, "xiaoming");
 		LuaDLL.lua_pushstring(l, "hanmeimei");
 		LuaDLL.lua_pushinteger(l, self.v);
-		return 3;
+		return 4;
 	}
 
 	// this exported function don't generate stub code, only register it
@@ -42,9 +43,10 @@ public class Custom : MonoBehaviour
 	[StaticExport]
 	static public int staticCustom(IntPtr l)
 	{
+		LuaObject.pushValue(l, true);
 		LuaDLL.lua_pushstring(l, vs);
 		LuaObject.pushObject(l, c);
-		return 2;
+		return 3;
 	}
 	public int this[string key]
 	{

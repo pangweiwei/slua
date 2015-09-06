@@ -56,6 +56,7 @@ namespace SLua
 		{
 			list = new List<string>
 			{
+				//"UnityEngine.GameObject",
 			};
 		}
 
@@ -133,6 +134,8 @@ namespace SLua
 			"Ping",
             "ShaderVariantCollection",
 			"SimpleJson.Reflection",
+			"CoroutineTween",
+			"GraphicRebuildTracker",
         };
 		}
 

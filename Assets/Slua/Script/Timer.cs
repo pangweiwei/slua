@@ -271,8 +271,9 @@ namespace SLua
 					};
 				}
 				ld.d = ua;
+				pushValue(l, true);
 				pushValue(l, add(delay, ua));
-				return 1;
+				return 2;
 			}
 			else if (top == 3)
 			{
@@ -299,11 +300,11 @@ namespace SLua
 					};
 				}
 				ld.d = ua;
+				pushValue(l, true);
 				pushValue(l, add(delay, cycle, ua));
-				return 1;
+				return 2;
 			}
-			LuaDLL.luaL_error(l, "Argument error");
-			return 0;
+			return LuaObject.error(l,"Argument error");
 		}
 
 

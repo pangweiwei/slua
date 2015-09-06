@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using UnityEngine;
 
 namespace LuaInterface
 {
@@ -142,18 +143,18 @@ namespace LuaInterface
 			return lua_type(luaState, stackPos) == LuaTypes.LUA_TTHREAD;
 		}
 
+		[Obsolete]
 		public static void luaL_error(IntPtr luaState, string message)
 		{
-			LuaDLL.luaL_where(luaState, 1);
-			LuaDLL.lua_pushstring(luaState, message);
-			LuaDLL.lua_concat(luaState, 2);
-			LuaDLL.lua_error(luaState);
+			//LuaDLL.lua_pushstring(luaState, message);
+			//LuaDLL.lua_error(luaState);
 		}
 
+		[Obsolete]
 		public static void luaL_error(IntPtr luaState, string fmt, params object[] args)
 		{
-			string str = string.Format(fmt, args);
-			luaL_error(luaState, str);
+			//string str = string.Format(fmt, args);
+			//luaL_error(luaState, str);
 		}
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
@@ -472,13 +473,25 @@ namespace LuaInterface
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void lua_pushnil(IntPtr luaState);
 
-		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void luaL_checktype(IntPtr luaState, int p, LuaTypes t);
+		public static void luaL_checktype(IntPtr luaState, int p, LuaTypes t)
+		{
+			if (lua_type(luaState, p) != t)
+			{
+				throw new Exception(string.Format("arg {0} expect {1}", p, lua_typenamestr(luaState, t)));
+			}
+		}
 
 		public static void lua_pushcfunction(IntPtr luaState, LuaCSFunction function)
 		{
 			IntPtr fn = Marshal.GetFunctionPointerForDelegate(function);
 			lua_pushcclosure(luaState, fn, 0);
+		}
+
+		public static void lua_pushcsfunction(IntPtr luaState, LuaCSFunction function)
+		{
+			LuaDLL.lua_getref(luaState, SLua.LuaState.PCallCSFunctionRef);
+			LuaDLL.lua_pushcclosure(luaState, Marshal.GetFunctionPointerForDelegate(function),0);
+			LuaDLL.lua_call(luaState, 1, 1);
 		}
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]

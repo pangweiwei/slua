@@ -83,8 +83,8 @@ namespace SLua
         static protected LuaCSFunction lua_tostring = new LuaCSFunction(ToString);
 		const string DelgateTable = "__LuaDelegate";
 
-		static protected int newindex_ref = 0;
-		static protected int index_ref = 0;
+		static protected LuaFunction newindex_func;
+		static protected LuaFunction index_func;
 
 		delegate void PushVarDelegate(IntPtr l, object o);
 		static Dictionary<Type, PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
@@ -143,23 +143,11 @@ end
 
 return index
 ";
-
-			if (LuaDLL.luaL_dostring(l, newindexfun) != 0)
-			{
-				lastError(l);
-				return;
-			}
-			newindex_ref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
-
-			if (LuaDLL.luaL_dostring(l, indexfun) != 0)
-			{
-                lastError(l);
-				return;
-			}
-			index_ref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
+			LuaState L = LuaState.get(l);
+			newindex_func = (LuaFunction)L.doString(newindexfun);
+			index_func = (LuaFunction)L.doString(indexfun);
 
 			// object method
-
 			LuaDLL.lua_newtable(l);
 			addMember(l, ToString);
 			addMember(l, GetHashCode);
@@ -179,34 +167,66 @@ return index
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int ToString(IntPtr l)
 		{
-			object obj = checkVar(l, 1);
-			pushValue(l,obj.ToString());
-			return 1;
+			try
+			{
+				object obj = checkVar(l, 1);
+				pushValue(l, true);
+				pushValue(l, obj.ToString());
+				return 2;
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int GetHashCode(IntPtr l)
 		{
-			object obj = checkVar(l, 1);
-			pushValue(l, obj.GetHashCode());
-			return 1;
+			try
+			{
+				object obj = checkVar(l, 1);
+				pushValue(l, true);
+				pushValue(l, obj.GetHashCode());
+				return 2;
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int Equals(IntPtr l)
 		{
-			object obj = checkVar(l, 1);
-			object other = checkVar(l, 2);
-			pushValue(l, obj.Equals(other));
-			return 1;
+			try
+			{
+				object obj = checkVar(l, 1);
+				object other = checkVar(l, 2);
+				pushValue(l, true);
+				pushValue(l, obj.Equals(other));
+				return 2;
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int GetType(IntPtr l)
 		{
-			object obj = checkVar(l, 1);
-            pushObject(l, obj.GetType());
-			return 1;
+			try
+			{
+				object obj = checkVar(l, 1);
+				pushValue(l, true);
+				pushObject(l, obj.GetType());
+				return 2;
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
 		}
 
 		static void setupPushVar()
@@ -338,8 +358,7 @@ return index
 			if (LuaDLL.lua_isnil(l, -1))
 			{
 				LuaDLL.lua_pop(l, 1);
-				LuaDLL.luaL_error(l, "No {0} operator", tip);
-				return 0;
+				throw new Exception(string.Format("No {0} operator", tip));
 			}
 			return err;
 		}
@@ -347,77 +366,131 @@ return index
 		static int luaOp(IntPtr l, string f, string tip)
 		{
 			int err = getOpFunction(l, f, tip);
-			if (err == 0)
-				return 0;
-
 			LuaDLL.lua_pushvalue(l, 1);
 			LuaDLL.lua_pushvalue(l, 2);
 			if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
 				LuaDLL.lua_pop(l, 1);
 			LuaDLL.lua_remove(l, err);
-			return 1;
+			pushValue(l, true);
+			LuaDLL.lua_insert(l, -2);
+			return 2;
 		}
 
 
 		static int luaUnaryOp(IntPtr l, string f, string tip)
 		{
 			int err = getOpFunction(l, f, tip);
-			if ( err == 0)
-				return 0;
-
 			LuaDLL.lua_pushvalue(l, 1);
 			if (LuaDLL.lua_pcall(l, 1, 1, err) != 0)
 				LuaDLL.lua_pop(l, 1);
 			LuaDLL.lua_remove(l, err);
-			return 1;
+			pushValue(l, true);
+			LuaDLL.lua_insert(l, -2);
+			return 2;
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaAdd(IntPtr l)
 		{
-			return luaOp(l, "op_Addition", "add");
+			try
+			{
+				return luaOp(l, "op_Addition", "add");
+			}
+			catch(Exception e)
+			{
+				return error(l, e);
+			}
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaSub(IntPtr l)
 		{
-			return luaOp(l, "op_Subtraction", "sub");
+			try
+			{
+				return luaOp(l, "op_Subtraction", "sub");
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaMul(IntPtr l)
 		{
-			return luaOp(l, "op_Multiply", "mul");
+			try
+			{
+				return luaOp(l, "op_Multiply", "mul");
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaDiv(IntPtr l)
 		{
-			return luaOp(l, "op_Division", "div");
+			try
+			{
+				return luaOp(l, "op_Division", "div");
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaUnm(IntPtr l)
 		{
-			return luaUnaryOp(l, "op_UnaryNegation", "unm");
+			try
+			{
+				return luaUnaryOp(l, "op_UnaryNegation", "unm");
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaEq(IntPtr l)
 		{
-			return luaOp(l, "op_Equality", "eq");
+			try
+			{
+				return luaOp(l, "op_Equality", "eq");
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
 		}
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaLt(IntPtr l)
         {
-            return luaOp(l, "op_LessThan", "lt");
+			try
+			{
+				return luaOp(l, "op_LessThan", "lt");
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
         }
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int luaLe(IntPtr l)
         {
-            return luaOp(l, "op_LessThanOrEqual", "le");
+			try
+			{
+				return luaOp(l, "op_LessThanOrEqual", "le");
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
         }
 
 		public static void getEnumTable(IntPtr l, string t)
@@ -512,15 +585,15 @@ return index
 			LuaDLL.lua_pushstring(l, ObjectCache.getAQName(self));
 			LuaDLL.lua_setfield(l, -3, "__fullname");
 
-			LuaDLL.lua_getref(l, index_ref);
+			index_func.push(l);
 			LuaDLL.lua_setfield(l, -2, "__index");
 
-			LuaDLL.lua_getref(l, newindex_ref);
+			newindex_func.push(l);
 			LuaDLL.lua_setfield(l, -2, "__newindex");
 
 			if (con == null) con = noConstructor;
 
-			LuaDLL.lua_pushcfunction(l, con);
+			LuaDLL.lua_pushcsfunction(l, con);
 			LuaDLL.lua_setfield(l, -2, "__call");
 
 			LuaDLL.lua_pushcfunction(l, typeToString);
@@ -539,32 +612,33 @@ return index
 			LuaDLL.lua_rawset(l, -3);
 
 			// for instance 
-			LuaDLL.lua_getref(l, index_ref);
+			index_func.push(l);
 			LuaDLL.lua_setfield(l, -2, "__index");
 
-			LuaDLL.lua_getref(l, newindex_ref);
+			newindex_func.push(l);
 			LuaDLL.lua_setfield(l, -2, "__newindex");
 
-			LuaDLL.lua_pushcfunction(l, lua_add);
+			LuaDLL.lua_pushcsfunction(l, lua_add);
 			LuaDLL.lua_setfield(l, -2, "__add");
-			LuaDLL.lua_pushcfunction(l, lua_sub);
+			LuaDLL.lua_pushcsfunction(l, lua_sub);
 			LuaDLL.lua_setfield(l, -2, "__sub");
-			LuaDLL.lua_pushcfunction(l, lua_mul);
+			LuaDLL.lua_pushcsfunction(l, lua_mul);
 			LuaDLL.lua_setfield(l, -2, "__mul");
-			LuaDLL.lua_pushcfunction(l, lua_div);
+			LuaDLL.lua_pushcsfunction(l, lua_div);
 			LuaDLL.lua_setfield(l, -2, "__div");
-			LuaDLL.lua_pushcfunction(l, lua_unm);
+			LuaDLL.lua_pushcsfunction(l, lua_unm);
 			LuaDLL.lua_setfield(l, -2, "__unm");
-			LuaDLL.lua_pushcfunction(l, lua_eq);
+			LuaDLL.lua_pushcsfunction(l, lua_eq);
 			LuaDLL.lua_setfield(l, -2, "__eq");
+            LuaDLL.lua_pushcsfunction(l, lua_le);
+            LuaDLL.lua_setfield(l, -2, "__le");
+            LuaDLL.lua_pushcsfunction(l, lua_lt);
+            LuaDLL.lua_setfield(l, -2, "__lt");
+			LuaDLL.lua_pushcsfunction(l, lua_tostring);
+			LuaDLL.lua_setfield(l, -2, "__tostring");
+
 			LuaDLL.lua_pushcfunction(l, lua_gc);
 			LuaDLL.lua_setfield(l, -2, "__gc");
-            LuaDLL.lua_pushcfunction(l, lua_le);
-            LuaDLL.lua_setfield(l, -2, "__le");
-            LuaDLL.lua_pushcfunction(l, lua_lt);
-            LuaDLL.lua_setfield(l, -2, "__lt");
-			LuaDLL.lua_pushcfunction(l, lua_tostring);
-			LuaDLL.lua_setfield(l, -2, "__tostring");
 			
 			if (self.IsValueType)
 			{
@@ -579,7 +653,7 @@ return index
             checkMethodValid(func);
 
             newTypeTable(l, ns);
-			LuaDLL.lua_pushcfunction(l, func);
+			LuaDLL.lua_pushcsfunction(l, func);
 			LuaDLL.lua_setfield(l, -2, func.Method.Name);
 			LuaDLL.lua_pop(l, 1);
 		}
@@ -588,7 +662,7 @@ return index
 		{
             checkMethodValid(func);
 
-            LuaDLL.lua_pushcfunction(l, func);
+			LuaDLL.lua_pushcsfunction(l, func);
 			string name = func.Method.Name;
 			if (name.EndsWith("_s"))
 			{
@@ -603,7 +677,7 @@ return index
 		{
             checkMethodValid(func);
 
-            LuaDLL.lua_pushcfunction(l, func);
+			LuaDLL.lua_pushcsfunction(l, func);
 			string name = func.Method.Name;
 			LuaDLL.lua_setfield(l, instance ? -2 : -3, name);
 		}
@@ -619,13 +693,13 @@ return index
 			if (get == null)
 				LuaDLL.lua_pushnil(l);
 			else
-				LuaDLL.lua_pushcfunction(l, get);
+				LuaDLL.lua_pushcsfunction(l, get);
 			LuaDLL.lua_rawseti(l, -2, 1);
 
 			if (set == null)
 				LuaDLL.lua_pushnil(l);
 			else
-				LuaDLL.lua_pushcfunction(l, set);
+				LuaDLL.lua_pushcsfunction(l, set);
 			LuaDLL.lua_rawseti(l, -2, 2);
 
 			LuaDLL.lua_setfield(l, t, name);
@@ -636,12 +710,6 @@ return index
 			LuaDLL.lua_pushinteger(l, v);
 			LuaDLL.lua_setfield(l, -2, name);
 		}
-
-        internal static void lastError(IntPtr l)
-        {
-            string err = LuaDLL.lua_tostring(l, -1);
-            LuaDLL.luaL_error(l, err);
-        }
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaGC(IntPtr l)
@@ -671,7 +739,7 @@ return index
 			if (LuaDLL.lua_isnil(l, -1))
 			{
 				LuaDLL.lua_pop(l, 1);
-				LuaDLL.luaL_error(l, "expect luaobject as first argument");
+				throw new Exception("expect luaobject as first argument");
 			}
 		}
 
@@ -988,7 +1056,6 @@ return index
 				{
 					f = newDelegate(l, p);
 				}
-
 			}
 			LuaDLL.lua_pop(l, 1); // pop DelgateTable
 			return true;
@@ -1054,7 +1121,7 @@ return index
                 case LuaTypes.LUA_TUSERDATA:
                     object o = checkObj(l, p);
                     if (o.GetType() != typeof(Type))
-                        LuaDLL.luaL_error(l, "{0} expect Type, got {1}", p, o.GetType().Name);
+                        throw new Exception(string.Format("{0} expect Type, got {1}", p, o.GetType().Name));
                     t = (Type)o;
                     break;
                 case LuaTypes.LUA_TTABLE:
@@ -1081,7 +1148,7 @@ return index
             }
 
 			if (tname == null)
-				LuaDLL.luaL_error(l, "expect string or type table");
+				throw new Exception("expect string or type table");
 
 			t = Type.GetType(tname);
             if (t != null && lt==LuaTypes.LUA_TTABLE)
@@ -1105,7 +1172,7 @@ return index
 
 			o = obj as T;
 			if (o == null)
-				LuaDLL.luaL_error(l, "arg {0} is not type of {1}", p, typeof(T).Name);
+				throw new Exception(string.Format("arg {0} is not type of {1}", p, typeof(T).Name));
 
 			return true;
 		}
@@ -1272,10 +1339,9 @@ return index
             {
                 return Convert.ChangeType(obj, t);
             }
-            catch(Exception) { 
-                LuaDLL.luaL_error(l, "parameter {0} expected {1}, got {2}", p, t.Name, obj==null?"null":obj.GetType().Name);
+            catch(Exception) {
+				throw new Exception(string.Format("parameter {0} expected {1}, got {2}", p, t.Name, obj == null ? "null" : obj.GetType().Name));
             }
-            return null;
         }
 
 		static public object checkVar(IntPtr l, int p)
@@ -1520,7 +1586,7 @@ return index
 
 		public static void pushValue(IntPtr l, LuaCSFunction f)
 		{
-			LuaDLL.lua_pushcfunction(l,f);
+			LuaDLL.lua_pushcsfunction(l,f);
 		}
 
 		public static void pushValue(IntPtr l, LuaTable t)
@@ -1570,23 +1636,14 @@ return index
 			{
 				return (T)o;
 			}
-			LuaDLL.luaL_error(l, "arg 1 expect self, but get null");
-			return default(T);
+			throw new Exception("arg 1 expect self, but get null");
 		}
 
 		public static object checkSelf(IntPtr l)
 		{
 			object o = checkObj(l, 1);
 			if (o == null)
-				LuaDLL.luaL_error(l, "expect self, but get null");
-			return o;
-		}
-
-		public static UnityEngine.Object checkUOSelf(IntPtr l)
-		{
-			UnityEngine.Object o = (UnityEngine.Object) checkObj(l, 1);
-			if(o==null)
-				LuaDLL.luaL_error(l, "expect self, but get null");
+				throw new Exception("expect self, but get null");
 			return o;
 		}
 
@@ -1621,7 +1678,7 @@ return index
             LuaDLL.luaS_setDataVec(l, 1, v.r, v.g, v.b, v.a);
         }
 
-        public static int extractFunction(IntPtr l, int p)
+        internal static int extractFunction(IntPtr l, int p)
 		{
 			int op = 0;
 			LuaTypes t = LuaDLL.lua_type(l, p);
@@ -1648,8 +1705,7 @@ return index
 					LuaDLL.lua_pushvalue(l, p);
 					break;
 				default:
-					LuaDLL.luaL_error(l, "expect valid Delegate ");
-					break;
+					throw new Exception("expect valid Delegate");
 			}
 			return op;
 		}
@@ -1658,8 +1714,7 @@ return index
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int noConstructor(IntPtr l)
 		{
-			LuaDLL.luaL_error(l, "Can't new this object");
-			return 0;
+			return error(l, "Can't new this object");
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -1667,6 +1722,34 @@ return index
 		{
 			LuaDLL.lua_pushstring (l, "__fullname");
 			LuaDLL.lua_rawget (l, -2);
+			return 1;
+		}
+
+		static public int error(IntPtr l,Exception e)
+		{
+			LuaDLL.lua_pushboolean(l, false);
+			LuaDLL.lua_pushstring(l, e.ToString());
+			return 2;
+		}
+
+		static public int error(IntPtr l, string err)
+		{
+			LuaDLL.lua_pushboolean(l, false);
+			LuaDLL.lua_pushstring(l, err);
+			return 2;
+		}
+
+		static public int error(IntPtr l, string err, params object[] args)
+		{
+			err = string.Format(err, args);
+			LuaDLL.lua_pushboolean(l, false);
+			LuaDLL.lua_pushstring(l, err);
+			return 2;
+		}
+
+		static public int ok(IntPtr l)
+		{
+			LuaDLL.lua_pushboolean(l, true);
 			return 1;
 		}
 	}

@@ -10,15 +10,16 @@ public class Main : MonoBehaviour
 	LuaSvr l;
 	public Text logText;
 	// Use this for initialization
-	void Start()
+	IEnumerator Start()
 	{
 #if UNITY_5
 		Application.logMessageReceived += this.log;
 #else
 		Application.RegisterLogCallback(this.log);
 #endif
-		l = new LuaSvr();
 
+		l = new LuaSvr();
+		yield return StartCoroutine(l.waitForDebugConnection());
 		l.start("main");
 		object o = l.luaState.getFunction("foo").call(1, 2, 3);
 		object[] array = (object[])o;

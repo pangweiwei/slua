@@ -24,14 +24,14 @@
 namespace SLua
 {
 	using System;
+	using System.Collections;
 	using System.Collections.Generic;
-
 	using UnityEngine;
 	using LuaInterface;
 	using System.Reflection;
 	using Debug = UnityEngine.Debug;
 
-	public class LuaSvr
+	public class LuaSvr 
 	{
 		public LuaState luaState;
 		static LuaSvrGameObject lgo;
@@ -39,9 +39,33 @@ namespace SLua
 
 
 		public LuaSvr()
-			: this(null)
 		{
+			luaState = new LuaState();
 
+			GameObject go = new GameObject("LuaSvrProxy");
+			lgo = go.AddComponent<LuaSvrGameObject>();
+			GameObject.DontDestroyOnLoad(go);
+			lgo.state = luaState;
+			lgo.onUpdate = this.tick;
+
+			LuaState.pcall(luaState.L, init);
+
+			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
+			{
+				Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
+				errorReported = LuaDLL.lua_gettop(luaState.L);
+			}
+		}
+
+		internal IEnumerator waitForDebugConnection()
+		{
+			lgo.skipDebugger = false;
+			Debug.Log("Waiting for debug connection");
+			while (true)
+			{
+				yield return new WaitForSeconds(0.1f);
+				if (lgo.skipDebugger) break;
+			}
 		}
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -57,27 +81,6 @@ namespace SLua
             LuaDLL.luaS_openextlibs(L);
             return 0;
         }
-
-		public LuaSvr(string main)
-		{
-			luaState = new LuaState();
-
-            GameObject go = new GameObject("LuaSvrProxy");
-            lgo = go.AddComponent<LuaSvrGameObject>();
-            GameObject.DontDestroyOnLoad(go);
-            lgo.state = luaState;
-            lgo.onUpdate = this.tick;
-
-            LuaState.pcall(luaState.L, init);
-
-            start(main);
-
-			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
-			{
-				Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
-				errorReported = LuaDLL.lua_gettop(luaState.L);
-			}
-		}
 
 		public object start(string main)
 		{

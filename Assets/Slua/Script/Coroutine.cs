@@ -50,12 +50,8 @@ UnityEngine.Yield = function(x)
 	end)
 	coroutine.yield()
 end
-return yield
 ";
-            // overload resume function for report error
-			if(LuaDLL.lua_dostring(l, yield)!=0)
-				LuaObject.lastError(l);
-			LuaDLL.lua_pop(l, 1);
+			LuaState.get(l).doString(yield);
 		}
 
 		[MonoPInvokeCallback(typeof(LuaCSFunction))]
@@ -65,20 +61,19 @@ return yield
 			{
 				if (LuaDLL.lua_pushthread(l) == 1)
 				{
-					LuaDLL.luaL_error(l, "should put Yield call into lua coroutine.");
-					return 0;
+					return error(l, "should put Yield call into lua coroutine.");
 				}
 				object y = checkObj(l, 1);
 				LuaFunction f;
 				checkType(l, 2, out f);
 
 				mb.StartCoroutine(yieldReturn(y, f));
-				return 0;
+				pushValue(l, true);
+				return 1;
 			}
 			catch (Exception e)
 			{
-				LuaDLL.luaL_error(l, e.ToString());
-				return 0;
+				return error(l, e);
 			}
 		}
 
