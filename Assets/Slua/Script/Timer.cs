@@ -243,7 +243,7 @@ namespace SLua
 			int id;
 			checkType(l, 1, out id);
 			del(id);
-			return 0;
+			return ok(l);
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
