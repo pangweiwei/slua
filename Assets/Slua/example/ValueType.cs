@@ -8,7 +8,10 @@ public class ValueType : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         l = new LuaSvr();
-        l.start("valuetype");
+		l.init(null, () =>
+		{
+			l.start("valuetype");
+		});
 	}
 	
 	// Update is called once per frame

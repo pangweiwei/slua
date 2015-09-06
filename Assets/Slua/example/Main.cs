@@ -9,8 +9,9 @@ public class Main : MonoBehaviour
 
 	LuaSvr l;
 	public Text logText;
+	int progress=0;
 	// Use this for initialization
-	IEnumerator Start()
+	void Start()
 	{
 #if UNITY_5
 		Application.logMessageReceived += this.log;
@@ -19,7 +20,22 @@ public class Main : MonoBehaviour
 #endif
 
 		l = new LuaSvr();
-		yield return StartCoroutine(l.waitForDebugConnection());
+		l.init(tick,complete,true);
+	}
+
+	void log(string cond, string trace, LogType lt)
+	{
+		logText.text += (cond + "\n");
+
+	}
+
+	void tick(int p)
+	{
+		progress = p;
+	}
+
+	void complete()
+	{
 		l.start("main");
 		object o = l.luaState.getFunction("foo").call(1, 2, 3);
 		object[] array = (object[])o;
@@ -30,10 +46,10 @@ public class Main : MonoBehaviour
 		Debug.Log(s);
 	}
 
-	void log(string cond, string trace, LogType lt)
+	void OnGUI()
 	{
-		logText.text += (cond + "\n");
-
+		if(progress!=100)
+			GUI.Label(new Rect(0, 0, 100, 50), string.Format("Loading {0}%", progress));
 	}
 
 }

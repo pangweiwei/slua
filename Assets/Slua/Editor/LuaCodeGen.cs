@@ -399,34 +399,38 @@ namespace SLua
 		Dictionary<string, PropPair> propname = new Dictionary<string, PropPair>();
 		
 		int indent = 0;
-		
+
 		public void GenerateBind(List<Type> list, string name, int order)
 		{
 			HashSet<Type> exported = new HashSet<Type>();
 			string f = path + name + ".cs";
 			StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
 			Write(file, "using System;");
+			Write(file, "using System.Collections.Generic;");
 			Write(file, "namespace SLua {");
 			Write(file, "[LuaBinder({0})]", order);
 			Write(file, "public class {0} {{", name);
-			Write(file, "public static void Bind(IntPtr l) {");
+			Write(file, "public static List<Action<IntPtr>> GetBindList() {");
+			Write(file, "List<Action<IntPtr>> list=new List<Action<IntPtr>>() {");
 			foreach (Type t in list)
 			{
 				WriteBindType(file, t, list, exported);
 			}
+			Write(file, "};");
+			Write(file, "return list;");
 			Write(file, "}");
 			Write(file, "}");
 			Write(file, "}");
 			file.Close();
 		}
-		
+
 		void WriteBindType(StreamWriter file, Type t, List<Type> exported, HashSet<Type> binded)
 		{
 			if (t == null || binded.Contains(t) || !exported.Contains(t))
 				return;
-			
+
 			WriteBindType(file, t.BaseType, exported, binded);
-			Write(file, "{0}.reg(l);", ExportName(t), binded);
+			Write(file, "{0}.reg,", ExportName(t), binded);
 			binded.Add(t);
 		}
 		

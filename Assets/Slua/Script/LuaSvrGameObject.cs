@@ -45,16 +45,18 @@ namespace SLua
 		{
 			if (state != null)
 			{
-				di.close();
-				di = null;
+				if (di != null)
+				{
+					di.close();
+					di = null;
+				}
 
 				state.Close();
 				state = null;
 			}
 		}
 
-		void Start()
-		{
+		public void init() {
 			di = new DebugInterface(state);
 			di.init();
 		}
@@ -63,8 +65,7 @@ namespace SLua
 		void Update()
 		{
 			if (onUpdate != null) onUpdate();
-			
-			di.update();
+			if (di != null) di.update();
 		}
 
 

@@ -9,7 +9,10 @@ public class Perf : MonoBehaviour
 	void Start()
 	{
 		l = new LuaSvr();
-		l.start("perf");
+		l.init(null, () =>
+		{
+			l.start("perf");
+		});
 
 #if UNITY_5
 		Application.logMessageReceived += this.log;
@@ -27,6 +30,8 @@ public class Perf : MonoBehaviour
 
 	void OnGUI()
 	{
+		if (!l.inited)
+			return;
 
 		if (GUI.Button(new Rect(10, 10, 120, 50), "Test1"))
 		{

@@ -36,7 +36,7 @@ namespace SLua
 		public LuaState luaState;
 		static LuaSvrGameObject lgo;
 		int errorReported = 0;
-
+		public bool inited = false;
 
 		public LuaSvr()
 		{
@@ -47,17 +47,9 @@ namespace SLua
 			GameObject.DontDestroyOnLoad(go);
 			lgo.state = luaState;
 			lgo.onUpdate = this.tick;
-
-			LuaState.pcall(luaState.L, init);
-
-			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
-			{
-				Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
-				errorReported = LuaDLL.lua_gettop(luaState.L);
-			}
 		}
 
-		internal IEnumerator waitForDebugConnection()
+		public IEnumerator waitForDebugConnection(Action complete)
 		{
 			lgo.skipDebugger = false;
 			Debug.Log("Waiting for debug connection");
@@ -66,20 +58,114 @@ namespace SLua
 				yield return new WaitForSeconds(0.1f);
 				if (lgo.skipDebugger) break;
 			}
+			complete();
 		}
 
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int init(IntPtr L)
+		public IEnumerator waitForBind(Action<int> tick_, Action complete)
+		{
+			Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
+
+			Action<int> tick = (int p) => {
+				if (tick_ != null) tick_(p);
+			};
+
+			tick(0);
+			yield return null;
+
+			List<Type> bindlist = new List<Type>();
+			foreach (Assembly a in ams)
+			{
+				Type[] ts = a.GetExportedTypes();
+				foreach (Type t in ts)
+				{
+					if (t.GetCustomAttributes(typeof(LuaBinderAttribute), false).Length > 0)
+					{
+						bindlist.Add(t);
+					}
+				}
+			}
+			tick(1);
+			yield return null;
+
+			bindlist.Sort(new System.Comparison<Type>((Type a, Type b) =>
+			{
+				LuaBinderAttribute la = (LuaBinderAttribute)a.GetCustomAttributes(typeof(LuaBinderAttribute), false)[0];
+				LuaBinderAttribute lb = (LuaBinderAttribute)b.GetCustomAttributes(typeof(LuaBinderAttribute), false)[0];
+
+				return la.order.CompareTo(lb.order);
+			})
+			);
+
+			List<Action<IntPtr>> list = new List<Action<IntPtr>>();
+			foreach (Type t in bindlist)
+			{
+				var l = (List<Action<IntPtr>>) t.GetMethod("GetBindList").Invoke(null,null);
+				list.AddRange(l);
+			}
+			tick(2);
+			yield return null;
+			int lastn = 2;
+			for (int n = 0; n < list.Count; n++)
+			{
+				Action<IntPtr> action = list[n];
+				action(luaState.L);
+				int progress = (int)(((float)n / list.Count) * 98.0) + 2;
+				if (progress != lastn && tick_!=null)
+				{
+					tick(progress);
+					lastn = progress;
+					yield return null;
+				}
+			}
+
+			tick(100);
+			if(complete!=null) complete();
+		}
+
+		void doinit(IntPtr L)
+		{
+			LuaTimer.reg(L);
+			LuaCoroutine.reg(L, lgo);
+			Helper.reg(L);
+			LuaValueType.reg(L);
+			SLuaDebug.reg(L);
+			LuaDLL.luaS_openextlibs(L);
+			lgo.init();
+			
+			inited = true;
+		}
+
+		void checkTop(IntPtr L)
+		{
+			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
+			{
+				Debug.LogError("Some function not remove temp value from lua stack. You should fix it.");
+				errorReported = LuaDLL.lua_gettop(luaState.L);
+			}
+		}
+
+        public void init(Action<int> tick,Action complete,bool debug=false)
         {
-            LuaObject.init(L);
-            bindAll(L);
-            LuaTimer.reg(L);
-            LuaCoroutine.reg(L, lgo);
-            Helper.reg(L);
-            LuaValueType.reg(L);
-            SLuaDebug.reg(L);
-            LuaDLL.luaS_openextlibs(L);
-            return 0;
+			IntPtr L = luaState.L;
+			LuaObject.init(L);
+
+			lgo.StartCoroutine(waitForBind(tick, () =>
+			{
+				doinit(L);
+				if (debug)
+				{
+					lgo.StartCoroutine(waitForDebugConnection(() =>
+					{
+						complete();
+						checkTop(L);
+					}));
+				}
+				else
+				{
+					complete();
+					checkTop(L);
+				}
+			}));
         }
 
 		public object start(string main)
@@ -96,6 +182,9 @@ namespace SLua
 
 		void tick()
 		{
+			if (!inited)
+				return;
+
 			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
 			{
 				errorReported = LuaDLL.lua_gettop(luaState.L);
@@ -105,46 +194,5 @@ namespace SLua
 			luaState.checkRef();
 			LuaTimer.tick(Time.deltaTime);
 		}
-
-
-		static void bindAll(IntPtr l)
-		{
-			// add RELEASE macro to switch on below codes
-#if RELEASE && (UNITY_IOS || UNITY_ANDROID)
-            BindUnity.Bind(l);
-            BindUnityUI.Bind(l); // delete this line if not found
-            BindDll.Bind(l); // delete this line if not found
-            BindCustom.Bind(l); 
-#else
-            Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
-
-			List<Type> bindlist = new List<Type>();
-			foreach(Assembly a in ams) 
-			{
-				Type[] ts=a.GetExportedTypes();
-				foreach (Type t in ts)
-				{
-					if (t.GetCustomAttributes(typeof(LuaBinderAttribute),false).Length > 0)
-					{
-						bindlist.Add(t);
-					}
-				}
-			}
-
-			bindlist.Sort( new System.Comparison<Type>((Type a,Type b) =>
-			{
-				LuaBinderAttribute la = (LuaBinderAttribute)a.GetCustomAttributes(typeof(LuaBinderAttribute),false)[0];
-				LuaBinderAttribute lb = (LuaBinderAttribute)b.GetCustomAttributes(typeof(LuaBinderAttribute),false)[0];
-
-				return la.order.CompareTo(lb.order);
-			})
-			);
-
-			foreach (Type t in bindlist)
-			{
-				t.GetMethod("Bind").Invoke(null, new object[] { l });
-			}
-#endif
-        }
 	}
 }

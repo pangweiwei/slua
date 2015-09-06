@@ -17,7 +17,10 @@ public class Custom : MonoBehaviour
 	{
 		c = this;
 		l = new LuaSvr();
-		l.start("custom");
+		l.init(null, () =>
+		{
+			l.start("custom");
+		});
 	}
 
 	// Update is called once per frame
