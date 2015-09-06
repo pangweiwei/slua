@@ -338,34 +338,37 @@ namespace SLua
 	class CodeGenerator
 	{
 		static List<string> memberFilter = new List<string>
-        {
-            "AnimationClip.averageDuration",
-            "AnimationClip.averageAngularSpeed",
-            "AnimationClip.averageSpeed",
-            "AnimationClip.apparentSpeed",
-            "AnimationClip.isLooping",
-            "AnimationClip.isAnimatorMotion",
-            "AnimationClip.isHumanMotion",
-            "AnimatorOverrideController.PerformOverrideClipListCleanup",
-            "Caching.SetNoBackupFlag",
-            "Caching.ResetNoBackupFlag",
-            "Light.areaSize",
-            "Security.GetChainOfTrustValue",
-            "Texture2D.alphaIsTransparency",
-            "WWW.movie",
-            "WebCamTexture.MarkNonReadable",
-            "WebCamTexture.isReadable",
-            // i don't why below 2 functions missed in iOS platform
-            "Graphic.OnRebuildRequested",
-            "Text.OnRebuildRequested",
-            // il2cpp not exixts
-            "Application.ExternalEval",
-            "GameObject.networkView",
-            "Component.networkView",
-            // unity5
-            "AnimatorControllerParameter.name",
-            "Input.IsJoystickPreconfigured",
-            "Resources.LoadAssetAtPath",
+
+
+	    {
+	        "AnimationClip.averageDuration",
+	        "AnimationClip.averageAngularSpeed",
+	        "AnimationClip.averageSpeed",
+	        "AnimationClip.apparentSpeed",
+	        "AnimationClip.isLooping",
+	        "AnimationClip.isAnimatorMotion",
+	        "AnimationClip.isHumanMotion",
+	        "AnimatorOverrideController.PerformOverrideClipListCleanup",
+	        "Caching.SetNoBackupFlag",
+	        "Caching.ResetNoBackupFlag",
+	        "Light.areaSize",
+	        "Security.GetChainOfTrustValue",
+	        "Texture2D.alphaIsTransparency",
+	        "WWW.movie",
+	        "WebCamTexture.MarkNonReadable",
+	        "WebCamTexture.isReadable",
+	        // i don't why below 2 functions missed in iOS platform
+	        "Graphic.OnRebuildRequested",
+	        "Text.OnRebuildRequested",
+	        // il2cpp not exixts
+	        "Application.ExternalEval",
+	        "GameObject.networkView",
+	        "Component.networkView",
+	        // unity5
+	        "AnimatorControllerParameter.name",
+	        "Input.IsJoystickPreconfigured",
+	        "Resources.LoadAssetAtPath",
+
 #if UNITY_4_6
 			"Motion.ValidateIfRetargetable",
 			"Motion.averageDuration",
@@ -376,7 +379,11 @@ namespace SLua
 			"Motion.isAnimatorMotion",
 			"Motion.isHumanMotion",
 #endif
-        };
+
+    	};
+
+
+
 		HashSet<string> funcname = new HashSet<string>();
 		Dictionary<string, bool> directfunc = new Dictionary<string, bool>();
 		

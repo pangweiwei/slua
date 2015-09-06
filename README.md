@@ -1,12 +1,15 @@
 #slua
 Fastest Unity lua binding via static code generating.
 
-QQ group: 15647305 (in chinese)
+Website: http://www.slua.net
 
-Support QA: http://www.unityqa.com/ (in chinese)
+Mail List: [Subscribe](http://www.freelists.org/list/slua) (in English only)
 
-Mail to : sineysan#163.com (both of chinese/english)
+QQ group: 15647305 (in Chinese)
 
+Support QA: http://www.unityqa.com/ (in Chinese)
+
+Mail to : sineysan#163.com (both of Chinese/English)
 
 ##Release Download
 
