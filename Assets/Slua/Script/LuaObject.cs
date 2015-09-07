@@ -1234,8 +1234,7 @@ return index
 
 		static public bool checkEnum<T>(IntPtr l, int p, out T o) where T : struct
 		{
-			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TNUMBER);
-			int i = LuaDLL.lua_tointeger(l, p);
+			int i = LuaDLL.luaL_checkinteger (l, p);
 			o = (T)Enum.ToObject(typeof(T), i);
 
 			return true;
