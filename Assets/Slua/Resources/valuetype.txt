@@ -4,6 +4,8 @@ import "UnityEngine"
 -- unit test
 function main()
 
+
+
 	local Vector3 = UnityEngine.Vector3
 	local v=Vector3(0,0,0)+Vector3.one*2/2
 	assert(v.y==1)
@@ -133,4 +135,6 @@ function main()
 	local r=Vector2.Lerp(Vector2.zero,Vector2.one,0.3)
 	assert(r==Vector2(1,1)*0.3)
 	print(r.normalized)
+
+	Vector2.Normalize(r)
 end

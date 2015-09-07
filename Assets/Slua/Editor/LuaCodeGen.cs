@@ -1180,7 +1180,7 @@ namespace SLua
 				Write(file, "checkEnum(l,{2}{0},out {1});", n, v, nprefix);
 			else if (t.BaseType == typeof(System.MulticastDelegate))
 				Write(file, "int op=LuaDelegation.checkDelegate(l,{2}{0},out {1});", n, v, nprefix);
-			else if (t.BaseType==typeof(ValueType) && !IsBaseType(t))
+			else if (IsValueType(t))
 				Write(file, "checkValueType(l,{2}{0},out {1});", n, v, nprefix);
 			else
 				Write(file, "checkType(l,{2}{0},out {1});", n, v, nprefix);
@@ -1694,11 +1694,16 @@ namespace SLua
 					else
 						Write(file, "checkParams(l,{0},out a{1});", n + argstart, n + 1);
 				}
-				else if (t.BaseType==typeof(ValueType) && !IsBaseType(t))
+				else if (IsValueType(t))
 					Write(file, "checkValueType(l,{0},out a{1});", n + argstart, n + 1);
 				else
 					Write(file, "checkType(l,{0},out a{1});", n + argstart, n + 1);
 			}
+		}
+
+		bool IsValueType(Type t)
+		{
+			return t.BaseType == typeof(ValueType) && !IsBaseType(t);
 		}
 
 		bool IsBaseType(Type t)
@@ -1708,7 +1713,12 @@ namespace SLua
 				|| t == typeof(Vector2)
 				|| t == typeof(Vector3)
 				|| t == typeof(Vector4)
-				|| t == typeof(Quaternion);
+				|| t == typeof(Quaternion)
+				|| t.Name == "Color2&"
+				|| t.Name == "Vector2&"
+				|| t.Name == "Vector3&"
+				|| t.Name == "Vector4&"
+				|| t.Name == "Quaternion&";
 		}
 		
 		string FullName(string str)
