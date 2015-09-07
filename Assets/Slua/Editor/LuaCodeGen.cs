@@ -406,8 +406,8 @@ namespace SLua
 			Write(file, "namespace SLua {");
 			Write(file, "[LuaBinder({0})]", order);
 			Write(file, "public class {0} {{", name);
-			Write(file, "public static List<Action<IntPtr>> GetBindList() {");
-			Write(file, "List<Action<IntPtr>> list=new List<Action<IntPtr>>() {");
+			Write(file, "public static Action<IntPtr>[] GetBindList() {");
+			Write(file, "Action<IntPtr>[] list= {");
 			foreach (Type t in list)
 			{
 				WriteBindType(file, t, list, exported);

@@ -66,7 +66,7 @@ namespace SLua
 			Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
 			
 			bindProgress = 0;
-			
+
 			List<Type> bindlist = new List<Type>();
 			foreach (Assembly a in ams)
 			{
@@ -92,7 +92,7 @@ namespace SLua
 			List<Action<IntPtr>> list = new List<Action<IntPtr>>();
 			foreach (Type t in bindlist)
 			{
-				var sublist = (List<Action<IntPtr>>) t.GetMethod("GetBindList").Invoke(null,null);
+				var sublist = (Action<IntPtr>[]) t.GetMethod("GetBindList").Invoke(null,null);
 				list.AddRange(sublist);
 			}
 			
