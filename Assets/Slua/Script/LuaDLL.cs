@@ -286,8 +286,10 @@ namespace LuaInterface
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void lua_pushinteger(IntPtr luaState, Int64 i);
 
-        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern Int64 luaL_checkinteger(IntPtr luaState, int stackPos); 
+        public static Int64 luaL_checkinteger(IntPtr luaState, int stackPos) {
+			luaL_checktype(luaState, stackPos, LuaTypes.LUA_TNUMBER);
+			return lua_tointegerx(luaState, stackPos, IntPtr.Zero);
+		}
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int luaS_yield(IntPtr luaState,int nrets);
@@ -380,8 +382,11 @@ namespace LuaInterface
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void lua_pushinteger(IntPtr luaState, int i);
 
-		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int luaL_checkinteger(IntPtr luaState, int stackPos);
+		public static int luaL_checkinteger(IntPtr luaState, int stackPos)
+		{
+			luaL_checktype(luaState, stackPos, LuaTypes.LUA_TNUMBER);
+			return lua_tointeger(luaState, stackPos);
+		}
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void lua_replace(IntPtr luaState, int index);
@@ -577,8 +582,11 @@ namespace LuaInterface
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void luaL_where(IntPtr luaState, int level);
 
-		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern double luaL_checknumber(IntPtr luaState, int stackPos);
+		public static double luaL_checknumber(IntPtr luaState, int stackPos)
+		{
+			luaL_checktype(luaState, stackPos, LuaTypes.LUA_TNUMBER);
+			return lua_tonumber(luaState, stackPos);
+		}
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void lua_concat(IntPtr luaState, int n);
