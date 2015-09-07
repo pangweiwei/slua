@@ -37,7 +37,8 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Vector4 v)
 		{
 			float x, y, z, w;
-			LuaDLL.luaS_checkVector4(l, p, out x, out y, out z, out w);
+			if(LuaDLL.luaS_checkVector4(l, p, out x, out y, out z, out w)!=0)
+				throw new Exception(string.Format("Invalid vector4 argument at {0}", p));
 			v = new Vector4(x, y, z, w);
 			return true;
 		}
@@ -46,7 +47,8 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Vector3 v)
 		{
 			float x, y, z;
-			LuaDLL.luaS_checkVector3(l, p, out x, out y, out z);
+			if(LuaDLL.luaS_checkVector3(l, p, out x, out y, out z)!=0)
+				throw new Exception(string.Format("Invalid vector3 argument at {0}", p));
 			v = new Vector3(x, y, z);
 			return true;
 		}
@@ -54,7 +56,8 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Vector2 v)
 		{
 			float x, y;
-			LuaDLL.luaS_checkVector2(l, p, out x, out y);
+			if(LuaDLL.luaS_checkVector2(l, p, out x, out y)!=0)
+				throw new Exception(string.Format("Invalid vector2 argument at {0}", p));
 			v = new Vector2(x, y);
 			return true;
 		}
@@ -62,7 +65,8 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Quaternion q)
 		{
 			float x, y, z, w;
-			LuaDLL.luaS_checkQuaternion(l, p, out x, out y, out z, out w);
+			if(LuaDLL.luaS_checkQuaternion(l, p, out x, out y, out z, out w)!=0)
+				throw new Exception(string.Format("Invalid quaternion argument at {0}", p));
 			q = new Quaternion(x, y, z, w);
 			return true;
 		}
@@ -70,7 +74,8 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Color c)
 		{
 			float x, y, z, w;
-			LuaDLL.luaS_checkColor(l, p, out x, out y, out z, out w);
+			if (LuaDLL.luaS_checkColor(l, p, out x, out y, out z, out w) != 0)
+				throw new Exception(string.Format("Invalid color argument at {0}", p));
 			c = new Color(x, y, z, w);
 			return true;
 		}

@@ -117,7 +117,7 @@ LUA_API int luaS_rawnetobj(lua_State *L, int index)
 		if (lua_isuserdata(L, -1) > 0)
 			lua_replace(L, index);
 		else
-			luaL_error(L, "arg %d expect object, but get a table", index);
+			return -1;
 	}
 
 	ud = lua_touserdata(L, index);
@@ -247,9 +247,10 @@ LUA_API int luaS_checkluatype(lua_State *L, int p, const char *t) {
 }
 
 
-LUA_API void luaS_checkVector4(lua_State *L, int p, float* x, float *y, float *z, float *w) {
+LUA_API int luaS_checkVector4(lua_State *L, int p, float* x, float *y, float *z, float *w) {
 	p=lua_absindex(L,p);
-	luaL_checktype(L, p, LUA_TTABLE);
+	if(lua_type(L,p)!=LUA_TTABLE)
+		return -1;
 	lua_rawgeti(L, p, 1);
 	*x = (float)lua_tonumber(L, -1);
 	lua_rawgeti(L, p, 2);
@@ -259,6 +260,7 @@ LUA_API void luaS_checkVector4(lua_State *L, int p, float* x, float *y, float *z
 	lua_rawgeti(L, p, 4);
 	*w = (float)lua_tonumber(L, -1);
 	lua_pop(L, 4);
+	return 0;
 }
 
 LUA_API void luaS_pushVector4(lua_State *L, float x, float y, float z, float w) {
@@ -274,8 +276,10 @@ LUA_API void luaS_pushVector4(lua_State *L, float x, float y, float z, float w) 
 	setmetatable(L, -2, MT_VEC4);
 }
 
-LUA_API void luaS_checkVector3(lua_State *L, int p, float* x, float *y, float *z) {
+LUA_API int luaS_checkVector3(lua_State *L, int p, float* x, float *y, float *z) {
 	p=lua_absindex(L,p);
+	if(lua_type(L,p)!=LUA_TTABLE)
+		return -1;
 	luaL_checktype(L, p, LUA_TTABLE);
 	lua_rawgeti(L, p, 1);
 	*x = (float)lua_tonumber(L, -1);
@@ -284,6 +288,7 @@ LUA_API void luaS_checkVector3(lua_State *L, int p, float* x, float *y, float *z
 	lua_rawgeti(L, p, 3);
 	*z = (float)lua_tonumber(L, -1);
 	lua_pop(L, 3);
+	return 0;
 }
 
 LUA_API void luaS_pushVector3(lua_State *L, float x, float y, float z) {
@@ -297,14 +302,16 @@ LUA_API void luaS_pushVector3(lua_State *L, float x, float y, float z) {
 	setmetatable(L, -2, MT_VEC3);
 }
 
-LUA_API void luaS_checkVector2(lua_State *L, int p, float* x, float *y) {
+LUA_API int luaS_checkVector2(lua_State *L, int p, float* x, float *y) {
 	p=lua_absindex(L,p);
-	luaL_checktype(L, p, LUA_TTABLE);
+	if(lua_type(L,p)!=LUA_TTABLE)
+		return -1;
 	lua_rawgeti(L, p, 1);
 	*x = (float)lua_tonumber(L, -1);
 	lua_rawgeti(L, p, 2);
 	*y = (float)lua_tonumber(L, -1);
 	lua_pop(L, 2);
+	return 0;
 }
 
 LUA_API void luaS_pushVector2(lua_State *L, float x, float y) {
@@ -316,9 +323,10 @@ LUA_API void luaS_pushVector2(lua_State *L, float x, float y) {
 	setmetatable(L, -2, MT_VEC2);
 }
 
-LUA_API void luaS_checkQuaternion(lua_State *L, int p, float* x, float *y, float *z, float* w) {
+LUA_API int luaS_checkQuaternion(lua_State *L, int p, float* x, float *y, float *z, float* w) {
 	p=lua_absindex(L,p);
-	luaL_checktype(L, p, LUA_TTABLE);
+	if(lua_type(L,p)!=LUA_TTABLE)
+		return -1;
 	lua_rawgeti(L, p, 1);
 	*x = (float)lua_tonumber(L, -1);
 	lua_rawgeti(L, p, 2);
@@ -328,11 +336,13 @@ LUA_API void luaS_checkQuaternion(lua_State *L, int p, float* x, float *y, float
 	lua_rawgeti(L, p, 4);
 	*w = (float)lua_tonumber(L, -1);
 	lua_pop(L, 4);
+	return 0;
 }
 
-LUA_API void luaS_checkColor(lua_State *L, int p, float* x, float *y, float *z, float* w) {
+LUA_API int luaS_checkColor(lua_State *L, int p, float* x, float *y, float *z, float* w) {
 	p=lua_absindex(L,p);
-	luaL_checktype(L, p, LUA_TTABLE);
+	if(lua_type(L,p)!=LUA_TTABLE)
+		return -1;
 	lua_rawgeti(L, p, 1);
 	*x = (float)lua_tonumber(L, -1);
 	lua_rawgeti(L, p, 2);
@@ -342,6 +352,7 @@ LUA_API void luaS_checkColor(lua_State *L, int p, float* x, float *y, float *z, 
 	lua_rawgeti(L, p, 4);
 	*w = (float)lua_tonumber(L, -1);
 	lua_pop(L, 4);
+	return 0;
 }
 
 LUA_API void luaS_pushQuaternion(lua_State *L, float x, float y, float z, float w) {
