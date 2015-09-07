@@ -123,7 +123,7 @@ return newindex
 local type=type
 local error=error
 local rawget=rawget
-local sub=string.sub
+local getmetatable=getmetatable
 local function index(ud,k)
     local t=getmetatable(ud)
     repeat
