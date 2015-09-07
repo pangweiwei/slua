@@ -110,7 +110,7 @@ namespace SLua
 				Action<IntPtr> action = list[n];
 				action(luaState.L);
 				int progress = (int)(((float)n / list.Count) * 98.0) + 2;
-				if (progress != lastn && tick_!=null)
+				if (progress%2==1 && progress != lastn && tick_ != null)
 				{
 					tick(progress);
 					lastn = progress;
