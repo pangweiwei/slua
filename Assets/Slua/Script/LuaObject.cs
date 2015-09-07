@@ -509,16 +509,14 @@ return index
 			LuaDLL.lua_newtable(l);
 		}
 
-		public static void newTypeTable(IntPtr l, string t)
+		public static void newTypeTable(IntPtr l, string name)
 		{
-			string[] subt = t.Split(new Char[] { '.' });
-
+			string[] subt = name.Split('.');
 
 			LuaDLL.lua_pushglobaltable(l);
 
-			for (int n = 0; n < subt.Length; n++)
+			foreach(string t in subt)
 			{
-				t = subt[n];
 				LuaDLL.lua_pushstring(l, t);
 				LuaDLL.lua_rawget(l, -2);
 				if (LuaDLL.lua_isnil(l, -1))
