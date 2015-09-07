@@ -739,6 +739,10 @@ do
 		v[1],v[2]=v[1]/m,v[2]/m
 	end
 
+	function Vector2.Magnitude( v )
+		return sqrt(v[1]^2+v[2]^2)
+	end
+
 	function Vector2:Set( x,y )
 		self[1],self[2]=x,y
 	end
