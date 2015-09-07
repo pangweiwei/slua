@@ -126,33 +126,31 @@ namespace SLua
 
 		static bool filterType(Type t, List<string> noUseList, List<string> uselist)
 		{
-			bool export = true;
-
 			// check type in uselist
+			string fullName = t.FullName;
 			if (uselist != null && uselist.Count > 0)
 			{
-				export = false;
 				foreach (string str in uselist)
 				{
-					if (t.FullName == str)
+					if (fullName == str)
 					{
-						export = true;
+						return true;
 					}
 				}
+				return false;
 			}
 			else
 			{
 				// check type not in nouselist
 				foreach (string str in noUseList)
 				{
-					if (t.FullName.Contains(str))
+					if (fullName.Contains(str))
 					{
-						export = false;
+						return false;
 					}
 				}
+				return true;
 			}
-
-			return export;
 		}
 		
 		[MenuItem("SLua/Unity/Make UI (for Unity4.6+)")]
