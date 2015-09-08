@@ -118,7 +118,7 @@ namespace SLua
 					exports.Add(t);
 			}
 			
-			GenerateBind(exports, "BindUnity", 0,path);
+			GenerateBind(exports, "BindUnity", 0, path);
 			if(autoRefresh)
 			    AssetDatabase.Refresh();
 			Debug.Log("Generate engine interface finished");
@@ -126,33 +126,24 @@ namespace SLua
 
 		static bool filterType(Type t, List<string> noUseList, List<string> uselist)
 		{
-			bool export = true;
-
 			// check type in uselist
+			string fullName = t.FullName;
 			if (uselist != null && uselist.Count > 0)
 			{
-				export = false;
-				foreach (string str in uselist)
-				{
-					if (t.FullName == str)
-					{
-						export = true;
-					}
-				}
+				return uselist.Contains(fullName);
 			}
 			else
 			{
 				// check type not in nouselist
 				foreach (string str in noUseList)
 				{
-					if (t.FullName.Contains(str))
+					if (fullName.Contains(str))
 					{
-						export = false;
+						return false;
 					}
 				}
+				return true;
 			}
-
-			return export;
 		}
 		
 		[MenuItem("SLua/Unity/Make UI (for Unity4.6+)")]
@@ -181,7 +172,7 @@ namespace SLua
 				}
 			}
 			
-			GenerateBind(exports, "BindUnityUI", 1,path);
+			GenerateBind(exports, "BindUnityUI", 1, path);
 			if(autoRefresh)
 			    AssetDatabase.Refresh();
 			Debug.Log("Generate UI interface finished");
@@ -216,7 +207,7 @@ namespace SLua
 			ExportGenericDelegate fun = (Type t, string ns) =>
 			{
 				if (Generate(t, ns, path))
-				exports.Add(t);
+					exports.Add(t);
 			};
 			
 			// export self-dll
@@ -233,7 +224,7 @@ namespace SLua
 			
 			CustomExport.OnAddCustomClass(fun);
 			
-			GenerateBind(exports, "BindCustom", 3,path);
+			GenerateBind(exports, "BindCustom", 3, path);
             if(autoRefresh)
 			    AssetDatabase.Refresh();
 			
@@ -248,14 +239,12 @@ namespace SLua
 			}
 
 			List<Type> cust = new List<Type>();
-			Assembly assembly = Assembly.Load("Assembly-CSharp");
-			Type[] types = assembly.GetExportedTypes();
 			List<string> assemblyList = new List<string>();
 			CustomExport.OnAddCustomAssembly(ref assemblyList);
 			foreach (string assemblyItem in assemblyList)
 			{
-				assembly = Assembly.Load(assemblyItem);
-				types = assembly.GetExportedTypes();
+				Assembly assembly = Assembly.Load(assemblyItem);
+				Type[] types = assembly.GetExportedTypes();
 				foreach (Type t in types)
 				{
 					cust.Add(t);
@@ -410,8 +399,8 @@ namespace SLua
 			Write(file, "namespace SLua {");
 			Write(file, "[LuaBinder({0})]", order);
 			Write(file, "public class {0} {{", name);
-			Write(file, "public static List<Action<IntPtr>> GetBindList() {");
-			Write(file, "List<Action<IntPtr>> list=new List<Action<IntPtr>>() {");
+			Write(file, "public static Action<IntPtr>[] GetBindList() {");
+			Write(file, "Action<IntPtr>[] list= {");
 			foreach (Type t in list)
 			{
 				WriteBindType(file, t, list, exported);

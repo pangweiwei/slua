@@ -123,7 +123,7 @@ return newindex
 local type=type
 local error=error
 local rawget=rawget
-local sub=string.sub
+local getmetatable=getmetatable
 local function index(ud,k)
     local t=getmetatable(ud)
     repeat
@@ -509,16 +509,14 @@ return index
 			LuaDLL.lua_newtable(l);
 		}
 
-		public static void newTypeTable(IntPtr l, string t)
+		public static void newTypeTable(IntPtr l, string name)
 		{
-			string[] subt = t.Split(new Char[] { '.' });
-
+			string[] subt = name.Split('.');
 
 			LuaDLL.lua_pushglobaltable(l);
 
-			for (int n = 0; n < subt.Length; n++)
+			foreach(string t in subt)
 			{
-				t = subt[n];
 				LuaDLL.lua_pushstring(l, t);
 				LuaDLL.lua_rawget(l, -2);
 				if (LuaDLL.lua_isnil(l, -1))
@@ -1236,8 +1234,7 @@ return index
 
 		static public bool checkEnum<T>(IntPtr l, int p, out T o) where T : struct
 		{
-			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TNUMBER);
-			int i = LuaDLL.lua_tointeger(l, p);
+			int i = LuaDLL.luaL_checkinteger (l, p);
 			o = (T)Enum.ToObject(typeof(T), i);
 
 			return true;

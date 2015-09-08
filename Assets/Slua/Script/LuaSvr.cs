@@ -24,6 +24,7 @@
 namespace SLua
 {
 	using System;
+	using System.Threading;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
@@ -40,13 +41,9 @@ namespace SLua
 
 		public LuaSvr()
 		{
-			luaState = new LuaState();
-
 			GameObject go = new GameObject("LuaSvrProxy");
 			lgo = go.AddComponent<LuaSvrGameObject>();
 			GameObject.DontDestroyOnLoad(go);
-			lgo.state = luaState;
-			lgo.onUpdate = this.tick;
 		}
 
 		public IEnumerator waitForDebugConnection(Action complete)
@@ -61,16 +58,14 @@ namespace SLua
 			complete();
 		}
 
-		public IEnumerator waitForBind(Action<int> tick_, Action complete)
+		private volatile int bindProgress = 0;
+		private void doBind(object state)
 		{
+			IntPtr L = (IntPtr)state;
+			
 			Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
-
-			Action<int> tick = (int p) => {
-				if (tick_ != null) tick_(p);
-			};
-
-			tick(0);
-			yield return null;
+			
+			bindProgress = 0;
 
 			List<Type> bindlist = new List<Type>();
 			foreach (Assembly a in ams)
@@ -84,42 +79,55 @@ namespace SLua
 					}
 				}
 			}
-			tick(1);
-			yield return null;
-
-			bindlist.Sort(new System.Comparison<Type>((Type a, Type b) =>
-			{
+			
+			bindProgress = 1;
+			
+			bindlist.Sort(new System.Comparison<Type>((Type a, Type b) => {
 				LuaBinderAttribute la = (LuaBinderAttribute)a.GetCustomAttributes(typeof(LuaBinderAttribute), false)[0];
 				LuaBinderAttribute lb = (LuaBinderAttribute)b.GetCustomAttributes(typeof(LuaBinderAttribute), false)[0];
-
+				
 				return la.order.CompareTo(lb.order);
-			})
-			);
-
+			}));
+			
 			List<Action<IntPtr>> list = new List<Action<IntPtr>>();
 			foreach (Type t in bindlist)
 			{
-				var l = (List<Action<IntPtr>>) t.GetMethod("GetBindList").Invoke(null,null);
-				list.AddRange(l);
+				var sublist = (Action<IntPtr>[]) t.GetMethod("GetBindList").Invoke(null,null);
+				list.AddRange(sublist);
 			}
-			tick(2);
-			yield return null;
-			int lastn = 2;
-			for (int n = 0; n < list.Count; n++)
+			
+			bindProgress = 2;
+			
+			int count = list.Count;
+			for (int n = 0; n < count; n++)
 			{
 				Action<IntPtr> action = list[n];
-				action(luaState.L);
-				int progress = (int)(((float)n / list.Count) * 98.0) + 2;
-				if (progress%2==1 && progress != lastn && tick_ != null)
+				action(L);
+				bindProgress = (int)(((float)n / count) * 98.0) + 2;
+			}
+			
+			bindProgress = 100;
+		}
+		
+		public IEnumerator waitForBind(Action<int> tick, Action complete)
+		{
+			int lastProgress = 0;
+			do {
+				if (tick != null)
+					tick (bindProgress);
+				// too many yield return will increase binding time
+				// so check progress and skip odd progress
+				if (lastProgress != bindProgress && bindProgress % 2 == 0)
 				{
-					tick(progress);
-					lastn = progress;
+					lastProgress = bindProgress;
 					yield return null;
 				}
-			}
-
-			tick(100);
-			if(complete!=null) complete();
+			} while (bindProgress != 100);
+			
+			if (tick != null)
+				tick (bindProgress);
+			
+			complete();
 		}
 
 		void doinit(IntPtr L)
@@ -130,6 +138,9 @@ namespace SLua
 			LuaValueType.reg(L);
 			SLuaDebug.reg(L);
 			LuaDLL.luaS_openextlibs(L);
+
+			lgo.state = luaState;
+			lgo.onUpdate = this.tick;
 			lgo.init();
 			
 			inited = true;
@@ -146,11 +157,16 @@ namespace SLua
 
         public void init(Action<int> tick,Action complete,bool debug=false)
         {
+			LuaState luaState = new LuaState();
+
 			IntPtr L = luaState.L;
 			LuaObject.init(L);
 
+			ThreadPool.QueueUserWorkItem(doBind, L);
+
 			lgo.StartCoroutine(waitForBind(tick, () =>
 			{
+				this.luaState = luaState;
 				doinit(L);
 				if (debug)
 				{
