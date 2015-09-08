@@ -726,7 +726,14 @@ end
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		internal static int loadfile(IntPtr L)
 		{
-			return loader(L);
+			loader(L);
+
+			if (LuaDLL.lua_isnil(L, -1))
+			{
+				string fileName = LuaDLL.lua_tostring(L, 1);
+				return LuaObject.error(L, "Can't find {0}", fileName);
+			}
+			return 2;
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -741,6 +748,11 @@ end
 			}
 			else
 			{
+				if (LuaDLL.lua_isnil(L, -1))
+				{
+					string fileName = LuaDLL.lua_tostring(L, 1);
+					return LuaObject.error(L, "Can't find {0}", fileName);
+				}
 				int k = LuaDLL.lua_gettop(L);
 				LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
 				k = LuaDLL.lua_gettop(L);
@@ -787,7 +799,9 @@ end
 					return LuaObject.error(L, errstr);
 				}
 			}
-			return LuaObject.ok(L);
+			LuaObject.pushValue(L, true);
+			LuaDLL.lua_pushnil(L);
+			return 2;
 		}
 
 		public object doFile(string fn)

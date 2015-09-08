@@ -25,6 +25,9 @@ function main()
 	assert(type(t)=='table')
 	assert(t.add(1,2)==3)
 
+	local fu=loadfile('module/some')
+	assert(type(fu)=='function')
+
 	if jit then
 		print("using luajit ",jit.version,jit.arch)
 	else
