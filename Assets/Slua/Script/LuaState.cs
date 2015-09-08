@@ -787,7 +787,7 @@ end
 					return LuaObject.error(L, errstr);
 				}
 			}
-			return LuaObject.error(L, "Can't find {0}", fileName);
+			return LuaObject.ok(L);
 		}
 
 		public object doFile(string fn)

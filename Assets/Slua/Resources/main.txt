@@ -15,8 +15,11 @@ MyGameObject=Slua.Class(GameObject,
 	}	
 )
 
+local ffi=require 'ffi'
 
 function main()
+
+	print(ffi)
 
 	local t=dofile('module/some')
 	assert(type(t)=='table')
