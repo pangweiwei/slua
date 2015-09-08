@@ -19,6 +19,10 @@ Mail to : sineysan#163.com (both of Chinese/English)
 
 Standard slua release doesn't contains any 3rd Lua library(like protobuf, lpeg etc), if you want to use this library, can visit this forked repo https://github.com/luzexi/slua, it focus slua on integrate with other 3rd library.
 
+##Demo with slua
+
+This repo https://github.com/lulersoft/ME_SLua based on slua for simple game framework.
+
 ##Help
 
 See inner demo for help or [Document](doc.md) (in chinese).
