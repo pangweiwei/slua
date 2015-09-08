@@ -184,10 +184,6 @@ namespace SLua
 			clear(new string[] { Path + "Unity" });
 			Debug.Log("Clear Unity & UI complete.");
 		}
-		static public bool IsObsolete(MemberInfo t)
-		{
-			return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0;
-		}
 		
 		[MenuItem("SLua/Custom/Make")]
 		static public void Custom()
@@ -822,9 +818,9 @@ namespace SLua
 			return memberFilter.Contains(t.Name + "." + mi.Name);
 		}
 		
-		bool IsObsolete(MemberInfo mi)
+		bool IsObsolete(MemberInfo t)
 		{
-			return LuaCodeGen.IsObsolete(mi);
+			return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0;
 		}
 		
 		void RegFunction(Type t, StreamWriter file)
