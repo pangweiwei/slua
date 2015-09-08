@@ -130,14 +130,7 @@ namespace SLua
 			string fullName = t.FullName;
 			if (uselist != null && uselist.Count > 0)
 			{
-				foreach (string str in uselist)
-				{
-					if (fullName == str)
-					{
-						return true;
-					}
-				}
-				return false;
+				return uselist.Contains(fullName);
 			}
 			else
 			{
