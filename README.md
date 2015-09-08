@@ -39,7 +39,7 @@ Click menu, SLua->All->Make  generate all wrap file for your version of unity.
 
 static code generating, no reflection, no extra gc alloc, very fast
 
-lua console for debug
+remote debugger (require v1.0+)
 
 full support iOS/iOS64, support il2cpp
 
