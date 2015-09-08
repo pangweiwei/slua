@@ -1620,11 +1620,10 @@ namespace SLua
 			Write(file, "return {0};", retcount);
 		}
 		
-		string SimpleType_(Type t)
+		string SimpleType(Type t)
 		{
 			
 			string tn = t.Name;
-			
 			switch (tn)
 			{
 			case "Single":
@@ -1645,12 +1644,6 @@ namespace SLua
 				tn = tn.Replace("System.Object", "object");
 				return tn;
 			}
-		}
-		
-		string SimpleType(Type t)
-		{
-			string ret = SimpleType_(t);
-			return ret;
 		}
 		
 		void WritePushValue(Type t, StreamWriter file)
