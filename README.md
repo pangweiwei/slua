@@ -15,9 +15,9 @@ Mail to : sineysan#163.com (both of Chinese/English)
 
 [here.](https://github.com/pangweiwei/slua/releases/latest)
 
-##Integrade 3rd Lua Library
+##Integrate with 3rd Lua Library
 
-Standard slua release doesn't contains any 3rd Lua library(like protobuf, lpeg etc), if you want to use this library, can visit this forked repo https://github.com/luzexi/slua, it focus slua on integrate other 3rd library.
+Standard slua release doesn't contains any 3rd Lua library(like protobuf, lpeg etc), if you want to use this library, can visit this forked repo https://github.com/luzexi/slua, it focus slua on integrate with other 3rd library.
 
 ##Help
 
