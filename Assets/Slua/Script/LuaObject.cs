@@ -670,7 +670,7 @@ return index
 				LuaDLL.lua_setfield(l, -3, name);
 			}
 			else
-				LuaDLL.lua_setfield(l, -2, func.Method.Name);
+				LuaDLL.lua_setfield(l, -2, name);
 		}
 
 		protected static void addMember(IntPtr l, LuaCSFunction func, bool instance)
