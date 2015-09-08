@@ -1499,16 +1499,6 @@ namespace SLua
 			return true;
 		}
 		
-		bool ContainGeneric(ParameterInfo[] pars)
-		{
-			foreach (ParameterInfo p in pars)
-			{
-				if (p.ParameterType.IsGenericType || p.ParameterType.IsGenericParameter || p.ParameterType.IsGenericTypeDefinition)
-					return true;
-			}
-			return false;
-		}
-		
 		
 		void WriteCheckSelf(StreamWriter file, Type t)
 		{
