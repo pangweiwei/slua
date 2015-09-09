@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4942CE831B9D9D7100858CB0 /* libluajit_x86_64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4942CE811B9D9D7100858CB0 /* libluajit_x86_64.a */; };
 		4942CE841B9D9D7100858CB0 /* libluajit_x86.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4942CE821B9D9D7100858CB0 /* libluajit_x86.a */; };
-		E8091A321B745553008FED27 /* slua.c in Sources */ = {isa = PBXBuildFile; fileRef = E8091A311B745553008FED27 /* slua.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,7 +16,6 @@
 		4942CE821B9D9D7100858CB0 /* libluajit_x86.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluajit_x86.a; sourceTree = "<group>"; };
 		E80919D41B745519008FED27 /* slua.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = slua.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		E80919D81B745519008FED27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E8091A311B745553008FED27 /* slua.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = slua.c; path = ../../Assets/slua_src/slua.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +36,6 @@
 			children = (
 				4942CE811B9D9D7100858CB0 /* libluajit_x86_64.a */,
 				4942CE821B9D9D7100858CB0 /* libluajit_x86.a */,
-				E8091A311B745553008FED27 /* slua.c */,
 				E80919D61B745519008FED27 /* slua */,
 				E80919D51B745519008FED27 /* Products */,
 			);
@@ -134,7 +131,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8091A321B745553008FED27 /* slua.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
