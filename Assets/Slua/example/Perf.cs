@@ -8,9 +8,16 @@ public class Perf : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		var startMem = System.GC.GetTotalMemory (true);
+
+		var start = Time.realtimeSinceStartup;
 		l = new LuaSvr();
 		l.init(null, () =>
 		{
+			Debug.Log ("start cost: " + (Time.realtimeSinceStartup - start));
+
+			var endMem = System.GC.GetTotalMemory (true);
+			Debug.Log ("startMem: " + startMem + ", endMem: " + endMem + ", " + "cost mem: " + (endMem - startMem));
 			l.start("perf");
 		});
 
