@@ -492,30 +492,10 @@ namespace LuaInterface
 			lua_pushcclosure(luaState, fn, 0);
 		}
 
-		private static System.Collections.Generic.List<LuaCSFunction> CSFunctionList = new System.Collections.Generic.List<LuaCSFunction>();
-		private static System.Collections.Generic.Dictionary<LuaCSFunction, int> CSFunctionDict = new System.Collections.Generic.Dictionary<LuaCSFunction, int>();
-
-		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-		private static int CSFunction(IntPtr l)
-		{
-			int refValue = LuaDLL.lua_tointeger(l, LuaDLL.lua_upvalueindex(1));
-			LuaCSFunction f = CSFunctionList[refValue];
-			return f(l);
-		}
-		private static IntPtr CSFunctionPtr = Marshal.GetFunctionPointerForDelegate(new LuaCSFunction(CSFunction));
-
 		public static void lua_pushcsfunction(IntPtr luaState, LuaCSFunction function)
 		{
-			int refValue;
-			if (!CSFunctionDict.TryGetValue(function, out refValue)) {
-				refValue = CSFunctionDict.Count;
-				CSFunctionDict[function] = refValue;
-				CSFunctionList.Add(function);
-			}
-
 			LuaDLL.lua_getref(luaState, SLua.LuaState.PCallCSFunctionRef);
-			LuaDLL.lua_pushinteger(luaState, refValue);
-			LuaDLL.lua_pushcclosure(luaState, CSFunctionPtr, 1);
+			LuaDLL.lua_pushcclosure(luaState, Marshal.GetFunctionPointerForDelegate(function),0);
 			LuaDLL.lua_call(luaState, 1, 1);
 		}
 
