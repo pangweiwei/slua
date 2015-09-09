@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		4942CE831B9D9D7100858CB0 /* libluajit_x86_64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4942CE811B9D9D7100858CB0 /* libluajit_x86_64.a */; };
 		4942CE841B9D9D7100858CB0 /* libluajit_x86.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4942CE821B9D9D7100858CB0 /* libluajit_x86.a */; };
+		49A357121BA0392800A0FA50 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 49A357111BA0392800A0FA50 /* main.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4942CE811B9D9D7100858CB0 /* libluajit_x86_64.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluajit_x86_64.a; sourceTree = "<group>"; };
 		4942CE821B9D9D7100858CB0 /* libluajit_x86.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluajit_x86.a; sourceTree = "<group>"; };
+		49A357111BA0392800A0FA50 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		E80919D41B745519008FED27 /* slua.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = slua.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		E80919D81B745519008FED27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -53,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				E80919D71B745519008FED27 /* Supporting Files */,
+				49A357111BA0392800A0FA50 /* main.c */,
 			);
 			path = slua;
 			sourceTree = "<group>";
@@ -131,6 +134,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49A357121BA0392800A0FA50 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
