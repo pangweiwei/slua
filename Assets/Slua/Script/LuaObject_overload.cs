@@ -114,6 +114,36 @@ namespace SLua
 			pushObject(l, r);
 		}
 
+		public static void pushValue(IntPtr l, RaycastHit[] r)
+		{
+			if (r == null)
+			{
+				LuaDLL.lua_pushnil(l);
+				return;
+			}
+			LuaDLL.lua_createtable(l, r.Length, 0);
+			for (int n = 0; n < r.Length; n++)
+			{
+				pushValue(l, r[n]);
+				LuaDLL.lua_rawseti(l, -2, n + 1);
+			}
+		}
+
+		public static void pushValue(IntPtr l, RaycastHit2D[] r)
+		{
+			if (r == null)
+			{
+				LuaDLL.lua_pushnil(l);
+				return;
+			}
+			LuaDLL.lua_createtable(l, r.Length, 0);
+			for (int n = 0; n < r.Length; n++)
+			{
+				pushValue(l, r[n]);
+				LuaDLL.lua_rawseti(l, -2, n + 1);
+			}
+		}
+
         public static void pushValue(IntPtr l, UnityEngine.AnimationState o)
         {
             if (o == null)
@@ -128,6 +158,21 @@ namespace SLua
 				LuaDLL.lua_pushnil(l);
 			else
 				pushObject(l, o);
+		}
+
+		public static void pushValue(IntPtr l, UnityEngine.Object[] o)
+		{
+			if (o == null)
+			{
+				LuaDLL.lua_pushnil(l);
+				return;
+			}
+			LuaDLL.lua_createtable(l, o.Length, 0);
+			for (int n = 0; n < o.Length; n++)
+			{
+				pushValue(l, o[n]);
+				LuaDLL.lua_rawseti(l, -2, n + 1);
+			}
 		}
 
 		public static void pushValue(IntPtr l, Quaternion o)

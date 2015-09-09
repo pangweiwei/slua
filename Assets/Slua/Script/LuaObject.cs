@@ -1433,7 +1433,7 @@ return index
 			LuaDLL.lua_pushnumber(l, o);
 		}
 
-		public static void pushValue<T>(IntPtr l, T[] o)
+		public static void pushValue(IntPtr l, float[] o)
 		{
 			if (o == null)
 			{
@@ -1453,9 +1453,39 @@ return index
 			LuaDLL.lua_pushboolean(l, b);
 		}
 
+		public static void pushValue(IntPtr l, bool[] o)
+		{
+			if (o == null)
+			{
+				LuaDLL.lua_pushnil(l);
+				return;
+			}
+			LuaDLL.lua_createtable(l, o.Length, 0);
+			for (int n = 0; n < o.Length; n++)
+			{
+				pushValue(l, o[n]);
+				LuaDLL.lua_rawseti(l, -2, n + 1);
+			}
+		}
+
 		public static void pushValue(IntPtr l, string s)
 		{
 			LuaDLL.lua_pushstring(l, s);
+		}
+
+		public static void pushValue(IntPtr l, string[] o)
+		{
+			if (o == null)
+			{
+				LuaDLL.lua_pushnil(l);
+				return;
+			}
+			LuaDLL.lua_createtable(l, o.Length, 0);
+			for (int n = 0; n < o.Length; n++)
+			{
+				pushValue(l, o[n]);
+				LuaDLL.lua_rawseti(l, -2, n + 1);
+			}
 		}
 
 		public static void pushValue(IntPtr l, int i)
@@ -1473,6 +1503,21 @@ return index
 			LuaDLL.lua_pushinteger(l, i);
 		}
 
+		public static void pushValue(IntPtr l, int[] o)
+		{
+			if (o == null)
+			{
+				LuaDLL.lua_pushnil(l);
+				return;
+			}
+			LuaDLL.lua_createtable(l, o.Length, 0);
+			for (int n = 0; n < o.Length; n++)
+			{
+				pushValue(l, o[n]);
+				LuaDLL.lua_rawseti(l, -2, n + 1);
+			}
+		}
+
 		public static void pushValue(IntPtr l, Int64 i)
 		{
 #if LUA_5_3
@@ -1482,14 +1527,60 @@ return index
 #endif
 		}
 
+		public static void pushValue(IntPtr l, Int64[] o)
+		{
+			if (o == null)
+			{
+				LuaDLL.lua_pushnil(l);
+				return;
+			}
+			LuaDLL.lua_createtable(l, o.Length, 0);
+			for (int n = 0; n < o.Length; n++)
+			{
+				pushValue(l, o[n]);
+				LuaDLL.lua_rawseti(l, -2, n + 1);
+			}
+		}
+
 		public static void pushValue(IntPtr l, double d)
 		{
 			LuaDLL.lua_pushnumber(l, d);
 		}
 
+		public static void pushValue(IntPtr l, double[] o)
+		{
+			if (o == null)
+			{
+				LuaDLL.lua_pushnil(l);
+				return;
+			}
+			LuaDLL.lua_createtable(l, o.Length, 0);
+			for (int n = 0; n < o.Length; n++)
+			{
+				pushValue(l, o[n]);
+				LuaDLL.lua_rawseti(l, -2, n + 1);
+			}
+		}
+
 		public static void pushValue(IntPtr l, object o)
 		{
 			pushVar(l, o);
+		}
+
+
+		public static void pushValue(IntPtr l, object[] o)
+		{
+			if (o == null)
+			{
+				LuaDLL.lua_pushnil(l);
+				return;
+			}
+			LuaDLL.lua_createtable(l, o.Length, 0);
+			for (int n = 0; n < o.Length; n++)
+			{
+				pushValue(l, o[n]);
+				LuaDLL.lua_rawseti(l, -2, n + 1);
+			}
 		}
 
 		public static void pushValue(IntPtr l, LuaCSFunction f)
