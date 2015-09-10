@@ -209,10 +209,12 @@ namespace SLua
 			// export self-dll
 			Assembly assembly = Assembly.Load("Assembly-CSharp");
 			Type[] types = assembly.GetExportedTypes();
-			
+
+			HashSet<string> namespaces = CustomExport.OnAddCustomNamespace ();
+
 			foreach (Type t in types)
 			{
-				if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0)
+				if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0 || namespaces.Contains(t.Namespace))
 				{
 					fun(t, null);
 				}
