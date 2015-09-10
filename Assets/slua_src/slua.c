@@ -75,11 +75,15 @@ static const char *luaL_findtable(lua_State *L, int idx,
 	return NULL;
 }
 
-#endif
+#else
 
-static int lua_absindex(lua_State *L,int index) {
+static int lua_absindex(lua_State *L, int index) {
 	return index > 0 ? index : lua_gettop(L) + index + 1;
 }
+
+#endif
+
+
 
 LUA_API void luaS_openextlibs(lua_State *L) {
 	const luaL_Reg *lib;

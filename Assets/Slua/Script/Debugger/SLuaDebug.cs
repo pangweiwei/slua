@@ -26,7 +26,6 @@ namespace SLua
 
     class SLuaDebug : LuaObject
     {
-#if UNITY_EDITOR
         static string script = @"
 do
     local xpcall=xpcall
@@ -453,20 +452,13 @@ do
 		print=output
 		error=output
 	end	
-
-    
-    
 end
 ";
-#endif
 
         public static void reg(IntPtr l)
         {
-#if UNITY_EDITOR
-			// lua console only be available in editor
 			LuaState L = LuaState.get(l);
 			L.doString(script);
-#endif
         }
     }
 }
