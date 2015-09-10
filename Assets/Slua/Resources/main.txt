@@ -15,11 +15,8 @@ MyGameObject=Slua.Class(GameObject,
 	}	
 )
 
-local ffi=require 'ffi'
-
 function main()
 
-	print(ffi)
 
 	local t=dofile('module/some')
 	assert(type(t)=='table')
@@ -30,6 +27,8 @@ function main()
 
 	if jit then
 		print("using luajit ",jit.version,jit.arch)
+		local ffi=require 'ffi'
+		print(ffi)
 	else
 		print("using lua")
 	end
