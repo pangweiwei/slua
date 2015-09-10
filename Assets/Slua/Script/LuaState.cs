@@ -835,9 +835,8 @@ end
 				return true;
 			}
 			string err = LuaDLL.lua_tostring(L, -1);
-			Debug.LogError(err);
 			LuaDLL.lua_pop(L, 2);
-			return false;
+			throw new Exception(err);
 		}
 
 		internal static byte[] loadFile(string fn)

@@ -250,38 +250,35 @@ do
         end
     end
 
-	local function fetchLuaSource(source, line, radius)
-		for i=line-radius,line+radius,1 do
-			local text = LuaDebugger.fetchLuaSource(source, i)
-			if text then
-				if i == line then
-					print(string.format('%04d>	%s', i, text))
-				else
-					print(string.format('%04d|	%s', i, text))
-				end
-			end
+	local lastbl=nil
+	local lastmd5=nil
+
+	local function fileMatch(v,md5,source)
+		if md5 and v.fileMd5 then
+			return v.fileMd5 == md5 or v.fileName==source
+		elseif v.fileName then
+			return v.fileName==source
+		else
+			return false
 		end
 	end
 
-	local lastbl=nil
 	local function checkLineBp(info,source,line) 
 		if not breakMode then
+			source=string.lower(source)
+			local md5=LuaDebugger.md5(source)
 			for i,v in ipairs(Bps)do
-				if string.lower(v.fileName) == string.lower(source) and v.line == line then
+				if fileMatch(v,md5,source) and v.line == line then
 					breakMode = true
 					lastbl=line
+					lastmd5=md5
 					stepOverDepth = nil
-					print(string.format('breakpoint #%s hit', i))
-					print(string.format('break at %s:%d', source, info.currentline))
-					fetchLuaSource(source, info.currentline, 3)
-					LuaDebugger.onBreak()
+					LuaDebugger.onBreak(source,info.currentline,lastmd5)
 				end
 			end
 		elseif not(stepOverDepth) or stepOverDepth >= stackDepth then
 			if line~=lastbl then
-				print(string.format('break at %s:%d', source, info.currentline))
-				fetchLuaSource(source, info.currentline, 3)
-				LuaDebugger.onBreak()
+				LuaDebugger.onBreak(source,info.currentline,lastmd5)
 				lastbl=line
 			end
 		end
@@ -403,13 +400,12 @@ do
 
 
 	function Slua.ldb.addBreakPoint(fn,line)
-		fetchLuaSource(fn, line, 3)
-		table.insert(Bps,{fileName=fn,line=line})
+		table.insert(Bps,{fileName=string.lower(fn),line=line})
 		if not debug.gethook() then openDebug() end
 	end
 
 	function Slua.ldb.addBreakPointMD5(md5,line)
-		table.insert(Bps,{fileMd5=md5,line=line})
+		table.insert(Bps,{fileMd5=string.lower(md5),line=line})
 		if not debug.gethook() then openDebug() end
 	end
 		
@@ -419,9 +415,9 @@ do
 		if value:match('^[_%a][_%w]*$') then
 			local matchvalue = env[value]
 			printVar(matchvalue)
-
+			return true,''
 		else
-			xpcall(function()
+			local ok,err=pcall(function()
 
                 local env = buildEnv()
                 local iscmd=false
@@ -447,11 +443,9 @@ do
                     end
                 end
 
-			end,
-			function(err)
-				error( err )
 			end)
-
+			
+			return ok,err
 		end
 	end
 
