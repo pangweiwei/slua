@@ -711,7 +711,14 @@ return index
                 case LuaTypes.LUA_TNIL:
                     return !t.IsValueType && !t.IsPrimitive;
 				case LuaTypes.LUA_TNUMBER:
+#if LUA_5_3
+					if (LuaDLL.lua_isinteger(l, p) > 0)
+						return (t.IsPrimitive && t != typeof(float) && t != typeof(double)) || t.IsEnum;
+					else
+						return t == typeof(float) || t == typeof(double);
+#else
 					return t.IsPrimitive || t.IsEnum;
+#endif
 				case LuaTypes.LUA_TUSERDATA:
 					object o = checkObj(l, p);
 					Type ot = o.GetType();

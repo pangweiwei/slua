@@ -306,6 +306,9 @@ namespace LuaInterface
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void lua_copy(IntPtr luaState,int from,int toidx);
+
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int lua_isinteger(IntPtr luaState, int p);
 #else
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int lua_resume(IntPtr L, int narg);
