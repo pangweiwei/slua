@@ -1,3 +1,39 @@
+/*
+NLua License
+--------------------
+
+NLua is licensed under the terms of the MIT license reproduced below.
+This mean that NLua is free software and can be used for both academic and
+commercial purposes at absolutely no cost.
+
+===============================================================================
+
+Copyright (C) 2013 - Vinicius Jarina (viniciusjarina@gmail.com)
+Copyright (C) 2012 Megax <http://megax.yeahunter.hu/>
+Copyright (C) 2003-2005 Fabio Mascarenhas de Queiroz.
+
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+===============================================================================
+*/
+
 //note: this should be cleaned up and replaced with moq mocks where possible
 
 namespace NLuaTest.Mock
@@ -7,6 +43,107 @@ namespace NLuaTest.Mock
 	using System.Diagnostics;
 	using System.Reflection;
 	using SLua;
+	
+	public class parameter
+	{
+		public string field1 = "parameter-field1";
+	}
+	
+	public class UnicodeClass{
+		public static readonly char UnicodeChar = '\uE007';
+		public static string UnicodeString
+		{
+			get
+			{
+				return Convert.ToString (UnicodeChar);
+			}
+		}
+	}
+	
+	#if MONOTOUCH
+	[Preserve (AllMembers = true)]
+	#endif
+	public class master
+	{
+		public static string read()
+		{
+			return "test-master";
+		}
+
+		public static string read( parameter test )
+		{
+			return test.field1;
+		}
+	}
+
+	#if MONOTOUCH
+	[Preserve (AllMembers = true)]
+	#endif
+	public class testClass3 : master 
+	{
+		public String strData;
+		public int intData;
+		public static string read2()
+		{
+			return "test";
+		}
+
+		public static string read( int test )
+		{
+			return "int-test";
+		}
+	}
+
+	#if MONOTOUCH
+	[Preserve (AllMembers = true)]
+	#endif
+	public class TestCaseName {
+		public string name = "name";
+		public string Name {
+			get {
+				return "**" + name + "**";
+			}
+		}
+	}
+
+
+
+	#if MONOTOUCH
+		[Preserve (AllMembers = true)]
+	#endif
+	public class Vector
+	{
+		public double x;
+		public double y;
+		public static Vector operator * (float k, Vector v)
+		{
+			var r = new Vector ();
+			r.x = v.x * k;
+			r.y = v.y * k;
+			return r;
+		}
+
+		public static Vector operator * (Vector v, float k)
+		{
+			var r = new Vector ();
+			r.x = v.x * k;
+			r.y = v.y * k;
+			return r;
+		}
+
+		public void Func ()
+		{
+			Console.WriteLine ("Func");
+		}
+	}
+
+	public static class VectorExtension
+	{
+		public static double Lenght (this Vector v)
+		{
+			return v.x * v.x + v.y * v.y;
+		}
+	}
 	
 	public class DefaultElementModel
 	{  
