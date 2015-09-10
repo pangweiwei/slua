@@ -497,6 +497,8 @@ namespace SLua
 			refQueue = new Queue<UnrefPair>();
             ObjectCache.make(L);
 
+			LuaDLL.lua_atpanic (L, panicCallback);
+
 			LuaDLL.luaL_openlibs(L);
 
 			string PCallCSFunction = @"
@@ -758,6 +760,13 @@ end
 				k = LuaDLL.lua_gettop(L);
 				return k-n;
 			}
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int panicCallback(IntPtr l)
+		{
+			string reason = string.Format ("unprotected error in call to Lua API ({0})", LuaDLL.lua_tostring (l, -1));
+			throw new Exception (reason);
 		}
 
 		public object doString(string str)
