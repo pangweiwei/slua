@@ -543,20 +543,24 @@ namespace SLua
 			}
 			
 			Write(file, "ld.pcall({0}, error);", mi.GetParameters().Length - outindex.Count);
-			
+
+			int offset = 0;
 			if (mi.ReturnType != typeof(void))
-				WriteValueCheck(file, mi.ReturnType, 1, "ret", "error+");
+			{
+				offset = 1;
+				WriteValueCheck(file, mi.ReturnType, offset, "ret", "error+");
+			}
 			
 			foreach (int i in outindex)
 			{
 				string a = string.Format("a{0}", i + 1);
-				WriteCheckType(file, mi.GetParameters()[i].ParameterType, i + 1, a, "error+");
+				WriteCheckType(file, mi.GetParameters()[i].ParameterType, i + offset, a, "error+");
 			}
 			
 			foreach (int i in refindex)
 			{
 				string a = string.Format("a{0}", i + 1);
-				WriteCheckType(file, mi.GetParameters()[i].ParameterType, i + 1, a, "error+");
+				WriteCheckType(file, mi.GetParameters()[i].ParameterType, i + offset, a, "error+");
 			}
 			
 			
