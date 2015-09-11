@@ -2011,9 +2011,11 @@ public class test : MonoBehaviour {
 			lua.doString (@"
 				TestClass=NLuaTest.Mock.TestClass
 				t = TestClass()
-				r = t:TestType(t:GetType())
+				r1 = t:TestType(t:GetType())
+				r2 = t:TestType(TestClass)
 			");
-			Assert.True ((bool)lua ["r"]);
+			Assert.True ((bool)lua ["r1"]);
+			Assert.True ((bool)lua ["r2"]);
 		}
 		
 //		static Lua m_lua;
