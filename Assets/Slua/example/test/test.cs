@@ -1,7 +1,44 @@
-﻿using UnityEngine;
+﻿/*
+NLua License
+--------------------
+
+NLua is licensed under the terms of the MIT license reproduced below.
+This mean that NLua is free software and can be used for both academic and
+commercial purposes at absolutely no cost.
+
+===============================================================================
+
+Copyright (C) 2013 - Vinicius Jarina (viniciusjarina@gmail.com)
+Copyright (C) 2012 Megax <http://megax.yeahunter.hu/>
+Copyright (C) 2003-2005 Fabio Mascarenhas de Queiroz.
+
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+===============================================================================
+*/
+
+using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System.Reflection;
+using System.Threading;
 using System;
 using SLua;
 using NLuaTest.Mock;
@@ -184,84 +221,81 @@ public class test : MonoBehaviour {
 			lua.doString ("test:MethodOverload(2,2,i)\r\nprint(i)");
 		}
 
-//		public void TestDispose ()
-//		{
-//			System.GC.Collect ();
-//			long startingMem = System.Diagnostics.Process.GetCurrentProcess ().WorkingSet64;
-//			
-//			for (int i = 0; i < 100; i++) {
-//				
-//					_Calc (lua, i);
-//			}
-//			
-//			//TODO: make this test assert so that it is useful
-//			Debug.Log ("Was using " + (startingMem / 1024 / 1024) + "MB, now using: " + (System.Diagnostics.Process.GetCurrentProcess ().WorkingSet64 / 1024 / 1024) + "MB");
-//		}
-//		
-//		private void _Calc (LuaState lua, int i)
-//		{
-//			lua.doString (
-//				"sqrt = math.sqrt;" +
-//				"sqr = function(x) return math.pow(x,2); end;" +
-//				"log = math.log;" +
-//				"log10 = math.log10;" +
-//				"exp = math.exp;" +
-//				"sin = math.sin;" +
-//				"cos = math.cos;" +
-//				"tan = math.tan;" +
-//				"abs = math.abs;"
-//				);
-//			lua.doString ("function calcVP(a,b) return a+b end");
-//			LuaFunction lf = lua.getFunction ("calcVP");
-//			lf.call (i, 20);
-//		}
+		public void TestDispose ()
+		{
+			System.GC.Collect ();
+			long startingMem = System.Diagnostics.Process.GetCurrentProcess ().WorkingSet64;
+			
+			for (int i = 0; i < 100; i++) {
+				
+					_Calc (lua, i);
+			}
+			
+			//TODO: make this test assert so that it is useful
+			Debug.Log ("Was using " + (startingMem / 1024 / 1024) + "MB, now using: " + (System.Diagnostics.Process.GetCurrentProcess ().WorkingSet64 / 1024 / 1024) + "MB");
+		}
+		
+		private void _Calc (LuaState lua, int i)
+		{
+			lua.doString (
+				"sqrt = math.sqrt;" +
+				"sqr = function(x) return math.pow(x,2); end;" +
+				"log = math.log;" +
+				"log10 = math.log10;" +
+				"exp = math.exp;" +
+				"sin = math.sin;" +
+				"cos = math.cos;" +
+				"tan = math.tan;" +
+				"abs = math.abs;"
+				);
+			lua.doString ("function calcVP(a,b) return a+b end");
+			LuaFunction lf = lua.getFunction ("calcVP");
+			lf.call (i, 20);
+		}
 		
 
-//		public void TestThreading ()
-//		{
-//			
-//				object lua_locker = new object ();
-//				DoWorkClass doWork = new DoWorkClass ();
-//				lua.RegisterFunction ("dowork", doWork, typeof(DoWorkClass).GetMethod ("DoWork"));
-//				bool failureDetected = false;
-//				int completed = 0;
-//				int iterations = 10;
-//				
-//				for (int i = 0; i < iterations; i++) {
-//					ThreadPool.QueueUserWorkItem (new WaitCallback (delegate (object o) {
-//						try {
-//							lock (lua_locker) {
-//								lua.doString ("dowork()");
-//							}
-//						} catch (Exception e) {
-//							Console.Write (e);
-//							failureDetected = true;
-//						}
-//						
-//						completed++;
-//					}));
-//				}
-//				
-//				while (completed < iterations && !failureDetected)
-//					Thread.Sleep (50);
-//				
-//				Assert.AreEqual (false, failureDetected);
-//			}
-//		}
+		// public void TestThreading ()
+		// {
+		// 	object lua_locker = new object ();
+		// 	DoWorkClass doWork = new DoWorkClass ();
+		// 	
+		// 	bool failureDetected = false;
+		// 	int completed = 0;
+		// 	int iterations = 10;
+		// 	
+		// 	for (int i = 0; i < iterations; i++) {
+		// 		ThreadPool.QueueUserWorkItem (new WaitCallback (delegate (object o) {
+		// 			try {
+		// 				lock (lua_locker) {
+		// 					lua.doString ("dowork()");
+		// 				}
+		// 			} catch (Exception e) {
+		// 				Console.Write (e);
+		// 				failureDetected = true;
+		// 			}
+		// 			
+		// 			completed++;
+		// 		}));
+		// 	}
+		// 	
+		// 	while (completed < iterations && !failureDetected)
+		// 		Thread.Sleep (50);
+		// 	
+		// 	Assert.AreEqual (false, failureDetected);
+		// }
 		
 		// public void TestPrivateMethod ()
 		// {
-		// 		lua.doString ("test=TestClass()");
-		// 		
-		// 		try {
-		// 			lua.doString ("test:_PrivateMethod()");
-		// 		} catch {
-		// 			Assert.AreEqual (true, true);
-		// 			return;
-		// 		}
-		// 		
-		// 		Assert.AreEqual(true, false);
+		// 	lua.doString ("test=TestClass()");
+		// 	
+		// 	try {
+		// 		lua.doString ("test:_PrivateMethod()");
+		// 	} catch {
+		// 		Assert.AreEqual (true, true);
+		// 		return;
 		// 	}
+		// 	
+		// 	Assert.AreEqual(true, false);
 		// }
 
 //		/*
@@ -283,23 +317,22 @@ public class test : MonoBehaviour {
         * Tests making an object from a Lua table and calling one of
         * methods the table overrides.
         */
-//		public void LuaTableOverridedMethod ()
-//		{
-//			lua.doString ("test={}");
-//			lua.doString ("function test:overridableMethod(x,y) return x*y; end");
-//			lua.doString ("luanet.make_object(test,'NLuaTest.Mock.TestClass')");
-//			lua.doString ("a=TestClass.callOverridable(test,2,3)");
-//			int a = (int)lua["a"];
-//			lua.doString ("luanet.free_object(test)");
-//			Assert.AreEqual (6, a);
-//		}
+		// public void LuaTableOverridedMethod ()
+		// {
+		// 	lua.doString ("test={}");
+		// 	lua.doString ("function test:overridableMethod(x,y) return x*y; end");
+		// 	lua.doString ("luanet.make_object(test,'NLuaTest.Mock.TestClass')");
+		// 	lua.doString ("a=TestClass.callOverridable(test,2,3)");
+		// 	int a = (int)lua["a"];
+		// 	lua.doString ("luanet.free_object(test)");
+		// 	Assert.AreEqual (6, a);
+		// }
 		
 		
 		/*
         * Tests making an object from a Lua table and calling a method
         * the table does not override.
         */
-
 //		public void LuaTableInheritedMethod ()
 //		{
 //			lua.doString ("test={}");
@@ -459,35 +492,31 @@ public class test : MonoBehaviour {
 		}
 		
 
-//		public void TestLoadStringLeak ()
-//		{
-//			//Test to prevent stack overflow
-//			//See: http://code.google.com/p/nlua/issues/detail?id=5
-//			//number of iterations to test
-//			int count = 1000;
-//			
-//				for (int i = 0; i < count; i++) {
-//					lua.LoadString ("abc = 'def'", string.Empty);
-//				}
-//			}
-//			//any thrown exceptions cause the test run to fail
-//		}
+		// public void TestLoadStringLeak ()
+		// {
+		// 	//Test to prevent stack overflow
+		// 	//See: http://code.google.com/p/nlua/issues/detail?id=5
+		// 	//number of iterations to test
+		// 	int count = 1000;
+		// 	for (int i = 0; i < count; i++) {
+		// 		lua.LoadString ("abc = 'def'", string.Empty);
+		// 	}
+		// 	//any thrown exceptions cause the test run to fail
+		// }
 		
 
-//		public void TestLoadFileLeak ()
-//		{
-//			//Test to prevent stack overflow
-//			//See: http://code.google.com/p/nlua/issues/detail?id=5
-//			//number of iterations to test
-//			int count = 1000;
-//			
-//				for (int i = 0; i < count; i++) {
-//					lua.LoadFile (Environment.CurrentDirectory + System.IO.Path.DirectorySeparatorChar + "test.lua");
-//				}
-//			}
-//			//any thrown exceptions cause the test run to fail
-//		}
-//		
+		// public void TestLoadFileLeak ()
+		// {
+		// 	//Test to prevent stack overflow
+		// 	//See: http://code.google.com/p/nlua/issues/detail?id=5
+		// 	//number of iterations to test
+		// 	int count = 1000;
+		// 	for (int i = 0; i < count; i++) {
+		// 		lua.LoadFile (Environment.CurrentDirectory + System.IO.Path.DirectorySeparatorChar + "test.lua");
+		// 	}
+		// 	//any thrown exceptions cause the test run to fail
+		// }
+		
 
 //		public void TestRegisterFunction ()
 //		{
@@ -1040,135 +1069,98 @@ public class test : MonoBehaviour {
         * Tests passing a Lua function to a delegate
         * with value-type arguments
         */
-//		public void LuaDelegateValueTypes ()
-//		{
-//				lua.RegisterLuaDelegateType (typeof(TestDelegate1), typeof(LuaTestDelegate1Handler));
-//				lua.doString ("test=TestClass()");
-//				lua.doString ("function func(x,y) return x+y; end");
-//				lua.doString ("test=TestClass()");
-//				lua.doString ("a=test:callDelegate1(func)");
-//				int a = (int)lua["a"];
-//				Assert.AreEqual (5, a);
-//				//Debug.Log("delegate returned: "+a);
-//		}
-//		/*
-//        * Tests passing a Lua function to a delegate
-//        * with value-type arguments and out params
-//        */
+		public void LuaDelegateValueTypes ()
+		{
+			lua.doString ("test=TestClass()");
+			lua.doString ("function func(x,y) return x+y; end");
+			lua.doString ("test=TestClass()");
+			lua.doString ("a=test:callDelegate1(func)");
+			Assert.AreEqual (5d, lua["a"]);
+			//Debug.Log("delegate returned: "+a);
+		}
 
-//		public void LuaDelegateValueTypesOutParam ()
-//		{
-//			
-//				lua.RegisterLuaDelegateType (typeof(TestDelegate2), typeof(LuaTestDelegate2Handler));
-//				
-//				
-//				lua.doString ("test=TestClass()");
-//				lua.doString ("function func(x) return x,x*2; end");
-//				lua.doString ("test=TestClass()");
-//				lua.doString ("a=test:callDelegate2(func)");
-//				int a = (int)lua["a"];
-//				Assert.AreEqual (6, a);
-//				//Debug.Log("delegate returned: "+a);
-//			}
-//		}
-//		/*
-//        * Tests passing a Lua function to a delegate
-//        * with value-type arguments and ref params
-//        */
+		/*
+        * Tests passing a Lua function to a delegate
+        * with value-type arguments and out params
+        */
+		public void LuaDelegateValueTypesOutParam ()
+		{			
+			lua.doString ("test=TestClass()");
+			lua.doString ("function func(x) return x,x*2; end");
+			lua.doString ("test=TestClass()");
+			lua.doString ("a=test:callDelegate2(func)");
+			Assert.AreEqual (6d, lua["a"]);
+			//Debug.Log("delegate returned: "+a);
+		}
 
-//		public void LuaDelegateValueTypesByRefParam ()
-//		{
-//			
-//				lua.RegisterLuaDelegateType (typeof(TestDelegate3), typeof(LuaTestDelegate3Handler));
-//				
-//				
-//				lua.doString ("test=TestClass()");
-//				lua.doString ("function func(x,y) return x+y; end");
-//				lua.doString ("test=TestClass()");
-//				lua.doString ("a=test:callDelegate3(func)");
-//				int a = (int)lua["a"];
-//				Assert.AreEqual (5, a);
-//				//Debug.Log("delegate returned: "+a);
-//			}
-//		}
-//		/*
-//        * Tests passing a Lua function to a delegate
-//        * with value-type arguments that returns a reference type
-//        */
+		/*
+        * Tests passing a Lua function to a delegate
+        * with value-type arguments and ref params
+        * 
+        */
+		public void LuaDelegateValueTypesByRefParam ()
+		{
+			lua.doString ("test=TestClass()");
+			lua.doString ("function func(x,y) return x+y; end");
+			lua.doString ("test=TestClass()");
+			lua.doString ("a=test:callDelegate3(func)");
+			Assert.AreEqual (5d, lua["a"]);
+			//Debug.Log("delegate returned: "+a);
+		}
 
-//		public void LuaDelegateValueTypesReturnReferenceType ()
-//		{
-//			
-//				lua.RegisterLuaDelegateType (typeof(TestDelegate4), typeof(LuaTestDelegate4Handler));
-//				
-//				
-//				lua.doString ("test=TestClass()");
-//				lua.doString ("function func(x,y) return TestClass(x+y); end");
-//				lua.doString ("test=TestClass()");
-//				lua.doString ("a=test:callDelegate4(func)");
-//				int a = (int)lua["a"];
-//				Assert.AreEqual (5, a);
-//				//Debug.Log("delegate returned: "+a);
-//			}
-//		}
-//		/*
-//        * Tests passing a Lua function to a delegate
-//        * with reference type arguments
-//        */
+		/*
+        * Tests passing a Lua function to a delegate
+        * with value-type arguments that returns a reference type
+        */
+		public void LuaDelegateValueTypesReturnReferenceType ()
+		{		
+			lua.doString ("test=TestClass()");
+			lua.doString ("function func(x,y) return TestClass(x+y); end");
+			lua.doString ("test=TestClass()");
+			lua.doString ("a=test:callDelegate4(func)");
+			Assert.AreEqual (5d, lua["a"]);
+			//Debug.Log("delegate returned: "+a);
+		}
 
-//		public void LuaDelegateReferenceTypes ()
-//		{
-//			
-//				lua.RegisterLuaDelegateType (typeof(TestDelegate5), typeof(LuaTestDelegate5Handler));
-//				
-//				
-//				lua.doString ("test=TestClass()");
-//				lua.doString ("function func(x,y) return x.testval+y.testval; end");
-//				lua.doString ("a=test:callDelegate5(func)");
-//				int a = (int)lua["a"];
-//				Assert.AreEqual (5, a);
-//				//Debug.Log("delegate returned: "+a);
-//			}
-//		}
-//		/*
-//        * Tests passing a Lua function to a delegate
-//        * with reference type arguments and an out param
-//        */
+		/*
+        * Tests passing a Lua function to a delegate
+        * with reference type arguments
+        */
+		public void LuaDelegateReferenceTypes ()
+		{
+			lua.doString ("test=TestClass()");
+			lua.doString ("function func(x,y) return x.testval+y.testval; end");
+			lua.doString ("a=test:callDelegate5(func)");
+			Assert.AreEqual (5d, lua["a"]);
+			//Debug.Log("delegate returned: "+a);
+		}
+		
+		/*
+        * Tests passing a Lua function to a delegate
+        * with reference type arguments and an out param
+        */
+		public void LuaDelegateReferenceTypesOutParam ()
+		{
+			lua.doString ("test=TestClass()");
+			lua.doString ("function func(x) return x,TestClass(x*2); end");
+			lua.doString ("test=TestClass()");
+			lua.doString ("a=test:callDelegate6(func)");
+			Assert.AreEqual (6d, lua["a"]);
+			//Debug.Log("delegate returned: "+a);
+		}
 
-//		public void LuaDelegateReferenceTypesOutParam ()
-//		{
-//			
-//				lua.RegisterLuaDelegateType (typeof(TestDelegate6), typeof(LuaTestDelegate6Handler));
-//				
-//				
-//				lua.doString ("test=TestClass()");
-//				lua.doString ("function func(x) return x,TestClass(x*2); end");
-//				lua.doString ("test=TestClass()");
-//				lua.doString ("a=test:callDelegate6(func)");
-//				int a = (int)lua["a"];
-//				Assert.AreEqual (6, a);
-//				//Debug.Log("delegate returned: "+a);
-//			}
-//		}
-//		/*
-//        * Tests passing a Lua function to a delegate
-//        * with reference type arguments and a ref param
-//        */
-
-//		public void LuaDelegateReferenceTypesByRefParam ()
-//		{
-//			
-//				lua.RegisterLuaDelegateType (typeof(TestDelegate7), typeof(LuaTestDelegate7Handler));
-//				
-//				
-//				lua.doString ("test=TestClass()");
-//				lua.doString ("function func(x,y) return TestClass(x+y.testval); end");
-//				lua.doString ("a=test:callDelegate7(func)");
-//				int a = (int)lua["a"];
-//				Assert.AreEqual (5, a);
-//				//Debug.Log("delegate returned: "+a);
-//			}
-//		}
+		/*
+        * Tests passing a Lua function to a delegate
+        * with reference type arguments and a ref param
+        */
+		public void LuaDelegateReferenceTypesByRefParam ()
+		{	
+			lua.doString ("test=TestClass()");
+			lua.doString ("function func(x,y) return TestClass(x+y.testval); end");
+			lua.doString ("a=test:callDelegate7(func)");
+			Assert.AreEqual (5d, lua["a"]);
+			//Debug.Log("delegate returned: "+a);
+		}
 //		
 //		
 //		/*
@@ -1663,7 +1655,7 @@ public class test : MonoBehaviour {
 
 		// public void TestCtype ()
 		// {
-		// 	lua.LoadCLRPackage ();
+		// 	
 		// 	lua.doString ("import'System'");
 		// 	var x  = lua.doString ("return luanet.ctype(String)");
 		// 	Assert.AreEqual (x, typeof(String), "#1 String ctype test");
@@ -1676,34 +1668,32 @@ public class test : MonoBehaviour {
 			Assert.IsTrue (true);
 		}
 
-		// public void TestUnicodeChars ()
-		// {
-		// 	lua.LoadCLRPackage ();
-		// 	lua.doString ("import('NLuaTest')");
-		// 	lua.doString ("res = LuaTests.UnicodeString");
-		// 	string res = (string)lua ["res"];
-		// 	
-		// 	Assert.AreEqual (LuaTests.UnicodeString, res);
-		// }
+		public void TestUnicodeChars ()
+		{
+			lua.doString ("UnicodeClass = NLuaTest.Mock.UnicodeClass");
+			lua.doString ("res = UnicodeClass.UnicodeString");
+			string res = (string)lua ["res"];
+			
+			Assert.AreEqual (UnicodeClass.UnicodeString, res);
+		}
 
-//		public void TestCoroutine ()
-//		{
-//				lua.LoadCLRPackage ();
-//				lua.RegisterFunction ("func1", null, typeof (TestClass2).GetMethod ("func"));
-//				lua.doString ("function yielder() " +
-//				              "a=1;" + "coroutine.yield();" +
-//				              "func1(3,2);" + "coroutine.yield();" + // This line triggers System.NullReferenceException
-//				              "a=2;" + "coroutine.yield();" +
-//				              "end;" +
-//				              "co_routine = coroutine.create(yielder);" +
-//				              "while coroutine.resume(co_routine) do end;");
-//				
-//				double num = lua["a"];
-//				//Debug.Log("a="+num);
-//				Assert.AreEqual (num, 2d);
-//			}
-//		}
-//		
+		// public void TestCoroutine ()
+		// {
+		// 	lua.doString (
+		// 		"func = NLuaTest.Mock.TestClass2.func;" +
+		// 		"function yielder() " +
+		// 			"a=1;" +
+		// 			"coroutine.yield();" +
+		// 			"func(3,2);" +
+		// 			"coroutine.yield();" + // This line triggers System.NullReferenceException
+		// 			"a=2;" +
+		// 			"coroutine.yield();" +
+		// 		"end;" +
+		// 		"co_routine = coroutine.create(yielder);" +
+		// 		"while coroutine.resume(co_routine) do end;");
+		// 	//Debug.Log("a="+num);
+		// 	Assert.AreEqual (lua["a"], 2d);
+		// }
 
 //		public void TestDebugHook ()
 //		{
@@ -1792,7 +1782,7 @@ public class test : MonoBehaviour {
 
 		// public void TestUnaryMinus ()
 		// {	
-		// 	lua.LoadCLRPackage ();
+		// 	
 		// 	lua.doString (@" import ('System.Numerics')
 		// 				  c = Complex (10, 5) 
 		// 				  c = -c ");
@@ -1804,69 +1794,58 @@ public class test : MonoBehaviour {
 		// }
 		// #endif
 
-//		public void TestCaseFields ()
-//		{
-//			
-//				lua.LoadCLRPackage ();
-//				
-//				lua.doString (@" import ('NLuaTest')
-//							  x = TestCaseName()
-//							  name  = x.name;
-//							  name2 = x.Name;
-//							  Name = x.Name;
-//							  Name2 = x.name");
-//				
-//				Assert.AreEqual ("name", lua ["name"]);
-//				Assert.AreEqual ("**name**", lua ["name2"]);
-//				Assert.AreEqual ("**name**", lua ["Name"]);
-//				Assert.AreEqual ("name", lua ["Name2"]);
-//		}
-//		
+		public void TestCaseFields ()
+		{			
+			lua.doString (@"
+						  x = NLuaTest.Mock.TestCaseName()
+						  name  = x.name;
+						  name2 = x.Name;
+						  Name = x.Name;
+						  Name2 = x.name");
+			
+			Assert.AreEqual ("name", lua ["name"]);
+			Assert.AreEqual ("**name**", lua ["name2"]);
+			Assert.AreEqual ("**name**", lua ["Name"]);
+			Assert.AreEqual ("name", lua ["Name2"]);
+		}
+		
 
-//		public void TestStaticOperators ()
-//		{
-//			
-//				lua.LoadCLRPackage ();
-//				
-//				lua.doString (@" import ('NLuaTest')
-//							  v = Vector()
-//							  v.x = 10
-//							  v.y = 3
-//							  v = v*2 ");
-//				
-//				var v = (Vector)lua ["v"];
-//				
-//				Assert.AreEqual (20, v.x, "#1");
-//				Assert.AreEqual (6, v.y, "#2");
-//				
-//				lua.doString (@" x = 2 * v");
-//				var x = (Vector)lua ["x"];
-//				
-//				Assert.AreEqual (40, x.x, "#3");
-//				Assert.AreEqual (12, x.y, "#4");
-//		}
-//		
+		public void TestStaticOperators ()
+		{	
+			lua.doString (@"
+						  v = NLuaTest.Mock.Vector()
+						  v.x = 10
+						  v.y = 3
+						  v = v*2 ");
+			
+			var v = (Vector)lua ["v"];
+			
+			Assert.AreEqual (20d, v.x, "#1");
+			Assert.AreEqual (6d, v.y, "#2");
+			
+			// lua.doString (@" x = 2 * v");
+			// var x = (Vector)lua ["x"];
+			
+			// Assert.AreEqual (40d, x.x, "#3");
+			// Assert.AreEqual (12d, x.y, "#4");
+		}	
 
-//		public void TestExtensionMethods ()
-//		{
-//			
-//				lua.LoadCLRPackage ();
-//				
-//				lua.doString (@" import ('NLuaTest')
-//							  v = Vector()
-//							  v.x = 10
-//							  v.y = 3
-//							  v = v*2 ");
-//				
-//				var v = (Vector)lua ["v"];
-//				
-//				double len = v.Lenght ();
-//				lua.doString (" v:Lenght() ");
-//				lua.doString (@" len2 = v:Lenght()");
-//				double len2 = (double)lua ["len2"];
-//				Assert.AreEqual (len, len2, "#1");
-//		}
-//		
+		// public void TestExtensionMethods ()
+		// {		
+		// 	lua.doString (@"
+		// 				  v = NLuaTest.Mock.Vector()
+		// 				  v.x = 10
+		// 				  v.y = 3
+		// 				  v = v*2 ");
+		// 	
+		// 	var v = (Vector)lua ["v"];
+		// 	
+		// 	double len = v.Lenght ();
+		// 	lua.doString (" v:Lenght() ");
+		// 	lua.doString (@" len2 = v:Lenght()");
+		// 	double len2 = (double)lua ["len2"];
+		// 	Assert.AreEqual (len, len2, "#1");
+		// }
 
 		 public void TestOverloadedMethods ()
 		 {
@@ -1883,30 +1862,27 @@ public class test : MonoBehaviour {
 	 		Assert.AreEqual (2, obj.CallsToStringFunc, "#string");
 		 }
 
-//		public void TestGetStack ()
-//		{
-//			
-//				lua.LoadCLRPackage ();
-//				m_lua = lua;
-//				lua.doString (@" 
-//								import ('NLuaTest')
-//								function f1 ()
-//									 f2 ()
-//								 end
-//								 
-//								function f2()
-//									f3()
-//								end
-//
-//								function f3()
-//									LuaTests.func()
-//								end
-//								
-//								f1 ()
-//								");
-//			}
-//			m_lua = null;
-//		}
+		// public void TestGetStack ()
+		// {
+		// 	m_lua = lua;
+		// 	lua.doString (@" 
+		// 		import ('NLuaTest')
+		// 		function f1 ()
+		// 			 f2 ()
+		// 		 end
+		// 		 
+		// 		function f2()
+		// 			f3()
+		// 		end
+		// 
+		// 		function f3()
+		// 			LuaTests.func()
+		// 		end
+		// 		
+		// 		f1 ()
+		// 	");
+		// 	m_lua = null;
+		// }
 //		
 //		public static void func()
 //		{
@@ -1936,17 +1912,14 @@ public class test : MonoBehaviour {
 //		}
 //		
 
-//		public void TestCallImplicitBaseMethod ()
-//		{
-//			using (var l = new Lua ()) {
-//				l.LoadCLRPackage ();
-//				l.DoString ("import ('NLuaTest')");
-//				l.DoString ("res = testClass.read() ");
-//				string res = (string)l ["res"];
-//				Assert.AreEqual (testClass.read (), res);
-//			}
-//		}
-//		
+		// public void TestCallImplicitBaseMethod ()
+		// {
+		// 	lua.doString ("testClass3 = NLuaTest.Mock.testClass3");
+		// 	lua.doString ("res = testClass3.read() ");
+		// 	string res = (string)lua ["res"];
+		// 	Assert.AreEqual (testClass3.read (), res);
+		// }
+		
 
 //		public void TestPushLuaFunctionWhenReadingDelegateProperty ()
 //		{
@@ -2004,36 +1977,28 @@ public class test : MonoBehaviour {
 //		}
 		
 
-//		public void TestOverloadedMethodCallOnBase ()
-//		{
-//			using (var l = new Lua ()) {
-//				l.LoadCLRPackage ();
-//				l.DoString (" import ('NLuaTest') ");
-//				l.DoString (@"
-//					p=parameter()
-//					r1 = testClass.read(p)     -- is not working. it is also not working if the method in base class has two parameters instead of one
-//					r2 = testClass.read(1)     -- is working				
-//				");
-//				string r1 = (string) l ["r1"];
-//				string r2 = (string) l ["r2"];
-//				Assert.AreEqual ("parameter-field1", r1, "#1");
-//				Assert.AreEqual ("int-test" , r2, "#2");
-//			}
-//		}
-//		
+		public void TestOverloadedMethodCallOnBase ()
+		{
+			lua.doString ("parameter = NLuaTest.Mock.parameter");
+			lua.doString (@"
+				testClass3 = NLuaTest.Mock.testClass3
+				p=parameter()
+				-- r1 = testClass3.read(p)     -- is not working. it is also not working if the method in base class has two parameters instead of one
+				r2 = testClass3.read(1)     -- is working				
+			");
+			// string r1 = (string) lua ["r1"];
+			string r2 = (string) lua ["r2"];
+			// Assert.AreEqual ("parameter-field1", r1, "#1");
+			Assert.AreEqual ("int-test" , r2, "#2");
+		}	
 
-//		public void TestCallMethodWithParams2 ()
-//		{
-//			using (var l = new Lua ()) {
-//				l.LoadCLRPackage ();
-//				l.DoString (" import ('NLuaTest','NLuaTest.Mock') ");
-//				l.DoString (@"					
-//					r = TestClass.MethodWithParams(2)			
-//				");
-//				int r =  (int)l["r");
-//				Assert.AreEqual (0, r, "#1");
-//			}
-//		}
+		public void TestCallMethodWithParams2 ()
+		{
+			lua.doString (@"					
+				r = TestClass.MethodWithParams(2)			
+			");
+			Assert.AreEqual (0d, lua["r"], "#1");
+		}
 		
 //		static Lua m_lua;
 		

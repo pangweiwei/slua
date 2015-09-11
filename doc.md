@@ -518,3 +518,11 @@ UnityAction/UnityEvent目前仅支持1个泛型参数的版本,目前UnityEngine
 返回没有导出的类型, 会采用LuaVarObject, 这个类退化为使用反射, 并且并没有完善, 不建议返回没有导出的类, 简单例子可以参考varobj工程.
 
 函数的默认参数不支持.
+
+问题补充：[见test.cs]:
+* 不支持Nullable. (TestNullable)
+* 当struct定义了带参的构造函数，并且没有定义不带参的构造函数时，struct无法构建. (TestStructDefaultConstructor)
+* 不支持跨线程调用LuaState. (TestThreading)
+* 不支持ExtensionMethods. (TestExtensionMethods)
+* 不支持父类方法重载. (TestCallImplicitBaseMethod)
+* 不支持读Action. (TestPushLuaFunctionWhenReadingDelegateProperty)
