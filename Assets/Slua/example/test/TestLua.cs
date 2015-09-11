@@ -756,6 +756,11 @@ namespace NLuaTest.Mock
 			}
 			return i;
 		}
+
+		public bool TestType(Type t)
+		{
+			return this.GetType() == t;
+		}
 	}
 	
 	public class TestClassWithOverloadedMethod

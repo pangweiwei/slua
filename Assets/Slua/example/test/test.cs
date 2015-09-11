@@ -1999,6 +1999,22 @@ public class test : MonoBehaviour {
 			");
 			Assert.AreEqual (0d, lua["r"], "#1");
 		}
+
+		public void TestPassType()
+		{
+			TestClass o = new TestClass ();
+			Type t = o.GetType();
+			Assert.True (t == typeof(NLuaTest.Mock.TestClass));
+			Assert.True (t != typeof(Type));
+			Assert.True (t.GetType() == typeof(Type).GetType());
+
+			lua.doString (@"
+				TestClass=NLuaTest.Mock.TestClass
+				t = TestClass()
+				r = t:TestType(t:GetType())
+			");
+			Assert.True ((bool)lua ["r"]);
+		}
 		
 //		static Lua m_lua;
 		
