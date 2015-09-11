@@ -720,7 +720,6 @@ namespace NLuaTest.Mock
 		{
 			Debug.Log ("Method with no params");
 		}
-		}
 		
 		public void MethodOverload (TestClass testClass)
 		{
