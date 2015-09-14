@@ -394,6 +394,64 @@ for i=1,100 do UnityEngine.GameObject() end -- 创建100个GameObject
 然后删除DLL,该DLL仅用于快捷生成wrap文件, 还需要ngui代码放在Assets目录内, 因为其有部分editor功能代码,需要在editor内运行.
 
 
+##远程调试
+
+从slua 1.0开始，附带了一个强大的远程调试工具，这是一个基于qt的跨平台控制台，以下简称sluadbg， 通过以下步骤，我们就可以远程调试slua了。
+
+1）修改代码，启开调试功能，代码如下，可以参考Main.cs：
+
+    	l = new LuaSvr();
+		l.init(tick,complete,true);
+
+第三个参数，默认为false，即不打开调试功能，当改为true的时候，则表示在slua在正式运行脚本前，需要等待调试器连接，否则不等待。为什么需要等待调试器连接呢？ 是因为方便你在启动之前下断点，这样可以在脚本执行的第一行就断点，否则可能slua就直接运行过去了，不能在开始就断点。 如果这里的参数为false，sluadbg任然可以连接，也任然可以放置断点，只不过已经跑过去的代码，无法断点调试而已。
+
+2）启动游戏，如果上面第三个参数设置为true，则会看到一个按钮，游戏暂停，等待slua调试器接入，如果点击按钮，则跳过等待调试器连接，继续运行。
+
+2）通过点击slua->console来打开调试器，然后选择Connect按钮，输入需要连接的ip，默认是127.0.0.1，也就是本机，如果你需要连接手机，需要知道手机的ip地址，slua的默认调试端口为10240，如果你修改了slua的默认调试端口，这里也需要相应需改，然后点击ok。
+
+3）如果连接成功，会看到
+
+    Host connected
+    Type start to continue game
+    slua>
+
+4）键入“start" ，这个时候，slua会继续运行，并且2）提到的按钮会消失。
+
+5）在键入"start"之前，可以通过b 命令，放置断点，例如
+
+    b main:22
+
+这样表示，在运行到lua文件main(可能是txt后缀，也可能是你自己定义的.lua后缀）的22行时，触发断点，这个时候在start，则slua继续运行，直到运行到main的22行。
+
+6）触发断点后，进入断点状态，可以使用如下命令：
+
+	bt 输出调用栈信息
+	c 继续运行
+	n 运行到下一行
+	s 运行到下一行，如果可能，进入函数内部
+	b filename:lineno 放置断点，filename为文件名（不包括扩展名）: lineno为行号，如果目标行号上没有代码，则不会触发断点
+	watch 输出当前帧上的local/upvalues
+	p varname 输出varname代表的变量内容
+	del n 删除第n个断点，n从1开始
+	list 列出所有断点
+	clear 清除所有断点
+
+	任何其他输入，调试器都会尝试运行对应的输入，如果有错误则报告错误，相当于dostring 
+
+7）在非断点状态，可以运行如命令：
+
+
+	b filename:lineno 放置断点，filename为文件名（不包括扩展名）: lineno为行号，如果目标行号上没有代码，则不会触发断点
+	p varname 输出varname代表的变量内容
+	del n 删除第n个断点，n从1开始
+	list 列出所有断点
+	clear 清除所有断点
+
+	任何其他输入，调试器都会尝试运行对应的输入，如果有错误则报告错误，相当于dostring 
+
+
+	
+
 ##编译slua库
 
 编译slua库非常简单, 仅需要把slua加入 lua/luajit 的make文件, 按照对应平台的make方法就可以产生对应平台的库文件, 以 luajit2.1 生成 64位 iOS 系统的库文件为例:
