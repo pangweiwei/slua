@@ -43,6 +43,7 @@ namespace NLuaTest.Mock
 	using System.Diagnostics;
 	using System.Reflection;
 	using SLua;
+	using Debug = UnityEngine.Debug;
 	
 	public class parameter
 	{
@@ -133,7 +134,7 @@ namespace NLuaTest.Mock
 
 		public void Func ()
 		{
-			Console.WriteLine ("Func");
+			Debug.Log ("Func");
 		}
 	}
 
@@ -328,9 +329,9 @@ namespace NLuaTest.Mock
 		{
 			
 			//simulate work by sleeping
-			//Console.WriteLine("Started to do work on thread: " + Thread.CurrentThread.ManagedThreadId);
+			//Debug.Log("Started to do work on thread: " + Thread.CurrentThread.ManagedThreadId);
 			Thread.Sleep (new Random ().Next (0, 1000));
-			//Console.WriteLine("Finished work on thread: " + Thread.CurrentThread.ManagedThreadId);
+			//Debug.Log("Finished work on thread: " + Thread.CurrentThread.ManagedThreadId);
 		}
 	}
 	
@@ -601,7 +602,7 @@ namespace NLuaTest.Mock
 		{
 			int a = 3;
 			del (2, ref a);
-			//Console.WriteLine(a);
+			//Debug.Log(a);
 			return a;
 		}
 		
@@ -645,7 +646,7 @@ namespace NLuaTest.Mock
 		{
 			int a = 3;
 			itest.test3 (2, ref a);
-			//Console.WriteLine(a);
+			//Debug.Log(a);
 			return a;
 		}
 		
@@ -712,28 +713,28 @@ namespace NLuaTest.Mock
 		
 		private void _PrivateMethod ()
 		{
-			Console.WriteLine ("Private method called");
+			Debug.Log ("Private method called");
 		}
 		
 		public void MethodOverload ()
 		{
-			Console.WriteLine ("Method with no params");
+			Debug.Log ("Method with no params");
 		}
 		
 		public void MethodOverload (TestClass testClass)
 		{
-			Console.WriteLine ("Method with testclass param");
+			Debug.Log ("Method with testclass param");
 		}
 		
 		public void MethodOverload (int i, int j, int k)
 		{
-			Console.WriteLine ("Overload without out param: " + i + ", " + j + ", " + k);
+			Debug.Log ("Overload without out param: " + i + ", " + j + ", " + k);
 		}
 		
 		public void MethodOverload (int i, int j, out int k)
 		{
 			k = 5;
-			Console.WriteLine ("Overload with out param" + i + ", " + j);
+			Debug.Log ("Overload with out param" + i + ", " + j);
 		}
 		
 		public void Print(object format,params object[] args)
@@ -744,17 +745,22 @@ namespace NLuaTest.Mock
 			{
 				output += msg.ToString() + "\t";
 			}
-			Console.WriteLine(output);
+			Debug.Log(output);
 		}
 		
 		static public int MethodWithParams (int a, params int[] others) {
-			Console.WriteLine (a);
+			Debug.Log (a);
 			int i = 0;
 			foreach (int val in others) {
-				Console.WriteLine (val);
+				Debug.Log (val);
 				i++;
 			}
 			return i;
+		}
+
+		public bool TestType(Type t)
+		{
+			return this.GetType() == t;
 		}
 	}
 	

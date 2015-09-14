@@ -1119,6 +1119,8 @@ return index
 			return true;
 		}
 
+		private static Type MonoType = typeof(Type).GetType();
+
 		static public bool checkType(IntPtr l, int p, out Type t)
 		{
 			string tname = null;
@@ -1127,10 +1129,10 @@ return index
             {
                 case LuaTypes.LUA_TUSERDATA:
                     object o = checkObj(l, p);
-                    if (o.GetType() != typeof(Type))
+                    if (o.GetType() != MonoType)
                         throw new Exception(string.Format("{0} expect Type, got {1}", p, o.GetType().Name));
                     t = (Type)o;
-                    break;
+					return true;
                 case LuaTypes.LUA_TTABLE:
                     LuaDLL.lua_pushstring(l, "__type");
                     LuaDLL.lua_rawget(l, p);
