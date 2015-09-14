@@ -349,31 +349,6 @@ c#中使用foreach语句遍历IEnumertable,例如List,Array等, 在slua中,可�
 	
 	    
 
-
-##LuaConsole 调试控制台
-
-Slua从v0.82开始提供了一个lua控制台, 在该控制台内可以敲入一些调试指令, 用于快速和lua虚拟机交互,方便调试. 通过Slua->LuaConsole菜单可以打开lua控制台.
-
-控制台内上方为输出窗口,下方为命令输入窗口, 目前支持如下调试指令:
-
-1)任何有效的lua语句, 运行该lua语句, 如果语句有返回值,则输出返回值, 例如:
-
-a=1 --赋值_G['a']=1
-
-a --输出a的值为1
-
-b=2 --赋值_G['b']=2
-
-a,b --输出a,b的值
-
-UnityEngine --输出UnityEngine的内容
-
-for i=1,100 do UnityEngine.GameObject() end -- 创建100个GameObject
-
-2)cls 清屏 
-
-
-
 ##如何快速导出第三方库, 例如ngui等
 
 新建一个空工程,将第三方库的所有代码放入Assets内, 等待Unity编译完成;
@@ -449,8 +424,6 @@ for i=1,100 do UnityEngine.GameObject() end -- 创建100个GameObject
 
 	任何其他输入，调试器都会尝试运行对应的输入，如果有错误则报告错误，相当于dostring 
 
-
-	
 
 ##编译slua库
 
