@@ -254,6 +254,9 @@ namespace SLua
 		{
 			while (true)
 			{
+				if (client == null || !client.Connected)
+					break;
+
 				int len;
 				if (recvCmd(recvBuffer, out len))
 				{
@@ -361,6 +364,8 @@ namespace SLua
 			server.BeginAccept(new AsyncCallback(onClientConnect), server);
 
 			debugMode = false;
+
+			Debug.Log("New debug session connected");
 		}
 
 		public void close()
@@ -389,8 +394,12 @@ namespace SLua
 
 		void onClientDisconnect()
 		{
-			state.doString("ldb.clearBreakPoint()");
+			state.doString("Slua.ldb.clearBreakPoint()");
+
 			client.Close();
+			client = null;
+
+			Debug.Log("Debug session disconnected");
 		}
 
 		public string md5(string f)
@@ -405,11 +414,17 @@ namespace SLua
 		{
 			send("break {0},{1},{2}", f, line, md5);
 			debugMode = true;
-			while (debugMode && client.Connected)
+			while (debugMode && (client!=null))
 			{
 				process();
 			}
 			send("resume");
+		}
+
+		bool cmdquit(string tail)
+		{
+			onClientDisconnect();
+			return true;
 		}
 
 		bool cmdstart(string tail) {
