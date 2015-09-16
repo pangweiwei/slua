@@ -1,5 +1,5 @@
 @echo off
-copy /Y ..\Assets\slua_src\slua.c luajit-2.1.0\src\ 
+copy /Y slua.c luajit-2.1.0\src\ 
 if not exist "%VS120COMNTOOLS%" goto missing
 @set VCVARS="%VS120COMNTOOLS%..\..\VC\bin\"
 @set ENV32="%VCVARS%vcvars32.bat"

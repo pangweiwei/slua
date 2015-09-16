@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 cd "$( dirname "${BASH_SOURCE[0]}" )"
-cp ../Assets/slua_src/slua.c luajit-2.0.4/src/
+cp slua.c luajit-2.0.4/src/
 cd luajit-2.0.4
 SRCDIR=$(pwd)
 DIR=$(pwd)
