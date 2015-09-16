@@ -261,7 +261,7 @@ namespace SLua
 				if (recvCmd(recvBuffer, out len))
 				{
 					string str = System.Text.Encoding.UTF8.GetString(recvBuffer, 0, len);
-					str = str.Replace("\n", "");
+					str = str.Replace("\r\n", "");
 
 					try
 					{

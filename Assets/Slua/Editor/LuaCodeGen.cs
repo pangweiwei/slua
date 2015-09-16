@@ -34,6 +34,52 @@ namespace SLua
 	using System.Text.RegularExpressions;
 
 
+	public class ConnectDebugger : EditorWindow
+	{
+		string addr = "localhost:10240";
+		static ConnectDebugger wnd;
+		[MenuItem("SLua/Console")]
+		static void Init()
+		{
+			if (wnd == null)
+				wnd = (ConnectDebugger)EditorWindow.GetWindow(typeof(ConnectDebugger), true, "Connect debugger");
+			wnd.position = new Rect(Screen.width / 2, Screen.height / 2, 500, 50);
+			wnd.Show();
+		}
+
+
+		void OnGUI()
+		{
+			addr = EditorGUILayout.TextField("Debugger IP:", addr);
+			if (GUILayout.Button("Connect", GUILayout.ExpandHeight(true)))
+			{
+				try
+				{
+					string ip = "localhost";
+					int port = 10240;
+					string[] comp = addr.Split(':');
+
+					ip = comp[0];
+					if (comp.Length > 0)
+						port = Convert.ToInt32(comp[1]);
+
+#if UNITY_EDITOR_WIN
+					System.Diagnostics.Process.Start("debugger\\win\\ldb.exe", string.Format("-host {0} -port {1}", ip, port));
+#else
+						System.Diagnostics.Process.Start(string.Format("debugger\\mac\\ldb",string.Format("-host {0} -port {1}", ip, port));
+#endif
+				}
+				catch (Exception)
+				{
+					Debug.LogError("Can't find debugger, download it from https://github.com/pangweiwei/sluadbg and put them to debugger directory.");
+				}
+
+			}
+		}
+
+	}
+
+
 
     public class LuaCodeGen : MonoBehaviour
 	{
@@ -64,24 +110,7 @@ namespace SLua
 				}
 			}
 		}
-
-		[MenuItem("SLua/Console")]
-		static public void Console()
-		{
-			try
-			{
-#if UNITY_EDITOR_WIN
-				System.Diagnostics.Process.Start("debugger\\win\\SluaDebugger.exe");
-#else
-			System.Diagnostics.Process.Start("debugger\\mac\\SluaDebugger");
-#endif
-			}
-			catch (Exception)
-			{
-				Debug.LogError("Can't find debugger, download it from https://github.com/pangweiwei/sluadbg and put them to debugger directory.");
-			}
-		}
-		
+	
 		[MenuItem("SLua/All/Make")]
 		static public void GenerateAll()
 		{
