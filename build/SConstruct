@@ -1,0 +1,28 @@
+import glob, os
+
+LUA_SRC = './luajit-2.1.0/src'
+IOS_SDK = 'iPhoneOS8.4.sdk'
+
+def build_mac_dylib(name, src):
+	env = Environment(CCFLAGS="-Wall -std=gnu99 -arch i386 -arch x86_64")
+	env.Append(LINKFLAGS = '-Wl,-undefined -Wl,dynamic_lookup -arch i386 -arch x86_64')
+
+	env.Append(CPPPATH=[LUA_SRC])
+	env.SharedLibrary(name+".bundle", src)
+	
+def build_ios_lib(name, src):
+	env = Environment(CCFLAGS="-Wall -std=gnu99 -arch armv7 -arch armv7s -arch arm64")
+
+	IXCODE = os.popen("xcode-select -print-path").read().replace("\n", "")
+	env["PATH"] = IXCODE
+	env.Append(CPPFLAGS = ["-isysroot", os.path.join(IXCODE, "Platforms/iPhoneOS.platform/Developer/SDKs/" + IOS_SDK)])
+	
+	env.Append(CPPPATH=[LUA_SRC])
+	env.StaticLibrary(name, src)
+
+luasocket_src = glob.glob('./luasocket-2.0.2/src/*.c')
+if os.name != "nt":
+	luasocket_src.remove('./luasocket-2.0.2/src/wsocket.c')
+
+build_mac_dylib("luasocket", luasocket_src)
+build_ios_lib("luasocket", luasocket_src)
