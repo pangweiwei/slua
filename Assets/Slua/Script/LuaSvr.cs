@@ -138,6 +138,7 @@ namespace SLua
 			LuaValueType.reg(L);
 			SLuaDebug.reg(L);
 			LuaDLL.luaS_openextlibs(L);
+			Lua3rdDLL.open(L);
 
 			lgo.state = luaState;
 			lgo.onUpdate = this.tick;
