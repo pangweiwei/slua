@@ -25,6 +25,8 @@ This repo https://github.com/lulersoft/ME_SLua based on slua for simple game fra
 
 This repo https://github.com/yaukeywang/2DPlatformer-SLua demonstrate 2DPlatformer game using slua.
 
+This repo https://github.com/tenvick/hugula demonstrate Tetris game using slua.
+
 ##Help
 
 See inner demo for help or [Document](doc.md) (in chinese).
