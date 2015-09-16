@@ -16,7 +16,10 @@ MyGameObject=Slua.Class(GameObject,
 )
 
 function main()
-
+	socket = require("socket")
+	print("socket._VERSION:", socket._VERSION)
+	http = require("socket.http")
+	print("http:", http.request("http://www.baidu.com"))
 
 	local t=dofile('module/some')
 	assert(type(t)=='table')
