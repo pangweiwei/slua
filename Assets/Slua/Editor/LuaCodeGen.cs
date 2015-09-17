@@ -66,7 +66,7 @@ namespace SLua
 #if UNITY_EDITOR_WIN
 					System.Diagnostics.Process.Start("debugger\\win\\ldb.exe", string.Format("-host {0} -port {1}", ip, port));
 #else
-						System.Diagnostics.Process.Start(string.Format("debugger\\mac\\ldb",string.Format("-host {0} -port {1}", ip, port));
+						System.Diagnostics.Process.Start("debugger\\mac\\ldb",string.Format("-host {0} -port {1}", ip, port));
 #endif
 				}
 				catch (Exception)
