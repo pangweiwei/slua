@@ -3,7 +3,7 @@ using System.Collections;
 using SLua;
 using UnityEngine.UI;
 using System.Collections.Generic;
-
+using LuaInterface;
 public class Main : MonoBehaviour
 {
 
@@ -36,14 +36,17 @@ public class Main : MonoBehaviour
 
 	void complete()
 	{
-		l.start("main");
-		object o = l.luaState.getFunction("foo").call(1, 2, 3);
-		object[] array = (object[])o;
-		for (int n = 0; n < array.Length; n++)
-			Debug.Log(array[n]);
-
-		string s = (string)l.luaState.getFunction("str").call(new object[0]);
-		Debug.Log(s);
+		System.IntPtr L = l.luaState.L;
+		LuaDLL.lua_pushnil (L);
+		LuaDLL.luaL_checknumber (L, -1);
+//		l.start("main");
+//		object o = l.luaState.getFunction("foo").call(1, 2, 3);
+//		object[] array = (object[])o;
+//		for (int n = 0; n < array.Length; n++)
+//			Debug.Log(array[n]);
+//
+//		string s = (string)l.luaState.getFunction("str").call(new object[0]);
+//		Debug.Log(s);
 	}
 
 	void OnGUI()

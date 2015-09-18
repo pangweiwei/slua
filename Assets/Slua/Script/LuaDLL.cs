@@ -483,9 +483,10 @@ namespace LuaInterface
 
 		public static void luaL_checktype(IntPtr luaState, int p, LuaTypes t)
 		{
-			if (lua_type(luaState, p) != t)
+			LuaTypes ct = LuaDLL.lua_type (luaState, p);
+			if (ct != t)
 			{
-				throw new Exception(string.Format("arg {0} expect {1}", p, lua_typenamestr(luaState, t)));
+				throw new Exception(string.Format("arg {0} expect {1}, got {2}", p, lua_typenamestr(luaState, t), lua_typenamestr(luaState, t)));
 			}
 		}
 
