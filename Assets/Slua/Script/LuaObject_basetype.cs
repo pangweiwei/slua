@@ -86,6 +86,19 @@ namespace SLua
 #endregion
 
 #region Integral Types
+	#region sbyte
+		public static bool checkType(IntPtr l, int p, out sbyte v)
+		{
+			v = (sbyte)LuaDLL.luaL_checkinteger(l, p);
+			return true;
+		}
+		
+		public static void pushValue(IntPtr l, sbyte v)
+		{
+			LuaDLL.lua_pushinteger(l, v);
+		}
+
+	#endregion
 
 		#region byte
 		static public bool checkType(IntPtr l, int p, out byte v)
@@ -105,6 +118,11 @@ namespace SLua
 		{
 			c = (char)LuaDLL.luaL_checkinteger(l, p);
 			return true;
+		}
+
+		public static void pushValue(IntPtr l, char v)
+		{
+			LuaDLL.lua_pushinteger(l, v);
 		}
 
 		static public bool checkType(IntPtr l, int p, out char[] pars)
@@ -137,6 +155,10 @@ namespace SLua
 			return true;
 		}
 		
+		public static void pushValue(IntPtr l, ushort v)
+		{
+			LuaDLL.lua_pushinteger(l, v);
+		}
 		#endregion
 
 		#region int
@@ -175,6 +197,10 @@ namespace SLua
 			return true;
 		}
 		
+		public static void pushValue(IntPtr l, uint o)
+		{
+			LuaDLL.lua_pushnumber(l, o);
+		}
 		#endregion
 
 		#region long
@@ -224,6 +250,14 @@ namespace SLua
 			return true;
 		}
 		
+		public static void pushValue(IntPtr l, ulong o)
+		{
+			#if LUA_5_3
+			LuaDLL.lua_lua_pushinteger(l,o);
+			#else
+			LuaDLL.lua_pushnumber(l, o);
+			#endif
+		}
 		#endregion
 		
 
