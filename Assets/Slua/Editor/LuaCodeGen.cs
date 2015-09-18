@@ -1230,7 +1230,9 @@ namespace SLua
 		ConstructorInfo[] GetValidConstructor(Type t)
 		{
 			List<ConstructorInfo> ret = new List<ConstructorInfo>();
-			if (t.GetConstructor(Type.EmptyTypes) == null || t.IsAbstract)
+			if (t.GetConstructor(Type.EmptyTypes) == null && t.IsAbstract && t.IsSealed)
+				return ret.ToArray();
+			if (t.IsAbstract)
 				return ret.ToArray();
 			if (t.BaseType != null && t.BaseType.Name == "MonoBehaviour")
 				return ret.ToArray();
