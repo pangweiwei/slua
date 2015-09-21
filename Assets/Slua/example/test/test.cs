@@ -854,7 +854,6 @@ public class test : MonoBehaviour {
 	        TestClass t1 = new TestClass();
 	        t1.testval = 4;
 	        lua["netobj"] = t1;
-	        TestClass t2 = (TestClass)lua["netobj"];
 	        
 			Assert.True(objMap.ContainsKey(t1));
 	        
