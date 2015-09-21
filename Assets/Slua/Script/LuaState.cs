@@ -101,6 +101,42 @@ namespace SLua
 		{
 			LuaDLL.lua_getref(l, valueref);
 		}
+
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
+		}
+
+		public override bool Equals(object obj)
+		{
+			if(obj is LuaVar) {
+				return this==(LuaVar)obj;
+			}
+			return false;
+		}
+
+		public static bool operator ==(LuaVar x, LuaVar y) {
+			if ((object)x == null || (object)y == null)
+				return (object)x == (object)y;
+
+			x.push(x.L);
+			y.push(x.L);
+			bool ok = LuaDLL.lua_equal(x.L, -1, -2) == 1;
+			LuaDLL.lua_pop(x.L, 2);
+			return ok;
+		}
+
+		public static bool operator !=(LuaVar x, LuaVar y)
+		{
+			if ((object)x == null || (object)y == null)
+				return (object)x != (object)y;
+
+			x.push(x.L);
+			y.push(x.L);
+			bool ok = LuaDLL.lua_equal(x.L, -1, -2) != 1;
+			LuaDLL.lua_pop(x.L, 2);
+			return ok;
+		}
 	}
 
     public class LuaThread : LuaVar
