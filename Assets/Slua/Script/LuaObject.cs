@@ -797,7 +797,7 @@ return index
 					return t == typeof(bool);
 				case LuaTypes.LUA_TTABLE:
 					{
-						if (t == typeof(LuaTable))
+						if (t == typeof(LuaTable) || t.IsArray)
 							return true;
 						else if (t.IsValueType)
 							return luaTypeCheck(l, p, t.Name);
