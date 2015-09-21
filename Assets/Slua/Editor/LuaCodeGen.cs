@@ -66,12 +66,20 @@ namespace SLua
 #if UNITY_EDITOR_WIN
 					System.Diagnostics.Process.Start("debugger\\win\\ldb.exe", string.Format("-host {0} -port {1}", ip, port));
 #else
-						System.Diagnostics.Process.Start("debugger\\mac\\ldb",string.Format("-host {0} -port {1}", ip, port));
+					System.Diagnostics.ProcessStartInfo proc = new System.Diagnostics.ProcessStartInfo();
+					proc.FileName = "ldb";
+					proc.WorkingDirectory = "debugger/mac";
+					// I don't know why can't start process with arguments on MacOSX
+					// I just keep arguments empty????
+					proc.Arguments = "";//string.Format("-host {0} -port {1}", ip, port);
+					proc.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+					proc.CreateNoWindow = true;
+					System.Diagnostics.Process.Start(proc);
 #endif
 				}
-				catch (Exception)
+				catch (Exception e)
 				{
-					Debug.LogError("Can't find debugger, download it from https://github.com/pangweiwei/sluadbg and put them to debugger directory.");
+					Debug.LogError(e);
 				}
 
 			}
