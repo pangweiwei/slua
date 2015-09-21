@@ -1027,6 +1027,11 @@ return index
 
         static public bool checkType(IntPtr l, int p, out LuaThread lt)
         {
+			if (LuaDLL.lua_isnil(l, p))
+			{
+				lt = null;
+				return true;
+			}
             LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTHREAD);
             LuaDLL.lua_pushvalue(l, p);
             int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
@@ -1036,6 +1041,11 @@ return index
 
         static public bool checkType(IntPtr l, int p, out LuaFunction f)
 		{
+			if (LuaDLL.lua_isnil(l, p))
+			{
+				f = null;
+				return true;
+			}
 			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TFUNCTION);
 			LuaDLL.lua_pushvalue(l, p);
 			int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
@@ -1045,6 +1055,11 @@ return index
 
 		static public bool checkType(IntPtr l, int p, out LuaTable t)
 		{
+			if (LuaDLL.lua_isnil(l, p))
+			{
+				t = null;
+				return true;
+			}
 			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
 			LuaDLL.lua_pushvalue(l, p);
 			int fref = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
