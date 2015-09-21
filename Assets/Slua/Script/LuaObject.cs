@@ -774,9 +774,9 @@ return index
 			{
 				return true;
 			}
-			else if (t == typeof(Type))
+			else if (t == typeof(Type) && isTypeTable(l, p))
 			{
-				return isTypeTable(l, p);
+				return true;
 			}
 
 			switch (lt)
