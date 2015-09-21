@@ -119,11 +119,7 @@ namespace SLua
 			if ((object)x == null || (object)y == null)
 				return (object)x == (object)y;
 
-			x.push(x.L);
-			y.push(x.L);
-			bool ok = LuaDLL.lua_equal(x.L, -1, -2) == 1;
-			LuaDLL.lua_pop(x.L, 2);
-			return ok;
+			return Equals(x, y) == 1;
 		}
 
 		public static bool operator !=(LuaVar x, LuaVar y)
@@ -131,9 +127,14 @@ namespace SLua
 			if ((object)x == null || (object)y == null)
 				return (object)x != (object)y;
 
+			return Equals(x, y) != 1;
+		}
+
+		static int Equals(LuaVar x, LuaVar y)
+		{
 			x.push(x.L);
 			y.push(x.L);
-			bool ok = LuaDLL.lua_equal(x.L, -1, -2) != 1;
+			int ok = LuaDLL.lua_equal(x.L, -1, -2);
 			LuaDLL.lua_pop(x.L, 2);
 			return ok;
 		}
