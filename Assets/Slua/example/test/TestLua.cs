@@ -716,25 +716,35 @@ namespace NLuaTest.Mock
 			Debug.Log ("Private method called");
 		}
 		
-		public void MethodOverload ()
+		public int MethodOverload ()
 		{
 			Debug.Log ("Method with no params");
+			return 1;
 		}
 		
-		public void MethodOverload (TestClass testClass)
+		public int MethodOverload (TestClass testClass)
 		{
 			Debug.Log ("Method with testclass param");
+			return 2;
+		}
+
+		public int MethodOverload (Type type)
+		{
+			Debug.Log ("Method with testclass param");
+			return 3;
 		}
 		
-		public void MethodOverload (int i, int j, int k)
+		public int MethodOverload (int i, int j, int k)
 		{
 			Debug.Log ("Overload without out param: " + i + ", " + j + ", " + k);
+			return 4;
 		}
 		
-		public void MethodOverload (int i, int j, out int k)
+		public int MethodOverload (int i, int j, out int k)
 		{
 			k = 5;
 			Debug.Log ("Overload with out param" + i + ", " + j);
+			return 5;
 		}
 		
 		public void Print(object format,params object[] args)
