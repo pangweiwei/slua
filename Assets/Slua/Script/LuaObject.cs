@@ -804,7 +804,7 @@ return index
 						else if (LuaDLL.luaS_subclassof(l, p, t.Name) == 1)
 							return true;
 						else
-							return t.IsArray;
+							return false;
 					}
 				case LuaTypes.LUA_TFUNCTION:
 					return t == typeof(LuaFunction) || t.BaseType == typeof(MulticastDelegate);
