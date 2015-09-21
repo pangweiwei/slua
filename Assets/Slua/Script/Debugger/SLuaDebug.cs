@@ -33,9 +33,9 @@ do
     rawset(Slua,'ldb',{})
 
 	local Bps={}
-	stepOverDepth = nil
-	stackDepth = 0
-	breakMode = false
+	local stepOverDepth = nil
+	local stackDepth = 0
+	local breakMode = false
 
     local function print(str)
     	outputConsole(str)
@@ -152,7 +152,7 @@ do
 	end
 
     local visited = nil
-	function prettyTabToStr(tab, level, path)
+	local function prettyTabToStr(tab, level, path)
 		local result = ''
 		if level == nil then
 			visited = {}
@@ -336,7 +336,7 @@ do
 		end
 	end
 
-	function bp()
+	function Slua.ldb.bp()
 		if not LuaDebugger.isRemoteClient then
 			return
 		end
@@ -349,7 +349,7 @@ do
 		breakMode = true
 	end
 
-	function getCallDepth()
+	local function getCallDepth()
 		local deep = 2
 		local info = nil
 		repeat 
