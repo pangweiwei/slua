@@ -215,10 +215,22 @@ public class test : MonoBehaviour {
 		public void TestMethodOverloads ()
 		{
 			lua.doString ("test=TestClass()");
-			lua.doString ("test:MethodOverload()");
-			lua.doString ("test:MethodOverload(test)");
-			lua.doString ("test:MethodOverload(1,1,1)");
-			lua.doString ("test:MethodOverload(2,2,i)\r\nprint(i)");
+			lua.doString ("a1 = test:MethodOverload()");
+			lua.doString ("a2 = test:MethodOverload(test)");
+			lua.doString ("a3 = test:MethodOverload(TestClass)");
+			lua.doString ("a31 = test:MethodOverload(test:GetType())");
+			lua.doString ("a32 = test:MethodOverload(NLuaTest.Mock.TestClass2():GetType())");
+			lua.doString ("a4 = test:MethodOverload(1,1,1)");
+			lua.doString ("a5, i = test:MethodOverload(2,2,Slua.out)\r\n");
+			Assert.AreEqual(1d, lua["a1"]);
+			Assert.AreEqual(2d, lua["a2"]);
+			Assert.AreEqual(3d, lua["a3"]);
+			Assert.AreEqual(3d, lua["a31"]);
+			Assert.AreEqual(3d, lua["a32"]);
+			Assert.AreEqual(4d, lua["a4"]);
+			Assert.AreEqual(5d, lua["a5"]);
+			Assert.AreEqual(5d, lua["i"]);
+
 		}
 
 		public void TestDispose ()
@@ -2017,7 +2029,7 @@ public class test : MonoBehaviour {
 			Assert.True ((bool)lua ["r1"]);
 			Assert.True ((bool)lua ["r2"]);
 		}
-		
+
 //		static Lua m_lua;
 		
 	}
