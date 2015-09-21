@@ -53,6 +53,20 @@ namespace SLua
 			return true;
 		}
 
+		static public bool checkType(IntPtr l, int p, out Vector3[] t)
+		{
+			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
+			int n = LuaDLL.lua_rawlen(l, p);
+			t = new Vector3[n];
+			for (int k = 0; k < n; k++)
+			{
+				LuaDLL.lua_rawgeti(l, p, k + 1);
+				checkType(l, -1, out t[k]);
+				LuaDLL.lua_pop(l, 1);
+			}
+			return true;
+		}
+
 		static public bool checkType(IntPtr l, int p, out Vector2 v)
 		{
 			float x, y;
