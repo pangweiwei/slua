@@ -152,7 +152,7 @@ public class HelloWorld   {
 
 ##How to remote debug
 
-ldb is powerful tool shiped with slua 1.0, you can find it in slua/debugger directory, win subdir for Windows, mac subdir for MacOSX. It's a cmd-line tool that accept form of cmd-line as below:
+ldb is powerful tool shiped with slua 1.0 (you can find the source from here https://github.com/pangweiwei/sluadbg), a procompiled binary file is in slua/debugger directory, win subdir for Windows, mac subdir for MacOSX. It's a cmd-line tool that accept form of cmd-line as below:
 
 on OSX
 
