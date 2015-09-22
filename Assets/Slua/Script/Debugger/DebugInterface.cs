@@ -58,16 +58,16 @@ namespace SLua
 		static DebugInterface instance;
 
 		const string usageTips =@"
-    add break point					b <filename>:<lineno>
-    remove break point              delete <break point index>
-    list exists break points		list
-    clear all break points          clear
-    -------------Commands-------------
-    continue                  		c
-    next                			n
-    step              				s
-    print traceback              	bt
-    watch local/up value  			watch
+add break point					b <filename>:<lineno>
+remove break point              delete <break point index>
+list exists break points		list
+clear all break points          clear
+-------------Debug Command-------------
+continue                  		c
+next                			n
+step              				s
+print traceback              	bt
+watch local/up value  			watch
 ";
 
 		public DebugInterface(LuaState L)
