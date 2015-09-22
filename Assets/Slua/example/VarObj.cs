@@ -9,6 +9,9 @@ public class VarObj : MonoBehaviour
 	void Start()
 	{
 		l = new LuaSvr();
-		l.start("varobj");
+		l.init(null, () =>
+		{
+			l.start("varobj");
+		});
 	}
 }

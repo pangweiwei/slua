@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 cd "$( dirname "${BASH_SOURCE[0]}" )"
-cp ../Assets/slua_src/slua.c luajit-2.0.4/src/
+cp slua.c luajit-2.0.4/src/
 cd luajit-2.0.4
 SRCDIR=$(pwd)
 DIR=$(pwd)
@@ -11,7 +11,7 @@ NDKVER=$NDK/toolchains/arm-linux-androideabi-4.8
 NDKP=$NDKVER/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-  
 NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-arm"  
   
-# Android/ARM, armeabi (ARMv5TE soft-float), Android 2.2+ (Froyo)  
+# # Android/ARM, armeabi (ARMv5TE soft-float), Android 2.2+ (Froyo)  
 # DESTDIR=$DIR/android/armeabi  
 # mkdir -p $DESTDIR
 # rm -rf "$DESTDIR"/*.a  
@@ -32,7 +32,7 @@ make clean
 make HOST_CC="gcc -m32" CROSS=$NDKP TARGET_SYS=Linux TARGET_FLAGS="$NDKF $NDKARCH" TARGET_SONAME=libslua.so BUILDMODE=dynamic
   
 if [ -f $SRCDIR/src/libluajit.so ]; then  
-    mv $SRCDIR/src/libluajit.so ../../Assets/Plugins/Android/libs/armeabi-v7a/libslua.so
+    cp $SRCDIR/src/libluajit.so ../../Assets/Plugins/Android/libs/armeabi-v7a/libslua.so
 fi;  
   
 # Android/x86, x86 (i686 SSE3), Android 4.0+ (ICS)  
@@ -47,7 +47,7 @@ make clean
 make HOST_CC="gcc -m32" CROSS=$NDKP TARGET_SYS=Linux TARGET_FLAGS="$NDKF"  
   
 if [ -f $SRCDIR/src/libluajit.so ]; then  
-    mv $SRCDIR/src/libluajit.so ../../Assets/Plugins/Android/libs/x86/libslua.so
+    cp $SRCDIR/src/libluajit.so ../../Assets/Plugins/Android/libs/x86/libslua.so
 fi;   
   
-make clean  
+# make clean  

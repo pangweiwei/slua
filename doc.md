@@ -349,31 +349,6 @@ c#中使用foreach语句遍历IEnumertable,例如List,Array等, 在slua中,可�
 	
 	    
 
-
-##LuaConsole 调试控制台
-
-Slua从v0.82开始提供了一个lua控制台, 在该控制台内可以敲入一些调试指令, 用于快速和lua虚拟机交互,方便调试. 通过Slua->LuaConsole菜单可以打开lua控制台.
-
-控制台内上方为输出窗口,下方为命令输入窗口, 目前支持如下调试指令:
-
-1)任何有效的lua语句, 运行该lua语句, 如果语句有返回值,则输出返回值, 例如:
-
-a=1 --赋值_G['a']=1
-
-a --输出a的值为1
-
-b=2 --赋值_G['b']=2
-
-a,b --输出a,b的值
-
-UnityEngine --输出UnityEngine的内容
-
-for i=1,100 do UnityEngine.GameObject() end -- 创建100个GameObject
-
-2)cls 清屏 
-
-
-
 ##如何快速导出第三方库, 例如ngui等
 
 新建一个空工程,将第三方库的所有代码放入Assets内, 等待Unity编译完成;
@@ -392,6 +367,66 @@ for i=1,100 do UnityEngine.GameObject() end -- 创建100个GameObject
 **注意去掉对UnityEditor的引用，否则发布的时候可能失败, 因为手机环境下没有UnityEditor的运行环境**
 
 然后删除DLL,该DLL仅用于快捷生成wrap文件, 还需要ngui代码放在Assets目录内, 因为其有部分editor功能代码,需要在editor内运行.
+
+
+##远程调试
+
+从slua 1.0开始，附带了一个强大的远程调试工具，这是一个基于golang的跨平台控制台，以下简称ldb， 通过以下步骤，我们就可以远程调试slua了。
+
+1）修改代码，启开调试功能，代码如下，可以参考Main.cs：
+
+    	l = new LuaSvr();
+		l.init(tick,complete,true);
+
+第三个参数，默认为false，即不打开调试功能，当改为true的时候，则表示在slua在正式运行脚本前，需要等待调试器连接，否则不等待。为什么需要等待调试器连接呢？ 是因为方便你在启动之前下断点，这样可以在脚本执行的第一行就断点，否则可能slua就直接运行过去了，不能在开始就断点。 如果这里的参数为false，ldb任然可以连接，也任然可以放置断点，只不过已经跑过去的代码，无法断点调试而已。
+
+2）启动游戏，如果上面第三个参数设置为true，则会看到一个按钮，游戏暂停，等待slua调试器接入，如果点击按钮，则跳过等待调试器连接，继续运行。
+
+2）通过点击slua->console来打开调试器，输入需要连接的ip和端口，默认是localhost:10240，也就是本机，如果你需要连接手机，需要知道手机的ip地址，slua的默认调试端口为10240，如果你修改了slua的默认调试端口，这里也需要相应需改，然后点击ok。
+
+2.1） 注意在mac平台暂时没有找到启动一个带有参数的进程的方法（貌似有bug），需要在terminal里手动启动ldb，位于$slua/debugger/mac, 它接受如下参数形式
+
+    >ldb -host 127.0.0.1 -port 10240
+
+3）如果连接成功，会看到
+
+    Host connected
+    Type start to continue game
+    slua>
+
+4）键入“start" ，这个时候，slua会继续运行，并且2）提到的按钮会消失。
+
+5）在键入"start"之前，可以通过b 命令，放置断点，例如
+
+    b main:22
+
+这样表示，在运行到lua文件main(可能是txt后缀，也可能是你自己定义的.lua后缀）的22行时，触发断点，这个时候在start，则slua继续运行，直到运行到main的22行。
+
+6）触发断点后，进入断点状态，可以使用如下命令：
+
+	bt 输出调用栈信息
+	c 继续运行
+	n 运行到下一行
+	s 运行到下一行，如果可能，进入函数内部
+	b filename:lineno 放置断点，filename为文件名（不包括扩展名）: lineno为行号，如果目标行号上没有代码，则不会触发断点
+	watch 输出当前帧上的local/upvalues
+	p varname 输出varname代表的变量内容
+	del n 删除第n个断点，n从1开始
+	list 列出所有断点
+	clear 清除所有断点
+
+	任何其他输入，调试器都会尝试运行对应的输入，如果有错误则报告错误，相当于dostring 
+
+7）在非断点状态，可以运行如命令：
+
+
+	b filename:lineno 放置断点，filename为文件名（不包括扩展名）: lineno为行号，如果目标行号上没有代码，则不会触发断点
+	p varname 输出varname代表的变量内容
+	del n 删除第n个断点，n从1开始
+	list 列出所有断点
+	clear 清除所有断点
+
+	任何其他输入，调试器都会尝试运行对应的输入，如果有错误则报告错误，相当于dostring 
 
 
 ##编译slua库
@@ -518,3 +553,11 @@ UnityAction/UnityEvent目前仅支持1个泛型参数的版本,目前UnityEngine
 返回没有导出的类型, 会采用LuaVarObject, 这个类退化为使用反射, 并且并没有完善, 不建议返回没有导出的类, 简单例子可以参考varobj工程.
 
 函数的默认参数不支持.
+
+问题补充：[见test.cs]:
+* 不支持Nullable. (TestNullable)
+* 当struct定义了带参的构造函数，并且没有定义不带参的构造函数时，struct无法构建. (TestStructDefaultConstructor)
+* 不支持跨线程调用LuaState. (TestThreading)
+* 不支持ExtensionMethods. (TestExtensionMethods)
+* 不支持父类方法重载. (TestCallImplicitBaseMethod)
+* 不支持读Action. (TestPushLuaFunctionWhenReadingDelegateProperty)

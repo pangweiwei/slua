@@ -18,6 +18,16 @@ public class SLuaTest : MonoBehaviour { }
 [CustomLuaClass]
 public class XXList : List<int> { }
 
+[CustomLuaClass]
+abstract public class AbsClass {
+
+	// this constructor should not been exported for test
+	public AbsClass() {
+	}
+
+	public int x;
+}
+
 
 public class Ref
 {

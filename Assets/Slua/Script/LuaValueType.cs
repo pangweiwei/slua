@@ -1060,11 +1060,7 @@ end
         {
 #if !UNITY_IPHONE && !LUA_5_3
             // lua implemented valuetype isn't faster than raw under non-jit.
-            if (LuaDLL.luaL_dostring(l, script) != 0)
-            {
-                lastError(l);
-                return;
-            }
+			LuaState.get(l).doString(script,"ValueTypeScript");
 #endif
         }
     }

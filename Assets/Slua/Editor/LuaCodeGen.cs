@@ -34,6 +34,60 @@ namespace SLua
 	using System.Text.RegularExpressions;
 
 
+	public class ConnectDebugger : EditorWindow
+	{
+		string addr = "localhost:10240";
+		static ConnectDebugger wnd;
+		[MenuItem("SLua/Console")]
+		static void Init()
+		{
+			if (wnd == null)
+				wnd = (ConnectDebugger)EditorWindow.GetWindow(typeof(ConnectDebugger), true, "Connect debugger");
+			wnd.position = new Rect(Screen.width / 2, Screen.height / 2, 500, 50);
+			wnd.Show();
+		}
+
+
+		void OnGUI()
+		{
+			addr = EditorGUILayout.TextField("Debugger IP:", addr);
+			if (GUILayout.Button("Connect", GUILayout.ExpandHeight(true)))
+			{
+				try
+				{
+					string ip = "localhost";
+					int port = 10240;
+					string[] comp = addr.Split(':');
+
+					ip = comp[0];
+					if (comp.Length > 0)
+						port = Convert.ToInt32(comp[1]);
+
+#if UNITY_EDITOR_WIN
+					System.Diagnostics.Process.Start("debugger\\win\\ldb.exe", string.Format("-host {0} -port {1}", ip, port));
+#else
+					System.Diagnostics.ProcessStartInfo proc = new System.Diagnostics.ProcessStartInfo();
+					proc.FileName = "ldb";
+					proc.WorkingDirectory = "debugger/mac";
+					// I don't know why can't start process with arguments on MacOSX
+					// I just keep arguments empty????
+					proc.Arguments = "";//string.Format("-host {0} -port {1}", ip, port);
+					proc.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+					proc.CreateNoWindow = true;
+					System.Diagnostics.Process.Start(proc);
+#endif
+				}
+				catch (Exception e)
+				{
+					Debug.LogError(e);
+				}
+
+			}
+		}
+
+	}
+
+
 
     public class LuaCodeGen : MonoBehaviour
 	{
@@ -64,7 +118,7 @@ namespace SLua
 				}
 			}
 		}
-		
+	
 		[MenuItem("SLua/All/Make")]
 		static public void GenerateAll()
 		{
@@ -97,45 +151,36 @@ namespace SLua
             string path = Path + "Unity/";
 			foreach (Type t in types)
 			{
-				bool export = true;
-				
-				// check type in uselist
-				if (uselist != null && uselist.Count > 0)
-				{
-					export = false;
-					foreach (string str in uselist)
-					{
-						if (t.FullName == str)
-						{
-							export = true;
-							break;
-						}
-					}
-				}
-				else
-				{
-					// check type not in nouselist
-					foreach (string str in noUseList)
-					{
-						if (t.FullName.Contains(str))
-						{
-							export = false;
-							break;
-						}
-					}
-				}
-				
-				if (export)
-				{
-					if (Generate(t,path))
-						exports.Add(t);
-				}
+				if (filterType(t, noUseList, uselist) && Generate(t, path))
+					exports.Add(t);
 			}
 			
-			GenerateBind(exports, "BindUnity", 0,path);
+			GenerateBind(exports, "BindUnity", 0, path);
 			if(autoRefresh)
 			    AssetDatabase.Refresh();
 			Debug.Log("Generate engine interface finished");
+		}
+
+		static bool filterType(Type t, List<string> noUseList, List<string> uselist)
+		{
+			// check type in uselist
+			string fullName = t.FullName;
+			if (uselist != null && uselist.Count > 0)
+			{
+				return uselist.Contains(fullName);
+			}
+			else
+			{
+				// check type not in nouselist
+				foreach (string str in noUseList)
+				{
+					if (fullName.Contains(str))
+					{
+						return false;
+					}
+				}
+				return true;
+			}
 		}
 		
 		[MenuItem("SLua/Unity/Make UI (for Unity4.6+)")]
@@ -145,11 +190,11 @@ namespace SLua
 				return;
 			}
 
-			List<string> noUseList = new List<string>
-			{      
-				"CoroutineTween",
-				"GraphicRebuildTracker",
-			};
+			List<string> uselist;
+			List<string> noUseList;
+
+			CustomExport.OnGetNoUseList(out noUseList);
+			CustomExport.OnGetUseList(out uselist);
 			
 			Assembly assembly = Assembly.Load("UnityEngine.UI");
 			Type[] types = assembly.GetExportedTypes();
@@ -158,23 +203,13 @@ namespace SLua
             string path = Path + "Unity/";
 			foreach (Type t in types)
 			{
-				bool export = true;
-				
-				foreach (string str in noUseList)
+				if (filterType(t,noUseList,uselist) && Generate(t,path))
 				{
-					if (t.FullName.Contains(str))
-						export = false;
+					exports.Add(t);
 				}
-				
-				if (export)
-				{
-					if (Generate(t, path))
-						exports.Add(t);
-				}
-				
 			}
 			
-			GenerateBind(exports, "BindUnityUI", 1,path);
+			GenerateBind(exports, "BindUnityUI", 1, path);
 			if(autoRefresh)
 			    AssetDatabase.Refresh();
 			Debug.Log("Generate UI interface finished");
@@ -185,10 +220,6 @@ namespace SLua
 		{
 			clear(new string[] { Path + "Unity" });
 			Debug.Log("Clear Unity & UI complete.");
-		}
-		static public bool IsObsolete(MemberInfo t)
-		{
-			return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0;
 		}
 		
 		[MenuItem("SLua/Custom/Make")]
@@ -209,16 +240,18 @@ namespace SLua
 			ExportGenericDelegate fun = (Type t, string ns) =>
 			{
 				if (Generate(t, ns, path))
-				exports.Add(t);
+					exports.Add(t);
 			};
 			
 			// export self-dll
 			Assembly assembly = Assembly.Load("Assembly-CSharp");
 			Type[] types = assembly.GetExportedTypes();
-			
+
+			HashSet<string> namespaces = CustomExport.OnAddCustomNamespace ();
+
 			foreach (Type t in types)
 			{
-				if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0)
+				if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0 || namespaces.Contains(t.Namespace))
 				{
 					fun(t, null);
 				}
@@ -226,7 +259,7 @@ namespace SLua
 			
 			CustomExport.OnAddCustomClass(fun);
 			
-			GenerateBind(exports, "BindCustom", 3,path);
+			GenerateBind(exports, "BindCustom", 3, path);
             if(autoRefresh)
 			    AssetDatabase.Refresh();
 			
@@ -241,14 +274,12 @@ namespace SLua
 			}
 
 			List<Type> cust = new List<Type>();
-			Assembly assembly = Assembly.Load("Assembly-CSharp");
-			Type[] types = assembly.GetExportedTypes();
 			List<string> assemblyList = new List<string>();
 			CustomExport.OnAddCustomAssembly(ref assemblyList);
 			foreach (string assemblyItem in assemblyList)
 			{
-				assembly = Assembly.Load(assemblyItem);
-				types = assembly.GetExportedTypes();
+				Assembly assembly = Assembly.Load(assemblyItem);
+				Type[] types = assembly.GetExportedTypes();
 				foreach (Type t in types)
 				{
 					cust.Add(t);
@@ -338,37 +369,34 @@ namespace SLua
 	class CodeGenerator
 	{
 		static List<string> memberFilter = new List<string>
-
-
-	    {
-	        "AnimationClip.averageDuration",
-	        "AnimationClip.averageAngularSpeed",
-	        "AnimationClip.averageSpeed",
-	        "AnimationClip.apparentSpeed",
-	        "AnimationClip.isLooping",
-	        "AnimationClip.isAnimatorMotion",
-	        "AnimationClip.isHumanMotion",
-	        "AnimatorOverrideController.PerformOverrideClipListCleanup",
-	        "Caching.SetNoBackupFlag",
-	        "Caching.ResetNoBackupFlag",
-	        "Light.areaSize",
-	        "Security.GetChainOfTrustValue",
-	        "Texture2D.alphaIsTransparency",
-	        "WWW.movie",
-	        "WebCamTexture.MarkNonReadable",
-	        "WebCamTexture.isReadable",
-	        // i don't why below 2 functions missed in iOS platform
-	        "Graphic.OnRebuildRequested",
-	        "Text.OnRebuildRequested",
-	        // il2cpp not exixts
-	        "Application.ExternalEval",
-	        "GameObject.networkView",
-	        "Component.networkView",
-	        // unity5
-	        "AnimatorControllerParameter.name",
-	        "Input.IsJoystickPreconfigured",
-	        "Resources.LoadAssetAtPath",
-
+        {
+            "AnimationClip.averageDuration",
+            "AnimationClip.averageAngularSpeed",
+            "AnimationClip.averageSpeed",
+            "AnimationClip.apparentSpeed",
+            "AnimationClip.isLooping",
+            "AnimationClip.isAnimatorMotion",
+            "AnimationClip.isHumanMotion",
+            "AnimatorOverrideController.PerformOverrideClipListCleanup",
+            "Caching.SetNoBackupFlag",
+            "Caching.ResetNoBackupFlag",
+            "Light.areaSize",
+            "Security.GetChainOfTrustValue",
+            "Texture2D.alphaIsTransparency",
+            "WWW.movie",
+            "WebCamTexture.MarkNonReadable",
+            "WebCamTexture.isReadable",
+            // i don't why below 2 functions missed in iOS platform
+            "Graphic.OnRebuildRequested",
+            "Text.OnRebuildRequested",
+            // il2cpp not exixts
+            "Application.ExternalEval",
+            "GameObject.networkView",
+            "Component.networkView",
+            // unity5
+            "AnimatorControllerParameter.name",
+            "Input.IsJoystickPreconfigured",
+            "Resources.LoadAssetAtPath",
 #if UNITY_4_6
 			"Motion.ValidateIfRetargetable",
 			"Motion.averageDuration",
@@ -379,11 +407,7 @@ namespace SLua
 			"Motion.isAnimatorMotion",
 			"Motion.isHumanMotion",
 #endif
-
-    	};
-
-
-
+        };
 		HashSet<string> funcname = new HashSet<string>();
 		Dictionary<string, bool> directfunc = new Dictionary<string, bool>();
 		
@@ -399,34 +423,38 @@ namespace SLua
 		Dictionary<string, PropPair> propname = new Dictionary<string, PropPair>();
 		
 		int indent = 0;
-		
+
 		public void GenerateBind(List<Type> list, string name, int order)
 		{
 			HashSet<Type> exported = new HashSet<Type>();
 			string f = path + name + ".cs";
 			StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
 			Write(file, "using System;");
+			Write(file, "using System.Collections.Generic;");
 			Write(file, "namespace SLua {");
 			Write(file, "[LuaBinder({0})]", order);
 			Write(file, "public class {0} {{", name);
-			Write(file, "public static void Bind(IntPtr l) {");
+			Write(file, "public static Action<IntPtr>[] GetBindList() {");
+			Write(file, "Action<IntPtr>[] list= {");
 			foreach (Type t in list)
 			{
 				WriteBindType(file, t, list, exported);
 			}
+			Write(file, "};");
+			Write(file, "return list;");
 			Write(file, "}");
 			Write(file, "}");
 			Write(file, "}");
 			file.Close();
 		}
-		
+
 		void WriteBindType(StreamWriter file, Type t, List<Type> exported, HashSet<Type> binded)
 		{
 			if (t == null || binded.Contains(t) || !exported.Contains(t))
 				return;
-			
+
 			WriteBindType(file, t.BaseType, exported, binded);
-			Write(file, "{0}.reg(l);", ExportName(t), binded);
+			Write(file, "{0}.reg,", ExportName(t), binded);
 			binded.Add(t);
 		}
 		
@@ -552,20 +580,24 @@ namespace SLua
 			}
 			
 			Write(file, "ld.pcall({0}, error);", mi.GetParameters().Length - outindex.Count);
-			
+
+			int offset = 0;
 			if (mi.ReturnType != typeof(void))
-				WriteValueCheck(file, mi.ReturnType, 1, "ret", "error+");
+			{
+				offset = 1;
+				WriteValueCheck(file, mi.ReturnType, offset, "ret", "error+");
+			}
 			
 			foreach (int i in outindex)
 			{
 				string a = string.Format("a{0}", i + 1);
-				WriteCheckType(file, mi.GetParameters()[i].ParameterType, i + 1, a, "error+");
+				WriteCheckType(file, mi.GetParameters()[i].ParameterType, i + offset, a, "error+");
 			}
 			
 			foreach (int i in refindex)
 			{
 				string a = string.Format("a{0}", i + 1);
-				WriteCheckType(file, mi.GetParameters()[i].ParameterType, i + 1, a, "error+");
+				WriteCheckType(file, mi.GetParameters()[i].ParameterType, i + offset, a, "error+");
 			}
 			
 			
@@ -645,12 +677,12 @@ namespace SLua
                 UnityEngine.Events.UnityAction<$GN> a1;
                 checkType(l, 2, out a1);
                 self.AddListener(a1);
-                return 0;
+				pushValue(l,true);
+                return 1;
             }
             catch (Exception e)
             {
-                LuaDLL.luaL_error(l, e.ToString());
-                return 0;
+				return error(l,e);
             }
         }
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -662,12 +694,12 @@ namespace SLua
                 UnityEngine.Events.UnityAction<$GN> a1;
                 checkType(l, 2, out a1);
                 self.RemoveListener(a1);
-                return 0;
+				pushValue(l,true);
+                return 1;
             }
             catch (Exception e)
             {
-                LuaDLL.luaL_error(l, e.ToString());
-                return 0;
+                return error(l,e);
             }
         }
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -679,12 +711,12 @@ namespace SLua
                 $GN o;
                 checkType(l,2,out o);
                 self.Invoke(o);
-                return 0;
+				pushValue(l,true);
+                return 1;
             }
             catch (Exception e)
             {
-                LuaDLL.luaL_error(l, e.ToString());
-                return 0;
+                return error(l,e);
             }
         }
         static public void reg(IntPtr l)
@@ -731,12 +763,10 @@ namespace SLua
 			// Write export function
 			Write(file, "static public void reg(IntPtr l) {");
 			Write(file, "getEnumTable(l,\"{0}\");", string.IsNullOrEmpty(givenNamespace) ? FullName(t) : givenNamespace);
-			
-			FieldInfo[] fields = t.GetFields();
-			foreach (FieldInfo f in fields)
+
+			foreach (object value in Enum.GetValues (t))
 			{
-				if (f.Name == "value__") continue;
-				Write(file, "addMember(l,{0},\"{1}\");", (int)f.GetValue(null), f.Name);
+				Write(file, "addMember(l,{0},\"{1}\");", (int)value, value.ToString());
 			}
 			
 			Write(file, "LuaDLL.lua_pop(l, 1);");
@@ -829,9 +859,9 @@ namespace SLua
 			return memberFilter.Contains(t.Name + "." + mi.Name);
 		}
 		
-		bool IsObsolete(MemberInfo mi)
+		bool IsObsolete(MemberInfo t)
 		{
-			return LuaCodeGen.IsObsolete(mi);
+			return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0;
 		}
 		
 		void RegFunction(Type t, StreamWriter file)
@@ -935,17 +965,20 @@ namespace SLua
 					WriteFunctionAttr(file);
 					Write(file, "static public int get_{0}(IntPtr l) {{", fi.Name);
 					WriteTry(file);
+					
 					if (fi.IsStatic)
 					{
+						WriteOk(file);
 						WritePushValue(fi.FieldType, file, string.Format("{0}.{1}", TypeDecl(t), fi.Name));
 					}
 					else
 					{
 						WriteCheckSelf(file, t);
+						WriteOk(file);
 						WritePushValue(fi.FieldType, file, string.Format("self.{0}", fi.Name));
 					}
 					
-					Write(file, "return 1;");
+					Write(file, "return 2;");
 					WriteCatchExecption(file);
 					Write(file, "}");
 					
@@ -976,7 +1009,8 @@ namespace SLua
 					
 					if (t.IsValueType && !fi.IsStatic)
 						Write(file, "setBack(l,self);");
-					Write(file, "return 0;");
+					WriteOk(file);
+					Write(file, "return 1;");
 					WriteCatchExecption(file);
 					Write(file, "}");
 					
@@ -1023,15 +1057,17 @@ namespace SLua
 						if (fi.GetGetMethod().IsStatic)
 						{
 							isInstance = false;
+							WriteOk(file);
 							WritePushValue(fi.PropertyType, file, string.Format("{0}.{1}", TypeDecl(t), fi.Name));
 						}
 						else
 						{
 							WriteCheckSelf(file, t);
+							WriteOk(file);
 							WritePushValue(fi.PropertyType, file, string.Format("self.{0}", fi.Name));
 						}
 						
-						Write(file, "return 1;");
+						Write(file, "return 2;");
 						WriteCatchExecption(file);
 						Write(file, "}");
 						pp.get = "get_" + fi.Name;
@@ -1059,8 +1095,8 @@ namespace SLua
 					
 					if (t.IsValueType)
 						Write(file, "setBack(l,self);");
-					
-					Write(file, "return 0;");
+					WriteOk(file);
+					Write(file, "return 1;");
 					WriteCatchExecption(file);
 					Write(file, "}");
 					pp.set = "set_" + fi.Name;
@@ -1091,8 +1127,9 @@ namespace SLua
 					ParameterInfo[] infos = _get.GetIndexParameters();
 					WriteValueCheck(file, infos[0].ParameterType, 2, "v");
 					Write(file, "var ret = self[v];");
+					WriteOk(file);
 					WritePushValue(_get.PropertyType, file, "ret");
-					Write(file, "return 1;");
+					Write(file, "return 2;");
 				}
 				else
 				{
@@ -1104,13 +1141,13 @@ namespace SLua
 						Write(file, "{0}(matchType(l,2,t,typeof({1}))){{", first_get ? "if" : "else if", infos[0].ParameterType);
 						WriteValueCheck(file, infos[0].ParameterType, 2, "v");
 						Write(file, "var ret = self[v];");
+						WriteOk(file);
 						WritePushValue(fii.PropertyType, file, "ret");
-						Write(file, "return 1;");
+						Write(file, "return 2;");
 						Write(file, "}");
 						first_get = false;
 					}
-					Write(file, "LuaDLL.luaL_error(l,\"No matched override function to call\");");
-					Write(file, "return 0;");
+					WriteError(file, "No matched override function to call");
 				}
 				WriteCatchExecption(file);
 				Write(file, "}");
@@ -1130,6 +1167,7 @@ namespace SLua
 					WriteValueCheck(file, infos[0].ParameterType, 2);
 					WriteValueCheck(file, _set.PropertyType, 3, "c");
 					Write(file, "self[v]=c;");
+					WriteOk(file);
 				}
 				else
 				{
@@ -1144,16 +1182,17 @@ namespace SLua
 							WriteValueCheck(file, infos[0].ParameterType, 2, "v");
 							WriteValueCheck(file, fii.PropertyType, 3, "c");
 							Write(file, "self[v]=c;");
-							Write(file, "return 0;");
+							WriteOk(file);
+							Write(file, "return 1;");
 							Write(file, "}");
 							first_set = false;
 						}
 						if (t.IsValueType)
 							Write(file, "setBack(l,self);");
 					}
-					Write(file, "LuaDLL.luaL_error(l,\"No matched override function to call\");");
+					Write(file, "LuaDLL.lua_pushstring(l,\"No matched override function to call\");");
 				}
-				Write(file, "return 0;");
+				Write(file, "return 1;");
 				WriteCatchExecption(file);
 				Write(file, "}");
 				funcname.Add("setItem");
@@ -1169,8 +1208,7 @@ namespace SLua
 		{
 			Write(file, "}");
 			Write(file, "catch(Exception e) {");
-			Write(file, "LuaDLL.luaL_error(l, e.ToString());");
-			Write(file, "return 0;");
+			Write(file, "return error(l,e);");
 			Write(file, "}");
 		}
 		
@@ -1264,11 +1302,12 @@ namespace SLua
 						CheckArgument(file, p.ParameterType, k, 2, p.IsOut, hasParams);
 					}
 					Write(file, "o=new {0}({1});", TypeDecl(t), FuncCall(ci));
+					WriteOk(file);
 					if (t.Name == "String") // if export system.string, push string as ud not lua string
 						Write(file, "pushObject(l,o);");
 					else
 						Write(file, "pushValue(l,o);");
-					Write(file, "return 1;");
+					Write(file, "return 2;");
 					if (cons.Length == 1)
 						WriteCatchExecption(file);
 					Write(file, "}");
@@ -1277,8 +1316,7 @@ namespace SLua
 				
 				if (cons.Length > 1)
 				{
-					Write(file, "LuaDLL.luaL_error(l,\"New object failed.\");");
-					Write(file, "return 0;");
+					Write(file, "return error(l,\"New object failed.\");");
 					WriteCatchExecption(file);
 					Write(file, "}");
 				}
@@ -1290,11 +1328,33 @@ namespace SLua
 				WriteTry(file);
 				Write(file, "{0} o;", FullName(t));
 				Write(file, "o=new {0}();", FullName(t));
-				Write(file, "pushValue(l,o);");
-				Write(file, "return 1;");
+				WriteReturn(file,"o");
 				WriteCatchExecption(file);
 				Write(file, "}");
 			}
+		}
+
+		void WriteOk(StreamWriter file)
+		{
+			Write(file, "pushValue(l,true);");
+		}
+		void WriteBad(StreamWriter file)
+		{
+			Write(file, "pushValue(l,false);");
+		}
+
+		void WriteError(StreamWriter file, string err)
+		{
+			WriteBad(file);
+			Write(file, "LuaDLL.lua_pushstring(l,\"{0}\");",err);
+			Write(file, "return 2;");
+		}
+
+		void WriteReturn(StreamWriter file, string val)
+		{
+			Write(file, "pushValue(l,true);");
+			Write(file, "pushValue(l,{0});",val);
+			Write(file, "return 2;");
 		}
 		
 		bool IsNotSupport(Type t)
@@ -1436,8 +1496,7 @@ namespace SLua
 					WriteFunctionCall(m, file, t);
 				else
 				{
-					Write(file, "LuaDLL.luaL_error(l,\"No matched override function to call\");");
-					Write(file, "return 0;");
+					WriteError(file, "No matched override function to call");
 				}
 			}
 			else // 2 or more override function
@@ -1466,8 +1525,7 @@ namespace SLua
 						}
 					}
 				}
-				Write(file, "LuaDLL.luaL_error(l,\"No matched override function to call\");");
-				Write(file, "return 0;");
+				WriteError(file, "No matched override function to call");
 			}
 			WriteCatchExecption(file);
 			Write(file, "}");
@@ -1482,16 +1540,6 @@ namespace SLua
 					return false;
 			}
 			return true;
-		}
-		
-		bool ContainGeneric(ParameterInfo[] pars)
-		{
-			foreach (ParameterInfo p in pars)
-			{
-				if (p.ParameterType.IsGenericType || p.ParameterType.IsGenericParameter || p.ParameterType.IsGenericTypeDefinition)
-					return true;
-			}
-			return false;
 		}
 		
 		
@@ -1573,13 +1621,14 @@ namespace SLua
 			}
 			else
 				Write(file, "{2}self.{0}({1});", m.Name, FuncCall(m), ret);
-			
-			int retcount = 0;
+
+			WriteOk(file);
+			int retcount = 1;
 			if (m.ReturnType != typeof(void))
 			{
 				
 				WritePushValue(m.ReturnType, file);
-				retcount = 1;
+				retcount = 2;
 			}
 			
 			
@@ -1602,16 +1651,12 @@ namespace SLua
 				Write(file, "setBack(l,self);");
 			
 			Write(file, "return {0};", retcount);
-			
-			
-			
 		}
 		
-		string SimpleType_(Type t)
+		string SimpleType(Type t)
 		{
 			
 			string tn = t.Name;
-			
 			switch (tn)
 			{
 			case "Single":
@@ -1632,12 +1677,6 @@ namespace SLua
 				tn = tn.Replace("System.Object", "object");
 				return tn;
 			}
-		}
-		
-		string SimpleType(Type t)
-		{
-			string ret = SimpleType_(t);
-			return ret;
 		}
 		
 		void WritePushValue(Type t, StreamWriter file)
@@ -1710,6 +1749,9 @@ namespace SLua
 
 		bool IsBaseType(Type t)
 		{
+			if (t.IsByRef) {
+				t = t.GetElementType();
+			}
 			return t.IsPrimitive
 				|| t == typeof(Color)
 				|| t == typeof(Vector2)
