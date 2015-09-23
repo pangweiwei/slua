@@ -188,6 +188,21 @@ namespace SLua
 				LuaDLL.lua_rawseti(l, -2, n + 1);
 			}
 		}
+		
+		public static void pushValue(IntPtr l, Vector3[] r)
+		{
+		    if (r == null)
+		    {
+		        LuaDLL.lua_pushnil(l);
+		        return;
+		    }
+		    LuaDLL.lua_createtable(l, r.Length, 0);
+		    for (int n = 0; n < r.Length; n++)
+		    {
+		        pushValue(l, r[n]);
+		        LuaDLL.lua_rawseti(l, -2, n + 1);
+		    }
+		}
 
 		public static void pushValue(IntPtr l, Quaternion o)
 		{
