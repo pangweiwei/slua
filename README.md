@@ -63,7 +63,7 @@ export enum as integer
 
 return array as lua table
 
-using raw luajit, can be replaced with lua5.3/lua5.1, link with slua.c, if you switch to lua5.3, add LUA_5_3 macro in build setting.
+using raw luajit, can be replaced with lua5.3/lua5.1
 
 ##Usage
 
