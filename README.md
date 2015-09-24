@@ -63,7 +63,7 @@ export enum as integer
 
 return array as lua table
 
-using raw luajit, can be replaced with lua5.3/lua5.1, link with slua.c, if you switch to lua5.3, add LUA_5_3 macro in build setting.
+using raw luajit, can be replaced with lua5.3/lua5.1
 
 ##Usage
 
@@ -164,59 +164,7 @@ public class HelloWorld   {
 
 ##How to remote debug
 
-ldb is powerful tool shiped with slua 1.0 (you can find the source from here https://github.com/pangweiwei/sluadbg), a procompiled binary file is in slua/debugger directory, win subdir for Windows, mac subdir for MacOSX. It's a cmd-line tool that accept form of cmd-line as below:
-
-on OSX
-
-    ./ldb -host 127.0.0.1 -port 10240
-
-on Windows
-
-    ldb.exe -host 127.0.0.1 -port 10240
-
-where host is ip address of device, port is port of debugger.
-
-First of all, you should switch on remote debugger of slua, In slua 1.0, changed init function of slua to make callback will be called on update binding progress and accpet a boolean value to flag debugger, see following code:
-
-
-~~~~~~~~~~cs
-
-   	void Start()
-	{
-		l = new LuaSvr();
-		l.init(tick,complete,true);
-	}
-
-	void tick(int p)
-	{
-		progress = p;
-	}
-
-	void complete()
-	{
-		l.start("main");
-		object o = l.luaState.getFunction("foo").call(1, 2, 3);
-		object[] array = (object[])o;
-		for (int n = 0; n < array.Length; n++)
-			Debug.Log(array[n]);
-
-		string s = (string)l.luaState.getFunction("str").call(new object[0]);
-		Debug.Log(s);
-	}
-
-~~~~~~~~~~
-
-
-init function be passed 3 arguments, tick function used for update progress, complete function used for binding completely, last argument for open debuger if is true, otherwise close debugger.
-
-Also you can open "Main" demo ( in example directory ), you will see code above. Now you start Main demo, there is a tipbox show you to waitting connection, at this momoment, you can start ldb with proper arguments to connect debugger, if eveything is ok, you will see follow tip on ldb:
-
-    Host connected
-    Type 'start' to continue game
-
-Type start to coutinue game.
-
-Type help to display all commands supported by slua.
+Wiki here(https://github.com/pangweiwei/slua/wiki/Remote-Debug).
 
 ###Benchmark
 
