@@ -185,7 +185,7 @@ namespace SLua
 		{
 		}
 
-		internal bool pcall(int nArgs, int errfunc)
+        public bool pcall(int nArgs, int errfunc)
 		{
 
 			if (!state.isMainThread())
