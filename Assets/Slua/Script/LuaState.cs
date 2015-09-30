@@ -351,6 +351,15 @@ namespace SLua
 			throw new Exception(string.Format("Can't find {0} function", func));
 		}
 
+        public int length()
+        {
+            int n = LuaDLL.lua_gettop(L);
+            push(L);
+            int l = LuaDLL.lua_rawlen(L, -1);
+            LuaDLL.lua_settop(L, n);
+            return l;
+        }
+		
 		public class Enumerator : IEnumerator<TablePair>, IDisposable
 		{
 			LuaTable t;

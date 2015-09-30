@@ -242,22 +242,34 @@ namespace SLua
 				if (Generate(t, ns, path))
 					exports.Add(t);
 			};
-			
-			// export self-dll
-			Assembly assembly = Assembly.Load("Assembly-CSharp");
+
+            HashSet<string> namespaces = CustomExport.OnAddCustomNamespace();
+            Assembly assembly = Assembly.Load("Assembly-CSharp");
 			Type[] types = assembly.GetExportedTypes();
 
-			HashSet<string> namespaces = CustomExport.OnAddCustomNamespace ();
+            // export plugin-dll
+            assembly = Assembly.Load("Assembly-CSharp-firstpass");
+            types = assembly.GetExportedTypes();
+            foreach (Type t in types)
+            {
+                if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0 || namespaces.Contains(t.Namespace))
+                {
+                    fun(t, null);
+                }
+            }
 
-			foreach (Type t in types)
-			{
-				if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0 || namespaces.Contains(t.Namespace))
-				{
-					fun(t, null);
-				}
-			}
-			
-			CustomExport.OnAddCustomClass(fun);
+            // export self-dll
+            assembly = Assembly.Load("Assembly-CSharp");
+            types = assembly.GetExportedTypes();
+            foreach (Type t in types)
+            {
+                if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0 || namespaces.Contains(t.Namespace))
+                {
+                    fun(t, null);
+                }
+            }
+
+            CustomExport.OnAddCustomClass(fun);
 			
 			GenerateBind(exports, "BindCustom", 3, path);
             if(autoRefresh)
@@ -946,8 +958,19 @@ namespace SLua
 				}
 			}
 		}
-		
-		private void WriteField(Type t, StreamWriter file)
+
+        readonly static string[] keywords = { "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void", "volatile", "while" };
+
+        static string NormalName(string name)
+        {
+            if (Array.BinarySearch<string>(keywords, name) >= 0)
+            {
+                return "@" + name;
+            }
+            return name;
+        }
+
+        private void WriteField(Type t, StreamWriter file)
 		{
 			// Write field set/get
 			
@@ -969,13 +992,13 @@ namespace SLua
 					if (fi.IsStatic)
 					{
 						WriteOk(file);
-						WritePushValue(fi.FieldType, file, string.Format("{0}.{1}", TypeDecl(t), fi.Name));
+						WritePushValue(fi.FieldType, file, string.Format("{0}.{1}", TypeDecl(t), NormalName(fi.Name)));
 					}
 					else
 					{
 						WriteCheckSelf(file, t);
 						WriteOk(file);
-						WritePushValue(fi.FieldType, file, string.Format("self.{0}", fi.Name));
+						WritePushValue(fi.FieldType, file, string.Format("self.{0}", NormalName(fi.Name)));
 					}
 					
 					Write(file, "return 2;");
@@ -997,14 +1020,14 @@ namespace SLua
 					{
 						Write(file, "{0} v;", TypeDecl(fi.FieldType));
 						WriteCheckType(file, fi.FieldType, 2);
-						WriteSet(file, fi.FieldType, TypeDecl(t), fi.Name, true);
+						WriteSet(file, fi.FieldType, TypeDecl(t), NormalName(fi.Name), true);
 					}
 					else
 					{
 						WriteCheckSelf(file, t);
 						Write(file, "{0} v;", TypeDecl(fi.FieldType));
 						WriteCheckType(file, fi.FieldType, 2);
-						WriteSet(file, fi.FieldType, t.FullName, fi.Name);
+						WriteSet(file, fi.FieldType, t.FullName, NormalName(fi.Name));
 					}
 					
 					if (t.IsValueType && !fi.IsStatic)
@@ -1058,13 +1081,13 @@ namespace SLua
 						{
 							isInstance = false;
 							WriteOk(file);
-							WritePushValue(fi.PropertyType, file, string.Format("{0}.{1}", TypeDecl(t), fi.Name));
+							WritePushValue(fi.PropertyType, file, string.Format("{0}.{1}", TypeDecl(t), NormalName(fi.Name)));
 						}
 						else
 						{
 							WriteCheckSelf(file, t);
 							WriteOk(file);
-							WritePushValue(fi.PropertyType, file, string.Format("self.{0}", fi.Name));
+							WritePushValue(fi.PropertyType, file, string.Format("self.{0}", NormalName(fi.Name)));
 						}
 						
 						Write(file, "return 2;");
@@ -1083,14 +1106,14 @@ namespace SLua
 					if (fi.GetSetMethod().IsStatic)
 					{
 						WriteValueCheck(file, fi.PropertyType, 2);
-						WriteSet(file, fi.PropertyType, TypeDecl(t), fi.Name, true);
+						WriteSet(file, fi.PropertyType, TypeDecl(t), NormalName(fi.Name), true);
 						isInstance = false;
 					}
 					else
 					{
 						WriteCheckSelf(file, t);
 						WriteValueCheck(file, fi.PropertyType, 2);
-						WriteSet(file, fi.PropertyType, TypeDecl(t), fi.Name);
+						WriteSet(file, fi.PropertyType, TypeDecl(t), NormalName(fi.Name));
 					}
 					
 					if (t.IsValueType)
