@@ -244,19 +244,22 @@ namespace SLua
 			};
 
             HashSet<string> namespaces = CustomExport.OnAddCustomNamespace();
-            Assembly assembly = Assembly.Load("Assembly-CSharp");
-			Type[] types = assembly.GetExportedTypes();
+            Assembly assembly;
+            Type[] types;
 
-            // export plugin-dll
-            assembly = Assembly.Load("Assembly-CSharp-firstpass");
-            types = assembly.GetExportedTypes();
-            foreach (Type t in types)
-            {
-                if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0 || namespaces.Contains(t.Namespace))
+            try {
+                // export plugin-dll
+                assembly = Assembly.Load("Assembly-CSharp-firstpass");
+                types = assembly.GetExportedTypes();
+                foreach (Type t in types)
                 {
-                    fun(t, null);
+                    if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0 || namespaces.Contains(t.Namespace))
+                    {
+                        fun(t, null);
+                    }
                 }
             }
+            catch(Exception){}
 
             // export self-dll
             assembly = Assembly.Load("Assembly-CSharp");
