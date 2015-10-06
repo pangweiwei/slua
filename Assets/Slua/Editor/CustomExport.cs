@@ -144,6 +144,8 @@ namespace SLua
 			"SimpleJson.Reflection",
 			"CoroutineTween",
 			"GraphicRebuildTracker",
+            "Advertisements",
+            "UnityEditor",
         };
 		}
 
