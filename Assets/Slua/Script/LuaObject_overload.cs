@@ -102,7 +102,7 @@ namespace SLua
 			return true;
 		}
 
-		static internal bool checkParams(IntPtr l, int p, out Vector2[] pars)
+		static public bool checkParams(IntPtr l, int p, out Vector2[] pars)
 		{
 			int top = LuaDLL.lua_gettop(l);
 			if (top - p >= 0)

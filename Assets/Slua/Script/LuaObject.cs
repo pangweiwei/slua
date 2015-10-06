@@ -1247,7 +1247,7 @@ return index
             LuaDLL.luaS_setDataVec(l, 1, v.r, v.g, v.b, v.a);
         }
 
-        internal static int extractFunction(IntPtr l, int p)
+        public static int extractFunction(IntPtr l, int p)
 		{
 			int op = 0;
 			LuaTypes t = LuaDLL.lua_type(l, p);

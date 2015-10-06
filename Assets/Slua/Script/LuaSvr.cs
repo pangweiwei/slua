@@ -70,8 +70,16 @@ namespace SLua
 			List<Type> bindlist = new List<Type>();
 			foreach (Assembly a in ams)
 			{
-				Type[] ts = a.GetExportedTypes();
-				foreach (Type t in ts)
+                Type[] ts = null;
+                try
+                {
+                    ts = a.GetExportedTypes();
+                }
+                catch
+                {
+                    continue;
+                }
+                foreach (Type t in ts)
 				{
 					if (t.GetCustomAttributes(typeof(LuaBinderAttribute), false).Length > 0)
 					{
