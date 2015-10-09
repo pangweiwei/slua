@@ -658,9 +658,6 @@ namespace LuaInterface
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void luaS_pushColor(IntPtr l, float x, float y, float z, float w);
 
-		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void luaS_setData(IntPtr l, int p, float x, float y, float z, float w);
-
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void luaS_setDataVec(IntPtr l, int p, float x, float y, float z, float w);
 

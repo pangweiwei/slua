@@ -403,13 +403,6 @@ static void setelementid(lua_State* L, int p, float v, int id) {
 	}
 }
 
-LUA_API void luaS_setData(lua_State *L, int p, float x, float y, float z, float w) {
-	setelement(L, p, x, "x");
-	setelement(L, p, y, "y");
-	setelement(L, p, z, "z");
-	setelement(L, p, w, "w");
-}
-
 LUA_API void luaS_setDataVec(lua_State *L, int p, float x, float y, float z, float w) {
 	p=lua_absindex(L,p);
 	setelementid(L, p, x, 1);
