@@ -49,6 +49,18 @@ do
 		debug.sethook(nil)
 	end
 
+	local function getCallDepth()
+		local deep = 2
+		local info = nil
+		repeat 
+			info = debug.getinfo(deep)
+			if info then
+				deep = deep + 1
+			end
+		until not(info)
+		return deep - 2
+	end
+
 	function Slua.ldb.delBreakPoint(index)
 		Bps[index] = nil
 		if not next(Bps) then
@@ -347,18 +359,6 @@ do
 		openDebug()
 		stepOverDepth = stackDepth+1
 		breakMode = true
-	end
-
-	local function getCallDepth()
-		local deep = 2
-		local info = nil
-		repeat 
-			info = debug.getinfo(deep)
-			if info then
-				deep = deep + 1
-			end
-		until not(info)
-		return deep - 2
 	end
 
 	function Slua.ldb.watch()
