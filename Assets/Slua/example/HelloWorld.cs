@@ -58,6 +58,13 @@ public class HelloWorld
 		return new byte[] { 51, 52, 53, 53 };
 	}
 
+	static public void nullf(int? a=null) {
+		if (a == null)
+			Debug.Log("null");
+		else
+			Debug.Log(a);
+	}
+
 	public IEnumerator y()
 	{
 		WWW www = new WWW("http://news.163.com");

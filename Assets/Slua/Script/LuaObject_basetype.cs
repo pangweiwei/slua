@@ -580,6 +580,19 @@ namespace SLua
 		}
 		#endregion
 
+		static public bool checkNullable<T>(IntPtr l, int p, out Nullable<T> v) where T : struct
+		{
+			if (LuaDLL.lua_isnil(l, p))
+				v = null;
+			else
+			{
+				object o=checkVar(l, p, typeof(T));
+				if (o == null) v = null;
+				else v = new Nullable<T>((T)o);
+			}
+			return true;
+		}
+
 		#region object
 		static public bool checkType<T>(IntPtr l, int p, out T o) where T:class
 		{

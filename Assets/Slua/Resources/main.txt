@@ -22,6 +22,8 @@ function main()
 	print(unpack(x:Split(",/",0)))
 	print(unpack(x:Split({",","/"},0)))
 
+	HelloWorld.nullf(1)
+	HelloWorld.nullf()
 
 	local t=dofile('module/some')
 	assert(type(t)=='table')

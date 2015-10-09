@@ -1055,10 +1055,10 @@ return index
 
         static public object checkVar(IntPtr l, int p, Type t)
         {
-            object obj = checkVar(l, p);
+			object obj = checkVar(l, p);
             try
             {
-                return Convert.ChangeType(obj, t);
+                return obj==null?null:Convert.ChangeType(obj, t);
             }
             catch(Exception) {
 				throw new Exception(string.Format("parameter {0} expected {1}, got {2}", p, t.Name, obj == null ? "null" : obj.GetType().Name));

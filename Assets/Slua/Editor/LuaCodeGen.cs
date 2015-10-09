@@ -1761,8 +1761,12 @@ namespace SLua
 					else
 						Write(file, "checkParams(l,{0},out a{1});", n + argstart, n + 1);
 				}
-				else if (IsValueType(t))
-					Write(file, "checkValueType(l,{0},out a{1});", n + argstart, n + 1);
+				else if (IsValueType(t)) {
+					if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
+						Write(file, "checkNullable(l,{0},out a{1});", n + argstart, n + 1);
+					else
+						Write(file, "checkValueType(l,{0},out a{1});", n + argstart, n + 1);
+				}
 				else
 					Write(file, "checkType(l,{0},out a{1});", n + argstart, n + 1);
 			}
