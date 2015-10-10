@@ -261,12 +261,14 @@ watch local/up value  			watch
 				if (recvCmd(recvBuffer, out len))
 				{
 					string str = System.Text.Encoding.UTF8.GetString(recvBuffer, 0, len);
-					str = str.Replace("\r\n", "");
+					str=str.Trim();
 
 					try
 					{
 						if(doCommand(str))
 							send("ret ok");
+						else
+							send("ret bad");
 					}
 					catch (Exception e)
 					{
