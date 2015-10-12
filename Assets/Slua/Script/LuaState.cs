@@ -631,20 +631,28 @@ end
 			if (L != IntPtr.Zero)
 			{
 				if (LuaState.main == this)
-					LuaState.main = null;
+				{
+					Debug.Log("Finalizing Lua State.");
+					// be careful, if you close lua vm, make sure you don't use lua state again,
+					// comment this line as default for avoid unexpected crash.
+					LuaDLL.lua_close(L);
 
-				Debug.Log("Finalizing Lua State.");
-				// be careful, if you close lua vm, make sure you don't use lua state again,
-				// comment this line as default for avoid unexpected crash.
-				// LuaDLL.lua_close(L);
-				// L = IntPtr.Zero;
+					ObjectCache.del(L);
+					ObjectCache.clear();
+
+					statemap.Clear();
+					oldptr = IntPtr.Zero;
+					oldstate = null;
+					L = IntPtr.Zero;
+
+					LuaState.main = null;
+				}
 			}
 		}
 
 		public void Dispose()
 		{
 			Dispose(true);
-			ObjectCache.del(L);
 			System.GC.Collect();
 			System.GC.WaitForPendingFinalizers();
 		}

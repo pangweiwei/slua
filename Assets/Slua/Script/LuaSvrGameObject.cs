@@ -51,7 +51,7 @@ namespace SLua
 					di = null;
 				}
 
-				state.Close();
+				state.Dispose();
 				state = null;
 			}
 		}
