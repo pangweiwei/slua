@@ -401,9 +401,8 @@ namespace SLua
             "WWW.movie",
             "WebCamTexture.MarkNonReadable",
             "WebCamTexture.isReadable",
-            // i don't why below 2 functions missed in iOS platform
-            "Graphic.OnRebuildRequested",
-            "Text.OnRebuildRequested",
+            // i don't know why below 2 functions missed in iOS platform
+            "*.OnRebuildRequested",
             // il2cpp not exixts
             "Application.ExternalEval",
             "GameObject.networkView",
@@ -871,7 +870,7 @@ namespace SLua
 		
 		bool MemberInFilter(Type t, MemberInfo mi)
 		{
-			return memberFilter.Contains(t.Name + "." + mi.Name);
+			return memberFilter.Contains(t.Name + "." + mi.Name) || memberFilter.Contains("*." + mi.Name);
 		}
 		
 		bool IsObsolete(MemberInfo t)
