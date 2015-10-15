@@ -496,13 +496,6 @@ namespace LuaInterface
 			lua_pushcclosure(luaState, fn, 0);
 		}
 
-		public static void lua_pushcsfunction(IntPtr luaState, LuaCSFunction function)
-		{
-			LuaDLL.lua_getref(luaState, SLua.LuaState.PCallCSFunctionRef);
-			LuaDLL.lua_pushcclosure(luaState, Marshal.GetFunctionPointerForDelegate(function),0);
-			LuaDLL.lua_call(luaState, 1, 1);
-		}
-
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern IntPtr lua_tocfunction(IntPtr luaState, int index);
 

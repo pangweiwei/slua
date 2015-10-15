@@ -508,7 +508,7 @@ namespace SLua
 
 		public static void pushValue(IntPtr l, LuaCSFunction f)
 		{
-			LuaDLL.lua_pushcsfunction(l,f);
+			LuaState.pushcsfunction (l, f);
 		}
 		
 		public static void pushValue(IntPtr l, LuaTable t)
