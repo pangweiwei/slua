@@ -1786,12 +1786,7 @@ namespace SLua
 				|| t == typeof(Vector2)
 				|| t == typeof(Vector3)
 				|| t == typeof(Vector4)
-				|| t == typeof(Quaternion)
-				|| t.Name == "Color2&"
-				|| t.Name == "Vector2&"
-				|| t.Name == "Vector3&"
-				|| t.Name == "Vector4&"
-				|| t.Name == "Quaternion&";
+				|| t == typeof(Quaternion);
 		}
 		
 		string FullName(string str)
