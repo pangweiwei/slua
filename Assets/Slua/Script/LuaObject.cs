@@ -639,19 +639,25 @@ return index
 
 			LuaDLL.lua_pushcfunction(l, lua_gc);
 			LuaDLL.lua_setfield(l, -2, "__gc");
-			
-			if (self.IsValueType && (
-				self.Name=="Vector2" ||
-				self.Name=="Vector3" ||
-				self.Name=="Vector4" ||
-				self.Name=="Color" ||
-				self.Name=="Quaternion"))
+
+			if (self.IsValueType && isImplByLua(self))
 			{
 				LuaDLL.lua_pushvalue(l, -1);
                 LuaDLL.lua_setglobal(l, self.FullName + ".Instance");
 			}
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX,  ObjectCache.getAQName(self));
 		}
+
+
+		public static bool isImplByLua(Type t)
+		{
+			return t == typeof(Color)
+				|| t == typeof(Vector2)
+				|| t == typeof(Vector3)
+				|| t == typeof(Vector4)
+				|| t == typeof(Quaternion);
+		}
+
 
 		public static void reg(IntPtr l, LuaCSFunction func, string ns)
 		{
