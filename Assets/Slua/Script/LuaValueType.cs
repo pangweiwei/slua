@@ -879,7 +879,7 @@ do
 	-- reflector code
 	Quaternion.__mul = function(a,b,target)
 		if getmetatable(b).__typename=='Vector3' then
-			    local vector=Vector3.New(0,0,0)
+			    local vector = UnityEngine.Vector3.New(0,0,0)
 			    local num = a[1] * 2
 			    local num2 = a[2] * 2
 			    local num3 = a[3] * 2
@@ -953,10 +953,10 @@ do
 	function Quaternion:ToAngleAxis()
 		local angle = acos(self[4])*2
 		if abs(angle-0)<Epsilon then
-			return angle,Vector3.New(1,0,0)
+			return angle,UnityEngine.Vector3.New(1,0,0)
 		end
 		local div = 1/sqrt(1-self[4]^2)
-		return angle,Vector3.New(self[1]*div,self[2]*div,self[3]*div)
+		return angle,UnityEngine.Vector3.New(self[1]*div,self[2]*div,self[3]*div)
 	end
 
 	--TODO
@@ -966,7 +966,7 @@ do
 
 	--TODO
 	function Quaternion:SetLookRotation(view,up)
-		up = up or Vector3.up
+		up = up or UnityEngine.Vector3.up
 		Inst.SetLookRotation(self,view,up)
 	end
 
