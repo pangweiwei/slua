@@ -207,7 +207,7 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out long v)
 		{
 #if LUA_5_3
-            v = LuaDLL.luaL_checkinteger(l, p);
+            v = (long)LuaDLL.luaL_checkinteger(l, p);
 #else
 			v = (long)LuaDLL.luaL_checknumber(l, p);
 #endif
