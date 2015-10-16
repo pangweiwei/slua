@@ -70,6 +70,7 @@ local function inherite(cls,base)
 end
 
 local Matrix3x3={}
+local Vector3
 
 do
 
@@ -148,7 +149,7 @@ end
 
 do
 	local Raw=UnityEngine.Vector3
-	local Vector3={__typename='Vector3',__raw=Raw}
+	Vector3={__typename='Vector3',__raw=Raw}
 	local T=Vector3
 	local I={__typename='Vector3'}
 	_G['UnityEngine.Vector3.Instance']=I
@@ -951,6 +952,7 @@ do
 	end
 
 	function Quaternion:ToAngleAxis()
+		print(Vector3,'xxxxxxxxxxxxxx')
 		local angle = acos(self[4])*2
 		if abs(angle-0)<Epsilon then
 			return angle,Vector3.New(1,0,0)
