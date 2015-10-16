@@ -253,7 +253,7 @@ namespace SLua
 		public static void pushValue(IntPtr l, ulong o)
 		{
 			#if LUA_5_3
-			LuaDLL.lua_lua_pushinteger(l,o);
+			LuaDLL.lua_pushinteger(l,o);
 			#else
 			LuaDLL.lua_pushnumber(l, o);
 			#endif
