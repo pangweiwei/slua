@@ -1078,7 +1078,7 @@ return index
                         LuaDLL.lua_pushstring(l, "__fullname");
                         LuaDLL.lua_rawget(l, p);
                         tname = LuaDLL.lua_tostring(l, -1);
-                        LuaDLL.lua_pop(l, 1);
+                        LuaDLL.lua_pop(l, 2);
                     }
                     break;
 
