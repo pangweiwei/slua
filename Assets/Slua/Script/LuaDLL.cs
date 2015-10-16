@@ -312,6 +312,15 @@ namespace LuaInterface
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int lua_isinteger(IntPtr luaState, int p);
+
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int lua_compare(IntPtr luaState, int index1, int index2, int op);
+		
+		public static int lua_equal(IntPtr luaState, int index1, int index2)
+		{
+			return lua_compare(luaState, index1, index2, 0);
+		}
+
 #else
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int lua_resume(IntPtr L, int narg);

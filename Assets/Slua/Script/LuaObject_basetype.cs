@@ -207,7 +207,7 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out long v)
 		{
 #if LUA_5_3
-            v = LuaDLL.luaL_checkinteger(l, p);
+            v = (long)LuaDLL.luaL_checkinteger(l, p);
 #else
 			v = (long)LuaDLL.luaL_checknumber(l, p);
 #endif
@@ -243,7 +243,7 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out ulong v)
 		{
 #if LUA_5_3
-			v = LuaDLL.luaL_checkinteger(l, p);
+			v = (ulong)LuaDLL.luaL_checkinteger(l, p);
 #else
 			v = (ulong)LuaDLL.luaL_checknumber(l, p);
 #endif
@@ -253,7 +253,7 @@ namespace SLua
 		public static void pushValue(IntPtr l, ulong o)
 		{
 			#if LUA_5_3
-			LuaDLL.lua_lua_pushinteger(l,o);
+			LuaDLL.lua_pushinteger(l, (long)o);
 			#else
 			LuaDLL.lua_pushnumber(l, o);
 			#endif
