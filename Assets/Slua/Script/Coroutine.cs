@@ -41,15 +41,36 @@ namespace SLua
 			string yield =
 @"
 local Yield = UnityEngine.Yieldk
-UnityEngine.Yield = function(x)
-	local co,ismain=coroutine.running()
+
+uCoroutine = uCoroutine or {}
+
+uCoroutine.create = function(x)
+
+	local co = coroutine.create(x)
+	coroutine.resume(co)
+	return co
+
+end
+
+uCoroutine.yield = function(x)
+
+	local co, ismain = coroutine.running()
 	if ismain then error('Can not yield in main thread') end
 
-	Yield(x,function()
-		coroutine.resume(co)
-	end)
-	coroutine.yield()
+	if type(x) == 'thread' and coroutine.status(x) ~= 'dead' then
+		repeat
+			Yield(nil, function() coroutine.resume(co) end)
+			coroutine.yield()
+		until coroutine.status(x) == 'dead'
+	else
+		Yield(x, function() coroutine.resume(co) end)
+		coroutine.yield()
+	end
+
 end
+
+-- backward compatibility of older versions
+UnityEngine.Yield = uCoroutine.yield
 ";
 			LuaState.get(l).doString(yield);
 		}
