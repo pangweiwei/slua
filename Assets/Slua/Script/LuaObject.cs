@@ -843,7 +843,7 @@ return index
 			return true;
 		}
 
-		static bool isLuaClass(IntPtr l, int p)
+		public static bool isLuaClass(IntPtr l, int p)
 		{
 			return LuaDLL.luaS_subclassof(l, p, null) == 1;
 		}
