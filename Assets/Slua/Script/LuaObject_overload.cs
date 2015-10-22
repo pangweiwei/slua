@@ -37,7 +37,8 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Vector4 v)
 		{
 			float x, y, z, w;
-			LuaDLL.luaS_checkVector4(l, p, out x, out y, out z, out w);
+			if(LuaDLL.luaS_checkVector4(l, p, out x, out y, out z, out w)!=0)
+				throw new Exception(string.Format("Invalid vector4 argument at {0}", p));
 			v = new Vector4(x, y, z, w);
 			return true;
 		}
@@ -46,15 +47,31 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Vector3 v)
 		{
 			float x, y, z;
-			LuaDLL.luaS_checkVector3(l, p, out x, out y, out z);
+			if(LuaDLL.luaS_checkVector3(l, p, out x, out y, out z)!=0)
+				throw new Exception(string.Format("Invalid vector3 argument at {0}", p));
 			v = new Vector3(x, y, z);
+			return true;
+		}
+
+		static public bool checkType(IntPtr l, int p, out Vector3[] t)
+		{
+			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
+			int n = LuaDLL.lua_rawlen(l, p);
+			t = new Vector3[n];
+			for (int k = 0; k < n; k++)
+			{
+				LuaDLL.lua_rawgeti(l, p, k + 1);
+				checkType(l, -1, out t[k]);
+				LuaDLL.lua_pop(l, 1);
+			}
 			return true;
 		}
 
 		static public bool checkType(IntPtr l, int p, out Vector2 v)
 		{
 			float x, y;
-			LuaDLL.luaS_checkVector2(l, p, out x, out y);
+			if(LuaDLL.luaS_checkVector2(l, p, out x, out y)!=0)
+				throw new Exception(string.Format("Invalid vector2 argument at {0}", p));
 			v = new Vector2(x, y);
 			return true;
 		}
@@ -62,7 +79,8 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Quaternion q)
 		{
 			float x, y, z, w;
-			LuaDLL.luaS_checkQuaternion(l, p, out x, out y, out z, out w);
+			if(LuaDLL.luaS_checkQuaternion(l, p, out x, out y, out z, out w)!=0)
+				throw new Exception(string.Format("Invalid quaternion argument at {0}", p));
 			q = new Quaternion(x, y, z, w);
 			return true;
 		}
@@ -70,7 +88,8 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Color c)
 		{
 			float x, y, z, w;
-			LuaDLL.luaS_checkColor(l, p, out x, out y, out z, out w);
+			if (LuaDLL.luaS_checkColor(l, p, out x, out y, out z, out w) != 0)
+				throw new Exception(string.Format("Invalid color argument at {0}", p));
 			c = new Color(x, y, z, w);
 			return true;
 		}
@@ -83,7 +102,7 @@ namespace SLua
 			return true;
 		}
 
-		static internal bool checkParams(IntPtr l, int p, out Vector2[] pars)
+		static public bool checkParams(IntPtr l, int p, out Vector2[] pars)
 		{
 			int top = LuaDLL.lua_gettop(l);
 			if (top - p >= 0)
@@ -116,7 +135,7 @@ namespace SLua
 				LuaDLL.lua_pushnil(l);
 				return;
 			}
-			LuaDLL.lua_newtable(l);
+			LuaDLL.lua_createtable(l, r.Length, 0);
 			for (int n = 0; n < r.Length; n++)
 			{
 				pushValue(l, r[n]);
@@ -131,7 +150,7 @@ namespace SLua
 				LuaDLL.lua_pushnil(l);
 				return;
 			}
-			LuaDLL.lua_newtable(l);
+			LuaDLL.lua_createtable(l, r.Length, 0);
 			for (int n = 0; n < r.Length; n++)
 			{
 				pushValue(l, r[n]);
@@ -162,12 +181,27 @@ namespace SLua
 				LuaDLL.lua_pushnil(l);
 				return;
 			}
-			LuaDLL.lua_newtable(l);
+			LuaDLL.lua_createtable(l, o.Length, 0);
 			for (int n = 0; n < o.Length; n++)
 			{
 				pushValue(l, o[n]);
 				LuaDLL.lua_rawseti(l, -2, n + 1);
 			}
+		}
+		
+		public static void pushValue(IntPtr l, Vector3[] r)
+		{
+		    if (r == null)
+		    {
+		        LuaDLL.lua_pushnil(l);
+		        return;
+		    }
+		    LuaDLL.lua_createtable(l, r.Length, 0);
+		    for (int n = 0; n < r.Length; n++)
+		    {
+		        pushValue(l, r[n]);
+		        LuaDLL.lua_rawseti(l, -2, n + 1);
+		    }
 		}
 
 		public static void pushValue(IntPtr l, Quaternion o)

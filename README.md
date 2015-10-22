@@ -25,9 +25,11 @@ This repo https://github.com/lulersoft/ME_SLua based on slua for simple game fra
 
 This repo https://github.com/yaukeywang/2DPlatformer-SLua demonstrate 2DPlatformer game using slua.
 
+This repo https://github.com/tenvick/hugula demonstrate Tetris game using slua.
+
 ##Help
 
-See inner demo for help or [Document](doc.md) (in chinese).
+See inner demo for help or [Document](../../wiki/中文帮助) (in chinese).
 
 ##Important
 
@@ -41,7 +43,7 @@ Click menu, SLua->All->Make  generate all wrap file for your version of unity.
 
 static code generating, no reflection, no extra gc alloc, very fast
 
-remote debugger (require v1.0+)
+remote debugger
 
 full support iOS/iOS64, support il2cpp
 
@@ -61,7 +63,7 @@ export enum as integer
 
 return array as lua table
 
-using raw luajit, can be replaced with lua5.3/lua5.1, link with slua.c, if you switch to lua5.3, add LUA_5_3 macro in build setting.
+using raw luajit, can be replaced with lua5.3/lua5.1
 
 ##Usage
 
@@ -146,6 +148,7 @@ end
 
 ~~~~~~~~~~
 
+
 ##Export custom class
 
 add CustomLuaClass attribute to your custom class, waiting for compile completed, click "SLua->Custom->Make", you will get interface file for lua.
@@ -158,6 +161,10 @@ public class HelloWorld   {
 }
 
 ~~~~~~~~~~
+
+##How to remote debug
+
+Wiki here(https://github.com/pangweiwei/slua/wiki/Remote-Debug).
 
 ###Benchmark
 

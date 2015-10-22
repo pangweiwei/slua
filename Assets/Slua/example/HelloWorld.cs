@@ -18,6 +18,16 @@ public class SLuaTest : MonoBehaviour { }
 [CustomLuaClass]
 public class XXList : List<int> { }
 
+[CustomLuaClass]
+abstract public class AbsClass {
+
+	// this constructor should not been exported for test
+	public AbsClass() {
+	}
+
+	public int x;
+}
+
 
 public class Ref
 {
@@ -46,6 +56,13 @@ public class HelloWorld
 	static public byte[] bytes()
 	{
 		return new byte[] { 51, 52, 53, 53 };
+	}
+
+	static public void nullf(int? a=null) {
+		if (a == null)
+			Debug.Log("null");
+		else
+			Debug.Log(a);
 	}
 
 	public IEnumerator y()

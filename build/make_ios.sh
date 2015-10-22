@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 cd "$( dirname "${BASH_SOURCE[0]}" )"
-cp ../Assets/slua_src/slua.c luajit-2.1.0/src/
+cp slua.c luajit-2.1.0/src/
 cd luajit-2.1.0
 LIPO="xcrun -sdk iphoneos lipo"
 STRIP="xcrun -sdk iphoneos strip"

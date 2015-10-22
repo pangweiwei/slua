@@ -15,6 +15,7 @@ function main()
 	print(c:getTypeName("UnityEngine.MonoBehaviour,UnityEngine"))
 	print(c:getTypeName(MonoBehaviour))
 	print(c:getTypeName(Custom))
+	print(c:getTypeName(c:GetType()))
 
 	-- Test getItem setItem
 	print("---<"..c:getItem("test"))

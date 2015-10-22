@@ -48,29 +48,20 @@ namespace SLua
 
 			bool matchType(IntPtr l, int p, LuaTypes lt, Type t)
 			{
-				string tn = t.Name;
+				if (t.IsPrimitive)
+					return lt == LuaTypes.LUA_TNUMBER;
 
-				switch (tn)
+				if (t == typeof(string))
+					return lt == LuaTypes.LUA_TSTRING;
+
+				switch (lt)
 				{
-					case "String":
-						return lt == LuaTypes.LUA_TSTRING;
-					case "Int32":
-					case "Uint32":
-					case "Single":
-					case "Double":
-						return lt == LuaTypes.LUA_TNUMBER;
+					case LuaTypes.LUA_TFUNCTION:
+						return t==typeof(LuaFunction) || t.BaseType == typeof(MulticastDelegate);
+					case LuaTypes.LUA_TTABLE:
+						return t == typeof(LuaTable) || LuaObject.luaTypeCheck(l, p, t.Name);
 					default:
-						{
-							switch (lt)
-							{
-								case LuaTypes.LUA_TFUNCTION:
-									return tn == "LuaFunction" || t.BaseType == typeof(MulticastDelegate);
-								case LuaTypes.LUA_TTABLE:
-									return tn == "LuaTable" || LuaObject.luaTypeCheck(l, p, tn);
-								default:
-									return lt == LuaTypes.LUA_TUSERDATA || tn == "Object";
-							}
-						}
+						return lt == LuaTypes.LUA_TUSERDATA || t == typeof(object);
 				}
 			}
 
@@ -132,16 +123,16 @@ namespace SLua
 						object[] args;
 						checkArgs(l, 1, m, out args);
 						object ret = m.Invoke(m.IsStatic?null:self, args);
+						pushValue(l, true);
 						if (ret != null)
 						{
 							pushVar(l, ret);
-							return 1;
+							return 2;
 						}
-						return 0;
+						return 1;
 					}
 				}
-				LuaDLL.luaL_error(l, "Can't find valid overload function {0} to invoke or parameter type mis-matched.", mis[0].Name);
-				return 0;
+				return error(l,"Can't find valid overload function {0} to invoke or parameter type mis-matched.", mis[0].Name);
 			}
 
 			public void checkArgs(IntPtr l, int from, MethodInfo m, out object[] args)
@@ -164,18 +155,25 @@ namespace SLua
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaIndex(IntPtr l)
 		{
-			ObjectCache oc = ObjectCache.get(l);
-			object self = oc.get(l, 1);
-
-			LuaTypes t = LuaDLL.lua_type(l, 2);
-			switch (t)
+			try
 			{
-				case LuaTypes.LUA_TSTRING:
-					return indexString(l, self, LuaDLL.lua_tostring(l, 2));
-				case LuaTypes.LUA_TNUMBER:
-					return indexInt(l, self, LuaDLL.lua_tointeger(l, 2));
-				default:
-					return indexObject(l, self, checkObj(l, 2));
+				ObjectCache oc = ObjectCache.get(l);
+				object self = oc.get(l, 1);
+
+				LuaTypes t = LuaDLL.lua_type(l, 2);
+				switch (t)
+				{
+					case LuaTypes.LUA_TSTRING:
+						return indexString(l, self, LuaDLL.lua_tostring(l, 2));
+					case LuaTypes.LUA_TNUMBER:
+						return indexInt(l, self, LuaDLL.lua_tointeger(l, 2));
+					default:
+						return indexObject(l, self, checkObj(l, 2));
+				}
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
 			}
 		}
 
@@ -212,8 +210,9 @@ namespace SLua
 				object v = (self as IDictionary)[key];
 				if (v != null)
 				{
+					pushValue(l, true);
 					pushVar(l, v);
-					return 1;
+					return 2;
 				}
 			}
 
@@ -221,9 +220,10 @@ IndexProperty:
 			MemberInfo[] mis = t.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
 			if (mis.Length == 0)
 			{
-				LuaDLL.luaL_error(l, "Can't find " + key);
+				return error(l, "Can't find " + key);
 			}
 
+			pushValue(l, true);
 			MemberInfo mi = mis[0];
 			switch (mi.MemberType)
 			{
@@ -243,26 +243,26 @@ IndexProperty:
 				case MemberTypes.Event:
 					break;
 				default:
-					return 0;
+					return 1;
 			}
 
-			return 1;
+			return 2;
 
 		}
 
-		static void newindexString(IntPtr l, object self, string key)
+		static int newindexString(IntPtr l, object self, string key)
 		{
 			if (self is IDictionary)
 			{
                 (self as IDictionary)[key] = checkVar(l, 3);
-				return;
+				return ok(l);
 			}
 
 			Type t = getType(self);
 			MemberInfo[] mis = t.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
 			if (mis.Length == 0)
 			{
-				LuaDLL.luaL_error(l, "Can't find " + key);
+				return error(l, "Can't find " + key);
 			}
 
 			MemberInfo mi = mis[0];
@@ -284,13 +284,12 @@ IndexProperty:
                         break;
                     }
 				case MemberTypes.Method:
-					LuaDLL.luaL_error(l, "Method can't set");
-					break;
+					return error(l, "Method can't set");
 				case MemberTypes.Event:
-					break;
+					return error(l, "Event can't set");
 
 			}
-
+			return ok(l);
 		}
 
 
@@ -299,8 +298,9 @@ IndexProperty:
 			Type type = getType(self);
 			if (self is IList)
 			{
+				pushValue(l, true);
 				pushVar(l, (self as IList)[index]);
-				return 1;
+				return 2;
 			}
 			else if (self is IDictionary)
 			{
@@ -310,19 +310,19 @@ IndexProperty:
 					Type t = type.GetGenericArguments()[0];
 					if (t.IsEnum)
 					{
+						pushValue(l, true);
 						pushVar(l, (self as IDictionary)[Enum.Parse(t, index.ToString())]);
-                        return 1;
+                        return 2;
 					}
 				}
-
+				pushValue(l, true);
                 pushVar(l, (self as IDictionary)[index]);
-
-				return 1;
+				return 2;
 			}
 			return 0;
 		}
 
-		static void newindexInt(IntPtr l, object self, int index)
+		static int newindexInt(IntPtr l, object self, int index)
 		{
 			Type type = getType(self);
 			if (self is IList)
@@ -345,34 +345,43 @@ IndexProperty:
 				else
 					(self as IDictionary)[index] = checkVar(l, 3);
 			}
+
+			pushValue(l, true);
+			return 1;
 		}
 
-		static void newindexObject(IntPtr l, object self, object k, object v)
+		static int newindexObject(IntPtr l, object self, object k, object v)
 		{
 			if (self is IDictionary)
 			{
 				(self as IDictionary)[k] = v;
 			}
+			pushValue(l, true);
+			return 1;
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int luaNewIndex(IntPtr l)
 		{
-			ObjectCache oc = ObjectCache.get(l);
-			object self = oc.get(l, 1);
-
-			LuaTypes t = LuaDLL.lua_type(l, 2);
-			switch (t)
+			try
 			{
-				case LuaTypes.LUA_TSTRING:
-					newindexString(l, self, LuaDLL.lua_tostring(l, 2));
-					return 0;
-				case LuaTypes.LUA_TNUMBER:
-					newindexInt(l, self, LuaDLL.lua_tointeger(l, 2));
-					return 0;
-				default:
-					newindexObject(l, self, checkVar(l, 2), checkVar(l, 3));
-					return 0;
+				ObjectCache oc = ObjectCache.get(l);
+				object self = oc.get(l, 1);
+
+				LuaTypes t = LuaDLL.lua_type(l, 2);
+				switch (t)
+				{
+					case LuaTypes.LUA_TSTRING:
+						return newindexString(l, self, LuaDLL.lua_tostring(l, 2));
+					case LuaTypes.LUA_TNUMBER:
+						return newindexInt(l, self, LuaDLL.lua_tointeger(l, 2));
+					default:
+						return newindexObject(l, self, checkVar(l, 2), checkVar(l, 3));
+				}
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
 			}
 		}
 
@@ -387,27 +396,25 @@ IndexProperty:
 			}
 			catch (Exception e)
 			{
-				LuaDLL.luaL_error(l, e.ToString());
-				return 0;
+				return error(l, e);
 			}
 		}
 
 		static new public void init(IntPtr l)
 		{
-			LuaDLL.lua_newtable(l);
-			LuaDLL.lua_pushcfunction(l, luaIndex);
+			LuaDLL.lua_createtable(l, 0, 3);
+			pushValue(l, luaIndex);
 			LuaDLL.lua_setfield(l, -2, "__index");
-			LuaDLL.lua_pushcfunction(l, luaNewIndex);
+			pushValue(l, luaNewIndex);
 			LuaDLL.lua_setfield(l, -2, "__newindex");
 			LuaDLL.lua_pushcfunction(l, lua_gc);
 			LuaDLL.lua_setfield(l, -2, "__gc");
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "LuaVarObject");
 
-			LuaDLL.lua_newtable(l);
-			LuaDLL.lua_pushcfunction(l, methodWrapper);
+			LuaDLL.lua_createtable(l, 0, 1);
+			pushValue(l, methodWrapper);
 			LuaDLL.lua_setfield(l, -2, "__call");
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, ObjectCache.getAQName(typeof(LuaCSFunction)));
-
 		}
 	}
 

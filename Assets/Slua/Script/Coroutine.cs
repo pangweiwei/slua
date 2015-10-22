@@ -41,21 +41,38 @@ namespace SLua
 			string yield =
 @"
 local Yield = UnityEngine.Yieldk
-UnityEngine.Yield = function(x)
-	local co,ismain=coroutine.running()
+
+uCoroutine = uCoroutine or {}
+
+uCoroutine.create = function(x)
+
+	local co = coroutine.create(x)
+	coroutine.resume(co)
+	return co
+
+end
+
+uCoroutine.yield = function(x)
+
+	local co, ismain = coroutine.running()
 	if ismain then error('Can not yield in main thread') end
 
-	Yield(x,function()
-		coroutine.resume(co)
-	end)
-	coroutine.yield()
+	if type(x) == 'thread' and coroutine.status(x) ~= 'dead' then
+		repeat
+			Yield(nil, function() coroutine.resume(co) end)
+			coroutine.yield()
+		until coroutine.status(x) == 'dead'
+	else
+		Yield(x, function() coroutine.resume(co) end)
+		coroutine.yield()
+	end
+
 end
-return yield
+
+-- backward compatibility of older versions
+UnityEngine.Yield = uCoroutine.yield
 ";
-            // overload resume function for report error
-			if(LuaDLL.lua_dostring(l, yield)!=0)
-				LuaObject.lastError(l);
-			LuaDLL.lua_pop(l, 1);
+			LuaState.get(l).doString(yield);
 		}
 
 		[MonoPInvokeCallback(typeof(LuaCSFunction))]
@@ -65,20 +82,19 @@ return yield
 			{
 				if (LuaDLL.lua_pushthread(l) == 1)
 				{
-					LuaDLL.luaL_error(l, "should put Yield call into lua coroutine.");
-					return 0;
+					return error(l, "should put Yield call into lua coroutine.");
 				}
 				object y = checkObj(l, 1);
 				LuaFunction f;
 				checkType(l, 2, out f);
 
 				mb.StartCoroutine(yieldReturn(y, f));
-				return 0;
+				pushValue(l, true);
+				return 1;
 			}
 			catch (Exception e)
 			{
-				LuaDLL.luaL_error(l, e.ToString());
-				return 0;
+				return error(l, e);
 			}
 		}
 

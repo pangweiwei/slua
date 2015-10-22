@@ -26,11 +26,18 @@ namespace SLua
 	using System.Collections;
 	using SLua;
 	using System;
+	using System.Net;
+	using System.Net.Sockets;
+	using LuaInterface;
+	using System.IO;
+
 	public class LuaSvrGameObject : MonoBehaviour
 	{
 
 		public LuaState state;
 		public Action onUpdate;
+		public bool skipDebugger = true;
+		DebugInterface di;
 
 		// make sure lua state finalize at last
 		// make sure LuaSvrGameObject excute order is max(9999)
@@ -38,14 +45,46 @@ namespace SLua
 		{
 			if (state != null)
 			{
-				state.Close();
+				if (di != null)
+				{
+					di.close();
+					di = null;
+				}
+
+				state.Dispose();
 				state = null;
 			}
 		}
 
+		public void init() {
+			di = new DebugInterface(state);
+			di.init();
+		}
+
+
 		void Update()
 		{
 			if (onUpdate != null) onUpdate();
+			if (di != null) di.update();
 		}
+
+
+		void OnGUI()
+		{
+			if (skipDebugger || di.isStarted)
+			{
+				skipDebugger = true;
+				return;
+			}
+
+			int w = Screen.width;
+			int h = Screen.height;
+			if (!skipDebugger && GUI.Button(new Rect((w - 300) / 2, (h - 100) / 2, 300, 100), "Waiting for debug connection\nPress this button to skip debugging."))
+			{
+				skipDebugger = true;
+			}
+		}
+
+		
 	}
 }

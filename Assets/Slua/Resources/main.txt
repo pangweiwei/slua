@@ -1,6 +1,5 @@
 local somemodule = require 'module.some'
 import "UnityEngine"
-
 if not UnityEngine.GameObject then
 	error("Click Make/All to generate lua wrap file")
 end
@@ -16,11 +15,27 @@ MyGameObject=Slua.Class(GameObject,
 	}	
 )
 
-
 function main()
+
+	-- test split of System.String
+	local x=String("a,b,c,d/e/f/g")
+	print(unpack(x:Split(",/",0)))
+	print(unpack(x:Split({",","/"},0)))
+
+	HelloWorld.nullf(1)
+	HelloWorld.nullf()
+
+	local t=dofile('module/some')
+	assert(type(t)=='table')
+	assert(t.add(1,2)==3)
+
+	local fu=loadfile('module/some')
+	assert(type(fu)=='function')
 
 	if jit then
 		print("using luajit ",jit.version,jit.arch)
+		local ffi=require 'ffi'
+		print(ffi)
 	else
 		print("using lua")
 	end

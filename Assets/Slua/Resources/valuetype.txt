@@ -1,12 +1,10 @@
---require 'valuetype/valuetype'
-import "UnityEngine"
-
 -- unit test
 function main()
 
 
 
 	local Vector3 = UnityEngine.Vector3
+	local Quaternion = UnityEngine.Quaternion
 	local v=Vector3(0,0,0)+Vector3.one*2/2
 	assert(v.y==1)
 	v.y=2

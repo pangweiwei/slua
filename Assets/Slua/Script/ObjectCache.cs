@@ -148,6 +148,14 @@ namespace SLua
 			udCacheRef = LuaDLL.luaL_ref(l, LuaIndexes.LUA_REGISTRYINDEX);
 		}
 
+
+		static public void clear()
+		{
+
+			oldl = IntPtr.Zero;
+			oldoc = null;
+
+		}
 		internal static void del(IntPtr l)
 		{
 			multiState.Remove(l);

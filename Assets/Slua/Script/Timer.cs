@@ -240,70 +240,81 @@ namespace SLua
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		public static int Delete(IntPtr l)
 		{
-			int id;
-			checkType(l, 1, out id);
-			del(id);
-			return 0;
+			try{
+				int id;
+				checkType(l, 1, out id);
+				del(id);
+				return ok(l);
+			}catch(Exception e)
+			{
+				return LuaObject.error(l, e);
+			}
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		public static int Add(IntPtr l)
 		{
-			int top = LuaDLL.lua_gettop(l);
-			if (top == 2)
-			{
-				int delay;
-				checkType(l, 1, out delay);
-				LuaDelegate ld;
-				checkType(l, 2, out ld);
-				Action<int> ua;
-				if (ld.d != null)
-					ua = (Action<int>)ld.d;
-				else
+			try{
+				int top = LuaDLL.lua_gettop(l);
+				if (top == 2)
 				{
-					IntPtr ml = LuaState.get(l).L;
-					ua = (int id) =>
+					int delay;
+					checkType(l, 1, out delay);
+					LuaDelegate ld;
+					checkType(l, 2, out ld);
+					Action<int> ua;
+					if (ld.d != null)
+						ua = (Action<int>)ld.d;
+					else
 					{
-						int error = pushTry(ml);
-						pushValue(ml, id);
-						ld.pcall(1, error);
-						LuaDLL.lua_settop(ml, error - 1);
-					};
+						IntPtr ml = LuaState.get(l).L;
+						ua = (int id) =>
+						{
+							int error = pushTry(ml);
+							pushValue(ml, id);
+							ld.pcall(1, error);
+							LuaDLL.lua_settop(ml, error - 1);
+						};
+					}
+					ld.d = ua;
+					pushValue(l, true);
+					pushValue(l, add(delay, ua));
+					return 2;
 				}
-				ld.d = ua;
-				pushValue(l, add(delay, ua));
-				return 1;
-			}
-			else if (top == 3)
-			{
-				int delay, cycle;
-				checkType(l, 1, out delay);
-				checkType(l, 2, out cycle);
-				LuaDelegate ld;
-				checkType(l, 3, out ld);
-				Func<int, bool> ua;
-
-				if (ld.d != null)
-					ua = (Func<int, bool>)ld.d;
-				else
+				else if (top == 3)
 				{
-					IntPtr ml = LuaState.get(l).L;
-					ua = (int id) =>
+					int delay, cycle;
+					checkType(l, 1, out delay);
+					checkType(l, 2, out cycle);
+					LuaDelegate ld;
+					checkType(l, 3, out ld);
+					Func<int, bool> ua;
+	
+					if (ld.d != null)
+						ua = (Func<int, bool>)ld.d;
+					else
 					{
-						int error = pushTry(ml);
-						pushValue(ml, id);
-						ld.pcall(1, error);
-						bool ret = LuaDLL.lua_toboolean(ml, -1);
-						LuaDLL.lua_settop(ml, error - 1);
-						return ret;
-					};
+						IntPtr ml = LuaState.get(l).L;
+						ua = (int id) =>
+						{
+							int error = pushTry(ml);
+							pushValue(ml, id);
+							ld.pcall(1, error);
+							bool ret = LuaDLL.lua_toboolean(ml, -1);
+							LuaDLL.lua_settop(ml, error - 1);
+							return ret;
+						};
+					}
+					ld.d = ua;
+					pushValue(l, true);
+					pushValue(l, add(delay, cycle, ua));
+					return 2;
 				}
-				ld.d = ua;
-				pushValue(l, add(delay, cycle, ua));
-				return 1;
+				return LuaObject.error(l,"Argument error");
+			}catch(Exception e)
+			{
+				return LuaObject.error(l, e);
 			}
-			LuaDLL.luaL_error(l, "Argument error");
-			return 0;
 		}
 
 

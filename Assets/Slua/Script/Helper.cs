@@ -106,13 +106,12 @@ return Class
 			{
 				IEnumerable e = o as IEnumerable;
 				IEnumerator iter = e.GetEnumerator();
-
+				pushValue(l, true);
 				pushObject(l, iter);
 				LuaDLL.lua_pushcclosure(l, _iter, 1);
-				return 1;
+				return 2;
 			}
-			LuaDLL.luaL_error(l, "passed in object isn't enumerable");
-			return 0;
+			return error(l,"passed in object isn't enumerable");
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -125,8 +124,7 @@ return Class
 				Type t = Type.GetType(cls);
 				if (t == null)
 				{
-					LuaDLL.luaL_error(l, "Can't find {0} to create", cls);
-					return 0;
+					return error(l, string.Format("Can't find {0} to create", cls));
 				}
 
 				ConstructorInfo[] cis = t.GetConstructors();
@@ -149,15 +147,16 @@ return Class
 						args[n] = Convert.ChangeType(checkVar(l, n + 2), pis[n].ParameterType);
 
 					object ret = target.Invoke(args);
+					pushValue(l, true);
 					pushVar(l, ret);
-					return 1;
+					return 2;
 				}
-				return 0;
+				pushValue(l, true);
+				return 1;
 			}
 			catch (Exception e)
 			{
-				LuaDLL.luaL_error(l, e.ToString());
-				return 0;
+				return error(l,e);
 			}
 		}
 
@@ -174,85 +173,123 @@ return Class
 				Type t = Type.GetType(cls);
 				if (t == null)
 				{
-					LuaDLL.luaL_error(l, "Can't find {0} to create", cls);
-					return 0;
+					return error(l, "Can't find {0} to create", cls);
 				}
 
 				LuaClassObject co = new LuaClassObject(t);
+				pushValue(l, true);
 				LuaObject.pushObject(l,co);
-
-				return 1;
+				return 2;
 			}
 			catch (Exception e)
 			{
-				LuaDLL.luaL_error(l, e.ToString());
-				return 0;
+				return error(l, e);
 			}
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public new int ToString(IntPtr l)
 		{
-			object o = checkObj(l, 1);
-			if (o == null)
+			try
 			{
-				LuaDLL.lua_pushnil(l);
-				return 1;
-			}
+				object o = checkObj(l, 1);
+				if (o == null)
+				{
+					pushValue(l, true);
+					LuaDLL.lua_pushnil(l);
+					return 2;
+				}
 
-			if (o is byte[])
-			{
-				byte[] b = (byte[])o;
-				LuaDLL.lua_pushlstring(l, b, b.Length);
+				pushValue(l, true);
+				if (o is byte[])
+				{
+					byte[] b = (byte[])o;
+					LuaDLL.lua_pushlstring(l, b, b.Length);
+				}
+				else
+				{
+					pushValue(l, o.ToString());
+				}
+				return 2;
 			}
-			else
+			catch (Exception e)
 			{
-				pushValue(l, o.ToString());
+				return error(l, e);
 			}
-			return 1;
 		}
 		
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int As(IntPtr l)
 		{
-			if (!isTypeTable (l, 2)) {
-				LuaDLL.luaL_error(l,"No matched type of param 2");
-				return 0;
+			try
+			{
+				if (!isTypeTable(l, 2))
+				{
+					return error(l, "No matched type of param 2");
+				}
+				string meta = LuaDLL.lua_tostring(l, -1);
+				LuaDLL.luaL_getmetatable(l, meta);
+				LuaDLL.lua_setmetatable(l, 1);
+				pushValue(l, true);
+				LuaDLL.lua_pushvalue(l, 1);
+				return 2;
 			}
-			string meta = LuaDLL.lua_tostring (l, -1);
-			LuaDLL.luaL_getmetatable (l, meta);
-			LuaDLL.lua_setmetatable (l, 1);
-			LuaDLL.lua_pushvalue (l, 1);
-			return 1;
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
 		}
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int IsNull(IntPtr l)
         {
-            LuaTypes t = LuaDLL.lua_type(l, 1);
-            if (t == LuaTypes.LUA_TNIL)
-                pushValue(l, true);
-            else if (t == LuaTypes.LUA_TUSERDATA)
-            {
-                object o = checkObj(l, 1);
-                if (o is UnityEngine.Object)
-                    pushValue(l, (o as UnityEngine.Object) == null);
-                else
-                    pushValue(l, o == null);
-            }
-            else
-                pushValue(l, false);
+			try
+			{
+				LuaTypes t = LuaDLL.lua_type(l, 1);
+				pushValue(l, true);
 
-            return 1;
+				if (t == LuaTypes.LUA_TNIL)
+				{
+					pushValue(l, true);
+				}
+				// LUA_TUSERDATA or LUA_TTABLE(Class inherited from Unity Native)
+				else if (t == LuaTypes.LUA_TUSERDATA || isLuaClass(l, 1))
+				{
+					object o = checkObj(l, 1);
+					if( o is UnityEngine.Object )
+					{
+						pushValue(l, (o as UnityEngine.Object) == null);
+					}
+					else
+						pushValue(l, o == null);
+				}
+				else
+					pushValue(l, false);
+
+				return 2;
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
         }
 
         static LuaOut luaOut = new LuaOut();
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int get_out(IntPtr l)
         {
+			pushValue(l, true);
             pushObject(l, luaOut);
-            return 1;
+            return 2;
         }
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int get_version(IntPtr l)
+		{
+			pushValue(l, true);
+			pushValue(l, VersionNumber);
+			return 2;
+		}
 
         static public void reg(IntPtr l)
 		{
@@ -263,13 +300,11 @@ return Class
             addMember(l, ToString, false);
             addMember(l, As, false);
             addMember(l, IsNull, false);
-            addMember(l, "out", get_out, null, false);
+			addMember(l, "out", get_out, null, false);
+			addMember(l, "version", get_version, null, false);
 
-			if (LuaDLL.luaL_dostring(l, classfunc) != 0)
-			{
-				lastError(l);
-				return;
-			}
+			LuaFunction func = LuaState.get(l).doString(classfunc) as LuaFunction;
+			func.push(l);
 			LuaDLL.lua_setfield(l, -3, "Class");
 
 
