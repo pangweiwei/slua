@@ -249,12 +249,17 @@ return Class
 				pushValue(l, true);
 
 				if (t == LuaTypes.LUA_TNIL)
+				{
 					pushValue(l, true);
-				else if (t == LuaTypes.LUA_TUSERDATA)
+				}
+				// LUA_TUSERDATA or LUA_TTABLE(Class inherited from Unity Native)
+				else if (t == LuaTypes.LUA_TUSERDATA || isLuaClass(l, 1))
 				{
 					object o = checkObj(l, 1);
-					if (o is UnityEngine.Object)
+					if( o is UnityEngine.Object )
+					{
 						pushValue(l, (o as UnityEngine.Object) == null);
+					}
 					else
 						pushValue(l, o == null);
 				}
