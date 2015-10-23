@@ -16,6 +16,8 @@ MyGameObject=Slua.Class(GameObject,
 )
 
 function main()
+	-- Cache unpack function.
+	local unpack = (unpack and unpack) or table.unpack
 
 	-- test split of System.String
 	local x=String("a,b,c,d/e/f/g")
