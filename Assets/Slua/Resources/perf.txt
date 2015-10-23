@@ -82,10 +82,11 @@ end
 
 function test7()
 	local transform=cube.transform
+	local Quaternion = (jit and Quaternion.__raw) or Quaternion
 	local start = os.clock()
 	for i=1,200000 do
-		local t=Quaternion.__raw.Euler(100,100,100)
-		local q=Quaternion.__raw.Slerp(Quaternion.identity,t,0.5)
+		local t=Quaternion.Euler(100,100,100)
+		local q=Quaternion.Slerp(Quaternion.identity,t,0.5)
 	end
 	print("test6/lua non-jit  " .. (os.clock() - start));
 end
