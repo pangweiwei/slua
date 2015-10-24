@@ -500,7 +500,7 @@ do
 	        newv = (vector4 - vector2) / deltaTime
 	    end
 	    currentVelocity:Set(newv.x,newv.y,newv.z)
-	    return vector4
+	    return vector4,currentVelocity
 	end
 
 	-- code copy from reflactor of UnityEgnine
