@@ -1477,7 +1477,7 @@ namespace SLua
 			    !method.Name.StartsWith("set_", StringComparison.Ordinal) &&
 			    !method.Name.StartsWith("add_", StringComparison.Ordinal) &&
 			    !IsObsolete(method) && !method.IsGenericMethod &&
-			    //!method.Name.StartsWith("op_", StringComparison.Ordinal) &&
+				method.ToString() != "Int32 Clamp(Int32, Int32, Int32)" &&
 			    !method.Name.StartsWith("remove_", StringComparison.Ordinal))
 			{
 				return true;
