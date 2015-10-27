@@ -1101,22 +1101,27 @@ end
 
 		public void gcRef(UnRefAction act, int r)
 		{
+			UnrefPair u = new UnrefPair();
+			u.act = act;
+			u.r = r;
 			lock (refQueue)
 			{
-				UnrefPair u = new UnrefPair();
-				u.act = act;
-				u.r = r;
 				refQueue.Enqueue(u);
 			}
 		}
 
 		public void checkRef()
 		{
-			while (refQueue.Count > 0)
+			int cnt=0;
+			// fix il2cpp lock issue on iOS
+			lock (refQueue)
 			{
+				cnt=refQueue.Count;
+			}
+
+			for(int n=0;n<cnt;n++) {
 				UnrefPair u;
-				lock (refQueue)
-				{
+				lock(refQueue) {
 					u = refQueue.Dequeue();
 				}
 				u.act(L, u.r);
