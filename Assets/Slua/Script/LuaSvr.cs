@@ -68,19 +68,21 @@ namespace SLua
 			bindProgress = 0;
 
 			List<Type> bindlist = new List<Type>();
-			foreach (Assembly a in ams)
+			for (int n = 0; n < ams.Length;n++ )
 			{
-                Type[] ts = null;
-                try
-                {
-                    ts = a.GetExportedTypes();
-                }
-                catch
-                {
-                    continue;
-                }
-                foreach (Type t in ts)
+				Assembly a = ams[n];
+				Type[] ts = null;
+				try
 				{
+					ts = a.GetExportedTypes();
+				}
+				catch
+				{
+					continue;
+				}
+				for (int k = 0; k < ts.Length; k++)
+				{
+					Type t = ts[k];
 					if (t.GetCustomAttributes(typeof(LuaBinderAttribute), false).Length > 0)
 					{
 						bindlist.Add(t);
@@ -98,9 +100,10 @@ namespace SLua
 			}));
 			
 			List<Action<IntPtr>> list = new List<Action<IntPtr>>();
-			foreach (Type t in bindlist)
+			for (int n = 0; n < bindlist.Count; n++)
 			{
-				var sublist = (Action<IntPtr>[]) t.GetMethod("GetBindList").Invoke(null,null);
+				Type t = bindlist[n];
+				var sublist = (Action<IntPtr>[])t.GetMethod("GetBindList").Invoke(null, null);
 				list.AddRange(sublist);
 			}
 			
