@@ -277,7 +277,7 @@ namespace SLua
 
 			
 			//detect interface ICustomExportPost,and call OnAddCustomClass
-			InvokeEditorMethond<ICustomExportPost>("OnAddCustomClass",new object[]{fun});
+			InvokeEditorMethod<ICustomExportPost>("OnAddCustomClass",new object[]{fun});
 
 
 			GenerateBind(exports, "BindCustom", 3, path);
@@ -287,7 +287,7 @@ namespace SLua
 			Debug.Log("Generate custom interface finished");
 		}
 
-		static private void InvokeEditorMethond<T>(string methodName,object[] parameters){
+		static private void InvokeEditorMethod<T>(string methodName,object[] parameters){
 			System.Reflection.Assembly editorAssembly = System.Reflection.Assembly.Load("Assembly-CSharp-Editor");
 			Type[] editorTypes = editorAssembly.GetExportedTypes();
 			foreach (Type t in editorTypes)
@@ -313,7 +313,7 @@ namespace SLua
 			CustomExport.OnAddCustomAssembly(ref assemblyList);
 
 			//detect interface ICustomExportPost,and call OnAddCustomAssembly
-			InvokeEditorMethond<ICustomExportPost>("OnAddCustomAssembly",new object[]{assemblyList});
+			InvokeEditorMethod<ICustomExportPost>("OnAddCustomAssembly",new object[]{assemblyList});
 
 			foreach (string assemblyItem in assemblyList)
 			{
