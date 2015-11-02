@@ -273,14 +273,34 @@ namespace SLua
             }
 
             CustomExport.OnAddCustomClass(fun);
+
+
 			
+			//detect interface ICustomExportPost,and call OnAddCustomClass
+			InvokeEditorMethond<ICustomExportPost>("OnAddCustomClass",new object[]{fun});
+
+
 			GenerateBind(exports, "BindCustom", 3, path);
             if(autoRefresh)
 			    AssetDatabase.Refresh();
 			
 			Debug.Log("Generate custom interface finished");
 		}
-		
+
+		static private void InvokeEditorMethond<T>(string methodName,object[] parameters){
+			System.Reflection.Assembly editorAssembly = System.Reflection.Assembly.Load("Assembly-CSharp-Editor");
+			Type[] editorTypes = editorAssembly.GetExportedTypes();
+			foreach (Type t in editorTypes)
+			{
+				if(typeof(T).IsAssignableFrom(t)){
+					System.Reflection.MethodInfo method =  t.GetMethod(methodName,System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+					if(method != null){
+						method.Invoke(null,parameters);
+					}
+				}
+			}
+		}
+
 		[MenuItem("SLua/3rdDll/Make")]
 		static public void Generate3rdDll()
 		{
@@ -291,6 +311,10 @@ namespace SLua
 			List<Type> cust = new List<Type>();
 			List<string> assemblyList = new List<string>();
 			CustomExport.OnAddCustomAssembly(ref assemblyList);
+
+			//detect interface ICustomExportPost,and call OnAddCustomAssembly
+			InvokeEditorMethond<ICustomExportPost>("OnAddCustomAssembly",new object[]{assemblyList});
+
 			foreach (string assemblyItem in assemblyList)
 			{
 				Assembly assembly = Assembly.Load(assemblyItem);
