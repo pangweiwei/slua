@@ -1566,12 +1566,11 @@ namespace SLua
 			List<MethodBase> methods = new List<MethodBase>();
 
 			if(this.includeExtension && ((bf&BindingFlags.Instance) == BindingFlags.Instance)){
-				if(!extensionMethods.ContainsKey(t)){
-					return new MethodBase[]{};
-				}
-				foreach(MethodInfo m in extensionMethods[t]){
-					if(m.Name == name){
-						methods.Add(m);
+				if(extensionMethods.ContainsKey(t)){
+					foreach(MethodInfo m in extensionMethods[t]){
+						if(m.Name == name){
+							methods.Add(m);
+						}
 					}
 				}
 			}
