@@ -393,14 +393,12 @@ namespace SLua
 			CodeGenerator cg = new CodeGenerator();
 			cg.givenNamespace = ns;
             cg.path = path;
-			cg.includeExtension = true;
 			return cg.Generate(t);
 		}
 		
 		static void GenerateBind(List<Type> list, string name, int order,string path)
 		{
 			CodeGenerator cg = new CodeGenerator();
-			cg.includeExtension = true;
             cg.path = path;
 			cg.GenerateBind(list, name, order);
 		}
@@ -487,7 +485,8 @@ namespace SLua
 		
 		public string givenNamespace;
         public string path;
-		public bool includeExtension = false;
+		public bool includeExtension = SLuaSetting.Instance.exportExtensionMethod;
+		public EOL eol = SLuaSetting.Instance.eol;
 
 		class PropPair
 		{
@@ -504,6 +503,7 @@ namespace SLua
 			HashSet<Type> exported = new HashSet<Type>();
 			string f = path + name + ".cs";
 			StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
+			file.NewLine = NewLine;
 			Write(file, "using System;");
 			Write(file, "using System.Collections.Generic;");
 			Write(file, "namespace SLua {");
@@ -566,6 +566,7 @@ namespace SLua
 						f = path + "LuaDelegate_" + _Name(t.FullName) + ".cs";
 					}
 					StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
+					file.NewLine = NewLine;
 					WriteDelegate(t, file);
 					file.Close();
 					return false;
@@ -589,6 +590,7 @@ namespace SLua
 					{
 						string f = path + "LuaUnityEvent_" + _Name(GenericName(t.BaseType)) + ".cs";
 						file = new StreamWriter(f, false, Encoding.UTF8);
+						file.NewLine = NewLine;
 						WriteEvent(t, file);
 						file.Close();
 					}
@@ -854,6 +856,7 @@ namespace SLua
 			string clsname = ExportName(t);
 			string f = path + clsname + ".cs";
 			StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
+			file.NewLine = NewLine;
 			return file;
 		}
 		
@@ -945,7 +948,28 @@ namespace SLua
 		{
 			return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0;
 		}
-		
+
+		string NewLine{
+			get{
+				switch(eol){
+				case EOL.Native:
+					return System.Environment.NewLine;
+				case EOL.CRLF:
+					return "\r\n";
+				case EOL.CR:
+					return "\r";
+				case EOL.LF:
+					return "\n";
+				default:
+					return "";
+				}
+			}
+		}
+		void WriteLine(StreamWriter w, string line){
+			w.Write(line);
+			w.Write(NewLine);
+		}
+
 		void RegFunction(Type t, StreamWriter file)
 		{
 			// Write export function
@@ -1568,7 +1592,10 @@ namespace SLua
 			if(this.includeExtension && ((bf&BindingFlags.Instance) == BindingFlags.Instance)){
 				if(extensionMethods.ContainsKey(t)){
 					foreach(MethodInfo m in extensionMethods[t]){
-						if(m.Name == name){
+						if(m.Name == name 
+						   && !IsObsolete(m)
+						   && !DontExport(m)
+						   && isUsefullMethod(m)){
 							methods.Add(m);
 						}
 					}
@@ -1813,6 +1840,9 @@ namespace SLua
 		
 		void Write(StreamWriter file, string fmt, params object[] args)
 		{
+
+			fmt = System.Text.RegularExpressions.Regex.Replace(fmt, @"\r\n?|\n|\r", NewLine);
+
 			if (fmt.StartsWith("}")) indent--;
 			
 			for (int n = 0; n < indent; n++)
