@@ -965,10 +965,6 @@ namespace SLua
 				}
 			}
 		}
-		void WriteLine(StreamWriter w, string line){
-			w.Write(line);
-			w.Write(NewLine);
-		}
 
 		void RegFunction(Type t, StreamWriter file)
 		{
