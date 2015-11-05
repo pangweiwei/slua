@@ -33,6 +33,7 @@ namespace SLua
 	using System.Text;
 	using System.Text.RegularExpressions;
 
+	public interface ICustomExportPost { }
 
 	public class ConnectDebugger : EditorWindow
 	{
