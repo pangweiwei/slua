@@ -80,7 +80,7 @@ namespace SLua
 						break;
 					case "Int32":
 						return (int)LuaDLL.lua_tointeger(l, p);
-					case "Uint32":
+					case "UInt32":
 						return (uint)LuaDLL.lua_tointeger(l, p);
 					case "Single":
 						return (float)LuaDLL.lua_tonumber(l, p);
