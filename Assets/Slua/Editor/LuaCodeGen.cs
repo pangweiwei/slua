@@ -604,7 +604,7 @@ namespace SLua
 		
 		void WriteDelegate(Type t, StreamWriter file)
 		{
-			System.Text.StringBuilder temp = new System.Text.StringBuilder( @"
+			string temp = @"
 using System;
 using System.Collections.Generic;
 using LuaInterface;
@@ -638,28 +638,16 @@ namespace SLua
 			l = LuaState.get(l).L;
             ua = ($ARGS) =>
             {
-				if(LuaState.main == null){
-					return $RET;
-				}
                 int error = pushTry(l);
-");
+";
+			
+			temp = temp.Replace("$TN", t.Name);
+			temp = temp.Replace("$FN", SimpleType(t));
 			MethodInfo mi = t.GetMethod("Invoke");
-
-			string defaultRet = "";
-			if(mi.ReturnType != typeof(void)){
-				defaultRet = "null";
-				if(mi.ReturnType.IsValueType){
-					defaultRet = System.Activator.CreateInstance(mi.ReturnType).ToString().ToLower();
-				}
-			}
-			temp.Replace("$RET",defaultRet);
-			temp.Replace("$TN", t.Name);
-			temp.Replace("$FN", SimpleType(t));
-
 			List<int> outindex = new List<int>();
 			List<int> refindex = new List<int>();
-			temp.Replace("$ARGS", ArgsList(mi, ref outindex, ref refindex));
-			Write(file, temp.ToString());
+			temp = temp.Replace("$ARGS", ArgsList(mi, ref outindex, ref refindex));
+			Write(file, temp);
 			
 			this.indent = 4;
 			
