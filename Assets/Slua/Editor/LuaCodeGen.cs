@@ -601,7 +601,21 @@ namespace SLua
 			}
 			return false;
 		}
-		
+
+		string GetDefaultValue(System.Type type){
+			string defaultRet = "";
+			if(type.IsByRef){
+				type = type.GetElementType();
+			}
+			if(type != typeof(void)){
+				defaultRet = "null";
+				if(type.IsValueType){
+					defaultRet = System.Activator.CreateInstance(type).ToString().ToLower();
+				}
+			}
+			return defaultRet;
+		}
+
 		void WriteDelegate(Type t, StreamWriter file)
 		{
 			System.Text.StringBuilder temp = new System.Text.StringBuilder( @"
@@ -638,30 +652,25 @@ namespace SLua
 			l = LuaState.get(l).L;
             ua = ($ARGS) =>
             {
-				if(LuaState.main == null){
-					return $RET;
-				}
-                int error = pushTry(l);
-");
+				if(LuaState.main == null){");
 			MethodInfo mi = t.GetMethod("Invoke");
-
-			string defaultRet = "";
-			if(mi.ReturnType != typeof(void)){
-				defaultRet = "null";
-				if(mi.ReturnType.IsValueType){
-					defaultRet = System.Activator.CreateInstance(mi.ReturnType).ToString().ToLower();
-				}
-			}
-			temp.Replace("$RET",defaultRet);
-			temp.Replace("$TN", t.Name);
-			temp.Replace("$FN", SimpleType(t));
-
+			
 			List<int> outindex = new List<int>();
 			List<int> refindex = new List<int>();
 			temp.Replace("$ARGS", ArgsList(mi, ref outindex, ref refindex));
+			temp.Replace("$TN", t.Name);
+			temp.Replace("$FN", SimpleType(t));
 			Write(file, temp.ToString());
-			
-			this.indent = 4;
+
+			this.indent=5;
+			for (int n = 0; n < mi.GetParameters().Length; n++)
+			{
+				if (outindex.Contains(n))
+					Write(file, "a{0} = {1} ; // type = {2}", n + 1,GetDefaultValue(mi.GetParameters()[n].ParameterType),mi.GetParameters()[n].ParameterType.Name);
+			}
+			Write(file,"return {0} ;",GetDefaultValue(mi.ReturnType));
+			Write(file,"}");
+			Write(file,"int error = pushTry(l);");
 			
 			for (int n = 0; n < mi.GetParameters().Length; n++)
 			{
@@ -1803,7 +1812,7 @@ namespace SLua
 			
 			Write(file, "return {0};", retcount);
 		}
-		
+
 		string SimpleType(Type t)
 		{
 			
