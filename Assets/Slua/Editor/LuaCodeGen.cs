@@ -618,7 +618,7 @@ namespace SLua
 
 		void WriteDelegate(Type t, StreamWriter file)
 		{
-			string temp = @"
+			System.Text.StringBuilder temp =  new System.Text.StringBuilder(@"
 using System;
 using System.Collections.Generic;
 using LuaInterface;
@@ -652,7 +652,7 @@ namespace SLua
 			l = LuaState.get(l).L;
             ua = ($ARGS) =>
             {
-				if(LuaState.main == null){";
+				if(LuaState.main == null){");
 
 			MethodInfo mi = t.GetMethod("Invoke");
 			
