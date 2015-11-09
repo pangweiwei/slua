@@ -9,7 +9,7 @@ NDK=/Users/sineysan/android-ndk-r10
 NDKABI=8  
 NDKVER=$NDK/toolchains/arm-linux-androideabi-4.8  
 NDKP=$NDKVER/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-  
-NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-arm"  
+NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-arm"
   
 # # Android/ARM, armeabi (ARMv5TE soft-float), Android 2.2+ (Froyo)  
 # DESTDIR=$DIR/android/armeabi  
@@ -25,6 +25,7 @@ NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-arm"
 # Android/ARM, armeabi-v7a (ARMv7 VFP), Android 4.0+ (ICS)  
 NDKARCH="-march=armv7-a -mfloat-abi=softfp -Wl,--fix-cortex-a8"  
 NDKABI=14 
+NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-arm"
 DESTDIR=$DIR/android/armeabi-v7a
 mkdir -p $DESTDIR  
 rm -rf "$DESTDIR"/*.a  
