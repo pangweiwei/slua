@@ -51,8 +51,11 @@ namespace SLua
 					di = null;
 				}
 
-				state.Dispose();
-				state = null;
+				// Main state shouldn't dispose until app quit due to some mono behaviour use state on disposed
+				// 
+
+				//state.Dispose();
+				//state = null;
 			}
 		}
 
