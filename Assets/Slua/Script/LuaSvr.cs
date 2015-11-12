@@ -120,16 +120,9 @@ namespace SLua
 			int count = list.Count;
 			for (int n = 0; n < count; n++)
 			{
-				try
-				{
-					Action<IntPtr> action = list[n];
-					action(L);
-					bindProgress = (int)(((float)n / count) * 98.0) + 2;
-				}
-				catch (Exception e)
-				{
-					Debug.LogError(e);
-				}
+				Action<IntPtr> action = list[n];
+				action(L);
+				bindProgress = (int)(((float)n / count) * 98.0) + 2;
 			}
 			
 			bindProgress = 100;
