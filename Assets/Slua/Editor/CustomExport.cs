@@ -33,7 +33,7 @@ namespace SLua
 			add(typeof(System.Func<int>), null);
 			add(typeof(System.Action<int, string>), null);
 			add(typeof(System.Action<int, Dictionary<int, object>>), null);
-			add(typeof(List<int>), "ListInt");
+			//add(typeof(List<int>), "ListInt");
 			add(typeof(Dictionary<int, string>), "DictIntStr");
 			add(typeof(string), "String");
 			// add your custom class here

@@ -252,6 +252,33 @@ namespace SLua
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        public static int DeleteAll(IntPtr l)
+        {
+            if (mapSnTimer == null) return 0;
+            try
+            {
+                lock (mapSnTimer)
+                {
+                    Timer[] timers = new Timer[mapSnTimer.Values.Count];
+                    mapSnTimer.Values.CopyTo(timers, 0);
+                    for (int i = 0; timers != null && i < timers.Length; i++)
+                    {
+                        if (timers[i] != null)
+                        {
+                            innerDel(timers[i]);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return LuaObject.error(l, e);
+            }
+            pushValue(l, true);
+            return 1;
+        }
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		public static int Add(IntPtr l)
 		{
 			try{
@@ -322,9 +349,10 @@ namespace SLua
 		{
 			init();
 			getTypeTable(l, "LuaTimer");
-			addMember(l, Add, false);
-			addMember(l, Delete, false);
-			createTypeMetatable(l, typeof(LuaTimer));
+			addMember(l, Add, "Add", false);
+            addMember(l, Delete, "Delete", false);
+            addMember(l, DeleteAll, "DeleteAll", false);
+            createTypeMetatable(l, typeof(LuaTimer));
 		}
 	}
 

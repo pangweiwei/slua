@@ -32,6 +32,77 @@ namespace SLua
 	using System.Reflection;
 	using Debug = UnityEngine.Debug;
 
+    public partial class Bind
+    {
+        public void BindAll(ref List<Action<IntPtr>> list)
+        {
+            Type t = this.GetType();
+
+            ///
+            /// FIX:make sure unity should bind first!
+            ///
+
+            var mi = t.GetMethod("BindUnity", BindingFlags.Static | BindingFlags.Public);
+            if(mi != null)
+            {
+                var mi2 = t.GetMethod("BindUnityStaticFunctionNameHash", BindingFlags.Public | BindingFlags.Instance);
+                int[] nameHashs = (int[])mi2.Invoke(this, null);
+                for (int j = 0; j < nameHashs.Length; j++)
+                {
+                    int v;
+                    if (!LuaObject.cachedStaticFunctionNameHashs.TryGetValue(nameHashs[j], out v))
+                        LuaObject.cachedStaticFunctionNameHashs.Add(nameHashs[j], 0);
+                }
+                list.AddRange((Action<IntPtr>[])mi.Invoke(null, null));
+            }
+
+            mi = t.GetMethod("BindUnityUI", BindingFlags.Static | BindingFlags.Public);
+            if (mi != null)
+            {
+                var mi2 = t.GetMethod("BindUnityUIStaticFunctionNameHash", BindingFlags.Public | BindingFlags.Instance);
+                int[] nameHashs = (int[])mi2.Invoke(this, null);
+                for (int j = 0; j < nameHashs.Length; j++)
+                {
+                    int v;
+                    if (!LuaObject.cachedStaticFunctionNameHashs.TryGetValue(nameHashs[j], out v))
+                        LuaObject.cachedStaticFunctionNameHashs.Add(nameHashs[j], 0);
+                }
+                list.AddRange((Action<IntPtr>[])mi.Invoke(null, null));
+            }
+
+            mi = t.GetMethod("BindCustom", BindingFlags.Static | BindingFlags.Public);
+            if (mi != null)
+            {
+                var mi2 = t.GetMethod("BindCustomStaticFunctionNameHash", BindingFlags.Public | BindingFlags.Instance);
+                int[] nameHashs = (int[])mi2.Invoke(this, null);
+                for (int j = 0; j < nameHashs.Length; j++)
+                {
+                    int v;
+                    if (!LuaObject.cachedStaticFunctionNameHashs.TryGetValue(nameHashs[j], out v))
+                        LuaObject.cachedStaticFunctionNameHashs.Add(nameHashs[j], 0);
+                }
+                list.AddRange((Action<IntPtr>[])mi.Invoke(null, null));
+            }
+
+            mi = t.GetMethod("BindDll", BindingFlags.Static | BindingFlags.Public);
+            if (mi != null)
+            {
+                var mi2 = t.GetMethod("BindDllStaticFunctionNameHash", BindingFlags.Public | BindingFlags.Instance);
+                int[] nameHashs = (int[])mi2.Invoke(this, null);
+                for (int j = 0; j < nameHashs.Length; j++)
+                {
+                    int v;
+                    if (!LuaObject.cachedStaticFunctionNameHashs.TryGetValue(nameHashs[j], out v))
+                        LuaObject.cachedStaticFunctionNameHashs.Add(nameHashs[j], 0);
+                }
+                list.AddRange((Action<IntPtr>[])mi.Invoke(null, null));
+            }
+
+            //release memory.
+            //LuaObject.cachedStaticFunctionNameHashs = null;
+        }
+    }
+
 	public class LuaSvr 
 	{
 		public LuaState luaState;
@@ -62,52 +133,12 @@ namespace SLua
 		private void doBind(object state)
 		{
 			IntPtr L = (IntPtr)state;
-			
-			Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
-			
-			bindProgress = 0;
+            List<Action<IntPtr>> list = new List<Action<IntPtr>>();
 
-			List<Type> bindlist = new List<Type>();
-			for (int n = 0; n < ams.Length;n++ )
-			{
-				Assembly a = ams[n];
-				Type[] ts = null;
-				try
-				{
-					ts = a.GetExportedTypes();
-				}
-				catch
-				{
-					continue;
-				}
-				for (int k = 0; k < ts.Length; k++)
-				{
-					Type t = ts[k];
-					if (t.GetCustomAttributes(typeof(LuaBinderAttribute), false).Length > 0)
-					{
-						bindlist.Add(t);
-					}
-				}
-			}
-			
-			bindProgress = 1;
-			
-			bindlist.Sort(new System.Comparison<Type>((Type a, Type b) => {
-				LuaBinderAttribute la = (LuaBinderAttribute)a.GetCustomAttributes(typeof(LuaBinderAttribute), false)[0];
-				LuaBinderAttribute lb = (LuaBinderAttribute)b.GetCustomAttributes(typeof(LuaBinderAttribute), false)[0];
-				
-				return la.order.CompareTo(lb.order);
-			}));
-			
-			List<Action<IntPtr>> list = new List<Action<IntPtr>>();
-			for (int n = 0; n < bindlist.Count; n++)
-			{
-				Type t = bindlist[n];
-				var sublist = (Action<IntPtr>[])t.GetMethod("GetBindList").Invoke(null, null);
-				list.AddRange(sublist);
-			}
-			
-			bindProgress = 2;
+            //bind all.
+            new Bind().BindAll(ref list);
+
+            bindProgress = 2;
 			
 			int count = list.Count;
 			for (int n = 0; n < count; n++)
@@ -116,8 +147,8 @@ namespace SLua
 				action(L);
 				bindProgress = (int)(((float)n / count) * 98.0) + 2;
 			}
-			
-			bindProgress = 100;
+            LuaObject.cachedStaticFunctionNameHashs = null;
+            bindProgress = 100;
 		}
 		
 		public IEnumerator waitForBind(Action<int> tick, Action complete)
@@ -148,10 +179,10 @@ namespace SLua
 			Helper.reg(L);
 			LuaValueType.reg(L);
 			SLuaDebug.reg(L);
-			LuaDLL.luaS_openextlibs(L);
-			Lua3rdDLL.open(L);
+            LuaDLL.luaS_openextlibs(L);
+            Lua3rdDLL.open(L);
 
-			lgo.state = luaState;
+            lgo.state = luaState;
 			lgo.onUpdate = this.tick;
 			lgo.init();
 			
@@ -195,6 +226,16 @@ namespace SLua
 				}
 			}));
         }
+
+        public void init()
+        {
+            this.luaState = new LuaState();
+            IntPtr L = luaState.L;
+            LuaObject.init(L);
+            doBind(L);
+            doinit(L);
+        }
+
 
 		public object start(string main)
 		{
