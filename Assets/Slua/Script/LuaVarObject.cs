@@ -217,7 +217,7 @@ namespace SLua
 			}
 
 IndexProperty:
-			MemberInfo[] mis = t.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
+			MemberInfo[] mis = t.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 			if (mis.Length == 0)
 			{
 				return error(l, "Can't find " + key);
