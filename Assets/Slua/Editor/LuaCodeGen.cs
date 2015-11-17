@@ -112,12 +112,12 @@ namespace SLua
 			
 			static Startup()
 			{
-				bool ok = System.IO.Directory.Exists(Path);
-				if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
-				{
-					GenerateAll();
-				}
-			}
+                bool ok = System.IO.Directory.Exists(Path);
+                if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
+                {
+                    GenerateAll();
+                }
+            }
 		}
 	
 		[MenuItem("SLua/All/Make")]
@@ -147,19 +147,21 @@ namespace SLua
 			
 			CustomExport.OnGetNoUseList(out noUseList);
 			CustomExport.OnGetUseList(out uselist);
-			
-			List<Type> exports = new List<Type>();
+
+            CodeGenerator cg = new CodeGenerator();
+
+            List<Type> exports = new List<Type>();
             string path = Path + "Unity/";
 			foreach (Type t in types)
 			{
-				if (filterType(t, noUseList, uselist) && Generate(t, path))
+				if (filterType(t, noUseList, uselist) && Generate(ref cg,t, path))
 					exports.Add(t);
 			}
 			
-			GenerateBind(exports, "BindUnity", 0, path);
-			if(autoRefresh)
+			GenerateBind(ref cg,exports, "BindUnity", 0, path);
+            if (autoRefresh)
 			    AssetDatabase.Refresh();
-			Debug.Log("Generate engine interface finished");
+			Debug.Log("Generate engine interface finished:" + exports.Count + " files");
 		}
 
 		static bool filterType(Type t, List<string> noUseList, List<string> uselist)
@@ -199,21 +201,21 @@ namespace SLua
 			
 			Assembly assembly = Assembly.Load("UnityEngine.UI");
 			Type[] types = assembly.GetExportedTypes();
-			
-			List<Type> exports = new List<Type>();
+            CodeGenerator cg = new CodeGenerator();
+            List<Type> exports = new List<Type>();
             string path = Path + "Unity/";
 			foreach (Type t in types)
 			{
-				if (filterType(t,noUseList,uselist) && Generate(t,path))
+				if (filterType(t,noUseList,uselist) && Generate(ref cg,t,path))
 				{
 					exports.Add(t);
 				}
 			}
 			
-			GenerateBind(exports, "BindUnityUI", 1, path);
+			GenerateBind(ref cg,exports, "BindUnityUI", 1, path);
 			if(autoRefresh)
 			    AssetDatabase.Refresh();
-			Debug.Log("Generate UI interface finished");
+			Debug.Log("Generate UI interface finished:" + exports.Count + " files");
 		}
 		
 		[MenuItem("SLua/Unity/Clear Uinty UI")]
@@ -222,6 +224,15 @@ namespace SLua
 			clear(new string[] { Path + "Unity" });
 			Debug.Log("Clear Unity & UI complete.");
 		}
+		static public bool IsObsolete(MemberInfo t)
+		{
+			return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0;
+		}
+
+        static public bool IsObsolete(FieldInfo t)
+        {
+            return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0 || (t.IsStatic && t.FieldType.BaseType == typeof(MulticastDelegate));
+        }
 		
 		[MenuItem("SLua/Custom/Make")]
 		static public void Custom()
@@ -232,15 +243,15 @@ namespace SLua
 
 			List<Type> exports = new List<Type>();
             string path = Path + "Custom/";
-			
-			if (!Directory.Exists(path))
+            CodeGenerator cg = new CodeGenerator();
+            if (!Directory.Exists(path))
 			{
 				Directory.CreateDirectory(path);
 			}
 			
 			ExportGenericDelegate fun = (Type t, string ns) =>
 			{
-				if (Generate(t, ns, path))
+				if (Generate(ref cg,t, ns, path))
 					exports.Add(t);
 			};
 
@@ -281,11 +292,11 @@ namespace SLua
 			InvokeEditorMethod<ICustomExportPost>("OnAddCustomClass",new object[]{fun});
 
 
-			GenerateBind(exports, "BindCustom", 3, path);
+			GenerateBind(ref cg,exports, "BindCustom", 3, path);
             if(autoRefresh)
 			    AssetDatabase.Refresh();
 			
-			Debug.Log("Generate custom interface finished");
+			Debug.Log("Generate custom interface finished:"+ exports.Count + " files");
 		}
 
 		static private void InvokeEditorMethod<T>(string methodName,object[] parameters){
@@ -329,19 +340,20 @@ namespace SLua
 			{
 				List<Type> exports = new List<Type>();
                 string path = Path + "Dll/";
-				if (!Directory.Exists(path))
+                CodeGenerator cg = new CodeGenerator();
+                if (!Directory.Exists(path))
 				{
 					Directory.CreateDirectory(path);
 				}
 				foreach (Type t in cust)
 				{
-					if (Generate(t,path))
+					if (Generate(ref cg,t,path))
 						exports.Add(t);
 				}
-				GenerateBind(exports, "BindDll", 2, path);
+				GenerateBind(ref cg,exports, "BindDll", 2, path);
                 if(autoRefresh)
 				    AssetDatabase.Refresh();
-				Debug.Log("Generate 3rdDll interface finished");
+				Debug.Log("Generate 3rdDll interface finished:" + exports.Count + " files");
 			}
 		}
 		[MenuItem("SLua/3rdDll/Clear")]
@@ -381,25 +393,22 @@ namespace SLua
 			AssetDatabase.Refresh();
 		}
 		
-		static bool Generate(Type t, string path)
+		static bool Generate(ref CodeGenerator cg,Type t, string path)
 		{
-			return Generate(t, null, path);
+			return Generate(ref cg,t, null, path);
 		}
 		
-		static bool Generate(Type t, string ns, string path)
+		static bool Generate(ref CodeGenerator cg,Type t, string ns, string path)
 		{
 			if (t.IsInterface)
 				return false;
-			
-			CodeGenerator cg = new CodeGenerator();
 			cg.givenNamespace = ns;
             cg.path = path;
-			return cg.Generate(t);
+            return cg.Generate(t);
 		}
 		
-		static void GenerateBind(List<Type> list, string name, int order,string path)
+		static void GenerateBind(ref CodeGenerator cg,List<Type> list, string name, int order,string path)
 		{
-			CodeGenerator cg = new CodeGenerator();
             cg.path = path;
 			cg.GenerateBind(list, name, order);
 		}
@@ -426,7 +435,7 @@ namespace SLua
             "WWW.movie",
             "WebCamTexture.MarkNonReadable",
             "WebCamTexture.isReadable",
-            // i don't know why below 2 functions missed in iOS platform
+            // i don't why below 2 functions missed in iOS platform
             "*.OnRebuildRequested",
             // il2cpp not exixts
             "Application.ExternalEval",
@@ -483,13 +492,19 @@ namespace SLua
 
 		HashSet<string> funcname = new HashSet<string>();
 		Dictionary<string, bool> directfunc = new Dictionary<string, bool>();
-		
-		public string givenNamespace;
+        public GenInfoCollector genInfoCollector = null;
+
+        public string givenNamespace;
         public string path;
-		public bool includeExtension = SLuaSetting.Instance.exportExtensionMethod;
+        public bool includeExtension = SLuaSetting.Instance.exportExtensionMethod;
 		public EOL eol = SLuaSetting.Instance.eol;
 
-		class PropPair
+        public CodeGenerator()
+        {
+            genInfoCollector = new GenInfoCollector();
+        }
+
+        class PropPair
 		{
 			public string get = "null";
 			public string set = "null";
@@ -508,10 +523,12 @@ namespace SLua
 			Write(file, "using System;");
 			Write(file, "using System.Collections.Generic;");
 			Write(file, "namespace SLua {");
-			Write(file, "[LuaBinder({0})]", order);
-			Write(file, "public class {0} {{", name);
-			Write(file, "public static Action<IntPtr>[] GetBindList() {");
-			Write(file, "Action<IntPtr>[] list= {");
+			Write(file, "public partial class Bind {");
+
+            //bind files
+			Write(file, "public static Action<IntPtr>[] {0}()",name);
+            Write(file, "{");
+            Write(file, "Action<IntPtr>[] list= {");
 			foreach (Type t in list)
 			{
 				WriteBindType(file, t, list, exported);
@@ -519,7 +536,20 @@ namespace SLua
 			Write(file, "};");
 			Write(file, "return list;");
 			Write(file, "}");
-			Write(file, "}");
+
+            //static function names record for better performance.
+            Write(file, "public int[] {0}()", name+"StaticFunctionNameHash");
+            Write(file, "{");
+            Write(file, "int[] list= {");
+            foreach (string t in genInfoCollector.genStaticFunctionNames)
+            {
+                Write(file, Animator.StringToHash(t) +",");
+            }
+            Write(file, "};");
+            Write(file, "return list;");
+            Write(file, "}");
+
+            Write(file, "}");
 			Write(file, "}");
 			file.Close();
 		}
@@ -800,9 +830,9 @@ namespace SLua
         static public void reg(IntPtr l)
         {
             getTypeTable(l, typeof(LuaUnityEvent_$CLS).FullName);
-            addMember(l, AddListener);
-            addMember(l, RemoveListener);
-            addMember(l, Invoke);
+            addMember(l, AddListener,$AddListener);
+            addMember(l, RemoveListener, $RemoveListener);
+            addMember(l, Invoke,$Invoke);
             createTypeMetatable(l, null, typeof(LuaUnityEvent_$CLS), typeof(UnityEngine.Events.UnityEventBase));
         }
 
@@ -833,6 +863,9 @@ namespace SLua
 			temp = temp.Replace("$CLS", _Name(GenericName(t.BaseType)));
 			temp = temp.Replace("$FNAME", FullName(t));
 			temp = temp.Replace("$GN", GenericName(t.BaseType));
+            temp = temp.Replace("$AddListener", "\"AddListener\"");
+            temp = temp.Replace("$RemoveListener", "\"RemoveListener\"");
+            temp = temp.Replace("$Invoke", "\"Invoke\"");
 			Write(file, temp);
 		}
 		
@@ -936,7 +969,9 @@ namespace SLua
 		{
 			if (name.StartsWith("op_"))
 				return name;
-			return name + "_s";
+            name = name + "_s";
+            genInfoCollector.AddStaticFunctionName(name);
+            return name;
 		}
 		
 		
@@ -944,10 +979,21 @@ namespace SLua
 		{
 			return memberFilter.Contains(t.Name + "." + mi.Name) || memberFilter.Contains("*." + mi.Name);
 		}
-		
+
+		/*
 		bool IsObsolete(MemberInfo t)
 		{
 			return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0;
+		}*/
+
+		bool IsObsolete(MemberInfo mi)
+		{
+			return LuaCodeGen.IsObsolete(mi);
+		}
+
+        bool IsObsolete(FieldInfo mi)
+		{
+			return LuaCodeGen.IsObsolete(mi);
 		}
 
 		string NewLine{
@@ -980,12 +1026,12 @@ namespace SLua
 			Write(file, "getTypeTable(l,\"{0}\");", string.IsNullOrEmpty(givenNamespace) ? FullName(t) : givenNamespace);
 			foreach (string f in funcname)
 			{
-				Write(file, "addMember(l,{0});", f);
+				Write(file, "addMember(l,{0},\"{1}\");", f, f.Substring(f.LastIndexOf('.') + 1));
 			}
 			foreach (string f in directfunc.Keys)
 			{
 				bool instance = directfunc[f];
-				Write(file, "addMember(l,{0},{1});", f, instance ? "true" : "false");
+				Write(file, "addMember(l,{0},\"{1}\",{2});", f, f.Substring(f.LastIndexOf('.') + 1), instance ? "true" : "false");
 			}
 			
 			foreach (string f in propname.Keys)
@@ -1984,4 +2030,20 @@ namespace SLua
 		}
 		
 	}
+
+    class GenInfoCollector
+    {
+        public List<string> genStaticFunctionNames;
+        public GenInfoCollector()
+        {
+            genStaticFunctionNames = new List<string>();
+        }
+
+        public void AddStaticFunctionName(string name)
+        {
+            if (!genStaticFunctionNames.Contains(name))
+                genStaticFunctionNames.Add(name);
+        }
+
+    }
 }
