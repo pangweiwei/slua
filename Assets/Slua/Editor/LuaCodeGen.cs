@@ -602,19 +602,6 @@ namespace SLua
 			return false;
 		}
 
-		string GetDefaultValue(System.Type type){
-			string defaultRet = "";
-			if(type.IsByRef){
-				type = type.GetElementType();
-			}
-			if(type != typeof(void)){
-				defaultRet = "null";
-				if(type.IsValueType){
-					defaultRet = System.Activator.CreateInstance(type).ToString().ToLower();
-				}
-			}
-			return defaultRet;
-		}
 
 		void WriteDelegate(Type t, StreamWriter file)
 		{
