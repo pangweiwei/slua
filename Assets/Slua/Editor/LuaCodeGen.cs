@@ -607,6 +607,9 @@ namespace SLua
 			if(type.IsByRef){
 				type = type.GetElementType();
 			}
+			if(type == typeof(System.Char)){
+				return @"' '";
+			}
 			if(type != typeof(void)){
 				defaultRet = "null";
 				if(type.IsValueType){
@@ -670,6 +673,7 @@ namespace SLua
 					Write(file, "a{0} = {1} ; // type = {2}", n + 1,GetDefaultValue(mi.GetParameters()[n].ParameterType),mi.GetParameters()[n].ParameterType.Name);
 			}
 			Write(file,"return {0} ;",GetDefaultValue(mi.ReturnType));
+			Write(file,"//"+GetDefaultValue(mi.ReturnType));
 			Write(file,"}");
 			Write(file,"int error = pushTry(l);");
 
