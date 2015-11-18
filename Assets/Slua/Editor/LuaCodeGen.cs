@@ -1403,6 +1403,9 @@ namespace SLua
 		
 		bool DontExport(MemberInfo mi)
 		{
+		    var methodString = string.Format("{0}.{1}", mi.DeclaringType, mi.Name);
+		    if (CustomExport.FunctionFilterList.Contains(methodString))
+		        return true;
 			return mi.GetCustomAttributes(typeof(DoNotToLuaAttribute), false).Length > 0;
 		}
 		

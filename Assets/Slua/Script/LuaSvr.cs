@@ -20,6 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+// uncomment this will use static binder(class BindCustom/BindUnity), 
+// init will not use reflection to speed up the speed
+//#define USE_STATIC_BINDER  
 
 namespace SLua
 {
@@ -62,7 +65,10 @@ namespace SLua
 		private void doBind(object state)
 		{
 			IntPtr L = (IntPtr)state;
-			
+
+            List<Action<IntPtr>> list = new List<Action<IntPtr>>();
+            
+#if !USE_STATIC_BINDER
 			Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
 			
 			bindProgress = 0;
@@ -99,29 +105,25 @@ namespace SLua
 				return la.order.CompareTo(lb.order);
 			}));
 			
-			List<Action<IntPtr>> list = new List<Action<IntPtr>>();
 			for (int n = 0; n < bindlist.Count; n++)
 			{
 				Type t = bindlist[n];
 				var sublist = (Action<IntPtr>[])t.GetMethod("GetBindList").Invoke(null, null);
 				list.AddRange(sublist);
 			}
+#else
+            list.AddRange(BindUnity.GetBindList());
+            list.AddRange(BindCustom.GetBindList());
+#endif
 			
 			bindProgress = 2;
 			
 			int count = list.Count;
 			for (int n = 0; n < count; n++)
 			{
-				try
-				{
-					Action<IntPtr> action = list[n];
-					action(L);
-					bindProgress = (int)(((float)n / count) * 98.0) + 2;
-				}
-				catch (Exception e)
-				{
-					Debug.LogError(e);
-				}
+				Action<IntPtr> action = list[n];
+				action(L);
+				bindProgress = (int)(((float)n / count) * 98.0) + 2;
 			}
 			
 			bindProgress = 100;
