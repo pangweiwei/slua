@@ -618,7 +618,7 @@ namespace SLua
 
 		void WriteDelegate(Type t, StreamWriter file)
 		{
-			System.Text.StringBuilder temp =  new System.Text.StringBuilder(@"
+			string temp = @"
 using System;
 using System.Collections.Generic;
 using LuaInterface;
@@ -652,27 +652,18 @@ namespace SLua
 			l = LuaState.get(l).L;
             ua = ($ARGS) =>
             {
-				if(LuaState.main == null){");
-
-			MethodInfo mi = t.GetMethod("Invoke");
+                int error = pushTry(l);
+";
 			
+			temp = temp.Replace("$TN", t.Name);
+			temp = temp.Replace("$FN", SimpleType(t));
+			MethodInfo mi = t.GetMethod("Invoke");
 			List<int> outindex = new List<int>();
 			List<int> refindex = new List<int>();
-			temp.Replace("$ARGS", ArgsList(mi, ref outindex, ref refindex));
-			temp.Replace("$TN", t.Name);
-			temp.Replace("$FN", SimpleType(t));
-			Write(file, temp.ToString());
-
-			this.indent=5;
-			for (int n = 0; n < mi.GetParameters().Length; n++)
-			{
-				if (outindex.Contains(n))
-					Write(file, "a{0} = {1} ; // type = {2}", n + 1,GetDefaultValue(mi.GetParameters()[n].ParameterType),mi.GetParameters()[n].ParameterType.Name);
-			}
-			Write(file,"return {0} ;",GetDefaultValue(mi.ReturnType));
-			Write(file,"}");
-			Write(file,"int error = pushTry(l);");
-
+			temp = temp.Replace("$ARGS", ArgsList(mi, ref outindex, ref refindex));
+			Write(file, temp);
+			
+			this.indent = 4;
 			
 			for (int n = 0; n < mi.GetParameters().Length; n++)
 			{
