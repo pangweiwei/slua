@@ -392,7 +392,12 @@ namespace LuaInterface
 		public static extern void lua_rawseti(IntPtr luaState, int tableIndex, int index);
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void lua_pushinteger(IntPtr luaState, int i);
+		public static extern void lua_pushinteger(IntPtr luaState, IntPtr i);
+
+		public static void lua_pushinteger(IntPtr luaState, int i)
+		{
+			lua_pushinteger(luaState, (IntPtr)i);
+		}
 
 		public static int luaL_checkinteger(IntPtr luaState, int stackPos)
 		{
