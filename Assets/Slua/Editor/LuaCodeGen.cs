@@ -68,14 +68,17 @@ namespace SLua
 					System.Diagnostics.Process.Start("debugger\\win\\ldb.exe", string.Format("-host {0} -port {1}", ip, port));
 #else
 					System.Diagnostics.ProcessStartInfo proc = new System.Diagnostics.ProcessStartInfo();
-					proc.FileName = "ldb";
+					proc.FileName = "bash";
 					proc.WorkingDirectory = "debugger/mac";
 					// I don't know why can't start process with arguments on MacOSX
 					// I just keep arguments empty????
-					proc.Arguments = "";//string.Format("-host {0} -port {1}", ip, port);
+					proc.Arguments =  @"-c ""./runldb.sh {0} {1} """;
+					proc.Arguments = string.Format(proc.Arguments,ip,port);
 					proc.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
-					proc.CreateNoWindow = true;
+					proc.CreateNoWindow = false;
+					proc.UseShellExecute = true;
 					System.Diagnostics.Process.Start(proc);
+
 #endif
 				}
 				catch (Exception e)
@@ -602,26 +605,10 @@ namespace SLua
 			return false;
 		}
 
-		string GetDefaultValue(System.Type type){
-			string defaultRet = "";
-			if(type.IsByRef){
-				type = type.GetElementType();
-			}
-			if(type == typeof(System.Char)){
-				return @"' '";
-			}
-			if(type != typeof(void)){
-				defaultRet = "null";
-				if(type.IsValueType){
-					defaultRet = System.Activator.CreateInstance(type).ToString().ToLower();
-				}
-			}
-			return defaultRet;
-		}
 
 		void WriteDelegate(Type t, StreamWriter file)
 		{
-			System.Text.StringBuilder temp =  new System.Text.StringBuilder(@"
+			string temp = @"
 using System;
 using System.Collections.Generic;
 using LuaInterface;
@@ -655,28 +642,18 @@ namespace SLua
 			l = LuaState.get(l).L;
             ua = ($ARGS) =>
             {
-				if(LuaState.main == null){");
-
-			MethodInfo mi = t.GetMethod("Invoke");
+                int error = pushTry(l);
+";
 			
+			temp = temp.Replace("$TN", t.Name);
+			temp = temp.Replace("$FN", SimpleType(t));
+			MethodInfo mi = t.GetMethod("Invoke");
 			List<int> outindex = new List<int>();
 			List<int> refindex = new List<int>();
-			temp.Replace("$ARGS", ArgsList(mi, ref outindex, ref refindex));
-			temp.Replace("$TN", t.Name);
-			temp.Replace("$FN", SimpleType(t));
-			Write(file, temp.ToString());
-
-			this.indent=5;
-			for (int n = 0; n < mi.GetParameters().Length; n++)
-			{
-				if (outindex.Contains(n))
-					Write(file, "a{0} = {1} ; // type = {2}", n + 1,GetDefaultValue(mi.GetParameters()[n].ParameterType),mi.GetParameters()[n].ParameterType.Name);
-			}
-			Write(file,"return {0} ;",GetDefaultValue(mi.ReturnType));
-			Write(file,"//"+GetDefaultValue(mi.ReturnType));
-			Write(file,"}");
-			Write(file,"int error = pushTry(l);");
-
+			temp = temp.Replace("$ARGS", ArgsList(mi, ref outindex, ref refindex));
+			Write(file, temp);
+			
+			this.indent = 4;
 			
 			for (int n = 0; n < mi.GetParameters().Length; n++)
 			{
