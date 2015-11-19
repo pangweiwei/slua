@@ -68,14 +68,17 @@ namespace SLua
 					System.Diagnostics.Process.Start("debugger\\win\\ldb.exe", string.Format("-host {0} -port {1}", ip, port));
 #else
 					System.Diagnostics.ProcessStartInfo proc = new System.Diagnostics.ProcessStartInfo();
-					proc.FileName = "ldb";
+					proc.FileName = "bash";
 					proc.WorkingDirectory = "debugger/mac";
 					// I don't know why can't start process with arguments on MacOSX
 					// I just keep arguments empty????
-					proc.Arguments = "";//string.Format("-host {0} -port {1}", ip, port);
+					proc.Arguments =  @"-c ""./runldb.sh {0} {1} """;
+					proc.Arguments = string.Format(proc.Arguments,ip,port);
 					proc.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
-					proc.CreateNoWindow = true;
+					proc.CreateNoWindow = false;
+					proc.UseShellExecute = true;
 					System.Diagnostics.Process.Start(proc);
+
 #endif
 				}
 				catch (Exception e)
@@ -601,7 +604,8 @@ namespace SLua
 			}
 			return false;
 		}
-		
+
+
 		void WriteDelegate(Type t, StreamWriter file)
 		{
 			string temp = @"
@@ -1794,7 +1798,7 @@ namespace SLua
 			
 			Write(file, "return {0};", retcount);
 		}
-		
+
 		string SimpleType(Type t)
 		{
 			
