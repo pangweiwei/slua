@@ -13,3 +13,4 @@ obj/*
 /ProjectSettings
 /*.csproj
 /*.sln
+/build/luajit-osx/build*
