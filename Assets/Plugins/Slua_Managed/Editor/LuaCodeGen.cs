@@ -93,6 +93,7 @@ namespace SLua
     public class LuaCodeGen : MonoBehaviour
 	{
         public const string Path = "Assets/Slua/LuaObject/";
+		public const string SluaPath = "Assets/Plugins/SLua_Managed/Unity/";
         public delegate void ExportGenericDelegate(Type t, string ns);
 		
         static bool autoRefresh = true;
@@ -112,7 +113,7 @@ namespace SLua
 			
 			static Startup()
 			{
-				bool ok = System.IO.Directory.Exists(Path);
+				bool ok = System.IO.Directory.Exists(SluaPath);
 				if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
 				{
 					GenerateAll();
@@ -149,7 +150,7 @@ namespace SLua
 			CustomExport.OnGetUseList(out uselist);
 			
 			List<Type> exports = new List<Type>();
-			string path = "Assets/Plugins/SLua_Managed/Unity/";
+			string path = SluaPath;
 			foreach (Type t in types)
 			{
 				if (filterType(t, noUseList, uselist) && Generate(t, path))
@@ -201,7 +202,7 @@ namespace SLua
 			Type[] types = assembly.GetExportedTypes();
 			
 			List<Type> exports = new List<Type>();
-			string path = "Assets/Plugins/SLua_Managed/Unity/";
+			string path = SluaPath;
 			foreach (Type t in types)
 			{
 				if (filterType(t,noUseList,uselist) && Generate(t,path))
