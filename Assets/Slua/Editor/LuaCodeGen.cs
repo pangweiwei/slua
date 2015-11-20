@@ -70,15 +70,12 @@ namespace SLua
 					System.Diagnostics.ProcessStartInfo proc = new System.Diagnostics.ProcessStartInfo();
 					proc.FileName = "bash";
 					proc.WorkingDirectory = "debugger/mac";
-					// I don't know why can't start process with arguments on MacOSX
-					// I just keep arguments empty????
 					proc.Arguments =  @"-c ""./runldb.sh {0} {1} """;
 					proc.Arguments = string.Format(proc.Arguments,ip,port);
 					proc.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
 					proc.CreateNoWindow = false;
 					proc.UseShellExecute = true;
 					System.Diagnostics.Process.Start(proc);
-
 #endif
 				}
 				catch (Exception e)
@@ -152,7 +149,7 @@ namespace SLua
 			CustomExport.OnGetUseList(out uselist);
 			
 			List<Type> exports = new List<Type>();
-            string path = Path + "Unity/";
+			string path = "Assets/Plugins/SLua_Managed/Unity/";
 			foreach (Type t in types)
 			{
 				if (filterType(t, noUseList, uselist) && Generate(t, path))
@@ -204,7 +201,7 @@ namespace SLua
 			Type[] types = assembly.GetExportedTypes();
 			
 			List<Type> exports = new List<Type>();
-            string path = Path + "Unity/";
+			string path = "Assets/Plugins/SLua_Managed/Unity/";
 			foreach (Type t in types)
 			{
 				if (filterType(t,noUseList,uselist) && Generate(t,path))
