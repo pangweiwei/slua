@@ -217,10 +217,10 @@ namespace SLua
 			Debug.Log("Generate UI interface finished");
 		}
 		
-		[MenuItem("SLua/Unity/Clear Uinty UI")]
+		[MenuItem("SLua/Unity/Clear Unity UI")]
 		static public void ClearUnity()
 		{
-			clear(new string[] { Path + "Unity" });
+			clear(new string[] { SluaPath });
 			Debug.Log("Clear Unity & UI complete.");
 		}
 		
