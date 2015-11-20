@@ -13,20 +13,28 @@ namespace SLua{
 		}
 		
 		public static void open(IntPtr L){
-
+			
 			var now = System.DateTime.Now;
-			var assembly = Assembly.GetExecutingAssembly();
-			var csfunctions = assembly.GetExportedTypes()
-				.SelectMany(x => x.GetMethods())
-					.Where(y => y.GetCustomAttributes(typeof(LualibRegAttribute),false).Any())
-					.ToList();
-			foreach(MethodInfo func in csfunctions){
-				var attr = System.Attribute.GetCustomAttribute(func,typeof(LualibRegAttribute)) as LualibRegAttribute;
-				var csfunc = Delegate.CreateDelegate(typeof(LuaCSFunction),func) as LuaCSFunction;
-				DLLRegFuncs.Add(attr.luaName,csfunc);
+			Assembly assembly = null;
+			foreach(var assem in AppDomain.CurrentDomain.GetAssemblies()){
+				if(assem.GetName().Name == "Assembly-CSharp"){
+					assembly = assem;
+				}
 			}
-			//	UnityEngine.Debug.Log("find all methods marked by [Lua3rdRegAttribute] cost :"(System.DateTime.Now - now).TotalSeconds);
-
+			if(assembly != null){
+				var csfunctions = assembly.GetExportedTypes()
+					.SelectMany(x => x.GetMethods())
+						.Where(y => y.GetCustomAttributes(typeof(LualibRegAttribute),false).Any())
+						.ToList();
+				foreach(MethodInfo func in csfunctions){
+					var attr = System.Attribute.GetCustomAttribute(func,typeof(LualibRegAttribute)) as LualibRegAttribute;
+					var csfunc = Delegate.CreateDelegate(typeof(LuaCSFunction),func) as LuaCSFunction;
+					DLLRegFuncs.Add(attr.luaName,csfunc);
+					//	UnityEngine.Debug.Log(attr.luaName);
+				}
+			}
+			//	UnityEngine.Debug.Log("find all methods marked by [Lua3rdRegAttribute] cost :"+(System.DateTime.Now - now).TotalSeconds);
+			
 			if(DLLRegFuncs.Count == 0){
 				return;
 			}
@@ -37,7 +45,7 @@ namespace SLua{
 				LuaDLL.lua_pushcfunction (L, pair.Value);
 				LuaDLL.lua_setfield(L, -2, pair.Key);
 			}
-
+			
 			LuaDLL.lua_settop(L, 0);
 		}
 
