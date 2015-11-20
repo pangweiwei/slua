@@ -121,7 +121,7 @@ return Class
 			{
 				string cls;
 				checkType(l, 1, out cls);
-				Type t = Type.GetType(cls);
+				Type t = LuaObject.FindType(cls);
 				if (t == null)
 				{
 					return error(l, string.Format("Can't find {0} to create", cls));
@@ -170,7 +170,7 @@ return Class
 			{
 				string cls;
 				checkType(l, 1, out cls);
-				Type t = Type.GetType(cls);
+				Type t = LuaObject.FindType(cls);
 				if (t == null)
 				{
 					return error(l, "Can't find {0} to create", cls);
