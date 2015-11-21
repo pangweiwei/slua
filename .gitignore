@@ -9,6 +9,7 @@ obj/*
 /Assets/AssetStoreTools.meta
 /Assets/UnityVS.meta
 /Assets/Plugins/Slua_Managed/Unity
+/Assets/Slua/LuaObject
 /Assets/Slua/LuaObject.meta
 /ProjectSettings
 /*.csproj
