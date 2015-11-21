@@ -514,8 +514,11 @@ namespace SLua
 			file.NewLine = NewLine;
 			Write(file, "using System;");
 			Write(file, "using System.Collections.Generic;");
-			Write(file, "namespace SLua {");
+            Write(file, "using UnityEngine;");
+            Write(file, "namespace SLua {");
 			Write(file, "public partial class Bind {");
+
+            //bind actions
 			Write(file, "public static Action<IntPtr>[] {0}()",name);
             Write(file, "{");
 			Write(file, "Action<IntPtr>[] list= {");
@@ -528,7 +531,9 @@ namespace SLua
 			Write(file, "}");
 
             //static function names record for better performance.
-            Write(file, "public int[] {0}()", name+"StaticFunctionNameHash");
+            //TODO:remove this,make single function contains all static func-path.
+            //TODO:record full path of static function and remove _s endswith check.
+            Write(file, "public static int[] {0}()", name+"StaticFunctionNameHash");
             Write(file, "{");
             Write(file, "int[] list= {");
             foreach (string t in genInfoCollector.genStaticFunctionNames)
@@ -539,7 +544,19 @@ namespace SLua
             Write(file, "return list;");
             Write(file, "}");
 
-			Write(file, "}");
+            //init func
+            Write(file, "[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]");
+            Write(file, "static void Init{0}()", name);
+            Write(file, "{");
+            Write(file, "LuaSvr.delegateGetBindActions.Add({0});", name);
+            Write(file, "int[] nameHashs = {0}();", name + "StaticFunctionNameHash");
+            Write(file, "for (int j = 0; j < nameHashs.Length; j++)");
+            Write(file, "{");
+            Write(file, "LuaObject.cachedStaticFunctionNameHashs[nameHashs[j]] = 1;");
+            Write(file, "}");
+            Write(file, "}");
+
+            Write(file, "}");
 			Write(file, "}");
 			file.Close();
 		}
@@ -962,7 +979,7 @@ namespace SLua
 				return name;
             name = name + "_s";
             genInfoCollector.AddStaticFunctionName(name);
-			return name + "_s";
+			return name;
 		}
 		
 		

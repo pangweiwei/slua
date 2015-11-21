@@ -35,83 +35,13 @@ namespace SLua
 	using System.Reflection;
 	using Debug = UnityEngine.Debug;
 
-    public partial class Bind
-    {
-        public void BindAll(ref List<Action<IntPtr>> list)
-        {
-            Type t = this.GetType();
-
-            ///
-            /// FIX:make sure unity should bind first!
-            ///
-
-            var mi = t.GetMethod("BindUnity", BindingFlags.Static | BindingFlags.Public);
-            if(mi != null)
-            {
-                var mi2 = t.GetMethod("BindUnityStaticFunctionNameHash", BindingFlags.Public | BindingFlags.Instance);
-                int[] nameHashs = (int[])mi2.Invoke(this, null);
-                for (int j = 0; j < nameHashs.Length; j++)
-                {
-                    int v;
-                    if (!LuaObject.cachedStaticFunctionNameHashs.TryGetValue(nameHashs[j], out v))
-                        LuaObject.cachedStaticFunctionNameHashs.Add(nameHashs[j], 0);
-                }
-                list.AddRange((Action<IntPtr>[])mi.Invoke(null, null));
-            }
-
-            mi = t.GetMethod("BindUnityUI", BindingFlags.Static | BindingFlags.Public);
-            if (mi != null)
-            {
-                var mi2 = t.GetMethod("BindUnityUIStaticFunctionNameHash", BindingFlags.Public | BindingFlags.Instance);
-                int[] nameHashs = (int[])mi2.Invoke(this, null);
-                for (int j = 0; j < nameHashs.Length; j++)
-                {
-                    int v;
-                    if (!LuaObject.cachedStaticFunctionNameHashs.TryGetValue(nameHashs[j], out v))
-                        LuaObject.cachedStaticFunctionNameHashs.Add(nameHashs[j], 0);
-                }
-                list.AddRange((Action<IntPtr>[])mi.Invoke(null, null));
-            }
-
-            mi = t.GetMethod("BindCustom", BindingFlags.Static | BindingFlags.Public);
-            if (mi != null)
-            {
-                var mi2 = t.GetMethod("BindCustomStaticFunctionNameHash", BindingFlags.Public | BindingFlags.Instance);
-                int[] nameHashs = (int[])mi2.Invoke(this, null);
-                for (int j = 0; j < nameHashs.Length; j++)
-                {
-                    int v;
-                    if (!LuaObject.cachedStaticFunctionNameHashs.TryGetValue(nameHashs[j], out v))
-                        LuaObject.cachedStaticFunctionNameHashs.Add(nameHashs[j], 0);
-                }
-                list.AddRange((Action<IntPtr>[])mi.Invoke(null, null));
-            }
-
-            mi = t.GetMethod("BindDll", BindingFlags.Static | BindingFlags.Public);
-            if (mi != null)
-            {
-                var mi2 = t.GetMethod("BindDllStaticFunctionNameHash", BindingFlags.Public | BindingFlags.Instance);
-                int[] nameHashs = (int[])mi2.Invoke(this, null);
-                for (int j = 0; j < nameHashs.Length; j++)
-                {
-                    int v;
-                    if (!LuaObject.cachedStaticFunctionNameHashs.TryGetValue(nameHashs[j], out v))
-                        LuaObject.cachedStaticFunctionNameHashs.Add(nameHashs[j], 0);
-                }
-                list.AddRange((Action<IntPtr>[])mi.Invoke(null, null));
-            }
-
-            //release memory.
-            //LuaObject.cachedStaticFunctionNameHashs = null;
-        }
-    }
-
 	public class LuaSvr 
 	{
 		public LuaState luaState;
 		static LuaSvrGameObject lgo;
 		int errorReported = 0;
 		public bool inited = false;
+        public static List<Func<Action<IntPtr>[]>> delegateGetBindActions = new List<Func<Action<IntPtr>[]>>();
 
 		public LuaSvr()
 		{
@@ -138,13 +68,15 @@ namespace SLua
 			IntPtr L = (IntPtr)state;
 
             List<Action<IntPtr>> list = new List<Action<IntPtr>>();
-            
-            //bind all.
-            new Bind().BindAll(ref list);
-			
-			bindProgress = 2;
-			
-			int count = list.Count;
+
+            for (int i = 0; i < delegateGetBindActions.Count; i++)
+            {
+                list.AddRange(delegateGetBindActions[i]());
+            }
+
+            bindProgress = 2;
+
+            int count = list.Count;
 			for (int n = 0; n < count; n++)
 			{
 				Action<IntPtr> action = list[n];
