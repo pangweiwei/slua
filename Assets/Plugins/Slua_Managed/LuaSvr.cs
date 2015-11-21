@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 
 // Copyright 2015 Siney/Pangweiwei siney@yeah.net
 // 
@@ -20,6 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+// uncomment this will use static binder(class BindCustom/BindUnity), 
+// init will not use reflection to speed up the speed
+//#define USE_STATIC_BINDER  
 
 namespace SLua
 {
@@ -133,12 +136,13 @@ namespace SLua
 		private void doBind(object state)
 		{
 			IntPtr L = (IntPtr)state;
-            List<Action<IntPtr>> list = new List<Action<IntPtr>>();
 
+            List<Action<IntPtr>> list = new List<Action<IntPtr>>();
+            
             //bind all.
             new Bind().BindAll(ref list);
-
-            bindProgress = 2;
+			
+			bindProgress = 2;
 			
 			int count = list.Count;
 			for (int n = 0; n < count; n++)
@@ -147,8 +151,11 @@ namespace SLua
 				action(L);
 				bindProgress = (int)(((float)n / count) * 98.0) + 2;
 			}
+
+			//after optimized used their name hash should clear from memory.
             LuaObject.cachedStaticFunctionNameHashs = null;
-            bindProgress = 100;
+
+			bindProgress = 100;
 		}
 		
 		public IEnumerator waitForBind(Action<int> tick, Action complete)
@@ -179,10 +186,10 @@ namespace SLua
 			Helper.reg(L);
 			LuaValueType.reg(L);
 			SLuaDebug.reg(L);
-            LuaDLL.luaS_openextlibs(L);
-            Lua3rdDLL.open(L);
+			LuaDLL.luaS_openextlibs(L);
+			Lua3rdDLL.open(L);
 
-            lgo.state = luaState;
+			lgo.state = luaState;
 			lgo.onUpdate = this.tick;
 			lgo.init();
 			
@@ -227,6 +234,8 @@ namespace SLua
 			}));
         }
 
+		//add sync init
+		//immediate create the LuaSvr.
         public void init()
         {
             this.luaState = new LuaState();

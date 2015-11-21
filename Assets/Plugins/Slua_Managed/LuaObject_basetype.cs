@@ -540,6 +540,29 @@ namespace SLua
 		#region Type
 		private static Type MonoType = typeof(Type).GetType();
 
+		public static Type FindType(string qualifiedTypeName) 
+		{
+			Type t = Type.GetType(qualifiedTypeName);
+
+			if (t != null)
+			{
+				return t;
+			}
+			else
+			{
+				Assembly[] Assemblies = AppDomain.CurrentDomain.GetAssemblies();
+				for (int n = 0; n < Assemblies.Length;n++ )
+				{
+					Assembly asm = Assemblies[n];
+					t = asm.GetType(qualifiedTypeName);
+					if (t != null)
+						return t;
+				}
+				return null;
+			}
+		}
+
+
 		static public bool checkType(IntPtr l, int p, out Type t)
 		{
 			string tname = null;
@@ -578,7 +601,7 @@ namespace SLua
 			if (tname == null)
 				throw new Exception("expect string or type table");
 
-			t = Type.GetType(tname);
+			t = LuaObject.FindType(tname);
             if (t != null && lt==LuaTypes.LUA_TTABLE)
             {
                 LuaDLL.lua_pushstring(l, "__type");

@@ -68,13 +68,13 @@ namespace SLua
 					System.Diagnostics.Process.Start("debugger\\win\\ldb.exe", string.Format("-host {0} -port {1}", ip, port));
 #else
 					System.Diagnostics.ProcessStartInfo proc = new System.Diagnostics.ProcessStartInfo();
-					proc.FileName = "ldb";
+					proc.FileName = "bash";
 					proc.WorkingDirectory = "debugger/mac";
-					// I don't know why can't start process with arguments on MacOSX
-					// I just keep arguments empty????
-					proc.Arguments = "";//string.Format("-host {0} -port {1}", ip, port);
+					proc.Arguments =  @"-c ""./runldb.sh {0} {1} """;
+					proc.Arguments = string.Format(proc.Arguments,ip,port);
 					proc.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
-					proc.CreateNoWindow = true;
+					proc.CreateNoWindow = false;
+					proc.UseShellExecute = true;
 					System.Diagnostics.Process.Start(proc);
 #endif
 				}
@@ -93,6 +93,7 @@ namespace SLua
     public class LuaCodeGen : MonoBehaviour
 	{
         public const string Path = "Assets/Slua/LuaObject/";
+		public const string SluaPath = "Assets/Plugins/SLua_Managed/Unity/";
         public delegate void ExportGenericDelegate(Type t, string ns);
 		
         static bool autoRefresh = true;
@@ -112,12 +113,12 @@ namespace SLua
 			
 			static Startup()
 			{
-                bool ok = System.IO.Directory.Exists(Path);
-                if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
-                {
-                    GenerateAll();
-                }
-            }
+				bool ok = System.IO.Directory.Exists(SluaPath);
+				if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
+				{
+					GenerateAll();
+				}
+			}
 		}
 	
 		[MenuItem("SLua/All/Make")]
@@ -150,8 +151,8 @@ namespace SLua
 
             CodeGenerator cg = new CodeGenerator();
 
-            List<Type> exports = new List<Type>();
-            string path = Path + "Unity/";
+			List<Type> exports = new List<Type>();
+			string path = SluaPath;
 			foreach (Type t in types)
 			{
 				if (filterType(t, noUseList, uselist) && Generate(ref cg,t, path))
@@ -202,8 +203,8 @@ namespace SLua
 			Assembly assembly = Assembly.Load("UnityEngine.UI");
 			Type[] types = assembly.GetExportedTypes();
             CodeGenerator cg = new CodeGenerator();
-            List<Type> exports = new List<Type>();
-            string path = Path + "Unity/";
+			List<Type> exports = new List<Type>();
+			string path = SluaPath;
 			foreach (Type t in types)
 			{
 				if (filterType(t,noUseList,uselist) && Generate(ref cg,t,path))
@@ -221,18 +222,9 @@ namespace SLua
 		[MenuItem("SLua/Unity/Clear Uinty UI")]
 		static public void ClearUnity()
 		{
-			clear(new string[] { Path + "Unity" });
+			clear(new string[] { SluaPath.Substring(0, SluaPath.Length - 1) });
 			Debug.Log("Clear Unity & UI complete.");
 		}
-		static public bool IsObsolete(MemberInfo t)
-		{
-			return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0;
-		}
-
-        static public bool IsObsolete(FieldInfo t)
-        {
-            return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0 || (t.IsStatic && t.FieldType.BaseType == typeof(MulticastDelegate));
-        }
 		
 		[MenuItem("SLua/Custom/Make")]
 		static public void Custom()
@@ -244,7 +236,7 @@ namespace SLua
 			List<Type> exports = new List<Type>();
             string path = Path + "Custom/";
             CodeGenerator cg = new CodeGenerator();
-            if (!Directory.Exists(path))
+			if (!Directory.Exists(path))
 			{
 				Directory.CreateDirectory(path);
 			}
@@ -341,7 +333,7 @@ namespace SLua
 				List<Type> exports = new List<Type>();
                 string path = Path + "Dll/";
                 CodeGenerator cg = new CodeGenerator();
-                if (!Directory.Exists(path))
+				if (!Directory.Exists(path))
 				{
 					Directory.CreateDirectory(path);
 				}
@@ -372,7 +364,7 @@ namespace SLua
 		[MenuItem("SLua/All/Clear")]
 		static public void ClearALL()
 		{
-			clear(new string[] { Path.Substring(0, Path.Length - 1) });
+			clear(new string[] { Path.Substring(0, Path.Length - 1), SluaPath.Substring(0, SluaPath.Length - 1) });
 			Debug.Log("Clear all complete.");
 		}
 		
@@ -404,7 +396,7 @@ namespace SLua
 				return false;
 			cg.givenNamespace = ns;
             cg.path = path;
-            return cg.Generate(t);
+			return cg.Generate(t);
 		}
 		
 		static void GenerateBind(ref CodeGenerator cg,List<Type> list, string name, int order,string path)
@@ -435,7 +427,7 @@ namespace SLua
             "WWW.movie",
             "WebCamTexture.MarkNonReadable",
             "WebCamTexture.isReadable",
-            // i don't why below 2 functions missed in iOS platform
+            // i don't know why below 2 functions missed in iOS platform
             "*.OnRebuildRequested",
             // il2cpp not exixts
             "Application.ExternalEval",
@@ -494,9 +486,9 @@ namespace SLua
 		Dictionary<string, bool> directfunc = new Dictionary<string, bool>();
         public GenInfoCollector genInfoCollector = null;
 
-        public string givenNamespace;
+		public string givenNamespace;
         public string path;
-        public bool includeExtension = SLuaSetting.Instance.exportExtensionMethod;
+		public bool includeExtension = SLuaSetting.Instance.exportExtensionMethod;
 		public EOL eol = SLuaSetting.Instance.eol;
 
         public CodeGenerator()
@@ -504,7 +496,7 @@ namespace SLua
             genInfoCollector = new GenInfoCollector();
         }
 
-        class PropPair
+		class PropPair
 		{
 			public string get = "null";
 			public string set = "null";
@@ -524,11 +516,9 @@ namespace SLua
 			Write(file, "using System.Collections.Generic;");
 			Write(file, "namespace SLua {");
 			Write(file, "public partial class Bind {");
-
-            //bind files
 			Write(file, "public static Action<IntPtr>[] {0}()",name);
             Write(file, "{");
-            Write(file, "Action<IntPtr>[] list= {");
+			Write(file, "Action<IntPtr>[] list= {");
 			foreach (Type t in list)
 			{
 				WriteBindType(file, t, list, exported);
@@ -549,7 +539,7 @@ namespace SLua
             Write(file, "return list;");
             Write(file, "}");
 
-            Write(file, "}");
+			Write(file, "}");
 			Write(file, "}");
 			file.Close();
 		}
@@ -631,7 +621,8 @@ namespace SLua
 			}
 			return false;
 		}
-		
+
+
 		void WriteDelegate(Type t, StreamWriter file)
 		{
 			string temp = @"
@@ -971,7 +962,7 @@ namespace SLua
 				return name;
             name = name + "_s";
             genInfoCollector.AddStaticFunctionName(name);
-            return name;
+			return name + "_s";
 		}
 		
 		
@@ -980,21 +971,17 @@ namespace SLua
 			return memberFilter.Contains(t.Name + "." + mi.Name) || memberFilter.Contains("*." + mi.Name);
 		}
 
-		/*
+		//should remove this memberInfo or FieldInfo
+		//because if not. to build Warp class into one dll will complie error the firstTime.
 		bool IsObsolete(MemberInfo t)
 		{
 			return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0;
-		}*/
-
-		bool IsObsolete(MemberInfo mi)
-		{
-			return LuaCodeGen.IsObsolete(mi);
 		}
 
-        bool IsObsolete(FieldInfo mi)
-		{
-			return LuaCodeGen.IsObsolete(mi);
-		}
+        bool IsObsolete(FieldInfo t)
+        {
+            return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0 || (t.IsStatic && t.FieldType.BaseType == typeof(MulticastDelegate));
+        }
 
 		string NewLine{
 			get{
@@ -1426,6 +1413,9 @@ namespace SLua
 		
 		bool DontExport(MemberInfo mi)
 		{
+		    var methodString = string.Format("{0}.{1}", mi.DeclaringType, mi.Name);
+		    if (CustomExport.FunctionFilterList.Contains(methodString))
+		        return true;
 			return mi.GetCustomAttributes(typeof(DoNotToLuaAttribute), false).Length > 0;
 		}
 		
@@ -1837,7 +1827,7 @@ namespace SLua
 			
 			Write(file, "return {0};", retcount);
 		}
-		
+
 		string SimpleType(Type t)
 		{
 			
