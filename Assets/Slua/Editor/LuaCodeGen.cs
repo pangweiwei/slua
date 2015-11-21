@@ -220,7 +220,7 @@ namespace SLua
 		[MenuItem("SLua/Unity/Clear Uinty UI")]
 		static public void ClearUnity()
 		{
-			clear(new string[] { Path + "Unity" });
+			clear(new string[] { SluaPath.Substring(0, SluaPath.Length - 1) });
 			Debug.Log("Clear Unity & UI complete.");
 		}
 		
@@ -361,7 +361,7 @@ namespace SLua
 		[MenuItem("SLua/All/Clear")]
 		static public void ClearALL()
 		{
-			clear(new string[] { Path.Substring(0, Path.Length - 1) });
+			clear(new string[] { Path.Substring(0, Path.Length - 1), SluaPath.Substring(0, SluaPath.Length - 1) });
 			Debug.Log("Clear all complete.");
 		}
 		
