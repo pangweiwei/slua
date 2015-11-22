@@ -93,7 +93,6 @@ namespace SLua
     public class LuaCodeGen : MonoBehaviour
 	{
         public const string Path = "Assets/Slua/LuaObject/";
-		public const string SluaPath = "Assets/Plugins/SLua_Managed/Unity/";
         public delegate void ExportGenericDelegate(Type t, string ns);
 		
         static bool autoRefresh = true;
@@ -113,7 +112,7 @@ namespace SLua
 			
 			static Startup()
 			{
-				bool ok = System.IO.Directory.Exists(SluaPath);
+				bool ok = System.IO.Directory.Exists(SLuaSetting.Instance.UnityEngineGeneratePath);
 				if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
 				{
 					GenerateAll();
@@ -150,7 +149,7 @@ namespace SLua
 			CustomExport.OnGetUseList(out uselist);
 			
 			List<Type> exports = new List<Type>();
-			string path = SluaPath;
+			string path = SLuaSetting.Instance.UnityEngineGeneratePath;
 			foreach (Type t in types)
 			{
 				if (filterType(t, noUseList, uselist) && Generate(t, path))
@@ -202,7 +201,7 @@ namespace SLua
 			Type[] types = assembly.GetExportedTypes();
 			
 			List<Type> exports = new List<Type>();
-			string path = SluaPath;
+			string path = SLuaSetting.Instance.UnityEngineGeneratePath;
 			foreach (Type t in types)
 			{
 				if (filterType(t,noUseList,uselist) && Generate(t,path))
@@ -217,10 +216,10 @@ namespace SLua
 			Debug.Log("Generate UI interface finished");
 		}
 		
-		[MenuItem("SLua/Unity/Clear Uinty UI")]
+		[MenuItem("SLua/Unity/Clear Unity UI")]
 		static public void ClearUnity()
 		{
-			clear(new string[] { SluaPath.Substring(0, SluaPath.Length - 1) });
+			clear(new string[] { SLuaSetting.Instance.UnityEngineGeneratePath });
 			Debug.Log("Clear Unity & UI complete.");
 		}
 		
@@ -361,7 +360,7 @@ namespace SLua
 		[MenuItem("SLua/All/Clear")]
 		static public void ClearALL()
 		{
-			clear(new string[] { Path.Substring(0, Path.Length - 1), SluaPath.Substring(0, SluaPath.Length - 1) });
+			clear(new string[] { Path.Substring(0, Path.Length - 1) });
 			Debug.Log("Clear all complete.");
 		}
 		
