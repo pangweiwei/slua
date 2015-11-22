@@ -111,6 +111,23 @@ namespace SLua
 		{
 			LuaDLL.lua_pushinteger(l, i);
 		}
+
+        public static bool checkType(IntPtr l,int p,out byte[] v)
+        {
+            int strlen;
+            IntPtr str = LuaDLL.luaS_tolstring32(l, p, out strlen);
+            if (strlen > 0)
+            {
+                v = new byte[strlen];
+                Marshal.Copy(str, v, 0, strlen);
+            }
+            else
+            {
+                v = null;
+            }
+            return true;
+        }
+
 		#endregion
 
 		#region char

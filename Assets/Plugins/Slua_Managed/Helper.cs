@@ -294,13 +294,13 @@ return Class
         static public void reg(IntPtr l)
 		{
             getTypeTable(l, "Slua");
-            addMember(l, CreateClass, false);
-            addMember(l, GetClass, false);
-            addMember(l, iter, false);
-            addMember(l, ToString, false);
-            addMember(l, As, false);
-            addMember(l, IsNull, false);
-			addMember(l, "out", get_out, null, false);
+            addMember(l, CreateClass, "CreateClass", false);
+            addMember(l, GetClass, "GetClass", false);
+            addMember(l, iter, "iter", false);
+            addMember(l, ToString, "ToString", false);
+            addMember(l, As, "As",false);
+            addMember(l, IsNull, "IsNull", false);
+            addMember(l, "out", get_out, null, false);
 			addMember(l, "version", get_version, null, false);
 
 			LuaFunction func = LuaState.get(l).doString(classfunc) as LuaFunction;

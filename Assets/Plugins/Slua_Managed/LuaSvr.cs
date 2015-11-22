@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 
 // Copyright 2015 Siney/Pangweiwei siney@yeah.net
 // 
@@ -41,6 +41,7 @@ namespace SLua
 		static LuaSvrGameObject lgo;
 		int errorReported = 0;
 		public bool inited = false;
+        public static List<Func<Action<IntPtr>[]>> delegateGetBindActions = new List<Func<Action<IntPtr>[]>>();
 
 		public LuaSvr()
 		{
@@ -67,65 +68,25 @@ namespace SLua
 			IntPtr L = (IntPtr)state;
 
             List<Action<IntPtr>> list = new List<Action<IntPtr>>();
-            
-#if !USE_STATIC_BINDER
-			Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
-			
-			bindProgress = 0;
 
-			List<Type> bindlist = new List<Type>();
-			for (int n = 0; n < ams.Length;n++ )
-			{
-				Assembly a = ams[n];
-				Type[] ts = null;
-				try
-				{
-					ts = a.GetExportedTypes();
-				}
-				catch
-				{
-					continue;
-				}
-				for (int k = 0; k < ts.Length; k++)
-				{
-					Type t = ts[k];
-					if (t.GetCustomAttributes(typeof(LuaBinderAttribute), false).Length > 0)
-					{
-						bindlist.Add(t);
-					}
-				}
-			}
-			
-			bindProgress = 1;
-			
-			bindlist.Sort(new System.Comparison<Type>((Type a, Type b) => {
-				LuaBinderAttribute la = (LuaBinderAttribute)a.GetCustomAttributes(typeof(LuaBinderAttribute), false)[0];
-				LuaBinderAttribute lb = (LuaBinderAttribute)b.GetCustomAttributes(typeof(LuaBinderAttribute), false)[0];
-				
-				return la.order.CompareTo(lb.order);
-			}));
-			
-			for (int n = 0; n < bindlist.Count; n++)
-			{
-				Type t = bindlist[n];
-				var sublist = (Action<IntPtr>[])t.GetMethod("GetBindList").Invoke(null, null);
-				list.AddRange(sublist);
-			}
-#else
-            list.AddRange(BindUnity.GetBindList());
-            list.AddRange(BindCustom.GetBindList());
-#endif
-			
-			bindProgress = 2;
-			
-			int count = list.Count;
+            for (int i = 0; i < delegateGetBindActions.Count; i++)
+            {
+                list.AddRange(delegateGetBindActions[i]());
+            }
+
+            bindProgress = 2;
+
+            int count = list.Count;
 			for (int n = 0; n < count; n++)
 			{
 				Action<IntPtr> action = list[n];
 				action(L);
 				bindProgress = (int)(((float)n / count) * 98.0) + 2;
 			}
-			
+
+			//after optimized used their name hash should clear from memory.
+            LuaObject.cachedStaticFunctionNameHashs = null;
+
 			bindProgress = 100;
 		}
 		
@@ -204,6 +165,18 @@ namespace SLua
 				}
 			}));
         }
+
+		//add sync init
+		//immediate create the LuaSvr.
+        public void init()
+        {
+            this.luaState = new LuaState();
+            IntPtr L = luaState.L;
+            LuaObject.init(L);
+            doBind(L);
+            doinit(L);
+        }
+
 
 		public object start(string main)
 		{

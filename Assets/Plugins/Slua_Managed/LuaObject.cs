@@ -88,6 +88,7 @@ namespace SLua
 
 		delegate void PushVarDelegate(IntPtr l, object o);
 		static Dictionary<Type, PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
+        public static Dictionary<int, int> cachedStaticFunctionNameHashs = new Dictionary<int, int>();
 
 		internal const int VersionNumber = 0x1004;
 
@@ -151,11 +152,11 @@ return index
 
 			// object method
 			LuaDLL.lua_createtable(l, 0, 4);
-			addMember(l, ToString);
-			addMember(l, GetHashCode);
-			addMember(l, Equals);
-			addMember (l, GetType);
-			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "__luabaseobject");
+			addMember(l, ToString, "ToString");
+            addMember(l, GetHashCode, "GetHashCode");
+            addMember(l, Equals, "Equals");
+            addMember (l, GetType, "GetType");
+            LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "__luabaseobject");
 
 			LuaVarObject.init(l);
 
@@ -669,28 +670,31 @@ return index
 			LuaDLL.lua_pop(l, 1);
 		}
 
-		protected static void addMember(IntPtr l, LuaCSFunction func)
+		protected static void addMember(IntPtr l, LuaCSFunction func,string funcname)
 		{
             checkMethodValid(func);
 
 			pushValue(l, func);
-			string name = func.Method.Name;
-			if (name.EndsWith("_s"))
-			{
-				name = name.Substring(0, name.Length - 2);
-				LuaDLL.lua_setfield(l, -3, name);
+            string name = funcname;
+            int val;
+            if (cachedStaticFunctionNameHashs.TryGetValue(Animator.StringToHash(name), out val))
+            {
+            	//i dont fix why must _s ends.
+            	//TODO:should remove this substring.
+                name = name.Substring(0, name.Length - 2);
+                LuaDLL.lua_setfield(l, -3, name);
 			}
 			else
 				LuaDLL.lua_setfield(l, -2, name);
 		}
 
-		protected static void addMember(IntPtr l, LuaCSFunction func, bool instance)
+		protected static void addMember(IntPtr l, LuaCSFunction func, string funcname, bool instance)
 		{
             checkMethodValid(func);
 
 			pushValue(l, func);
-			string name = func.Method.Name;
-			LuaDLL.lua_setfield(l, instance ? -2 : -3, name);
+            string name = funcname;
+            LuaDLL.lua_setfield(l, instance ? -2 : -3, name);
 		}
 
 		protected static void addMember(IntPtr l, string name, LuaCSFunction get, LuaCSFunction set, bool instance)
@@ -783,12 +787,20 @@ return index
 			{
 				return true;
 			}
-			else if (t == typeof(char[]) || t==typeof(byte[]))
-			{
-				return lt == LuaTypes.LUA_TSTRING;
-			}
+            else if (t == typeof(char[]) || t == typeof(byte[]))
+            {
+                if(lt == LuaTypes.LUA_TSTRING)
+                {
+                    object o = checkVar(l, p);
+                    return o.GetType() == t;
+                }
+                else
+                {
+                    return false;
+                }
+            }
 
-			switch (lt)
+            switch (lt)
 			{
                 case LuaTypes.LUA_TNIL:
                     return !t.IsValueType && !t.IsPrimitive;
