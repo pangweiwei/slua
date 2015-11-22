@@ -77,9 +77,9 @@ watch local/up value  			watch
 
 			IntPtr l = L.L;
 			getTypeTable(l, "LuaDebugger");
-			addMember(l, output, "output",false);
-            addMember(l, onBreak, "onBreak", false);
-            addMember(l, md5, "md5", false);
+			addMember(l, output,false);
+            addMember(l, onBreak, false);
+            addMember(l, md5, false);
             createTypeMetatable(l, typeof(DebugInterface));
 		}
 

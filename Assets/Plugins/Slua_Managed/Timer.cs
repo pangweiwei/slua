@@ -349,10 +349,10 @@ namespace SLua
 		{
 			init();
 			getTypeTable(l, "LuaTimer");
-			addMember(l, Add, "Add", false);
-            addMember(l, Delete, "Delete", false);
-            addMember(l, DeleteAll, "DeleteAll", false);
-            createTypeMetatable(l, typeof(LuaTimer));
+			addMember(l, Add, false);
+			addMember(l, Delete, false);
+            addMember(l, DeleteAll, false);
+			createTypeMetatable(l, typeof(LuaTimer));
 		}
 	}
 

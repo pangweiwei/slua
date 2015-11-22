@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 
 // Copyright 2015 Siney/Pangweiwei siney@yeah.net
 // 
@@ -83,10 +83,7 @@ namespace SLua
 				action(L);
 				bindProgress = (int)(((float)n / count) * 98.0) + 2;
 			}
-
-			//after optimized used their name hash should clear from memory.
-            LuaObject.cachedStaticFunctionNameHashs = null;
-
+			
 			bindProgress = 100;
 		}
 		

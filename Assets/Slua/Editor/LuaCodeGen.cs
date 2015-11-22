@@ -93,7 +93,7 @@ namespace SLua
     public class LuaCodeGen : MonoBehaviour
 	{
         public const string Path = "Assets/Slua/LuaObject/";
-		public const string SluaPath = "Assets/Plugins/SLua_Managed/Unity/";
+        public const string SluaPath = "Assets/Plugins/SLua_Managed/Unity/";
         public delegate void ExportGenericDelegate(Type t, string ns);
 		
         static bool autoRefresh = true;
@@ -484,17 +484,11 @@ namespace SLua
 
 		HashSet<string> funcname = new HashSet<string>();
 		Dictionary<string, bool> directfunc = new Dictionary<string, bool>();
-        public GenInfoCollector genInfoCollector = null;
 
 		public string givenNamespace;
         public string path;
 		public bool includeExtension = SLuaSetting.Instance.exportExtensionMethod;
 		public EOL eol = SLuaSetting.Instance.eol;
-
-        public CodeGenerator()
-        {
-            genInfoCollector = new GenInfoCollector();
-        }
 
 		class PropPair
 		{
@@ -530,30 +524,11 @@ namespace SLua
 			Write(file, "return list;");
 			Write(file, "}");
 
-            //static function names record for better performance.
-            //TODO:remove this,make single function contains all static func-path.
-            //TODO:record full path of static function and remove _s endswith check.
-            Write(file, "public static int[] {0}()", name+"StaticFunctionNameHash");
-            Write(file, "{");
-            Write(file, "int[] list= {");
-            foreach (string t in genInfoCollector.genStaticFunctionNames)
-            {
-                Write(file, Animator.StringToHash(t) +",");
-            }
-            Write(file, "};");
-            Write(file, "return list;");
-            Write(file, "}");
-
             //init func
             Write(file, "[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]");
             Write(file, "static void Init{0}()", name);
             Write(file, "{");
             Write(file, "LuaSvr.delegateGetBindActions.Add({0});", name);
-            Write(file, "int[] nameHashs = {0}();", name + "StaticFunctionNameHash");
-            Write(file, "for (int j = 0; j < nameHashs.Length; j++)");
-            Write(file, "{");
-            Write(file, "LuaObject.cachedStaticFunctionNameHashs[nameHashs[j]] = 1;");
-            Write(file, "}");
             Write(file, "}");
 
             Write(file, "}");
@@ -838,9 +813,9 @@ namespace SLua
         static public void reg(IntPtr l)
         {
             getTypeTable(l, typeof(LuaUnityEvent_$CLS).FullName);
-            addMember(l, AddListener,$AddListener);
-            addMember(l, RemoveListener, $RemoveListener);
-            addMember(l, Invoke,$Invoke);
+            addMember(l, AddListener);
+            addMember(l, RemoveListener);
+            addMember(l, Invoke);
             createTypeMetatable(l, null, typeof(LuaUnityEvent_$CLS), typeof(UnityEngine.Events.UnityEventBase));
         }
 
@@ -871,9 +846,6 @@ namespace SLua
 			temp = temp.Replace("$CLS", _Name(GenericName(t.BaseType)));
 			temp = temp.Replace("$FNAME", FullName(t));
 			temp = temp.Replace("$GN", GenericName(t.BaseType));
-            temp = temp.Replace("$AddListener", "\"AddListener\"");
-            temp = temp.Replace("$RemoveListener", "\"RemoveListener\"");
-            temp = temp.Replace("$Invoke", "\"Invoke\"");
 			Write(file, temp);
 		}
 		
@@ -978,7 +950,6 @@ namespace SLua
 			if (name.StartsWith("op_"))
 				return name;
             name = name + "_s";
-            genInfoCollector.AddStaticFunctionName(name);
 			return name;
 		}
 		
@@ -1030,12 +1001,12 @@ namespace SLua
 			Write(file, "getTypeTable(l,\"{0}\");", string.IsNullOrEmpty(givenNamespace) ? FullName(t) : givenNamespace);
 			foreach (string f in funcname)
 			{
-				Write(file, "addMember(l,{0},\"{1}\");", f, f.Substring(f.LastIndexOf('.') + 1));
+				Write(file, "addMember(l,{0});", f);
 			}
 			foreach (string f in directfunc.Keys)
 			{
 				bool instance = directfunc[f];
-				Write(file, "addMember(l,{0},\"{1}\",{2});", f, f.Substring(f.LastIndexOf('.') + 1), instance ? "true" : "false");
+				Write(file, "addMember(l,{0},{1});", f,instance ? "true" : "false");
 			}
 			
 			foreach (string f in propname.Keys)
@@ -2037,20 +2008,4 @@ namespace SLua
 		}
 		
 	}
-
-    class GenInfoCollector
-    {
-        public List<string> genStaticFunctionNames;
-        public GenInfoCollector()
-        {
-            genStaticFunctionNames = new List<string>();
-        }
-
-        public void AddStaticFunctionName(string name)
-        {
-            if (!genStaticFunctionNames.Contains(name))
-                genStaticFunctionNames.Add(name);
-        }
-
-    }
 }
