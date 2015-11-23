@@ -107,7 +107,7 @@ return Class
 				IEnumerable e = o as IEnumerable;
 				IEnumerator iter = e.GetEnumerator();
 				pushValue(l, true);
-				pushObject(l, iter);
+				pushLightObject(l, iter);
 				LuaDLL.lua_pushcclosure(l, _iter, 1);
 				return 2;
 			}
@@ -279,7 +279,7 @@ return Class
         static public int get_out(IntPtr l)
         {
 			pushValue(l, true);
-            pushObject(l, luaOut);
+            pushLightObject(l, luaOut);
             return 2;
         }
 

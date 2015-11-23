@@ -229,6 +229,11 @@ namespace SLua
 
 		internal void push(IntPtr l, object o)
 		{
+			push(l, o, true);
+		}
+
+		internal void push(IntPtr l, object o, bool checkReflect)
+		{
 			if (o == null)
 			{
 				LuaDLL.lua_pushnil(l);
@@ -246,7 +251,15 @@ namespace SLua
 			}
 
 			index = add(o);
+#if SLUA_CHECK_REFLECTION
+			int isReflect = LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
+			if (isReflect != 0 && checkReflect)
+			{
+				Debug.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
+			}
+#else
 			LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
+#endif
 
 		}
 

@@ -427,7 +427,10 @@ static void cacheud(lua_State *l, int index, int cref) {
 }
 
 
-LUA_API void luaS_pushobject(lua_State *l, int index, const char* t, int gco, int cref) {
+LUA_API int luaS_pushobject(lua_State *l, int index, const char* t, int gco, int cref) {
+
+	int is_reflect = 0;
+
 	luaS_newuserdata(l, index);
 	if (gco) cacheud(l, index, cref);
 
@@ -437,9 +440,11 @@ LUA_API void luaS_pushobject(lua_State *l, int index, const char* t, int gco, in
 	{
 		lua_pop(l, 1);
 		luaL_getmetatable(l, "LuaVarObject");
+		is_reflect = 1;
 	}
 
 	lua_setmetatable(l, -2);
+	return is_reflect;
 }
 
 LUA_API int luaS_getcacheud(lua_State *l, int index, int cref) {

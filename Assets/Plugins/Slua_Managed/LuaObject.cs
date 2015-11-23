@@ -760,6 +760,13 @@ return index
 			oc.push(l, o);
 		}
 
+		// lightobj is non-exported object used for re-get from c#, not for lua
+		public static void pushLightObject(IntPtr l, object t)
+		{
+			ObjectCache oc = ObjectCache.get(l);
+			oc.push(l, t, false);
+		}
+
 		public static int pushTry(IntPtr l)
 		{
 			if (!LuaState.get(l).isMainThread())

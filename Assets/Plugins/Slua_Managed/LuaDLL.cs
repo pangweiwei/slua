@@ -672,7 +672,7 @@ namespace LuaInterface
 		public static extern int luaS_checkluatype(IntPtr l, int p, string t);
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern void luaS_pushobject(IntPtr l, int index, string t, bool gco, int cref);
+		public static extern int luaS_pushobject(IntPtr l, int index, string t, bool gco, int cref);
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int luaS_getcacheud(IntPtr l, int index, int cref);
