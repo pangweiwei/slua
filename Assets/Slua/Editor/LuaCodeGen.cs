@@ -112,12 +112,16 @@ namespace SLua
 			
 			static Startup()
 			{
+			}
+
+			[UnityEditor.Callbacks.DidReloadScripts]
+			public static void OnDidReloadScripts(){
 				bool ok = System.IO.Directory.Exists(SLuaSetting.Instance.UnityEngineGeneratePath);
 				if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
 				{
 					GenerateAll();
 				}
-			}
+			} 
 		}
 	
 		[MenuItem("SLua/All/Make")]
@@ -215,11 +219,18 @@ namespace SLua
 			    AssetDatabase.Refresh();
 			Debug.Log("Generate UI interface finished");
 		}
+
+		static String FixPathName(string path) {
+			if(path.EndsWith("\\") || path.EndsWith("/")) {
+				return path.Substring(0,path.Length-1);
+			}
+			return path;
+		}
 		
 		[MenuItem("SLua/Unity/Clear Unity UI")]
-		static public void ClearUnity()
+		static public void ClearUnityUI()
 		{
-			clear(new string[] { SLuaSetting.Instance.UnityEngineGeneratePath });
+			clear(new string[] { FixPathName(SLuaSetting.Instance.UnityEngineGeneratePath) });
 			Debug.Log("Clear Unity & UI complete.");
 		}
 		
@@ -360,7 +371,7 @@ namespace SLua
 		[MenuItem("SLua/All/Clear")]
 		static public void ClearALL()
 		{
-			clear(new string[] { Path.Substring(0, Path.Length - 1) });
+			clear(new string[] { FixPathName(Path),FixPathName(SLuaSetting.Instance.UnityEngineGeneratePath) });
 			Debug.Log("Clear all complete.");
 		}
 		
@@ -371,6 +382,7 @@ namespace SLua
 				foreach (string path in paths)
 				{
 					System.IO.Directory.Delete(path, true);
+					AssetDatabase.DeleteAsset(path);
 				}
 			}
 			catch
@@ -502,7 +514,7 @@ namespace SLua
 		public void GenerateBind(List<Type> list, string name, int order)
 		{
 			HashSet<Type> exported = new HashSet<Type>();
-			string f = path + name + ".cs";
+			string f = System.IO.Path.Combine(path , name + ".cs");
 			StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
 			file.NewLine = NewLine;
 			Write(file, "using System;");
