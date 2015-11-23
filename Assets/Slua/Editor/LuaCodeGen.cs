@@ -112,12 +112,16 @@ namespace SLua
 			
 			static Startup()
 			{
+			}
+
+			[UnityEditor.Callbacks.DidReloadScripts]
+			public static void OnDidReloadScripts(){
 				bool ok = System.IO.Directory.Exists(SLuaSetting.Instance.UnityEngineGeneratePath);
 				if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
 				{
 					GenerateAll();
 				}
-			}
+			} 
 		}
 	
 		[MenuItem("SLua/All/Make")]
@@ -510,7 +514,7 @@ namespace SLua
 		public void GenerateBind(List<Type> list, string name, int order)
 		{
 			HashSet<Type> exported = new HashSet<Type>();
-			string f = path + name + ".cs";
+			string f = System.IO.Path.Combine(path , name + ".cs");
 			StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
 			file.NewLine = NewLine;
 			Write(file, "using System;");
