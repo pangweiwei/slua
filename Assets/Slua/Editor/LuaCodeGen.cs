@@ -857,7 +857,7 @@ namespace SLua
 
 			foreach (object value in Enum.GetValues (t))
 			{
-				Write(file, "addMember(l,{0},\"{1}\");", (int)value, value.ToString());
+				Write(file, "addMember(l,{0},\"{1}\");", Convert.ToInt32(value), value.ToString());
 			}
 			
 			Write(file, "LuaDLL.lua_pop(l, 1);");
