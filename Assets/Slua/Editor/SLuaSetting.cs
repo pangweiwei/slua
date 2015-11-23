@@ -36,6 +36,7 @@ namespace SLua{
 
 		public EOL eol = EOL.Native;
 		public bool exportExtensionMethod = true;
+		public string UnityEngineGeneratePath = "Assets/Plugins/SLua_Managed/Unity/";
 
 		private static SLuaSetting _instance;
 		public static SLuaSetting Instance{
