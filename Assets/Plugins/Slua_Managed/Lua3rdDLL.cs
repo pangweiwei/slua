@@ -14,7 +14,7 @@ namespace SLua{
 		
 		public static void open(IntPtr L){
 			
-			var now = System.DateTime.Now;
+			// var now = System.DateTime.Now;
 			Assembly assembly = null;
 			foreach(var assem in AppDomain.CurrentDomain.GetAssemblies()){
 				if(assem.GetName().Name == "Assembly-CSharp"){

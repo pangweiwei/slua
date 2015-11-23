@@ -219,11 +219,18 @@ namespace SLua
 			    AssetDatabase.Refresh();
 			Debug.Log("Generate UI interface finished");
 		}
+
+		static String FixPathName(string path) {
+			if(path.EndsWith("\\") || path.EndsWith("/")) {
+				return path.Substring(0,path.Length-1);
+			}
+			return path;
+		}
 		
 		[MenuItem("SLua/Unity/Clear Unity UI")]
-		static public void ClearUnity()
+		static public void ClearUnityUI()
 		{
-			clear(new string[] { SLuaSetting.Instance.UnityEngineGeneratePath });
+			clear(new string[] { FixPathName(SLuaSetting.Instance.UnityEngineGeneratePath) });
 			Debug.Log("Clear Unity & UI complete.");
 		}
 		
@@ -364,7 +371,7 @@ namespace SLua
 		[MenuItem("SLua/All/Clear")]
 		static public void ClearALL()
 		{
-			clear(new string[] { Path.Substring(0, Path.Length - 1) });
+			clear(new string[] { FixPathName(Path),FixPathName(SLuaSetting.Instance.UnityEngineGeneratePath) });
 			Debug.Log("Clear all complete.");
 		}
 		
@@ -375,6 +382,7 @@ namespace SLua
 				foreach (string path in paths)
 				{
 					System.IO.Directory.Delete(path, true);
+					AssetDatabase.DeleteAsset(path);
 				}
 			}
 			catch
