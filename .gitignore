@@ -1,6 +1,6 @@
 .DS_Store
 .vs
-.suo
+*.suo
 Library
 Temp
 UnityVS
