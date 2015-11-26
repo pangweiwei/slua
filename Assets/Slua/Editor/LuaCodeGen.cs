@@ -599,7 +599,7 @@ namespace SLua
 					RegFunction(t, file);
 					End(file);
 					
-					if (t.BaseType != null && t.BaseType.Name == "UnityEvent`1")
+					if (t.BaseType != null && t.BaseType.Name == "UnityEvent`1" && !t.IsDefined(typeof(IgnoreBaseAttribute),false))
 					{
 						string f = path + "LuaUnityEvent_" + _Name(GenericName(t.BaseType)) + ".cs";
 						file = new StreamWriter(f, false, Encoding.UTF8);

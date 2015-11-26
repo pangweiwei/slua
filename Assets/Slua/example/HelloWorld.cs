@@ -13,7 +13,16 @@ public struct foostruct
 }
 
 [CustomLuaClass]
-public class SLuaTest : MonoBehaviour { }
+[IgnoreBase] // skip auto gen "UnityEngine.Events.UnityEvent<int>" to avoid conflict
+public class IntEvent : UnityEngine.Events.UnityEvent<int>
+{
+	public IntEvent() { }
+}
+
+[CustomLuaClass]
+public class SLuaTest : MonoBehaviour {
+	public IntEvent intevent;
+}
 
 [CustomLuaClass]
 public class XXList : List<int> { }
