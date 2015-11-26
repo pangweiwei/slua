@@ -92,7 +92,7 @@ namespace SLua
 
     public class LuaCodeGen : MonoBehaviour
 	{
-        public const string Path = "Assets/Slua/LuaObject/";
+		static public string GenPath = SLuaSetting.Instance.UnityEngineGeneratePath;
         public delegate void ExportGenericDelegate(Type t, string ns);
 		
         static bool autoRefresh = true;
@@ -116,7 +116,7 @@ namespace SLua
 
 			[UnityEditor.Callbacks.DidReloadScripts]
 			public static void OnDidReloadScripts(){
-				bool ok = System.IO.Directory.Exists(SLuaSetting.Instance.UnityEngineGeneratePath);
+				bool ok = System.IO.Directory.Exists(GenPath+"Unity");
 				if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
 				{
 					GenerateAll();
@@ -153,7 +153,7 @@ namespace SLua
 			CustomExport.OnGetUseList(out uselist);
 			
 			List<Type> exports = new List<Type>();
-			string path = SLuaSetting.Instance.UnityEngineGeneratePath;
+			string path = GenPath + "Unity/";
 			foreach (Type t in types)
 			{
 				if (filterType(t, noUseList, uselist) && Generate(t, path))
@@ -205,7 +205,7 @@ namespace SLua
 			Type[] types = assembly.GetExportedTypes();
 			
 			List<Type> exports = new List<Type>();
-			string path = SLuaSetting.Instance.UnityEngineGeneratePath;
+			string path = GenPath + "Unity/";
 			foreach (Type t in types)
 			{
 				if (filterType(t,noUseList,uselist) && Generate(t,path))
@@ -227,10 +227,10 @@ namespace SLua
 			return path;
 		}
 		
-		[MenuItem("SLua/Unity/Clear Unity UI")]
-		static public void ClearUnityUI()
+		[MenuItem("SLua/Unity/Clear Unity and UI")]
+		static public void ClearUnity()
 		{
-			clear(new string[] { FixPathName(SLuaSetting.Instance.UnityEngineGeneratePath) });
+			clear(new string[] { GenPath+"Unity" });
 			Debug.Log("Clear Unity & UI complete.");
 		}
 		
@@ -242,7 +242,7 @@ namespace SLua
 			}
 
 			List<Type> exports = new List<Type>();
-            string path = Path + "Custom/";
+            string path = GenPath + "Custom/";
 			
 			if (!Directory.Exists(path))
 			{
@@ -339,7 +339,7 @@ namespace SLua
 			if (cust.Count > 0)
 			{
 				List<Type> exports = new List<Type>();
-                string path = Path + "Dll/";
+				string path = GenPath + "Dll/";
 				if (!Directory.Exists(path))
 				{
 					Directory.CreateDirectory(path);
@@ -358,20 +358,20 @@ namespace SLua
 		[MenuItem("SLua/3rdDll/Clear")]
 		static public void Clear3rdDll()
 		{
-			clear(new string[] { Path + "Dll" });
+			clear(new string[] { GenPath + "Dll" });
 			Debug.Log("Clear AssemblyDll complete.");
 		}
 		[MenuItem("SLua/Custom/Clear")]
 		static public void ClearCustom()
 		{
-			clear(new string[] { Path + "Custom" });
+			clear(new string[] { GenPath + "Custom" });
 			Debug.Log("Clear custom complete.");
 		}
 		
 		[MenuItem("SLua/All/Clear")]
 		static public void ClearALL()
 		{
-			clear(new string[] { FixPathName(Path),FixPathName(SLuaSetting.Instance.UnityEngineGeneratePath) });
+			clear(new string[] { Path.GetDirectoryName(GenPath) });
 			Debug.Log("Clear all complete.");
 		}
 		
