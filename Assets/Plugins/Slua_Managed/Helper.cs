@@ -258,10 +258,10 @@ return Class
 					object o = checkObj(l, 1);
 					if( o is UnityEngine.Object )
 					{
-						pushValue(l, (o as UnityEngine.Object) == null);
+						pushValue(l, UnityEngine.Object.Equals(o,null));
 					}
 					else
-						pushValue(l, o == null);
+						pushValue(l, o.Equals(null));
 				}
 				else
 					pushValue(l, false);
