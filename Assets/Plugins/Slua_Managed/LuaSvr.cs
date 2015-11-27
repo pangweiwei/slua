@@ -183,6 +183,10 @@ namespace SLua
 			IntPtr L = luaState.L;
 			LuaObject.init(L);
 
+			// be caurefull here, doBind Run in another thread
+			// any code access unity interface will cause deadlock.
+			// if you want to debug bind code using unity interface, need call doBind directly, like:
+			// doBind(L);
 			ThreadPool.QueueUserWorkItem(doBind, L);
 
 			lgo.StartCoroutine(waitForBind(tick, () =>

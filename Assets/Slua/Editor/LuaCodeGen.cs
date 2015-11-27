@@ -462,14 +462,14 @@ namespace SLua
 
 
 		static Dictionary<System.Type,List<MethodInfo>> GenerateExtensionMethodsMap(){
-			Dictionary<System.Type,List<MethodInfo>> dic = new Dictionary<Type, List<MethodInfo>>();
+			Dictionary<Type,List<MethodInfo>> dic = new Dictionary<Type, List<MethodInfo>>();
 			Assembly assembly = Assembly.Load("Assembly-CSharp");
-			foreach(System.Type type in assembly.GetExportedTypes()){
+			foreach(Type type in assembly.GetExportedTypes()){
 				if(type.IsSealed && !type.IsGenericType && !type.IsNested){
-					MethodInfo[] methods = type.GetMethods(BindingFlags.Static|BindingFlags.Public|BindingFlags.NonPublic);
+					MethodInfo[] methods = type.GetMethods(BindingFlags.Static|BindingFlags.Public);
 					foreach(MethodInfo method in methods){
 						if(IsExtensionMethod(method)){
-							System.Type extendedType = method.GetParameters()[0].ParameterType;
+							Type extendedType = method.GetParameters()[0].ParameterType;
 							if(!dic.ContainsKey(extendedType)){
 								dic.Add(extendedType,new List<MethodInfo>());
 							}
@@ -888,9 +888,24 @@ namespace SLua
 			Write(file, "using LuaInterface;");
 			Write(file, "using SLua;");
 			Write(file, "using System.Collections.Generic;");
+			WriteExtraNamespace(file,t);
 			Write(file, "public class {0} : LuaObject {{", ExportName(t));
 		}
-		
+
+		// add namespace for extension method
+		void WriteExtraNamespace(StreamWriter file,Type t) {
+			List<MethodInfo> lstMI;
+			HashSet<string> nsset=new HashSet<string>();
+			if(extensionMethods.TryGetValue(t,out lstMI)) {
+				foreach(MethodInfo m in lstMI) {
+					// if not writed
+					if(!nsset.Contains(m.ReflectedType.Namespace)) {
+						Write(file,"using {0};",m.ReflectedType.Namespace);
+						nsset.Add(m.ReflectedType.Namespace);
+					}
+				}
+			}
+		}
 		
 		private void WriteFunction(Type t, StreamWriter file, bool writeStatic = false)
 		{
