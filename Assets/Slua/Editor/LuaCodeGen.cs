@@ -899,7 +899,7 @@ namespace SLua
 			if(extensionMethods.TryGetValue(t,out lstMI)) {
 				foreach(MethodInfo m in lstMI) {
 					// if not writed
-					if(!nsset.Contains(m.ReflectedType.Namespace)) {
+					if(!string.IsNullOrEmpty(m.ReflectedType.Namespace) && !nsset.Contains(m.ReflectedType.Namespace)) {
 						Write(file,"using {0};",m.ReflectedType.Namespace);
 						nsset.Add(m.ReflectedType.Namespace);
 					}
