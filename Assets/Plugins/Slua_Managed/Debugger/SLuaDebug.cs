@@ -104,7 +104,7 @@ do
 
     local function buildEnv()
 		local localEnv = setmetatable({}, {__index=_G})
-		setVariable = _G
+		local setVariable = _G
 		if breakMode then
 			local level
 			if jit then
