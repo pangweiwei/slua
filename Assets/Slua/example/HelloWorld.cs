@@ -20,6 +20,11 @@ public class IntEvent : UnityEngine.Events.UnityEvent<int>
 }
 
 [CustomLuaClass]
+public class ListViewEvent : UnityEngine.Events.UnityEvent<int,string> {
+	
+}
+
+[CustomLuaClass]
 public class SLuaTest : MonoBehaviour {
 	public IntEvent intevent;
 }

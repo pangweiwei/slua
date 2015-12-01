@@ -599,7 +599,7 @@ namespace SLua
 					RegFunction(t, file);
 					End(file);
 					
-					if (t.BaseType != null && t.BaseType.Name == "UnityEvent`1" && !t.IsDefined(typeof(IgnoreBaseAttribute),false))
+					if (t.BaseType != null && t.BaseType.Name.Contains("UnityEvent`") && !t.IsDefined(typeof(IgnoreBaseAttribute),false))
 					{
 						string f = path + "LuaUnityEvent_" + _Name(GenericName(t.BaseType)) + ".cs";
 						file = new StreamWriter(f, false, Encoding.UTF8);
@@ -799,9 +799,12 @@ namespace SLua
             try
             {
                 UnityEngine.Events.UnityEvent<$GN> self = checkSelf<UnityEngine.Events.UnityEvent<$GN>>(l);
-                $GN o;
-                checkType(l,2,out o);
-                self.Invoke(o);
+" + 
+                
+				GenericCallDecl(t.BaseType)
+
+
++ @"
 				pushValue(l,true);
                 return 1;
             }
@@ -829,10 +832,10 @@ namespace SLua
                 return true;
             }
 			l = LuaState.get(l).L;
-            ua = ($GN v) =>
+            ua = ($ARGS) =>
             {
                 int error = pushTry(l);
-                pushValue(l, v);
+                $PUSHVALUES
                 ld.pcall(1, error);
                 LuaDLL.lua_settop(l,error - 1);
             };
@@ -845,8 +848,76 @@ namespace SLua
 			
 			temp = temp.Replace("$CLS", _Name(GenericName(t.BaseType)));
 			temp = temp.Replace("$FNAME", FullName(t));
-			temp = temp.Replace("$GN", GenericName(t.BaseType));
+			temp = temp.Replace("$GN", GenericName(t.BaseType,","));
+			temp = temp.Replace("$ARGS", ArgsDecl(t.BaseType));
+			temp = temp.Replace("$PUSHVALUES", PushValues(t.BaseType));
 			Write(file, temp);
+		}
+
+		string GenericCallDecl(Type t) {
+
+			try
+			{
+				Type[] tt = t.GetGenericArguments();
+				string ret = "";
+				string args = "";
+				for (int n = 0; n < tt.Length; n++)
+				{
+					string dt = SimpleType(tt[n]);
+					ret+=string.Format("				{0} a{1};",dt,n)+NewLine;
+					ret+=string.Format("				checkType(l,{0},out a{1});",n+2,n)+NewLine;
+					args+=("a"+n);
+					if (n < tt.Length - 1) args += ",";
+				}
+				ret+=string.Format("				self.Invoke({0});",args)+NewLine;
+				return ret;
+			}
+			catch (Exception e)
+			{
+				Debug.Log(e.ToString());
+				return "";
+			}
+		}
+
+		string PushValues(Type t) {
+			try
+			{
+				Type[] tt = t.GetGenericArguments();
+				string ret = "";
+				for (int n = 0; n < tt.Length; n++)
+				{
+					ret+=("pushValue(l,v"+n+");");
+				}
+				return ret;
+			}
+			catch (Exception e)
+			{
+				Debug.Log(e.ToString());
+				return "";
+			}
+		}
+
+		string ArgsDecl(Type t)
+		{
+			try
+			{
+				Type[] tt = t.GetGenericArguments();
+				string ret = "";
+				for (int n = 0; n < tt.Length; n++)
+				{
+					string dt = SimpleType(tt[n]);
+					dt+=(" v"+n);
+					ret += dt;
+					if (n < tt.Length - 1)
+						ret += ",";
+				}
+				return ret;
+			}
+			catch (Exception e)
+			{
+				Debug.Log(e.ToString());
+				return "";
+			}
 		}
 		
 		void RegEnumFunction(Type t, StreamWriter file)
@@ -1023,7 +1094,7 @@ namespace SLua
 			}
 			if (t.BaseType != null && !CutBase(t.BaseType))
 			{
-				if (t.BaseType.Name.Contains("UnityEvent`1"))
+				if (t.BaseType.Name.Contains("UnityEvent`"))
 					Write(file, "createTypeMetatable(l,{2}, typeof({0}),typeof(LuaUnityEvent_{1}));", TypeDecl(t), _Name(GenericName(t.BaseType)), constructorOrNot(t));
 				else
 					Write(file, "createTypeMetatable(l,{2}, typeof({0}),typeof({1}));", TypeDecl(t), TypeDecl(t.BaseType), constructorOrNot(t));
@@ -1537,7 +1608,7 @@ namespace SLua
 			}
 			return n.Replace("+", ".");
 		}
-		string GenericName(Type t)
+		string GenericName(Type t,string sep="_")
 		{
 			try
 			{
@@ -1548,7 +1619,7 @@ namespace SLua
 					string dt = SimpleType(tt[n]);
 					ret += dt;
 					if (n < tt.Length - 1)
-						ret += "_";
+						ret += sep;
 				}
 				return ret;
 			}
