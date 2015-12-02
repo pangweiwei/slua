@@ -107,7 +107,7 @@ return Class
 				IEnumerable e = o as IEnumerable;
 				IEnumerator iter = e.GetEnumerator();
 				pushValue(l, true);
-				pushObject(l, iter);
+				pushLightObject(l, iter);
 				LuaDLL.lua_pushcclosure(l, _iter, 1);
 				return 2;
 			}
@@ -258,10 +258,10 @@ return Class
 					object o = checkObj(l, 1);
 					if( o is UnityEngine.Object )
 					{
-						pushValue(l, (o as UnityEngine.Object) == null);
+						pushValue(l, UnityEngine.Object.Equals(o,null));
 					}
 					else
-						pushValue(l, o == null);
+						pushValue(l, o.Equals(null));
 				}
 				else
 					pushValue(l, false);
@@ -279,7 +279,7 @@ return Class
         static public int get_out(IntPtr l)
         {
 			pushValue(l, true);
-            pushObject(l, luaOut);
+            pushLightObject(l, luaOut);
             return 2;
         }
 

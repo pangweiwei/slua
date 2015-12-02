@@ -20,7 +20,7 @@ public class Main : MonoBehaviour
 #endif
 
 		l = new LuaSvr();
-		l.init(tick,complete,true);
+		l.init(tick,complete,LuaSvrFlag.LSF_DEBUG);
 	}
 
 	void log(string cond, string trace, LogType lt)

@@ -24,8 +24,8 @@ namespace SLua{
 			if(assembly != null){
 				var csfunctions = assembly.GetExportedTypes()
 					.SelectMany(x => x.GetMethods())
-						.Where(y => y.GetCustomAttributes(typeof(LualibRegAttribute),false).Any())
-						.ToList();
+						.Where(y => y.IsDefined(typeof(LualibRegAttribute),false));
+
 				foreach(MethodInfo func in csfunctions){
 					var attr = System.Attribute.GetCustomAttribute(func,typeof(LualibRegAttribute)) as LualibRegAttribute;
 					var csfunc = Delegate.CreateDelegate(typeof(LuaCSFunction),func) as LuaCSFunction;

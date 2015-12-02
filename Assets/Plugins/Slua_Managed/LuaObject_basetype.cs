@@ -588,7 +588,7 @@ namespace SLua
             if (t != null && lt==LuaTypes.LUA_TTABLE)
             {
                 LuaDLL.lua_pushstring(l, "__type");
-                pushObject(l, t);
+				pushLightObject(l, t);
                 LuaDLL.lua_rawset(l, p);
             }
 			return t != null;
