@@ -3,6 +3,7 @@ using LuaInterface;
 using System;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 
 namespace SLua{
 	public static class Lua3rdDLL{
@@ -14,7 +15,6 @@ namespace SLua{
 		
 		public static void open(IntPtr L){
 			
-			// var now = System.DateTime.Now;
 			Assembly assembly = null;
 			foreach(var assem in AppDomain.CurrentDomain.GetAssemblies()){
 				if(assem.GetName().Name == "Assembly-CSharp"){
@@ -23,17 +23,15 @@ namespace SLua{
 			}
 			if(assembly != null){
 				var csfunctions = assembly.GetExportedTypes()
-					.SelectMany(x => x.GetMethods())
+					.SelectMany(x => x.GetMethods(BindingFlags.Public|BindingFlags.Static) )
 						.Where(y => y.IsDefined(typeof(LualibRegAttribute),false));
 
 				foreach(MethodInfo func in csfunctions){
 					var attr = System.Attribute.GetCustomAttribute(func,typeof(LualibRegAttribute)) as LualibRegAttribute;
 					var csfunc = Delegate.CreateDelegate(typeof(LuaCSFunction),func) as LuaCSFunction;
 					DLLRegFuncs.Add(attr.luaName,csfunc);
-					//	UnityEngine.Debug.Log(attr.luaName);
 				}
 			}
-			//	UnityEngine.Debug.Log("find all methods marked by [Lua3rdRegAttribute] cost :"+(System.DateTime.Now - now).TotalSeconds);
 			
 			if(DLLRegFuncs.Count == 0){
 				return;
