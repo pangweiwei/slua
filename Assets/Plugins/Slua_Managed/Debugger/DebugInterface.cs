@@ -52,7 +52,8 @@ namespace SLua
 		static Dictionary<string, string> sourceMd5 = new Dictionary<string, string>();
 		static Dictionary<string, string> md5Source = new Dictionary<string, string>();
 
-		const int DebugPort = 10240;
+		int DebugPort = SLuaSetting.Instance.debugPort;
+		string DebugIP = SLuaSetting.Instance.debugIP;
 
 
 		static DebugInterface instance;
@@ -210,7 +211,7 @@ watch local/up value  			watch
 #if LuaDebugger
 			try
 			{
-				IPEndPoint localEP = new IPEndPoint(IPAddress.Parse("0.0.0.0"), DebugPort);
+				IPEndPoint localEP = new IPEndPoint(IPAddress.Parse(DebugIP), DebugPort);
 				server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 				server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 				server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontLinger, true);

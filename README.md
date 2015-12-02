@@ -59,6 +59,8 @@ support yield call
 
 support custom class exported
 
+support extension method
+
 export enum as integer
 
 return array as lua table

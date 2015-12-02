@@ -37,6 +37,7 @@ namespace SLua
 		public LuaState state;
 		public Action onUpdate;
 		public bool skipDebugger = true;
+		public bool openDebug = false;
 		DebugInterface di;
 
 		// make sure lua state finalize at last
@@ -60,8 +61,10 @@ namespace SLua
 		}
 
 		public void init() {
-			di = new DebugInterface(state);
-			di.init();
+			if(openDebug) {
+				di = new DebugInterface(state);
+				di.init();
+			}
 		}
 
 
@@ -74,6 +77,9 @@ namespace SLua
 
 		void OnGUI()
 		{
+			if(!openDebug)
+				return;
+
 			if (skipDebugger || di.isStarted)
 			{
 				skipDebugger = true;
