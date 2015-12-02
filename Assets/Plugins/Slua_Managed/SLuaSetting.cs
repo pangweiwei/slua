@@ -22,7 +22,9 @@
 
 using UnityEngine;
 using System.Collections;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 namespace SLua{
 	public enum EOL{
@@ -46,15 +48,15 @@ namespace SLua{
 			get{
 				if(_instance == null){
 					string path = "Assets/Slua/setting.asset";
-#if UNITY_5
-					_instance = AssetDatabase.LoadAssetAtPath<SLuaSetting>(path);
-#else
-					_instance = (SLuaSetting)AssetDatabase.LoadAssetAtPath(path,typeof(SLuaSetting));
-#endif
+					_instance = Resources.Load<SLuaSetting>(path);
+
+#if UNITY_EDITOR
 					if(_instance == null){
 						_instance =  SLuaSetting.CreateInstance<SLuaSetting>();
 						AssetDatabase.CreateAsset(_instance,path);
 					}
+#endif
+
 				}
 				return _instance;
 			}
