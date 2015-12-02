@@ -35,6 +35,13 @@ namespace SLua
 	using System.Reflection;
 	using Debug = UnityEngine.Debug;
 
+	public enum LuaSvrFlag {
+		LSF_BASIC = 0,
+		LSF_DEBUG = 1,
+		LSF_EXTLIB = 2,
+		LSF_3RDDLL = 4
+	};
+
 	public class LuaSvr 
 	{
 		public LuaState luaState;
@@ -150,15 +157,18 @@ namespace SLua
 			complete();
 		}
 
-		void doinit(IntPtr L)
+		void doinit(IntPtr L,LuaSvrFlag flag)
 		{
 			LuaTimer.reg(L);
 			LuaCoroutine.reg(L, lgo);
 			Helper.reg(L);
 			LuaValueType.reg(L);
-			SLuaDebug.reg(L);
-			LuaDLL.luaS_openextlibs(L);
-			Lua3rdDLL.open(L);
+			if((flag&LuaSvrFlag.LSF_DEBUG)!=0)
+				SLuaDebug.reg(L);
+			if((flag&LuaSvrFlag.LSF_EXTLIB)!=0)
+				LuaDLL.luaS_openextlibs(L);
+			if((flag&LuaSvrFlag.LSF_3RDDLL)!=0)
+				Lua3rdDLL.open(L);
 
 			lgo.state = luaState;
 			lgo.onUpdate = this.tick;
@@ -176,12 +186,13 @@ namespace SLua
 			}
 		}
 
-        public void init(Action<int> tick,Action complete,bool debug=false)
+		public void init(Action<int> tick,Action complete,LuaSvrFlag flag=LuaSvrFlag.LSF_BASIC)
         {
 			LuaState luaState = new LuaState();
 
 			IntPtr L = luaState.L;
 			LuaObject.init(L);
+			lgo.openDebug = (flag&LuaSvrFlag.LSF_DEBUG)!=0;
 
 			// be caurefull here, doBind Run in another thread
 			// any code access unity interface will cause deadlock.
@@ -192,8 +203,8 @@ namespace SLua
 			lgo.StartCoroutine(waitForBind(tick, () =>
 			{
 				this.luaState = luaState;
-				doinit(L);
-				if (debug)
+				doinit(L,flag);
+				if (lgo.openDebug)
 				{
 					lgo.StartCoroutine(waitForDebugConnection(() =>
 					{
