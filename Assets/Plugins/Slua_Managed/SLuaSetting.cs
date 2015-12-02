@@ -47,13 +47,12 @@ namespace SLua{
 		public static SLuaSetting Instance{
 			get{
 				if(_instance == null){
-					string path = "Assets/Slua/setting.asset";
-					_instance = Resources.Load<SLuaSetting>(path);
+					_instance = Resources.Load<SLuaSetting>("setting");
 
 #if UNITY_EDITOR
 					if(_instance == null){
 						_instance =  SLuaSetting.CreateInstance<SLuaSetting>();
-						AssetDatabase.CreateAsset(_instance,path);
+						AssetDatabase.CreateAsset(_instance,"Assets/Slua/Resources/setting.asset");
 					}
 #endif
 
