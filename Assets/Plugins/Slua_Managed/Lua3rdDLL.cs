@@ -3,7 +3,6 @@ using LuaInterface;
 using System;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
 
 namespace SLua{
 	public static class Lua3rdDLL{
@@ -19,6 +18,7 @@ namespace SLua{
 			foreach(var assem in AppDomain.CurrentDomain.GetAssemblies()){
 				if(assem.GetName().Name == "Assembly-CSharp"){
 					assembly = assem;
+					break;
 				}
 			}
 			if(assembly != null){
