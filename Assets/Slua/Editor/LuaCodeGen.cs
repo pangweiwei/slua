@@ -265,7 +265,7 @@ namespace SLua
                 types = assembly.GetExportedTypes();
                 foreach (Type t in types)
                 {
-                    if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0 || namespaces.Contains(t.Namespace))
+                    if (t.IsDefined(typeof(CustomLuaClassAttribute), false) || namespaces.Contains(t.Namespace))
                     {
                         fun(t, null);
                     }
@@ -278,7 +278,7 @@ namespace SLua
             types = assembly.GetExportedTypes();
             foreach (Type t in types)
             {
-                if (t.GetCustomAttributes(typeof(CustomLuaClassAttribute), false).Length > 0 || namespaces.Contains(t.Namespace))
+                if (t.IsDefined(typeof(CustomLuaClassAttribute), false) || namespaces.Contains(t.Namespace))
                 {
                     fun(t, null);
                 }
@@ -1021,10 +1021,9 @@ namespace SLua
 
 		bool isPInvoke(MethodInfo mi, out bool instanceFunc)
 		{
-			object[] attrs = mi.GetCustomAttributes(typeof(MonoPInvokeCallbackAttribute), false);
-			if (attrs.Length > 0)
+			if (mi.IsDefined(typeof(MonoPInvokeCallbackAttribute), false))
 			{
-				instanceFunc = mi.GetCustomAttributes(typeof(StaticExportAttribute), false).Length == 0;
+				instanceFunc = mi.IsDefined(typeof(StaticExportAttribute), false);
 				return true;
 			}
 			instanceFunc = true;
@@ -1046,7 +1045,7 @@ namespace SLua
 		
 		bool IsObsolete(MemberInfo t)
 		{
-			return t.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length > 0;
+			return t.IsDefined(typeof(ObsoleteAttribute), false);
 		}
 
 		string NewLine{
@@ -1482,7 +1481,7 @@ namespace SLua
 		    var methodString = string.Format("{0}.{1}", mi.DeclaringType, mi.Name);
 		    if (CustomExport.FunctionFilterList.Contains(methodString))
 		        return true;
-			return mi.GetCustomAttributes(typeof(DoNotToLuaAttribute), false).Length > 0;
+			return mi.IsDefined(typeof(DoNotToLuaAttribute), false);
 		}
 		
 		
@@ -1514,7 +1513,7 @@ namespace SLua
 					for (int k = 0; k < pars.Length; k++)
 					{
 						ParameterInfo p = pars[k];
-						bool hasParams = p.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0;
+						bool hasParams = p.IsDefined(typeof(ParamArrayAttribute), false);
 						CheckArgument(file, p.ParameterType, k, 2, p.IsOut, hasParams);
 					}
 					Write(file, "o=new {0}({1});", TypeDecl(t), FuncCall(ci));
@@ -1821,7 +1820,7 @@ namespace SLua
 					hasref = true;
 				}
 				
-				bool hasParams = p.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0;
+				bool hasParams = p.IsDefined(typeof(ParamArrayAttribute), false);
 				CheckArgument(file, p.ParameterType, n, argIndex, p.IsOut, hasParams);
 			}
 			

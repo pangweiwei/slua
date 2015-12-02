@@ -96,7 +96,7 @@ namespace SLua
 				for (int k = 0; k < ts.Length; k++)
 				{
 					Type t = ts[k];
-					if (t.GetCustomAttributes(typeof(LuaBinderAttribute), false).Length > 0)
+					if (t.IsDefined(typeof(LuaBinderAttribute), false))
 					{
 						bindlist.Add(t);
 					}
@@ -106,8 +106,8 @@ namespace SLua
 			bindProgress = 1;
 			
 			bindlist.Sort(new System.Comparison<Type>((Type a, Type b) => {
-				LuaBinderAttribute la = (LuaBinderAttribute)a.GetCustomAttributes(typeof(LuaBinderAttribute), false)[0];
-				LuaBinderAttribute lb = (LuaBinderAttribute)b.GetCustomAttributes(typeof(LuaBinderAttribute), false)[0];
+				LuaBinderAttribute la = System.Attribute.GetCustomAttribute( a, typeof(LuaBinderAttribute) ) as LuaBinderAttribute;
+				LuaBinderAttribute lb = System.Attribute.GetCustomAttribute( b, typeof(LuaBinderAttribute) ) as LuaBinderAttribute;
 				
 				return la.order.CompareTo(lb.order);
 			}));
