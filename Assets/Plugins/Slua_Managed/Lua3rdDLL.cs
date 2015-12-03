@@ -3,6 +3,8 @@ using LuaInterface;
 using System;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
+using System.IO;
 
 namespace SLua{
 	public static class Lua3rdDLL{
@@ -13,27 +15,33 @@ namespace SLua{
 		}
 		
 		public static void open(IntPtr L){
-			
-			// var now = System.DateTime.Now;
+		//	var now = System.DateTime.Now;
+			var typenames = Lua3rdMeta.Instance.typesWithAttribtues;
+			var assemblys = AppDomain.CurrentDomain.GetAssemblies();
 			Assembly assembly = null;
-			foreach(var assem in AppDomain.CurrentDomain.GetAssemblies()){
-				if(assem.GetName().Name == "Assembly-CSharp"){
-					assembly = assem;
+			foreach(var ass in assemblys){
+				if(ass.GetName().Name == "Assembly-CSharp"){
+					assembly = ass;
+					break;
 				}
 			}
+			Debug.Log(assembly);
 			if(assembly != null){
-				var csfunctions = assembly.GetExportedTypes()
-					.SelectMany(x => x.GetMethods())
-						.Where(y => y.IsDefined(typeof(LualibRegAttribute),false));
-
-				foreach(MethodInfo func in csfunctions){
-					var attr = System.Attribute.GetCustomAttribute(func,typeof(LualibRegAttribute)) as LualibRegAttribute;
-					var csfunc = Delegate.CreateDelegate(typeof(LuaCSFunction),func) as LuaCSFunction;
-					DLLRegFuncs.Add(attr.luaName,csfunc);
-					//	UnityEngine.Debug.Log(attr.luaName);
+				foreach(var typename in typenames){
+					Debug.Log(typename);
+					var type = assembly.GetType(typename);
+					var methods = type.GetMethods(BindingFlags.Static|BindingFlags.Public);
+					foreach(var method in methods){
+						var attr = System.Attribute.GetCustomAttribute(method,typeof(LualibRegAttribute)) as LualibRegAttribute;
+						if(attr != null){
+							Debug.Log(method.Name);
+							var csfunc = Delegate.CreateDelegate(typeof(LuaCSFunction),method) as LuaCSFunction;
+							DLLRegFuncs.Add(attr.luaName,csfunc);
+						}
+					}
 				}
 			}
-			//	UnityEngine.Debug.Log("find all methods marked by [Lua3rdRegAttribute] cost :"+(System.DateTime.Now - now).TotalSeconds);
+	//		UnityEngine.Debug.Log("find all methods marked by [Lua3rdRegAttribute] cost :"+(System.DateTime.Now - now).TotalSeconds);
 			
 			if(DLLRegFuncs.Count == 0){
 				return;
@@ -59,4 +67,63 @@ namespace SLua{
 			}
 		}
 	}
+
+
+	public class Lua3rdMeta:ScriptableObject{
+		/// <summary>
+		///Cache class types here those contain 3rd dll attribute.
+		/// </summary>
+		public List<string> typesWithAttribtues = new List<string>();
+
+		void OnEnable(){
+			this.hideFlags = HideFlags.NotEditable;
+		}
+#if UNITY_EDITOR
+
+		public void ReBuildTypes(){
+			typesWithAttribtues.Clear();
+			Assembly assembly = null;
+			foreach(var assem in AppDomain.CurrentDomain.GetAssemblies()){
+				if(assem.GetName().Name == "Assembly-CSharp"){
+					assembly = assem;
+					break;
+				}
+			}
+			if(assembly != null){
+				var types = assembly.GetExportedTypes();
+				foreach(var type in types){
+					var methods = type.GetMethods(BindingFlags.Public|BindingFlags.Static);
+					foreach(var method in methods){
+						if(method.IsDefined(typeof(Lua3rdDLL.LualibRegAttribute),false)){
+							typesWithAttribtues.Add(type.FullName);
+							break;
+						}
+					}
+				}
+			}
+		}
+
+#endif
+		private static Lua3rdMeta _instance;
+		public static Lua3rdMeta Instance{
+			get{
+				if(_instance == null){
+					_instance = Resources.Load<Lua3rdMeta>("lua3rdmeta");
+				}
+#if UNITY_EDITOR
+				if(_instance == null){
+					_instance = ScriptableObject.CreateInstance<Lua3rdMeta>();
+					string path = "Assets/Slua/Meta/Resources";
+					if(!Directory.Exists(path)){
+						Directory.CreateDirectory(path);
+					}
+					UnityEditor.AssetDatabase.CreateAsset(_instance,Path.Combine(path,"lua3rdmeta.asset"));
+				}
+
+#endif
+				return _instance;
+			}
+		}
+	}
+
 }

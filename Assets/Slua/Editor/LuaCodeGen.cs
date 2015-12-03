@@ -112,10 +112,12 @@ namespace SLua
 			
 			static Startup()
 			{
+				
 			}
 
 			[UnityEditor.Callbacks.DidReloadScripts]
 			public static void OnDidReloadScripts(){
+				Lua3rdMeta.Instance.ReBuildTypes();
 				bool ok = System.IO.Directory.Exists(GenPath+"Unity");
 				if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
 				{
