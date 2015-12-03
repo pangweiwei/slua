@@ -15,7 +15,6 @@ namespace SLua{
 		}
 		
 		public static void open(IntPtr L){
-		//	var now = System.DateTime.Now;
 			var typenames = Lua3rdMeta.Instance.typesWithAttribtues;
 			var assemblys = AppDomain.CurrentDomain.GetAssemblies();
 			Assembly assembly = null;
@@ -25,23 +24,19 @@ namespace SLua{
 					break;
 				}
 			}
-			Debug.Log(assembly);
 			if(assembly != null){
 				foreach(var typename in typenames){
-					Debug.Log(typename);
 					var type = assembly.GetType(typename);
 					var methods = type.GetMethods(BindingFlags.Static|BindingFlags.Public);
 					foreach(var method in methods){
 						var attr = System.Attribute.GetCustomAttribute(method,typeof(LualibRegAttribute)) as LualibRegAttribute;
 						if(attr != null){
-							Debug.Log(method.Name);
 							var csfunc = Delegate.CreateDelegate(typeof(LuaCSFunction),method) as LuaCSFunction;
 							DLLRegFuncs.Add(attr.luaName,csfunc);
 						}
 					}
 				}
 			}
-	//		UnityEngine.Debug.Log("find all methods marked by [Lua3rdRegAttribute] cost :"+(System.DateTime.Now - now).TotalSeconds);
 			
 			if(DLLRegFuncs.Count == 0){
 				return;
@@ -98,7 +93,7 @@ namespace SLua{
 							typesWithAttribtues.Add(type.FullName);
 							break;
 						}
-					}
+					} 
 				}
 			}
 		}
