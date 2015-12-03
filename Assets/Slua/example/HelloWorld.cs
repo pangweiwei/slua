@@ -14,9 +14,9 @@ public struct foostruct
 
 [CustomLuaClass]
 [IgnoreBase] // skip auto gen "UnityEngine.Events.UnityEvent<int>" to avoid conflict
-public class IntEvent : UnityEngine.Events.UnityEvent<int>
+public class FloatEvent : UnityEngine.Events.UnityEvent<float>
 {
-	public IntEvent() { }
+	public FloatEvent() { }
 }
 
 [CustomLuaClass]
@@ -26,7 +26,7 @@ public class ListViewEvent : UnityEngine.Events.UnityEvent<int,string> {
 
 [CustomLuaClass]
 public class SLuaTest : MonoBehaviour {
-	public IntEvent intevent;
+	public FloatEvent intevent;
 }
 
 [CustomLuaClass]
