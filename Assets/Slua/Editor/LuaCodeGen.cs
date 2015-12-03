@@ -105,23 +105,27 @@ namespace SLua
 				return EditorApplication.isCompiling;
 			}
 		}
-
+		 
 		[InitializeOnLoad]
 		public class Startup
 		{
 			
 			static Startup()
 			{
-			}
+				EditorApplication.update += Update;
+			} 
 
-			[UnityEditor.Callbacks.DidReloadScripts]
-			public static void OnDidReloadScripts(){
+
+			static void Update(){
+				EditorApplication.update -= Update;
+				Lua3rdMeta.Instance.ReBuildTypes();
 				bool ok = System.IO.Directory.Exists(GenPath+"Unity");
 				if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
 				{
 					GenerateAll();
 				}
-			} 
+			}
+
 		}
 	
 		[MenuItem("SLua/All/Make")]
