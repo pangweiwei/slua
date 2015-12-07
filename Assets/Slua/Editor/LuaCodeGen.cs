@@ -467,17 +467,25 @@ namespace SLua
 
 		static Dictionary<System.Type,List<MethodInfo>> GenerateExtensionMethodsMap(){
 			Dictionary<Type,List<MethodInfo>> dic = new Dictionary<Type, List<MethodInfo>>();
-			Assembly assembly = Assembly.Load("Assembly-CSharp");
-			foreach(Type type in assembly.GetExportedTypes()){
-				if(type.IsSealed && !type.IsGenericType && !type.IsNested){
-					MethodInfo[] methods = type.GetMethods(BindingFlags.Static|BindingFlags.Public);
-					foreach(MethodInfo method in methods){
-						if(IsExtensionMethod(method)){
-							Type extendedType = method.GetParameters()[0].ParameterType;
-							if(!dic.ContainsKey(extendedType)){
-								dic.Add(extendedType,new List<MethodInfo>());
+			Assembly[] asems = AppDomain.CurrentDomain.GetAssemblies();
+			foreach (Assembly assembly in asems)
+			{
+				foreach (Type type in assembly.GetExportedTypes())
+				{
+					if (type.IsSealed && !type.IsGenericType && !type.IsNested)
+					{
+						MethodInfo[] methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
+						foreach (MethodInfo method in methods)
+						{
+							if (IsExtensionMethod(method))
+							{
+								Type extendedType = method.GetParameters()[0].ParameterType;
+								if (!dic.ContainsKey(extendedType))
+								{
+									dic.Add(extendedType, new List<MethodInfo>());
+								}
+								dic[extendedType].Add(method);
 							}
-							dic[extendedType].Add(method);
 						}
 					}
 				}
