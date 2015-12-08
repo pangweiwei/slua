@@ -27,6 +27,11 @@ namespace SLua
 
     public class CustomExport
     {
+		public static void OnGetAssemblyToGenerateExtensionMethod(out List<string> list) {
+			list = new List<string> {
+				"Assembly-CSharp",
+			};
+		}
 
         public static void OnAddCustomClass(LuaCodeGen.ExportGenericDelegate add)
         {
