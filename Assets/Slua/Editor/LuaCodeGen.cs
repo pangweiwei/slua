@@ -1037,7 +1037,7 @@ namespace SLua
 		{
 			if (mi.IsDefined(typeof(MonoPInvokeCallbackAttribute), false))
 			{
-				instanceFunc = mi.IsDefined(typeof(StaticExportAttribute), false);
+				instanceFunc = !mi.IsDefined(typeof(StaticExportAttribute), false);
 				return true;
 			}
 			instanceFunc = true;
