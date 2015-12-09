@@ -467,9 +467,11 @@ namespace SLua
 
 		static Dictionary<System.Type,List<MethodInfo>> GenerateExtensionMethodsMap(){
 			Dictionary<Type,List<MethodInfo>> dic = new Dictionary<Type, List<MethodInfo>>();
-			Assembly[] asems = AppDomain.CurrentDomain.GetAssemblies();
-			foreach (Assembly assembly in asems)
+			List<string> asems;
+			CustomExport.OnGetAssemblyToGenerateExtensionMethod(out asems);
+			foreach (string assstr in asems)
 			{
+				Assembly assembly = Assembly.Load(assstr);
 				foreach (Type type in assembly.GetExportedTypes())
 				{
 					if (type.IsSealed && !type.IsGenericType && !type.IsNested)
