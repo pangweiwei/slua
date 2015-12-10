@@ -212,7 +212,15 @@ do
 	end
 
 	I.__mul = function(a,b)
-		return Vector3.New(a[1]*b,a[2]*b,a[3]*b)
+		local ta=type(a)
+		local tb=type(b)
+		if ta=='table' and tb=='number' then
+			return Vector3.New(a[1]*b,a[2]*b,a[3]*b)
+		elseif ta=='number' and tb=='table' then
+			return Vector3.New(a*b[1],a*b[2],a*b[3])
+		else
+			error(string.format('unexpect type of arguments, got %s,%s',ta,tb))
+		end
 	end
 
 	I.__add = function(a,b)
