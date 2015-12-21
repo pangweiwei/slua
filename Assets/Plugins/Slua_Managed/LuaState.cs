@@ -595,6 +595,11 @@ end
 
 			// overload resume function for report error
 			LuaState.get(L).doString(resumefunc);
+
+#if UNITY_ANDROID
+			// fix android performance drop with JIT on according to luajit mailist post
+			LuaState.get(L).doString("if jit then require('jit.opt').start('sizemcode=256','maxmcode=256') for i=1,1000 do end end");
+#endif
 			
 			pushcsfunction(L, dofile);
             LuaDLL.lua_setglobal(L, "dofile");
