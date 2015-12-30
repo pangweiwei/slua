@@ -120,6 +120,7 @@ namespace SLua
 			}
 #else
             list.AddRange(BindUnity.GetBindList());
+            list.AddRange(BindDll.GetBindList());
             list.AddRange(BindCustom.GetBindList());
 #endif
 			
