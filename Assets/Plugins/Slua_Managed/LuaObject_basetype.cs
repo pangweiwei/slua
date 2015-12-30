@@ -155,6 +155,22 @@ namespace SLua
 			return true;
 		}
 		
+                static public bool checkType(IntPtr l, int p, out ushort[] v)
+                {
+                    LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
+                    int n = LuaDLL.lua_rawlen(l, p);
+                    v = new ushort[n];
+                    for (int k = 0; k < n; k++)
+                    {
+                        LuaDLL.lua_rawgeti(l, p, k + 1);
+                        ushort f;
+                        checkType(l, -1, out f);
+                        v[k] = f;
+                        LuaDLL.lua_pop(l, 1);
+                    }
+                    return true;
+                }
+                
 		public static void pushValue(IntPtr l, ushort v)
 		{
 			LuaDLL.lua_pushinteger(l, v);
@@ -168,6 +184,22 @@ namespace SLua
 			return true;
 		}
 		
+                static public bool checkType(IntPtr l, int p, out int[] v)
+                {
+                    LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
+                    int n = LuaDLL.lua_rawlen(l, p);
+                    v = new int[n];
+                    for (int k = 0; k < n; k++)
+                    {
+                        LuaDLL.lua_rawgeti(l, p, k + 1);
+                        int f;
+                        checkType(l, -1, out f);
+                        v[k] = f;
+                        LuaDLL.lua_pop(l, 1);
+                    }
+                    return true;
+                }
+                
 		public static void pushValue(IntPtr l, int i)
 		{
 			LuaDLL.lua_pushinteger(l, i);
