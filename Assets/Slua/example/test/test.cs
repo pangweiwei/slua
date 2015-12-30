@@ -1851,9 +1851,9 @@ public class test : MonoBehaviour {
 		// 	
 		// 	var v = (Vector)lua ["v"];
 		// 	
-		// 	double len = v.Lenght ();
-		// 	lua.doString (" v:Lenght() ");
-		// 	lua.doString (@" len2 = v:Lenght()");
+		// 	double len = v.Length ();
+		// 	lua.doString (" v:Length() ");
+		// 	lua.doString (@" len2 = v:Length()");
 		// 	double len2 = (double)lua ["len2"];
 		// 	Assert.AreEqual (len, len2, "#1");
 		// }
