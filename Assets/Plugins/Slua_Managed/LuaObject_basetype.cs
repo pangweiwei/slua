@@ -173,8 +173,24 @@ namespace SLua
                 
 		public static void pushValue(IntPtr l, ushort v)
 		{
-			LuaDLL.lua_pushinteger(l, v);
+		    LuaDLL.lua_pushinteger(l, v);
 		}
+                
+                public static void pushValue(IntPtr l, ushort[] o)
+                {
+                    if (o == null)
+                    {
+                        LuaDLL.lua_pushnil(l);
+                        return;
+                    }
+                    LuaDLL.lua_createtable(l, o.Length, 0);
+                    for (int n = 0; n < o.Length; n++)
+                    {
+                        pushValue(l, o[n]);
+                        LuaDLL.lua_rawseti(l, -2, n + 1);
+                    }
+                }
+                
 		#endregion
 
 		#region int
