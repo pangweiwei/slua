@@ -155,6 +155,22 @@ namespace SLua
 			return true;
 		}
 		
+                static public bool checkType(IntPtr l, int p, out ushort[] v)
+                {
+                    LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
+                    int n = LuaDLL.lua_rawlen(l, p);
+                    v = new ushort[n];
+                    for (int k = 0; k < n; k++)
+                    {
+                        LuaDLL.lua_rawgeti(l, p, k + 1);
+                        ushort f;
+                        checkType(l, -1, out f);
+                        v[k] = f;
+                        LuaDLL.lua_pop(l, 1);
+                    }
+                    return true;
+                }
+                
 		public static void pushValue(IntPtr l, ushort v)
 		{
 			LuaDLL.lua_pushinteger(l, v);
@@ -168,6 +184,22 @@ namespace SLua
 			return true;
 		}
 		
+                static public bool checkType(IntPtr l, int p, out int[] v)
+                {
+                    LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
+                    int n = LuaDLL.lua_rawlen(l, p);
+                    v = new int[n];
+                    for (int k = 0; k < n; k++)
+                    {
+                        LuaDLL.lua_rawgeti(l, p, k + 1);
+                        int f;
+                        checkType(l, -1, out f);
+                        v[k] = f;
+                        LuaDLL.lua_pop(l, 1);
+                    }
+                    return true;
+                }
+                
 		public static void pushValue(IntPtr l, int i)
 		{
 			LuaDLL.lua_pushinteger(l, i);
@@ -523,6 +555,29 @@ namespace SLua
 		#region Type
 		private static Type MonoType = typeof(Type).GetType();
 
+		public static Type FindType(string qualifiedTypeName) 
+		{
+			Type t = Type.GetType(qualifiedTypeName);
+
+			if (t != null)
+			{
+				return t;
+			}
+			else
+			{
+				Assembly[] Assemblies = AppDomain.CurrentDomain.GetAssemblies();
+				for (int n = 0; n < Assemblies.Length;n++ )
+				{
+					Assembly asm = Assemblies[n];
+					t = asm.GetType(qualifiedTypeName);
+					if (t != null)
+						return t;
+				}
+				return null;
+			}
+		}
+
+
 		static public bool checkType(IntPtr l, int p, out Type t)
 		{
 			string tname = null;
@@ -561,11 +616,11 @@ namespace SLua
 			if (tname == null)
 				throw new Exception("expect string or type table");
 
-			t = Type.GetType(tname);
+			t = LuaObject.FindType(tname);
             if (t != null && lt==LuaTypes.LUA_TTABLE)
             {
                 LuaDLL.lua_pushstring(l, "__type");
-                pushObject(l, t);
+				pushLightObject(l, t);
                 LuaDLL.lua_rawset(l, p);
             }
 			return t != null;

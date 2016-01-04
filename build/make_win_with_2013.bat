@@ -1,7 +1,16 @@
 @echo off
 copy /Y slua.c luajit-2.1.0\src\ 
-if not exist "%VS120COMNTOOLS%" goto missing
-@set VCVARS="%VS120COMNTOOLS%..\..\VC\bin\"
+if exist "%VS120COMNTOOLS%" (
+	set VCVARS="%VS120COMNTOOLS%..\..\VC\bin\"
+	goto build
+	) 
+else (goto check2012)
+
+:check2012
+if exist "%VS110COMNTOOLS%" (set VCVARS="%VS110COMNTOOLS%..\..\VC\bin\") else (goto missing)
+
+:build
+
 @set ENV32="%VCVARS%vcvars32.bat"
 @set ENV64="%VCVARS%amd64\vcvars64.bat"
 

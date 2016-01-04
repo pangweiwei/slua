@@ -27,6 +27,11 @@ namespace SLua
 
     public class CustomExport
     {
+		public static void OnGetAssemblyToGenerateExtensionMethod(out List<string> list) {
+			list = new List<string> {
+				"Assembly-CSharp",
+			};
+		}
 
         public static void OnAddCustomClass(LuaCodeGen.ExportGenericDelegate add)
         {
@@ -85,7 +90,7 @@ namespace SLua
         {
             // add your custom assembly here
             // you can build a dll for 3rd library like ngui titled assembly name "NGUI", put it in Assets folder
-            // add it's name into list, slua will generate all exported interface automatically for you
+            // add its name into list, slua will generate all exported interface automatically for you
 
             //list.Add("NGUI");
         }
@@ -104,7 +109,6 @@ namespace SLua
             list = new List<string>
             {
                 //"UnityEngine.GameObject",
-                
             };
         }
 
@@ -112,7 +116,7 @@ namespace SLua
         {
             "UIWidget.showHandles",
             "UIWidget.showHandlesWithMoveTool",
-            "UnityEngine.Input.location",
+            "UnityEngine.Input.location", // android权限会自动减少
         };
         // black list if white list not given
         public static void OnGetNoUseList(out List<string> list)
@@ -193,7 +197,6 @@ namespace SLua
 			"GraphicRebuildTracker",
             "Advertisements",
             "UnityEditor",
-
 
             // remove GPS, Camera, Microphone Permission on Android
             "LocationInfo",

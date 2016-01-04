@@ -107,7 +107,7 @@ return Class
 				IEnumerable e = o as IEnumerable;
 				IEnumerator iter = e.GetEnumerator();
 				pushValue(l, true);
-				pushObject(l, iter);
+				pushLightObject(l, iter);
 				LuaDLL.lua_pushcclosure(l, _iter, 1);
 				return 2;
 			}
@@ -121,7 +121,7 @@ return Class
 			{
 				string cls;
 				checkType(l, 1, out cls);
-				Type t = Type.GetType(cls);
+				Type t = LuaObject.FindType(cls);
 				if (t == null)
 				{
 					return error(l, string.Format("Can't find {0} to create", cls));
@@ -170,7 +170,7 @@ return Class
 			{
 				string cls;
 				checkType(l, 1, out cls);
-				Type t = Type.GetType(cls);
+				Type t = LuaObject.FindType(cls);
 				if (t == null)
 				{
 					return error(l, "Can't find {0} to create", cls);
@@ -258,10 +258,10 @@ return Class
 					object o = checkObj(l, 1);
 					if( o is UnityEngine.Object )
 					{
-						pushValue(l, (o as UnityEngine.Object) == null);
+						pushValue(l, UnityEngine.Object.Equals(o,null));
 					}
 					else
-						pushValue(l, o == null);
+						pushValue(l, o.Equals(null));
 				}
 				else
 					pushValue(l, false);
@@ -279,7 +279,7 @@ return Class
         static public int get_out(IntPtr l)
         {
 			pushValue(l, true);
-            pushObject(l, luaOut);
+            pushLightObject(l, luaOut);
             return 2;
         }
 
