@@ -140,9 +140,10 @@ local function index(ud,k)
         local tp=type(fun)	
         if tp=='function' then 
             return fun 
-        elseif tp=='table' then
-			if fun[1] then
-				return fun[1](ud)
+        else
+			local f=fun[1]
+			if f then
+				return f(ud)
 			else
 				error('property '..k..' is write only')
 			end
@@ -830,7 +831,7 @@ return index
 						if (t == typeof(LuaTable) || t.IsArray)
 							return true;
 						else if (t.IsValueType)
-							return luaTypeCheck(l, p, t.Name);
+							return true;//luaTypeCheck(l, p, t.Name);
 						else if (LuaDLL.luaS_subclassof(l, p, t.Name) == 1)
 							return true;
 						else
