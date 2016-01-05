@@ -17,87 +17,99 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>../bin\</OutputPath>
-    <BaseIntermediateOutputPath>obj/Debug/slua-standalone\</BaseIntermediateOutputPath>
+    <OutputPath>..\bin\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\slua-standalone\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants>_DEBUG;DEBUG;TRACE;;SLUA_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Windows|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>../bin\</OutputPath>
-    <BaseIntermediateOutputPath>obj/Release/slua-standalone\</BaseIntermediateOutputPath>
+    <OutputPath>..\bin\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Release_Windows\slua-standalone\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>;SLUA_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE</DefineConstants>
+    <DefineConstants>SLUA_STANDALONE_WINDOWS;;SLUA_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release_Linux|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Release_Linux\slua-standalone\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+    <DefineConstants>SLUA_STANDALONE_LINUX;;SLUA_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/Coroutine.cs">
-      <Link>Assets/Plugins/Slua_Managed/Coroutine.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Coroutine.cs">
+      <Link>Assets\Plugins\Slua_Managed\Coroutine.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/Debugger/DebugInterface.cs">
-      <Link>Assets/Plugins/Slua_Managed/Debugger/DebugInterface.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Debugger\DebugInterface.cs">
+      <Link>Assets\Plugins\Slua_Managed\Debugger\DebugInterface.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/Debugger/SLuaDebug.cs">
-      <Link>Assets/Plugins/Slua_Managed/Debugger/SLuaDebug.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Debugger\SLuaDebug.cs">
+      <Link>Assets\Plugins\Slua_Managed\Debugger\SLuaDebug.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/Helper.cs">
-      <Link>Assets/Plugins/Slua_Managed/Helper.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Helper.cs">
+      <Link>Assets\Plugins\Slua_Managed\Helper.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/Logger.cs">
-      <Link>Assets/Plugins/Slua_Managed/Logger.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Logger.cs">
+      <Link>Assets\Plugins\Slua_Managed\Logger.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/Lua3rdDLL.cs">
-      <Link>Assets/Plugins/Slua_Managed/Lua3rdDLL.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Lua3rdDLL.cs">
+      <Link>Assets\Plugins\Slua_Managed\Lua3rdDLL.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/LuaDLL.cs">
-      <Link>Assets/Plugins/Slua_Managed/LuaDLL.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaDLL.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaDLL.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/LuaDLLWrapper.cs">
-      <Link>Assets/Plugins/Slua_Managed/LuaDLLWrapper.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaDLLWrapper.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaDLLWrapper.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/LuaObject.cs">
-      <Link>Assets/Plugins/Slua_Managed/LuaObject.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaObject.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaObject.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/LuaObject_basetype.cs">
-      <Link>Assets/Plugins/Slua_Managed/LuaObject_basetype.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaObject_basetype.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaObject_basetype.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/LuaObject_overload.cs">
-      <Link>Assets/Plugins/Slua_Managed/LuaObject_overload.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaObject_overload.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaObject_overload.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/LuaState.cs">
-      <Link>Assets/Plugins/Slua_Managed/LuaState.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaState.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaState.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/LuaSvr.cs">
-      <Link>Assets/Plugins/Slua_Managed/LuaSvr.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaSvr.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaSvr.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/LuaSvrGameObject.cs">
-      <Link>Assets/Plugins/Slua_Managed/LuaSvrGameObject.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaSvrGameObject.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaSvrGameObject.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/LuaValueType.cs">
-      <Link>Assets/Plugins/Slua_Managed/LuaValueType.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaValueType.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaValueType.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/LuaVarObject.cs">
-      <Link>Assets/Plugins/Slua_Managed/LuaVarObject.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaVarObject.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaVarObject.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/ObjectCache.cs">
-      <Link>Assets/Plugins/Slua_Managed/ObjectCache.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\ObjectCache.cs">
+      <Link>Assets\Plugins\Slua_Managed\ObjectCache.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/SLuaSetting.cs">
-      <Link>Assets/Plugins/Slua_Managed/SLuaSetting.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\SLuaSetting.cs">
+      <Link>Assets\Plugins\Slua_Managed\SLuaSetting.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/Timer.cs">
-      <Link>Assets/Plugins/Slua_Managed/Timer.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Timer.cs">
+      <Link>Assets\Plugins\Slua_Managed\Timer.cs</Link>
     </Compile>
-    <Compile Include="../../Assets/Plugins/Slua_Managed/WeakDictionary.cs">
-      <Link>Assets/Plugins/Slua_Managed/WeakDictionary.cs</Link>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\WeakDictionary.cs">
+      <Link>Assets\Plugins\Slua_Managed\WeakDictionary.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
