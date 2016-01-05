@@ -124,6 +124,15 @@ namespace SLua
 		{
 			LuaDLL.lua_pushinteger(l, v);
 		}
+
+		static public bool checkArray(IntPtr l, int p, out char[] pars)
+		{
+			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TSTRING);
+			string s;
+			checkType(l, p, out s);
+			pars = s.ToCharArray();
+			return true;
+		}
 		#endregion
 
 		#region short
