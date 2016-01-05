@@ -12,7 +12,7 @@ script:
   # test
   - cd ./standalone/bin
   - export LD_LIBRARY_PATH=$PWD
-  - mono ./testrunner/NUnit.Console.3.0.1/tools/nunit3-console.exe slua-standalone-tests.dll
+  - mono ../../testrunner/NUnit.Console.3.0.1/tools/nunit3-console.exe slua-standalone-tests.dll
   # tarball
   - tar czvf slua-standalone-linux.tar.gz *
 deploy:
