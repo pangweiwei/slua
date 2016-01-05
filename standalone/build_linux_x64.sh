@@ -2,7 +2,7 @@ cd $(cd `dirname $0`; pwd)
 ./premake.sh
 
 cd gmake
-make config=release_linux
+make config=release
 
 echo 'Copying NUnit.dll...'
 cp ../packages/NUnit.3.0.1/lib/net20/*.dll ../bin/
