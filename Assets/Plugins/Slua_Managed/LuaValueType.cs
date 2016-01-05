@@ -968,7 +968,6 @@ do
 	end
 
 	function Quaternion:ToAngleAxis()
-		print(Vector3,'xxxxxxxxxxxxxx')
 		local angle = acos(self[4])*2
 		if abs(angle-0)<Epsilon then
 			return angle,Vector3.New(1,0,0)
