@@ -70,6 +70,7 @@ local function inherite(cls,base)
 end
 
 local Matrix3x3={}
+local Vector3
 
 do
 
@@ -148,7 +149,7 @@ end
 
 do
 	local Raw=UnityEngine.Vector3
-	local Vector3={__typename='Vector3',__raw=Raw}
+	Vector3={__typename='Vector3',__raw=Raw}
 	local T=Vector3
 	local I={__typename='Vector3'}
 	_G['UnityEngine.Vector3.Instance']=I
@@ -173,7 +174,8 @@ do
 
 	Vector3.New=function (x,y,z)
 		local v={x or 0,y or 0,z or 0}
-		return setmetatable(v,I)
+		setmetatable(v,I)
+		return v
 	end
 
 	Vector3.__call = function(t,x,y,z)
@@ -211,7 +213,15 @@ do
 	end
 
 	I.__mul = function(a,b)
-		return Vector3.New(a[1]*b,a[2]*b,a[3]*b)
+		local ta=type(a)
+		local tb=type(b)
+		if ta=='table' and tb=='number' then
+			return Vector3.New(a[1]*b,a[2]*b,a[3]*b)
+		elseif ta=='number' and tb=='table' then
+			return Vector3.New(a*b[1],a*b[2],a*b[3])
+		else
+			error(string.format('unexpect type of arguments, got %s,%s',ta,tb))
+		end
 	end
 
 	I.__add = function(a,b)
@@ -243,14 +253,14 @@ do
 	end
 
 
-	function get.back() return Vector3(0,0,-1) end
-	function get.down() return Vector3(0,-1,0) end
-	function get.forward() return Vector3(0,0,1) end
-	function get.left() return Vector3(-1,0,0) end
-	function get.one() return Vector3(1,1,1) end
-	function get.right() return Vector3(1,0,0) end
-	function get.up() return Vector3(0,1,0) end
-	function get.zero() return Vector3(0,0,0) end
+	function get.back() return Vector3.New(0,0,-1) end
+	function get.down() return Vector3.New(0,-1,0) end
+	function get.forward() return Vector3.New(0,0,1) end
+	function get.left() return Vector3.New(-1,0,0) end
+	function get.one() return Vector3.New(1,1,1) end
+	function get.right() return Vector3.New(1,0,0) end
+	function get.up() return Vector3.New(0,1,0) end
+	function get.zero() return Vector3.New(0,0,0) end
 
 	function get:x() return self[1] end
 	function get:y() return self[2] end
@@ -278,7 +288,7 @@ do
 	end
 
 	function Vector3.Angle(a,b)
-		local dot = Dot(Vector3.Normalize(a), Vector3.Normalize(b))
+		local dot = Vector3.Dot(Vector3.Normalize(a), Vector3.Normalize(b))
 		return acos(dot)*ToAngle
 	end
 
@@ -499,7 +509,7 @@ do
 	        newv = (vector4 - vector2) / deltaTime
 	    end
 	    currentVelocity:Set(newv.x,newv.y,newv.z)
-	    return vector4
+	    return vector4,currentVelocity
 	end
 
 	-- code copy from reflactor of UnityEgnine
@@ -566,7 +576,8 @@ do
 	function Color.New(r,g,b,a)
 		a=a or 1
 		local c={r or 0,g or 0,b or 0,a or 0}
-		return setmetatable(c,Color)
+		setmetatable(c,Color)
+		return c
 	end
 
 	function Color.__call(t,r,g,b,a)
@@ -685,7 +696,9 @@ do
 	end
 
 	function Vector2.New(x,y)
-		return setmetatable({x or 0,y or 0},Vector2)
+		local v={x or 0,y or 0}
+		setmetatable(v,Vector2)
+		return v
 	end
 
 	function Vector2.__call(t,x,y)
@@ -781,7 +794,9 @@ do
 	end
 
 	function Vector4.New(x,y,z,w)
-		return setmetatable({x or 0,y or 0,z or 0,w or 0},Vector4)
+		local v={x or 0,y or 0,z or 0,w or 0}
+		setmetatable(v,Vector4)
+		return v
 	end
 
 	function Vector4.__call(t,x,y,z,w)
@@ -922,7 +937,9 @@ do
 
 
 	function Quaternion.New(x,y,z,w)
-		return setmetatable({x or 0,y or 0,z or 0,w or 0},Quaternion)
+		local q={x or 0,y or 0,z or 0,w or 0}
+		setmetatable(q,Quaternion)
+		return q
 	end
 
 	function Quaternion.__call(t,x,y,z,w)
