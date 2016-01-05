@@ -14,7 +14,7 @@ ifeq ($(config),debug)
   CSC = csc
   RESGEN = resgen
   TARGETDIR = ../bin
-  TARGET = $(TARGETDIR)/slua-standalone-tests.exe
+  TARGET = $(TARGETDIR)/slua-standalone-tests.dll
   OBJDIR = obj/Debug/slua-standalone-tests
   FLAGS = /debug /noconfig /d:_DEBUG /d:DEBUG /d:TRACE
   DEPENDS = ../bin/slua-standalone.dll
@@ -31,7 +31,7 @@ ifeq ($(config),release)
   CSC = csc
   RESGEN = resgen
   TARGETDIR = ../bin
-  TARGET = $(TARGETDIR)/slua-standalone-tests.exe
+  TARGET = $(TARGETDIR)/slua-standalone-tests.dll
   OBJDIR = obj/Release/slua-standalone-tests
   FLAGS = /optimize /noconfig
   DEPENDS = ../bin/slua-standalone.dll
@@ -44,7 +44,7 @@ ifeq ($(config),release)
   endef
 endif
 
-FLAGS += /t:exe 
+FLAGS += /t:library 
 REFERENCES += /r:System.dll /r:../packages/NUnit.3.0.1/lib/net20/nunit.framework.dll
 
 SOURCES += \

@@ -38,7 +38,7 @@ links
 
 project "slua-standalone-tests"
 language "C#"
-kind "ConsoleApp"
+kind "SharedLib"
 framework "3.5"
 targetdir "./bin"
 
