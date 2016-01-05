@@ -11,6 +11,13 @@ Support QA: http://www.unityqa.com/ (in Chinese)
 
 Mail to : sineysan#163.com (both of Chinese/English)
 
+## Continuous Integration Build
+
+SLua Linux Standalone:
+
+[![Build Status](https://travis-ci.org/mr-kelly/slua.svg)](https://travis-ci.org/mr-kelly/slua)
+
+
 ##Release Download
 
 [here.](https://github.com/pangweiwei/slua/releases/latest)
