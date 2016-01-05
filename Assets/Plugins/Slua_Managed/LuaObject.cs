@@ -140,7 +140,7 @@ local function index(ud,k)
         local tp=type(fun)	
         if tp=='function' then 
             return fun 
-        else
+        elseif tp=='table' then
 			local f=fun[1]
 			if f then
 				return f(ud)
