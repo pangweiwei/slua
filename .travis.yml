@@ -10,9 +10,10 @@ script:
   # build C# solution
   - ./standalone/build_linux_x64.sh
   # test
-  - mono ./testrunner/NUnit.Console.3.0.1/tools/nunit3-console.exe ./standalone/bin/slua-standalone-tests.dll
-  # tarball
   - cd ./standalone/bin
+  - export LD_LIBRARY_PATH=$PWD
+  - mono ./testrunner/NUnit.Console.3.0.1/tools/nunit3-console.exe slua-standalone-tests.dll
+  # tarball
   - tar czvf slua-standalone-linux.tar.gz *
 deploy:
   provider: releases
