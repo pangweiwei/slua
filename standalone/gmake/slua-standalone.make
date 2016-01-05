@@ -16,7 +16,7 @@ ifeq ($(config),debug)
   TARGETDIR = ../bin
   TARGET = $(TARGETDIR)/slua-standalone.dll
   OBJDIR = obj/Debug/slua-standalone
-  FLAGS = /debug /noconfig /d:_DEBUG /d:DEBUG /d:TRACE /d:SLUA_STANDALONE /d:UNITY_STANDALONE_WIN
+  FLAGS = /debug /noconfig /d:_DEBUG /d:DEBUG /d:TRACE /d:SLUA_STANDALONE /d:UNITY_STANDALONE_WIN /d:UNITY_STANDALONE
   DEPENDS =
   REFERENCES = 
   define PREBUILDCMDS
@@ -33,7 +33,7 @@ ifeq ($(config),release)
   TARGETDIR = ../bin
   TARGET = $(TARGETDIR)/slua-standalone.dll
   OBJDIR = obj/Release/slua-standalone
-  FLAGS = /optimize /noconfig /d:SLUA_STANDALONE /d:UNITY_STANDALONE_WIN
+  FLAGS = /optimize /noconfig /d:SLUA_STANDALONE /d:UNITY_STANDALONE_WIN /d:UNITY_STANDALONE
   DEPENDS =
   REFERENCES = 
   define PREBUILDCMDS

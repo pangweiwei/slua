@@ -49,7 +49,6 @@ files
 
 defines
 {
-	"SLUA_STANDALONE",
 }
 
 links

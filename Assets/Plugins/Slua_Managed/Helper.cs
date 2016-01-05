@@ -256,11 +256,13 @@ return Class
 				else if (t == LuaTypes.LUA_TUSERDATA || isLuaClass(l, 1))
 				{
 					object o = checkObj(l, 1);
+#if !SLUA_STANDALONE
 					if( o is UnityEngine.Object )
 					{
 						pushValue(l, UnityEngine.Object.Equals(o,null));
 					}
 					else
+#endif
 						pushValue(l, o.Equals(null));
 				}
 				else

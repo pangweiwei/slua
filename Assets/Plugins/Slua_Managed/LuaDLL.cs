@@ -1,7 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
-using UnityEngine;
 
 namespace LuaInterface
 {

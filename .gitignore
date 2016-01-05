@@ -15,3 +15,6 @@ obj/*
 /*.csproj
 /*.sln
 /build/luajit-osx/build*
+
+/standalone/bin
+/standalone/**/obj

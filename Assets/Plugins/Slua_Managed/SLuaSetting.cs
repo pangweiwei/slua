@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
 using System.Collections;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -34,7 +33,11 @@ namespace SLua{
 		LF,
 	}
 
-	public class SLuaSetting : ScriptableObject {
+	public class SLuaSetting 
+#if !SLUA_STANDALONE
+        : ScriptableObject
+#endif
+    {
 
 		public EOL eol = EOL.Native;
 		public bool exportExtensionMethod = true;
@@ -46,6 +49,7 @@ namespace SLua{
 		private static SLuaSetting _instance;
 		public static SLuaSetting Instance{
 			get{
+#if !SLUA_STANDALONE
 				if(_instance == null){
 					_instance = Resources.Load<SLuaSetting>("setting");
 
@@ -57,6 +61,7 @@ namespace SLua{
 #endif
 
 				}
+#endif
 				return _instance;
 			}
 		}

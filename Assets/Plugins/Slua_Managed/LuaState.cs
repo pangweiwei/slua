@@ -28,7 +28,6 @@ namespace SLua
 	using System.Collections.Generic;
 	using System.Collections;
 	using LuaInterface;
-	using UnityEngine;
 	using System.IO;
 	using System.Text;
 	using System.Runtime.InteropServices;
@@ -190,7 +189,7 @@ namespace SLua
 
 			if (!state.isMainThread())
 			{
-				Debug.LogError("Can't call lua function in bg thread");
+				Logger.LogError("Can't call lua function in bg thread");
 				return false;
 			}
 
@@ -454,13 +453,13 @@ namespace SLua
 
 				if (!isMainThread())
 				{
-					Debug.LogError("Can't access lua in bg thread");
+					Logger.LogError("Can't access lua in bg thread");
 					throw new Exception("Can't access lua in bg thread");
 				}
 
 				if (l_ == IntPtr.Zero)
 				{
-					Debug.LogError("LuaState had been destroyed, can't used yet");
+					Logger.LogError("LuaState had been destroyed, can't used yet");
 					throw new Exception("LuaState had been destroyed, can't used yet");
 				}
 
@@ -636,7 +635,7 @@ end
 			{
 				if (LuaState.main == this)
 				{
-					Debug.Log("Finalizing Lua State.");
+					Logger.Log("Finalizing Lua State.");
 					// be careful, if you close lua vm, make sure you don't use lua state again,
 					// comment this line as default for avoid unexpected crash.
 					LuaDLL.lua_close(L);
@@ -678,7 +677,7 @@ end
 			LuaDLL.lua_pushnumber(L, 2);
 			LuaDLL.lua_call(L, 2, 1);
 			LuaDLL.lua_remove(L, -2);
-			Debug.LogError(LuaDLL.lua_tostring(L, -1));
+			Logger.LogError(LuaDLL.lua_tostring(L, -1));
 			LuaDLL.lua_pop(L, 1);
 			return 0;
 		}
@@ -779,7 +778,7 @@ end
 				LuaDLL.lua_pop(L, 1);
 			}
 			LuaDLL.lua_settop(L, n);
-			Debug.Log(s);
+			Logger.Log(s);
 			return 0;
 		}
 
@@ -883,7 +882,7 @@ end
 			byte[] bytes = loadFile(fn);
 			if (bytes == null)
 			{
-				Debug.LogError(string.Format("Can't find {0}", fn));
+				Logger.LogError(string.Format("Can't find {0}", fn));
 				return null;
 			}
 
@@ -923,10 +922,14 @@ end
 				else
 				{
 					fn = fn.Replace(".", "/");
+#if !SLUA_STANDALONE
 					TextAsset asset = (TextAsset)Resources.Load(fn);
 					if (asset == null)
 						return null;
 					bytes = asset.bytes;
+#else
+				    bytes = File.ReadAllBytes(fn);
+#endif
 				}
 
 				if(bytes!=null) DebugInterface.require(fn, bytes);
