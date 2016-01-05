@@ -3,16 +3,20 @@
 .NOTPARALLEL:
 
 ifndef config
-  config=debug
+  config=debug_windows
 endif
 
 ifndef verbose
   SILENT = @
 endif
 
-ifeq ($(config),debug)
-  slua_standalone_config = debug
-  slua_standalone_tests_config = debug
+ifeq ($(config),debug_windows)
+  slua_standalone_config = debug_windows
+  slua_standalone_tests_config = debug_windows
+endif
+ifeq ($(config),debug_linux)
+  slua_standalone_config = debug_linux
+  slua_standalone_tests_config = debug_linux
 endif
 ifeq ($(config),release_windows)
   slua_standalone_config = release_windows
@@ -49,7 +53,8 @@ help:
 	@echo "Usage: make [config=name] [target]"
 	@echo ""
 	@echo "CONFIGURATIONS:"
-	@echo "  debug"
+	@echo "  debug_windows"
+	@echo "  debug_linux"
 	@echo "  release_windows"
 	@echo "  release_linux"
 	@echo ""
