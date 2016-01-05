@@ -217,6 +217,30 @@ return Class
 				return error(l, e);
 			}
 		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int MakeArray(IntPtr l)
+		{
+			try
+			{
+				LuaDLL.luaL_checktype(l, 1, LuaTypes.LUA_TTABLE);
+				int n = LuaDLL.lua_rawlen(l, 1);
+				object[] array = new object[n];
+				for (int k = 0; k < n; k++)
+				{
+					LuaDLL.lua_rawgeti(l, 1, k + 1);
+					array[k] = checkVar(l, -1);
+					LuaDLL.lua_pop(l, 1);
+				}
+				pushValue(l, true);
+				pushValue(l, array);
+				return 2;
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
+		}
 		
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int As(IntPtr l)
@@ -299,7 +323,8 @@ return Class
             addMember(l, iter, false);
             addMember(l, ToString, false);
             addMember(l, As, false);
-            addMember(l, IsNull, false);
+			addMember(l, IsNull, false);
+			addMember(l, MakeArray, false);
 			addMember(l, "out", get_out, null, false);
 			addMember(l, "version", get_version, null, false);
 

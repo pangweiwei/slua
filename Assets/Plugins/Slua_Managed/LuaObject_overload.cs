@@ -53,20 +53,6 @@ namespace SLua
 			return true;
 		}
 
-		static public bool checkType(IntPtr l, int p, out Vector3[] t)
-		{
-			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
-			int n = LuaDLL.lua_rawlen(l, p);
-			t = new Vector3[n];
-			for (int k = 0; k < n; k++)
-			{
-				LuaDLL.lua_rawgeti(l, p, k + 1);
-				checkType(l, -1, out t[k]);
-				LuaDLL.lua_pop(l, 1);
-			}
-			return true;
-		}
-
 		static public bool checkType(IntPtr l, int p, out Vector2 v)
 		{
 			float x, y;
@@ -128,36 +114,6 @@ namespace SLua
 			pushObject(l, r);
 		}
 
-		public static void pushValue(IntPtr l, RaycastHit[] r)
-		{
-			if (r == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, r.Length, 0);
-			for (int n = 0; n < r.Length; n++)
-			{
-				pushValue(l, r[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
-
-		public static void pushValue(IntPtr l, RaycastHit2D[] r)
-		{
-			if (r == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, r.Length, 0);
-			for (int n = 0; n < r.Length; n++)
-			{
-				pushValue(l, r[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
-
         public static void pushValue(IntPtr l, UnityEngine.AnimationState o)
         {
             if (o == null)
@@ -173,37 +129,7 @@ namespace SLua
 			else
 				pushObject(l, o);
 		}
-
-		public static void pushValue(IntPtr l, UnityEngine.Object[] o)
-		{
-			if (o == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, o.Length, 0);
-			for (int n = 0; n < o.Length; n++)
-			{
-				pushValue(l, o[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
-		
-		public static void pushValue(IntPtr l, Vector3[] r)
-		{
-		    if (r == null)
-		    {
-		        LuaDLL.lua_pushnil(l);
-		        return;
-		    }
-		    LuaDLL.lua_createtable(l, r.Length, 0);
-		    for (int n = 0; n < r.Length; n++)
-		    {
-		        pushValue(l, r[n]);
-		        LuaDLL.lua_rawseti(l, -2, n + 1);
-		    }
-		}
-
+	
 		public static void pushValue(IntPtr l, Quaternion o)
 		{
 			LuaDLL.luaS_pushQuaternion(l, o.x, o.y, o.z, o.w);

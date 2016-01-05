@@ -72,6 +72,11 @@ public class HelloWorld
 		return new byte[] { 51, 52, 53, 53 };
 	}
 
+	static public Vector3[] vectors()
+	{
+		return new Vector3[] { Vector3.one, Vector3.zero, Vector3.up };
+	}
+
 	static public void nullf(int? a=null) {
 		if (a == null)
 			Debug.Log("null");

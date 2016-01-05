@@ -981,14 +981,30 @@ return index
 			return oc.get(l, p);
 		}
 
-		static public bool checkType(IntPtr l, int p, out Type[] t)
+		static public bool checkArray<T>(IntPtr l, int p, out T[] ta)
 		{
-			throw new NotSupportedException();
-		}
-
-		static public bool checkType(IntPtr l, int p, out Array t)
-		{
-			throw new NotSupportedException();
+			if (LuaDLL.lua_type(l, p) == LuaTypes.LUA_TTABLE)
+			{
+				int n = LuaDLL.lua_rawlen(l, p);
+				ta = new T[n];
+				for (int k = 0; k < n; k++)
+				{
+					LuaDLL.lua_rawgeti(l, p, k + 1);
+					ta[k]=(T)checkVar(l, -1);
+					LuaDLL.lua_pop(l, 1);
+				}
+				return true;
+			}
+			else
+			{
+				Array array = checkObj(l, p) as Array;
+				ta = new T[array.Length];
+				for (int n = 0; n < array.Length; n++)
+				{
+					ta[n] = (T)array.GetValue(n);
+				}
+				return true;
+			}
 		}
 
 		static public bool checkParams<T>(IntPtr l, int p, out T[] pars) where T:class
@@ -1188,23 +1204,6 @@ return index
 		{
 			pushVar(l, a);
 		}
-
-
-		public static void pushValue(IntPtr l, object[] o)
-		{
-			if (o == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, o.Length, 0);
-			for (int n = 0; n < o.Length; n++)
-			{
-				pushValue(l, o[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
-
 
 		public static void pushVar(IntPtr l, object o)
 		{

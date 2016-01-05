@@ -1446,6 +1446,8 @@ namespace SLua
 				Write(file, "int op=LuaDelegation.checkDelegate(l,{2}{0},out {1});", n, v, nprefix);
 			else if (IsValueType(t))
 				Write(file, "checkValueType(l,{2}{0},out {1});", n, v, nprefix);
+			else if (t.IsArray)
+				Write(file, "checkArray(l,{2}{0},out {1});", n, v, nprefix);
 			else
 				Write(file, "checkType(l,{2}{0},out {1});", n, v, nprefix);
 		}
@@ -1992,6 +1994,8 @@ namespace SLua
 					else
 						Write(file, "checkParams(l,{0},out a{1});", n + argstart, n + 1);
 				}
+				else if(t.IsArray)
+					Write(file, "checkArray(l,{0},out a{1});", n + argstart, n + 1);
 				else if (IsValueType(t)) {
 					if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
 						Write(file, "checkNullable(l,{0},out a{1});", n + argstart, n + 1);
