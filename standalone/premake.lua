@@ -1,13 +1,19 @@
 
 solution "slua-standalone"
-    configurations { "Debug", "Release_Windows", "Release_Linux" }
+    configurations { 
+        "Debug_Windows", "Debug_Linux", 
+        "Release_Windows", "Release_Linux"
+    }
     location ("./" .. (_ACTION or ""))
     debugdir ("./bin")
     debugargs {  }
 
-configuration "Debug"
+configuration "Debug_Windows"
     flags { "Symbols" }
-    defines { "_DEBUG", "DEBUG", "TRACE" }
+    defines { "_DEBUG", "DEBUG", "TRACE", "SLUA_STANDALONE_WINDOWS" }
+configuration "Debug_Linux"
+    flags { "Symbols" }
+    defines { "_DEBUG", "DEBUG", "TRACE", "SLUA_STANDALONE_LINUX" }
 configuration "Release_Windows"
     flags { "Optimize" }
     defines { "SLUA_STANDALONE_WINDOWS" }
