@@ -252,14 +252,14 @@ do
 	end
 
 
-	function get.back() return Vector3(0,0,-1) end
-	function get.down() return Vector3(0,-1,0) end
-	function get.forward() return Vector3(0,0,1) end
-	function get.left() return Vector3(-1,0,0) end
-	function get.one() return Vector3(1,1,1) end
-	function get.right() return Vector3(1,0,0) end
-	function get.up() return Vector3(0,1,0) end
-	function get.zero() return Vector3(0,0,0) end
+	function get.back() return Vector3.New(0,0,-1) end
+	function get.down() return Vector3.New(0,-1,0) end
+	function get.forward() return Vector3.New(0,0,1) end
+	function get.left() return Vector3.New(-1,0,0) end
+	function get.one() return Vector3.New(1,1,1) end
+	function get.right() return Vector3.New(1,0,0) end
+	function get.up() return Vector3.New(0,1,0) end
+	function get.zero() return Vector3.New(0,0,0) end
 
 	function get:x() return self[1] end
 	function get:y() return self[2] end
