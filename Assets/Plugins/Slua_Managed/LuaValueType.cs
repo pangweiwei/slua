@@ -174,7 +174,8 @@ do
 
 	Vector3.New=function (x,y,z)
 		local v={x or 0,y or 0,z or 0}
-		return setmetatable(v,I)
+		setmetatable(v,I)
+		return v
 	end
 
 	Vector3.__call = function(t,x,y,z)
@@ -252,14 +253,14 @@ do
 	end
 
 
-	function get.back() return Vector3(0,0,-1) end
-	function get.down() return Vector3(0,-1,0) end
-	function get.forward() return Vector3(0,0,1) end
-	function get.left() return Vector3(-1,0,0) end
-	function get.one() return Vector3(1,1,1) end
-	function get.right() return Vector3(1,0,0) end
-	function get.up() return Vector3(0,1,0) end
-	function get.zero() return Vector3(0,0,0) end
+	function get.back() return Vector3.New(0,0,-1) end
+	function get.down() return Vector3.New(0,-1,0) end
+	function get.forward() return Vector3.New(0,0,1) end
+	function get.left() return Vector3.New(-1,0,0) end
+	function get.one() return Vector3.New(1,1,1) end
+	function get.right() return Vector3.New(1,0,0) end
+	function get.up() return Vector3.New(0,1,0) end
+	function get.zero() return Vector3.New(0,0,0) end
 
 	function get:x() return self[1] end
 	function get:y() return self[2] end
@@ -575,7 +576,8 @@ do
 	function Color.New(r,g,b,a)
 		a=a or 1
 		local c={r or 0,g or 0,b or 0,a or 0}
-		return setmetatable(c,Color)
+		setmetatable(c,Color)
+		return c
 	end
 
 	function Color.__call(t,r,g,b,a)
@@ -694,7 +696,9 @@ do
 	end
 
 	function Vector2.New(x,y)
-		return setmetatable({x or 0,y or 0},Vector2)
+		local v={x or 0,y or 0}
+		setmetatable(v,Vector2)
+		return v
 	end
 
 	function Vector2.__call(t,x,y)
@@ -790,7 +794,9 @@ do
 	end
 
 	function Vector4.New(x,y,z,w)
-		return setmetatable({x or 0,y or 0,z or 0,w or 0},Vector4)
+		local v={x or 0,y or 0,z or 0,w or 0}
+		setmetatable(v,Vector4)
+		return v
 	end
 
 	function Vector4.__call(t,x,y,z,w)
@@ -931,7 +937,9 @@ do
 
 
 	function Quaternion.New(x,y,z,w)
-		return setmetatable({x or 0,y or 0,z or 0,w or 0},Quaternion)
+		local q={x or 0,y or 0,z or 0,w or 0}
+		setmetatable(q,Quaternion)
+		return q
 	end
 
 	function Quaternion.__call(t,x,y,z,w)
@@ -960,7 +968,6 @@ do
 	end
 
 	function Quaternion:ToAngleAxis()
-		print(Vector3,'xxxxxxxxxxxxxx')
 		local angle = acos(self[4])*2
 		if abs(angle-0)<Epsilon then
 			return angle,Vector3.New(1,0,0)

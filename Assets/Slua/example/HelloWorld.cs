@@ -13,7 +13,6 @@ public struct foostruct
 }
 
 [CustomLuaClass]
-[IgnoreBase] // skip auto gen "UnityEngine.Events.UnityEvent<int>" to avoid conflict
 public class FloatEvent : UnityEngine.Events.UnityEvent<float>
 {
 	public FloatEvent() { }
@@ -61,7 +60,7 @@ public class Ref
 [CustomLuaClass]
 public class HelloWorld
 {
-
+	public UnityEngine.Events.UnityAction someAct;
 	static public void say()
 	{
 		Debug.Log("hello world");
@@ -70,6 +69,11 @@ public class HelloWorld
 	static public byte[] bytes()
 	{
 		return new byte[] { 51, 52, 53, 53 };
+	}
+
+	static public Vector3[] vectors()
+	{
+		return new Vector3[] { Vector3.one, Vector3.zero, Vector3.up };
 	}
 
 	static public void nullf(int? a=null) {
