@@ -1193,7 +1193,7 @@ return index
 
 		public static void pushValue(IntPtr l, Array a)
 		{
-			pushVar(l, a);
+			pushObject(l, a);
 		}
 
 		public static void pushVar(IntPtr l, object o)
