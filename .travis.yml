@@ -4,9 +4,21 @@ mono:
 install:
  - nuget install NUnit.Runners -Version 3.0.1 -OutputDirectory testrunner
 script:
+  # ==== slua standalone linux ===
   # build linux .so
   -  ./build/make_linux_jit.sh
   # build C# solution
   - ./standalone/build_linux_x64.sh
   # test
   - mono ./testrunner/NUnit.Console.3.0.1/tools/nunit-console.exe ./standalone/bin/slua-standalone-tests.dll
+  # tarball
+  - cd ./standalone/bin
+  - tar czvf slua-standalone-linux.tar.gz *
+deploy:
+  provider: releases
+  api_key: "18cf559def7681322485343947ee76e49607a77d"
+  file: ./standalone/bin/slua-standalone-linux.tar.gz
+  skip_cleanup: true
+  on:
+    tags: true
+  
