@@ -24,6 +24,9 @@ using System.Collections;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+#if !SLUA_STANDALONE
+using UnityEngine;
+#endif
 
 namespace SLua{
 	public enum EOL{

@@ -31,7 +31,9 @@ namespace SLua
 	using System.IO;
 	using System.Text;
 	using System.Runtime.InteropServices;
-
+#if !SLUA_STANDALONE
+    using UnityEngine;
+#endif
 	abstract public class LuaVar : IDisposable
 	{
 		protected LuaState state = null;
