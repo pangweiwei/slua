@@ -13,7 +13,6 @@ public struct foostruct
 }
 
 [CustomLuaClass]
-[IgnoreBase] // skip auto gen "UnityEngine.Events.UnityEvent<int>" to avoid conflict
 public class FloatEvent : UnityEngine.Events.UnityEvent<float>
 {
 	public FloatEvent() { }
@@ -61,7 +60,7 @@ public class Ref
 [CustomLuaClass]
 public class HelloWorld
 {
-
+	public UnityEngine.Events.UnityAction someAct;
 	static public void say()
 	{
 		Debug.Log("hello world");

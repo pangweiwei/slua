@@ -559,6 +559,20 @@ namespace SLua
 			Write(file, "{0}.reg,", ExportName(t), binded);
 			binded.Add(t);
 		}
+
+		public string DelegateExportFilename(string path, Type t)
+		{
+			string f;
+			if (t.IsGenericType)
+			{
+				f = path + string.Format("Lua{0}_{1}.cs", _Name(GenericBaseName(t)), _Name(GenericName(t)));
+			}
+			else
+			{
+				f = path + "LuaDelegate_" + _Name(t.FullName) + ".cs";
+			}
+			return f;
+		}
 		
 		
 		public bool Generate(Type t)
@@ -580,18 +594,11 @@ namespace SLua
 				}
 				else if (t.BaseType == typeof(System.MulticastDelegate))
 				{
-					string f;
-					if (t.IsGenericType)
-					{
-						if (t.ContainsGenericParameters)
-							return false;
-						
-						f = path + string.Format("Lua{0}_{1}.cs", _Name(GenericBaseName(t)), _Name(GenericName(t)));
-					}
-					else
-					{
-						f = path + "LuaDelegate_" + _Name(t.FullName) + ".cs";
-					}
+					if (t.ContainsGenericParameters)
+						return false;
+
+					string f = DelegateExportFilename(path, t);
+					
 					StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
 					file.NewLine = NewLine;
 					WriteDelegate(t, file);
@@ -613,13 +620,18 @@ namespace SLua
 					RegFunction(t, file);
 					End(file);
 					
-					if (t.BaseType != null && t.BaseType.Name.Contains("UnityEvent`") && !t.IsDefined(typeof(IgnoreBaseAttribute),false))
+					if (t.BaseType != null && t.BaseType.Name.Contains("UnityEvent`"))
 					{
-						string f = path + "LuaUnityEvent_" + _Name(GenericName(t.BaseType)) + ".cs";
-						file = new StreamWriter(f, false, Encoding.UTF8);
-						file.NewLine = NewLine;
-						WriteEvent(t, file);
-						file.Close();
+						string basename = "LuaUnityEvent_" + _Name(GenericName(t.BaseType)) + ".cs";
+						string f = path + basename;
+						string checkf = LuaCodeGen.GenPath + "Unity/" + basename;
+						if (!File.Exists(checkf)) // if had exported
+						{
+							file = new StreamWriter(f, false, Encoding.UTF8);
+							file.NewLine = NewLine;
+							WriteEvent(t, file);
+							file.Close();
+						}
 					}
 				}
 				
@@ -747,13 +759,15 @@ namespace SLua
 			}
 			return str;
 		}
-		
+	
 		void tryMake(Type t)
 		{
-			
+
 			if (t.BaseType == typeof(System.MulticastDelegate))
 			{
 				CodeGenerator cg = new CodeGenerator();
+				if (File.Exists(cg.DelegateExportFilename(LuaCodeGen.GenPath + "Unity/", t)))
+					return;
                 cg.path = this.path;
 				cg.Generate(t);
 			}

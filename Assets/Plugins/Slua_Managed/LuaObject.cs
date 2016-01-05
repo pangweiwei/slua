@@ -68,15 +68,6 @@ namespace SLua
 
     public class LuaOut { }
 
-	[AttributeUsage(AttributeTargets.Class)]
-	public class IgnoreBaseAttribute : System.Attribute
-	{
-		public IgnoreBaseAttribute()
-		{
-			//
-		}
-	}
-
 	public partial class LuaObject
 	{
 
