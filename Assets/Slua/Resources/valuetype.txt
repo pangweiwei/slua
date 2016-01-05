@@ -17,7 +17,7 @@ function main()
 	assert(x1==x2)
 
 	local v1=2*Vector3(1,2,3)
-	local v2=Vector3(1,2,3)*'2'
+	local v2=Vector3(1,2,3)*2
 	print("2*Vector",v1,v2)
 	assert(v1==v2)
 
