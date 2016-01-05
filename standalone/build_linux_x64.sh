@@ -11,7 +11,7 @@ echo 'Copying slua.so & slua.dll...'
 cp ../../Assets/Plugins/x64/slua.* ../bin/
 
 echo 'Copying dll config...'
-cp ./slua-standalone.dll.config ../bin/
+cp ../slua-standalone.dll.config ../bin/
 
 echo 'Success!'
 
