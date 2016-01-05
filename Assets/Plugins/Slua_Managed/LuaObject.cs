@@ -989,12 +989,8 @@ return index
 			else
 			{
 				Array array = checkObj(l, p) as Array;
-				ta = new T[array.Length];
-				for (int n = 0; n < array.Length; n++)
-				{
-					ta[n] = (T)array.GetValue(n);
-				}
-				return true;
+				ta = array as T[];
+				return ta!=null;
 			}
 		}
 
