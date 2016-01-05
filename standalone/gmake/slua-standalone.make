@@ -11,7 +11,7 @@ endif
 .PHONY: clean prebuild prelink
 
 ifeq ($(config),debug)
-  CSC = csc
+  CSC = mcs
   RESGEN = resgen
   TARGETDIR = ../bin
   TARGET = $(TARGETDIR)/slua-standalone.dll
@@ -27,13 +27,30 @@ ifeq ($(config),debug)
   endef
 endif
 
-ifeq ($(config),release)
-  CSC = csc
+ifeq ($(config),release_windows)
+  CSC = mcs
   RESGEN = resgen
   TARGETDIR = ../bin
   TARGET = $(TARGETDIR)/slua-standalone.dll
-  OBJDIR = obj/Release/slua-standalone
-  FLAGS = /optimize /noconfig /d:SLUA_STANDALONE /d:UNITY_STANDALONE_WIN /d:UNITY_STANDALONE
+  OBJDIR = obj/Release_Windows/slua-standalone
+  FLAGS = /optimize /noconfig /d:SLUA_STANDALONE_WINDOWS /d:SLUA_STANDALONE /d:UNITY_STANDALONE_WIN /d:UNITY_STANDALONE
+  DEPENDS =
+  REFERENCES = 
+  define PREBUILDCMDS
+  endef
+  define PRELINKCMDS
+  endef
+  define POSTBUILDCMDS
+  endef
+endif
+
+ifeq ($(config),release_linux)
+  CSC = mcs
+  RESGEN = resgen
+  TARGETDIR = ../bin
+  TARGET = $(TARGETDIR)/slua-standalone.dll
+  OBJDIR = obj/Release_Linux/slua-standalone
+  FLAGS = /optimize /noconfig /d:SLUA_STANDALONE_LINUX /d:SLUA_STANDALONE /d:UNITY_STANDALONE_WIN /d:UNITY_STANDALONE
   DEPENDS =
   REFERENCES = 
   define PREBUILDCMDS
@@ -45,7 +62,7 @@ ifeq ($(config),release)
 endif
 
 FLAGS += /t:library 
-REFERENCES += /r:System.dll
+REFERENCES += /r:System /r:System.Core
 
 SOURCES += \
 	../../Assets/Plugins/Slua_Managed/Coroutine.cs \
@@ -71,6 +88,7 @@ SOURCES += \
 
 EMBEDFILES += \
 
+RESPONSE += $(OBJDIR)/slua-standalone.rsp
 SHELLTYPE := msdos
 ifeq (,$(ComSpec)$(COMSPEC))
   SHELLTYPE := posix
@@ -81,8 +99,8 @@ endif
 
 all: $(TARGETDIR) $(OBJDIR) prebuild $(EMBEDFILES) $(COPYFILES) prelink $(TARGET)
 
-$(TARGET): $(SOURCES) $(EMBEDFILES) $(DEPENDS)
-	$(SILENT) $(CSC) /nologo /out:$@ $(FLAGS) $(REFERENCES) $(SOURCES) $(patsubst %,/resource:%,$(EMBEDFILES))
+$(TARGET): $(SOURCES) $(EMBEDFILES) $(DEPENDS) $(RESPONSE)
+	$(SILENT) $(CSC) /nologo /out:$@ $(FLAGS) $(REFERENCES) @$(RESPONSE) $(patsubst %,/resource:%,$(EMBEDFILES))
 	$(POSTBUILDCMDS)
 
 $(TARGETDIR):
@@ -92,6 +110,34 @@ ifeq (posix,$(SHELLTYPE))
 else
 	$(SILENT) mkdir $(subst /,\\,$(TARGETDIR))
 endif
+
+$(RESPONSE): slua-standalone.make
+	@echo Generating response file
+ifeq (posix,$(SHELLTYPE))
+	$(SILENT) rm -f $(RESPONSE)
+else
+	$(SILENT) if exist $(RESPONSE) del $(OBJDIR)/slua-standalone.rsp
+endif
+	@echo ../../Assets/Plugins/Slua_Managed/Coroutine.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/Debugger/DebugInterface.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/Debugger/SLuaDebug.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/Helper.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/Logger.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/Lua3rdDLL.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/LuaDLL.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/LuaDLLWrapper.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/LuaObject.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/LuaObject_basetype.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/LuaObject_overload.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/LuaState.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/LuaSvr.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/LuaSvrGameObject.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/LuaValueType.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/LuaVarObject.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/ObjectCache.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/SLuaSetting.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/Timer.cs >> $(RESPONSE)
+	@echo ../../Assets/Plugins/Slua_Managed/WeakDictionary.cs >> $(RESPONSE)
 
 $(OBJDIR):
 	@echo Creating $(OBJDIR)
@@ -106,4 +152,3 @@ prebuild:
 
 prelink:
 	$(PRELINKCMDS)
-

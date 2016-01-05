@@ -48,9 +48,11 @@
 
 #if UNITY_IPHONE && !UNITY_EDITOR
 		const string LUADLL = "__Internal";
+#elif SLUA_STANDALONE_LINUX
+        const string LUADLL = "slua.so";
 #else
-
-        const string LUADLL = "slua";
+	// Windows
+	const string LUADLL = "slua";
 #endif
 
 #if LUA_5_3

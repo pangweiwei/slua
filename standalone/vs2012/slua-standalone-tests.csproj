@@ -17,8 +17,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\</OutputPath>
-    <BaseIntermediateOutputPath>obj\Debug\slua-standalone-tests\</BaseIntermediateOutputPath>
+    <OutputPath>../bin\</OutputPath>
+    <BaseIntermediateOutputPath>obj/Debug/slua-standalone-tests\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants>_DEBUG;DEBUG;TRACE;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -28,8 +28,8 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\</OutputPath>
-    <BaseIntermediateOutputPath>obj\Release\slua-standalone-tests\</BaseIntermediateOutputPath>
+    <OutputPath>../bin\</OutputPath>
+    <BaseIntermediateOutputPath>obj/Release/slua-standalone-tests\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -38,15 +38,15 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.3.0.1\lib\net20\nunit.framework.dll</HintPath>
+      <HintPath>../packages/NUnit.3.0.1/lib/net20/nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\slua-standalone-tests\Main.cs">
-      <Link>slua-standalone-tests\Main.cs</Link>
+    <Compile Include="../slua-standalone-tests/Main.cs">
+      <Link>slua-standalone-tests/Main.cs</Link>
     </Compile>
-    <Compile Include="..\slua-standalone-tests\TestSLua.cs">
-      <Link>slua-standalone-tests\TestSLua.cs</Link>
+    <Compile Include="../slua-standalone-tests/TestSLua.cs">
+      <Link>slua-standalone-tests/TestSLua.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

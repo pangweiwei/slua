@@ -83,8 +83,9 @@ namespace LuaInterface
 		public static int LUA_MULTRET = -1;
 #if UNITY_IPHONE && !UNITY_EDITOR
 		const string LUADLL = "__Internal";
+#elif SLUA_STANDALONE_LINUX
+		const string LUADLL = "slua.so";
 #else
-
 		const string LUADLL = "slua";
 #endif
 
