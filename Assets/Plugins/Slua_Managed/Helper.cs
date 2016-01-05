@@ -258,7 +258,7 @@ return Class
 					object o = checkObj(l, 1);
 					if( o is UnityEngine.Object )
 					{
-						pushValue(l, UnityEngine.Object.Equals(o,null));
+						pushValue(l, ((UnityEngine.Object)o)==null);
 					}
 					else
 						pushValue(l, o.Equals(null));
