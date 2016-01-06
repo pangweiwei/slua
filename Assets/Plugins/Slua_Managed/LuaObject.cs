@@ -253,7 +253,7 @@ return index
 			typePushMap[typeof(uint)] =
 				(IntPtr L, object o) =>
 				{
-					LuaDLL.lua_pushinteger(L, Convert.ToInt32(o));
+					LuaDLL.lua_pushnumber(L, Convert.ToUInt32(o));
 				};
 
 			typePushMap[typeof(short)] =
