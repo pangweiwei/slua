@@ -223,13 +223,15 @@ return Class
 		{
 			try
 			{
-				LuaDLL.luaL_checktype(l, 1, LuaTypes.LUA_TTABLE);
-				int n = LuaDLL.lua_rawlen(l, 1);
-				object[] array = new object[n];
+				Type t;
+				checkType (l,1,out t);
+				LuaDLL.luaL_checktype(l, 2, LuaTypes.LUA_TTABLE);
+				int n = LuaDLL.lua_rawlen(l, 2);
+				Array array=Array.CreateInstance(t,n);
 				for (int k = 0; k < n; k++)
 				{
-					LuaDLL.lua_rawgeti(l, 1, k + 1);
-					array[k] = checkVar(l, -1);
+					LuaDLL.lua_rawgeti(l, 2, k + 1);
+					array.SetValue(Convert.ChangeType(checkVar(l, -1),t),k);
 					LuaDLL.lua_pop(l, 1);
 				}
 				pushValue(l, true);
