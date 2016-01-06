@@ -71,6 +71,12 @@ public class HelloWorld
 		return new byte[] { 51, 52, 53, 53 };
 	}
 
+	static public void int16Array(Int16[] array) {
+		foreach(Int16 i in array) {
+			Debug.Log("output int16 "+i);
+		}
+	}
+
 	static public Vector3[] vectors()
 	{
 		return new Vector3[] { Vector3.one, Vector3.zero, Vector3.up };

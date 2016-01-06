@@ -981,7 +981,7 @@ return index
 				for (int k = 0; k < n; k++)
 				{
 					LuaDLL.lua_rawgeti(l, p, k + 1);
-					ta[k]=(T)checkVar(l, -1);
+					ta[k]=(T)Convert.ChangeType(checkVar(l, -1),typeof(T));
 					LuaDLL.lua_pop(l, 1);
 				}
 				return true;
