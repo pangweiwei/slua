@@ -3,6 +3,8 @@ mono:
   - 3.12.0
 install:
  - nuget install NUnit.Runners -Version 3.0.1 -OutputDirectory testrunner
+ - sudo apt-get install openssl
+ - sudo apt-get install libssl-dev
 script:
   # ==== slua standalone linux ===
   # build linux .so
