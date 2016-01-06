@@ -23,6 +23,11 @@ function testArray()
 	for v in Slua.iter(a) do
 		print(v)
 	end
+	
+	local a=Slua.MakeArray("System.Int16",{1,2,3,4})
+	for v in Slua.iter(a) do
+		print(v)
+	end
 end
 
 function testNullable()

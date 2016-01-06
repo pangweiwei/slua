@@ -231,7 +231,7 @@ return Class
 				for (int k = 0; k < n; k++)
 				{
 					LuaDLL.lua_rawgeti(l, 2, k + 1);
-					array.SetValue(checkVar(l, -1),k);
+					array.SetValue(Convert.ChangeType(checkVar(l, -1),t),k);
 					LuaDLL.lua_pop(l, 1);
 				}
 				pushValue(l, true);
