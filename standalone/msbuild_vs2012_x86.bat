@@ -13,3 +13,4 @@ set BIN_TYPE="x86"
 
 copy /Y %~dp0..\Assets\Plugins\%BIN_TYPE%\slua.dll %BIN_PATH%
 copy /Y %~dp0..\Assets\Plugins\%BIN_TYPE%\slua.so %BIN_PATH%
+copy /Y %~dp0linux.slua-standalone.dll.config %BIN_PATH%

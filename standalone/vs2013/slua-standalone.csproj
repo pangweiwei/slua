@@ -58,6 +58,9 @@
     <Compile Include="..\..\Assets\Plugins\Slua_Managed\Lua3rdDLL.cs">
       <Link>Assets\Plugins\Slua_Managed\Lua3rdDLL.cs</Link>
     </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaArray.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaArray.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaDLL.cs">
       <Link>Assets\Plugins\Slua_Managed\LuaDLL.cs</Link>
     </Compile>
