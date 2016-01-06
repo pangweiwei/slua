@@ -3,8 +3,12 @@ mono:
   - 3.12.0
 install:
  - nuget install NUnit.Runners -Version 3.0.1 -OutputDirectory testrunner
+ # premake5 use libssl.so.10
  - sudo apt-get install openssl
  - sudo apt-get install libssl-dev
+ - cd /lib/x86_64-linux-gnu
+ - sudo ln -s libssl.so.1.0.0 libssl.so.10
+ - sudo ln -s libcrypto.so.1.0.0 libcrypto.so.10
 script:
   # ==== slua standalone linux ===
   # build linux .so
