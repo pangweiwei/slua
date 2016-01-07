@@ -1011,6 +1011,21 @@ return index
 				&& matchType(l, from + 8, t9);
 		}
 
+		public static bool matchType
+			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6,Type t7,Type t8,Type t9,Type t10)
+		{
+			if (total - from + 1 != 4)
+				return false;
+			
+			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
+				&& matchType(l, from + 4, t5)
+					&& matchType(l, from + 5, t6)
+					&& matchType(l, from + 6, t7)
+					&& matchType(l, from + 7, t8)
+					&& matchType(l, from + 8, t9)
+					&& matchType(l, from + 9, t10);
+		}
+
 		public static bool matchType(IntPtr l, int total, int from, ParameterInfo[] pars)
 		{
 			if (total - from + 1 != pars.Length)
