@@ -20,7 +20,7 @@ after_build:
   - cmd: 7z a slua-standalone.zip slua-standalone.pdb
   - cmd: 7z a slua-standalone.zip slua.dll
   - cmd: 7z a slua-standalone.zip slua.so
-  - cmd: 7z a slua-standalone.zip linux.slua-standalone.dll.config
+  - cmd: 7z a slua-standalone.zip slua-standalone.dll.config
   - cmd: 7z a slua-standalone.zip README
   - cmd: cd %BASE%
 test: off
