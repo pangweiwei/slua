@@ -11,8 +11,9 @@ artifacts:
   - path: standalone/bin/slua-standalone.zip
     name: slua-standalone
 build_script:
-- cmd: standalone/msbuild_vs2012.bat
+- cmd: .\standalone\msbuild_vs2012.bat
 after_build:
+  # slua-standalone
   - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/slua-standalone.dll
   - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/slua-standalone.pdb
   - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/slua.dll
