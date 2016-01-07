@@ -1,5 +1,5 @@
 #slua
-Fastest Unity lua binding via static code generating.
+Fastest lua binding via static code generating for Unity3D or mono
 
 Website: http://www.slua.net
 
