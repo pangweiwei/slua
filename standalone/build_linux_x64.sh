@@ -1,5 +1,8 @@
 cd $(cd `dirname $0`; pwd)
-./premake.sh
+
+# premake has bug with different platform (centos / ubuntu) 
+# so manually generate project and commit it please
+#./premake.sh
 
 cd gmake
 make config=release
