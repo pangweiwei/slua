@@ -58,6 +58,8 @@ above 90% UnityEngine interface exported ( remove flash, platform dependented in
 
 100% UnityEngine.UI interface ( require Unity4.6+ )
 
+support standalone in mono without Unity3D
+
 support UnityEvent/UnityAction for event callback via lua function
 
 support delegate via lua function (include iOS)
