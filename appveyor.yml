@@ -1,0 +1,29 @@
+version: 1.0.{build}
+os: Windows Server 2012 R2
+# enable patching of AssemblyInfo.* files
+#assembly_info:
+#  patch: true
+#  file: AssemblyInfo.*
+#  assembly_version: "{version}"
+#  assembly_file_version: "{version}"
+#  assembly_informational_version: "{version}"
+artifacts:
+  - path: standalone/bin/slua-standalone.zip
+    name: slua-standalone
+build_script:
+- cmd: standalone/msbuild_vs2012.bat
+after_build:
+  - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/slua-standalone.dll
+  - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/slua-standalone.pdb
+  - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/slua.dll
+  - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/slua.so
+  - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/linux.slua-standalone.dll.config
+  - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/README
+test: off
+deploy:
+- provider: Environment
+  name: Github
+  # tag: slua.$(appveyor_build_version)
+  on:
+    branch: master                # release from master branch only
+    appveyor_repo_tag: true       # deploy on tag push only

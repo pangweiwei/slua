@@ -1,3 +1,6 @@
+# Travis CI Continuous Integration
+# Linux Build test , no deployment
+# deployment on the appveyor.yml
 language: csharp
 mono:
   - 3.12.0
@@ -24,11 +27,10 @@ script:
   - mono ../../testrunner/NUnit.Console.3.0.1/tools/nunit3-console.exe slua-standalone-tests.dll
   # tarball
   - tar czvf slua-standalone-linux.tar.gz *
-deploy:
-  provider: releases
-  api_key: "18cf559def7681322485343947ee76e49607a77d"
-  file: ./standalone/bin/slua-standalone-linux.tar.gz
-  skip_cleanup: true
-  on:
-    tags: true
-  
+#deploy:
+#  provider: releases
+#  api_key: "18cf559def7681322485343947ee76e49607a77d"
+#  file: ./standalone/bin/slua-standalone-linux.tar.gz
+#  skip_cleanup: true
+#  on:
+#    tags: true
