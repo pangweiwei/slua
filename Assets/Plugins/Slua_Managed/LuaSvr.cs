@@ -83,7 +83,7 @@ namespace SLua
 
             List<Action<IntPtr>> list = new List<Action<IntPtr>>();
             
-#if !USE_STATIC_BINDER
+#if USE_STATIC_BINDER
 			Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
 			
 			bindProgress = 0;
@@ -127,9 +127,11 @@ namespace SLua
 				list.AddRange(sublist);
 			}
 #else
-            list.AddRange(BindUnity.GetBindList());
-            list.AddRange(BindDll.GetBindList());
-            list.AddRange(BindCustom.GetBindList());
+			Assembly assembly = Assembly.Load("Assembly-CSharp");
+			list.AddRange(getBindList(assembly,"SLua.BindUnity"));
+			list.AddRange(getBindList(assembly,"SLua.BindUnityUI"));
+			list.AddRange(getBindList(assembly,"SLua.BindDll"));
+			list.AddRange(getBindList(assembly,"SLua.BindCustom"));
 #endif
 			
 			bindProgress = 2;
@@ -144,6 +146,14 @@ namespace SLua
 			
 			bindProgress = 100;
 		}
+
+		Action<IntPtr>[] getBindList(Assembly assembly,string ns) {
+			Type t=assembly.GetType(ns);
+			if(t!=null)
+				return (Action<IntPtr>[]) t.GetMethod("GetBindList").Invoke(null, null);
+			return new Action<IntPtr>[0];
+		}
+
 		
 		public IEnumerator waitForBind(Action<int> tick, Action complete)
 		{
@@ -218,8 +228,8 @@ namespace SLua
 			// be caurefull here, doBind Run in another thread
 			// any code access unity interface will cause deadlock.
 			// if you want to debug bind code using unity interface, need call doBind directly, like:
-			// doBind(L);
-			ThreadPool.QueueUserWorkItem(doBind, L);
+			doBind(L);
+			//ThreadPool.QueueUserWorkItem(doBind, L);
 
 			lgo.StartCoroutine(waitForBind(tick, () =>
 			{
