@@ -27,11 +27,11 @@ namespace SLua
 
     public class CustomExport
     {
-		public static void OnGetAssemblyToGenerateExtensionMethod(out List<string> list) {
-			list = new List<string> {
-				"Assembly-CSharp",
-			};
-		}
+        public static void OnGetAssemblyToGenerateExtensionMethod(out List<string> list) {
+            list = new List<string> {
+                "Assembly-CSharp",
+            };
+        }
 
         public static void OnAddCustomClass(LuaCodeGen.ExportGenericDelegate add)
         {
@@ -41,45 +41,7 @@ namespace SLua
             add(typeof(List<int>), "ListInt");
             add(typeof(Dictionary<int, string>), "DictIntStr");
             add(typeof(string), "String");
-#if KTV_GAMECLIENT
-            add(typeof(KLog), "KLog");
-            add(typeof(KException), "KException");
-
-            add(typeof(KUiTweenFrame), "KUiTweenFrame");
-            add(typeof(KUiFrame), "KUiFrame");
-            add(typeof(KUiMgr), "KUiMgr");
-
-            add(typeof(AnnounceConf), "AnnounceConf");
-
-            // NGUI
-            //add(typeof(UIButtonColor.State), "UIButtonColorState");
-            //add(typeof(UIButtonColor), "UIButtonColor");
-            //add(typeof(UIButton), "UIButton");
-
-            //add(typeof(UICamera), "UICamera");
-            //add(typeof(Localization), "Localization");
-            //add(typeof(NGUITools), "NGUITools");
-            //add(typeof(UIRect), "UIRect");
-            //add(typeof(UIWidget), "UIWidget");
-            //add(typeof(UIWidgetContainer), "UIWidgetContainer");
-            //add(typeof(UILabel), "UILabel");
-            //add(typeof(UIToggle), "UIToggle");
-            //add(typeof(UIBasicSprite), "UIBasicSprite");
-            //add(typeof(UITexture), "UITexture");
-            //add(typeof(UISprite), "UISprite");
-            //add(typeof(UIProgressBar), "UIProgressBar");
-            //add(typeof(UISlider), "UISlider");
-            //add(typeof(UIGrid), "UIGrid");
-            //add(typeof(UIInput), "UIInput");
-            //add(typeof(UIScrollView), "UIScrollView");
-            //add(typeof(UITweener), "UITweener");
-            //add(typeof(TweenWidth), "TweenWidth");
-            //add(typeof(TweenRotation), "TweenRotation");
-            //add(typeof(TweenPosition), "TweenPosition");
-            //add(typeof(TweenScale), "TweenScale");
-            //add(typeof(UICenterOnChild), "UICenterOnChild");
-            //add(typeof(UIAtlas), "UIAtlas");
-#endif
+            
             // add your custom class here
             // add( type, typename)
             // type is what you want to export
@@ -116,7 +78,6 @@ namespace SLua
         {
             "UIWidget.showHandles",
             "UIWidget.showHandlesWithMoveTool",
-            "UnityEngine.Input.location", // android权限会自动减少
         };
         // black list if white list not given
         public static void OnGetNoUseList(out List<string> list)
@@ -156,7 +117,7 @@ namespace SLua
              "ADBannerView",
             "ADInterstitialAd",            
             "Android",
-			"Tizen",
+            "Tizen",
             "jvalue",
             "iPhone",
             "iOS",
@@ -190,25 +151,13 @@ namespace SLua
             "Flash",
             "ActionScript",
             "OnRequestRebuild",
-			"Ping",
+            "Ping",
             "ShaderVariantCollection",
-			"SimpleJson.Reflection",
-			"CoroutineTween",
-			"GraphicRebuildTracker",
+            "SimpleJson.Reflection",
+            "CoroutineTween",
+            "GraphicRebuildTracker",
             "Advertisements",
             "UnityEditor",
-
-            // remove GPS, Camera, Microphone Permission on Android
-            "LocationInfo",
-            "LocationServiceStatus",
-            "LocationService",
-            "Gyroscope",
-            "AccelerationEvent",
-            "Microphone",
-            "WebCamFlags",
-            "WebCamDevice",
-				
-            "WebCamTexture",
         };
         }
 
