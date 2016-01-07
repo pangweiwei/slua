@@ -23,7 +23,9 @@
 
 namespace SLua
 {
+#if !SLUA_STANDALONE
 	using UnityEngine;
+#endif
 	using System.Collections;
 	using System.Collections.Generic;
 	using System;

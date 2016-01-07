@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "slua-standalone", "slua-standalone.csproj", "{10D83B57-7C63-A91B-8574-2C10F17E051C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "slua-standalone-tests", "slua-standalone-tests.csproj", "{B03DC6FB-1CAA-81F6-E59D-195451C9A35E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10D83B57-7C63-A91B-8574-2C10F17E051C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10D83B57-7C63-A91B-8574-2C10F17E051C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10D83B57-7C63-A91B-8574-2C10F17E051C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10D83B57-7C63-A91B-8574-2C10F17E051C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B03DC6FB-1CAA-81F6-E59D-195451C9A35E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B03DC6FB-1CAA-81F6-E59D-195451C9A35E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B03DC6FB-1CAA-81F6-E59D-195451C9A35E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B03DC6FB-1CAA-81F6-E59D-195451C9A35E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

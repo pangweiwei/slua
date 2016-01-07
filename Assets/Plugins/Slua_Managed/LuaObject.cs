@@ -23,7 +23,9 @@
 namespace SLua
 {
 
+#if !SLUA_STANDALONE
 	using UnityEngine;
+#endif
 	using System.Collections;
 	using System.Collections.Generic;
 	using System;
@@ -309,7 +311,7 @@ return index
 				{
 					((LuaVar)o).push(L);
 				};
-
+#if !SLUA_STANDALONE
 			typePushMap[typeof(Vector3)] = (IntPtr L, object o) =>
 			{
 				pushValue(L, (Vector3)o);
@@ -334,6 +336,7 @@ return index
 			{
 				pushValue(L, (Color)o);
 			};
+#endif
 
 			typePushMap[typeof(LuaCSFunction)] = (IntPtr L, object o) =>
 			{
@@ -653,11 +656,15 @@ return index
 
 		public static bool isImplByLua(Type t)
 		{
+#if !SLUA_STANDALONE
 			return t == typeof(Color)
 				|| t == typeof(Vector2)
 				|| t == typeof(Vector3)
 				|| t == typeof(Vector4)
 				|| t == typeof(Quaternion);
+#else
+		    return false;
+#endif
 		}
 
 
@@ -735,7 +742,7 @@ return index
 			}
 			return 0;
 		}
-
+#if !SLUA_STANDALONE
         static internal void gc(IntPtr l,int p,UnityEngine.Object o)
         {
             // set ud's metatable is nil avoid gc again
@@ -745,6 +752,7 @@ return index
             ObjectCache t = ObjectCache.get(l);
             t.gc(o);
         }
+#endif
 
 		static public void checkLuaObject(IntPtr l, int p)
 		{
@@ -779,7 +787,7 @@ return index
 		{
 			if (!LuaState.get(l).isMainThread())
 			{
-				Debug.LogError("Can't call lua function in bg thread");
+                Logger.LogError("Can't call lua function in bg thread");
 				return 0;
 			}
 
@@ -1228,6 +1236,7 @@ return index
 					{
 						if (isLuaValueType(l, p))
 						{
+#if !SLUA_STANDALONE
 							if (luaTypeCheck(l, p, "Vector2"))
 							{
 								Vector2 v;
@@ -1258,7 +1267,8 @@ return index
 								checkType(l, p, out c);
 								return c;
 							}
-							Debug.LogError("unknown lua value type");
+#endif
+							Logger.LogError("unknown lua value type");
 							return null;
 						}
 						else if (isLuaClass(l, p))
@@ -1348,6 +1358,7 @@ return index
 			t.setBack(l, 1, o);
 		}
 
+#if !SLUA_STANDALONE
 		public static void setBack(IntPtr l, Vector3 v)
 		{
 			LuaDLL.luaS_setDataVec(l, 1, v.x, v.y, v.z, float.NaN);
@@ -1372,6 +1383,7 @@ return index
         {
             LuaDLL.luaS_setDataVec(l, 1, v.r, v.g, v.b, v.a);
         }
+#endif
 
         public static int extractFunction(IntPtr l, int p)
 		{

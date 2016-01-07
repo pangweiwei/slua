@@ -25,7 +25,6 @@
 
 namespace SLua
 {
-	using UnityEngine;
 	using System.Collections;
 	using System.Collections.Generic;
 	using SLua;
@@ -218,7 +217,7 @@ watch local/up value  			watch
 				server.Bind(localEP);
 				server.Listen(10);
 				server.BeginAccept(new AsyncCallback(onClientConnect), server);
-				Debug.Log("Opened lua debugger interface at " + localEP.ToString());
+				Logger.Log("Opened lua debugger interface at " + localEP.ToString());
 
 				// redirect output to client socket
 				var luaFunc = state.getFunction("Slua.ldb.setOutput");
@@ -226,7 +225,7 @@ watch local/up value  			watch
 			}
 			catch (Exception e)
 			{
-				Debug.LogError(string.Format("LuaDebugger listened failed for reason:：{0}", e.Message));
+				Logger.LogError(string.Format("LuaDebugger listened failed for reason:：{0}", e.Message));
 			}
 #endif
 		}
@@ -274,7 +273,7 @@ watch local/up value  			watch
 					catch (Exception e)
 					{
 						error(e.Message);
-						Debug.LogError(e.Message);
+                        Logger.LogError(e.Message);
 					}
 				}
 				else
@@ -295,7 +294,7 @@ watch local/up value  			watch
 
 				if (packageLen < 0)
 				{
-					Debug.LogError("Invalid packaged received.");
+					Logger.LogError("Invalid packaged received.");
 					return false;
 				}
 
@@ -304,7 +303,7 @@ watch local/up value  			watch
 
 					if (packageLen > RecvMax)
 					{
-						Debug.LogError("Invalid debug command received.");
+						Logger.LogError("Invalid debug command received.");
 						return false;
 					}
 
@@ -368,7 +367,7 @@ watch local/up value  			watch
 
 			debugMode = false;
 
-			Debug.Log("New debug session connected");
+			Logger.Log("New debug session connected");
 		}
 
 		public void close()
@@ -391,7 +390,7 @@ watch local/up value  			watch
 				server = null;
 			}
 
-			Debug.Log("Closed lua debugger interface.");
+			Logger.Log("Closed lua debugger interface.");
 
 		}
 
@@ -402,7 +401,7 @@ watch local/up value  			watch
 			client.Close();
 			client = null;
 
-			Debug.Log("Debug session disconnected");
+			Logger.Log("Debug session disconnected");
 		}
 
 		public string md5(string f)

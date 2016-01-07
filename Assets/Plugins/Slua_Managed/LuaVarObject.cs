@@ -23,7 +23,6 @@
 
 namespace SLua
 {
-	using UnityEngine;
 	using System.Collections;
 	using System.Collections.Generic;
 	using System;
@@ -35,6 +34,11 @@ namespace SLua
 	// This class use reflection and not completed, you should write your code for your purpose.
 	class LuaVarObject : LuaObject
 	{
+
+        /// <summary>
+        /// A cache list of MemberInfo, for reflection optimize
+        /// </summary>
+        static Dictionary<Type, Dictionary<string, MemberInfo[]>> cachedMemberInfos = new Dictionary<Type, Dictionary<string, MemberInfo[]>>(); 
 
 		class MethodWrapper
 		{
@@ -217,14 +221,19 @@ namespace SLua
 			}
 
 IndexProperty:
-			MemberInfo[] mis = t.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-			if (mis.Length == 0)
-			{
-				return error(l, "Can't find " + key);
-			}
+            //MemberInfo[] mis = t.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            //if (mis.Length == 0)
+            //{
+            //    return error(l, "Can't find " + key);
+            //}
+            var mis = GetCacheMembers(t, key);
+            if (mis == null)
+            {
+                return error(l, "Can't find " + key);
+            }
 
 			pushValue(l, true);
-			MemberInfo mi = mis[0];
+            MemberInfo mi = mis[0];
 			switch (mi.MemberType)
 			{
 				case MemberTypes.Property:
@@ -249,6 +258,29 @@ IndexProperty:
 			return 2;
 
 		}
+        
+        /// <summary>
+        /// Get Member from Type, use reflection, use cache Dictionary
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+	    static MemberInfo[] GetCacheMembers(Type type, string key)
+        {
+            Dictionary<string, MemberInfo[]> cache;
+            if (!cachedMemberInfos.TryGetValue(type, out cache))
+            {
+                cachedMemberInfos[type] = cache = new Dictionary<string, MemberInfo[]>();
+            }
+
+            MemberInfo[] memberInfos;
+            if (!cache.TryGetValue(key, out memberInfos))
+            {
+                cache[key] = memberInfos = type.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    
+            }
+            return memberInfos;
+        }
 
 		static int newindexString(IntPtr l, object self, string key)
 		{
@@ -259,13 +291,18 @@ IndexProperty:
 			}
 
 			Type t = getType(self);
-			MemberInfo[] mis = t.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public);
-			if (mis.Length == 0)
-			{
-				return error(l, "Can't find " + key);
-			}
+            //MemberInfo[] mis = t.GetMember(key, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            //if (mis.Length == 0)
+            //{
+            //    return error(l, "Can't find " + key);
+            //}
 
-			MemberInfo mi = mis[0];
+		    var mis = GetCacheMembers(t, key);
+		    if (mis == null)
+		    {
+                return error(l, "Can't find " + key);
+		    }
+            MemberInfo mi = mis[0];
 			switch (mi.MemberType)
 			{
 				case MemberTypes.Property:

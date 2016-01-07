@@ -1,7 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
-using UnityEngine;
 
 namespace LuaInterface
 {
@@ -86,7 +84,6 @@ namespace LuaInterface
 #if UNITY_IPHONE && !UNITY_EDITOR
 		const string LUADLL = "__Internal";
 #else
-
 		const string LUADLL = "slua";
 #endif
 

@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using LuaInterface;
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+#if !SLUA_STANDALONE
 using UnityEngine;
-using System.IO;
+#endif
 
 namespace SLua{
 	public static class Lua3rdDLL{
@@ -64,14 +66,20 @@ namespace SLua{
 	}
 
 
-	public class Lua3rdMeta:ScriptableObject{
+	public class Lua3rdMeta
+#if !SLUA_STANDALONE
+        : ScriptableObject
+#endif
+    {
 		/// <summary>
 		///Cache class types here those contain 3rd dll attribute.
 		/// </summary>
 		public List<string> typesWithAttribtues = new List<string>();
 
 		void OnEnable(){
+#if !SLUA_STANDALONE
 			this.hideFlags = HideFlags.NotEditable;
+#endif
 		}
 #if UNITY_EDITOR
 
@@ -102,6 +110,7 @@ namespace SLua{
 		private static Lua3rdMeta _instance;
 		public static Lua3rdMeta Instance{
 			get{
+#if !SLUA_STANDALONE
 				if(_instance == null){
 					_instance = Resources.Load<Lua3rdMeta>("lua3rdmeta");
 				}
@@ -115,6 +124,7 @@ namespace SLua{
 					UnityEditor.AssetDatabase.CreateAsset(_instance,Path.Combine(path,"lua3rdmeta.asset"));
 				}
 
+#endif
 #endif
 				return _instance;
 			}

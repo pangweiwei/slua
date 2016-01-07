@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 
+#if !SLUA_STANDALONE
 namespace SLua
 {
 	using UnityEngine;
@@ -160,3 +161,4 @@ namespace SLua
 		}
 	}
 }
+#endif

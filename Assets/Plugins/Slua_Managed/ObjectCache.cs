@@ -27,7 +27,6 @@ namespace SLua
 	using System.Runtime.InteropServices;
 	using System.Collections.Generic;
 	using LuaInterface;
-	using UnityEngine;
 
 	public class ObjectCache
 	{
@@ -182,7 +181,7 @@ namespace SLua
 				cache.del(index);
 			}
 		}
-
+#if !SLUA_STANDALONE
         internal void gc(UnityEngine.Object o)
         {
             int index;
@@ -192,6 +191,7 @@ namespace SLua
                 cache.del(index);
             }
         }
+#endif
 
 		internal int add(object o)
 		{
