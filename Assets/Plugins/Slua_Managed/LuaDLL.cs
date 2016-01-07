@@ -80,6 +80,21 @@ namespace LuaInterface
 	public delegate int LuaFunctionCallback(IntPtr luaState);
 	public class LuaDLL
 	{
+
+#if SLUA_STANDALONE
+	    static LuaDLL()
+	    {
+	        // set Linux LD_LIBRARY_PATH for .so file search
+	        var libPath = Environment.GetEnvironmentVariable("LD_LIBRARY_PATH");
+	        if (libPath == null) libPath = "";
+            var cwd = Environment.CurrentDirectory;
+	        if (!libPath.Contains(cwd))
+	        {
+	            Environment.SetEnvironmentVariable("LD_LIBRARY_PATH", libPath + ":" + cwd);
+	        }
+	    }
+#endif
+
 		public static int LUA_MULTRET = -1;
 #if UNITY_IPHONE && !UNITY_EDITOR
 		const string LUADLL = "__Internal";
