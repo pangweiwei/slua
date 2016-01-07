@@ -4,10 +4,10 @@
 # see more on http://stackoverflow.com/questions/7412548/error-gnu-stubs-32-h-no-such-file-or-directory-while-compiling-nachos-source check development lib
 
 cd "$( dirname "${BASH_SOURCE[0]}" )"
-cp slua.c luajit-2.1.0/src/
+cp slua.c luajit-2.0.4/src/
 
 echo "Building Slua-Linux-32...."
-cd luajit-2.1.0
+cd luajit-2.0.4
 make clean
 make CC="gcc -m32" BUILDMODE=dynamic
 cp src/libluajit.so ../../Assets/Plugins/x86/slua.so
