@@ -60,6 +60,14 @@ namespace SLua
 			return 1;
 		}
 
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int len(IntPtr l)
+		{
+			Array a = (Array)checkSelf(l);
+			pushValue(l, a.Length);
+			return 1;
+		}
+
 		delegate int ArrayPropFunction(IntPtr l, Array a);
 
 		static Dictionary<string, ArrayPropFunction> propMethod = new Dictionary<string, ArrayPropFunction>();
@@ -130,16 +138,18 @@ namespace SLua
 			propMethod["Table"] = toTable;
 			propMethod["Length"] = length;
 
-			LuaDLL.lua_createtable(l, 0, 4);
+			LuaDLL.lua_createtable(l, 0, 5);
 			pushValue(l, luaIndex);
 			LuaDLL.lua_setfield(l, -2, "__index");
 			pushValue(l, luaNewIndex);
 			LuaDLL.lua_setfield(l, -2, "__newindex");
 			LuaDLL.lua_pushcfunction(l, lua_gc);
 			LuaDLL.lua_setfield(l, -2, "__gc");
-
 			LuaDLL.lua_pushcfunction(l, tostring);
 			LuaDLL.lua_setfield(l, -2, "__tostring");
+			LuaDLL.lua_pushcfunction(l, len);
+			LuaDLL.lua_setfield(l, -2, "__len");
+
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "LuaArray");
 		}
 	}
