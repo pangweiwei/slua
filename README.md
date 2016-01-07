@@ -13,10 +13,11 @@ Mail to : sineysan#163.com (both of Chinese/English)
 
 ## Continuous Integration Build
 
-SLua Linux Standalone:
-
-[![Build Status](https://travis-ci.org/mr-kelly/slua.svg)](https://travis-ci.org/mr-kelly/slua)
-
+| Build | Platform | Type    | Status  |
+| ---   | ---      | ---     |         |
+| *slua-unity* | None | None | None |
+| **slua-standalone** | Linux   | Test,Build | [![Build Status](https://travis-ci.org/mr-kelly/slua.svg)](https://travis-ci.org/mr-kelly/slua) |
+| **slua-standalone** | Windows | Test,Build,Deploy | [![Build status](https://ci.appveyor.com/api/projects/status/vokwhnu95lx5e8g3?svg=true)](https://ci.appveyor.com/project/mr-kelly/slua) |
 
 ##Release Download
 
