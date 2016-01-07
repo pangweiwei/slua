@@ -14,12 +14,15 @@ build_script:
 - cmd: .\standalone\msbuild_vs2012.bat
 after_build:
   # slua-standalone
-  - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/slua-standalone.dll
-  - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/slua-standalone.pdb
-  - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/slua.dll
-  - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/slua.so
-  - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/linux.slua-standalone.dll.config
-  - cmd: 7z a standalone/bin/slua-standalone.zip standalone/bin/README
+  - cmd: set BASE=%~dp0
+  - cmd: cd standalone\bin
+  - cmd: 7z a slua-standalone.zip slua-standalone.dll
+  - cmd: 7z a slua-standalone.zip slua-standalone.pdb
+  - cmd: 7z a slua-standalone.zip slua.dll
+  - cmd: 7z a slua-standalone.zip slua.so
+  - cmd: 7z a slua-standalone.zip linux.slua-standalone.dll.config
+  - cmd: 7z a slua-standalone.zip README
+  - cmd: cd %BASE%
 test: off
 deploy:
 - provider: Environment
