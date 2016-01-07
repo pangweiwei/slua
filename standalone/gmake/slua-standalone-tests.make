@@ -81,7 +81,7 @@ $(RESPONSE): slua-standalone-tests.make
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f $(RESPONSE)
 else
-	$(SILENT) if exist $(RESPONSE) del $(OBJDIR)\slua-standalone-tests.rsp
+	$(SILENT) if exist $(RESPONSE) del $(OBJDIR)/slua-standalone-tests.rsp
 endif
 	@echo ../slua-standalone-tests/Main.cs >> $(RESPONSE)
 	@echo ../slua-standalone-tests/TestSLua.cs >> $(RESPONSE)

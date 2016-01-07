@@ -100,7 +100,7 @@ $(RESPONSE): slua-standalone.make
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f $(RESPONSE)
 else
-	$(SILENT) if exist $(RESPONSE) del $(OBJDIR)\slua-standalone.rsp
+	$(SILENT) if exist $(RESPONSE) del $(OBJDIR)/slua-standalone.rsp
 endif
 	@echo ../../Assets/Plugins/Slua_Managed/Coroutine.cs >> $(RESPONSE)
 	@echo ../../Assets/Plugins/Slua_Managed/Debugger/DebugInterface.cs >> $(RESPONSE)
