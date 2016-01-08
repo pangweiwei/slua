@@ -27,7 +27,7 @@ after_build:
   # - cmd: 7z a slua-standalone.zip SLUA_README.txt
   # - cmd: cd %BASE%
   # nupkg -> \slua-standalone.x.x.x.nupkg
-  - cmd: nuget pack standalone\slua-standalone.nuspec -Version {version}
+  - cmd: nuget pack standalone\slua-standalone.nuspec -Version %APPVEYOR_BUILD_VERSION%
 test: off
 deploy:
 - provider: Environment
