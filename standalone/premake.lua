@@ -3,10 +3,18 @@ solution "slua-standalone"
     configurations { 
         "Debug", "Release"
     }
+    
     location ("./" .. (_ACTION or ""))
     debugdir ("./bin")
     debugargs {  }
 
+    platforms { "x64", "x32" }
+
+    filter "platforms:x64"
+      architecture "x64"
+
+    filter "platforms:x32"
+      architecture "x32"
 configuration "Debug"
     flags { "Symbols" }
     defines { "_DEBUG", "DEBUG", "TRACE" }

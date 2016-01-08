@@ -83,6 +83,7 @@ namespace SLua
 
             List<Action<IntPtr>> list = new List<Action<IntPtr>>();
             
+#if !SLUA_STANDALONE
 #if USE_STATIC_BINDER
 			Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
 			
@@ -127,11 +128,13 @@ namespace SLua
 				list.AddRange(sublist);
 			}
 #else
-			Assembly assembly = Assembly.Load("Assembly-CSharp");
+		    var assemblyName = "Assembly-CSharp";
+            Assembly assembly = Assembly.Load(assemblyName);
 			list.AddRange(getBindList(assembly,"SLua.BindUnity"));
 			list.AddRange(getBindList(assembly,"SLua.BindUnityUI"));
 			list.AddRange(getBindList(assembly,"SLua.BindDll"));
 			list.AddRange(getBindList(assembly,"SLua.BindCustom"));
+#endif
 #endif
 			
 			bindProgress = 2;
