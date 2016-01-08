@@ -3,10 +3,10 @@
 <package >
   <metadata>
     <id>slua-standalone</id>
-    <version>1.0.7</version>
-    <authors>mr-kelly</authors>
+    <version>1.0.0</version>
+    <authors>http://github.com/mr-kelly</authors>
     <owners>pangweiwei</owners>
-    <licenseUrl>http://github.com/mr-kelly/slua</licenseUrl>
+    <licenseUrl>http://github.com/pangweiwei/slua</licenseUrl>
     <projectUrl>http://github.com/mr-kelly/slua</projectUrl>
     <iconUrl>http://www.lua.org/images/lua.gif</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
