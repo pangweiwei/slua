@@ -110,6 +110,9 @@ namespace SLua
 		{
 			LuaDLL.lua_pushinteger(l, i);
 		}
+
+		// why doesn't have a checkArray<byte[]> function accept lua string?
+		// I think you should did a Buffer class to wrap byte[] pass/accept between mono and lua vm
 		#endregion
 
 		#region char

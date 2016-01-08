@@ -91,7 +91,7 @@ namespace SLua
 		delegate void PushVarDelegate(IntPtr l, object o);
 		static Dictionary<Type, PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
 
-		internal const int VersionNumber = 0x1007;
+		internal const int VersionNumber = 0x1010;
 
 		public static void init(IntPtr l)
 		{
@@ -1465,6 +1465,10 @@ return index
 			LuaDLL.lua_pushboolean(l, true);
 			LuaDLL.lua_insert(l, -(retCount + 1));
 			return retCount + 1;
+		}
+
+		static public void assert(bool cond,string err) {
+			if(!cond) throw new Exception(err);
 		}
 	}
 

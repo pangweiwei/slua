@@ -112,7 +112,7 @@ function main()
 	-- bytes return byte[]
 	local data = HelloWorld.bytes()
 	data[1]=11
-	print("data type ",type(data),#data,data.Table[1],data,data[0],data[1])
+	print("data type ",type(data),#data,data.Table[1],data,data[1],data[2])
 	data = Slua.ToString(data)
 	print("data type ",type(data),data)
 
