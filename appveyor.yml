@@ -8,22 +8,26 @@ os: Windows Server 2012 R2
 #  assembly_file_version: "{version}"
 #  assembly_informational_version: "{version}"
 artifacts:
-  - path: standalone/bin/slua-standalone.zip
-    name: slua-standalone
+  # - path: standalone/bin/slua-standalone.zip
+  #   name: slua-standalone
+  - path: *.nupkg
+    name: slua-standalone-nupkg
 build_script:
 - cmd: .\standalone\msbuild_vs2012.bat
 after_build:
   # slua-standalone
   - cmd: set BASE=%~dp0
-  - cmd: cd standalone\bin
-  - cmd: nunit3-console slua-standalone-tests.dll --result=testresults.xml;format=AppVeyor
-  - cmd: 7z a slua-standalone.zip slua-standalone.dll
-  - cmd: 7z a slua-standalone.zip slua-standalone.pdb
-  - cmd: 7z a slua-standalone.zip slua.dll
-  - cmd: 7z a slua-standalone.zip slua.so
-  - cmd: 7z a slua-standalone.zip slua-standalone.dll.config
-  - cmd: 7z a slua-standalone.zip README
-  - cmd: cd %BASE%
+  # - cmd: cd standalone\bin
+  # - cmd: nunit3-console slua-standalone-tests.dll --result=testresults.xml;format=AppVeyor
+  # - cmd: 7z a slua-standalone.zip slua-standalone.dll
+  # - cmd: 7z a slua-standalone.zip slua-standalone.pdb
+  # - cmd: 7z a slua-standalone.zip slua.dll
+  # - cmd: 7z a slua-standalone.zip slua.so
+  # - cmd: 7z a slua-standalone.zip slua-standalone.dll.config
+  # - cmd: 7z a slua-standalone.zip SLUA_README.txt
+  # - cmd: cd %BASE%
+  # nupkg -> \slua-standalone.x.x.x.nupkg
+  - cmd: nuget pack standalone\slua-standalone.nuspec
 test: off
 deploy:
 - provider: Environment

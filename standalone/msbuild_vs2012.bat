@@ -21,4 +21,4 @@ copy /Y %~dp0linux.slua-standalone.dll.config %BIN_PATH%\slua-standalone.dll.con
 
 
 echo On Linux: > %BIN_PATH%\README
-echo command  `export LD_LIBRARY_PATH=$PWD` make the library can be searched >> %BIN_PATH%\README
+echo command  `export LD_LIBRARY_PATH=$PWD` make the library can be searched >> %BIN_PATH%\SLUA_README.txt
