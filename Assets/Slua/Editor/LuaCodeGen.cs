@@ -109,10 +109,19 @@ namespace SLua
 		[InitializeOnLoad]
 		public class Startup
 		{
-			
+			static bool isPlaying=false;
 			static Startup()
 			{
 				EditorApplication.update += Update;
+				// use this delegation to ensure dispose luavm at last
+				EditorApplication.playmodeStateChanged+=()=>{
+					
+					if(isPlaying==true && EditorApplication.isPlaying==false) {
+						if(LuaState.main!=null) LuaState.main.Dispose();
+					}
+
+					isPlaying=EditorApplication.isPlaying;
+				};
 			} 
 
 
