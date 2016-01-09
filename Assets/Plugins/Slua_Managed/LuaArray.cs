@@ -94,8 +94,9 @@ namespace SLua
 				{
 					int i;
 					checkType(l, 2, out i);
+					assert(i>0,"index base 1");
 					pushValue(l, true);
-					pushVar(l, a.GetValue(i));
+					pushVar(l, a.GetValue(i-1));
 					return 2;
 				}	
 			}
@@ -113,9 +114,10 @@ namespace SLua
 				Array a = (Array)checkSelf(l);
 				int i;
 				checkType(l, 2, out i);
+				assert(i>0,"index base 1");
 				object o=checkVar(l, 3);
 				Type et = a.GetType().GetElementType();
-				a.SetValue(Convert.ChangeType(o,et), i);
+				a.SetValue(Convert.ChangeType(o,et), i-1);
 				return ok(l);
 			}
 			catch (Exception e)

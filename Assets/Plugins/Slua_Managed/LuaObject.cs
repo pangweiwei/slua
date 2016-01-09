@@ -91,7 +91,7 @@ namespace SLua
 		delegate void PushVarDelegate(IntPtr l, object o);
 		static Dictionary<Type, PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
 
-		internal const int VersionNumber = 0x1007;
+		internal const int VersionNumber = 0x1010;
 
 		public static void init(IntPtr l)
 		{
@@ -876,14 +876,13 @@ return index
 			return LuaDLL.luaS_checkluatype(l, p, null) == 1;
 		}
 
-		public static bool matchType<T>(IntPtr l, int p, T t1) where T:Type
+		public static bool matchType(IntPtr l, int p, Type t1)
 		{
 			LuaTypes t = LuaDLL.lua_type(l, p);
 			return matchType(l, p, t, t1);
 		}
 
-		public static bool matchType<T1>(IntPtr l, int total, int from, T1 t1)
-			where T1 : Type
+		public static bool matchType(IntPtr l, int total, int from, Type t1)
 		{
 			if (total - from + 1 != 1)
 				return false;
@@ -891,9 +890,7 @@ return index
 			return matchType(l, from, t1);
 		}
 
-		public static bool matchType<T1,T2>(IntPtr l, int total, int from, T1 t1, T2 t2)
-			where T1 : Type
-			where T2 : Type
+		public static bool matchType(IntPtr l, int total, int from, Type t1, Type t2)
 		{
 			if (total - from + 1 != 2)
 				return false;
@@ -901,10 +898,7 @@ return index
 			return matchType(l, from, t1) && matchType(l, from + 1, t2);
 		}
 
-		public static bool matchType<T1, T2, T3>(IntPtr l, int total, int from, T1 t1, T2 t2, T3 t3)
-			where T1 : Type
-			where T2 : Type
-			where T3 : Type
+		public static bool matchType(IntPtr l, int total, int from, Type t1, Type t2, Type t3)
 		{
 			if (total - from + 1 != 3)
 				return false;
@@ -912,11 +906,7 @@ return index
 			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3);
 		}
 
-		public static bool matchType<T1,T2,T3,T4>(IntPtr l, int total, int from, T1 t1, T2 t2, T3 t3, T4 t4)
-			where T1 : Type
-			where T2 : Type
-			where T3 : Type
-			where T4 : Type
+		public static bool matchType(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4)
 		{
 			if (total - from + 1 != 4)
 				return false;
@@ -924,12 +914,7 @@ return index
 			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4);
 		}
 
-		public static bool matchType<T1, T2, T3, T4, T5>(IntPtr l, int total, int from, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5)
-			where T1 : Type
-			where T2 : Type
-			where T3 : Type
-			where T4 : Type
-			where T5 : Type
+		public static bool matchType(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5)
 		{
 			if (total - from + 1 != 4)
 				return false;
@@ -938,14 +923,8 @@ return index
 				&& matchType(l, from + 4, t5);
 		}
 
-		public static bool matchType<T1, T2, T3, T4, T5, T6>
-			(IntPtr l, int total, int from, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6)
-			where T1 : Type
-			where T2 : Type
-			where T3 : Type
-			where T4 : Type
-			where T5 : Type
-			where T6 : Type
+		public static bool matchType
+			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6)
 		{
 			if (total - from + 1 != 4)
 				return false;
@@ -955,15 +934,8 @@ return index
 				&& matchType(l, from + 5, t6);
 		}
 
-		public static bool matchType<T1, T2, T3, T4, T5, T6, T7>
-			(IntPtr l, int total, int from, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7)
-			where T1 : Type
-			where T2 : Type
-			where T3 : Type
-			where T4 : Type
-			where T5 : Type
-			where T6 : Type
-			where T7 : Type
+		public static bool matchType
+			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6,Type t7)
 		{
 			if (total - from + 1 != 4)
 				return false;
@@ -974,16 +946,8 @@ return index
 				&& matchType(l, from + 6, t7);
 		}
 
-		public static bool matchType<T1, T2, T3, T4, T5, T6, T7, T8>
-			(IntPtr l, int total, int from, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8)
-			where T1 : Type
-			where T2 : Type
-			where T3 : Type
-			where T4 : Type
-			where T5 : Type
-			where T6 : Type
-			where T7 : Type
-			where T8 : Type
+		public static bool matchType
+			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6,Type t7,Type t8)
 		{
 			if (total - from + 1 != 4)
 				return false;
@@ -996,17 +960,8 @@ return index
 		}
 
 
-		public static bool matchType<T1, T2, T3, T4, T5,T6,T7,T8,T9>
-			(IntPtr l, int total, int from, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5,T6 t6,T7 t7,T8 t8,T9 t9)
-			where T1 : Type
-			where T2 : Type
-			where T3 : Type
-			where T4 : Type
-			where T5 : Type
-			where T6 : Type
-			where T7 : Type
-			where T8 : Type
-			where T9 : Type
+		public static bool matchType
+			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6,Type t7,Type t8,Type t9)
 		{
 			if (total - from + 1 != 4)
 				return false;
@@ -1465,6 +1420,10 @@ return index
 			LuaDLL.lua_pushboolean(l, true);
 			LuaDLL.lua_insert(l, -(retCount + 1));
 			return retCount + 1;
+		}
+
+		static public void assert(bool cond,string err) {
+			if(!cond) throw new Exception(err);
 		}
 	}
 
