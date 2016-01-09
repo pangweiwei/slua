@@ -9,13 +9,12 @@ cmd /c %~dp0premake.bat
 
 
 :: Copy luajit.dll and .so
-set BIN_TYPE="x64"
 
 :: 32bit on windows
-copy /Y %~dp0..\Assets\Plugins\%BIN_TYPE%\slua.dll %BIN_PATH%
+copy /Y %~dp0..\Assets\Plugins\x86\slua.dll %BIN_PATH%
 
 :: 64bit on linux mono
-copy /Y %~dp0..\Assets\Plugins\%BIN_TYPE%\slua.so %BIN_PATH%
+copy /Y %~dp0..\Assets\Plugins\x64\slua.so %BIN_PATH%
 
 copy /Y %~dp0linux.slua-standalone.dll.config %BIN_PATH%\slua-standalone.dll.config
 
