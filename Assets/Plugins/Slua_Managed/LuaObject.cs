@@ -916,7 +916,7 @@ return index
 
 		public static bool matchType(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5)
 		{
-			if (total - from + 1 != 4)
+			if (total - from + 1 != 5)
 				return false;
 
 			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
@@ -926,7 +926,7 @@ return index
 		public static bool matchType
 			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6)
 		{
-			if (total - from + 1 != 4)
+			if (total - from + 1 != 6)
 				return false;
 
 			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
@@ -937,7 +937,7 @@ return index
 		public static bool matchType
 			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6,Type t7)
 		{
-			if (total - from + 1 != 4)
+			if (total - from + 1 != 7)
 				return false;
 
 			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
@@ -949,7 +949,7 @@ return index
 		public static bool matchType
 			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6,Type t7,Type t8)
 		{
-			if (total - from + 1 != 4)
+			if (total - from + 1 != 8)
 				return false;
 
 			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
@@ -963,7 +963,7 @@ return index
 		public static bool matchType
 			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6,Type t7,Type t8,Type t9)
 		{
-			if (total - from + 1 != 4)
+			if (total - from + 1 != 9)
 				return false;
 
 			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
@@ -977,7 +977,7 @@ return index
 		public static bool matchType
 			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6,Type t7,Type t8,Type t9,Type t10)
 		{
-			if (total - from + 1 != 4)
+			if (total - from + 1 != 10)
 				return false;
 			
 			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
