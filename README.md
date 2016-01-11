@@ -1,5 +1,5 @@
 #slua
-Fastest Unity lua binding via static code generating.
+Fastest lua binding via static code generating for Unity3D or mono
 
 Website: http://www.slua.net
 
@@ -10,6 +10,14 @@ QQ group: 15647305 (in Chinese)
 Support QA: http://www.unityqa.com/ (in Chinese)
 
 Mail to : sineysan#163.com (both of Chinese/English)
+
+## Continuous Integration Build
+
+| Build | Platform | Type    | Status  |
+| ---   | ---      | ---     | ---     |
+| *slua-unity* | None | None | None |
+| **slua-standalone** | Linux   | Test,Build | [![Build Status](https://travis-ci.org/mr-kelly/slua.svg)](https://travis-ci.org/mr-kelly/slua) |
+| **slua-standalone** | Windows | Test,Build,Deploy | [![Build status](https://ci.appveyor.com/api/projects/status/vokwhnu95lx5e8g3?svg=true)](https://ci.appveyor.com/project/mr-kelly/slua) |
 
 ##Release Download
 
@@ -50,6 +58,8 @@ full support iOS/iOS64, support il2cpp
 above 90% UnityEngine interface exported ( remove flash, platform dependented interface )
 
 100% UnityEngine.UI interface ( require Unity4.6+ )
+
+support standalone in mono without Unity3D
 
 support UnityEvent/UnityAction for event callback via lua function
 

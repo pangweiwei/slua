@@ -15,17 +15,41 @@ MyGameObject=Slua.Class(GameObject,
 	}	
 )
 
+function testArray()
+	local x=GameObject("TestArray")
+	local c=x:AddComponent(UnityEngine.RectTransform)
+	local a=Slua.MakeArray("UnityEngine.Vector3",{Vector3(1,0,0),Vector3(1,0,0),Vector3(1,0,0),Vector3(1,0,0)})
+	c:GetLocalCorners(a)
+	for v in Slua.iter(a) do
+		print(v)
+	end
+	
+	local a=Slua.MakeArray("System.Int16",{1,2,3,4})
+	for v in Slua.iter(a) do
+		print(v)
+	end
+	
+	HelloWorld.int16Array(a)
+	HelloWorld.int16Array({1,2,3,4})
+end
+
+function testNullable()
+	HelloWorld.nullf(1)
+	HelloWorld.nullf()
+end
+
 function main()
 	-- Cache unpack function.
 	local unpack = (unpack and unpack) or table.unpack
 
 	-- test split of System.String
 	local x=String("a,b,c,d/e/f/g")
-	print(unpack(x:Split(",/",0)))
-	print(unpack(x:Split({",","/"},0)))
-
-	HelloWorld.nullf(1)
-	HelloWorld.nullf()
+	print(unpack(x:Split(",/",0).Table))
+	print(unpack(x:Split({",","/"},0).Table))
+	
+	testArray()
+	testNullable()
+	
 
 	local t=dofile('module/some')
 	assert(type(t)=='table')
@@ -87,7 +111,8 @@ function main()
 	
 	-- bytes return byte[]
 	local data = HelloWorld.bytes()
-	print("data type ",type(data))
+	data[1]=11
+	print("data type ",type(data),#data,data.Table[1],data,data[1],data[2])
 	data = Slua.ToString(data)
 	print("data type ",type(data),data)
 

@@ -27,11 +27,11 @@ namespace SLua
 
     public class CustomExport
     {
-		public static void OnGetAssemblyToGenerateExtensionMethod(out List<string> list) {
-			list = new List<string> {
-				"Assembly-CSharp",
-			};
-		}
+        public static void OnGetAssemblyToGenerateExtensionMethod(out List<string> list) {
+            list = new List<string> {
+                "Assembly-CSharp",
+            };
+        }
 
         public static void OnAddCustomClass(LuaCodeGen.ExportGenericDelegate add)
         {
@@ -117,7 +117,7 @@ namespace SLua
              "ADBannerView",
             "ADInterstitialAd",            
             "Android",
-			"Tizen",
+            "Tizen",
             "jvalue",
             "iPhone",
             "iOS",
@@ -151,11 +151,11 @@ namespace SLua
             "Flash",
             "ActionScript",
             "OnRequestRebuild",
-			"Ping",
+            "Ping",
             "ShaderVariantCollection",
-			"SimpleJson.Reflection",
-			"CoroutineTween",
-			"GraphicRebuildTracker",
+            "SimpleJson.Reflection",
+            "CoroutineTween",
+            "GraphicRebuildTracker",
             "Advertisements",
             "UnityEditor",
         };

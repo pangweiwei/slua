@@ -28,11 +28,12 @@ namespace SLua
 	using System.Collections.Generic;
 	using System.Collections;
 	using LuaInterface;
-	using UnityEngine;
 	using System.IO;
 	using System.Text;
 	using System.Runtime.InteropServices;
-
+#if !SLUA_STANDALONE
+    using UnityEngine;
+#endif
 	abstract public class LuaVar : IDisposable
 	{
 		protected LuaState state = null;
@@ -109,13 +110,15 @@ namespace SLua
 
 		public override bool Equals(object obj)
 		{
-			if(obj is LuaVar) {
-				return this==(LuaVar)obj;
+			if (obj is LuaVar)
+			{
+				return this == (LuaVar)obj;
 			}
 			return false;
 		}
 
-		public static bool operator ==(LuaVar x, LuaVar y) {
+		public static bool operator ==(LuaVar x, LuaVar y)
+		{
 			if ((object)x == null || (object)y == null)
 				return (object)x == (object)y;
 
@@ -140,14 +143,14 @@ namespace SLua
 		}
 	}
 
-    public class LuaThread : LuaVar
-    {
-        public LuaThread(IntPtr l, int r)
-            : base(l, r)
-        { }
-    }
+	public class LuaThread : LuaVar
+	{
+		public LuaThread(IntPtr l, int r)
+			: base(l, r)
+		{ }
+	}
 
-    public class LuaDelegate : LuaFunction
+	public class LuaDelegate : LuaFunction
 	{
 		public object d;
 
@@ -170,7 +173,7 @@ namespace SLua
 			}
 
 		}
-		
+
 	}
 
 	public class LuaFunction : LuaVar
@@ -185,12 +188,12 @@ namespace SLua
 		{
 		}
 
-        public bool pcall(int nArgs, int errfunc)
+		public bool pcall(int nArgs, int errfunc)
 		{
 
 			if (!state.isMainThread())
 			{
-				Debug.LogError("Can't call lua function in bg thread");
+				Logger.LogError("Can't call lua function in bg thread");
 				return false;
 			}
 
@@ -221,7 +224,7 @@ namespace SLua
 
 		public object call()
 		{
-			int error=LuaObject.pushTry(state.L);
+			int error = LuaObject.pushTry(state.L);
 			if (innerCall(0, error))
 			{
 				return state.topObjects(error - 1);
@@ -233,7 +236,7 @@ namespace SLua
 		{
 			int error = LuaObject.pushTry(state.L);
 
-			for (int n = 0; args!=null && n < args.Length; n++)
+			for (int n = 0; args != null && n < args.Length; n++)
 			{
 				LuaObject.pushVar(L, args[n]);
 			}
@@ -248,19 +251,19 @@ namespace SLua
 
 		public object call(object a1)
 		{
-			int error=LuaObject.pushTry(state.L);
+			int error = LuaObject.pushTry(state.L);
 
-			LuaObject.pushVar(state.L,a1);
+			LuaObject.pushVar(state.L, a1);
 			if (innerCall(1, error))
 			{
 				return state.topObjects(error - 1);
 			}
-			
+
 
 			return null;
 		}
 
-		public object call(object a1,object a2)
+		public object call(object a1, object a2)
 		{
 			int error = LuaObject.pushTry(state.L);
 
@@ -273,7 +276,7 @@ namespace SLua
 			return null;
 		}
 
-		public object call(object a1,object a2,object a3)
+		public object call(object a1, object a2, object a3)
 		{
 			int error = LuaObject.pushTry(state.L);
 
@@ -341,7 +344,7 @@ namespace SLua
 			}
 		}
 
-		public object invoke(string func,params object[] args)
+		public object invoke(string func, params object[] args)
 		{
 			LuaFunction f = (LuaFunction)this[func];
 			if (f != null)
@@ -351,15 +354,15 @@ namespace SLua
 			throw new Exception(string.Format("Can't find {0} function", func));
 		}
 
-        public int length()
-        {
-            int n = LuaDLL.lua_gettop(L);
-            push(L);
-            int l = LuaDLL.lua_rawlen(L, -1);
-            LuaDLL.lua_settop(L, n);
-            return l;
-        }
-		
+		public int length()
+		{
+			int n = LuaDLL.lua_gettop(L);
+			push(L);
+			int l = LuaDLL.lua_rawlen(L, -1);
+			LuaDLL.lua_settop(L, n);
+			return l;
+		}
+
 		public class Enumerator : IEnumerator<TablePair>, IDisposable
 		{
 			LuaTable t;
@@ -378,7 +381,7 @@ namespace SLua
 				if (indext < 0)
 					return false;
 
-				if (iterPhase==0)
+				if (iterPhase == 0)
 				{
 					LuaDLL.lua_pushnil(t.L);
 					iterPhase = 1;
@@ -387,7 +390,7 @@ namespace SLua
 					LuaDLL.lua_pop(t.L, 1);
 
 				bool ret = LuaDLL.lua_next(t.L, indext) > 0;
-				if(!ret) iterPhase=2;
+				if (!ret) iterPhase = 2;
 
 				return ret;
 			}
@@ -400,7 +403,7 @@ namespace SLua
 
 			public void Dispose()
 			{
-				if(iterPhase==1)
+				if (iterPhase == 1)
 					LuaDLL.lua_pop(t.L, 2);
 
 				LuaDLL.lua_remove(t.L, indext);
@@ -454,13 +457,13 @@ namespace SLua
 
 				if (!isMainThread())
 				{
-					Debug.LogError("Can't access lua in bg thread");
+					Logger.LogError("Can't access lua in bg thread");
 					throw new Exception("Can't access lua in bg thread");
 				}
 
 				if (l_ == IntPtr.Zero)
 				{
-					Debug.LogError("LuaState had been destroyed, can't used yet");
+					Logger.LogError("LuaState had been destroyed, can't used yet");
 					throw new Exception("LuaState had been destroyed, can't used yet");
 				}
 
@@ -481,7 +484,11 @@ namespace SLua
 		}
 
 		public delegate byte[] LoaderDelegate(string fn);
+		public delegate void OutputDelegate(string msg);
+
 		static public LoaderDelegate loaderDelegate;
+		static public OutputDelegate logDelegate;
+		static public OutputDelegate errorDelegate;
 
 
 		public delegate void UnRefAction(IntPtr l, int r);
@@ -541,9 +548,9 @@ namespace SLua
 			if (main == null) main = this;
 
 			refQueue = new Queue<UnrefPair>();
-            ObjectCache.make(L);
+			ObjectCache.make(L);
 
-			LuaDLL.lua_atpanic (L, panicCallback);
+			LuaDLL.lua_atpanic(L, panicCallback);
 
 			LuaDLL.luaL_openlibs(L);
 
@@ -563,26 +570,26 @@ end
 			LuaDLL.lua_dostring(L, PCallCSFunction);
 			PCallCSFunctionRef = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
 
-            pcall(L, init);
+			pcall(L, init);
 		}
 
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int init(IntPtr L)
-        {
-            LuaDLL.lua_pushlightuserdata(L, L);
-            LuaDLL.lua_setglobal(L, "__main_state");
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static int init(IntPtr L)
+		{
+			LuaDLL.lua_pushlightuserdata(L, L);
+			LuaDLL.lua_setglobal(L, "__main_state");
 
-            LuaDLL.lua_pushcfunction(L, print);
-            LuaDLL.lua_setglobal(L, "print");
+			LuaDLL.lua_pushcfunction(L, print);
+			LuaDLL.lua_setglobal(L, "print");
 
-            LuaDLL.lua_pushcfunction(L, pcall);
-            LuaDLL.lua_setglobal(L, "pcall");
+			LuaDLL.lua_pushcfunction(L, pcall);
+			LuaDLL.lua_setglobal(L, "pcall");
 
-            pushcsfunction(L, import);
-            LuaDLL.lua_setglobal(L, "import");
+			pushcsfunction(L, import);
+			LuaDLL.lua_setglobal(L, "import");
 
 
-            string resumefunc = @"
+			string resumefunc = @"
 local resume = coroutine.resume
 local function check(co, ok, err, ...)
 	if not ok then UnityEngine.Debug.LogError(debug.traceback(co,err)) end
@@ -600,35 +607,35 @@ end
 			// fix android performance drop with JIT on according to luajit mailist post
 			LuaState.get(L).doString("if jit then require('jit.opt').start('sizemcode=256','maxmcode=256') for i=1,1000 do end end");
 #endif
-			
+
 			pushcsfunction(L, dofile);
-            LuaDLL.lua_setglobal(L, "dofile");
+			LuaDLL.lua_setglobal(L, "dofile");
 
 			pushcsfunction(L, loadfile);
-            LuaDLL.lua_setglobal(L, "loadfile");
+			LuaDLL.lua_setglobal(L, "loadfile");
 
 			pushcsfunction(L, loader);
-            int loaderFunc = LuaDLL.lua_gettop(L);
+			int loaderFunc = LuaDLL.lua_gettop(L);
 
-            LuaDLL.lua_getglobal(L, "package");
+			LuaDLL.lua_getglobal(L, "package");
 #if LUA_5_3
 			LuaDLL.lua_getfield(L, -1, "searchers");
 #else
-            LuaDLL.lua_getfield(L, -1, "loaders");
+			LuaDLL.lua_getfield(L, -1, "loaders");
 #endif
-            int loaderTable = LuaDLL.lua_gettop(L);
+			int loaderTable = LuaDLL.lua_gettop(L);
 
-            // Shift table elements right
-            for (int e = LuaDLL.lua_rawlen(L, loaderTable) + 1; e > 1; e--)
-            {
-                LuaDLL.lua_rawgeti(L, loaderTable, e - 1);
-                LuaDLL.lua_rawseti(L, loaderTable, e);
-            }
-            LuaDLL.lua_pushvalue(L, loaderFunc);
-            LuaDLL.lua_rawseti(L, loaderTable, 1);
-            LuaDLL.lua_settop(L, 0);
-            return 0;
-        }
+			// Shift table elements right
+			for (int e = LuaDLL.lua_rawlen(L, loaderTable) + 1; e > 1; e--)
+			{
+				LuaDLL.lua_rawgeti(L, loaderTable, e - 1);
+				LuaDLL.lua_rawseti(L, loaderTable, e);
+			}
+			LuaDLL.lua_pushvalue(L, loaderFunc);
+			LuaDLL.lua_rawseti(L, loaderTable, 1);
+			LuaDLL.lua_settop(L, 0);
+			return 0;
+		}
 
 		public void Close()
 		{
@@ -636,7 +643,7 @@ end
 			{
 				if (LuaState.main == this)
 				{
-					Debug.Log("Finalizing Lua State.");
+					Logger.Log("Finalizing Lua State.");
 					// be careful, if you close lua vm, make sure you don't use lua state again,
 					// comment this line as default for avoid unexpected crash.
 					LuaDLL.lua_close(L);
@@ -678,7 +685,11 @@ end
 			LuaDLL.lua_pushnumber(L, 2);
 			LuaDLL.lua_call(L, 2, 1);
 			LuaDLL.lua_remove(L, -2);
-			Debug.LogError(LuaDLL.lua_tostring(L, -1));
+			Logger.LogError(LuaDLL.lua_tostring(L, -1));
+			if (errorDelegate != null)
+			{
+				errorDelegate(LuaDLL.lua_tostring(L, -1));
+			}
 			LuaDLL.lua_pop(L, 1);
 			return 0;
 		}
@@ -726,7 +737,7 @@ end
 			}
 			catch (Exception e)
 			{
-				return LuaObject.error(l,e);
+				return LuaObject.error(l, e);
 			}
 		}
 
@@ -734,7 +745,7 @@ end
 		internal static int pcall(IntPtr L)
 		{
 			int status;
-			if(LuaDLL.lua_type(L,1)!=LuaTypes.LUA_TFUNCTION)
+			if (LuaDLL.lua_type(L, 1) != LuaTypes.LUA_TFUNCTION)
 			{
 				return LuaObject.error(L, "arg 1 expect function");
 			}
@@ -745,16 +756,16 @@ end
 			return LuaDLL.lua_gettop(L);  /* return status + all results */
 		}
 
-        internal static void pcall(IntPtr l,LuaCSFunction f)
-        {
-            int err = LuaObject.pushTry(l);
-            LuaDLL.lua_pushcfunction(l, f);
-            if(LuaDLL.lua_pcall(l, 0, 0, err)!=0)
-            {
-                LuaDLL.lua_pop(l, 1);
-            }
-            LuaDLL.lua_remove(l, err);
-        }
+		internal static void pcall(IntPtr l, LuaCSFunction f)
+		{
+			int err = LuaObject.pushTry(l);
+			LuaDLL.lua_pushcfunction(l, f);
+			if (LuaDLL.lua_pcall(l, 0, 0, err) != 0)
+			{
+				LuaDLL.lua_pop(l, 1);
+			}
+			LuaDLL.lua_remove(l, err);
+		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		internal static int print(IntPtr L)
@@ -779,7 +790,11 @@ end
 				LuaDLL.lua_pop(L, 1);
 			}
 			LuaDLL.lua_settop(L, n);
-			Debug.Log(s);
+			Logger.Log(s);
+			if (logDelegate != null)
+			{
+				logDelegate(s);
+			}
 			return 0;
 		}
 
@@ -816,35 +831,35 @@ end
 				int k = LuaDLL.lua_gettop(L);
 				LuaDLL.lua_call(L, 0, LuaDLL.LUA_MULTRET);
 				k = LuaDLL.lua_gettop(L);
-				return k-n;
+				return k - n;
 			}
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int panicCallback(IntPtr l)
 		{
-			string reason = string.Format ("unprotected error in call to Lua API ({0})", LuaDLL.lua_tostring (l, -1));
-			throw new Exception (reason);
+			string reason = string.Format("unprotected error in call to Lua API ({0})", LuaDLL.lua_tostring(l, -1));
+			throw new Exception(reason);
 		}
 
 		static public void pushcsfunction(IntPtr L, LuaCSFunction function)
 		{
 			LuaDLL.lua_getref(L, get(L).PCallCSFunctionRef);
-			LuaDLL.lua_pushcclosure(L, Marshal.GetFunctionPointerForDelegate(function),0);
+			LuaDLL.lua_pushcclosure(L, Marshal.GetFunctionPointerForDelegate(function), 0);
 			LuaDLL.lua_call(L, 1, 1);
 		}
 
 		public object doString(string str)
 		{
 			byte[] bytes = Encoding.UTF8.GetBytes(str);
-			
+
 			object obj;
 			if (doBuffer(bytes, "temp buffer", out obj))
 				return obj;
 			return null; ;
 		}
 
-		public object doString(string str,string chunkname)
+		public object doString(string str, string chunkname)
 		{
 			byte[] bytes = Encoding.UTF8.GetBytes(str);
 
@@ -853,7 +868,7 @@ end
 				return obj;
 			return null; ;
 		}
-		
+
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		internal static int loader(IntPtr L)
 		{
@@ -883,12 +898,12 @@ end
 			byte[] bytes = loadFile(fn);
 			if (bytes == null)
 			{
-				Debug.LogError(string.Format("Can't find {0}", fn));
+				Logger.LogError(string.Format("Can't find {0}", fn));
 				return null;
 			}
 
 			object obj;
-			if (doBuffer(bytes, "@"+fn, out obj))
+			if (doBuffer(bytes, "@" + fn, out obj))
 				return obj;
 			return null;
 		}
@@ -896,7 +911,7 @@ end
 		public bool doBuffer(byte[] bytes, string fn, out object ret)
 		{
 			ret = null;
-            int errfunc = LuaObject.pushTry(L);
+			int errfunc = LuaObject.pushTry(L);
 			if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, fn) == 0)
 			{
 				if (LuaDLL.lua_pcall(L, 0, LuaDLL.LUA_MULTRET, errfunc) != 0)
@@ -923,13 +938,17 @@ end
 				else
 				{
 					fn = fn.Replace(".", "/");
+#if !SLUA_STANDALONE
 					TextAsset asset = (TextAsset)Resources.Load(fn);
 					if (asset == null)
 						return null;
 					bytes = asset.bytes;
+#else
+				    bytes = File.ReadAllBytes(fn);
+#endif
 				}
 
-				if(bytes!=null) DebugInterface.require(fn, bytes);
+				if (bytes != null) DebugInterface.require(fn, bytes);
 				return bytes;
 			}
 			catch (Exception e)
@@ -1077,7 +1096,7 @@ end
 
 		object getObject(IntPtr l, int p)
 		{
-			p = LuaDLL.lua_absindex(l,p);
+			p = LuaDLL.lua_absindex(l, p);
 			return LuaObject.checkVar(l, p);
 		}
 
@@ -1117,16 +1136,18 @@ end
 
 		public void checkRef()
 		{
-			int cnt=0;
+			int cnt = 0;
 			// fix il2cpp lock issue on iOS
 			lock (refQueue)
 			{
-				cnt=refQueue.Count;
+				cnt = refQueue.Count;
 			}
 
-			for(int n=0;n<cnt;n++) {
+			for (int n = 0; n < cnt; n++)
+			{
 				UnrefPair u;
-				lock(refQueue) {
+				lock (refQueue)
+				{
 					u = refQueue.Dequeue();
 				}
 				u.act(L, u.r);

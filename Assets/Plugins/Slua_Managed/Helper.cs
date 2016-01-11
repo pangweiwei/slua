@@ -217,6 +217,32 @@ return Class
 				return error(l, e);
 			}
 		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int MakeArray(IntPtr l)
+		{
+			try
+			{
+				Type t;
+				checkType (l,1,out t);
+				LuaDLL.luaL_checktype(l, 2, LuaTypes.LUA_TTABLE);
+				int n = LuaDLL.lua_rawlen(l, 2);
+				Array array=Array.CreateInstance(t,n);
+				for (int k = 0; k < n; k++)
+				{
+					LuaDLL.lua_rawgeti(l, 2, k + 1);
+					array.SetValue(Convert.ChangeType(checkVar(l, -1),t),k);
+					LuaDLL.lua_pop(l, 1);
+				}
+				pushValue(l, true);
+				pushValue(l, array);
+				return 2;
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
+		}
 		
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int As(IntPtr l)
@@ -256,11 +282,13 @@ return Class
 				else if (t == LuaTypes.LUA_TUSERDATA || isLuaClass(l, 1))
 				{
 					object o = checkObj(l, 1);
+#if !SLUA_STANDALONE
 					if( o is UnityEngine.Object )
 					{
-						pushValue(l, UnityEngine.Object.Equals(o,null));
+						pushValue(l, ((UnityEngine.Object)o)==null);
 					}
 					else
+#endif
 						pushValue(l, o.Equals(null));
 				}
 				else
@@ -299,7 +327,8 @@ return Class
             addMember(l, iter, false);
             addMember(l, ToString, false);
             addMember(l, As, false);
-            addMember(l, IsNull, false);
+			addMember(l, IsNull, false);
+			addMember(l, MakeArray, false);
 			addMember(l, "out", get_out, null, false);
 			addMember(l, "version", get_version, null, false);
 

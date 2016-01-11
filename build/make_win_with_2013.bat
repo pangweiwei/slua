@@ -1,5 +1,5 @@
 @echo off
-copy /Y slua.c luajit-2.1.0\src\ 
+copy /Y slua.c luajit-2.0.4\src\ 
 if exist "%VS120COMNTOOLS%" (
 	set VCVARS="%VS120COMNTOOLS%..\..\VC\bin\"
 	goto build
@@ -16,14 +16,14 @@ if exist "%VS110COMNTOOLS%" (set VCVARS="%VS110COMNTOOLS%..\..\VC\bin\") else (g
 
 call "%ENV32%"
 echo Swtich to x86 build env
-cd luajit-2.1.0\src
+cd luajit-2.0.4\src
 call msvcbuild.bat
 copy /Y lua51.dll ..\..\..\Assets\Plugins\x86\slua.dll
 cd ..\..
 
 call "%ENV64%"
 echo Swtich to x64 build env
-cd luajit-2.1.0\src
+cd luajit-2.0.4\src
 call msvcbuild.bat
 copy /Y lua51.dll ..\..\..\Assets\Plugins\x64\slua.dll
 cd ..\..

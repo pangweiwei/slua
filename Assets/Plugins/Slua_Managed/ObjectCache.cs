@@ -27,7 +27,6 @@ namespace SLua
 	using System.Runtime.InteropServices;
 	using System.Collections.Generic;
 	using LuaInterface;
-	using UnityEngine;
 
 	public class ObjectCache
 	{
@@ -182,7 +181,7 @@ namespace SLua
 				cache.del(index);
 			}
 		}
-
+#if !SLUA_STANDALONE
         internal void gc(UnityEngine.Object o)
         {
             int index;
@@ -192,6 +191,7 @@ namespace SLua
                 cache.del(index);
             }
         }
+#endif
 
 		internal int add(object o)
 		{
@@ -232,7 +232,12 @@ namespace SLua
 			push(l, o, true);
 		}
 
-		internal void push(IntPtr l, object o, bool checkReflect)
+		internal void push(IntPtr l, Array o)
+		{
+			push(l, o, true, true);
+		}
+
+		internal void push(IntPtr l, object o, bool checkReflect, bool isArray=false)
 		{
 			if (o == null)
 			{
@@ -252,13 +257,13 @@ namespace SLua
 
 			index = add(o);
 #if SLUA_CHECK_REFLECTION
-			int isReflect = LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
-			if (isReflect != 0 && checkReflect)
+			int isReflect = LuaDLL.luaS_pushobject(l, index, isArray ? "LuaArray" : getAQName(o), gco, udCacheRef);
+			if (isReflect != 0 && checkReflect && !isArray)
 			{
-				Debug.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
+				Logger.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
 			}
 #else
-			LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
+			LuaDLL.luaS_pushobject(l, index, isArray?"LuaArray":getAQName(o), gco, udCacheRef);
 #endif
 
 		}

@@ -109,10 +109,19 @@ namespace SLua
 		[InitializeOnLoad]
 		public class Startup
 		{
-			
+			static bool isPlaying=false;
 			static Startup()
 			{
 				EditorApplication.update += Update;
+				// use this delegation to ensure dispose luavm at last
+				EditorApplication.playmodeStateChanged+=()=>{
+					
+					if(isPlaying==true && EditorApplication.isPlaying==false) {
+						if(LuaState.main!=null) LuaState.main.Dispose();
+					}
+
+					isPlaying=EditorApplication.isPlaying;
+				};
 			} 
 
 
@@ -559,6 +568,20 @@ namespace SLua
 			Write(file, "{0}.reg,", ExportName(t), binded);
 			binded.Add(t);
 		}
+
+		public string DelegateExportFilename(string path, Type t)
+		{
+			string f;
+			if (t.IsGenericType)
+			{
+				f = path + string.Format("Lua{0}_{1}.cs", _Name(GenericBaseName(t)), _Name(GenericName(t)));
+			}
+			else
+			{
+				f = path + "LuaDelegate_" + _Name(t.FullName) + ".cs";
+			}
+			return f;
+		}
 		
 		
 		public bool Generate(Type t)
@@ -580,18 +603,11 @@ namespace SLua
 				}
 				else if (t.BaseType == typeof(System.MulticastDelegate))
 				{
-					string f;
-					if (t.IsGenericType)
-					{
-						if (t.ContainsGenericParameters)
-							return false;
-						
-						f = path + string.Format("Lua{0}_{1}.cs", _Name(GenericBaseName(t)), _Name(GenericName(t)));
-					}
-					else
-					{
-						f = path + "LuaDelegate_" + _Name(t.FullName) + ".cs";
-					}
+					if (t.ContainsGenericParameters)
+						return false;
+
+					string f = DelegateExportFilename(path, t);
+					
 					StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
 					file.NewLine = NewLine;
 					WriteDelegate(t, file);
@@ -613,13 +629,18 @@ namespace SLua
 					RegFunction(t, file);
 					End(file);
 					
-					if (t.BaseType != null && t.BaseType.Name.Contains("UnityEvent`") && !t.IsDefined(typeof(IgnoreBaseAttribute),false))
+					if (t.BaseType != null && t.BaseType.Name.Contains("UnityEvent`"))
 					{
-						string f = path + "LuaUnityEvent_" + _Name(GenericName(t.BaseType)) + ".cs";
-						file = new StreamWriter(f, false, Encoding.UTF8);
-						file.NewLine = NewLine;
-						WriteEvent(t, file);
-						file.Close();
+						string basename = "LuaUnityEvent_" + _Name(GenericName(t.BaseType)) + ".cs";
+						string f = path + basename;
+						string checkf = LuaCodeGen.GenPath + "Unity/" + basename;
+						if (!File.Exists(checkf)) // if had exported
+						{
+							file = new StreamWriter(f, false, Encoding.UTF8);
+							file.NewLine = NewLine;
+							WriteEvent(t, file);
+							file.Close();
+						}
 					}
 				}
 				
@@ -747,13 +768,15 @@ namespace SLua
 			}
 			return str;
 		}
-		
+	
 		void tryMake(Type t)
 		{
-			
+
 			if (t.BaseType == typeof(System.MulticastDelegate))
 			{
 				CodeGenerator cg = new CodeGenerator();
+				if (File.Exists(cg.DelegateExportFilename(LuaCodeGen.GenPath + "Unity/", t)))
+					return;
                 cg.path = this.path;
 				cg.Generate(t);
 			}
@@ -1446,6 +1469,8 @@ namespace SLua
 				Write(file, "int op=LuaDelegation.checkDelegate(l,{2}{0},out {1});", n, v, nprefix);
 			else if (IsValueType(t))
 				Write(file, "checkValueType(l,{2}{0},out {1});", n, v, nprefix);
+			else if (t.IsArray)
+				Write(file, "checkArray(l,{2}{0},out {1});", n, v, nprefix);
 			else
 				Write(file, "checkType(l,{2}{0},out {1});", n, v, nprefix);
 		}
@@ -1992,6 +2017,8 @@ namespace SLua
 					else
 						Write(file, "checkParams(l,{0},out a{1});", n + argstart, n + 1);
 				}
+				else if(t.IsArray)
+					Write(file, "checkArray(l,{0},out a{1});", n + argstart, n + 1);
 				else if (IsValueType(t)) {
 					if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
 						Write(file, "checkNullable(l,{0},out a{1});", n + argstart, n + 1);

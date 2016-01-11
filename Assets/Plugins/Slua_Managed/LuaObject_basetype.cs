@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -111,6 +110,9 @@ namespace SLua
 		{
 			LuaDLL.lua_pushinteger(l, i);
 		}
+
+		// why doesn't have a checkArray<byte[]> function accept lua string?
+		// I think you should did a Buffer class to wrap byte[] pass/accept between mono and lua vm
 		#endregion
 
 		#region char
@@ -125,7 +127,7 @@ namespace SLua
 			LuaDLL.lua_pushinteger(l, v);
 		}
 
-		static public bool checkType(IntPtr l, int p, out char[] pars)
+		static public bool checkArray(IntPtr l, int p, out char[] pars)
 		{
 			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TSTRING);
 			string s;
@@ -154,11 +156,12 @@ namespace SLua
 			v = (ushort)LuaDLL.luaL_checkinteger(l, p);
 			return true;
 		}
-		
+                
 		public static void pushValue(IntPtr l, ushort v)
 		{
-			LuaDLL.lua_pushinteger(l, v);
+		    LuaDLL.lua_pushinteger(l, v);
 		}
+               
 		#endregion
 
 		#region int
@@ -167,27 +170,12 @@ namespace SLua
 			v = (int)LuaDLL.luaL_checkinteger(l, p);
 			return true;
 		}
-		
+                
 		public static void pushValue(IntPtr l, int i)
 		{
 			LuaDLL.lua_pushinteger(l, i);
 		}
 		
-		public static void pushValue(IntPtr l, int[] o)
-		{
-			if (o == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, o.Length, 0);
-			for (int n = 0; n < o.Length; n++)
-			{
-				pushValue(l, o[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
-
 		#endregion
 		
 		#region uint
@@ -223,20 +211,6 @@ namespace SLua
 #endif
 		}
 		
-		public static void pushValue(IntPtr l, long[] o)
-		{
-			if (o == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, o.Length, 0);
-			for (int n = 0; n < o.Length; n++)
-			{
-				pushValue(l, o[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
 		#endregion
 
 		#region ulong
@@ -275,37 +249,6 @@ namespace SLua
 		{
 			LuaDLL.lua_pushnumber(l, o);
 		}
-
-		static public bool checkType(IntPtr l, int p, out float[] v)
-		{
-			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
-			int n = LuaDLL.lua_rawlen(l, p);
-			v = new float[n];
-			for (int k = 0; k < n; k++)
-			{
-				LuaDLL.lua_rawgeti(l, p, k + 1);
-				float f;
-				checkType(l, -1, out f);
-				v[k] = f;
-				LuaDLL.lua_pop(l, 1);
-			}
-			return true;
-		}
-		
-		public static void pushValue(IntPtr l, float[] o)
-		{
-			if (o == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, o.Length, 0);
-			for (int n = 0; n < o.Length; n++)
-			{
-				pushValue(l, o[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
 		
 		#endregion
 
@@ -321,20 +264,6 @@ namespace SLua
 			LuaDLL.lua_pushnumber(l, d);
 		}
 		
-		public static void pushValue(IntPtr l, double[] o)
-		{
-			if (o == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, o.Length, 0);
-			for (int n = 0; n < o.Length; n++)
-			{
-				pushValue(l, o[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
 		#endregion
 #endregion
 
@@ -350,21 +279,7 @@ namespace SLua
 		{
 			LuaDLL.lua_pushboolean(l, b);
 		}
-		
-		public static void pushValue(IntPtr l, bool[] o)
-		{
-			if (o == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, o.Length, 0);
-			for (int n = 0; n < o.Length; n++)
-			{
-				pushValue(l, o[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
+	
 		#endregion
 
 		#region string
@@ -393,37 +308,8 @@ namespace SLua
 		{
 			LuaDLL.lua_pushstring(l, s);
 		}
-
-		static public bool checkType(IntPtr l, int p, out string[] t)
-		{
-			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
-			int n = LuaDLL.lua_rawlen(l, p);
-			t = new string[n];
-			for (int k = 0; k < n; k++)
-			{
-				LuaDLL.lua_rawgeti(l, p, k + 1);
-				string f;
-				checkType(l, -1, out f);
-				t[k] = f;
-				LuaDLL.lua_pop(l, 1);
-			}
-			return true;
-		}
 		
-		public static void pushValue(IntPtr l, string[] o)
-		{
-			if (o == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, o.Length, 0);
-			for (int n = 0; n < o.Length; n++)
-			{
-				pushValue(l, o[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
+
 		#endregion
 
 		#region IntPtr
@@ -630,20 +516,6 @@ namespace SLua
 			if (o == null)
 				throw new Exception(string.Format("arg {0} is not type of {1}", p, typeof(T).Name));
 
-			return true;
-		}
-		
-		static public bool checkType(IntPtr l, int p, out object[] t)
-		{
-			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
-			int n = LuaDLL.lua_rawlen(l, p);
-			t = new object[n];
-			for (int k = 0; k < n; k++)
-			{
-				LuaDLL.lua_rawgeti(l, p, k + 1);
-				t[k] = checkVar(l, -1);
-				LuaDLL.lua_pop(l, 1);
-			}
 			return true;
 		}
 		#endregion
