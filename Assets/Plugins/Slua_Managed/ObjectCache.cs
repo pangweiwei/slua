@@ -260,7 +260,7 @@ namespace SLua
 			int isReflect = LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
 			if (isReflect != 0 && checkReflect)
 			{
-				Debug.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
+				Logger.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
 			}
 #else
 			LuaDLL.luaS_pushobject(l, index, isArray?"LuaArray":getAQName(o), gco, udCacheRef);
