@@ -21,6 +21,8 @@
 // THE SOFTWARE.
 
 
+using System.Runtime.CompilerServices;
+
 namespace SLua
 {
 	using System;
@@ -132,8 +134,21 @@ namespace SLua
 		}
 
 		FreeList cache = new FreeList();
+        public class ObjEqualityComparer : IEqualityComparer<object>
+        {
+            public bool Equals(object x, object y)
+            {
 
-		Dictionary<object, int> objMap = new Dictionary<object, int>();
+                return ReferenceEquals(x, y);
+            }
+
+            public int GetHashCode(object obj)
+            {
+                return RuntimeHelpers.GetHashCode(obj);
+            }
+        }
+
+		Dictionary<object, int> objMap = new Dictionary<object, int>(new ObjEqualityComparer());
 		int udCacheRef = 0;
 
 
