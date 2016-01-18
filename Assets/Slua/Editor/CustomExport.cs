@@ -158,6 +158,7 @@ namespace SLua
             "GraphicRebuildTracker",
             "Advertisements",
             "UnityEditor",
+			"Apple",
         };
         }
 
