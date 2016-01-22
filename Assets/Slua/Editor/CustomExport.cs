@@ -124,6 +124,7 @@ namespace SLua
             "CalendarIdentifier",
             "CalendarUnit",
             "CalendarUnit",
+            "ClusterInput",
             "FullScreenMovieControlMode",
             "FullScreenMovieScalingMode",
             "Handheld",
