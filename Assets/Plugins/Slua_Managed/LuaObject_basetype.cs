@@ -303,7 +303,16 @@ namespace SLua
 			v = null;
 			return false;
 		}
-		
+
+		static public bool checkBinaryString(IntPtr l,int p,out byte[] bytes){
+			if(LuaDLL.lua_isstring(l,p)){
+				bytes = LuaDLL.lua_tobytes(l, p);
+				return true;
+			}
+			bytes = null;
+			return false;
+		}
+
 		public static void pushValue(IntPtr l, string s)
 		{
 			LuaDLL.lua_pushstring(l, s);

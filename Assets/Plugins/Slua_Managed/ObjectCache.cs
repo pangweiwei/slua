@@ -21,6 +21,8 @@
 // THE SOFTWARE.
 
 
+using System.Runtime.CompilerServices;
+
 namespace SLua
 {
 	using System;
@@ -170,6 +172,19 @@ namespace SLua
 #endif
 
 		FreeList cache = new FreeList();
+        public class ObjEqualityComparer : IEqualityComparer<object>
+        {
+            public bool Equals(object x, object y)
+            {
+
+                return ReferenceEquals(x, y);
+            }
+
+            public int GetHashCode(object obj)
+            {
+                return RuntimeHelpers.GetHashCode(obj);
+            }
+        }
 
 		public class ObjEqualityComparer : IEqualityComparer<object>
 		{
@@ -309,8 +324,8 @@ namespace SLua
 
 			index = add(o);
 #if SLUA_CHECK_REFLECTION
-			int isReflect = LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
-			if (isReflect != 0 && checkReflect)
+			int isReflect = LuaDLL.luaS_pushobject(l, index, isArray ? "LuaArray" : getAQName(o), gco, udCacheRef);
+			if (isReflect != 0 && checkReflect && !isArray)
 			{
 				Logger.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
 			}
