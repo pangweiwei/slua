@@ -27,6 +27,7 @@ namespace SLua
 	using System.Runtime.InteropServices;
 	using System.Collections.Generic;
 	using LuaInterface;
+	using System.Runtime.CompilerServices;
 
 	public class ObjectCache
 	{
@@ -72,6 +73,7 @@ namespace SLua
 			}
 		}
 
+#if SPEED_FREELIST
 		class FreeList : List<ObjSlot>
 		{
 			public FreeList()
@@ -130,10 +132,60 @@ namespace SLua
 				this[i].v = o;
 			}
 		}
+#else
+
+		class FreeList : Dictionary<int, object>
+		{
+			private int id = 1;
+			public int add(object o)
+			{
+				Add(id, o);
+				return id++;
+			}
+
+			public void del(int i)
+			{
+				this.Remove(i);
+			}
+
+			public bool get(int i, out object o)
+			{
+				return TryGetValue(i, out o);
+			}
+
+			public object get(int i)
+			{
+				object o;
+				if (TryGetValue(i, out o))
+					return o;
+				return null;
+			}
+
+			public void set(int i, object o)
+			{
+				this[i] = o;
+			}
+		}
+
+#endif
 
 		FreeList cache = new FreeList();
 
-		Dictionary<object, int> objMap = new Dictionary<object, int>();
+		public class ObjEqualityComparer : IEqualityComparer<object>
+		{
+			public bool Equals(object x, object y)
+			{
+
+				return ReferenceEquals(x, y);
+			}
+
+			public int GetHashCode(object obj)
+			{
+				return RuntimeHelpers.GetHashCode(obj);
+			}
+		}
+
+		Dictionary<object, int> objMap = new Dictionary<object, int>(new ObjEqualityComparer());
 		int udCacheRef = 0;
 
 
