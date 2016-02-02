@@ -91,7 +91,7 @@ namespace SLua
 		delegate void PushVarDelegate(IntPtr l, object o);
 		static Dictionary<Type, PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
 
-		internal const int VersionNumber = 0x1010;
+		internal const int VersionNumber = 0x1011;
 
 		public static void init(IntPtr l)
 		{

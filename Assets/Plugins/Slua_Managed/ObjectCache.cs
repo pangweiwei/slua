@@ -186,20 +186,6 @@ namespace SLua
             }
         }
 
-		public class ObjEqualityComparer : IEqualityComparer<object>
-		{
-			public bool Equals(object x, object y)
-			{
-
-				return ReferenceEquals(x, y);
-			}
-
-			public int GetHashCode(object obj)
-			{
-				return RuntimeHelpers.GetHashCode(obj);
-			}
-		}
-
 		Dictionary<object, int> objMap = new Dictionary<object, int>(new ObjEqualityComparer());
 		int udCacheRef = 0;
 
