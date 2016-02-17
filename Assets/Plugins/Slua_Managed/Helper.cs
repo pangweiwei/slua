@@ -189,7 +189,7 @@ return Class
 
 		//convert lua binary string to c# byte[]
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-		static public new int ToBytes(IntPtr l){
+		static public int ToBytes(IntPtr l){
 			try{
 				byte[] bytes = null;
 				checkBinaryString(l,1,out bytes);
