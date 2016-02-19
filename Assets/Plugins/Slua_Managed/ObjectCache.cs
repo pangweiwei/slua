@@ -174,7 +174,7 @@ namespace SLua
 		FreeList cache = new FreeList();
         public class ObjEqualityComparer : IEqualityComparer<object>
         {
-            public bool Equals(object x, object y)
+            public new bool Equals(object x, object y)
             {
 
                 return ReferenceEquals(x, y);
