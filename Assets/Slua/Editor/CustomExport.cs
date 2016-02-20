@@ -158,6 +158,8 @@ namespace SLua
             "GraphicRebuildTracker",
             "Advertisements",
             "UnityEditor",
+			"WSA",
+			"EventProvider",
         };
         }
 
