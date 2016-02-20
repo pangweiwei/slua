@@ -19,3 +19,7 @@ obj/*
 /standalone/bin
 /standalone/**/obj
 
+*.o
+Assets/Slua/Meta/Resources/lua3rdmeta.asset
+Assets/Slua/Meta/Resources/lua3rdmeta.asset.meta
+

@@ -21,12 +21,15 @@
 // THE SOFTWARE.
 
 
+using System.Runtime.CompilerServices;
+
 namespace SLua
 {
 	using System;
 	using System.Runtime.InteropServices;
 	using System.Collections.Generic;
 	using LuaInterface;
+	using System.Runtime.CompilerServices;
 
 	public class ObjectCache
 	{
@@ -72,6 +75,7 @@ namespace SLua
 			}
 		}
 
+#if SPEED_FREELIST
 		class FreeList : List<ObjSlot>
 		{
 			public FreeList()
@@ -130,10 +134,59 @@ namespace SLua
 				this[i].v = o;
 			}
 		}
+#else
+
+		class FreeList : Dictionary<int, object>
+		{
+			private int id = 1;
+			public int add(object o)
+			{
+				Add(id, o);
+				return id++;
+			}
+
+			public void del(int i)
+			{
+				this.Remove(i);
+			}
+
+			public bool get(int i, out object o)
+			{
+				return TryGetValue(i, out o);
+			}
+
+			public object get(int i)
+			{
+				object o;
+				if (TryGetValue(i, out o))
+					return o;
+				return null;
+			}
+
+			public void set(int i, object o)
+			{
+				this[i] = o;
+			}
+		}
+
+#endif
 
 		FreeList cache = new FreeList();
+        public class ObjEqualityComparer : IEqualityComparer<object>
+        {
+            public new bool Equals(object x, object y)
+            {
 
-		Dictionary<object, int> objMap = new Dictionary<object, int>();
+                return ReferenceEquals(x, y);
+            }
+
+            public int GetHashCode(object obj)
+            {
+                return RuntimeHelpers.GetHashCode(obj);
+            }
+        }
+
+		Dictionary<object, int> objMap = new Dictionary<object, int>(new ObjEqualityComparer());
 		int udCacheRef = 0;
 
 
@@ -257,10 +310,10 @@ namespace SLua
 
 			index = add(o);
 #if SLUA_CHECK_REFLECTION
-			int isReflect = LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
-			if (isReflect != 0 && checkReflect)
+			int isReflect = LuaDLL.luaS_pushobject(l, index, isArray ? "LuaArray" : getAQName(o), gco, udCacheRef);
+			if (isReflect != 0 && checkReflect && !isArray)
 			{
-				Debug.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
+				Logger.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
 			}
 #else
 			LuaDLL.luaS_pushobject(l, index, isArray?"LuaArray":getAQName(o), gco, udCacheRef);

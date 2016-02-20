@@ -26,6 +26,15 @@ namespace SLua
             Console.WriteLine(msg);
 #endif
         }
+
+		public static void LogWarning(string msg)
+		{
+#if !SLUA_STANDALONE
+			UnityEngine.Debug.LogWarning(msg);
+#else
+            Console.WriteLine(msg);
+#endif
+		}
     }
 
 

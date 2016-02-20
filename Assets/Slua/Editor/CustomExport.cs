@@ -124,6 +124,7 @@ namespace SLua
             "CalendarIdentifier",
             "CalendarUnit",
             "CalendarUnit",
+            "ClusterInput",
             "FullScreenMovieControlMode",
             "FullScreenMovieScalingMode",
             "Handheld",
@@ -160,6 +161,7 @@ namespace SLua
             "UnityEditor",
 			"WSA",
 			"EventProvider",
+			"Apple",
         };
         }
 
