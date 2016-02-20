@@ -162,6 +162,7 @@ namespace SLua
 			"WSA",
 			"EventProvider",
 			"Apple",
+			"ClusterInput",
         };
         }
 
