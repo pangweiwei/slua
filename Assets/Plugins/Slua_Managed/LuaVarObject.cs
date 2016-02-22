@@ -101,7 +101,7 @@ namespace SLua
                         if (t.BaseType == typeof (System.Enum))
                         {
                             var num = LuaDLL.lua_tointeger(l, p);
-                            return Convert.ChangeType(num, t);
+                            return Enum.ToObject(t, num);
                         }
                         return LuaObject.checkVar(l, p);
                 }
