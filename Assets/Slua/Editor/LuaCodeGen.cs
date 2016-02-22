@@ -1155,21 +1155,25 @@ namespace SLua
 			return false;
 		}
 		
-		void WriteSet(StreamWriter file, Type t, string cls, string fn, bool isstatic = false)
+		void WriteSet(StreamWriter file, Type t, string cls, string fn, bool isstatic = false,bool canread = true)
 		{
 			if (t.BaseType == typeof(MulticastDelegate))
 			{
 				if (isstatic)
 				{
 					Write(file, "if(op==0) {0}.{1}=v;", cls, fn);
-					Write(file, "else if(op==1) {0}.{1}+=v;", cls, fn);
-					Write(file, "else if(op==2) {0}.{1}-=v;", cls, fn);
+					if(canread){
+						Write(file, "else if(op==1) {0}.{1}+=v;", cls, fn);
+						Write(file, "else if(op==2) {0}.{1}-=v;", cls, fn);
+					}
 				}
 				else
 				{
 					Write(file, "if(op==0) self.{0}=v;", fn);
-					Write(file, "else if(op==1) self.{0}+=v;", fn);
-					Write(file, "else if(op==2) self.{0}-=v;", fn);
+					if(canread){
+						Write(file, "else if(op==1) self.{0}+=v;", fn);
+						Write(file, "else if(op==2) self.{0}-=v;", fn);
+					}
 				}
 			}
 			else
@@ -1332,14 +1336,14 @@ namespace SLua
 					if (fi.GetSetMethod().IsStatic)
 					{
 						WriteValueCheck(file, fi.PropertyType, 2);
-						WriteSet(file, fi.PropertyType, TypeDecl(t), NormalName(fi.Name), true);
+						WriteSet(file, fi.PropertyType, TypeDecl(t), NormalName(fi.Name), true,fi.CanRead);
 						isInstance = false;
 					}
 					else
 					{
 						WriteCheckSelf(file, t);
 						WriteValueCheck(file, fi.PropertyType, 2);
-						WriteSet(file, fi.PropertyType, TypeDecl(t), NormalName(fi.Name));
+						WriteSet(file, fi.PropertyType, TypeDecl(t), NormalName(fi.Name),false,fi.CanRead);
 					}
 					
 					if (t.IsValueType)

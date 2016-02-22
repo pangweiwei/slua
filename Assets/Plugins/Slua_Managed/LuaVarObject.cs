@@ -52,8 +52,11 @@ namespace SLua
 
 			bool matchType(IntPtr l, int p, LuaTypes lt, Type t)
 			{
-				if (t.IsPrimitive)
+				if (t.IsPrimitive && t!=typeof(bool))
 					return lt == LuaTypes.LUA_TNUMBER;
+
+				if (t == typeof(bool))
+					return lt == LuaTypes.LUA_TBOOLEAN;
 
 				if (t == typeof(string))
 					return lt == LuaTypes.LUA_TSTRING;
