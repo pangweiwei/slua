@@ -249,7 +249,7 @@ namespace SLua
             //    return error(l, "Can't find " + key);
             //}
             var mis = GetCacheMembers(t, key);
-            if (mis == null)
+            if (mis == null || mis.Length == 0)
             {
                 return error(l, "Can't find " + key);
             }
