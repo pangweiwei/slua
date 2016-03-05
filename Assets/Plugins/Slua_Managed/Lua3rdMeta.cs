@@ -49,7 +49,7 @@ namespace SLua{
 		}
 
 		#endif
-		private static Lua3rdMeta _instance;
+		private static Lua3rdMeta _instance=null;
 		public static Lua3rdMeta Instance{
 			get{
 				#if !SLUA_STANDALONE

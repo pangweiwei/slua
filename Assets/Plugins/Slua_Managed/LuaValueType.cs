@@ -314,15 +314,18 @@ do
 	end
 
 	function Vector3.Magnitude(v)
-		return sqrt(v[1]^2+v[2]^2+v[3]^2)
+		local v= sqrt(v[1]^2+v[2]^2+v[3]^2)
+		return v
 	end
 
 	function Vector3.SqrMagnitude(v)
-		return v[1]^2+v[2]^2+v[3]^2
+		local v= v[1]^2+v[2]^2+v[3]^2
+		return v
 	end
 
 	function Vector3.Dot(a,b)
-		return a[1]*b[1] + a[2]*b[2] + a[3]*b[3]
+		local v= a[1]*b[1] + a[2]*b[2] + a[3]*b[3]
+		return v
 	end
 
 	function Vector3.Cross(a,b)
