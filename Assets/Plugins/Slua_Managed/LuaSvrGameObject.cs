@@ -37,57 +37,26 @@ namespace SLua
 
 		public LuaState state;
 		public Action onUpdate;
-		public bool skipDebugger = true;
-		public bool openDebug = false;
-		DebugInterface di;
 
 		void OnDestroy()
 		{
 			if (state != null)
 			{
-				if (di != null)
-				{
-					di.close();
-					di = null;
-				}
-
+				
 				// state is disposed by editorapplication if in the Editor
 				// state isn't disposed in App because that all resources will be disposed by app on process exit.
 			}
 		}
 
 		public void init() {
-			if(openDebug) {
-				di = new DebugInterface(state);
-				di.init();
-			}
+			
 		}
 
 
 		void Update()
 		{
 			if (onUpdate != null) onUpdate();
-			if (di != null) di.update();
-		}
 
-
-		void OnGUI()
-		{
-			if(!openDebug)
-				return;
-
-			if (skipDebugger || di.isStarted)
-			{
-				skipDebugger = true;
-				return;
-			}
-
-			int w = Screen.width;
-			int h = Screen.height;
-			if (!skipDebugger && GUI.Button(new Rect((w - 300) / 2, (h - 100) / 2, 300, 100), "Waiting for debug connection\nPress this button to skip debugging."))
-			{
-				skipDebugger = true;
-			}
 		}
 
 		
