@@ -49,7 +49,7 @@ namespace SLua{
 		public int debugPort=10240;
 		public string debugIP="0.0.0.0";
 
-		private static SLuaSetting _instance;
+		private static SLuaSetting _instance=null;
 		public static SLuaSetting Instance{
 			get{
 #if !SLUA_STANDALONE
@@ -69,7 +69,7 @@ namespace SLua{
 			}
 		}
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && !SLUA_STANDALONE
 		[MenuItem("SLua/Setting")]
 		public static void Open(){
 			Selection.activeObject = Instance;
