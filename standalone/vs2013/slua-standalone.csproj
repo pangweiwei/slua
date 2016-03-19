@@ -66,12 +66,6 @@
     <Compile Include="..\..\Assets\Plugins\Slua_Managed\Coroutine.cs">
       <Link>Assets\Plugins\Slua_Managed\Coroutine.cs</Link>
     </Compile>
-    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Debugger\DebugInterface.cs">
-      <Link>Assets\Plugins\Slua_Managed\Debugger\DebugInterface.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Debugger\SLuaDebug.cs">
-      <Link>Assets\Plugins\Slua_Managed\Debugger\SLuaDebug.cs</Link>
-    </Compile>
     <Compile Include="..\..\Assets\Plugins\Slua_Managed\Helper.cs">
       <Link>Assets\Plugins\Slua_Managed\Helper.cs</Link>
     </Compile>
@@ -80,6 +74,9 @@
     </Compile>
     <Compile Include="..\..\Assets\Plugins\Slua_Managed\Lua3rdDLL.cs">
       <Link>Assets\Plugins\Slua_Managed\Lua3rdDLL.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Lua3rdMeta.cs">
+      <Link>Assets\Plugins\Slua_Managed\Lua3rdMeta.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaArray.cs">
       <Link>Assets\Plugins\Slua_Managed\LuaArray.cs</Link>
