@@ -172,9 +172,6 @@ public class HelloWorld   {
 
 ~~~~~~~~~~
 
-##How to remote debug
-
-Wiki here(https://github.com/pangweiwei/slua/wiki/Remote-Debug).
 
 ###Benchmark
 
