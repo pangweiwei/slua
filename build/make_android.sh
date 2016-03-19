@@ -5,6 +5,8 @@ cd LuaJIT-2.1.0
 SRCDIR=$(pwd)
 DIR=$(pwd)
 
+${NDKPATH?"Need to set NDKPATH"}
+
 NDK=$NDKPATH
 NDKABI=8
 NDKVER=$NDK/toolchains/arm-linux-androideabi-4.8
