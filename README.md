@@ -7,8 +7,6 @@ Mail List: [Subscribe](http://www.freelists.org/list/slua) (in English only)
 
 QQ group: 15647305 (in Chinese)
 
-Support QA: http://www.unityqa.com/ (in Chinese)
-
 Mail to : sineysan#163.com (both of Chinese/English)
 
 ## Continuous Integration Build
