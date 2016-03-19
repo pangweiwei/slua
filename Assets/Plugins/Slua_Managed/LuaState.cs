@@ -937,8 +937,8 @@ end
 					bytes = loaderDelegate(fn);
 				else
 				{
-					fn = fn.Replace(".", "/");
 #if !SLUA_STANDALONE
+					fn = fn.Replace(".", "/");
 					TextAsset asset = (TextAsset)Resources.Load(fn);
 					if (asset == null)
 						return null;
