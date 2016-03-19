@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------
 -- DynASM ARM64 module.
 --
--- Copyright (C) 2005-2015 Mike Pall. All rights reserved.
+-- Copyright (C) 2005-2016 Mike Pall. All rights reserved.
 -- See dynasm.lua for full copyright notice.
 ------------------------------------------------------------------------------
 
@@ -9,9 +9,9 @@
 local _info = {
   arch =	"arm",
   description =	"DynASM ARM64 module",
-  version =	"1.3.0",
-  vernum =	 10300,
-  release =	"2014-12-03",
+  version =	"1.4.0",
+  vernum =	 10400,
+  release =	"2015-10-18",
   author =	"Mike Pall",
   license =	"MIT",
 }

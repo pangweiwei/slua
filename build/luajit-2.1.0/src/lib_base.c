@@ -1,6 +1,6 @@
 /*
 ** Base and coroutine library.
-** Copyright (C) 2005-2015 Mike Pall. See Copyright Notice in luajit.h
+** Copyright (C) 2005-2016 Mike Pall. See Copyright Notice in luajit.h
 **
 ** Major portions taken verbatim or adapted from the Lua interpreter.
 ** Copyright (C) 1994-2011 Lua.org, PUC-Rio. See Copyright Notice in lua.h
@@ -435,13 +435,13 @@ LJLIB_CF(gcinfo)
 LJLIB_CF(collectgarbage)
 {
   int opt = lj_lib_checkopt(L, 1, LUA_GCCOLLECT,  /* ORDER LUA_GC* */
-    "\4stop\7restart\7collect\5count\1\377\4step\10setpause\12setstepmul");
+    "\4stop\7restart\7collect\5count\1\377\4step\10setpause\12setstepmul\1\377\11isrunning");
   int32_t data = lj_lib_optint(L, 2, 0);
   if (opt == LUA_GCCOUNT) {
     setnumV(L->top, (lua_Number)G(L)->gc.total/1024.0);
   } else {
     int res = lua_gc(L, opt, data);
-    if (opt == LUA_GCSTEP)
+    if (opt == LUA_GCSTEP || opt == LUA_GCISRUNNING)
       setboolV(L->top, res);
     else
       setintV(L->top, res);
@@ -495,11 +495,10 @@ LJLIB_CF(print)
   shortcut = (tvisfunc(tv) && funcV(tv)->c.ffid == FF_tostring);
   for (i = 0; i < nargs; i++) {
     cTValue *o = &L->base[i];
-    char buf[STRFMT_MAXBUF_NUM];
     const char *str;
     size_t size;
     MSize len;
-    if (shortcut && (str = lj_strfmt_wstrnum(buf, o, &len)) != NULL) {
+    if (shortcut && (str = lj_strfmt_wstrnum(L, o, &len)) != NULL) {
       size = len;
     } else {
       copyTV(L, L->top+1, o);

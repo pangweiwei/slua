@@ -1,6 +1,6 @@
 /*
 ** Garbage collector.
-** Copyright (C) 2005-2015 Mike Pall. See Copyright Notice in luajit.h
+** Copyright (C) 2005-2016 Mike Pall. See Copyright Notice in luajit.h
 **
 ** Major portions taken verbatim or adapted from the Lua interpreter.
 ** Copyright (C) 1994-2008 Lua.org, PUC-Rio. See Copyright Notice in lua.h
@@ -69,7 +69,7 @@ static void gc_mark(global_State *g, GCobj *o)
       gray2black(o);  /* Closed upvalues are never gray. */
   } else if (gct != ~LJ_TSTR && gct != ~LJ_TCDATA) {
     lua_assert(gct == ~LJ_TFUNC || gct == ~LJ_TTAB ||
-	       gct == ~LJ_TTHREAD || gct == ~LJ_TPROTO);
+	       gct == ~LJ_TTHREAD || gct == ~LJ_TPROTO || gct == ~LJ_TTRACE);
     setgcrefr(o->gch.gclist, g->gc.gray);
     setgcref(g->gc.gray, o);
   }

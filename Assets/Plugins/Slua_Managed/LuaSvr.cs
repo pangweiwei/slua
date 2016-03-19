@@ -62,20 +62,6 @@ namespace SLua
 #endif
 		}
 
-#if !SLUA_STANDALONE
-		public IEnumerator waitForDebugConnection(Action complete)
-		{
-			lgo.skipDebugger = false;
-			Debug.Log("Waiting for debug connection");
-			while (true)
-			{
-				yield return new WaitForSeconds(0.1f);
-				if (lgo.skipDebugger) break;
-			}
-			complete();
-		}
-#endif
-
 		private volatile int bindProgress = 0;
 		private void doBind(object state)
 		{
@@ -187,8 +173,7 @@ namespace SLua
 #endif
 			Helper.reg(L);
 			LuaValueType.reg(L);
-			if((flag&LuaSvrFlag.LSF_DEBUG)!=0)
-				SLuaDebug.reg(L);
+			
 			if((flag&LuaSvrFlag.LSF_EXTLIB)!=0)
 				LuaDLL.luaS_openextlibs(L);
 			if((flag&LuaSvrFlag.LSF_3RDDLL)!=0)
@@ -226,7 +211,7 @@ namespace SLua
 		    complete();
             checkTop(L);
 #else
-			lgo.openDebug = (flag&LuaSvrFlag.LSF_DEBUG)!=0;
+			
 
 			// be caurefull here, doBind Run in another thread
 			// any code access unity interface will cause deadlock.
@@ -238,19 +223,8 @@ namespace SLua
 			{
 				this.luaState = luaState;
 				doinit(L,flag);
-				if (lgo.openDebug)
-				{
-					lgo.StartCoroutine(waitForDebugConnection(() =>
-					{
-						complete();
-						checkTop(L);
-					}));
-				}
-				else
-				{
-					complete();
-					checkTop(L);
-				}
+				complete();
+				checkTop(L);
 			}));
 #endif
         }

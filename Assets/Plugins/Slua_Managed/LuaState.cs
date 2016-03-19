@@ -626,13 +626,13 @@ end
 			int loaderTable = LuaDLL.lua_gettop(L);
 
 			// Shift table elements right
-			for (int e = LuaDLL.lua_rawlen(L, loaderTable) + 1; e > 1; e--)
+			for (int e = LuaDLL.lua_rawlen(L, loaderTable) + 1; e > 2; e--)
 			{
 				LuaDLL.lua_rawgeti(L, loaderTable, e - 1);
 				LuaDLL.lua_rawseti(L, loaderTable, e);
 			}
 			LuaDLL.lua_pushvalue(L, loaderFunc);
-			LuaDLL.lua_rawseti(L, loaderTable, 1);
+			LuaDLL.lua_rawseti(L, loaderTable, 2);
 			LuaDLL.lua_settop(L, 0);
 			return 0;
 		}
@@ -947,8 +947,6 @@ end
 				    bytes = File.ReadAllBytes(fn);
 #endif
 				}
-
-				if (bytes != null) DebugInterface.require(fn, bytes);
 				return bytes;
 			}
 			catch (Exception e)
