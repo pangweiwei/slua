@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------
 -- DynASM PPC/PPC64 module.
 --
--- Copyright (C) 2005-2015 Mike Pall. All rights reserved.
+-- Copyright (C) 2005-2016 Mike Pall. All rights reserved.
 -- See dynasm.lua for full copyright notice.
 --
 -- Support for various extensions contributed by Caio Souza Oliveira.
@@ -11,9 +11,9 @@
 local _info = {
   arch =	"ppc",
   description =	"DynASM PPC module",
-  version =	"1.3.0",
-  vernum =	 10300,
-  release =	"2015-01-14",
+  version =	"1.4.0",
+  vernum =	 10400,
+  release =	"2015-10-18",
   author =	"Mike Pall",
   license =	"MIT",
 }

@@ -1,6 +1,6 @@
 /*
 ** C data management.
-** Copyright (C) 2005-2015 Mike Pall. See Copyright Notice in luajit.h
+** Copyright (C) 2005-2016 Mike Pall. See Copyright Notice in luajit.h
 */
 
 #include "lj_obj.h"
@@ -47,6 +47,15 @@ GCcdata *lj_cdata_newv(lua_State *L, CTypeID id, CTSize sz, CTSize align)
   cd->gct = ~LJ_TCDATA;
   cd->ctypeid = id;
   return cd;
+}
+
+/* Allocate arbitrary C data object. */
+GCcdata *lj_cdata_newx(CTState *cts, CTypeID id, CTSize sz, CTInfo info)
+{
+  if (!(info & CTF_VLA) && ctype_align(info) <= CT_MEMALIGN)
+    return lj_cdata_new(cts, id, sz);
+  else
+    return lj_cdata_newv(cts->L, id, sz, ctype_align(info));
 }
 
 /* Free a C data object. */

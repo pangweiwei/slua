@@ -7,7 +7,7 @@
 # Also works with MinGW and Cygwin on Windows.
 # Please check msvcbuild.bat for building with MSVC on Windows.
 #
-# Copyright (C) 2005-2015 Mike Pall. See Copyright Notice in luajit.h
+# Copyright (C) 2005-2016 Mike Pall. See Copyright Notice in luajit.h
 ##############################################################################
 
 MAJVER=  2
@@ -24,11 +24,13 @@ NODOTABIVER= 51
 # removing the '#' in front of them. Make sure you force a full recompile
 # with "make clean", followed by "make" if you change any options.
 #
+DEFAULT_CC = gcc
+#
 # LuaJIT builds as a native 32 or 64 bit binary by default.
-CC= gcc
+CC= $(DEFAULT_CC)
 #
 # Use this if you want to force a 32 bit build on a 64 bit multilib OS.
-#CC= gcc -m32
+#CC= $(DEFAULT_CC) -m32
 #
 # Since the assembler part does NOT maintain a frame pointer, it's pointless
 # to slow down the C part by not omitting it. Debugging, tracebacks and
@@ -146,6 +148,29 @@ XCFLAGS=
 ##############################################################################
 # You probably don't need to change anything below this line!
 ##############################################################################
+
+##############################################################################
+# Host system detection.
+##############################################################################
+
+ifeq (Windows,$(findstring Windows,$(OS))$(MSYSTEM)$(TERM))
+  HOST_SYS= Windows
+  HOST_RM= del
+else
+  HOST_SYS:= $(shell uname -s)
+  ifneq (,$(findstring MINGW,$(HOST_SYS)))
+    HOST_SYS= Windows
+    HOST_MSYS= mingw
+  endif
+  ifneq (,$(findstring CYGWIN,$(HOST_SYS)))
+    HOST_SYS= Windows
+    HOST_MSYS= cygwin
+  endif
+  # Use Clang for OSX host.
+  ifeq (Darwin,$(HOST_SYS))
+    DEFAULT_CC= gcc
+  endif
+endif
 
 ##############################################################################
 # Flags and options for host and target.
@@ -268,23 +293,8 @@ ifneq (,$(LMULTILIB))
 endif
 
 ##############################################################################
-# System detection.
+# Target system detection.
 ##############################################################################
-
-ifeq (Windows,$(findstring Windows,$(OS))$(MSYSTEM)$(TERM))
-  HOST_SYS= Windows
-  HOST_RM= del
-else
-  HOST_SYS:= $(shell uname -s)
-  ifneq (,$(findstring MINGW,$(HOST_SYS)))
-    HOST_SYS= Windows
-    HOST_MSYS= mingw
-  endif
-  ifneq (,$(findstring CYGWIN,$(HOST_SYS)))
-    HOST_SYS= Windows
-    HOST_MSYS= cygwin
-  endif
-endif
 
 TARGET_SYS?= $(HOST_SYS)
 ifeq (Windows,$(TARGET_SYS))
@@ -378,6 +388,11 @@ DASM_XFLAGS=
 DASM_AFLAGS=
 DASM_ARCH= $(TARGET_LJARCH)
 
+ifneq (,$(findstring LJ_LE 1,$(TARGET_TESTARCH)))
+  DASM_AFLAGS+= -D ENDIAN_LE
+else
+  DASM_AFLAGS+= -D ENDIAN_BE
+endif
 ifneq (,$(findstring LJ_ARCH_BITS 64,$(TARGET_TESTARCH)))
   DASM_AFLAGS+= -D P64
 endif
@@ -463,7 +478,7 @@ LJLIB_C= $(LJLIB_O:.o=.c)
 LJCORE_O= lj_gc.o lj_err.o lj_char.o lj_bc.o lj_obj.o lj_buf.o \
 	  lj_str.o lj_tab.o lj_func.o lj_udata.o lj_meta.o lj_debug.o \
 	  lj_state.o lj_dispatch.o lj_vmevent.o lj_vmmath.o lj_strscan.o \
-	  lj_strfmt.o lj_api.o lj_profile.o \
+	  lj_strfmt.o lj_strfmt_num.o lj_api.o lj_profile.o \
 	  lj_lex.o lj_parse.o lj_bcread.o lj_bcwrite.o lj_load.o \
 	  lj_ir.o lj_opt_mem.o lj_opt_fold.o lj_opt_narrow.o \
 	  lj_opt_dce.o lj_opt_loop.o lj_opt_split.o lj_opt_sink.o \
@@ -472,7 +487,7 @@ LJCORE_O= lj_gc.o lj_err.o lj_char.o lj_bc.o lj_obj.o lj_buf.o \
 	  lj_ctype.o lj_cdata.o lj_cconv.o lj_ccall.o lj_ccallback.o \
 	  lj_carith.o lj_clib.o lj_cparse.o \
 	  lj_lib.o lj_alloc.o lib_aux.o \
-	  $(LJLIB_O) lib_init.o slua.o
+	  $(LJLIB_O) lib_init.o
 
 LJVMCORE_O= $(LJVM_O) $(LJCORE_O)
 LJVMCORE_DYNO= $(LJVMCORE_O:.o=_dyn.o)
@@ -612,7 +627,7 @@ $(MINILUA_T): $(MINILUA_O)
 	$(E) "HOSTLINK  $@"
 	$(Q)$(HOST_CC) $(HOST_ALDFLAGS) -o $@ $(MINILUA_O) $(MINILUA_LIBS) $(HOST_ALIBS)
 
-host/buildvm_arch.h: $(DASM_DASC) $(DASM_DEP)
+host/buildvm_arch.h: $(DASM_DASC) $(DASM_DEP) $(DASM_DIR)/*.lua
 	$(E) "DYNASM    $@"
 	$(Q)$(DASM) $(DASM_FLAGS) -o $@ $(DASM_DASC)
 

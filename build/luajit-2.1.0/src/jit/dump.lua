@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------
 -- LuaJIT compiler dump module.
 --
--- Copyright (C) 2005-2015 Mike Pall. All rights reserved.
+-- Copyright (C) 2005-2016 Mike Pall. All rights reserved.
 -- Released under the MIT license. See Copyright Notice in luajit.h
 ----------------------------------------------------------------------------
 --
@@ -571,6 +571,7 @@ local function dump_trace(what, tr, func, pc, otr, oex)
     end
     if dumpmode.H then out:write("</pre>\n\n") else out:write("\n") end
   else
+    if what == "flush" then symtab, nexitsym = {}, 0 end
     out:write("---- TRACE ", what, "\n\n")
   end
   out:flush()
