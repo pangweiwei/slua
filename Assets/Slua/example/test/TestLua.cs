@@ -140,7 +140,7 @@ namespace NLuaTest.Mock
 
 	public static class VectorExtension
 	{
-		public static double Lenght (this Vector v)
+		public static double Length (this Vector v)
 		{
 			return v.x * v.x + v.y * v.y;
 		}

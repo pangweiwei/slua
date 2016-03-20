@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!-- create .nupkg file -->
+<package >
+  <metadata>
+    <id>slua-standalone</id>
+    <version>1.0.0</version>
+    <authors>http://github.com/mr-kelly</authors>
+    <owners>pangweiwei</owners>
+    <licenseUrl>http://github.com/pangweiwei/slua</licenseUrl>
+    <projectUrl>http://github.com/mr-kelly/slua</projectUrl>
+    <iconUrl>http://www.lua.org/images/lua.gif</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    
+    <description>Slua is a Unity3D Lua Library, this slua-standalone is a version without Unity3D for Windows and Linux</description>
+
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>slua lua</tags>
+    <dependencies>
+      <!--<dependency id="SampleDependency" version="1.0" />-->
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\slua-standalone.dll" target="lib\net35" />
+    <file src="bin\slua-standalone.pdb" target="lib\net35" />
+    <file src="..\Assets\Plugins\x64\slua.dll" target="content\lib\x64" />
+    <file src="..\Assets\Plugins\x64\slua.so" target="content\lib\x64" />
+    <file src="..\Assets\Plugins\x86\slua.dll" target="content\lib\x86" />
+    <file src="..\Assets\Plugins\x86\slua.so" target="content\lib\x86" />
+    <file src="bin\SLUA_README.txt" target="content\lib" />
+    <file src="bin\slua-standalone.dll.config" target="content\lib" />
+  </files>
+</package>

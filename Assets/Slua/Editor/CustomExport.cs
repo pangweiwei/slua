@@ -22,56 +22,67 @@
 
 namespace SLua
 {
-	using System.Collections.Generic;
-	using System;
+    using System.Collections.Generic;
+    using System;
 
-	public class CustomExport
-	{
+    public class CustomExport
+    {
+        public static void OnGetAssemblyToGenerateExtensionMethod(out List<string> list) {
+            list = new List<string> {
+                "Assembly-CSharp",
+            };
+        }
 
-		public static void OnAddCustomClass(LuaCodeGen.ExportGenericDelegate add)
-		{
-			add(typeof(System.Func<int>), null);
-			add(typeof(System.Action<int, string>), null);
-			add(typeof(System.Action<int, Dictionary<int, object>>), null);
-			add(typeof(List<int>), "ListInt");
-			add(typeof(Dictionary<int, string>), "DictIntStr");
-			add(typeof(string), "String");
-			// add your custom class here
-			// add( type, typename)
-			// type is what you want to export
-			// typename used for simplify generic type name or rename, like List<int> named to "ListInt", if not a generic type keep typename as null or rename as new type name
-		}
+        public static void OnAddCustomClass(LuaCodeGen.ExportGenericDelegate add)
+        {
+            add(typeof(System.Func<int>), null);
+            add(typeof(System.Action<int, string>), null);
+            add(typeof(System.Action<int, Dictionary<int, object>>), null);
+            add(typeof(List<int>), "ListInt");
+            add(typeof(Dictionary<int, string>), "DictIntStr");
+            add(typeof(string), "String");
+            
+            // add your custom class here
+            // add( type, typename)
+            // type is what you want to export
+            // typename used for simplify generic type name or rename, like List<int> named to "ListInt", if not a generic type keep typename as null or rename as new type name
+        }
 
-		public static void OnAddCustomAssembly(ref List<string> list)
-		{
-			// add your custom assembly here
-			// you can build a dll for 3rd library like ngui titled assembly name "NGUI", put it in Assets folder
-			// add it's name into list, slua will generate all exported interface automatically for you
+        public static void OnAddCustomAssembly(ref List<string> list)
+        {
+            // add your custom assembly here
+            // you can build a dll for 3rd library like ngui titled assembly name "NGUI", put it in Assets folder
+            // add its name into list, slua will generate all exported interface automatically for you
 
-			//list.Add("NGUI");
-		}
+            //list.Add("NGUI");
+        }
 
-		public static HashSet<string> OnAddCustomNamespace()
-		{
-			return new HashSet<string>
-			{
-				//"NLuaTest.Mock"
-			};
-		}
+        public static HashSet<string> OnAddCustomNamespace()
+        {
+            return new HashSet<string>
+            {
+                //"NLuaTest.Mock"
+            };
+        }
 
-		// if uselist return a white list, don't check noUseList(black list) again
-		public static void OnGetUseList(out List<string> list)
-		{
-			list = new List<string>
-			{
-				//"UnityEngine.GameObject",
-			};
-		}
+        // if uselist return a white list, don't check noUseList(black list) again
+        public static void OnGetUseList(out List<string> list)
+        {
+            list = new List<string>
+            {
+                //"UnityEngine.GameObject",
+            };
+        }
 
-		// black list if white list not given
-		public static void OnGetNoUseList(out List<string> list)
-		{
-			list = new List<string>
+        public static List<string> FunctionFilterList = new List<string>()
+        {
+            "UIWidget.showHandles",
+            "UIWidget.showHandlesWithMoveTool",
+        };
+        // black list if white list not given
+        public static void OnGetNoUseList(out List<string> list)
+        {
+            list = new List<string>
         {      
             "HideInInspector",
             "ExecuteInEditMode",
@@ -106,12 +117,14 @@ namespace SLua
              "ADBannerView",
             "ADInterstitialAd",            
             "Android",
+            "Tizen",
             "jvalue",
             "iPhone",
             "iOS",
             "CalendarIdentifier",
             "CalendarUnit",
             "CalendarUnit",
+            "ClusterInput",
             "FullScreenMovieControlMode",
             "FullScreenMovieScalingMode",
             "Handheld",
@@ -139,15 +152,19 @@ namespace SLua
             "Flash",
             "ActionScript",
             "OnRequestRebuild",
-			"Ping",
+            "Ping",
             "ShaderVariantCollection",
-			"SimpleJson.Reflection",
-			"CoroutineTween",
-			"GraphicRebuildTracker",
+            "SimpleJson.Reflection",
+            "CoroutineTween",
+            "GraphicRebuildTracker",
             "Advertisements",
             "UnityEditor",
+			"WSA",
+			"EventProvider",
+			"Apple",
+			"ClusterInput",
         };
-		}
+        }
 
-	}
+    }
 }

@@ -13,7 +13,20 @@ public struct foostruct
 }
 
 [CustomLuaClass]
-public class SLuaTest : MonoBehaviour { }
+public class FloatEvent : UnityEngine.Events.UnityEvent<float>
+{
+	public FloatEvent() { }
+}
+
+[CustomLuaClass]
+public class ListViewEvent : UnityEngine.Events.UnityEvent<int,string> {
+	
+}
+
+[CustomLuaClass]
+public class SLuaTest : MonoBehaviour {
+	public FloatEvent intevent;
+}
 
 [CustomLuaClass]
 public class XXList : List<int> { }
@@ -47,7 +60,7 @@ public class Ref
 [CustomLuaClass]
 public class HelloWorld
 {
-
+	public UnityEngine.Events.UnityAction someAct;
 	static public void say()
 	{
 		Debug.Log("hello world");
@@ -56,6 +69,17 @@ public class HelloWorld
 	static public byte[] bytes()
 	{
 		return new byte[] { 51, 52, 53, 53 };
+	}
+
+	static public void int16Array(Int16[] array) {
+		foreach(Int16 i in array) {
+			Debug.Log("output int16 "+i);
+		}
+	}
+
+	static public Vector3[] vectors()
+	{
+		return new Vector3[] { Vector3.one, Vector3.zero, Vector3.up };
 	}
 
 	static public void nullf(int? a=null) {

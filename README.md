@@ -1,5 +1,5 @@
 #slua
-Fastest Unity lua binding via static code generating.
+Fastest lua binding via static code generating for Unity3D or mono
 
 Website: http://www.slua.net
 
@@ -7,9 +7,15 @@ Mail List: [Subscribe](http://www.freelists.org/list/slua) (in English only)
 
 QQ group: 15647305 (in Chinese)
 
-Support QA: http://www.unityqa.com/ (in Chinese)
-
 Mail to : sineysan#163.com (both of Chinese/English)
+
+## Continuous Integration Build
+
+| Build | Platform | Type    | Status  |
+| ---   | ---      | ---     | ---     |
+| *slua-unity* | None | None | None |
+| **slua-standalone** | Linux   | Test,Build | [![Build Status](https://travis-ci.org/mr-kelly/slua.svg)](https://travis-ci.org/mr-kelly/slua) |
+| **slua-standalone** | Windows | Test,Build,Deploy | [![Build status](https://ci.appveyor.com/api/projects/status/vokwhnu95lx5e8g3?svg=true)](https://ci.appveyor.com/project/mr-kelly/slua) |
 
 ##Release Download
 
@@ -51,6 +57,8 @@ above 90% UnityEngine interface exported ( remove flash, platform dependented in
 
 100% UnityEngine.UI interface ( require Unity4.6+ )
 
+support standalone in mono without Unity3D
+
 support UnityEvent/UnityAction for event callback via lua function
 
 support delegate via lua function (include iOS)
@@ -58,6 +66,8 @@ support delegate via lua function (include iOS)
 support yield call
 
 support custom class exported
+
+support extension method
 
 export enum as integer
 
@@ -162,9 +172,6 @@ public class HelloWorld   {
 
 ~~~~~~~~~~
 
-##How to remote debug
-
-Wiki here(https://github.com/pangweiwei/slua/wiki/Remote-Debug).
 
 ###Benchmark
 

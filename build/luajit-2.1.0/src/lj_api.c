@@ -1,6 +1,6 @@
 /*
 ** Public Lua/C API.
-** Copyright (C) 2005-2015 Mike Pall. See Copyright Notice in luajit.h
+** Copyright (C) 2005-2016 Mike Pall. See Copyright Notice in luajit.h
 **
 ** Major portions taken verbatim or adapted from the Lua interpreter.
 ** Copyright (C) 1994-2008 Lua.org, PUC-Rio. See Copyright Notice in lua.h
@@ -1187,6 +1187,9 @@ LUA_API int lua_gc(lua_State *L, int what, int data)
   case LUA_GCSETSTEPMUL:
     res = (int)(g->gc.stepmul);
     g->gc.stepmul = (MSize)data;
+    break;
+  case LUA_GCISRUNNING:
+    res = (g->gc.threshold != LJ_MAX_MEM);
     break;
   default:
     res = -1;  /* Invalid option. */

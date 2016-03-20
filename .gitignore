@@ -1,6 +1,6 @@
 .DS_Store
 .vs
-.suo
+*.suo
 Library
 Temp
 UnityVS
@@ -8,8 +8,18 @@ AssetStoreTools
 obj/*
 /Assets/AssetStoreTools.meta
 /Assets/UnityVS.meta
+/Assets/Plugins/Slua_Managed/Unity
 /Assets/Slua/LuaObject
 /Assets/Slua/LuaObject.meta
 /ProjectSettings
 /*.csproj
 /*.sln
+/build/luajit-osx/build*
+
+/standalone/bin
+/standalone/**/obj
+
+*.o
+Assets/Slua/Meta/Resources/lua3rdmeta.asset
+Assets/Slua/Meta/Resources/lua3rdmeta.asset.meta
+

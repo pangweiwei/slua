@@ -16,6 +16,11 @@ function main()
 	print(x1,x2)
 	assert(x1==x2)
 
+	local v1=2*Vector3(1,2,3)
+	local v2=Vector3(1,2,3)*2
+	print("2*Vector",v1,v2)
+	assert(v1==v2)
+
 	local v=Vector3(2,0,0)
 	v:Set(3,0,0)
 	assert(v.x==v[1] and v.x==3)

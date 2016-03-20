@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------
 -- LuaJIT module to save/list bytecode.
 --
--- Copyright (C) 2005-2015 Mike Pall. All rights reserved.
+-- Copyright (C) 2005-2016 Mike Pall. All rights reserved.
 -- Released under the MIT license. See Copyright Notice in luajit.h
 ----------------------------------------------------------------------------
 --
@@ -200,7 +200,7 @@ typedef struct {
 ]]
   local symname = LJBC_PREFIX..ctx.modname
   local is64, isbe = false, false
-  if ctx.arch == "x64" then
+  if ctx.arch == "x64" or ctx.arch == "arm64" then
     is64 = true
   elseif ctx.arch == "ppc" or ctx.arch == "mips" then
     isbe = true

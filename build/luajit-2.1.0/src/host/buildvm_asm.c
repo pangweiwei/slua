@@ -1,6 +1,6 @@
 /*
 ** LuaJIT VM builder: Assembler source code emitter.
-** Copyright (C) 2005-2015 Mike Pall. See Copyright Notice in luajit.h
+** Copyright (C) 2005-2016 Mike Pall. See Copyright Notice in luajit.h
 */
 
 #include "buildvm.h"
@@ -261,10 +261,19 @@ void emit_asm(BuildCtx *ctx)
 
 #if LJ_TARGET_ARM && defined(__GNUC__) && !LJ_NO_UNWIND
   /* This should really be moved into buildvm_arm.dasc. */
+#if LJ_ARCH_HASFPU
+  fprintf(ctx->fp,
+	  ".fnstart\n"
+	  ".save {r5, r6, r7, r8, r9, r10, r11, lr}\n"
+	  ".vsave {d8-d15}\n"
+	  ".save {r4}\n"
+	  ".pad #28\n");
+#else
   fprintf(ctx->fp,
 	  ".fnstart\n"
 	  ".save {r4, r5, r6, r7, r8, r9, r10, r11, lr}\n"
 	  ".pad #28\n");
+#endif
 #endif
 #if LJ_TARGET_MIPS
   fprintf(ctx->fp, ".set nomips16\n.abicalls\n.set noreorder\n.set nomacro\n");
