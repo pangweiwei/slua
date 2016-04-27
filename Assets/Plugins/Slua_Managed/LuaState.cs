@@ -1145,6 +1145,7 @@ end
 				cnt = refQueue.Count;
 			}
 
+			var l = L;
 			for (int n = 0; n < cnt; n++)
 			{
 				UnrefPair u;
@@ -1152,7 +1153,7 @@ end
 				{
 					u = refQueue.Dequeue();
 				}
-				u.act(L, u.r);
+				u.act(l, u.r);
 			}
 		}
 	}
