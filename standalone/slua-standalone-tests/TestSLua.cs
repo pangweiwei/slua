@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using System.Text;
 using NUnit.Framework;
@@ -15,11 +16,15 @@ namespace SLua.Test
             Assert.AreEqual(obj, 123);
         }
 
+        static readonly LuaSvr CacheLuaSvr = new LuaSvr();
         [Test]
         public void TestLuaSvr()
         {
-            var luaSvr = new LuaSvr();
+            var luaSvr = CacheLuaSvr;
             luaSvr.init((x) => { }, () => { });
+            
+            GC.Collect();
+
             var code = @"
 local testVar = 12345;
 return testVar;
