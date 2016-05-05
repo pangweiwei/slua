@@ -110,8 +110,37 @@ namespace SLua
 			
 			CustomExport.OnGetNoUseList(out noUseList);
 			CustomExport.OnGetUseList(out uselist);
-			
-			List<Type> exports = new List<Type>();
+
+            // Get use and nouse list from custom export.
+            object[] aCustomExport = new object[1];
+            InvokeEditorMethod<ICustomExportPost>("OnGetUseList", ref aCustomExport);
+            if (null != aCustomExport[0])
+            {
+                if (null != uselist)
+                {
+                    uselist.AddRange((List<string>)aCustomExport[0]);
+                }
+                else
+                {
+                    uselist = (List<string>)aCustomExport[0];
+                }
+            }
+
+            aCustomExport[0] = null;
+            InvokeEditorMethod<ICustomExportPost>("OnGetNoUseList", ref aCustomExport);
+            if (null != aCustomExport[0])
+            {
+                if ((null != noUseList))
+                {
+                    noUseList.AddRange((List<string>)aCustomExport[0]);
+                }
+                else
+                {
+                    noUseList = (List<string>)aCustomExport[0];
+                }
+            }
+
+            List<Type> exports = new List<Type>();
 			string path = GenPath + "Unity/";
 			foreach (Type t in types)
 			{
@@ -159,8 +188,37 @@ namespace SLua
 
 			CustomExport.OnGetNoUseList(out noUseList);
 			CustomExport.OnGetUseList(out uselist);
-			
-			Assembly assembly = Assembly.Load("UnityEngine.UI");
+
+            // Get use and nouse list from custom export.
+            object[] aCustomExport = new object[1];
+            InvokeEditorMethod<ICustomExportPost>("OnGetUseList", ref aCustomExport);
+            if (null != aCustomExport[0])
+            {
+                if (null != uselist)
+                {
+                    uselist.AddRange((List<string>)aCustomExport[0]);
+                }
+                else
+                {
+                    uselist = (List<string>)aCustomExport[0];
+                }
+            }
+
+            aCustomExport[0] = null;
+            InvokeEditorMethod<ICustomExportPost>("OnGetNoUseList", ref aCustomExport);
+            if (null != aCustomExport[0])
+            {
+                if ((null != noUseList))
+                {
+                    noUseList.AddRange((List<string>)aCustomExport[0]);
+                }
+                else
+                {
+                    noUseList = (List<string>)aCustomExport[0];
+                }
+            }
+
+            Assembly assembly = Assembly.Load("UnityEngine.UI");
 			Type[] types = assembly.GetExportedTypes();
 			
 			List<Type> exports = new List<Type>();
@@ -215,6 +273,18 @@ namespace SLua
 			};
 
             HashSet<string> namespaces = CustomExport.OnAddCustomNamespace();
+
+            // Add custom namespaces.
+            object[] aCustomExport = null;
+            List<object> aCustomNs = LuaCodeGen.InvokeEditorMethod<ICustomExportPost>("OnAddCustomNamespace", ref aCustomExport);
+            foreach (object cNsSet in aCustomNs)
+            {
+                foreach (string strNs in (HashSet<string>)cNsSet)
+                {
+                    namespaces.Add(strNs);
+                }
+            }
+
             Assembly assembly;
             Type[] types;
 
@@ -245,11 +315,9 @@ namespace SLua
 
             CustomExport.OnAddCustomClass(fun);
 
-
-			
-			//detect interface ICustomExportPost,and call OnAddCustomClass
-			InvokeEditorMethod<ICustomExportPost>("OnAddCustomClass",new object[]{fun});
-
+            //detect interface ICustomExportPost,and call OnAddCustomClass
+            aCustomExport = new object[] { fun };
+			InvokeEditorMethod<ICustomExportPost>("OnAddCustomClass", ref aCustomExport);
 
 			GenerateBind(exports, "BindCustom", 3, path);
             if(autoRefresh)
@@ -258,19 +326,53 @@ namespace SLua
 			Debug.Log("Generate custom interface finished");
 		}
 
-		static private void InvokeEditorMethod<T>(string methodName,object[] parameters){
-			System.Reflection.Assembly editorAssembly = System.Reflection.Assembly.Load("Assembly-CSharp-Editor");
+		static public List<object> InvokeEditorMethod<T>(string methodName, ref object[] parameters)
+        {
+            List<object> aReturn = new List<object>();
+            System.Reflection.Assembly editorAssembly = System.Reflection.Assembly.Load("Assembly-CSharp-Editor");
 			Type[] editorTypes = editorAssembly.GetExportedTypes();
 			foreach (Type t in editorTypes)
 			{
-				if(typeof(T).IsAssignableFrom(t)){
+				if(typeof(T).IsAssignableFrom(t))
+                {
 					System.Reflection.MethodInfo method =  t.GetMethod(methodName,System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-					if(method != null){
-						method.Invoke(null,parameters);
-					}
+                    if (method != null)
+                    {
+                        object cRes = method.Invoke(null, parameters);
+                        if (null != cRes)
+                        {
+                            aReturn.Add(cRes);
+                        }
+                    }
 				}
 			}
+
+            return aReturn;
 		}
+
+        static public List<object> GetEditorField<T>(string strFieldName)
+        {
+            List<object> aReturn = new List<object>();
+            System.Reflection.Assembly cEditorAssembly = System.Reflection.Assembly.Load("Assembly-CSharp-Editor");
+            Type[] aEditorTypes = cEditorAssembly.GetExportedTypes();
+            foreach (Type t in aEditorTypes)
+            {
+                if (typeof(T).IsAssignableFrom(t))
+                {
+                    FieldInfo cField = t.GetField(strFieldName, BindingFlags.Static | BindingFlags.Public);
+                    if (null != cField)
+                    {
+                        object cValue = cField.GetValue(t);
+                        if (null != cValue)
+                        {
+                            aReturn.Add(cValue);
+                        }
+                    }
+                }
+            }
+
+            return aReturn;
+        }
 
 		[MenuItem("SLua/3rdDll/Make")]
 		static public void Generate3rdDll()
@@ -283,8 +385,9 @@ namespace SLua
 			List<string> assemblyList = new List<string>();
 			CustomExport.OnAddCustomAssembly(ref assemblyList);
 
-			//detect interface ICustomExportPost,and call OnAddCustomAssembly
-			InvokeEditorMethod<ICustomExportPost>("OnAddCustomAssembly",new object[]{assemblyList});
+            //detect interface ICustomExportPost,and call OnAddCustomAssembly
+            object[] aCustomExport = new object[] { assemblyList };
+            InvokeEditorMethod<ICustomExportPost>("OnAddCustomAssembly", ref aCustomExport);
 
 			foreach (string assemblyItem in assemblyList)
 			{
@@ -424,7 +527,23 @@ namespace SLua
 			Dictionary<Type,List<MethodInfo>> dic = new Dictionary<Type, List<MethodInfo>>();
 			List<string> asems;
 			CustomExport.OnGetAssemblyToGenerateExtensionMethod(out asems);
-			foreach (string assstr in asems)
+
+            // Get list from custom export.
+            object[] aCustomExport = new object[1];
+            LuaCodeGen.InvokeEditorMethod<ICustomExportPost>("OnGetAssemblyToGenerateExtensionMethod", ref aCustomExport);
+            if (null != aCustomExport[0])
+            {
+                if (null != asems)
+                {
+                    asems.AddRange((List<string>)aCustomExport[0]);
+                }
+                else
+                {
+                    asems = (List<string>)aCustomExport[0];
+                }
+            }
+
+            foreach (string assstr in asems)
 			{
 				Assembly assembly = Assembly.Load(assstr);
 				foreach (Type type in assembly.GetExportedTypes())
@@ -1470,6 +1589,17 @@ namespace SLua
 		    var methodString = string.Format("{0}.{1}", mi.DeclaringType, mi.Name);
 		    if (CustomExport.FunctionFilterList.Contains(methodString))
 		        return true;
+
+            // Check in custom export function filter list.
+            List<object> aFuncFilterList = LuaCodeGen.GetEditorField<ICustomExportPost>("FunctionFilterList");
+            foreach (object aFilterList in aFuncFilterList)
+            {
+                if (((List<string>)aFilterList).Contains(methodString))
+                {
+                    return true;
+                }
+            }
+
 			return mi.IsDefined(typeof(DoNotToLuaAttribute), false);
 		}
 		

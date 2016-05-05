@@ -290,6 +290,10 @@ namespace SLua
 			return null;
 		}
 
+		// you can add call method with specific type rather than object type to avoid gc alloc, like
+		// public object call(int a1,float a2,string a3,object a4)
+		
+		// using specific type to avoid type boxing/unboxing
 	}
 
 	public class LuaTable : LuaVar, IEnumerable<LuaTable.TablePair>
@@ -1141,6 +1145,7 @@ end
 				cnt = refQueue.Count;
 			}
 
+			var l = L;
 			for (int n = 0; n < cnt; n++)
 			{
 				UnrefPair u;
@@ -1148,7 +1153,7 @@ end
 				{
 					u = refQueue.Dequeue();
 				}
-				u.act(L, u.r);
+				u.act(l, u.r);
 			}
 		}
 	}
