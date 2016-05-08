@@ -94,8 +94,13 @@ namespace SLua
                     case "Double":
                         return (double)LuaDLL.lua_tonumber(l, p);
                     case "Boolean":
-                        return LuaDLL.lua_toboolean(l, p);
-
+                        return (bool)LuaDLL.lua_toboolean(l, p);
+                    case "Byte":
+                        return (byte) LuaDLL.lua_tointeger(l, p);
+                    case "UInt16":
+                        return (ushort) LuaDLL.lua_tointeger(l, p);
+                    case "Int16":
+                        return (short) LuaDLL.lua_tointeger(l, p);
                     default:
                         // Enum convert
                         if (t.BaseType == typeof (System.Enum))

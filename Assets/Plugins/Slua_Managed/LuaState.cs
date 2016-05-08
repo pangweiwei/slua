@@ -849,7 +849,7 @@ end
 		static public void pushcsfunction(IntPtr L, LuaCSFunction function)
 		{
 			LuaDLL.lua_getref(L, get(L).PCallCSFunctionRef);
-			LuaDLL.lua_pushcclosure(L, Marshal.GetFunctionPointerForDelegate(function), 0);
+			LuaDLL.lua_pushcclosure(L, function, 0);
 			LuaDLL.lua_call(L, 1, 1);
 		}
 

@@ -503,6 +503,10 @@ namespace LuaInterface
 
         public static void lua_pushcfunction(IntPtr luaState, LuaCSFunction function)
         {
+#if SLUA_STANDALONE
+            // Add all LuaCSFunction£¬ or they will be GC collected!  (problem at windows, .net framework 4.5, `CallbackOnCollectedDelegated` exception)
+            GCHandle.Alloc(function);
+#endif
             IntPtr fn = Marshal.GetFunctionPointerForDelegate(function);
             lua_pushcclosure(luaState, fn, 0);
         }
@@ -643,6 +647,10 @@ namespace LuaInterface
 
         public static void lua_pushcclosure(IntPtr l, LuaCSFunction f, int nup)
         {
+#if SLUA_STANDALONE
+            // Add all LuaCSFunction£¬ or they will be GC collected!  (problem at windows, .net framework 4.5, `CallbackOnCollectedDelegated` exception)
+            GCHandle.Alloc(f);
+#endif
             IntPtr fn = Marshal.GetFunctionPointerForDelegate(f);
             lua_pushcclosure(l, fn, nup);
         }
