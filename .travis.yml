@@ -1,0 +1,37 @@
+# Travis CI Continuous Integration
+# Linux Build test , no deployment
+# deployment on the appveyor.yml
+language: csharp
+mono:
+  - 3.12.0
+install:
+ - nuget install NUnit.Runners -Version 3.0.1 -OutputDirectory testrunner
+ # premake5 use libssl.so.10
+ - sudo apt-get install openssl
+ - sudo apt-get install libssl-dev
+ - sudo ln -s /lib/x86_64-linux-gnu/libssl.so.1.0.0 /lib/x86_64-linux-gnu/libssl.so.10
+ - sudo ln -s /lib/x86_64-linux-gnu/libcrypto.so.1.0.0 /lib/x86_64-linux-gnu/libcrypto.so.10
+script:
+  # ==== slua standalone linux ===
+  # build linux .so
+  - chmod +x ./build/make_linux_jit.sh
+  -  ./build/make_linux_jit.sh
+  # build C# solution
+  - chmod +x ./tools/premake5
+  - chmod +x ./standalone/premake.sh
+  - chmod +x ./standalone/build_linux_x64.sh
+  - ./standalone/build_linux_x64.sh
+  # test
+  - cd ./standalone/bin
+  - export LD_LIBRARY_PATH=$PWD
+  # travis ci has problem with nunit3, ignore it temporary
+  #- mono ../../testrunner/NUnit.Console.3.0.1/tools/nunit3-console.exe slua-standalone-tests.dll
+  # tarball
+  - tar czvf slua-standalone-linux.tar.gz *
+#deploy:
+#  provider: releases
+#  api_key: "18cf559def7681322485343947ee76e49607a77d"
+#  file: ./standalone/bin/slua-standalone-linux.tar.gz
+#  skip_cleanup: true
+#  on:
+#    tags: true
