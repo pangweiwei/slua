@@ -1,9 +1,9 @@
 
 solution "slua-standalone"
-    configurations { 
+    configurations {
         "Debug", "Release"
     }
-    
+
     location ("./" .. (_ACTION or ""))
     debugdir ("./bin")
     debugargs {  }
@@ -26,7 +26,7 @@ configuration "vs*"
 project "slua-standalone"
 language "C#"
 kind "SharedLib"
-framework "3.5"
+framework "4.0"
 targetdir "./bin"
 
 files
@@ -36,7 +36,7 @@ files
 
 defines
 {
-	"SLUA_STANDALONE", 
+	"SLUA_STANDALONE",
 	"UNITY_STANDALONE_WIN",  -- sim unity pc
 	"UNITY_STANDALONE",
 }
@@ -51,7 +51,7 @@ links
 project "slua-standalone-tests"
 language "C#"
 kind "SharedLib"
-framework "3.5"
+framework "4.0"
 targetdir "./bin"
 
 files

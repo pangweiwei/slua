@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>slua-standalone-tests</RootNamespace>
     <AssemblyName>slua-standalone-tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
@@ -68,8 +68,14 @@
     <Compile Include="..\slua-standalone-tests\Main.cs">
       <Link>slua-standalone-tests\Main.cs</Link>
     </Compile>
+    <Compile Include="..\slua-standalone-tests\TestEnum.cs">
+      <Link>slua-standalone-tests\TestEnum.cs</Link>
+    </Compile>
     <Compile Include="..\slua-standalone-tests\TestSLua.cs">
       <Link>slua-standalone-tests\TestSLua.cs</Link>
+    </Compile>
+    <Compile Include="..\slua-standalone-tests\TestStruct.cs">
+      <Link>slua-standalone-tests\TestStruct.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
