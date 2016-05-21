@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace SLua.Test
@@ -54,5 +55,81 @@ return childClass
 
         }
 
+        [Test]
+        public void DictionaryStringKeyGet()
+        {
+            var dict = new Dictionary<string, ushort>();
+            dict["TestString"] = 321;
+            var code = @"
+function Func(dict)
+    dict['TestString'] = 888
+    return dict['TestString']
+end
+return Func
+";
+            var ret = luaSvr.luaState.doString(code);
+            var func = ret as LuaFunction;
+            var result = func.call(dict);
+
+            Assert.AreEqual(888, result);
+        }
+
+        [Test]
+        public void DictionaryUShortKeyGet()
+        {
+            var dict = new Dictionary<ushort, ushort>();
+            dict[123] = 321;
+            var code = @"
+function Func(dict)
+    dict[123] = 888
+    return dict[123]
+end
+return Func
+";
+            var ret = luaSvr.luaState.doString(code);
+            var func = ret as LuaFunction;
+            var result = func.call(dict);
+
+            Assert.AreEqual(888, result);
+        }
+
+        [Test]
+        public void DictionaryObjectKeyGet()
+        {
+            var dict = new Dictionary<object, ushort>();
+            dict[123] = 321;
+            var code = @"
+function Func(dict)
+    dict[123] = 888
+    return dict[123]
+end
+return Func
+";
+            var ret = luaSvr.luaState.doString(code);
+            var func = ret as LuaFunction;
+            var result = func.call(dict);
+
+            Assert.AreEqual(888, result);
+        }
+
+        [Test]
+        public void DictionaryClassKey()
+        {
+            var child = new ChildClass();
+            var dict = new Dictionary<object, ulong>();
+            dict[child] = 321;
+            var code = @"
+function Func(dict, child)
+    dict[child] = 888
+    return dict[child]
+end
+return Func
+";
+            var ret = luaSvr.luaState.doString(code);
+            var func = ret as LuaFunction;
+            var result = func.call(dict, child);
+
+            Assert.AreEqual(888, result);
+        }
     }
 }

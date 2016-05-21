@@ -26,7 +26,7 @@ configuration "vs*"
 project "slua-standalone"
 language "C#"
 kind "SharedLib"
-framework "4.0"
+framework "3.5"
 targetdir "./bin"
 
 files
@@ -51,7 +51,7 @@ links
 project "slua-standalone-tests"
 language "C#"
 kind "SharedLib"
-framework "4.0"
+framework "3.5"
 targetdir "./bin"
 
 files
@@ -67,5 +67,5 @@ links
 {
     "slua-standalone",
     "System",
-     "./packages/NUnit.3.0.1/lib/net20/nunit.framework.dll",
+     "./packages/NUnit.2.6.4/lib/nunit.framework.dll",
 }

@@ -1171,7 +1171,7 @@ return index
 			object obj = checkVar(l, p);
             try
             {
-                if (t.BaseType == typeof(System.Enum))
+                if (t.IsEnum)
                 {
                     // double to int
                     var number = Convert.ChangeType(obj, typeof(int));

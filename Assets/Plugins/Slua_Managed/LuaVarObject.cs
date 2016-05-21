@@ -103,7 +103,7 @@ namespace SLua
                         return (short)LuaDLL.lua_tointeger(l, p);
                     default:
                         // Enum convert
-                        if (t.BaseType == typeof(System.Enum))
+                        if (t.IsEnum)
                         {
                             var num = LuaDLL.lua_tointeger(l, p);
                             return Enum.ToObject(t, num);
@@ -213,9 +213,12 @@ namespace SLua
 
             if (self is IDictionary)
             {
-                object v = (self as IDictionary)[key];
+                var dict = self as IDictionary;
+                
+                object v = dict[key];
+                pushValue(l, true);
                 pushVar(l, v);
-                return 1;
+                return 2;
             }
             return 0;
 
@@ -329,7 +332,9 @@ namespace SLua
         {
             if (self is IDictionary)
             {
-                (self as IDictionary)[key] = checkVar(l, 3);
+                var dictType = getType(self);
+                var valueType = dictType.GetGenericArguments()[1];
+                (self as IDictionary)[key] = checkVar(l, 3, valueType);
                 return ok(l);
             }
 
@@ -384,19 +389,26 @@ namespace SLua
             }
             else if (self is IDictionary)
             {
+                var dict = (IDictionary)self;// as IDictionary;
                 //support enumerate key
+                object dictKey = index;
                 if (type.IsGenericType)
                 {
-                    Type t = type.GetGenericArguments()[0];
-                    if (t.IsEnum)
+                    Type keyType = type.GetGenericArguments()[0];
+
+                    if (keyType.IsEnum)
                     {
                         pushValue(l, true);
-                        pushVar(l, (self as IDictionary)[Enum.Parse(t, index.ToString())]);
+                        pushVar(l, dict[Enum.Parse(keyType, dictKey.ToString())]);
                         return 2;
                     }
+
+                    if (keyType != dictKey.GetType())
+                        dictKey = Convert.ChangeType(dictKey, keyType); // if key is not int but ushort/uint,  IDictionary will cannot find the key and return null!
                 }
+                
                 pushValue(l, true);
-                pushVar(l, (self as IDictionary)[index]);
+                pushVar(l, dict[dictKey]);
                 return 2;
             }
             return 0;
@@ -417,13 +429,18 @@ namespace SLua
             }
             else if (self is IDictionary)
             {
+                Type keyType = type.GetGenericArguments()[0];
+                object dictKey = index;
+                if (keyType != dictKey.GetType())
+                    dictKey = Convert.ChangeType(dictKey, keyType); // if key is not int but ushort/uint,  IDictionary will cannot find the key and return null!
+
                 if (type.IsGenericType)
                 {
                     Type t = type.GetGenericArguments()[1];
-                    (self as IDictionary)[index] = Convert.ChangeType(checkVar(l, 3), t);
+                    (self as IDictionary)[dictKey] = Convert.ChangeType(checkVar(l, 3), t);
                 }
                 else
-                    (self as IDictionary)[index] = checkVar(l, 3);
+                    (self as IDictionary)[dictKey] = checkVar(l, 3);
             }
 
             pushValue(l, true);
@@ -434,10 +451,16 @@ namespace SLua
         {
             if (self is IDictionary)
             {
-                (self as IDictionary)[k] = v;
+                var dict = self as IDictionary;
+                var dictType = getType(self);
+                var keyType = dictType.GetGenericArguments()[0];
+                var valueType = dictType.GetGenericArguments()[1];
+
+                var key = k;
+                var value = Convert.ChangeType(v, valueType);
+                dict[key] = value;
             }
-            pushValue(l, true);
-            return 1;
+            return ok(l);
         }
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
