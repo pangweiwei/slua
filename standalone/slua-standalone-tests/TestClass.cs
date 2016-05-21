@@ -16,7 +16,7 @@ namespace SLua.Test
 
         private class ParentClass
         {
-            private int ParentField;
+            private int ParentField = 0;
 
             public int GetParentField
             {
@@ -27,7 +27,7 @@ namespace SLua.Test
 
         private class ChildClass : ParentClass
         {
-            private uint ChildField;
+            private uint ChildField = 0;
 
             public uint GetChildField
             {

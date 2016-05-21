@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -9,13 +10,13 @@ namespace SLua.Test
     [TestFixture]
     public class TestSLua
     {
-        private LuaSvr luaSvr;
+        private LuaSvr _luaSvr;
 
         [SetUp]
         public void Init()
         {
-            luaSvr = new LuaSvr();
-            luaSvr.init(x => { }, () => { });
+            _luaSvr = new LuaSvr();
+            _luaSvr.init(x => { }, () => { });
 
         }
         [Test]
@@ -52,10 +53,11 @@ return testVar;
 local TestSLua = Slua.GetClass('SLua.Test.TestSLua')
 return TestSLua
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = _luaSvr.luaState.doString(code);
             Assert.AreEqual("SLua.LuaClassObject", ret.GetType().ToString());
 
             var clsField = ret.GetType().GetField("cls", BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.NotNull(clsField);
             var cls = clsField.GetValue(ret);
             Assert.AreEqual(typeof(TestSLua), cls);
         }
@@ -75,7 +77,7 @@ return TestSLua
     local TestSLua = Slua.GetClass('SLua.Test.TestSLua')
     return TestSLua.DoMethod(123)
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = _luaSvr.luaState.doString(code);
             Assert.AreEqual(123, ret);
         }
     }

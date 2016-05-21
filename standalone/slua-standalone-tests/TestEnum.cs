@@ -64,6 +64,24 @@ return Func
             Assert.AreEqual(EnumType.DogEnum, this.EnumValue);
         }
 
+        static EnumType TestMethod(EnumType em)
+        {
+            return em;
+        }
+
+        [Test]
+        public void CallMethodWithEnum()
+        {
+            var code = @"
+local TestEnum = Slua.GetClass('SLua.Test.TestEnum')
+local EnumType = Slua.GetClass('SLua.Test.TestEnum+EnumType')
+
+return TestEnum.TestMethod(EnumType.BetaEnum)
+";
+            var ret = luaSvr.luaState.doString(code);
+            Assert.AreEqual((int)EnumType.BetaEnum, ret);
+        }
+
         [Test]
         public void SetEnum3()
         {
