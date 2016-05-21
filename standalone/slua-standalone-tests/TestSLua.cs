@@ -19,7 +19,7 @@ namespace SLua.Test
 
         }
         [Test]
-        public void TestLuaState()
+        public void LuaState()
         {
             var luaState = new LuaState();
             var obj = luaState.doString("print 'abc';return 123");
@@ -29,7 +29,7 @@ namespace SLua.Test
         static readonly LuaSvr CacheLuaSvr = new LuaSvr();
 
         [Test]
-        public void TestLuaSvr()
+        public void LuaSvr()
         {
             var luaSvr = CacheLuaSvr;
             luaSvr.init((x) => { }, () => { });
@@ -46,7 +46,7 @@ return testVar;
         }
 
         [Test]
-        public void TestSLuaLib()
+        public void SLuaLib()
         {
             var code = @"
 local TestSLua = Slua.GetClass('SLua.Test.TestSLua')
@@ -69,7 +69,7 @@ return TestSLua
         }
 
         [Test]
-        public void TestDoMethod()
+        public void DoMethod()
         {
             var code = @"
     local TestSLua = Slua.GetClass('SLua.Test.TestSLua')

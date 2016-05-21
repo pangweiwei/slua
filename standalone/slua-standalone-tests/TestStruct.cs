@@ -53,11 +53,11 @@ namespace SLua.Test
         }
 
         [Test]
-        public void TestDoMethodWithStructArg()
+        public void DoMethodWithStructArg()
         {
             var code = @"
-local v1 = Slua.CreateClass('SLua.Test.TestStruct+Vector3', 1.5, 2.5, 3.5);
-local v2 = Slua.CreateClass('SLua.Test.TestStruct+Vector2', 1.5, 2.5);
+local v1 = Slua.CreateClass('SLua.Test.TestStruct+Vector3', 1.52, 2.5, 3.5);
+local v2 = Slua.CreateClass('SLua.Test.TestStruct+Vector2', 1.52, 2.5);
 local TestStruct = Slua.GetClass('SLua.Test.TestStruct')
 TestStruct.DoMethod(v1, v2)
 return 1
@@ -67,7 +67,7 @@ return 1
         }
 
         [Test]
-        public void TestCreateStructVector3()
+        public void CreateStructVector3()
         {
             var code = @"
     local v = Slua.CreateClass('SLua.Test.TestStruct+Vector3', 1.5, 2.5)
@@ -89,7 +89,7 @@ return 1
         /// Test Create a struct , like Vector2
         /// </summary>
         [Test]
-        public void TestCreateStructVector2()
+        public void CreateStructVector2()
         {
             var luaSvr = new LuaSvr();
             luaSvr.init(x => { }, () => { });

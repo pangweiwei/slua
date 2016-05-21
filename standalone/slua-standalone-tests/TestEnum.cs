@@ -26,7 +26,7 @@ namespace SLua.Test
         }
 
         [Test]
-        public void TestSetEnum()
+        public void SetEnum()
         {
             var code = @"
 function Func(this, arg2)
@@ -45,7 +45,7 @@ return Func
         }
 
         [Test]
-        public void TestSetEnum2()
+        public void SetEnum2()
         {
             var code = @"
 function Func(this)
@@ -65,7 +65,7 @@ return Func
         }
 
         [Test]
-        public void TestSetEnum3()
+        public void SetEnum3()
         {
             var code = @"
 local EnumType = Slua.GetClass('SLua.Test.TestEnum+EnumType')
