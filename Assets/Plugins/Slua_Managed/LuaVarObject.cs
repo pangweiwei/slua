@@ -453,7 +453,6 @@ namespace SLua
             {
                 var dict = self as IDictionary;
                 var dictType = getType(self);
-                var keyType = dictType.GetGenericArguments()[0];
                 var valueType = dictType.GetGenericArguments()[1];
 
                 var key = k;
