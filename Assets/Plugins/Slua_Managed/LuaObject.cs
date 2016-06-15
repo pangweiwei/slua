@@ -989,7 +989,21 @@ return index
 					&& matchType(l, from + 9, t10);
 		}
 
-		public static bool matchType(IntPtr l, int total, int from, ParameterInfo[] pars)
+        public static bool matchType(IntPtr l, int total, int from, params Type[] t)
+        {
+            if (total - from + 1 != t.Length)
+                return false;
+
+            for (int i = 0; i < t.Length; ++i)
+            {
+                if (!matchType(l, from + i, t[i]))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public static bool matchType(IntPtr l, int total, int from, ParameterInfo[] pars)
 		{
 			if (total - from + 1 != pars.Length)
 				return false;
