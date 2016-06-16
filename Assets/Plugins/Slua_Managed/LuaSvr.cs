@@ -200,6 +200,7 @@ namespace SLua
 		public void init(Action<int> tick,Action complete,LuaSvrFlag flag=LuaSvrFlag.LSF_BASIC)
         {
 			LuaState luaState = new LuaState();
+            this.luaState = luaState;
 
 			IntPtr L = luaState.L;
 			LuaObject.init(L);
@@ -221,7 +222,6 @@ namespace SLua
 
 			lgo.StartCoroutine(waitForBind(tick, () =>
 			{
-				this.luaState = luaState;
 				doinit(L,flag);
 				complete();
 				checkTop(L);
