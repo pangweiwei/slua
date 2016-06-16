@@ -1,9 +1,9 @@
 
 solution "slua-standalone"
-    configurations { 
+    configurations {
         "Debug", "Release"
     }
-    
+
     location ("./" .. (_ACTION or ""))
     debugdir ("./bin")
     debugargs {  }
@@ -36,7 +36,7 @@ files
 
 defines
 {
-	"SLUA_STANDALONE", 
+	"SLUA_STANDALONE",
 	"UNITY_STANDALONE_WIN",  -- sim unity pc
 	"UNITY_STANDALONE",
 }
@@ -67,5 +67,5 @@ links
 {
     "slua-standalone",
     "System",
-     "./packages/NUnit.3.0.1/lib/net20/nunit.framework.dll",
+     "./packages/NUnit.2.6.4/lib/nunit.framework.dll",
 }

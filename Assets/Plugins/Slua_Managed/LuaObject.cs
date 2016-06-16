@@ -1171,10 +1171,17 @@ return index
 			object obj = checkVar(l, p);
             try
             {
-                return obj==null?null:Convert.ChangeType(obj, t);
+                if (t.IsEnum)
+                {
+                    // double to int
+                    var number = Convert.ChangeType(obj, typeof(int));
+                    return Enum.ToObject(t, number);
+                }
+
+                return obj == null ? null : Convert.ChangeType(obj, t);
             }
-            catch(Exception) {
-				throw new Exception(string.Format("parameter {0} expected {1}, got {2}", p, t.Name, obj == null ? "null" : obj.GetType().Name));
+            catch(Exception e) {
+				throw new Exception(string.Format("parameter {0} expected {1}, got {2}, exception: {3}", p, t.Name, obj == null ? "null" : obj.GetType().Name, e.Message));
             }
         }
 

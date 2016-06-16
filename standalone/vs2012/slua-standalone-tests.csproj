@@ -61,15 +61,24 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.3.0.1\lib\net20\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\slua-standalone-tests\Main.cs">
-      <Link>slua-standalone-tests\Main.cs</Link>
+    <Compile Include="..\slua-standalone-tests\TestClass.cs">
+      <Link>slua-standalone-tests\TestClass.cs</Link>
+    </Compile>
+    <Compile Include="..\slua-standalone-tests\TestDLL.cs">
+      <Link>slua-standalone-tests\TestDLL.cs</Link>
+    </Compile>
+    <Compile Include="..\slua-standalone-tests\TestEnum.cs">
+      <Link>slua-standalone-tests\TestEnum.cs</Link>
     </Compile>
     <Compile Include="..\slua-standalone-tests\TestSLua.cs">
       <Link>slua-standalone-tests\TestSLua.cs</Link>
+    </Compile>
+    <Compile Include="..\slua-standalone-tests\TestStruct.cs">
+      <Link>slua-standalone-tests\TestStruct.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
