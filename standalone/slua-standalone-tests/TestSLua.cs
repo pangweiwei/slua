@@ -98,5 +98,22 @@ return TestSLua
             var ret = _luaSvr.luaState.doString(code);
             Assert.AreEqual(321, ret);
         }
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        static decimal DoMethodDecimal(decimal a1, decimal a2)
+        {
+            Assert.AreEqual(123, a1);
+            return a2;
+        }
+
+        [Test]
+        public void DoMethodDecimal()
+        {
+            var code = @"
+    local TestSLua = Slua.GetClass('SLua.Test.TestSLua')
+    return TestSLua.DoMethodDecimal(123, 321)
+";
+            var ret = _luaSvr.luaState.doString(code);
+            Assert.AreEqual(321, ret);
+        }
     }
 }

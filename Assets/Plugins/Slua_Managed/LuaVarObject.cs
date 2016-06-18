@@ -85,6 +85,8 @@ namespace SLua
                                 return str;
                         }
                         break;
+                    case "Decimal":
+                        return (decimal)LuaDLL.lua_tointeger(l, p);
                     case "Int64":
                         return (long)LuaDLL.lua_tointeger(l, p);
                     case "UInt64":
