@@ -19,8 +19,8 @@ Mail to : sineysan#163.com (both of Chinese/English)
 
 ##Release Download
 
-[slua-unity](https://github.com/pangweiwei/slua/releases/latest)
-[slua-standalone](https://www.nuget.org/packages/slua-standalone)
+- [slua-unity](https://github.com/pangweiwei/slua/releases/latest)
+- [slua-standalone](https://www.nuget.org/packages/slua-standalone)
 
 ##Integrate with 3rd Lua Library
 
