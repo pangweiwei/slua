@@ -115,5 +115,31 @@ return TestSLua
             var ret = _luaSvr.luaState.doString(code);
             Assert.AreEqual(321, ret);
         }
+
+
+        [Test]
+        public void UTF8Bom()
+        {
+            var bytes = Encoding.UTF8.GetBytes("return 1");
+
+            var bomBytes = new byte[bytes.Length + 3];
+            Array.Copy(bytes, 0, bomBytes, 3, bytes.Length);
+
+            bomBytes[0] = 0xEF;
+            bomBytes[1] = 0xBB;
+            bomBytes[2] = 0xBF;
+
+
+
+            object ret;
+            Assert.IsTrue(_luaSvr.luaState.doBuffer(bomBytes, "TestUtf8Bom", out ret));
+            Assert.AreEqual(1, ret);
+
+            // Test BOM filter
+            var noBomBytes = SLua.LuaState.CleanUTF8Bom(bomBytes);
+            Assert.AreNotEqual(noBomBytes[0], 0xEF);
+            Assert.AreNotEqual(noBomBytes[0], 0xBB);
+            Assert.AreNotEqual(noBomBytes[0], 0xBF);
+        }
     }
 }
