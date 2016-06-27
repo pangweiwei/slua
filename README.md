@@ -19,7 +19,8 @@ Mail to : sineysan#163.com (both of Chinese/English)
 
 ##Release Download
 
-[here.](https://github.com/pangweiwei/slua/releases/latest)
+- [slua-unity](https://github.com/pangweiwei/slua/releases/latest)
+- [slua-standalone](https://www.nuget.org/packages/slua-standalone)
 
 ##Integrate with 3rd Lua Library
 
@@ -47,33 +48,20 @@ Click menu, SLua->All->Make  generate all wrap file for your version of unity.
 
 ##Main feature
 
-static code generating, no reflection, no extra gc alloc, very fast
-
-remote debugger
-
-full support iOS/iOS64, support il2cpp
-
-above 90% UnityEngine interface exported ( remove flash, platform dependented interface )
-
-100% UnityEngine.UI interface ( require Unity4.6+ )
-
-support standalone in mono without Unity3D
-
-support UnityEvent/UnityAction for event callback via lua function
-
-support delegate via lua function (include iOS)
-
-support yield call
-
-support custom class exported
-
-support extension method
-
-export enum as integer
-
-return array as lua table
-
-using raw luajit, can be replaced with lua5.3/lua5.1
+- static code generating, no reflection, no extra gc alloc, very fast
+- remote debugger
+- full support iOS/iOS64, support il2cpp
+- above 90% UnityEngine interface exported ( remove flash, platform dependented interface )
+- 100% UnityEngine.UI interface ( require Unity4.6+ )
+- support standalone mode in .net framework/mono without Unity3D
+- support UnityEvent/UnityAction for event callback via lua function
+- support delegate via lua function (include iOS)
+- support yield call
+- support custom class exported
+- support extension method
+- export enum as integer
+- return array as lua table
+- using raw luajit, can be replaced with lua5.3/lua5.1
 
 ##Usage
 

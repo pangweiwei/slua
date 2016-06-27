@@ -17,6 +17,8 @@ build_script:
 after_build:
   # slua-standalone
   - cmd: set BASE=%~dp0
+  # unit tests
+  - cmd: standalone\unit_tests.bat
   # - cmd: cd standalone\bin
   # - cmd: nunit3-console slua-standalone-tests.dll --result=testresults.xml;format=AppVeyor
   # - cmd: 7z a slua-standalone.zip slua-standalone.dll
