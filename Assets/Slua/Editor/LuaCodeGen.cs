@@ -1048,11 +1048,9 @@ namespace SLua
 			Write(file, "static public void reg(IntPtr l) {");
 			Write(file, "getEnumTable(l,\"{0}\");", string.IsNullOrEmpty(givenNamespace) ? FullName(t) : givenNamespace);
 
-			FieldInfo[] fields = t.GetFields();
-			foreach (FieldInfo f in fields)		
+			foreach (string name in Enum.GetNames (t))
 			{
-					if (f.Name == "value__") continue;
-					Write(file, "addMember(l,{0},\"{1}\");", (int)f.GetValue(null), f.Name);
+				Write(file, "addMember(l,{0},\"{1}\");", Convert.ToInt32(Enum.Parse(t, name)), name);
 			}
 			
 			Write(file, "LuaDLL.lua_pop(l, 1);");
