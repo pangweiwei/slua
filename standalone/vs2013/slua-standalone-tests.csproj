@@ -54,6 +54,9 @@
     <Compile Include="..\slua-standalone-tests\TestEnum.cs">
       <Link>slua-standalone-tests\TestEnum.cs</Link>
     </Compile>
+    <Compile Include="..\slua-standalone-tests\TestProperty.cs">
+      <Link>slua-standalone-tests\TestProperty.cs</Link>
+    </Compile>
     <Compile Include="..\slua-standalone-tests\TestSLua.cs">
       <Link>slua-standalone-tests\TestSLua.cs</Link>
     </Compile>

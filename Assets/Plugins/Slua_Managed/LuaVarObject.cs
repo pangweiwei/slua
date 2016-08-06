@@ -270,7 +270,7 @@ namespace SLua
             {
                 case MemberTypes.Property:
                     PropertyInfo p = (PropertyInfo)mi;
-                    MethodInfo get = p.GetGetMethod();
+                    MethodInfo get = p.GetGetMethod(true);
                     pushVar(l, get.Invoke(self, null));
                     break;
                 case MemberTypes.Field:
@@ -362,7 +362,7 @@ namespace SLua
                 case MemberTypes.Property:
                     {
                         PropertyInfo p = (PropertyInfo)mi;
-                        MethodInfo set = p.GetSetMethod();
+                        MethodInfo set = p.GetSetMethod(true);
                         var value = checkVar(l, 3, p.PropertyType);
                         set.Invoke(self, new object[] { value });
                         break;
