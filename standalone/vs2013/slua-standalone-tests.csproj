@@ -42,6 +42,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\slua-standalone-tests\TestArray.cs">
+      <Link>slua-standalone-tests\TestArray.cs</Link>
+    </Compile>
     <Compile Include="..\slua-standalone-tests\TestClass.cs">
       <Link>slua-standalone-tests\TestClass.cs</Link>
     </Compile>
