@@ -64,10 +64,10 @@ return TestSLua
 
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        static float DoMethod(int a1)
+        static double DoMethod(int a1)
         {
-            Assert.AreEqual(123, a1);
-            return (float) a1;
+            Assert.AreEqual(543210543, a1);
+            return a1;
         }
 
         [Test]
@@ -75,16 +75,16 @@ return TestSLua
         {
             var code = @"
     local TestSLua = Slua.GetClass('SLua.Test.TestSLua')
-    return TestSLua.DoMethod(123)
+    return TestSLua.DoMethod(543210543)
 ";
             var ret = _luaSvr.luaState.doString(code);
-            Assert.AreEqual(123, ret);
+            Assert.AreEqual(543210543, (double)ret);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         static ulong DoMethodLong(long a1, ulong a2)
         {
-            Assert.AreEqual(123, a1);
+            Assert.AreEqual(987654321054321, a1);
             return a2;
         }
 
@@ -93,15 +93,16 @@ return TestSLua
         {
             var code = @"
     local TestSLua = Slua.GetClass('SLua.Test.TestSLua')
-    return TestSLua.DoMethodLong(123, 321)
+    return TestSLua.DoMethodLong(987654321054321, 187654321054321)
 ";
             var ret = _luaSvr.luaState.doString(code);
-            Assert.AreEqual(321, ret);
+            Assert.AreEqual(187654321054321, ret);
         }
+
         [MethodImpl(MethodImplOptions.NoInlining)]
         static decimal DoMethodDecimal(decimal a1, decimal a2)
         {
-            Assert.AreEqual(123, a1);
+            Assert.AreEqual(987654321054321, a1);
             return a2;
         }
 
@@ -110,10 +111,10 @@ return TestSLua
         {
             var code = @"
     local TestSLua = Slua.GetClass('SLua.Test.TestSLua')
-    return TestSLua.DoMethodDecimal(123, 321)
+    return TestSLua.DoMethodDecimal(987654321054321, 187654321054321)
 ";
             var ret = _luaSvr.luaState.doString(code);
-            Assert.AreEqual(321, ret);
+            Assert.AreEqual(187654321054321, ret);
         }
 
 

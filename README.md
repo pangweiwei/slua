@@ -26,7 +26,14 @@ Mail to : sineysan#163.com (both of Chinese/English)
 
 Standard slua release doesn't contains any 3rd Lua library(like protobuf, lpeg etc), if you want to use this library, can visit this forked repo https://github.com/luzexi/slua, it focus slua on integrate with other 3rd library.
 
+##Use SLua without Unity3D
+
+You can use slua without Unity3D dependency, it call **slua-standalone**. Useful for C# server development. Find it on https://www.nuget.org/packages/slua-standalone , and it's maintained by https://github.com/mr-kelly/slua.
+
+
 ##Demo with slua
+
+This repo https://github.com/mr-kelly/KSFramework based on slua for hot reloadable asset bundle framework.
 
 This repo https://github.com/lulersoft/ME_SLua based on slua for simple game framework.
 
