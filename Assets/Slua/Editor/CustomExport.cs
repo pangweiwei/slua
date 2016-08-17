@@ -121,6 +121,7 @@ namespace SLua
                 "jvalue",
                 "iPhone",
                 "iOS",
+                "Windows",
                 "CalendarIdentifier",
                 "CalendarUnit",
                 "CalendarUnit",
