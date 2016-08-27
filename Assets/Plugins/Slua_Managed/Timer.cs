@@ -162,9 +162,10 @@ namespace SLua
 			{
 				var timers = wheels[0].nextDial();
 				LinkedListNode<Timer> node = timers.First;
-				for (int j = 0; j < timers.Count; ++j)
+				while(node!=null)
 				{
 					executeTimers.Add(node.Value);
+					timers.Remove(node);
 					freeNode(node);
 					node = node.Next;
 				}
@@ -180,7 +181,7 @@ namespace SLua
 						{
 							var tms = wheel.nextWheel.nextDial();
 							LinkedListNode<Timer> tmsNode = tms.First;
-							for (int k = 0; k < tms.Count; ++k)
+							while(tmsNode!=null)
 							{
 								var tm = tmsNode.Value;
 								if (tm.delete)
@@ -191,6 +192,7 @@ namespace SLua
 								{
 									innerAdd(tm.deadline, tm);
 								}
+								tms.Remove(tmsNode);
 								freeNode(tmsNode);
 								tmsNode = tmsNode.Next;
 							}
