@@ -169,13 +169,15 @@ function main()
 		return true
 	end)
 	
-	LuaTimer.Add(0,3000,function(id)
+	local xt=LuaTimer.Add(0,3000,function(id)
 		print("xx")
 		return true
 	end)
 	
 	LuaTimer.Add(0,70,function(id)
-		print("xx")
+		print("yy")
+	
+		LuaTimer.Delete(xt)
 		return true
 	end)
 
