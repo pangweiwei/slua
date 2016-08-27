@@ -60,21 +60,40 @@ namespace SLua
 			{
 				return vecDial[head++];
 			}
-			internal void add(int delay, Timer tm)
+			internal void add(int delay, LinkedListNode<Timer> tm)
 			{
 				var container = vecDial[(head + (delay - (dialSize - jiffies_msec)) / dialSize) % dial_scale];
 				container.AddLast(tm);
-				tm.container = container;
+				tm.Value.container = container;
 			}
 		}
+
+
 		static int nextSn = 0;
 		static int jiffies_msec = 20;
 		static float jiffies_sec = jiffies_msec * .001f;
 		static Wheel[] wheels;
 		static float pileSecs;
 		static float nowTime;
-		static Dictionary<int, Timer> mapSnTimer;
+		static Dictionary<int, LinkedListNode<Timer> > mapSnTimer;
 		static LinkedList<Timer> executeTimers;
+
+		static LinkedList< Timer > linkNodeCache = new LinkedList<Timer>();
+
+		static LinkedListNode<Timer> getFreeNode() {
+			if(linkNodeCache.Count==0) {
+				var tm = new Timer();
+				return new LinkedListNode<Timer>(tm);
+			}
+
+			var node = linkNodeCache.First;
+			linkNodeCache.RemoveFirst();
+			return node;
+		}
+
+		static void freeNode( LinkedListNode<Timer> node ) {
+			linkNodeCache.AddLast( node );
+		}
 
 		static int intpow(int n, int m)
 		{
@@ -84,9 +103,9 @@ namespace SLua
 			return ret;
 		}
 
-		static void innerAdd(int deadline, Timer tm)
+		static void innerAdd(int deadline,LinkedListNode<Timer> tm)
 		{
-			tm.deadline = deadline;
+			tm.Value.deadline = deadline;
 			int delay = Math.Max(0, deadline - now());
 			Wheel suitableWheel = wheels[wheels.Length - 1];
 			for (int i = 0; i < wheels.Length; ++i)
@@ -101,18 +120,20 @@ namespace SLua
 			suitableWheel.add(delay, tm);
 		}
 
-		static void innerDel(Timer tm)
+		static void innerDel(LinkedListNode<Timer> tm)
 		{
 			innerDel(tm, true);
 		}
 
-		static void innerDel(Timer tm,bool removeFromMap)
+		static void innerDel(LinkedListNode<Timer> node,bool removeFromMap)
 		{
+			var tm = node.Value;
 			tm.delete = true;
 			if (tm.container != null)
 			{
-				tm.container.Remove(tm);
+				tm.container.Remove(node);
 				tm.container = null;
+				freeNode(node);
 			}
 			if (removeFromMap) mapSnTimer.Remove(tm.sn);
 		}
@@ -138,8 +159,9 @@ namespace SLua
 				LinkedListNode<Timer> node = timers.First;
 				for (int j = 0; j < timers.Count; ++j)
 				{
-					var tm = node.Value;
-					executeTimers.AddLast(tm);
+					node.Value.container.Remove(node);
+
+					executeTimers.AddLast(node);
 					node = node.Next;
 				}
 				timers.Clear();
@@ -156,14 +178,14 @@ namespace SLua
 							LinkedListNode<Timer> tmsNode = tms.First;
 							for (int k = 0; k < tms.Count; ++k)
 							{
-								var tm = tmsNode.Value;
-								if (tm.delete)
+								var tm = tmsNode;
+								if (tm.Value.delete)
 								{
-									mapSnTimer.Remove(tm.sn);
+									mapSnTimer.Remove(tm.Value.sn);
 								}
 								else
 								{
-									innerAdd(tm.deadline, tm);
+									innerAdd(tm.Value.deadline, tm);
 								}
 								tmsNode = tmsNode.Next;
 							}
@@ -179,15 +201,15 @@ namespace SLua
 
 			while (executeTimers.Count > 0)
 			{
-				var tm = executeTimers.First.Value;
+				var tm = executeTimers.First;
 				executeTimers.Remove(tm);
-				if (!tm.delete && tm.handler(tm.sn) && tm.cycle > 0)
+				if (!tm.Value.delete && tm.Value.handler(tm.Value.sn) && tm.Value.cycle > 0)
 				{
-					innerAdd(now() + tm.cycle, tm);
+					innerAdd(now() + tm.Value.cycle, tm);
 				}
 				else
 				{
-					mapSnTimer.Remove(tm.sn);
+					mapSnTimer.Remove(tm.Value.sn);
 				}
 			}
 		}
@@ -203,7 +225,7 @@ namespace SLua
 					wheels[i - 1].nextWheel = wheels[i];
 				}
 			}
-			mapSnTimer = new Dictionary<int, Timer>();
+			mapSnTimer = new Dictionary<int, LinkedListNode<Timer> >();
 			executeTimers = new LinkedList<Timer>();
 		}
 
@@ -223,18 +245,20 @@ namespace SLua
 
 		internal static int add(int delay, int cycle, Func<int, bool> handler)
 		{
-			Timer tm = new Timer();
+			var node = getFreeNode();
+			Timer tm = node.Value;
+
 			tm.sn = fetchSn();
 			tm.cycle = cycle;
 			tm.handler = handler;
-			mapSnTimer[tm.sn] = tm;
-			innerAdd(now() + delay, tm);
+			mapSnTimer[tm.sn] = node;
+			innerAdd(now() + delay, node);
 			return tm.sn;
 		}
 
 		internal static void del(int sn)
 		{
-			Timer tm;
+			LinkedListNode<Timer> tm;
 			if (mapSnTimer.TryGetValue(sn, out tm))
 			{
 				innerDel(tm);
