@@ -165,8 +165,8 @@ namespace SLua
 				for (int j = 0; j < timers.Count; ++j)
 				{
 					executeTimers.Add(node.Value);
-					node = node.Next;
 					freeNode(node);
+					node = node.Next;
 				}
 				timers.Clear();
 
