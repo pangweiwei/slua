@@ -60,11 +60,12 @@ namespace SLua
 			{
 				return vecDial[head++];
 			}
-			internal void add(int delay, LinkedListNode<Timer> tm)
+			internal void add(int delay, Timer tm)
 			{
 				var container = vecDial[(head + (delay - (dialSize - jiffies_msec)) / dialSize) % dial_scale];
-				container.AddLast(tm);
-				tm.Value.container = container;
+				var node = getFreeNode(tm);
+				container.AddLast(node);
+				tm.container = container;
 			}
 		}
 
@@ -76,14 +77,13 @@ namespace SLua
 		static float pileSecs;
 		static float nowTime;
 		static Dictionary<int, LinkedListNode<Timer> > mapSnTimer;
-		static LinkedList<Timer> executeTimers;
+		static List<Timer> executeTimers;
 
 		static LinkedList< Timer > linkNodeCache = new LinkedList<Timer>();
 
-		static LinkedListNode<Timer> getFreeNode() {
+		static LinkedListNode<Timer> getFreeNode(Timer t) {
 			if(linkNodeCache.Count==0) {
-				var tm = new Timer();
-				return new LinkedListNode<Timer>(tm);
+				return new LinkedListNode<Timer>(t);
 			}
 
 			var node = linkNodeCache.First;
@@ -103,9 +103,9 @@ namespace SLua
 			return ret;
 		}
 
-		static void innerAdd(int deadline,LinkedListNode<Timer> tm)
+		static void innerAdd(int deadline,Timer tm)
 		{
-			tm.Value.deadline = deadline;
+			tm.deadline = deadline;
 			int delay = Math.Max(0, deadline - now());
 			Wheel suitableWheel = wheels[wheels.Length - 1];
 			for (int i = 0; i < wheels.Length; ++i)
@@ -118,6 +118,11 @@ namespace SLua
 				}
 			}
 			suitableWheel.add(delay, tm);
+		}
+
+		static void innerAdd(int deadline,LinkedListNode<Timer> node)
+		{
+			innerAdd(deadline,node.Value);
 		}
 
 		static void innerDel(LinkedListNode<Timer> tm)
@@ -159,9 +164,7 @@ namespace SLua
 				LinkedListNode<Timer> node = timers.First;
 				for (int j = 0; j < timers.Count; ++j)
 				{
-					node.Value.container.Remove(node);
-
-					executeTimers.AddLast(node);
+					executeTimers.Add(node.Value);
 					node = node.Next;
 				}
 				timers.Clear();
@@ -178,14 +181,14 @@ namespace SLua
 							LinkedListNode<Timer> tmsNode = tms.First;
 							for (int k = 0; k < tms.Count; ++k)
 							{
-								var tm = tmsNode;
-								if (tm.Value.delete)
+								var tm = tmsNode.Value;
+								if (tm.delete)
 								{
-									mapSnTimer.Remove(tm.Value.sn);
+									mapSnTimer.Remove(tm.sn);
 								}
 								else
 								{
-									innerAdd(tm.Value.deadline, tm);
+									innerAdd(tm.deadline, tm);
 								}
 								tmsNode = tmsNode.Next;
 							}
@@ -199,19 +202,19 @@ namespace SLua
 				}
 			}
 
-			while (executeTimers.Count > 0)
+			for(int n=0;n<executeTimers.Count;n++)
 			{
-				var tm = executeTimers.First;
-				executeTimers.Remove(tm);
-				if (!tm.Value.delete && tm.Value.handler(tm.Value.sn) && tm.Value.cycle > 0)
+				var tm = executeTimers[n];
+				if (!tm.delete && tm.handler(tm.sn) && tm.cycle > 0)
 				{
-					innerAdd(now() + tm.Value.cycle, tm);
+					innerAdd(now() + tm.cycle, tm);
 				}
 				else
 				{
-					mapSnTimer.Remove(tm.Value.sn);
+					mapSnTimer.Remove(tm.sn);
 				}
 			}
+			executeTimers.Clear();
 		}
 
 		static void init()
@@ -226,7 +229,7 @@ namespace SLua
 				}
 			}
 			mapSnTimer = new Dictionary<int, LinkedListNode<Timer> >();
-			executeTimers = new LinkedList<Timer>();
+			executeTimers = new List<Timer>();
 		}
 
 		static int fetchSn()
@@ -245,9 +248,8 @@ namespace SLua
 
 		internal static int add(int delay, int cycle, Func<int, bool> handler)
 		{
-			var node = getFreeNode();
-			Timer tm = node.Value;
-
+			Timer tm = new Timer();
+			var node = getFreeNode(tm);
 			tm.sn = fetchSn();
 			tm.cycle = cycle;
 			tm.handler = handler;
