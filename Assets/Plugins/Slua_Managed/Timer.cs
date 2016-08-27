@@ -169,7 +169,7 @@ namespace SLua
 					freeNode(node);
 					node = node.Next;
 				}
-				timers.Clear();
+				// timers.Clear();
 
 				for (int j = 0; j < wheels.Length; ++j)
 				{
@@ -196,7 +196,7 @@ namespace SLua
 								freeNode(tmsNode);
 								tmsNode = tmsNode.Next;
 							}
-							tms.Clear();
+							// tms.Clear();
 						}
 					}
 					else
@@ -360,7 +360,7 @@ namespace SLua
 			{
 				foreach (var t in mapSnTimer)
 				{
-					innerDel(t.Value, false);
+					innerDel(t, false);
 				}
 				mapSnTimer.Clear();
 
