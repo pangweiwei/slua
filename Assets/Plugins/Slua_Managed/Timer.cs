@@ -166,6 +166,7 @@ namespace SLua
 				{
 					executeTimers.Add(node.Value);
 					node = node.Next;
+					freeNode(node);
 				}
 				timers.Clear();
 
@@ -190,6 +191,7 @@ namespace SLua
 								{
 									innerAdd(tm.deadline, tm);
 								}
+								freeNode(tmsNode);
 								tmsNode = tmsNode.Next;
 							}
 							tms.Clear();
