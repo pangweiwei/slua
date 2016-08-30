@@ -14,4 +14,4 @@ cp src/libluajit.a ../luajit-osx/libluajit_x86_64.a
 
 cd ../luajit-osx/
 xcodebuild -configuration=Release
-cp -r Build/Release/slua.bundle ../../Assets/Plugins/
+cp -r Build/Release/slua.bundle ../bin/
