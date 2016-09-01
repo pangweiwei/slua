@@ -12,4 +12,4 @@ make clean
 make CC="gcc" BUILDMODE=static PLAT=macosx
 cp src/liblua.a ../lua-5.1.5/liblua_x86_64.a
 
-lipo -create ../lua-5.1.5/liblua_x86.a ../lua-5.1.5/liblua_x86_64.a -output ../bin/osx/liblua.a
+lipo -create ../lua-5.1.5/liblua_x86.a ../lua-5.1.5/liblua_x86_64.a -output ../bin/osx/libslua.a
