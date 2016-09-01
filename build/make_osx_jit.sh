@@ -12,6 +12,8 @@ make clean
 make CC="gcc" BUILDMODE=static
 cp src/libluajit.a ../luajit-osx/libluajit_x86_64.a
 
+lipo -create ../luajit-osx/libluajit_x86.a ../luajit-osx/libluajit_x86_64.a -output ../luajit-osx/libluajit.a
+
 cd ../luajit-osx/
 xcodebuild -configuration=Release
 cp -r Build/Release/slua.bundle ../bin/
