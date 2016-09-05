@@ -8,21 +8,21 @@ DIR=$(pwd)/../bin
 ${NDKPATH?"Need to set NDKPATH"}
 
 NDK=$NDKPATH
+
+# Android/ARM, armeabi (ARMv5TE soft-float), Android 2.2+ (Froyo)
 NDKABI=8
 NDKVER=$NDK/toolchains/arm-linux-androideabi-4.8
 NDKP=$NDKVER/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-
 NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-arm"
+DESTDIR=$DIR/android/armeabi
+mkdir -p $DESTDIR
+rm -rf "$DESTDIR"/*.a
+make clean
+make HOST_CC="gcc -m32" CROSS=$NDKP TARGET_SYS=Linux TARGET_FLAGS="$NDKF"
 
-# # Android/ARM, armeabi (ARMv5TE soft-float), Android 2.2+ (Froyo)
-# DESTDIR=$DIR/android/armeabi
-# mkdir -p $DESTDIR
-# rm -rf "$DESTDIR"/*.a
-# make clean
-# make HOST_CC="gcc -m32" CROSS=$NDKP TARGET_SYS=Linux TARGET_FLAGS="$NDKF"
-
-# if [ -f $SRCDIR/src/libluajit.a ]; then
-#     mv $SRCDIR/src/libluajit.a $DESTDIR/libslua.a
-# fi;
+if [ -f $SRCDIR/src/libluajit.a ]; then
+    mv $SRCDIR/src/libluajit.a $DESTDIR/libslua.a
+fi;
 
 # Android/ARM, armeabi-v7a (ARMv7 VFP), Android 4.0+ (ICS)
 NDKARCH="-march=armv7-a -mfloat-abi=softfp -Wl,--fix-cortex-a8"
