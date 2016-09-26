@@ -1688,9 +1688,19 @@ namespace SLua
 					Write(file, "}");
 					first = false;
 				}
-				
+
 				if (cons.Length > 1)
 				{
+					if(t.IsValueType)
+					{
+						Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", 0);
+						Write(file, "o=new {0}();", FullName(t));
+						Write(file, "pushValue(l,true);");
+						Write(file, "pushObject(l,o);");
+						Write(file, "return 2;");
+						Write(file, "}");
+					}
+
 					Write(file, "return error(l,\"New object failed.\");");
 					WriteCatchExecption(file);
 					Write(file, "}");
