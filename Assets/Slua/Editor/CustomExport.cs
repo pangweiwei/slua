@@ -166,6 +166,7 @@ namespace SLua
 			    "EventProvider",
 			    "Apple",
 			    "ClusterInput",
+				"Motion",
             };
         }
     }
