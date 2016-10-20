@@ -760,12 +760,12 @@ namespace SLua
             }
             LuaDelegate ld;
             checkType(l, -1, out ld);
+			LuaDLL.lua_pop(l,1);
             if(ld.d!=null)
             {
                 ua = ($FN)ld.d;
                 return op;
             }
-			LuaDLL.lua_pop(l,1);
 			
 			l = LuaState.get(l).L;
             ua = ($ARGS) =>
