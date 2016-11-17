@@ -263,6 +263,25 @@ namespace SLua
 			return null;
 		}
 
+		public object call(LuaTable self, params object[] args)
+		{
+			int error = LuaObject.pushTry(state.L);
+
+			LuaObject.pushVar(L, self);
+
+			for (int n = 0; args != null && n < args.Length; n++)
+			{
+				LuaObject.pushVar(L, args[n]);
+			}
+
+			if (innerCall((args != null ? args.Length : 0)+1, error))
+			{
+				return state.topObjects(error - 1);
+			}
+
+			return null;
+		}
+
 		public object call(object a1, object a2)
 		{
 			int error = LuaObject.pushTry(state.L);

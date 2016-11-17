@@ -27,7 +27,7 @@ namespace SLua
 	using LuaInterface;
 	using System.Reflection;
 
-    class Helper : LuaObject
+    public class Helper : LuaObject
 	{
 
 		static string classfunc = @"
