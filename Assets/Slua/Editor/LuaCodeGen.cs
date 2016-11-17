@@ -984,8 +984,9 @@ namespace SLua
 				{
 					string dt = SimpleType(tt[n]);
 					ret+=string.Format("				{0} a{1};",dt,n)+NewLine;
-					ret+=string.Format("				checkType(l,{0},out a{1});",n+2,n)+NewLine;
-					args+=("a"+n);
+                    //ret+=string.Format("				checkType(l,{0},out a{1});",n+2,n)+NewLine;
+                    ret += "				" + GetCheckType(tt[n], n + 2, "a" + n) + NewLine;
+                    args +=("a"+n);
 					if (n < tt.Length - 1) args += ",";
 				}
 				ret+=string.Format("				self.Invoke({0});",args)+NewLine;
@@ -998,7 +999,31 @@ namespace SLua
 			}
 		}
 
-		string PushValues(Type t) {
+        string GetCheckType(Type t, int n, string v = "v", string prefix = "")
+        {
+            if (t.IsEnum)
+            {
+                return string.Format("checkEnum(l,{2}{0},out {1});", n, v, prefix);
+            }
+            else if (t.BaseType == typeof(System.MulticastDelegate))
+            {
+                return string.Format("int op=LuaDelegation.checkDelegate(l,{2}{0},out {1});", n, v, prefix);
+            }
+            else if (IsValueType(t))
+            {
+                return string.Format("checkValueType(l,{2}{0},out {1});", n, v, prefix);
+            }
+            else if (t.IsArray)
+            {
+                return string.Format("checkArray(l,{2}{0},out {1});", n, v, prefix);
+            }
+            else
+            {
+                return string.Format("checkType(l,{2}{0},out {1});", n, v, prefix);
+            }
+        }
+
+        string PushValues(Type t) {
 			try
 			{
 				Type[] tt = t.GetGenericArguments();
@@ -1663,9 +1688,19 @@ namespace SLua
 					Write(file, "}");
 					first = false;
 				}
-				
+
 				if (cons.Length > 1)
 				{
+					if(t.IsValueType)
+					{
+						Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", 0);
+						Write(file, "o=new {0}();", FullName(t));
+						Write(file, "pushValue(l,true);");
+						Write(file, "pushObject(l,o);");
+						Write(file, "return 2;");
+						Write(file, "}");
+					}
+
 					Write(file, "return error(l,\"New object failed.\");");
 					WriteCatchExecption(file);
 					Write(file, "}");
