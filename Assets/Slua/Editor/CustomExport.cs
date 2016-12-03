@@ -35,6 +35,8 @@ namespace SLua
 
         public static void OnAddCustomClass(LuaCodeGen.ExportGenericDelegate add)
         {
+			// below lines only used for demostrate how to add custom class to export, can be delete on your app
+
             add(typeof(System.Func<int>), null);
             add(typeof(System.Action<int, string>), null);
             add(typeof(System.Action<int, Dictionary<int, object>>), null);
@@ -121,6 +123,7 @@ namespace SLua
                 "jvalue",
                 "iPhone",
                 "iOS",
+                "Windows",
                 "CalendarIdentifier",
                 "CalendarUnit",
                 "CalendarUnit",
@@ -163,6 +166,7 @@ namespace SLua
 			    "EventProvider",
 			    "Apple",
 			    "ClusterInput",
+				"Motion",
             };
         }
     }

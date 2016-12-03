@@ -74,10 +74,30 @@ namespace SLua
 			static void Update(){
 				EditorApplication.update -= Update;
 				Lua3rdMeta.Instance.ReBuildTypes();
+
+                // Remind user to generate lua interface code
+			    var remindGenerate = !EditorPrefs.HasKey("SLUA_REMIND_GENERTE_LUA_INTERFACE") || EditorPrefs.GetBool("SLUA_REMIND_GENERTE_LUA_INTERFACE");
 				bool ok = System.IO.Directory.Exists(GenPath+"Unity");
-				if (!ok && EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
+				if (!ok && remindGenerate)
 				{
-					GenerateAll();
+				    if (EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
+				    {
+				        GenerateAll();
+				    }
+				    else
+				    {
+				        if (!EditorUtility.DisplayDialog("Slua", "Remind you next time when no lua interface found for Unity?", "OK",
+				            "Don't remind me next time!"))
+				        {
+                            EditorPrefs.SetBool("SLUA_REMIND_GENERTE_LUA_INTERFACE", false);
+				        }
+				        else
+				        {
+				            
+                            EditorPrefs.SetBool("SLUA_REMIND_GENERTE_LUA_INTERFACE", true);
+				        }
+				        
+				    }
 				}
 			}
 
@@ -721,7 +741,6 @@ namespace SLua
 using System;
 using System.Collections.Generic;
 using LuaInterface;
-using UnityEngine;
 
 namespace SLua
 {
@@ -741,12 +760,12 @@ namespace SLua
             }
             LuaDelegate ld;
             checkType(l, -1, out ld);
+			LuaDLL.lua_pop(l,1);
             if(ld.d!=null)
             {
                 ua = ($FN)ld.d;
                 return op;
             }
-			LuaDLL.lua_pop(l,1);
 			
 			l = LuaState.get(l).L;
             ua = ($ARGS) =>
@@ -853,8 +872,6 @@ namespace SLua
 using System;
 using System.Collections.Generic;
 using LuaInterface;
-using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace SLua
 {
@@ -938,7 +955,7 @@ namespace SLua
             {
                 int error = pushTry(l);
                 $PUSHVALUES
-                ld.pcall(1, error);
+                ld.pcall($GENERICCOUNT, error);
                 LuaDLL.lua_settop(l,error - 1);
             };
             ld.d = ua;
@@ -953,6 +970,7 @@ namespace SLua
 			temp = temp.Replace("$GN", GenericName(t.BaseType,","));
 			temp = temp.Replace("$ARGS", ArgsDecl(t.BaseType));
 			temp = temp.Replace("$PUSHVALUES", PushValues(t.BaseType));
+			temp = temp.Replace ("$GENERICCOUNT", t.BaseType.GetGenericArguments ().Length.ToString());
 			Write(file, temp);
 		}
 
@@ -967,8 +985,9 @@ namespace SLua
 				{
 					string dt = SimpleType(tt[n]);
 					ret+=string.Format("				{0} a{1};",dt,n)+NewLine;
-					ret+=string.Format("				checkType(l,{0},out a{1});",n+2,n)+NewLine;
-					args+=("a"+n);
+                    //ret+=string.Format("				checkType(l,{0},out a{1});",n+2,n)+NewLine;
+                    ret += "				" + GetCheckType(tt[n], n + 2, "a" + n) + NewLine;
+                    args +=("a"+n);
 					if (n < tt.Length - 1) args += ",";
 				}
 				ret+=string.Format("				self.Invoke({0});",args)+NewLine;
@@ -981,7 +1000,31 @@ namespace SLua
 			}
 		}
 
-		string PushValues(Type t) {
+        string GetCheckType(Type t, int n, string v = "v", string prefix = "")
+        {
+            if (t.IsEnum)
+            {
+                return string.Format("checkEnum(l,{2}{0},out {1});", n, v, prefix);
+            }
+            else if (t.BaseType == typeof(System.MulticastDelegate))
+            {
+                return string.Format("int op=LuaDelegation.checkDelegate(l,{2}{0},out {1});", n, v, prefix);
+            }
+            else if (IsValueType(t))
+            {
+                return string.Format("checkValueType(l,{2}{0},out {1});", n, v, prefix);
+            }
+            else if (t.IsArray)
+            {
+                return string.Format("checkArray(l,{2}{0},out {1});", n, v, prefix);
+            }
+            else
+            {
+                return string.Format("checkType(l,{2}{0},out {1});", n, v, prefix);
+            }
+        }
+
+        string PushValues(Type t) {
 			try
 			{
 				Type[] tt = t.GetGenericArguments();
@@ -1028,9 +1071,9 @@ namespace SLua
 			Write(file, "static public void reg(IntPtr l) {");
 			Write(file, "getEnumTable(l,\"{0}\");", string.IsNullOrEmpty(givenNamespace) ? FullName(t) : givenNamespace);
 
-			foreach (object value in Enum.GetValues (t))
+			foreach (string name in Enum.GetNames (t))
 			{
-				Write(file, "addMember(l,{0},\"{1}\");", Convert.ToInt32(value), value.ToString());
+				Write(file, "addMember(l,{0},\"{1}\");", Convert.ToInt32(Enum.Parse(t, name)), name);
 			}
 			
 			Write(file, "LuaDLL.lua_pop(l, 1);");
@@ -1056,7 +1099,6 @@ namespace SLua
 		
 		private void WriteHead(Type t, StreamWriter file)
 		{
-			Write(file, "using UnityEngine;");
 			Write(file, "using System;");
 			Write(file, "using LuaInterface;");
 			Write(file, "using SLua;");
@@ -1647,9 +1689,19 @@ namespace SLua
 					Write(file, "}");
 					first = false;
 				}
-				
+
 				if (cons.Length > 1)
 				{
+					if(t.IsValueType)
+					{
+						Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", 0);
+						Write(file, "o=new {0}();", FullName(t));
+						Write(file, "pushValue(l,true);");
+						Write(file, "pushObject(l,o);");
+						Write(file, "return 2;");
+						Write(file, "}");
+					}
+
 					Write(file, "return error(l,\"New object failed.\");");
 					WriteCatchExecption(file);
 					Write(file, "}");
@@ -1961,6 +2013,8 @@ namespace SLua
 					Write(file, "{0}a1/a2;", ret);
 				else if (m.Name == "op_UnaryNegation")
 					Write(file, "{0}-a1;", ret);
+				else if (m.Name == "op_UnaryPlus")
+					Write(file, "{0}+a1;", ret);
 				else if (m.Name == "op_Equality")
 					Write(file, "{0}(a1==a2);", ret);
 				else if (m.Name == "op_Inequality")

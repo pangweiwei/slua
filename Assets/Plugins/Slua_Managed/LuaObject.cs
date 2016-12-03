@@ -783,15 +783,23 @@ return index
 			oc.push(l, t, false);
 		}
 
+		static private int errorRef = 0;
+
 		public static int pushTry(IntPtr l)
 		{
 			if (!LuaState.get(l).isMainThread())
 			{
-                Logger.LogError("Can't call lua function in bg thread");
+				Logger.LogError("Can't call lua function in bg thread");
 				return 0;
 			}
 
-			LuaDLL.lua_pushcfunction(l, LuaState.errorFunc);
+			if (errorRef == 0) {
+				LuaDLL.lua_pushcfunction (l, LuaState.errorFunc);
+				LuaDLL.lua_pushvalue (l, -1);
+				errorRef = LuaDLL.luaL_ref (l, LuaIndexes.LUA_REGISTRYINDEX);
+			} else {
+				LuaDLL.lua_getref(l,errorRef);
+			}
 			return LuaDLL.lua_gettop(l);
 		}
 
@@ -1446,6 +1454,28 @@ return index
 		static public void assert(bool cond,string err) {
 			if(!cond) throw new Exception(err);
 		}
+
+        /// <summary>
+        /// Change Type, alternative for Convert.ChangeType, but has exception handling
+        /// change fail, return origin value directly, useful for some LuaVarObject value assign
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+	    static public object changeType(object obj, Type t)
+        {
+            if (t == typeof (object)) return obj;
+            if (obj.GetType() == t) return obj;
+
+            try
+            {
+                return Convert.ChangeType(obj, t);
+            }
+            catch
+            {
+                return obj;
+            }
+	    }
 	}
 
 }

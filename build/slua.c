@@ -88,13 +88,19 @@ static int lua_absindex(lua_State *L, int index) {
 LUA_API void luaS_openextlibs(lua_State *L) {
 	const luaL_Reg *lib;
 
+#if defined(luajit_c)
 	luaL_findtable(L, LUA_REGISTRYINDEX, "_PRELOAD",
 		sizeof(s_lib_preload) / sizeof(s_lib_preload[0]) - 1);
+#else
+	lua_getglobal(L,"package");
+	lua_getfield(L,-1,"preload");
+#endif
 
 	for (lib = s_lib_preload; lib->func; lib++) {
 		lua_pushcfunction(L, lib->func);
 		lua_setfield(L, -2, lib->name);
 	}
+
 
 	lua_pop(L, 1);
 }
