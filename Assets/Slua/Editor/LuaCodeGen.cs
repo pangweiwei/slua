@@ -1631,6 +1631,14 @@ namespace SLua
 		    var methodString = string.Format("{0}.{1}", mi.DeclaringType, mi.Name);
 		    if (CustomExport.FunctionFilterList.Contains(methodString))
 		        return true;
+            // directly ignore any components .ctor
+            if (mi.DeclaringType.IsSubclassOf(typeof(UnityEngine.Component)))
+            {
+                if (mi.MemberType == MemberTypes.Constructor)
+                {
+                    return true;
+                }
+            }
 
             // Check in custom export function filter list.
             List<object> aFuncFilterList = LuaCodeGen.GetEditorField<ICustomExportPost>("FunctionFilterList");
