@@ -760,12 +760,12 @@ namespace SLua
             }
             LuaDelegate ld;
             checkType(l, -1, out ld);
+			LuaDLL.lua_pop(l,1);
             if(ld.d!=null)
             {
                 ua = ($FN)ld.d;
                 return op;
             }
-			LuaDLL.lua_pop(l,1);
 			
 			l = LuaState.get(l).L;
             ua = ($ARGS) =>
@@ -955,7 +955,7 @@ namespace SLua
             {
                 int error = pushTry(l);
                 $PUSHVALUES
-                ld.pcall(1, error);
+                ld.pcall($GENERICCOUNT, error);
                 LuaDLL.lua_settop(l,error - 1);
             };
             ld.d = ua;
@@ -970,6 +970,7 @@ namespace SLua
 			temp = temp.Replace("$GN", GenericName(t.BaseType,","));
 			temp = temp.Replace("$ARGS", ArgsDecl(t.BaseType));
 			temp = temp.Replace("$PUSHVALUES", PushValues(t.BaseType));
+			temp = temp.Replace ("$GENERICCOUNT", t.BaseType.GetGenericArguments ().Length.ToString());
 			Write(file, temp);
 		}
 
@@ -984,8 +985,9 @@ namespace SLua
 				{
 					string dt = SimpleType(tt[n]);
 					ret+=string.Format("				{0} a{1};",dt,n)+NewLine;
-					ret+=string.Format("				checkType(l,{0},out a{1});",n+2,n)+NewLine;
-					args+=("a"+n);
+                    //ret+=string.Format("				checkType(l,{0},out a{1});",n+2,n)+NewLine;
+                    ret += "				" + GetCheckType(tt[n], n + 2, "a" + n) + NewLine;
+                    args +=("a"+n);
 					if (n < tt.Length - 1) args += ",";
 				}
 				ret+=string.Format("				self.Invoke({0});",args)+NewLine;
@@ -998,7 +1000,31 @@ namespace SLua
 			}
 		}
 
-		string PushValues(Type t) {
+        string GetCheckType(Type t, int n, string v = "v", string prefix = "")
+        {
+            if (t.IsEnum)
+            {
+                return string.Format("checkEnum(l,{2}{0},out {1});", n, v, prefix);
+            }
+            else if (t.BaseType == typeof(System.MulticastDelegate))
+            {
+                return string.Format("int op=LuaDelegation.checkDelegate(l,{2}{0},out {1});", n, v, prefix);
+            }
+            else if (IsValueType(t))
+            {
+                return string.Format("checkValueType(l,{2}{0},out {1});", n, v, prefix);
+            }
+            else if (t.IsArray)
+            {
+                return string.Format("checkArray(l,{2}{0},out {1});", n, v, prefix);
+            }
+            else
+            {
+                return string.Format("checkType(l,{2}{0},out {1});", n, v, prefix);
+            }
+        }
+
+        string PushValues(Type t) {
 			try
 			{
 				Type[] tt = t.GetGenericArguments();
@@ -1605,6 +1631,14 @@ namespace SLua
 		    var methodString = string.Format("{0}.{1}", mi.DeclaringType, mi.Name);
 		    if (CustomExport.FunctionFilterList.Contains(methodString))
 		        return true;
+            // directly ignore any components .ctor
+            if (mi.DeclaringType.IsSubclassOf(typeof(UnityEngine.Component)))
+            {
+                if (mi.MemberType == MemberTypes.Constructor)
+                {
+                    return true;
+                }
+            }
 
             // Check in custom export function filter list.
             List<object> aFuncFilterList = LuaCodeGen.GetEditorField<ICustomExportPost>("FunctionFilterList");
@@ -1663,9 +1697,19 @@ namespace SLua
 					Write(file, "}");
 					first = false;
 				}
-				
+
 				if (cons.Length > 1)
 				{
+					if(t.IsValueType)
+					{
+						Write(file, "{0}(argc=={1}){{", first ? "if" : "else if", 0);
+						Write(file, "o=new {0}();", FullName(t));
+						Write(file, "pushValue(l,true);");
+						Write(file, "pushObject(l,o);");
+						Write(file, "return 2;");
+						Write(file, "}");
+					}
+
 					Write(file, "return error(l,\"New object failed.\");");
 					WriteCatchExecption(file);
 					Write(file, "}");

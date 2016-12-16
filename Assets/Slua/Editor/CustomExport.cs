@@ -35,6 +35,8 @@ namespace SLua
 
         public static void OnAddCustomClass(LuaCodeGen.ExportGenericDelegate add)
         {
+			// below lines only used for demostrate how to add custom class to export, can be delete on your app
+
             add(typeof(System.Func<int>), null);
             add(typeof(System.Action<int, string>), null);
             add(typeof(System.Action<int, Dictionary<int, object>>), null);
@@ -78,6 +80,13 @@ namespace SLua
         {
             "UIWidget.showHandles",
             "UIWidget.showHandlesWithMoveTool",
+            
+            "UnityEngine.MonoBehaviour.get_runInEditMode",
+            "UnityEngine.MonoBehaviour.set_useGUILayout",
+            "UnityEngine.MonoBehaviour.get_runInEditMode",
+            "UnityEngine.MonoBehaviour.set_useGUILayout",
+            "UnityEngine.MonoBehaviour.runInEditMode",
+            "UnityEngine.MonoBehaviour.useGUILayout",
         };
         // black list if white list not given
         public static void OnGetNoUseList(out List<string> list)
@@ -164,6 +173,8 @@ namespace SLua
 			    "EventProvider",
 			    "Apple",
 			    "ClusterInput",
+				"Motion",
+                "UnityEngine.UI.ReflectionMethodsCache",
             };
         }
     }
