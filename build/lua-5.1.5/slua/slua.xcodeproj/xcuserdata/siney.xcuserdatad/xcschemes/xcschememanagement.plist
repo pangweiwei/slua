@@ -4,7 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>slua_ios.xcscheme</key>
+		<key>libslua.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>slua.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +17,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>E8137B721D118B32005A2592</key>
+		<key>A48345231E0EB10C000A9A4F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E80919D31B745519008FED27</key>
 		<dict>
 			<key>primary</key>
 			<true/>

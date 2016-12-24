@@ -101,8 +101,11 @@ LUA_API void luaS_openextlibs(lua_State *L) {
 		lua_setfield(L, -2, lib->name);
 	}
 
-
+#if defined(luajit_c)
 	lua_pop(L, 1);
+#else
+    lua_pop(L, 2);
+#endif
 }
 
 LUA_API void luaS_newuserdata(lua_State *L, int val)

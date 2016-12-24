@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0730"
+   LastUpgradeVersion = "0820"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E8137B721D118B32005A2592"
-               BuildableName = "libslua.a"
-               BlueprintName = "slua_ios"
-               ReferencedContainer = "container:slua_ios.xcodeproj">
+               BlueprintIdentifier = "E80919D31B745519008FED27"
+               BuildableName = "slua.bundle"
+               BlueprintName = "slua"
+               ReferencedContainer = "container:slua.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E8137B721D118B32005A2592"
-            BuildableName = "libslua.a"
-            BlueprintName = "slua_ios"
-            ReferencedContainer = "container:slua_ios.xcodeproj">
+            BlueprintIdentifier = "E80919D31B745519008FED27"
+            BuildableName = "slua.bundle"
+            BlueprintName = "slua"
+            ReferencedContainer = "container:slua.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E8137B721D118B32005A2592"
-            BuildableName = "libslua.a"
-            BlueprintName = "slua_ios"
-            ReferencedContainer = "container:slua_ios.xcodeproj">
+            BlueprintIdentifier = "E80919D31B745519008FED27"
+            BuildableName = "slua.bundle"
+            BlueprintName = "slua"
+            ReferencedContainer = "container:slua.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
