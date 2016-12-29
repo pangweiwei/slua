@@ -5,6 +5,7 @@ import subprocess
 import platform
 import os
 import sys
+import stat
 
 def build(platform):
     print("[Start Build] Target Platform: " + platform)
@@ -21,6 +22,12 @@ def build(platform):
         build_script = "make_ios.sh"
     elif platform == "osx":
         build_script = "make_osx_static.sh"
+        
+    #make script execute able
+    #chmod a+x
+    st = os.stat(build_script)
+    os.chmod(build_script, st.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+
     subprocess.check_call(build_script,shell=True)
 
 if __name__ == '__main__':
