@@ -20,19 +20,19 @@ def build(platform):
         build_cmd = ["cmd.exe","/C",build_script]
     elif platform == "android":
         build_script = "make_android_static.sh"
-        build_cmd = ["sh",build_script]
+        build_cmd = ["./" + build_script]
     elif platform == "ios":
         build_script = "make_ios.sh"
-        build_cmd = ["sh",build_script]
+        build_cmd = ["./" + build_script]
     elif platform == "osx":
         build_script = "make_osx_static.sh"
-        build_cmd = ["sh",build_script]
+        build_cmd = ["./" + build_script]
 
     #make script execute able
     #chmod a+x
     st = os.stat(build_script)
     os.chmod(build_script, st.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
-    subprocess.check_call(build_cmd,shell=True)
+    subprocess.check_call(build_cmd,stdout=subprocess.PIPE,shell=True)
 
 if __name__ == '__main__':
     length = len(sys.argv)
