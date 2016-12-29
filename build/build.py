@@ -10,7 +10,7 @@ def build(platform):
     build_script = ""
     if platform == "windows":
         build_script = "make_win_with_2015_static.bat"
-        subprocess.check_call(["cmd.exe","/C",build_script],shell=True)
+        subprocess.Popen(["cmd.exe","/C",build_script],shell=True)
     elif platform == "android":
         build_script = "make_android_static.sh"
     elif platform == "ios":
