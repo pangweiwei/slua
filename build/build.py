@@ -16,7 +16,7 @@ def build(platform):
         build_script = "make_ios.sh"
     elif platform == "osx":
         build_script = "make_osx_static.sh"
-    subprocess.check_call("make_android_static.sh",shell=True)
+    subprocess.check_call(build_script,shell=True)
 
 if __name__ == '__main__':
     length = len(sys.argv)
