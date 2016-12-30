@@ -32,7 +32,7 @@ def build(platform):
     #chmod a+x
     st = os.stat(build_script)
     os.chmod(build_script, st.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
-    subprocess.check_call(build_cmd,stdout=subprocess.PIPE,shell=True)
+    subprocess.check_call(build_cmd,shell=True)
 
 if __name__ == '__main__':
     length = len(sys.argv)
