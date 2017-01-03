@@ -839,9 +839,9 @@ return index
 					return t.IsPrimitive || t.IsEnum;
 #endif
 				case LuaTypes.LUA_TUSERDATA:
-					object o = checkObj(l, p);
-					Type ot = o.GetType();
-					return ot == t || ot.IsSubclassOf(t);
+					object o = checkObj (l, p);
+					Type ot = o.GetType ();
+					return ot == t || ot.IsSubclassOf (t) || t.IsAssignableFrom (ot);
 				case LuaTypes.LUA_TSTRING:
 					return t == typeof(string);
 				case LuaTypes.LUA_TBOOLEAN:

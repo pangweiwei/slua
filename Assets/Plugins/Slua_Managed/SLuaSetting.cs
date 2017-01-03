@@ -46,8 +46,8 @@ namespace SLua{
 		public bool exportExtensionMethod = true;
 		public string UnityEngineGeneratePath = "Assets/Slua/LuaObject/";
 
-		public int debugPort=10240;
-		public string debugIP="0.0.0.0";
+		// public int debugPort=10240;
+		// public string debugIP="0.0.0.0"; // no longer debugger built-in
 
 		private static SLuaSetting _instance=null;
 		public static SLuaSetting Instance{
