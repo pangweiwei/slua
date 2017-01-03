@@ -29,7 +29,6 @@ namespace SLua
 	using System;
 	using System.Reflection;
 	using UnityEditor;
-	using LuaInterface;
 	using System.Text;
 	using System.Text.RegularExpressions;
 
@@ -751,7 +750,6 @@ namespace SLua
 			string temp = @"
 using System;
 using System.Collections.Generic;
-using LuaInterface;
 
 namespace SLua
 {
@@ -882,7 +880,6 @@ namespace SLua
 			string temp = @"
 using System;
 using System.Collections.Generic;
-using LuaInterface;
 
 namespace SLua
 {
@@ -1111,7 +1108,6 @@ namespace SLua
 		private void WriteHead(Type t, StreamWriter file)
 		{
 			Write(file, "using System;");
-			Write(file, "using LuaInterface;");
 			Write(file, "using SLua;");
 			Write(file, "using System.Collections.Generic;");
 			WriteExtraNamespace(file,t);

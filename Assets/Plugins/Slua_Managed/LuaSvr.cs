@@ -30,7 +30,6 @@ namespace SLua
 	using System.Threading;
 	using System.Collections;
 	using System.Collections.Generic;
-	using LuaInterface;
 	using System.Reflection;
 #if !SLUA_STANDALONE
 	using UnityEngine;

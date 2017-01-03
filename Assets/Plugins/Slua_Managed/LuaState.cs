@@ -27,7 +27,6 @@ namespace SLua
 	using System;
 	using System.Collections.Generic;
 	using System.Collections;
-	using LuaInterface;
 	using System.IO;
 	using System.Text;
 	using System.Runtime.InteropServices;
