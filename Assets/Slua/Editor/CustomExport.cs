@@ -80,6 +80,13 @@ namespace SLua
         {
             "UIWidget.showHandles",
             "UIWidget.showHandlesWithMoveTool",
+            
+            "UnityEngine.MonoBehaviour.get_runInEditMode",
+            "UnityEngine.MonoBehaviour.set_useGUILayout",
+            "UnityEngine.MonoBehaviour.get_runInEditMode",
+            "UnityEngine.MonoBehaviour.set_useGUILayout",
+            "UnityEngine.MonoBehaviour.runInEditMode",
+            "UnityEngine.MonoBehaviour.useGUILayout",
         };
         // black list if white list not given
         public static void OnGetNoUseList(out List<string> list)
@@ -167,6 +174,7 @@ namespace SLua
 			    "Apple",
 			    "ClusterInput",
 				"Motion",
+                "UnityEngine.UI.ReflectionMethodsCache",
             };
         }
     }
