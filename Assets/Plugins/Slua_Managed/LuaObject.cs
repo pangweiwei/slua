@@ -68,6 +68,13 @@ namespace SLua
 		}
 	}
 
+	public class OverloadLuaClassAttribute : System.Attribute {
+		public OverloadLuaClassAttribute(Type target) {
+			targetType = target;
+		}
+		public Type targetType;
+	}
+
     public class LuaOut { }
 
 	public partial class LuaObject

@@ -543,8 +543,9 @@ namespace SLua
         };
 
 
-		static Dictionary<System.Type,List<MethodInfo>> GenerateExtensionMethodsMap(){
-			Dictionary<Type,List<MethodInfo>> dic = new Dictionary<Type, List<MethodInfo>>();
+		static void FilterSpecMethods(out Dictionary<Type,List<MethodInfo>> dic, out Dictionary<Type,Type> overloadedClass){
+			dic = new Dictionary<Type, List<MethodInfo>>();
+			overloadedClass = new Dictionary<Type, Type> ();
 			List<string> asems;
 			CustomExport.OnGetAssemblyToGenerateExtensionMethod(out asems);
 
@@ -584,9 +585,18 @@ namespace SLua
 							}
 						}
 					}
+
+
+					if (type.IsDefined(typeof(OverloadLuaClassAttribute),false)) {
+						OverloadLuaClassAttribute olc = type.GetCustomAttributes (typeof(OverloadLuaClassAttribute), false)[0] as OverloadLuaClassAttribute;
+						if (olc != null) {
+							if (overloadedClass.ContainsKey (olc.targetType))
+								throw new Exception ("Can't overload class more than once");
+							overloadedClass.Add (olc.targetType, type);
+						}
+					}
 				}
 			}
-			return dic;
 		}
 
 		static bool IsExtensionMethod(MethodBase method){
@@ -595,10 +605,11 @@ namespace SLua
 
 
 
-		static Dictionary<System.Type,List<MethodInfo>> extensionMethods = new Dictionary<Type, List<MethodInfo>>();
+		static Dictionary<System.Type,List<MethodInfo>> extensionMethods;
+		static Dictionary<Type,Type> overloadedClass;
 
 		static CodeGenerator(){
-			extensionMethods = GenerateExtensionMethodsMap();
+			FilterSpecMethods(out extensionMethods,out overloadedClass);
 		}
 
 		HashSet<string> funcname = new HashSet<string>();
@@ -1209,6 +1220,18 @@ namespace SLua
 			}
 		}
 
+		bool hasOverloadedVersion(Type t,ref string f) {
+			Type ot;
+			if (overloadedClass.TryGetValue (t, out ot)) {
+				MethodInfo mi = ot.GetMethod (f, BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+				if (mi != null && mi.IsDefined(typeof(MonoPInvokeCallbackAttribute),false)) {
+					f = FullName (ot) + "." + f;
+					return true;
+				}
+			}
+			return false;
+		}
+
 		void RegFunction(Type t, StreamWriter file)
 		{
 			// Write export function
@@ -1220,9 +1243,13 @@ namespace SLua
 			}
 			
 			Write(file, "getTypeTable(l,\"{0}\");", string.IsNullOrEmpty(givenNamespace) ? FullName(t) : givenNamespace);
-			foreach (string f in funcname)
+			foreach (string i in funcname)
 			{
-				Write(file, "addMember(l,{0});", f);
+				string f = i;
+				if (hasOverloadedVersion (t, ref f))
+					Write (file, "addMember(l,{0});", f);
+				else
+					Write(file, "addMember(l,{0});", f);
 			}
 			foreach (string f in directfunc.Keys)
 			{
