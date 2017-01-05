@@ -564,22 +564,35 @@ return index
 
 		public static void createTypeMetatable(IntPtr l, LuaCSFunction con, Type self, Type parent)
 		{
-            checkMethodValid(con);
+			checkMethodValid(con);
 
 			// set parent
-			if (parent != null && parent != typeof(object) && parent != typeof(ValueType))
+			bool parentSet = false;
+			LuaDLL.lua_pushstring(l, "__parent");
+			while (parent != null && parent != typeof(object) && parent != typeof(ValueType))
 			{
-				LuaDLL.lua_pushstring(l, "__parent");
 				LuaDLL.luaL_getmetatable(l, ObjectCache.getAQName(parent));
-				LuaDLL.lua_rawset(l, -3);
+				// if parentType is not exported to lua
+				if (LuaDLL.lua_isnil(l, -1))
+				{
+					LuaDLL.lua_pop(l, 1);
+					parent = parent.BaseType;
+				}
+				else
+				{
+					LuaDLL.lua_rawset(l, -3);
 
-				LuaDLL.lua_pushstring(l, "__parent");
-				LuaDLL.luaL_getmetatable(l, parent.FullName);
-				LuaDLL.lua_rawset(l, -4);
+					LuaDLL.lua_pushstring(l, "__parent");
+					LuaDLL.luaL_getmetatable(l, parent.FullName);
+					LuaDLL.lua_rawset(l, -4);
+
+					parentSet = true;
+					break;
+				}
 			}
-			else
+
+			if(!parentSet)
 			{
-				LuaDLL.lua_pushstring(l, "__parent");
 				LuaDLL.luaL_getmetatable(l, "__luabaseobject");
 				LuaDLL.lua_rawset(l, -3);
 			}
