@@ -571,9 +571,10 @@ namespace SLua
 					if (type.IsSealed && !type.IsGenericType && !type.IsNested)
 					{
 						MethodInfo[] methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
-						foreach (MethodInfo method in methods)
+						foreach (MethodInfo _method in methods)
 						{
-							if (IsExtensionMethod(method))
+							MethodInfo method = tryFixGenericMethod(_method);
+                            if (IsExtensionMethod(method))
 							{
 								Type extendedType = method.GetParameters()[0].ParameterType;
 								if (!dic.ContainsKey(extendedType))
@@ -1139,9 +1140,10 @@ namespace SLua
 			
 			MethodInfo[] members = t.GetMethods(bf);
 			List<MethodInfo> methods = new List<MethodInfo>();
-			methods.AddRange(members);
+			foreach (MethodInfo mi in members)
+				methods.Add(tryFixGenericMethod(mi));
 
-			if(!writeStatic && this.includeExtension){
+			if (!writeStatic && this.includeExtension){
 				if(extensionMethods.ContainsKey(t)){
 					methods.AddRange(extensionMethods[t]);
 				}
@@ -1858,7 +1860,56 @@ namespace SLua
 			}
 			return ret;
 		}
-		
+
+		// fill Generic Parameters if needed
+		string MethodDecl(MethodInfo m)
+		{
+			if (m.IsGenericMethod)
+			{
+				string parameters = "";
+				bool first = true;
+				foreach (Type genericType in m.GetGenericArguments())
+				{
+					if (first)
+						first = false;
+					else
+						parameters += ",";
+					parameters += genericType.ToString();
+
+				}
+				return string.Format("{0}<{1}>", m.Name, parameters);
+			}
+			else
+				return m.Name;
+		}
+
+		// try filling generic parameters
+		static MethodInfo tryFixGenericMethod(MethodInfo method)
+		{
+			if (!method.ContainsGenericParameters)
+				return method;
+
+			try
+			{
+				Type[] genericTypes = method.GetGenericArguments();
+				for (int j = 0; j < genericTypes.Length; j++)
+				{
+					Type[] contraints = genericTypes[j].GetGenericParameterConstraints();
+					if (contraints != null && contraints.Length == 1 && contraints[0] != typeof(ValueType))
+						genericTypes[j] = contraints[0];
+					else
+						return method;
+				}
+				// only fixed here
+				return method.MakeGenericMethod(genericTypes);
+			}
+			catch (Exception e)
+			{
+				Debug.LogError(e);
+			}
+			return method;
+		}
+
 		bool isUsefullMethod(MethodInfo method)
 		{
 			if (method.Name != "GetType" && method.Name != "GetHashCode" && method.Name != "Equals" &&
@@ -1868,7 +1919,7 @@ namespace SLua
 			    !method.Name.StartsWith("get_", StringComparison.Ordinal) &&
 			    !method.Name.StartsWith("set_", StringComparison.Ordinal) &&
 			    !method.Name.StartsWith("add_", StringComparison.Ordinal) &&
-			    !IsObsolete(method) && !method.IsGenericMethod &&
+			    !IsObsolete(method) && !method.ContainsGenericParameters  &&
 				method.ToString() != "Int32 Clamp(Int32, Int32, Int32)" &&
 			    !method.Name.StartsWith("remove_", StringComparison.Ordinal))
 			{
@@ -1903,8 +1954,10 @@ namespace SLua
 			}
 
 			MemberInfo[] cons = t.GetMember(name, bf);
-			foreach (MemberInfo m in cons)
+			foreach (MemberInfo _m in cons)
 			{
+				MemberInfo m = _m;
+				if (m.MemberType == MemberTypes.Method) m = tryFixGenericMethod((MethodInfo)m);
 				if (m.MemberType == MemberTypes.Method
 				    && !IsObsolete(m)
 				    && !DontExport(m)
@@ -2059,11 +2112,11 @@ namespace SLua
 				else if (m.Name == "op_GreaterThanOrEqual")
 					Write(file, "{0}(a2<=a1);", ret);
 				else{
-					Write(file, "{3}{2}.{0}({1});", m.Name, FuncCall(m), TypeDecl(t), ret);
+					Write(file, "{3}{2}.{0}({1});", MethodDecl(m), FuncCall(m), TypeDecl(t), ret);
 				}
 			}
 			else{
-				Write(file, "{2}self.{0}({1});", m.Name, FuncCall(m,parOffset), ret);
+				Write(file, "{2}self.{0}({1});", MethodDecl(m), FuncCall(m,parOffset), ret);
 			}
 
 			WriteOk(file);
