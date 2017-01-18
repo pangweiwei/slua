@@ -8,6 +8,8 @@ STRIP="xcrun -sdk iphoneos strip"
 IXCODE=`xcode-select -print-path`
 ISDK=$IXCODE/Platforms/iPhoneOS.platform/Developer
 ISDKVER=iPhoneOS.sdk
+# set development target to 8.0
+DEVTAR=8.0
 ISDKP=$IXCODE/usr/bin/
 
 if [ ! -e $ISDKP/ar ]; then
@@ -23,16 +25,16 @@ if [ ! -e $ISDKP/strip ]; then
 fi
 
 make clean
-ISDKF="-arch armv7 -isysroot $ISDK/SDKs/$ISDKVER"
+ISDKF="-arch armv7 -isysroot $ISDK/SDKs/$ISDKVER -miphoneos-version-min=$DEVTAR"
 make HOST_CC="gcc -m32 -std=c99" CROSS="$ISDKP" TARGET_FLAGS="$ISDKF" TARGET=armv7 TARGET_SYS=iOS LUAJIT_A=libsluav7.a
 
 
 make clean
-ISDKF="-arch armv7s -isysroot $ISDK/SDKs/$ISDKVER"
+ISDKF="-arch armv7s -isysroot $ISDK/SDKs/$ISDKVER -miphoneos-version-min=$DEVTAR"
 make HOST_CC="gcc -m32 -std=c99" CROSS="$ISDKP" TARGET_FLAGS="$ISDKF" TARGET=armv7s TARGET_SYS=iOS LUAJIT_A=libsluav7s.a
 
 make clean
-ISDKF="-arch arm64 -isysroot $ISDK/SDKs/$ISDKVER"
+ISDKF="-arch arm64 -isysroot $ISDK/SDKs/$ISDKVER -miphoneos-version-min=$DEVTAR"
 make HOST_CC="gcc -std=c99" CROSS="$ISDKP" TARGET_FLAGS="$ISDKF" TARGET=arm64 TARGET_SYS=iOS LUAJIT_A=libslua64.a
 
 cd src
