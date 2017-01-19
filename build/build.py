@@ -32,12 +32,19 @@ def build(platform):
     #chmod a+x
     st = os.stat(build_script)
     os.chmod(build_script, st.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
-    subprocess.check_call(build_cmd,shell=True)
+    try:
+        subprocess.check_call(build_cmd,shell=True)
+    except Exception as e:
+        raise e
+
+def exitWithErrorMsg(msg,errCode = 1):
+    print msg
+    sys.exit(errCode)
 
 if __name__ == '__main__':
     length = len(sys.argv)
     if length < 2:
-        sys.exit("please select target platform !")
+        exitWithErrorMsg("please select target platform !")
 
     platform = sys.argv[1]
     build(platform)
