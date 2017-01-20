@@ -23,7 +23,6 @@
 namespace SLua
 {
     using System;
-    using LuaInterface;
     class LuaValueType : LuaObject
     {
 #if !UNITY_IPHONE && !LUA_5_3 && !SLUA_STANDALONE

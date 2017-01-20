@@ -42,7 +42,6 @@ using System.Threading;
 using System;
 using SLua;
 using NLuaTest.Mock;
-using LuaInterface;
 
 class Assert{
 	public static void True(bool v)

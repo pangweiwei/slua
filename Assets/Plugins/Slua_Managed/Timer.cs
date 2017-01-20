@@ -22,7 +22,6 @@
 
 namespace SLua
 {
-	using LuaInterface;
 	using System;
 	using System.Collections.Generic;
 	
