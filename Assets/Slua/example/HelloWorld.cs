@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using SLua;
 using System;
-using LuaInterface;
+
+#if UNITY_5_5_OR_NEWER
+using UnityEngine.Profiling;
+#endif
 
 [CustomLuaClass]
 public struct foostruct

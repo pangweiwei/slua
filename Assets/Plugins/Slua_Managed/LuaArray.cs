@@ -29,7 +29,6 @@ namespace SLua
 	using System.Collections;
 	using System.Collections.Generic;
 	using System;
-	using LuaInterface;
 	using System.Reflection;
 	using System.Runtime.InteropServices;
 
@@ -117,7 +116,7 @@ namespace SLua
 				assert(i>0,"index base 1");
 				object o=checkVar(l, 3);
 				Type et = a.GetType().GetElementType();
-				a.SetValue(Convert.ChangeType(o,et), i-1);
+				a.SetValue(changeType(o,et), i-1);
 				return ok(l);
 			}
 			catch (Exception e)

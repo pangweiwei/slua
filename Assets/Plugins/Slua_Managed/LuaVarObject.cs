@@ -26,7 +26,6 @@ namespace SLua
     using System.Collections;
     using System.Collections.Generic;
     using System;
-    using LuaInterface;
     using System.Reflection;
     using System.Runtime.InteropServices;
 
@@ -86,11 +85,11 @@ namespace SLua
                         }
                         break;
                     case "Decimal":
-                        return (decimal)LuaDLL.lua_tointeger(l, p);
+                        return (decimal)LuaDLL.lua_tonumber(l, p);
                     case "Int64":
-                        return (long)LuaDLL.lua_tointeger(l, p);
+                        return (long)LuaDLL.lua_tonumber(l, p);
                     case "UInt64":
-                        return (ulong)LuaDLL.lua_tointeger(l, p);
+                        return (ulong)LuaDLL.lua_tonumber(l, p);
                     case "Int32":
                         return (int)LuaDLL.lua_tointeger(l, p);
                     case "UInt32":
@@ -158,19 +157,28 @@ namespace SLua
             /// <param name="l"></param>
             /// <param name="m"></param>
             /// <returns></returns>
-            private int forceInvoke(IntPtr l, MethodInfo m)
-            {
-                object[] args;
-                checkArgs(l, 1, m, out args);
-                object ret = m.Invoke(m.IsStatic ? null : self, args);
-                pushValue(l, true);
-                if (ret != null)
-                {
-                    pushVar(l, ret);
-                    return 2;
-                }
-                return 1;
-            }
+			private int forceInvoke(IntPtr l, MethodInfo m)
+			{
+				object[] args;
+				checkArgs(l, 1, m, out args);
+				object ret = m.Invoke(m.IsStatic ? null : self, args);
+				var pis = m.GetParameters();
+				pushValue(l, true);
+				if (ret != null)
+				{
+					pushVar(l, ret);
+					int ct = 2;
+					for (int i = 0; i < pis.Length; ++i) {
+						var pi = pis[i];
+						if (pi.ParameterType.IsByRef || pi.IsOut) {
+							pushValue(l, args[i]);
+							++ct;
+						}
+					}
+					return ct;
+				}
+				return 1;
+			}
 
             public void checkArgs(IntPtr l, int from, MethodInfo m, out object[] args)
             {
@@ -270,7 +278,7 @@ namespace SLua
             {
                 case MemberTypes.Property:
                     PropertyInfo p = (PropertyInfo)mi;
-                    MethodInfo get = p.GetGetMethod();
+                    MethodInfo get = p.GetGetMethod(true);
                     pushVar(l, get.Invoke(self, null));
                     break;
                 case MemberTypes.Field:
@@ -362,7 +370,7 @@ namespace SLua
                 case MemberTypes.Property:
                     {
                         PropertyInfo p = (PropertyInfo)mi;
-                        MethodInfo set = p.GetSetMethod();
+                        MethodInfo set = p.GetSetMethod(true);
                         var value = checkVar(l, 3, p.PropertyType);
                         set.Invoke(self, new object[] { value });
                         break;
@@ -409,8 +417,7 @@ namespace SLua
                         return 2;
                     }
 
-                    if (keyType != dictKey.GetType())
-                        dictKey = Convert.ChangeType(dictKey, keyType); // if key is not int but ushort/uint,  IDictionary will cannot find the key and return null!
+                    dictKey = changeType(dictKey, keyType); // if key is not int but ushort/uint,  IDictionary will cannot find the key and return null!
                 }
                 
                 pushValue(l, true);
@@ -428,7 +435,7 @@ namespace SLua
                 if (type.IsGenericType)
                 {
                     Type t = type.GetGenericArguments()[0];
-                    (self as IList)[index] = Convert.ChangeType(checkVar(l, 3), t);
+                    (self as IList)[index] = changeType(checkVar(l, 3), t);
                 }
                 else
                     (self as IList)[index] = checkVar(l, 3);
@@ -437,13 +444,12 @@ namespace SLua
             {
                 Type keyType = type.GetGenericArguments()[0];
                 object dictKey = index;
-                if (keyType != dictKey.GetType())
-                    dictKey = Convert.ChangeType(dictKey, keyType); // if key is not int but ushort/uint,  IDictionary will cannot find the key and return null!
+                dictKey = changeType(dictKey, keyType); // if key is not int but ushort/uint,  IDictionary will cannot find the key and return null!
 
                 if (type.IsGenericType)
                 {
                     Type t = type.GetGenericArguments()[1];
-                    (self as IDictionary)[dictKey] = Convert.ChangeType(checkVar(l, 3), t);
+                    (self as IDictionary)[dictKey] = changeType(checkVar(l, 3), t);
                 }
                 else
                     (self as IDictionary)[dictKey] = checkVar(l, 3);
@@ -462,7 +468,7 @@ namespace SLua
                 var valueType = dictType.GetGenericArguments()[1];
 
                 var key = k;
-                var value = Convert.ChangeType(v, valueType);
+                var value = changeType(v, valueType);
                 dict[key] = value;
             }
             return ok(l);

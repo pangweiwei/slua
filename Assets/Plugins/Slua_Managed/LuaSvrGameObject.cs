@@ -29,7 +29,6 @@ namespace SLua
 	using System;
 	using System.Net;
 	using System.Net.Sockets;
-	using LuaInterface;
 	using System.IO;
 
 	public class LuaSvrGameObject : MonoBehaviour

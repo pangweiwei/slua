@@ -5,7 +5,7 @@ set BIN_PATH="%~dp0bin"
 
 cmd /c %~dp0premake.bat
 
-%MSBUILD% %PROJECT% /property:Configuration="Release";GenerateDocumentation=true;DeployOnBuild=true;PublishProfile=Deployment' /property:Platform=x86 /target:Rebuild /nologo /verbosity:normal
+%MSBUILD% %PROJECT% /property:Configuration="Release";GenerateDocumentation=true;DeployOnBuild=true;PublishProfile=Deployment' /property:Platform="Any CPU" /target:Rebuild /nologo /verbosity:normal
 
 
 :: Copy luajit.dll and .so
