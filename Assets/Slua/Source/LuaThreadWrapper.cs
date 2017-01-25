@@ -72,7 +72,7 @@ namespace SLua
                 retVal = null;
                 return false;
             }
-            //var top = LuaDLL.lua_gettop(_thread);
+            //var debug_top = LuaDLL.lua_gettop(_thread);
             var result = LuaDLL.lua_resume(_thread, 0);
             if (result != (int)LuaThreadStatus.LUA_YIELD)
             {
@@ -85,6 +85,7 @@ namespace SLua
                 return false;
             }
             var nArgsFromYield = LuaDLL.lua_gettop(_thread);
+            //Debug.LogFormat("thread debug {0} {1}", debug_top, nArgsFromYield);
             retVal = TopObjects(nArgsFromYield); //?? top is thread self, but remove after yield??
             return true;
         }

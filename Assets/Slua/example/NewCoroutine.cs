@@ -5,10 +5,11 @@ using SLua;
 [CustomLuaClass]
 public class NewCoroutine : MonoBehaviour
 {
-    public static IEnumerator MyMethod(string test, float time)
+    public static IEnumerator MyMethod(string test, float time, LuaFunction func)
     {
         Debug.Log(test);
         yield return new WaitForSeconds(time);
+        func.call();
     }
 
 	void Start () {
