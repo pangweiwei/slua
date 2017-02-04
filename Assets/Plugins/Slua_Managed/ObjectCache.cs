@@ -28,7 +28,6 @@ namespace SLua
 	using System;
 	using System.Runtime.InteropServices;
 	using System.Collections.Generic;
-	using LuaInterface;
 	using System.Runtime.CompilerServices;
 
 	public class ObjectCache

@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace LuaInterface
+namespace SLua
 {
 #pragma warning disable 414
     public class MonoPInvokeCallbackAttribute : System.Attribute
