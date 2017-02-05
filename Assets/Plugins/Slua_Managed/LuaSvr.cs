@@ -152,7 +152,7 @@ namespace SLua
 				bindProgress = (int)(((float)n / list.Count) * 98.0) + 2;
 				if (_tick!=null && lastProgress != bindProgress && bindProgress % 5 == 0) {
 					tick (bindProgress);
-					yield return bindProgress;
+					yield return null;
 				}
 			}
 
