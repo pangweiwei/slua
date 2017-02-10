@@ -457,7 +457,7 @@ namespace SLua
 			clear(new string[] { Path.GetDirectoryName(GenPath) });
 			Debug.Log("Clear all complete.");
 		}
-#if UNITY_5
+
         [MenuItem("SLua/Compile LuaObject To DLL")]
         static public void CompileDLL()
         {
@@ -482,35 +482,26 @@ namespace SLua
 
             #region libraries
             List<string> libraries = new List<string>();
-            // system related
-            string editorData = EditorApplication.applicationContentsPath;
-#if UNITY_EDITOR_OSX && !UNITY_5_4_OR_NEWER
-			editorData += "/Frameworks";
-#endif
-            libraries.Add(editorData + "/Managed/UnityEngine.dll");
-            
-            libraries.Add(editorData + "/Mono/lib/mono/unity/System.Runtime.Serialization.dll");
-            libraries.Add(editorData + "/Mono/lib/mono/unity/System.Xml.Linq.dll");
-            libraries.Add(editorData + "/Mono/lib/mono/unity/System.Core.dll");
-
-            // reference other scripts in Project
-            if (File.Exists("Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll"))
+            string[] referenced = new string[] { "UnityEngine", "UnityEngine.UI" };
+            string projectPath = Path.GetFullPath(Application.dataPath+"/..").Replace("\\", "/");
+            // http://stackoverflow.com/questions/52797/how-do-i-get-the-path-of-the-assembly-the-code-is-in
+            foreach (var assem in AppDomain.CurrentDomain.GetAssemblies())
             {
-                libraries.Add("Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll");
-            }
-            libraries.Add("Library/ScriptAssemblies/Assembly-CSharp.dll");
-            // reference other dll in Project
-            PluginImporter[] importers = PluginImporter.GetAllImporters();
-            for (int i = 0; i < importers.Length; i++)
-            {
-                if (!importers[i].isNativePlugin && importers[i].GetCompatibleWithAnyPlatform())
+                UriBuilder uri = new UriBuilder(assem.CodeBase);
+                string path = Uri.UnescapeDataString(uri.Path).Replace("\\", "/");
+                string name = Path.GetFileNameWithoutExtension(path);
+                if (path.StartsWith(projectPath) || referenced.Contains(name))
                 {
-                    libraries.Add(importers[i].assetPath);
+                    libraries.Add(path);
                 }
             }
             #endregion
 			
-            #region mono compile
+            #region mono compile            
+            string editorData = EditorApplication.applicationContentsPath;
+#if UNITY_EDITOR_OSX && !UNITY_5_4_OR_NEWER
+			editorData += "/Frameworks";
+#endif
             List<string> arg = new List<string>();
             arg.Add("/target:library");
             arg.Add(string.Format("/out:\"{0}\"", WrapperName));
@@ -606,7 +597,7 @@ namespace SLua
             }
             File.Delete(ArgumentFile);
         }
-#endif
+
         static void clear(string[] paths)
 		{
 			try
