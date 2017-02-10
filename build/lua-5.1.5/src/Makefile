@@ -8,7 +8,7 @@
 PLAT= none
 
 CC= gcc
-CFLAGS= -O2 -Wall $(MYCFLAGS)
+CFLAGS= -O2 -Wall $(MYCFLAGS) $(COCOCFLAGS)
 AR= ar rcu
 RANLIB= ranlib
 RM= rm -f
@@ -18,14 +18,29 @@ MYCFLAGS=
 MYLDFLAGS=
 MYLIBS=
 
+# ++ Coco =========
+# Default: autodetect gccasm/setjmp/ucontext/fibers context switch method.
+COCOCFLAGS=
+# Force use of setjmp (instead of gccasm).
+#COCOCFLAGS= -DCOCO_USE_SETJMP
+# Force use of ucontext (instead of gccasm or setjmp).
+#COCOCFLAGS= -DCOCO_USE_UCONTEXT
+# Uncomment this if you want to disable support for Coco.
+#COCOCFLAGS= -DCOCO_DISABLE
+# -- Coco =========
+
 # == END OF USER SETTINGS. NO NEED TO CHANGE ANYTHING BELOW THIS LINE =========
 
 PLATS= aix ansi bsd freebsd generic linux macosx mingw posix solaris
 
+# ++ Coco =========
+COCO_O= lcoco.o
+# -- Coco =========
+
 LUA_A=	liblua.a
 CORE_O=	lapi.o lcode.o ldebug.o ldo.o ldump.o lfunc.o lgc.o llex.o lmem.o \
 	lobject.o lopcodes.o lparser.o lstate.o lstring.o ltable.o ltm.o  \
-	lundump.o lvm.o lzio.o
+	lundump.o lvm.o lzio.o $(COCO_O)
 LIB_O=	lauxlib.o lbaselib.o ldblib.o liolib.o lmathlib.o loslib.o ltablib.o \
 	lstrlib.o loadlib.o linit.o
 
@@ -48,7 +63,7 @@ o:	$(ALL_O)
 a:	$(ALL_A)
 
 $(LUA_A): $(CORE_O) $(LIB_O)
-	$(AR) $@ $(CORE_O) $(LIB_O)	# DLL needs all object files
+	$(AR) $@ $(CORE_O) $(LIB_O)
 	$(RANLIB) $@
 
 $(LUA_T): $(LUA_O) $(LUA_A)
@@ -121,62 +136,67 @@ solaris:
 # DO NOT DELETE
 
 lapi.o: lapi.c lua.h luaconf.h lapi.h lobject.h llimits.h ldebug.h \
-  lstate.h ltm.h lzio.h lmem.h ldo.h lfunc.h lgc.h lstring.h ltable.h \
-  lundump.h lvm.h
+  lstate.h ltm.h lzio.h lmem.h lcoco.h ldo.h lfunc.h lgc.h lstring.h \
+  ltable.h lundump.h lvm.h
 lauxlib.o: lauxlib.c lua.h luaconf.h lauxlib.h
-lbaselib.o: lbaselib.c lua.h luaconf.h lauxlib.h lualib.h
+lbaselib.o: lbaselib.c lua.h luaconf.h lauxlib.h lualib.h lcoco.h
+lcoco.o: lcoco.c lua.h luaconf.h lobject.h llimits.h lstate.h ltm.h \
+  lzio.h lmem.h lcoco.h ldo.h lvm.h lgc.h
 lcode.o: lcode.c lua.h luaconf.h lcode.h llex.h lobject.h llimits.h \
-  lzio.h lmem.h lopcodes.h lparser.h ldebug.h lstate.h ltm.h ldo.h lgc.h \
-  ltable.h
+  lzio.h lmem.h lopcodes.h lparser.h ldebug.h lstate.h ltm.h lcoco.h \
+  ldo.h lgc.h ltable.h
 ldblib.o: ldblib.c lua.h luaconf.h lauxlib.h lualib.h
 ldebug.o: ldebug.c lua.h luaconf.h lapi.h lobject.h llimits.h lcode.h \
-  llex.h lzio.h lmem.h lopcodes.h lparser.h ldebug.h lstate.h ltm.h ldo.h \
-  lfunc.h lstring.h lgc.h ltable.h lvm.h
+  llex.h lzio.h lmem.h lopcodes.h lparser.h ldebug.h lstate.h ltm.h \
+  lcoco.h ldo.h lfunc.h lstring.h lgc.h ltable.h lvm.h
 ldo.o: ldo.c lua.h luaconf.h ldebug.h lstate.h lobject.h llimits.h ltm.h \
-  lzio.h lmem.h ldo.h lfunc.h lgc.h lopcodes.h lparser.h lstring.h \
-  ltable.h lundump.h lvm.h
+  lzio.h lmem.h lcoco.h ldo.h lfunc.h lgc.h lopcodes.h lparser.h \
+  lstring.h ltable.h lundump.h lvm.h
 ldump.o: ldump.c lua.h luaconf.h lobject.h llimits.h lstate.h ltm.h \
-  lzio.h lmem.h lundump.h
+  lzio.h lmem.h lcoco.h lundump.h
 lfunc.o: lfunc.c lua.h luaconf.h lfunc.h lobject.h llimits.h lgc.h lmem.h \
-  lstate.h ltm.h lzio.h
+  lstate.h ltm.h lzio.h lcoco.h
 lgc.o: lgc.c lua.h luaconf.h ldebug.h lstate.h lobject.h llimits.h ltm.h \
-  lzio.h lmem.h ldo.h lfunc.h lgc.h lstring.h ltable.h
+  lzio.h lmem.h lcoco.h ldo.h lfunc.h lgc.h lstring.h ltable.h
 linit.o: linit.c lua.h luaconf.h lualib.h lauxlib.h
 liolib.o: liolib.c lua.h luaconf.h lauxlib.h lualib.h
 llex.o: llex.c lua.h luaconf.h ldo.h lobject.h llimits.h lstate.h ltm.h \
-  lzio.h lmem.h llex.h lparser.h lstring.h lgc.h ltable.h
+  lzio.h lmem.h lcoco.h llex.h lparser.h lstring.h lgc.h ltable.h
 lmathlib.o: lmathlib.c lua.h luaconf.h lauxlib.h lualib.h
 lmem.o: lmem.c lua.h luaconf.h ldebug.h lstate.h lobject.h llimits.h \
-  ltm.h lzio.h lmem.h ldo.h
+  ltm.h lzio.h lmem.h lcoco.h ldo.h
 loadlib.o: loadlib.c lua.h luaconf.h lauxlib.h lualib.h
 lobject.o: lobject.c lua.h luaconf.h ldo.h lobject.h llimits.h lstate.h \
-  ltm.h lzio.h lmem.h lstring.h lgc.h lvm.h
+  ltm.h lzio.h lmem.h lcoco.h lstring.h lgc.h lvm.h
 lopcodes.o: lopcodes.c lopcodes.h llimits.h lua.h luaconf.h
 loslib.o: loslib.c lua.h luaconf.h lauxlib.h lualib.h
 lparser.o: lparser.c lua.h luaconf.h lcode.h llex.h lobject.h llimits.h \
-  lzio.h lmem.h lopcodes.h lparser.h ldebug.h lstate.h ltm.h ldo.h \
-  lfunc.h lstring.h lgc.h ltable.h
+  lzio.h lmem.h lopcodes.h lparser.h ldebug.h lstate.h ltm.h lcoco.h \
+  ldo.h lfunc.h lstring.h lgc.h ltable.h
 lstate.o: lstate.c lua.h luaconf.h ldebug.h lstate.h lobject.h llimits.h \
-  ltm.h lzio.h lmem.h ldo.h lfunc.h lgc.h llex.h lstring.h ltable.h
+  ltm.h lzio.h lmem.h lcoco.h ldo.h lfunc.h lgc.h llex.h lstring.h \
+  ltable.h
 lstring.o: lstring.c lua.h luaconf.h lmem.h llimits.h lobject.h lstate.h \
-  ltm.h lzio.h lstring.h lgc.h
+  ltm.h lzio.h lcoco.h lstring.h lgc.h
 lstrlib.o: lstrlib.c lua.h luaconf.h lauxlib.h lualib.h
 ltable.o: ltable.c lua.h luaconf.h ldebug.h lstate.h lobject.h llimits.h \
-  ltm.h lzio.h lmem.h ldo.h lgc.h ltable.h
+  ltm.h lzio.h lmem.h lcoco.h ldo.h lgc.h ltable.h
 ltablib.o: ltablib.c lua.h luaconf.h lauxlib.h lualib.h
 ltm.o: ltm.c lua.h luaconf.h lobject.h llimits.h lstate.h ltm.h lzio.h \
-  lmem.h lstring.h lgc.h ltable.h
+  lmem.h lcoco.h lstring.h lgc.h ltable.h
 lua.o: lua.c lua.h luaconf.h lauxlib.h lualib.h
 luac.o: luac.c lua.h luaconf.h lauxlib.h ldo.h lobject.h llimits.h \
-  lstate.h ltm.h lzio.h lmem.h lfunc.h lopcodes.h lstring.h lgc.h \
+  lstate.h ltm.h lzio.h lmem.h lcoco.h lfunc.h lopcodes.h lstring.h lgc.h \
   lundump.h
 lundump.o: lundump.c lua.h luaconf.h ldebug.h lstate.h lobject.h \
-  llimits.h ltm.h lzio.h lmem.h ldo.h lfunc.h lstring.h lgc.h lundump.h
+  llimits.h ltm.h lzio.h lmem.h lcoco.h ldo.h lfunc.h lstring.h lgc.h \
+  lundump.h
 lvm.o: lvm.c lua.h luaconf.h ldebug.h lstate.h lobject.h llimits.h ltm.h \
-  lzio.h lmem.h ldo.h lfunc.h lgc.h lopcodes.h lstring.h ltable.h lvm.h
+  lzio.h lmem.h lcoco.h ldo.h lfunc.h lgc.h lopcodes.h lstring.h ltable.h \
+  lvm.h
 lzio.o: lzio.c lua.h luaconf.h llimits.h lmem.h lstate.h lobject.h ltm.h \
-  lzio.h
+  lzio.h lcoco.h
 print.o: print.c ldebug.h lstate.h lua.h luaconf.h lobject.h llimits.h \
-  ltm.h lzio.h lmem.h lopcodes.h lundump.h
+  ltm.h lzio.h lmem.h lcoco.h lopcodes.h lundump.h
 
 # (end of Makefile)

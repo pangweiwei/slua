@@ -108,22 +108,17 @@ LUA_API int lua_checkstack (lua_State *L, int size) {
 
 
 LUA_API void lua_xmove (lua_State *from, lua_State *to, int n) {
-  int i;
+  StkId f, t;
   if (from == to) return;
   lua_lock(to);
   api_checknelems(from, n);
   api_check(from, G(from) == G(to));
   api_check(from, to->ci->top - to->top >= n);
-  from->top -= n;
-  for (i = 0; i < n; i++) {
-    setobj2s(to, to->top++, from->top + i);
-  }
+  f = from->top;
+  t = to->top = to->top + n;
+  while (--n >= 0) setobj2s(to, --t, --f);
+  from->top = f;
   lua_unlock(to);
-}
-
-
-LUA_API void lua_setlevel (lua_State *from, lua_State *to) {
-  to->nCcalls = from->nCcalls;
 }
 
 
