@@ -590,6 +590,7 @@ namespace SLua
                 Directory.Delete(GenPath, true);
                 Directory.CreateDirectory(GenPath);
 				File.Move (WrapperName, GenPath + WrapperName);
+				AssetDatabase.Refresh();
             }
             else
             {
@@ -634,6 +635,9 @@ namespace SLua
 		
 		static void GenerateBind(List<Type> list, string name, int order,string path)
 		{
+			// delete wrapper dll
+			System.IO.File.Delete(GenPath + WrapperName);
+
 			CodeGenerator cg = new CodeGenerator();
             cg.path = path;
 			cg.GenerateBind(list, name, order);
