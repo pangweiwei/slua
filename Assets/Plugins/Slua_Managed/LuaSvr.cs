@@ -143,8 +143,7 @@ namespace SLua
 			tick (2);
 
 			int bindProgress = 2;
-			int count = list.Count;
-			int lastProgress = 0;
+			int lastProgress = bindProgress;
 			for (int n = 0; n < list.Count; n++)
 			{
 				Action<IntPtr> action = list[n];
