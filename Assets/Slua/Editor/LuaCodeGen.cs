@@ -456,7 +456,155 @@ namespace SLua
 			Debug.Log("Clear all complete.");
 		}
 		
-		static void clear(string[] paths)
+        [MenuItem("SLua/Compile LuaObject To DLL")]
+        static public void CompileDLL()
+        {
+            #region scripts
+            List<string> scripts = new List<string>();
+            string[] guids = AssetDatabase.FindAssets("t:Script", new string[1] { Path.GetDirectoryName(GenPath) });
+            int guidCount = guids.Length;
+            for (int i = 0; i < guidCount; i++)
+            {
+                // path may contains space
+                string path = "\"" + AssetDatabase.GUIDToAssetPath(guids[i]) + "\"";
+                if(!scripts.Contains(path))
+                    scripts.Add(path); 
+            }
+
+            if (scripts.Count == 0)
+            {
+                Debug.LogError("No Scripts");
+                return;
+            }
+            #endregion
+
+            #region libraries
+            List<string> libraries = new List<string>();
+            // system related
+            string editorData = EditorApplication.applicationContentsPath;
+#if UNITY_EDITOR_OSX && !UNITY_5_4_OR_NEWER
+			editorData += "/Frameworks";
+#endif
+            libraries.Add(editorData + "/Managed/UnityEngine.dll");
+            libraries.Add(editorData + "/Mono/lib/mono/unity/System.Runtime.Serialization.dll");
+            libraries.Add(editorData + "/Mono/lib/mono/unity/System.Xml.Linq.dll");
+            libraries.Add(editorData + "/Mono/lib/mono/unity/System.Core.dll");
+            // reference other scripts in Project
+            if (File.Exists("Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll"))
+            {
+                libraries.Add("Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll");
+            }
+            libraries.Add("Library/ScriptAssemblies/Assembly-CSharp.dll");
+            // reference other dll in Project
+            PluginImporter[] importers = PluginImporter.GetAllImporters();
+            for (int i = 0; i < importers.Length; i++)
+            {
+                if (!importers[i].isNativePlugin && importers[i].GetCompatibleWithAnyPlatform())
+                {
+                    libraries.Add(importers[i].assetPath);
+                }
+            }
+            #endregion
+
+            #region mono compile
+            string dllFile = "sluaWrapper.dll";
+            List<string> arg = new List<string>();
+            arg.Add("/target:library");
+            arg.Add(string.Format("/out:\"{0}\"", dllFile));
+            arg.Add(string.Format("/r:\"{0}\"", string.Join(";", libraries.ToArray())));
+            arg.AddRange(scripts);
+
+            const string ArgumentFile = "LuaCodeGen.txt";
+            File.WriteAllLines(ArgumentFile, arg.ToArray());
+            
+			Environment.SetEnvironmentVariable ("MONO_PATH", editorData+"/Mono/lib/mono/unity");
+			Environment.SetEnvironmentVariable ("MONO_CFG_DIR", editorData+"/Mono/etc");
+			string mono = editorData+ "/Mono/bin/mono";
+#if UNITY_EDITOR_WIN
+            mono += ".exe";
+#endif
+			string smcs = editorData + "/Mono/lib/mono/unity/smcs.exe";
+			// wrapping since we may have space
+#if UNITY_EDITOR_WIN
+            mono = "\"" + mono + "\"";
+#endif
+            smcs = "\"" + smcs + "\"";
+            #endregion
+
+            #region execute bash
+            StringBuilder output = new StringBuilder();
+            StringBuilder error = new StringBuilder();
+            bool success = false;
+            try
+            {
+                var process = new System.Diagnostics.Process();
+                process.StartInfo.FileName = mono;
+                process.StartInfo.Arguments = smcs + " @" + ArgumentFile;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+
+                using (var outputWaitHandle = new System.Threading.AutoResetEvent(false))
+                using (var errorWaitHandle = new System.Threading.AutoResetEvent(false))
+                {
+                    process.OutputDataReceived += (sender, e) =>
+                    {
+                        if (e.Data == null)
+                        {
+                            outputWaitHandle.Set();
+                        }
+                        else
+                        {
+                            output.AppendLine(e.Data);
+                        }
+                    };
+                    process.ErrorDataReceived += (sender, e) =>
+                    {
+                        if (e.Data == null)
+                        {
+                            errorWaitHandle.Set();
+                        }
+                        else
+                        {
+                            error.AppendLine(e.Data);
+                        }
+                    };
+                    // http://stackoverflow.com/questions/139593/processstartinfo-hanging-on-waitforexit-why
+                    process.Start();
+
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+
+                    const int timeout = 300;
+                    if (process.WaitForExit(timeout * 1000) &&
+                        outputWaitHandle.WaitOne(timeout * 1000) &&
+                        errorWaitHandle.WaitOne(timeout * 1000))
+                    {
+                        success = (process.ExitCode == 0);
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError(ex);
+            }
+            #endregion
+
+            Debug.Log(output.ToString());
+            if (success)
+            {
+                Directory.Delete(GenPath, true);
+                Directory.CreateDirectory(GenPath);
+				File.Move (dllFile, GenPath + dllFile);
+            }
+            else
+            {
+                Debug.LogError(error.ToString());
+            }
+            File.Delete(ArgumentFile);
+        }
+
+        static void clear(string[] paths)
 		{
 			try
 			{
