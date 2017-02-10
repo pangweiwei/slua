@@ -25,6 +25,7 @@ namespace SLua
 	using UnityEngine;
 	using System.Collections;
 	using System.Collections.Generic;
+    using System.Linq;
 	using System.IO;
 	using System;
 	using System.Reflection;
@@ -38,6 +39,7 @@ namespace SLua
     public class LuaCodeGen : MonoBehaviour
 	{
 		static public string GenPath = SLuaSetting.Instance.UnityEngineGeneratePath;
+        static public string WrapperName = "sluaWrapper.dll";
         public delegate void ExportGenericDelegate(Type t, string ns);
 		
         static bool autoRefresh = true;
@@ -76,7 +78,7 @@ namespace SLua
 
                 // Remind user to generate lua interface code
 			    var remindGenerate = !EditorPrefs.HasKey("SLUA_REMIND_GENERTE_LUA_INTERFACE") || EditorPrefs.GetBool("SLUA_REMIND_GENERTE_LUA_INTERFACE");
-				bool ok = System.IO.Directory.Exists(GenPath+"Unity");
+                bool ok = System.IO.Directory.Exists(GenPath + "Unity") || System.IO.File.Exists(GenPath + WrapperName);
 				if (!ok && remindGenerate)
 				{
 				    if (EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
@@ -455,8 +457,148 @@ namespace SLua
 			clear(new string[] { Path.GetDirectoryName(GenPath) });
 			Debug.Log("Clear all complete.");
 		}
-		
-		static void clear(string[] paths)
+
+        [MenuItem("SLua/Compile LuaObject To DLL")]
+        static public void CompileDLL()
+        {
+            #region scripts
+            List<string> scripts = new List<string>();
+            string[] guids = AssetDatabase.FindAssets("t:Script", new string[1] { Path.GetDirectoryName(GenPath) }).Distinct().ToArray();
+            int guidCount = guids.Length;
+            for (int i = 0; i < guidCount; i++)
+            {
+                // path may contains space
+                string path = "\"" + AssetDatabase.GUIDToAssetPath(guids[i]) + "\"";
+                if(!scripts.Contains(path))
+                    scripts.Add(path); 
+            }
+
+            if (scripts.Count == 0)
+            {
+                Debug.LogError("No Scripts");
+                return;
+            }
+            #endregion
+
+            #region libraries
+            List<string> libraries = new List<string>();
+            string[] referenced = new string[] { "UnityEngine", "UnityEngine.UI" };
+            string projectPath = Path.GetFullPath(Application.dataPath+"/..").Replace("\\", "/");
+            // http://stackoverflow.com/questions/52797/how-do-i-get-the-path-of-the-assembly-the-code-is-in
+            foreach (var assem in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                UriBuilder uri = new UriBuilder(assem.CodeBase);
+                string path = Uri.UnescapeDataString(uri.Path).Replace("\\", "/");
+                string name = Path.GetFileNameWithoutExtension(path);
+                if (path.StartsWith(projectPath) || referenced.Contains(name))
+                {
+                    libraries.Add(path);
+                }
+            }
+            #endregion
+			
+            #region mono compile            
+            string editorData = EditorApplication.applicationContentsPath;
+#if UNITY_EDITOR_OSX && !UNITY_5_4_OR_NEWER
+			editorData += "/Frameworks";
+#endif
+            List<string> arg = new List<string>();
+            arg.Add("/target:library");
+            arg.Add(string.Format("/out:\"{0}\"", WrapperName));
+            arg.Add(string.Format("/r:\"{0}\"", string.Join(";", libraries.ToArray())));
+            arg.AddRange(scripts);
+
+            const string ArgumentFile = "LuaCodeGen.txt";
+            File.WriteAllLines(ArgumentFile, arg.ToArray());
+            
+			Environment.SetEnvironmentVariable ("MONO_PATH", editorData+"/Mono/lib/mono/unity");
+			Environment.SetEnvironmentVariable ("MONO_CFG_DIR", editorData+"/Mono/etc");
+			string mono = editorData+ "/Mono/bin/mono";
+#if UNITY_EDITOR_WIN
+            mono += ".exe";
+#endif
+			string smcs = editorData + "/Mono/lib/mono/unity/smcs.exe";
+			// wrapping since we may have space
+#if UNITY_EDITOR_WIN
+            mono = "\"" + mono + "\"";
+#endif
+            smcs = "\"" + smcs + "\"";
+            #endregion
+
+            #region execute bash
+            StringBuilder output = new StringBuilder();
+            StringBuilder error = new StringBuilder();
+            bool success = false;
+            try
+            {
+                var process = new System.Diagnostics.Process();
+                process.StartInfo.FileName = mono;
+                process.StartInfo.Arguments = smcs + " @" + ArgumentFile;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+
+                using (var outputWaitHandle = new System.Threading.AutoResetEvent(false))
+                using (var errorWaitHandle = new System.Threading.AutoResetEvent(false))
+                {
+                    process.OutputDataReceived += (sender, e) =>
+                    {
+                        if (e.Data == null)
+                        {
+                            outputWaitHandle.Set();
+                        }
+                        else
+                        {
+                            output.AppendLine(e.Data);
+                        }
+                    };
+                    process.ErrorDataReceived += (sender, e) =>
+                    {
+                        if (e.Data == null)
+                        {
+                            errorWaitHandle.Set();
+                        }
+                        else
+                        {
+                            error.AppendLine(e.Data);
+                        }
+                    };
+                    // http://stackoverflow.com/questions/139593/processstartinfo-hanging-on-waitforexit-why
+                    process.Start();
+
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+
+                    const int timeout = 300;
+                    if (process.WaitForExit(timeout * 1000) &&
+                        outputWaitHandle.WaitOne(timeout * 1000) &&
+                        errorWaitHandle.WaitOne(timeout * 1000))
+                    {
+                        success = (process.ExitCode == 0);
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError(ex);
+            }
+            #endregion
+
+            Debug.Log(output.ToString());
+            if (success)
+            {
+                Directory.Delete(GenPath, true);
+                Directory.CreateDirectory(GenPath);
+				File.Move (WrapperName, GenPath + WrapperName);
+            }
+            else
+            {
+                Debug.LogError(error.ToString());
+            }
+            File.Delete(ArgumentFile);
+        }
+
+        static void clear(string[] paths)
 		{
 			try
 			{
