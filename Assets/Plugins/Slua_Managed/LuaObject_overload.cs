@@ -88,12 +88,6 @@ namespace SLua
 			return true;
 		}
 
-		static public bool checkType(IntPtr l, int p, out Color32 c)
-		{
-			c = new Color32 ();
-			return true;
-		}
-
 		static public bool checkType(IntPtr l, int p, out LayerMask lm)
 		{
 			int v;
