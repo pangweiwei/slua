@@ -25,6 +25,7 @@ namespace SLua
 	using UnityEngine;
 	using System.Collections;
 	using System.Collections.Generic;
+    using System.Linq;
 	using System.IO;
 	using System;
 	using System.Reflection;
@@ -38,6 +39,7 @@ namespace SLua
     public class LuaCodeGen : MonoBehaviour
 	{
 		static public string GenPath = SLuaSetting.Instance.UnityEngineGeneratePath;
+        static public string WrapperName = "sluaWrapper.dll";
         public delegate void ExportGenericDelegate(Type t, string ns);
 		
         static bool autoRefresh = true;
@@ -76,7 +78,7 @@ namespace SLua
 
                 // Remind user to generate lua interface code
 			    var remindGenerate = !EditorPrefs.HasKey("SLUA_REMIND_GENERTE_LUA_INTERFACE") || EditorPrefs.GetBool("SLUA_REMIND_GENERTE_LUA_INTERFACE");
-				bool ok = System.IO.Directory.Exists(GenPath+"Unity");
+                bool ok = System.IO.Directory.Exists(GenPath + "Unity") || System.IO.File.Exists(GenPath + WrapperName);
 				if (!ok && remindGenerate)
 				{
 				    if (EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
@@ -455,13 +457,13 @@ namespace SLua
 			clear(new string[] { Path.GetDirectoryName(GenPath) });
 			Debug.Log("Clear all complete.");
 		}
-		
+#if UNITY_5
         [MenuItem("SLua/Compile LuaObject To DLL")]
         static public void CompileDLL()
         {
             #region scripts
             List<string> scripts = new List<string>();
-            string[] guids = AssetDatabase.FindAssets("t:Script", new string[1] { Path.GetDirectoryName(GenPath) });
+            string[] guids = AssetDatabase.FindAssets("t:Script", new string[1] { Path.GetDirectoryName(GenPath) }).Distinct().ToArray();
             int guidCount = guids.Length;
             for (int i = 0; i < guidCount; i++)
             {
@@ -486,9 +488,11 @@ namespace SLua
 			editorData += "/Frameworks";
 #endif
             libraries.Add(editorData + "/Managed/UnityEngine.dll");
+            
             libraries.Add(editorData + "/Mono/lib/mono/unity/System.Runtime.Serialization.dll");
             libraries.Add(editorData + "/Mono/lib/mono/unity/System.Xml.Linq.dll");
             libraries.Add(editorData + "/Mono/lib/mono/unity/System.Core.dll");
+
             // reference other scripts in Project
             if (File.Exists("Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll"))
             {
@@ -505,12 +509,11 @@ namespace SLua
                 }
             }
             #endregion
-
+			
             #region mono compile
-            string dllFile = "sluaWrapper.dll";
             List<string> arg = new List<string>();
             arg.Add("/target:library");
-            arg.Add(string.Format("/out:\"{0}\"", dllFile));
+            arg.Add(string.Format("/out:\"{0}\"", WrapperName));
             arg.Add(string.Format("/r:\"{0}\"", string.Join(";", libraries.ToArray())));
             arg.AddRange(scripts);
 
@@ -595,7 +598,7 @@ namespace SLua
             {
                 Directory.Delete(GenPath, true);
                 Directory.CreateDirectory(GenPath);
-				File.Move (dllFile, GenPath + dllFile);
+				File.Move (WrapperName, GenPath + WrapperName);
             }
             else
             {
@@ -603,7 +606,7 @@ namespace SLua
             }
             File.Delete(ArgumentFile);
         }
-
+#endif
         static void clear(string[] paths)
 		{
 			try
