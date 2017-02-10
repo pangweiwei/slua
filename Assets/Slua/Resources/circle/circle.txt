@@ -56,7 +56,7 @@ function class:init(count)
 		local p = GameObject.Instantiate(P,Vector3.zero,Quaternion.identity)
 		p.transform:SetParent( cube.transform )
 
-		mat.color=self.colors[math.random(#self.colors)]
+		mat.color=Colorself.colors[math.random(#self.colors)]
 		table.insert(self.cubes,{cube,mat})
 	end
 end

@@ -227,6 +227,8 @@ function main()
 	-- test luafunction
 	local h=HelloWorld()
 	h:func7(abc)
+	h.cc = Color.red
+	print("Hellor world color",h.cc)
 end
 
 function abc()

@@ -74,9 +74,23 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Color c)
 		{
 			float x, y, z, w;
+			if (LuaDLL.lua_type (l, p) == LuaTypes.LUA_TUSERDATA) {
+				object o = checkObj(l,p);
+				if(o is Color32) {
+					c = (Color32)o;
+					return true;
+				}
+				throw new Exception(string.Format("Invalid color argument at {0}", p));
+			}
 			if (LuaDLL.luaS_checkColor(l, p, out x, out y, out z, out w) != 0)
 				throw new Exception(string.Format("Invalid color argument at {0}", p));
 			c = new Color(x, y, z, w);
+			return true;
+		}
+
+		static public bool checkType(IntPtr l, int p, out Color32 c)
+		{
+			c = new Color32 ();
 			return true;
 		}
 

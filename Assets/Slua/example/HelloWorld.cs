@@ -63,6 +63,8 @@ public class Ref
 [CustomLuaClass]
 public class HelloWorld
 {
+	public Color32 cc;
+
 	public UnityEngine.Events.UnityAction someAct;
 	static public void say()
 	{
