@@ -8,7 +8,7 @@ namespace SLua
     /// <summary>
     /// A bridge between UnityEngine.Debug.LogXXX and standalone.LogXXX
     /// </summary>
-    internal class Logger
+    public class Logger
     {
         public static void Log(string msg)
         {
