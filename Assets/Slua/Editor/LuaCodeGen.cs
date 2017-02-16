@@ -1258,6 +1258,9 @@ namespace SLua
 			Write(file, "using SLua;");
 			Write(file, "using System.Collections.Generic;");
 			WriteExtraNamespace(file,t);
+#if UNITY_5_3_OR_NEWER
+			Write (file, "[UnityEngine.Scripting.Preserve]");
+#endif
 			Write(file, "public class {0} : LuaObject {{", ExportName(t));
 		}
 
@@ -1378,6 +1381,10 @@ namespace SLua
 
 		void RegFunction(Type t, StreamWriter file)
 		{
+#if UNITY_5_3_OR_NEWER
+			Write (file, "[UnityEngine.Scripting.Preserve]");
+#endif
+
 			// Write export function
 			Write(file, "static public void reg(IntPtr l) {");
 			
@@ -1766,6 +1773,9 @@ namespace SLua
 		private void WriteFunctionAttr(StreamWriter file)
 		{
 			Write(file, "[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]");
+#if UNITY_5_3_OR_NEWER
+			Write (file, "[UnityEngine.Scripting.Preserve]");
+#endif
 		}
 		
 		ConstructorInfo[] GetValidConstructor(Type t)
