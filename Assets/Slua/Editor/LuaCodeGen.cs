@@ -110,27 +110,71 @@ namespace SLua
             autoRefresh = false;
             Generate();
 			GenerateUI();
+            GenerateAds();
 			Custom();
 			Generate3rdDll();
             autoRefresh = true;
             AssetDatabase.Refresh();
         }
 
+		static bool filterType(Type t, List<string> noUseList, List<string> uselist)
+		{
+			// check type in uselist
+			string fullName = t.FullName;
+			if (uselist != null && uselist.Count > 0)
+			{
+				return uselist.Contains(fullName);
+			}
+			else
+			{
+				// check type not in nouselist
+				foreach (string str in noUseList)
+				{
+					if (fullName.Contains(str))
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+
         [MenuItem("SLua/Unity/Make UnityEngine")]
         static public void Generate()
-		{
-			if (IsCompiling) {
-				return;
-			}
+        {
+            GenerateFor("UnityEngine", "Unity/", 0, "BindUnity");
+        }
 
-			Assembly assembly = Assembly.Load("UnityEngine");
-			Type[] types = assembly.GetExportedTypes();
-			
-			List<string> uselist;
-			List<string> noUseList;
-			
-			CustomExport.OnGetNoUseList(out noUseList);
-			CustomExport.OnGetUseList(out uselist);
+        [MenuItem("SLua/Unity/Make UnityEngine.UI")]
+        static public void GenerateUI()
+        {
+            GenerateFor("UnityEngine.UI", "Unity/", 1, "BindUnityUI");
+        }
+
+        [MenuItem("SLua/Unity/Make UnityEngine.Advertisements")]
+        static public void GenerateAds()
+        {
+            GenerateFor("UnityEngine.Advertisements", "Unity/", 2, "BindUnityAds");
+        }
+
+        static public void GenerateFor(string asemblyName, string genAtPath, int genOrder, string bindMethod)
+        {
+            if (IsCompiling)
+            {
+                return;
+            }
+
+            Assembly assembly;
+            try { assembly = Assembly.Load(asemblyName); }
+            catch (Exception) { return; }
+
+            Type[] types = assembly.GetExportedTypes();
+
+            List<string> uselist;
+            List<string> noUseList;
+
+            CustomExport.OnGetNoUseList(out noUseList);
+            CustomExport.OnGetUseList(out uselist);
 
             // Get use and nouse list from custom export.
             object[] aCustomExport = new object[1];
@@ -162,101 +206,18 @@ namespace SLua
             }
 
             List<Type> exports = new List<Type>();
-			string path = GenPath + "Unity/";
-			foreach (Type t in types)
-			{
-				if (filterType(t, noUseList, uselist) && Generate(t, path))
-					exports.Add(t);
-			}
-			
-			GenerateBind(exports, "BindUnity", 0, path);
-			if(autoRefresh)
-			    AssetDatabase.Refresh();
-			Debug.Log("Generate engine interface finished");
-		}
-
-		static bool filterType(Type t, List<string> noUseList, List<string> uselist)
-		{
-			// check type in uselist
-			string fullName = t.FullName;
-			if (uselist != null && uselist.Count > 0)
-			{
-				return uselist.Contains(fullName);
-			}
-			else
-			{
-				// check type not in nouselist
-				foreach (string str in noUseList)
-				{
-					if (fullName.Contains(str))
-					{
-						return false;
-					}
-				}
-				return true;
-			}
-		}
-		
-		[MenuItem("SLua/Unity/Make UI (for Unity4.6+)")]
-		static public void GenerateUI()
-		{
-			if (IsCompiling) {
-				return;
-			}
-
-			List<string> uselist;
-			List<string> noUseList;
-
-			CustomExport.OnGetNoUseList(out noUseList);
-			CustomExport.OnGetUseList(out uselist);
-
-            // Get use and nouse list from custom export.
-            object[] aCustomExport = new object[1];
-            InvokeEditorMethod<ICustomExportPost>("OnGetUseList", ref aCustomExport);
-            if (null != aCustomExport[0])
+            string path = GenPath + genAtPath;
+            foreach (Type t in types)
             {
-                if (null != uselist)
-                {
-                    uselist.AddRange((List<string>)aCustomExport[0]);
-                }
-                else
-                {
-                    uselist = (List<string>)aCustomExport[0];
-                }
+                if (filterType(t, noUseList, uselist) && Generate(t, path))
+                    exports.Add(t);
             }
 
-            aCustomExport[0] = null;
-            InvokeEditorMethod<ICustomExportPost>("OnGetNoUseList", ref aCustomExport);
-            if (null != aCustomExport[0])
-            {
-                if ((null != noUseList))
-                {
-                    noUseList.AddRange((List<string>)aCustomExport[0]);
-                }
-                else
-                {
-                    noUseList = (List<string>)aCustomExport[0];
-                }
-            }
-
-            Assembly assembly = Assembly.Load("UnityEngine.UI");
-			Type[] types = assembly.GetExportedTypes();
-			
-			List<Type> exports = new List<Type>();
-			string path = GenPath + "Unity/";
-			foreach (Type t in types)
-			{
-				if (filterType(t,noUseList,uselist) && Generate(t,path))
-				{
-					exports.Add(t);
-				}
-			}
-			
-			GenerateBind(exports, "BindUnityUI", 1, path);
-			if(autoRefresh)
-			    AssetDatabase.Refresh();
-			Debug.Log("Generate UI interface finished");
-		}
+            GenerateBind(exports, bindMethod, genOrder, path);
+            if (autoRefresh)
+                AssetDatabase.Refresh();
+            Debug.Log("Generate interface finished: " + asemblyName);
+        }
 
 		static String FixPathName(string path) {
 			if(path.EndsWith("\\") || path.EndsWith("/")) {
