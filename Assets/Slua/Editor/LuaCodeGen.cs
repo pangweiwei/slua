@@ -451,7 +451,9 @@ namespace SLua
                 UriBuilder uri = new UriBuilder(assem.CodeBase);
                 string path = Uri.UnescapeDataString(uri.Path).Replace("\\", "/");
                 string name = Path.GetFileNameWithoutExtension(path);
-                if (path.StartsWith(projectPath) || referenced.Contains(name))
+                // ignore dll for Editor
+                if ((path.StartsWith(projectPath) && !path.Contains("/Editor/") && !path.Contains("CSharp-Editor"))
+                    || referenced.Contains(name))
                 {
                     libraries.Add(path);
                 }
@@ -552,12 +554,12 @@ namespace SLua
                 Directory.CreateDirectory(GenPath);
 				File.Move (WrapperName, GenPath + WrapperName);
 				AssetDatabase.Refresh();
+                File.Delete(ArgumentFile);
             }
             else
             {
                 Debug.LogError(error.ToString());
-            }
-            File.Delete(ArgumentFile);
+            }            
         }
 
         static void clear(string[] paths)
