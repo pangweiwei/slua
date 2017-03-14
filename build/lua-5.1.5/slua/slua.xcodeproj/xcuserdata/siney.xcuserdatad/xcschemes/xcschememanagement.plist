@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>slua copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>slua.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -17,6 +22,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>A42AD89F1E77C6A600A568FF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>A48345231E0EB10C000A9A4F</key>
 		<dict>
 			<key>primary</key>

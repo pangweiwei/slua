@@ -38,7 +38,6 @@
 		A48345491E0EB12B000A9A4F /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = E8091A101B74553E008FED27 /* lvm.c */; };
 		A483454A1E0EB12B000A9A4F /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = E8091A111B74553E008FED27 /* lzio.c */; };
 		A483454B1E0EB12B000A9A4F /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = E8091A121B74553E008FED27 /* print.c */; };
-		A4CE9BAD1E4DB90A00C8142F /* lcoco.c in Sources */ = {isa = PBXBuildFile; fileRef = A4CE9BAC1E4DB90A00C8142F /* lcoco.c */; };
 		E8091A131B74553E008FED27 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = E80919F51B74553E008FED27 /* lapi.c */; };
 		E8091A141B74553E008FED27 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = E80919F61B74553E008FED27 /* lauxlib.c */; };
 		E8091A151B74553E008FED27 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = E80919F71B74553E008FED27 /* lbaselib.c */; };
@@ -85,9 +84,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A42AD8C61E77C6A700A568FF /* slua copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "slua copy-Info.plist"; path = "/Users/siney/slua/build/lua-5.1.5/slua/slua copy-Info.plist"; sourceTree = "<absolute>"; };
 		A48345241E0EB10C000A9A4F /* libslua.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libslua.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A4CE9BAB1E4DB90A00C8142F /* lcoco.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcoco.h; path = ../src/lcoco.h; sourceTree = "<group>"; };
-		A4CE9BAC1E4DB90A00C8142F /* lcoco.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lcoco.c; path = ../src/lcoco.c; sourceTree = "<group>"; };
 		E80919D41B745519008FED27 /* slua.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = slua.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		E80919D81B745519008FED27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E80919DE1B74553E008FED27 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lapi.h; path = ../src/lapi.h; sourceTree = "<group>"; };
@@ -167,8 +165,6 @@
 		E80919CB1B745519008FED27 = {
 			isa = PBXGroup;
 			children = (
-				A4CE9BAB1E4DB90A00C8142F /* lcoco.h */,
-				A4CE9BAC1E4DB90A00C8142F /* lcoco.c */,
 				E8091A311B745553008FED27 /* slua.c */,
 				E80919DE1B74553E008FED27 /* lapi.h */,
 				E80919DF1B74553E008FED27 /* lauxlib.h */,
@@ -225,6 +221,7 @@
 				E8091A121B74553E008FED27 /* print.c */,
 				E80919D61B745519008FED27 /* slua */,
 				E80919D51B745519008FED27 /* Products */,
+				A42AD8C61E77C6A700A568FF /* slua copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -388,7 +385,6 @@
 				E8091A2E1B74553E008FED27 /* lvm.c in Sources */,
 				E8091A1B1B74553E008FED27 /* lfunc.c in Sources */,
 				E8091A291B74553E008FED27 /* lstrlib.c in Sources */,
-				A4CE9BAD1E4DB90A00C8142F /* lcoco.c in Sources */,
 				E8091A131B74553E008FED27 /* lapi.c in Sources */,
 				E8091A301B74553E008FED27 /* print.c in Sources */,
 				E8091A231B74553E008FED27 /* lobject.c in Sources */,
