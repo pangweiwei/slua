@@ -1130,7 +1130,10 @@ namespace SLua
             }
             else if (IsValueType(t))
             {
-                return string.Format("checkValueType(l,{2}{0},out {1});", n, v, prefix);
+                if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    return string.Format("checkNullable(l,{2}{0},out {1});", n, v, prefix);
+                else
+                    return string.Format("checkValueType(l,{2}{0},out {1});", n, v, prefix);
             }
             else if (t.IsArray)
             {
@@ -1720,7 +1723,10 @@ namespace SLua
 			else if (t.BaseType == typeof(System.MulticastDelegate))
 				Write(file, "int op=LuaDelegation.checkDelegate(l,{2}{0},out {1});", n, v, nprefix);
 			else if (IsValueType(t))
-				Write(file, "checkValueType(l,{2}{0},out {1});", n, v, nprefix);
+                if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    Write(file, "checkNullable(l,{2}{0},out {1});", n, v, nprefix);
+                else
+                    Write(file, "checkValueType(l,{2}{0},out {1});", n, v, nprefix);
 			else if (t.IsArray)
 				Write(file, "checkArray(l,{2}{0},out {1});", n, v, nprefix);
 			else
