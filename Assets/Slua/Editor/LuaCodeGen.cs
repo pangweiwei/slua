@@ -648,6 +648,11 @@ namespace SLua
 			"Motion.isAnimatorMotion",
 			"Motion.isHumanMotion",
 #endif
+
+			"Light.lightmappingMode",
+			"MonoBehaviour.runInEditMode",
+			"MonoBehaviour.useGUILayout",
+
         };
 
 
