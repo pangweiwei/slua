@@ -46,7 +46,7 @@ namespace SLua
 	{
 		public LuaState luaState;
 		#if !SLUA_STANDALONE
-		static LuaSvrGameObject lgo;
+		protected static LuaSvrGameObject lgo;
 		#endif
 		int errorReported = 0;
 		public bool inited = false;
@@ -116,7 +116,7 @@ namespace SLua
 		}
 
 
-		private void doBind(IntPtr L)
+		protected void doBind(IntPtr L)
 		{
 			var list = collectBindInfo ();
 
@@ -143,8 +143,7 @@ namespace SLua
 			tick (2);
 
 			int bindProgress = 2;
-			int count = list.Count;
-			int lastProgress = 0;
+			int lastProgress = bindProgress;
 			for (int n = 0; n < list.Count; n++)
 			{
 				Action<IntPtr> action = list[n];
@@ -167,7 +166,7 @@ namespace SLua
 			return new Action<IntPtr>[0];
 		}
 
-		void doinit(IntPtr L,LuaSvrFlag flag)
+        protected void doinit(IntPtr L,LuaSvrFlag flag)
 		{
 			#if !SLUA_STANDALONE
 			LuaTimer.reg(L);
@@ -202,7 +201,7 @@ namespace SLua
 			inited = true;
 		}
 
-		void checkTop(IntPtr L)
+        protected void checkTop(IntPtr L)
 		{
 			if (LuaDLL.lua_gettop(luaState.L) != errorReported)
 			{
