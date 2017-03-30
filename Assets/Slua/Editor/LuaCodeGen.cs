@@ -25,6 +25,7 @@ namespace SLua
 	using UnityEngine;
 	using System.Collections;
 	using System.Collections.Generic;
+    using System.Linq;
 	using System.IO;
 	using System;
 	using System.Reflection;
@@ -38,6 +39,7 @@ namespace SLua
     public class LuaCodeGen : MonoBehaviour
 	{
 		static public string GenPath = SLuaSetting.Instance.UnityEngineGeneratePath;
+        static public string WrapperName = "sluaWrapper.dll";
         public delegate void ExportGenericDelegate(Type t, string ns);
 		
         static bool autoRefresh = true;
@@ -76,7 +78,7 @@ namespace SLua
 
                 // Remind user to generate lua interface code
 			    var remindGenerate = !EditorPrefs.HasKey("SLUA_REMIND_GENERTE_LUA_INTERFACE") || EditorPrefs.GetBool("SLUA_REMIND_GENERTE_LUA_INTERFACE");
-				bool ok = System.IO.Directory.Exists(GenPath+"Unity");
+                bool ok = System.IO.Directory.Exists(GenPath + "Unity") || System.IO.File.Exists(GenPath + WrapperName);
 				if (!ok && remindGenerate)
 				{
 				    if (EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
@@ -108,27 +110,71 @@ namespace SLua
             autoRefresh = false;
             Generate();
 			GenerateUI();
+            GenerateAds();
 			Custom();
 			Generate3rdDll();
             autoRefresh = true;
             AssetDatabase.Refresh();
         }
 
+		static bool filterType(Type t, List<string> noUseList, List<string> uselist)
+		{
+			// check type in uselist
+			string fullName = t.FullName;
+			if (uselist != null && uselist.Count > 0)
+			{
+				return uselist.Contains(fullName);
+			}
+			else
+			{
+				// check type not in nouselist
+				foreach (string str in noUseList)
+				{
+					if (fullName.Contains(str))
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+
         [MenuItem("SLua/Unity/Make UnityEngine")]
         static public void Generate()
-		{
-			if (IsCompiling) {
-				return;
-			}
+        {
+            GenerateFor("UnityEngine", "Unity/", 0, "BindUnity");
+        }
 
-			Assembly assembly = Assembly.Load("UnityEngine");
-			Type[] types = assembly.GetExportedTypes();
-			
-			List<string> uselist;
-			List<string> noUseList;
-			
-			CustomExport.OnGetNoUseList(out noUseList);
-			CustomExport.OnGetUseList(out uselist);
+        [MenuItem("SLua/Unity/Make UnityEngine.UI")]
+        static public void GenerateUI()
+        {
+            GenerateFor("UnityEngine.UI", "Unity/", 1, "BindUnityUI");
+        }
+
+        [MenuItem("SLua/Unity/Make UnityEngine.Advertisements")]
+        static public void GenerateAds()
+        {
+            GenerateFor("UnityEngine.Advertisements", "Unity/", 2, "BindUnityAds");
+        }
+
+        static public void GenerateFor(string asemblyName, string genAtPath, int genOrder, string bindMethod)
+        {
+            if (IsCompiling)
+            {
+                return;
+            }
+
+            Assembly assembly;
+            try { assembly = Assembly.Load(asemblyName); }
+            catch (Exception) { return; }
+
+            Type[] types = assembly.GetExportedTypes();
+
+            List<string> uselist;
+            List<string> noUseList;
+
+            CustomExport.OnGetNoUseList(out noUseList);
+            CustomExport.OnGetUseList(out uselist);
 
             // Get use and nouse list from custom export.
             object[] aCustomExport = new object[1];
@@ -160,101 +206,18 @@ namespace SLua
             }
 
             List<Type> exports = new List<Type>();
-			string path = GenPath + "Unity/";
-			foreach (Type t in types)
-			{
-				if (filterType(t, noUseList, uselist) && Generate(t, path))
-					exports.Add(t);
-			}
-			
-			GenerateBind(exports, "BindUnity", 0, path);
-			if(autoRefresh)
-			    AssetDatabase.Refresh();
-			Debug.Log("Generate engine interface finished");
-		}
-
-		static bool filterType(Type t, List<string> noUseList, List<string> uselist)
-		{
-			// check type in uselist
-			string fullName = t.FullName;
-			if (uselist != null && uselist.Count > 0)
-			{
-				return uselist.Contains(fullName);
-			}
-			else
-			{
-				// check type not in nouselist
-				foreach (string str in noUseList)
-				{
-					if (fullName.Contains(str))
-					{
-						return false;
-					}
-				}
-				return true;
-			}
-		}
-		
-		[MenuItem("SLua/Unity/Make UI (for Unity4.6+)")]
-		static public void GenerateUI()
-		{
-			if (IsCompiling) {
-				return;
-			}
-
-			List<string> uselist;
-			List<string> noUseList;
-
-			CustomExport.OnGetNoUseList(out noUseList);
-			CustomExport.OnGetUseList(out uselist);
-
-            // Get use and nouse list from custom export.
-            object[] aCustomExport = new object[1];
-            InvokeEditorMethod<ICustomExportPost>("OnGetUseList", ref aCustomExport);
-            if (null != aCustomExport[0])
+            string path = GenPath + genAtPath;
+            foreach (Type t in types)
             {
-                if (null != uselist)
-                {
-                    uselist.AddRange((List<string>)aCustomExport[0]);
-                }
-                else
-                {
-                    uselist = (List<string>)aCustomExport[0];
-                }
+                if (filterType(t, noUseList, uselist) && Generate(t, path))
+                    exports.Add(t);
             }
 
-            aCustomExport[0] = null;
-            InvokeEditorMethod<ICustomExportPost>("OnGetNoUseList", ref aCustomExport);
-            if (null != aCustomExport[0])
-            {
-                if ((null != noUseList))
-                {
-                    noUseList.AddRange((List<string>)aCustomExport[0]);
-                }
-                else
-                {
-                    noUseList = (List<string>)aCustomExport[0];
-                }
-            }
-
-            Assembly assembly = Assembly.Load("UnityEngine.UI");
-			Type[] types = assembly.GetExportedTypes();
-			
-			List<Type> exports = new List<Type>();
-			string path = GenPath + "Unity/";
-			foreach (Type t in types)
-			{
-				if (filterType(t,noUseList,uselist) && Generate(t,path))
-				{
-					exports.Add(t);
-				}
-			}
-			
-			GenerateBind(exports, "BindUnityUI", 1, path);
-			if(autoRefresh)
-			    AssetDatabase.Refresh();
-			Debug.Log("Generate UI interface finished");
-		}
+            GenerateBind(exports, bindMethod, genOrder, path);
+            if (autoRefresh)
+                AssetDatabase.Refresh();
+            Debug.Log("Generate interface finished: " + asemblyName);
+        }
 
 		static String FixPathName(string path) {
 			if(path.EndsWith("\\") || path.EndsWith("/")) {
@@ -455,8 +418,151 @@ namespace SLua
 			clear(new string[] { Path.GetDirectoryName(GenPath) });
 			Debug.Log("Clear all complete.");
 		}
-		
-		static void clear(string[] paths)
+
+        [MenuItem("SLua/Compile LuaObject To DLL")]
+        static public void CompileDLL()
+        {
+            #region scripts
+            List<string> scripts = new List<string>();
+            string[] guids = AssetDatabase.FindAssets("t:Script", new string[1] { Path.GetDirectoryName(GenPath) }).Distinct().ToArray();
+            int guidCount = guids.Length;
+            for (int i = 0; i < guidCount; i++)
+            {
+                // path may contains space
+                string path = "\"" + AssetDatabase.GUIDToAssetPath(guids[i]) + "\"";
+                if(!scripts.Contains(path))
+                    scripts.Add(path); 
+            }
+
+            if (scripts.Count == 0)
+            {
+                Debug.LogError("No Scripts");
+                return;
+            }
+            #endregion
+
+            #region libraries
+            List<string> libraries = new List<string>();
+            string[] referenced = new string[] { "UnityEngine", "UnityEngine.UI" };
+            string projectPath = Path.GetFullPath(Application.dataPath+"/..").Replace("\\", "/");
+            // http://stackoverflow.com/questions/52797/how-do-i-get-the-path-of-the-assembly-the-code-is-in
+            foreach (var assem in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                UriBuilder uri = new UriBuilder(assem.CodeBase);
+                string path = Uri.UnescapeDataString(uri.Path).Replace("\\", "/");
+                string name = Path.GetFileNameWithoutExtension(path);
+                // ignore dll for Editor
+                if ((path.StartsWith(projectPath) && !path.Contains("/Editor/") && !path.Contains("CSharp-Editor"))
+                    || referenced.Contains(name))
+                {
+                    libraries.Add(path);
+                }
+            }
+            #endregion
+			
+            #region mono compile            
+            string editorData = EditorApplication.applicationContentsPath;
+#if UNITY_EDITOR_OSX && !UNITY_5_4_OR_NEWER
+			editorData += "/Frameworks";
+#endif
+            List<string> arg = new List<string>();
+            arg.Add("/target:library");
+            arg.Add(string.Format("/out:\"{0}\"", WrapperName));
+            arg.Add(string.Format("/r:\"{0}\"", string.Join(";", libraries.ToArray())));
+            arg.AddRange(scripts);
+
+            const string ArgumentFile = "LuaCodeGen.txt";
+            File.WriteAllLines(ArgumentFile, arg.ToArray());
+            
+			Environment.SetEnvironmentVariable ("MONO_PATH", editorData+"/Mono/lib/mono/unity");
+			Environment.SetEnvironmentVariable ("MONO_CFG_DIR", editorData+"/Mono/etc");
+			string mono = editorData+ "/Mono/bin/mono";
+#if UNITY_EDITOR_WIN
+            mono += ".exe";
+#endif
+			string smcs = editorData + "/Mono/lib/mono/unity/smcs.exe";
+			// wrapping since we may have space
+#if UNITY_EDITOR_WIN
+            mono = "\"" + mono + "\"";
+#endif
+            smcs = "\"" + smcs + "\"";
+            #endregion
+
+            #region execute bash
+            StringBuilder output = new StringBuilder();
+            StringBuilder error = new StringBuilder();
+            bool success = false;
+            try
+            {
+                var process = new System.Diagnostics.Process();
+                process.StartInfo.FileName = mono;
+                process.StartInfo.Arguments = smcs + " @" + ArgumentFile;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+
+                using (var outputWaitHandle = new System.Threading.AutoResetEvent(false))
+                using (var errorWaitHandle = new System.Threading.AutoResetEvent(false))
+                {
+                    process.OutputDataReceived += (sender, e) =>
+                    {
+                        if (e.Data == null)
+                        {
+                            outputWaitHandle.Set();
+                        }
+                        else
+                        {
+                            output.AppendLine(e.Data);
+                        }
+                    };
+                    process.ErrorDataReceived += (sender, e) =>
+                    {
+                        if (e.Data == null)
+                        {
+                            errorWaitHandle.Set();
+                        }
+                        else
+                        {
+                            error.AppendLine(e.Data);
+                        }
+                    };
+                    // http://stackoverflow.com/questions/139593/processstartinfo-hanging-on-waitforexit-why
+                    process.Start();
+
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+
+                    const int timeout = 300;
+                    if (process.WaitForExit(timeout * 1000) &&
+                        outputWaitHandle.WaitOne(timeout * 1000) &&
+                        errorWaitHandle.WaitOne(timeout * 1000))
+                    {
+                        success = (process.ExitCode == 0);
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError(ex);
+            }
+            #endregion
+
+            Debug.Log(output.ToString());
+            if (success)
+            {
+                Directory.Delete(GenPath, true);
+                Directory.CreateDirectory(GenPath);
+				File.Move (WrapperName, GenPath + WrapperName);
+				AssetDatabase.Refresh();
+                File.Delete(ArgumentFile);
+            }
+            else
+            {
+                Debug.LogError(error.ToString());
+            }            
+        }
+
+        static void clear(string[] paths)
 		{
 			try
 			{
@@ -492,6 +598,9 @@ namespace SLua
 		
 		static void GenerateBind(List<Type> list, string name, int order,string path)
 		{
+			// delete wrapper dll
+			System.IO.File.Delete(GenPath + WrapperName);
+
 			CodeGenerator cg = new CodeGenerator();
             cg.path = path;
 			cg.GenerateBind(list, name, order);
@@ -539,6 +648,11 @@ namespace SLua
 			"Motion.isAnimatorMotion",
 			"Motion.isHumanMotion",
 #endif
+
+			"Light.lightmappingMode",
+			"MonoBehaviour.runInEditMode",
+			"MonoBehaviour.useGUILayout",
+
         };
 
 
@@ -1021,7 +1135,10 @@ namespace SLua
             }
             else if (IsValueType(t))
             {
-                return string.Format("checkValueType(l,{2}{0},out {1});", n, v, prefix);
+                if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    return string.Format("checkNullable(l,{2}{0},out {1});", n, v, prefix);
+                else
+                    return string.Format("checkValueType(l,{2}{0},out {1});", n, v, prefix);
             }
             else if (t.IsArray)
             {
@@ -1108,17 +1225,23 @@ namespace SLua
 		
 		private void WriteHead(Type t, StreamWriter file)
 		{
-			Write(file, "using System;");
-			Write(file, "using SLua;");
-			Write(file, "using System.Collections.Generic;");
-			WriteExtraNamespace(file,t);
+			HashSet<string> nsset=new HashSet<string>();
+			Write(file, "using System;"); 
+			Write(file, "using SLua;"); 
+			Write(file, "using System.Collections.Generic;"); 
+			nsset.Add("System");
+			nsset.Add("SLua");
+			nsset.Add("System.Collections.Generic");
+			WriteExtraNamespace(file,t, nsset);
+#if UNITY_5_3_OR_NEWER
+			Write (file, "[UnityEngine.Scripting.Preserve]");
+#endif
 			Write(file, "public class {0} : LuaObject {{", ExportName(t));
 		}
 
 		// add namespace for extension method
-		void WriteExtraNamespace(StreamWriter file,Type t) {
+		void WriteExtraNamespace(StreamWriter file,Type t, HashSet<string> nsset) {
 			List<MethodInfo> lstMI;
-			HashSet<string> nsset=new HashSet<string>();
 			if(extensionMethods.TryGetValue(t,out lstMI)) {
 				foreach(MethodInfo m in lstMI) {
 					// if not writed
@@ -1232,6 +1355,10 @@ namespace SLua
 
 		void RegFunction(Type t, StreamWriter file)
 		{
+#if UNITY_5_3_OR_NEWER
+			Write (file, "[UnityEngine.Scripting.Preserve]");
+#endif
+
 			// Write export function
 			Write(file, "static public void reg(IntPtr l) {");
 			
@@ -1604,7 +1731,10 @@ namespace SLua
 			else if (t.BaseType == typeof(System.MulticastDelegate))
 				Write(file, "int op=LuaDelegation.checkDelegate(l,{2}{0},out {1});", n, v, nprefix);
 			else if (IsValueType(t))
-				Write(file, "checkValueType(l,{2}{0},out {1});", n, v, nprefix);
+                if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    Write(file, "checkNullable(l,{2}{0},out {1});", n, v, nprefix);
+                else
+                    Write(file, "checkValueType(l,{2}{0},out {1});", n, v, nprefix);
 			else if (t.IsArray)
 				Write(file, "checkArray(l,{2}{0},out {1});", n, v, nprefix);
 			else
@@ -1620,6 +1750,9 @@ namespace SLua
 		private void WriteFunctionAttr(StreamWriter file)
 		{
 			Write(file, "[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]");
+#if UNITY_5_3_OR_NEWER
+			Write (file, "[UnityEngine.Scripting.Preserve]");
+#endif
 		}
 		
 		ConstructorInfo[] GetValidConstructor(Type t)

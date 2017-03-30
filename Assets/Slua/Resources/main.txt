@@ -113,8 +113,30 @@ function main()
 	local data = HelloWorld.bytes()
 	data[1]=11
 	print("data type ",type(data),#data,data.Table[1],data,data[1],data[2])
+
+	-- test bytearray object wity array
+	local ba = Slua.ByteArray(data)
+
 	data = Slua.ToString(data)
 	print("data type ",type(data),data)
+
+
+	print('Construct bytearray object',ba)
+	print(ba:ReadByte(),ba:ReadByte())
+	assert(ba.Length==4)
+	assert(ba.Position==2)
+	assert(ba:ReadByte()==53)
+
+	-- construct new byte array
+	local ba = Slua.ByteArray()
+	ba:WriteByte(11)
+	ba:WriteByte(22)
+	ba:WriteVarInt(1024)
+	ba.Position=0
+	assert(ba:ReadByte()==11)
+	assert(ba:ReadByte()==22)
+	assert(ba:ReadVarInt()==1024)
+
 
 	-- get out parameter
 	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1),Slua.out)
@@ -227,6 +249,8 @@ function main()
 	-- test luafunction
 	local h=HelloWorld()
 	h:func7(abc)
+	h.cc = Color32(255,0,0,255)
+	print("Hellor world color",h.cc)
 end
 
 function abc()
