@@ -553,7 +553,7 @@ namespace SLua
                 Directory.Delete(GenPath, true);
                 Directory.CreateDirectory(GenPath);
 				File.Move (WrapperName, GenPath + WrapperName);
-				AssetDatabase.Refresh();
+				// AssetDatabase.Refresh();
                 File.Delete(ArgumentFile);
             }
             else
