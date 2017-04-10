@@ -286,36 +286,52 @@ namespace SLua
 
 		internal void push(IntPtr l, Array o)
 		{
-			push(l, o, true, true);
+			int index = allocID (l, o);
+			if (index < 0)
+				return;
+
+			LuaDLL.luaS_pushobject(l, index, "LuaArray", true, udCacheRef);
 		}
 
-		internal void push(IntPtr l, object o, bool checkReflect, bool isArray=false)
-		{
+		internal int allocID(IntPtr l,object o) {
+
+			int index = -1;
+
 			if (o == null)
 			{
 				LuaDLL.lua_pushnil(l);
-				return;
+				return index;
 			}
-
-			int index = -1;
 
 			bool gco = isGcObject(o);
 			bool found = gco && objMap.TryGetValue(o, out index);
 			if (found)
 			{
 				if (LuaDLL.luaS_getcacheud(l, index, udCacheRef) == 1)
-					return;
+					return index;
 			}
 
 			index = add(o);
+			return index;
+		}
+
+		internal void push(IntPtr l, object o, bool checkReflect)
+		{
+			
+			int index = allocID (l, o);
+			if (index < 0)
+				return;
+
+			bool gco = isGcObject(o);
+
 #if SLUA_CHECK_REFLECTION
-			int isReflect = LuaDLL.luaS_pushobject(l, index, isArray ? "LuaArray" : getAQName(o), gco, udCacheRef);
+			int isReflect = LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
 			if (isReflect != 0 && checkReflect && !isArray)
 			{
 				Logger.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
 			}
 #else
-			LuaDLL.luaS_pushobject(l, index, isArray?"LuaArray":getAQName(o), gco, udCacheRef);
+			LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
 #endif
 
 		}

@@ -1225,10 +1225,14 @@ namespace SLua
 		
 		private void WriteHead(Type t, StreamWriter file)
 		{
-			Write(file, "using System;");
-			Write(file, "using SLua;");
-			Write(file, "using System.Collections.Generic;");
-			WriteExtraNamespace(file,t);
+			HashSet<string> nsset=new HashSet<string>();
+			Write(file, "using System;"); 
+			Write(file, "using SLua;"); 
+			Write(file, "using System.Collections.Generic;"); 
+			nsset.Add("System");
+			nsset.Add("SLua");
+			nsset.Add("System.Collections.Generic");
+			WriteExtraNamespace(file,t, nsset);
 #if UNITY_5_3_OR_NEWER
 			Write (file, "[UnityEngine.Scripting.Preserve]");
 #endif
@@ -1236,9 +1240,8 @@ namespace SLua
 		}
 
 		// add namespace for extension method
-		void WriteExtraNamespace(StreamWriter file,Type t) {
+		void WriteExtraNamespace(StreamWriter file,Type t, HashSet<string> nsset) {
 			List<MethodInfo> lstMI;
-			HashSet<string> nsset=new HashSet<string>();
 			if(extensionMethods.TryGetValue(t,out lstMI)) {
 				foreach(MethodInfo m in lstMI) {
 					// if not writed

@@ -175,6 +175,7 @@ namespace SLua
 			#endif
 				LuaCoroutine.reg(L, lgo);
 			#endif
+			Lua_SLua_ByteArray.reg (L);
 			Helper.reg(L);
 			LuaValueType.reg(L);
 

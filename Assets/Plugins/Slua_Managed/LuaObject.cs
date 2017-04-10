@@ -1097,6 +1097,8 @@ return index
 			else
 			{
 				Array array = checkObj(l, p) as Array;
+				if (array == null)
+					throw new ArgumentException ("expect array");
 				ta = array as T[];
 				return ta!=null;
 			}
