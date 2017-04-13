@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 
 // Copyright 2015 Siney/Pangweiwei siney@yeah.net
 // 
@@ -326,7 +326,7 @@ namespace SLua
 
 #if SLUA_CHECK_REFLECTION
 			int isReflect = LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
-			if (isReflect != 0 && checkReflect && !isArray)
+			if (isReflect != 0 && checkReflect)
 			{
 				Logger.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
 			}
