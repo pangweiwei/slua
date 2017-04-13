@@ -32,6 +32,7 @@ namespace SLua
 	using UnityEditor;
 	using System.Text;
 	using System.Text.RegularExpressions;
+	using System.Runtime.CompilerServices;
 
 	public interface ICustomExportPost { }
 
@@ -119,6 +120,11 @@ namespace SLua
 
 		static bool filterType(Type t, List<string> noUseList, List<string> uselist)
 		{
+			if (t.IsDefined (typeof(CompilerGeneratedAttribute),false)) {
+				Debug.Log (t.Name + " is filtered out");
+				return false;
+			}
+			
 			// check type in uselist
 			string fullName = t.FullName;
 			if (uselist != null && uselist.Count > 0)
@@ -652,7 +658,7 @@ namespace SLua
 			"Light.lightmappingMode",
 			"MonoBehaviour.runInEditMode",
 			"MonoBehaviour.useGUILayout",
-
+			"PlayableGraph.CreateScriptPlayable",
         };
 
 
@@ -804,6 +810,10 @@ namespace SLua
 			if (!t.IsGenericTypeDefinition && (!IsObsolete(t) && t != typeof(YieldInstruction) && t != typeof(Coroutine))
 			    || (t.BaseType != null && t.BaseType == typeof(System.MulticastDelegate)))
 			{
+
+				if (t.IsNested && t.DeclaringType.IsPublic == false)
+					return false;
+
 				if (t.IsEnum)
 				{
 					StreamWriter file = Begin(t);
@@ -817,7 +827,7 @@ namespace SLua
 						return false;
 
 					string f = DelegateExportFilename(path, t);
-					
+
 					StreamWriter file = new StreamWriter(f, false, Encoding.UTF8);
 					file.NewLine = NewLine;
 					WriteDelegate(t, file);
@@ -1263,7 +1273,7 @@ namespace SLua
 			
 			MethodInfo[] members = t.GetMethods(bf);
 			List<MethodInfo> methods = new List<MethodInfo>();
-			foreach (MethodInfo mi in members)
+			foreach (MethodInfo mi in members) 
 				methods.Add(tryFixGenericMethod(mi));
 
 			if (!writeStatic && this.includeExtension){
