@@ -308,7 +308,7 @@ namespace SLua
 			if (found)
 			{
 				if (LuaDLL.luaS_getcacheud(l, index, udCacheRef) == 1)
-					return index;
+					return -1;
 			}
 
 			index = add(o);
