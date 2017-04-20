@@ -129,6 +129,9 @@ public class HelloWorld
 
 	static public void setv(LuaTable t)
 	{
+		Debug.Log ("negative index test " + t [-2]);
+		Debug.Log ("zero index test " + t [0]);
+		
 		foreach (LuaTable.TablePair pair in t)
 		{
 			Debug.Log(string.Format("foreach LuaTable {0}-{1}", pair.key, pair.value));

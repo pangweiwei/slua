@@ -227,7 +227,7 @@ function main()
 	coroutine.resume(c)
 
 	-- test lua table
-	HelloWorld.setv({name="yes",value=12})
+	HelloWorld.setv({name="yes",value=12,[-2]="siney",[0]="no"})
 	local t=HelloWorld.getv()
 	for k,v in pairs(t) do
 		print("table value",k,v)
