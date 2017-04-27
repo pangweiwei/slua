@@ -25,7 +25,7 @@ namespace SLua
     using System;
     class LuaValueType : LuaObject
     {
-#if !UNITY_IPHONE && !LUA_5_3 && !SLUA_STANDALONE
+#if !LUA_5_3 && !SLUA_STANDALONE
         static string script = @"
 if not UnityEngine or not UnityEngine.Vector2 then
     print('No static code gen yet, ignore `LuaValueType:reg` !!! ')
@@ -1083,7 +1083,7 @@ end
 #endif
         public static void reg(IntPtr l)
         {
-#if !UNITY_IPHONE && !LUA_5_3 && !SLUA_STANDALONE
+#if !LUA_5_3 && !SLUA_STANDALONE
             // lua implemented valuetype isn't faster than raw under non-jit.
 			LuaState.get(l).doString(script,"ValueTypeScript");
 #endif
