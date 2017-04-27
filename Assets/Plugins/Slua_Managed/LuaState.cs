@@ -1022,19 +1022,17 @@ end
 		internal object getObject(int reference, int index)
 		{
 			if (index >= 1) {
-				int oldTop = LuaDLL.lua_gettop (L);
 				LuaDLL.lua_getref (L, reference);
 				LuaDLL.lua_rawgeti (L, -1, index);
 				object returnValue = getObject (L, -1);
-				LuaDLL.lua_settop (L, oldTop);
+				LuaDLL.lua_pop (L, 1);
 				return returnValue;
 			} else {
-				int oldTop = LuaDLL.lua_gettop (L);
 				LuaDLL.lua_getref (L, reference);
 				LuaDLL.lua_pushinteger (L, index);
 				LuaDLL.lua_gettable (L, -2);
 				object returnValue = getObject (L, -1);
-				LuaDLL.lua_settop (L, oldTop);
+				LuaDLL.lua_pop (L, 1);
 				return returnValue;
 			}
 		}
@@ -1075,16 +1073,18 @@ end
 
 		internal void setObject(int reference, int index, object o)
 		{
-			if (index >= 1)
-			{
-				int oldTop = LuaDLL.lua_gettop(L);
-				LuaDLL.lua_getref(L, reference);
-				LuaObject.pushVar(L, o);
-				LuaDLL.lua_rawseti(L, -2, index);
-				LuaDLL.lua_settop(L, oldTop);
-				return;
+			if (index >= 1) {
+				LuaDLL.lua_getref (L, reference);
+				LuaObject.pushVar (L, o);
+				LuaDLL.lua_rawseti (L, -2, index);
+				LuaDLL.lua_pop (L, 1);
+			} else {
+				LuaDLL.lua_getref (L, reference);
+				LuaDLL.lua_pushinteger (L, index);
+				LuaObject.pushVar (L, o);
+				LuaDLL.lua_settable (L, -3);
+				LuaDLL.lua_pop (L, 1);
 			}
-			throw new IndexOutOfRangeException();
 		}
 
 		internal void setObject(int reference, object field, object o)
