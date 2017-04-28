@@ -10,6 +10,7 @@ namespace SLua
     /// </summary>
     public class Logger
     {
+#if !SLUA_STANDALONE
         private static UnityEngine.Object FindScriptByMsg(string msg)
         {
 #if UNITY_EDITOR
@@ -31,6 +32,7 @@ namespace SLua
 #endif
             return null;
         }
+#endif
 
         public static void Log(string msg)
         {
