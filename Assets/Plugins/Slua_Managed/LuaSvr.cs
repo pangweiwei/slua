@@ -24,6 +24,13 @@
 // init will not use reflection to speed up the speed
 //#define USE_STATIC_BINDER  
 
+namespace LuaInterface
+{
+    public class DummyClass
+    {
+    }
+}
+
 namespace SLua
 {
 	using System;
@@ -271,7 +278,9 @@ namespace SLua
 			return null;
 		}
 
-		#if !SLUA_STANDALONE
+#if SLUA_STANDALONE
+        public
+#endif
 		void tick()
 		{
 			if (!inited)
@@ -284,8 +293,10 @@ namespace SLua
 			}
 
 			luaState.checkRef();
+
+		    #if !SLUA_STANDALONE
 			LuaTimer.tick(Time.deltaTime);
+		    #endif
 		}
-		#endif
 	}
 }
