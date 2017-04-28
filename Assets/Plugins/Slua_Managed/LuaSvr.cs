@@ -271,7 +271,7 @@ namespace SLua
 			return null;
 		}
 
-		#if !SLUA_STANDALONE
+		#if SLUA_STANDALONE
 		public 
 		#endif
 		void tick()
