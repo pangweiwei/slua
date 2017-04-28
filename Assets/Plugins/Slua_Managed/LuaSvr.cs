@@ -271,6 +271,7 @@ namespace SLua
 			return null;
 		}
 
+		// You should call this function periodically by yourself in STANDALONE mode
 		#if SLUA_STANDALONE
 		public 
 		#endif
