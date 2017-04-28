@@ -1,17 +1,17 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 
 // Copyright 2015 Siney/Pangweiwei siney@yeah.net
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -136,9 +136,9 @@ local function index(ud,k)
     local t=getmetatable(ud)
     repeat
         local fun=rawget(t,k)
-        local tp=type(fun)	
-        if tp=='function' then 
-            return fun 
+        local tp=type(fun)
+        if tp=='function' then
+            return fun
         elseif tp=='table' then
 			local f=fun[1]
 			if f then
@@ -635,7 +635,7 @@ return index
 			LuaDLL.lua_pushstring(l, self.Name);
 			LuaDLL.lua_rawset(l, -3);
 
-			// for instance 
+			// for instance
 			index_func.push(l);
 			LuaDLL.lua_setfield(l, -2, "__index");
 
@@ -874,7 +874,7 @@ return index
 					return t == typeof(LuaFunction) || t.BaseType == typeof(MulticastDelegate);
                 case LuaTypes.LUA_TTHREAD:
                     return t == typeof(LuaThread);
-                    
+
 			}
 			return false;
 		}
@@ -1006,7 +1006,7 @@ return index
 		{
 			if (total - from + 1 != 10)
 				return false;
-			
+
 			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
 				&& matchType(l, from + 4, t5)
 					&& matchType(l, from + 5, t6)
@@ -1207,7 +1207,16 @@ return index
                     return Enum.ToObject(t, number);
                 }
 
-                return obj == null ? null : Convert.ChangeType(obj, t);
+                object convertObj;
+                if (t.IsInstanceOfType(obj))
+                {
+                    convertObj = obj; // if t is parent of obj, ignore change type
+                }
+                else
+                {
+                    convertObj = Convert.ChangeType(obj, t);
+                }
+                return obj == null ? null : convertObj;
             }
             catch(Exception e) {
 				throw new Exception(string.Format("parameter {0} expected {1}, got {2}, exception: {3}", p, t.Name, obj == null ? "null" : obj.GetType().Name, e.Message));
@@ -1319,10 +1328,10 @@ return index
 				return;
 			}
 
-			
+
 			Type t = o.GetType();
 
-			
+
 			PushVarDelegate push;
 			if (typePushMap.TryGetValue(t, out push))
 				push(l, o);
@@ -1334,7 +1343,7 @@ return index
 				pushObject(l, (Array)o);
 			else
 				pushObject(l, o);
-         
+
 		}
 
 
