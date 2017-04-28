@@ -38,6 +38,10 @@ function testNullable()
 	HelloWorld.nullf()
 end
 
+local function click(...)
+	print("fuck")
+end
+
 function main()
 	-- Cache unpack function.
 	local unpack = (unpack and unpack) or table.unpack
@@ -142,12 +146,16 @@ function main()
 	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1),Slua.out)
 	print("Physics Hitinfo",ok,hitinfo)
 	
-
+	local clickCount=0
 	btn.onClick:AddListener(function()
 		local go = GameObject.Find("Canvas/Text")
 		local label = go:GetComponent("Text")
-		label.text="hello world"
+		clickCount=clickCount+1
+		label.text="hello world " ..tostring(clickCount)
+
 	end)
+
+	btn.onClick:AddListener(click)
 	
 
 	local go = GameObject.Find("Canvas/Panel2"):GetComponent("ScrollRect")
@@ -181,28 +189,6 @@ function main()
 		return true
 	end)
 	
-	LuaTimer.Add(0,2000,function(id)
-		print("xx")
-		return true
-	end)
-	
-	LuaTimer.Add(0,200,function(id)
-		print("xx")
-		return true
-	end)
-	
-	local xt=LuaTimer.Add(0,3000,function(id)
-		print("xx")
-		return true
-	end)
-	
-	LuaTimer.Add(0,70,function(id)
-		print("yy")
-	
-		LuaTimer.Delete(xt)
-		return true
-	end)
-
 	print(UnityEngine.PrimitiveType.Cube,type(UnityEngine.PrimitiveType.Cube))
 
 
