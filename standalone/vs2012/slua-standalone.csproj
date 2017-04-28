@@ -40,6 +40,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\ByteArray.cs">
+      <Link>Assets\Plugins\Slua_Managed\ByteArray.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\Plugins\Slua_Managed\Coroutine.cs">
       <Link>Assets\Plugins\Slua_Managed\Coroutine.cs</Link>
     </Compile>
@@ -57,6 +60,9 @@
     </Compile>
     <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaArray.cs">
       <Link>Assets\Plugins\Slua_Managed\LuaArray.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaByteArray.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaByteArray.cs</Link>
     </Compile>
     <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaDLL.cs">
       <Link>Assets\Plugins\Slua_Managed\LuaDLL.cs</Link>

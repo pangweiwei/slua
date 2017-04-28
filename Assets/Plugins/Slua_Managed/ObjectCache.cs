@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
 using System.Runtime.CompilerServices;
 
 namespace SLua
@@ -219,6 +218,11 @@ namespace SLua
 			oldl = l;
 			oldoc = oc;
 		}
+
+        public int size()
+        {
+            return objMap.Count;
+        }
 
 		internal void gc(int index)
 		{
