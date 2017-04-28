@@ -84,6 +84,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A42AD8C61E77C6A700A568FF /* slua copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "slua copy-Info.plist"; path = "/Users/siney/slua/build/lua-5.1.5/slua/slua copy-Info.plist"; sourceTree = "<absolute>"; };
 		A48345241E0EB10C000A9A4F /* libslua.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libslua.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E80919D41B745519008FED27 /* slua.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = slua.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		E80919D81B745519008FED27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -220,6 +221,7 @@
 				E8091A121B74553E008FED27 /* print.c */,
 				E80919D61B745519008FED27 /* slua */,
 				E80919D51B745519008FED27 /* Products */,
+				A42AD8C61E77C6A700A568FF /* slua copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -422,7 +424,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 98AT3Z27EP;
 				ENABLE_TESTABILITY = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_MODULE_NAME = slua;
 				PRODUCT_NAME = slua;
@@ -440,7 +442,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 98AT3Z27EP;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_MODULE_NAME = slua;
 				PRODUCT_NAME = slua;
@@ -535,6 +537,7 @@
 		E80919DC1B745519008FED27 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = slua/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -548,6 +551,7 @@
 		E80919DD1B745519008FED27 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = slua/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";

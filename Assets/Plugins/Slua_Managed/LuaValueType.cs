@@ -23,10 +23,9 @@
 namespace SLua
 {
     using System;
-    using LuaInterface;
     class LuaValueType : LuaObject
     {
-#if !UNITY_IPHONE && !LUA_5_3 && !SLUA_STANDALONE
+#if !LUA_5_3 && !SLUA_STANDALONE
         static string script = @"
 if not UnityEngine or not UnityEngine.Vector2 then
     print('No static code gen yet, ignore `LuaValueType:reg` !!! ')
@@ -740,7 +739,9 @@ do
 	function get.one() return Vector2.New(1,1) end
 	function get.zero() return Vector2.New(0,0) end
 	function get.up() return Vector2.New(0,1) end
+	function get.down() return Vector2.New(0,-1) end
 	function get.right() return Vector2.New(1,0) end
+	function get.left() return Vector2.New(-1,0) end
 	function get:magnitude() return sqrt(self[1]^2+self[2]^2) end
 	function get:sqrMagnitude() return self[1]^2+self[2]^2 end
 	function get:normalized() 
@@ -1082,7 +1083,7 @@ end
 #endif
         public static void reg(IntPtr l)
         {
-#if !UNITY_IPHONE && !LUA_5_3 && !SLUA_STANDALONE
+#if !LUA_5_3 && !SLUA_STANDALONE
             // lua implemented valuetype isn't faster than raw under non-jit.
 			LuaState.get(l).doString(script,"ValueTypeScript");
 #endif

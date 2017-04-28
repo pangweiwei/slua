@@ -26,7 +26,6 @@ namespace SLua
     using System.Collections;
     using System.Collections.Generic;
     using System;
-    using LuaInterface;
     using System.Reflection;
     using System.Runtime.InteropServices;
 
@@ -158,19 +157,28 @@ namespace SLua
             /// <param name="l"></param>
             /// <param name="m"></param>
             /// <returns></returns>
-            private int forceInvoke(IntPtr l, MethodInfo m)
-            {
-                object[] args;
-                checkArgs(l, 1, m, out args);
-                object ret = m.Invoke(m.IsStatic ? null : self, args);
-                pushValue(l, true);
-                if (ret != null)
-                {
-                    pushVar(l, ret);
-                    return 2;
-                }
-                return 1;
-            }
+			private int forceInvoke(IntPtr l, MethodInfo m)
+			{
+				object[] args;
+				checkArgs(l, 1, m, out args);
+				object ret = m.Invoke(m.IsStatic ? null : self, args);
+				var pis = m.GetParameters();
+				pushValue(l, true);
+				if (ret != null)
+				{
+					pushVar(l, ret);
+					int ct = 2;
+					for (int i = 0; i < pis.Length; ++i) {
+						var pi = pis[i];
+						if (pi.ParameterType.IsByRef || pi.IsOut) {
+							pushValue(l, args[i]);
+							++ct;
+						}
+					}
+					return ct;
+				}
+				return 1;
+			}
 
             public void checkArgs(IntPtr l, int from, MethodInfo m, out object[] args)
             {

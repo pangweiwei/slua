@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using SLua;
 using System;
-using LuaInterface;
 
 #if UNITY_5_5_OR_NEWER
 using UnityEngine.Profiling;
@@ -64,6 +63,8 @@ public class Ref
 [CustomLuaClass]
 public class HelloWorld
 {
+	public Color32 cc;
+
 	public UnityEngine.Events.UnityAction someAct;
 	static public void say()
 	{
@@ -128,6 +129,9 @@ public class HelloWorld
 
 	static public void setv(LuaTable t)
 	{
+		Debug.Log ("negative index test " + t [-2]);
+		Debug.Log ("zero index test " + t [0]);
+		
 		foreach (LuaTable.TablePair pair in t)
 		{
 			Debug.Log(string.Format("foreach LuaTable {0}-{1}", pair.key, pair.value));

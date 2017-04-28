@@ -24,7 +24,6 @@ namespace SLua
 {
 	using System.Collections;
 	using System;
-	using LuaInterface;
 	using System.Reflection;
 
     public class Helper : LuaObject
