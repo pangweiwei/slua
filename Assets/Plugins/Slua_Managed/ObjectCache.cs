@@ -22,6 +22,10 @@
 
 
 using System.Runtime.CompilerServices;
+namespace LuaInterface
+{
+    public class TestClass { }
+}
 
 namespace SLua
 {
@@ -219,6 +223,11 @@ namespace SLua
 			oldl = l;
 			oldoc = oc;
 		}
+
+        public int size()
+        {
+            return objMap.Count;
+        }
 
 		internal void gc(int index)
 		{
