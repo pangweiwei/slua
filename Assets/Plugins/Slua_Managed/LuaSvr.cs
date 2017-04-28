@@ -271,8 +271,8 @@ namespace SLua
 			return null;
 		}
 
-		#if !SLUA_STANDALONE
-		void tick()
+
+		public void tick()
 		{
 			if (!inited)
 				return;
@@ -284,8 +284,10 @@ namespace SLua
 			}
 
 			luaState.checkRef();
+			#if !SLUA_STANDALONE
 			LuaTimer.tick(Time.deltaTime);
+			#endif
 		}
-		#endif
+
 	}
 }
