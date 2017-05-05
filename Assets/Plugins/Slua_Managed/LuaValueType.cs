@@ -66,7 +66,7 @@ end
 
 local function inherite(cls,base)
 	for k,v in pairs(getmetatable(base)) do
-		if k:sub(1,2)~='__' and  k:sub(1,1)>='A' and k:sub(1,1)<='Z' then
+		if not cls[k] and k:sub(1,2)~='__' and  k:sub(1,1)>='A' and k:sub(1,1)<='Z' then
 			cls[k]=v
 		end
 	end
