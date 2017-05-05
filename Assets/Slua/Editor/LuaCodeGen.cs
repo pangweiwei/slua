@@ -1669,7 +1669,7 @@ namespace SLua
 						Write(file, "}");
 						first_get = false;
 					}
-					WriteError(file, "No matched override function to call");
+					WriteNotMatch (file, "getItem");
 				}
 				WriteCatchExecption(file);
 				Write(file, "}");
@@ -1690,6 +1690,7 @@ namespace SLua
 					WriteValueCheck(file, _set.PropertyType, 3, "c");
 					Write(file, "self[v]=c;");
 					WriteOk(file);
+					Write(file, "return 1;");
 				}
 				else
 				{
@@ -1712,9 +1713,8 @@ namespace SLua
 						if (t.IsValueType)
 							Write(file, "setBack(l,self);");
 					}
-					Write(file, "LuaDLL.lua_pushstring(l,\"No matched override function to call\");");
+					WriteNotMatch (file, "setItem");
 				}
-				Write(file, "return 1;");
 				WriteCatchExecption(file);
 				Write(file, "}");
 				funcname.Add("setItem");
@@ -2114,11 +2114,17 @@ namespace SLua
 			return methods.ToArray();
 
 		}
+
+		void WriteNotMatch(StreamWriter file,string fn) {
+			WriteError(file, string.Format("No matched override function {0} to call",fn));
+		}
 		
 		void WriteFunctionImpl(StreamWriter file, MethodInfo m, Type t, BindingFlags bf)
 		{
 			WriteTry(file);
 			MethodBase[] cons = GetMethods(t, m.Name, bf);
+
+			Dictionary<string,MethodInfo> overridedMethods = null;
 
 			if (cons.Length == 1) // no override function
 			{
@@ -2126,7 +2132,7 @@ namespace SLua
 					WriteFunctionCall(m, file, t,bf);
 				else
 				{
-					WriteError(file, "No matched override function to call");
+					WriteNotMatch (file, m.Name);
 				}
 			}
 			else // 2 or more override function
@@ -2140,6 +2146,18 @@ namespace SLua
 					if (cons[n].MemberType == MemberTypes.Method)
 					{
 						MethodInfo mi = cons[n] as MethodInfo;
+
+						if (mi.IsDefined (typeof(LuaOverrideAttribute), false)) {
+							if (overridedMethods == null)
+								overridedMethods = new Dictionary<string,MethodInfo> ();
+
+							LuaOverrideAttribute attr = mi.GetCustomAttributes (typeof(LuaOverrideAttribute), false)[0] as LuaOverrideAttribute;
+							string fn = attr.fn;
+							if(overridedMethods.ContainsKey(fn))
+								throw new Exception(string.Format("Found function with same name {0}",fn));	
+							overridedMethods.Add (fn,mi);
+							continue;
+						}
 						
 						ParameterInfo[] pars = mi.GetParameters();
 						if (isUsefullMethod(mi)
@@ -2157,8 +2175,30 @@ namespace SLua
 						}
 					}
 				}
-				WriteError(file, "No matched override function to call");
+				WriteNotMatch (file, m.Name);
 			}
+			WriteCatchExecption(file);
+			Write(file, "}");
+
+			WriteOverridedMethod (file,overridedMethods,t,bf);
+		}
+
+		void WriteOverridedMethod(StreamWriter file,Dictionary<string,MethodInfo> methods,Type t,BindingFlags bf) {
+			if (methods == null)
+				return;
+
+			foreach (var pair in methods) {
+				string fn = pair.Value.IsStatic ? staticName (pair.Key) : pair.Key;
+				WriteSimpleFunction (file,fn,pair.Value,t,bf);
+				funcname.Add(fn);
+			}
+
+		}
+
+		void WriteSimpleFunction(StreamWriter file,string fn,MethodInfo mi,Type t,BindingFlags bf) {
+			WriteFunctionDec(file, fn);
+			WriteTry(file);
+			WriteFunctionCall (mi, file, t, bf);
 			WriteCatchExecption(file);
 			Write(file, "}");
 		}

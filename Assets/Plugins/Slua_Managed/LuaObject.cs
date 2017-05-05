@@ -67,6 +67,14 @@ namespace SLua
 		}
 	}
 
+	[AttributeUsage(AttributeTargets.Method)]
+	public class LuaOverrideAttribute : System.Attribute {
+		public string fn;
+		public LuaOverrideAttribute(string fn) {
+			this.fn = fn;
+		}
+	}
+
 	public class OverloadLuaClassAttribute : System.Attribute {
 		public OverloadLuaClassAttribute(Type target) {
 			targetType = target;

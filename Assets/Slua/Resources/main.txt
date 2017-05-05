@@ -70,6 +70,9 @@ function main()
 		print("using lua")
 	end
 
+	-- test override function
+	HelloWorld.AFuncByDouble(1);
+
 	-- test custom component
 	local x=UnityEngine.GameObject("OoOo")
 	x:AddComponent(SLuaTest)
