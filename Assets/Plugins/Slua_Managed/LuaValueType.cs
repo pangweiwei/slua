@@ -547,6 +547,7 @@ do
 	    return (normal * Vector3.Dot(vector, normal)) / num
 	end
 
+	inherite(Vector3,Raw)
 	setmetatable(Vector3,Vector3)
 end
 
@@ -671,6 +672,7 @@ do
 	end
 
 
+	inherite(Color,Raw)
 	setmetatable(Color,Color)
 
 end

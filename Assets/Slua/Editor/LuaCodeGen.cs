@@ -2202,20 +2202,30 @@ namespace SLua
 			WriteCatchExecption(file);
 			Write(file, "}");
 		}
-		
-		bool isUniqueArgsCount(MethodBase[] cons, MethodBase mi)
-		{
-			foreach (MethodBase member in cons)
-			{
-				MethodBase m = (MethodBase)member;
-				if (m != mi && mi.GetParameters().Length == m.GetParameters().Length)
-					return false;
-			}
-			return true;
-		}
-		
-		
-		void WriteCheckSelf(StreamWriter file, Type t)
+
+        int GetMethodArgc(MethodBase mi)
+        {
+            bool isExtension = IsExtensionMethod(mi);
+            if (isExtension)
+                return mi.GetParameters().Length - 1;
+            return mi.GetParameters().Length;
+        }
+
+        bool isUniqueArgsCount(MethodBase[] cons, MethodBase mi)
+        {
+            int argcLength = GetMethodArgc(mi);
+            foreach (MethodBase member in cons)
+            {
+                MethodBase m = (MethodBase)member;
+                if (m == mi)
+                    continue;
+                if (argcLength == GetMethodArgc(m))
+                    return false;
+            }
+            return true;
+        }
+
+        void WriteCheckSelf(StreamWriter file, Type t)
 		{
 			if (t.IsValueType)
 			{
