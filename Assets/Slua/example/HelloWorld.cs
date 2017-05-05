@@ -329,4 +329,19 @@ public class HelloWorld
 	}
 
 	internal int b;
+
+    public void func8(List<int> result)
+    {
+        result.Add(1);
+    }
+}
+
+public static class ExtensionTest
+{
+    static List<int> result = new List<int>();
+	public static List<int> func8(this HelloWorld helloWorld)
+    {
+        helloWorld.func8(result);
+        return result;
+    }
 }
