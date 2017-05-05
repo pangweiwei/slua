@@ -298,6 +298,10 @@ namespace SLua
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int lua_resume(IntPtr L, IntPtr from, int narg);
+        public static int lua_resume(IntPtr L, int narg)
+        {
+            return lua_resume(L, IntPtr.Zero, narg);
+        }
 
 		public static void lua_replace(IntPtr luaState, int index) {
 			lua_copy(luaState, -1, (index));
