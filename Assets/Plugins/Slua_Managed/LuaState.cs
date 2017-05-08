@@ -1044,14 +1044,14 @@ end
 				LuaDLL.lua_getref (L, reference);
 				LuaDLL.lua_rawgeti (L, -1, index);
 				object returnValue = getObject (L, -1);
-				LuaDLL.lua_pop (L, 1);
+				LuaDLL.lua_pop (L, 2);
 				return returnValue;
 			} else {
 				LuaDLL.lua_getref (L, reference);
 				LuaDLL.lua_pushinteger (L, index);
 				LuaDLL.lua_gettable (L, -2);
 				object returnValue = getObject (L, -1);
-				LuaDLL.lua_pop (L, 1);
+				LuaDLL.lua_pop (L, 2);
 				return returnValue;
 			}
 		}
