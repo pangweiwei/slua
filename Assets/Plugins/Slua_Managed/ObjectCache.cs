@@ -185,7 +185,9 @@ namespace SLua
         }
 
 		Dictionary<object, int> objMap = new Dictionary<object, int>(new ObjEqualityComparer());
-		int udCacheRef = 0;
+        public Dictionary<object, int>.KeyCollection Objs { get { return objMap.Keys; } }
+
+        int udCacheRef = 0;
 
 
 		public ObjectCache(IntPtr l)
