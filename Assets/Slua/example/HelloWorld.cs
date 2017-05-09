@@ -334,6 +334,18 @@ public class HelloWorld
     {
         result.Add(1);
     }
+
+    public static void byteArrayTest()
+    {
+        var ba = new ByteArray();
+        ba.WriteInt64(1L);
+        ba.WriteInt64(2L);
+        ba.WriteInt64(1024L);
+        ba.Position = 0;
+        Assert.IsTrue(ba.ReadInt64() == 1L);
+        Assert.IsTrue(ba.ReadInt64() == 2L);
+        Assert.IsTrue(ba.ReadInt64()==1024L);
+    }
 }
 
 public static class ExtensionTest
