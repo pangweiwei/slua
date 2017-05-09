@@ -208,7 +208,8 @@ namespace SLua
 				ReAlloc (ref data_, pos_, v.Position);
 				byte[] arr = v.GetData ();
 				arr.CopyTo (data_, pos_);
-			}
+                pos_ += v.Position;
+            }
 		}
 
 		public void Write (bool v)
@@ -355,6 +356,7 @@ namespace SLua
 		public void Write (Int64 v)
 		{
 			BitConverter.GetBytes (v).CopyTo (data_, pos_);
+            pos_ += sizeof(Int64);
 		}
 
 		public void WriteInt64 (Int64 v)
@@ -386,5 +388,27 @@ namespace SLua
 
 			WriteByte ((byte)uv);
 		}
-	}
+
+        public long ReadInt48()
+        {
+            uint low = ReadUInt();
+            short high = ReadInt16();
+            Int64 int48 = (Int64)((UInt64)high << 32 | low);
+            return int48;
+        }
+
+        public long ReadInt48L()
+        {
+            Int64 low = (Int64)ReadUInt();
+            Int64 high = (Int64)ReadInt16();
+            Int64 v = (Int64)(low | (high << 32));
+            return v;
+        }
+
+        public void WriteInt48(Int64 v)
+        {
+            Write(Convert.ToUInt32(v & 0x00000000ffffffff));
+            Write(Convert.ToInt16(v & 0x0000ffff00000000));
+        }
+    }
 }
