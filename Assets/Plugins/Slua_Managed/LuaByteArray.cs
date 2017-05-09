@@ -1,20 +1,21 @@
 ﻿using System;
 using SLua;
 using System.Collections.Generic;
+[UnityEngine.Scripting.Preserve]
 public class Lua_SLua_ByteArray : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int constructor(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
-			if(argc==1) {
-				SLua.ByteArray o;
-				o = new SLua.ByteArray();
+			SLua.ByteArray o;
+			if(argc==1){
+				o=new SLua.ByteArray();
 				pushValue(l,true);
 				pushValue(l,o);
 				return 2;
 			}
-			else if(argc==2) {
-				SLua.ByteArray o;
+			else if(argc==2){
 				System.Byte[] a1;
 				checkArray(l,2,out a1);
 				o=new SLua.ByteArray(a1);
@@ -22,15 +23,14 @@ public class Lua_SLua_ByteArray : LuaObject {
 				pushValue(l,o);
 				return 2;
 			}
-			pushValue(l,false);
-			LuaDLL.lua_pushstring(l,"No matched override function to call");
-			return 2;
+			return error(l,"New object failed.");
 		}
 		catch(Exception e) {
 			return error(l,e);
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int SetData(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
@@ -55,7 +55,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 				return 1;
 			}
 			pushValue(l,false);
-			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			LuaDLL.lua_pushstring(l,"No matched override function SetData to call");
 			return 2;
 		}
 		catch(Exception e) {
@@ -63,6 +63,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int Clear(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -75,6 +76,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int GetData(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -88,6 +90,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadBool(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -101,6 +104,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadInt(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -114,6 +118,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadUInt(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -127,6 +132,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadChar(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -140,6 +146,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadUChar(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -153,6 +160,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadByte(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -166,6 +174,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int Read(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -181,6 +190,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadSByte(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -194,6 +204,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadShort(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -207,6 +218,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadUShort(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -220,6 +232,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadInt16(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -233,6 +246,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadUInt16(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -246,6 +260,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadInt64(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -259,6 +274,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadFloat(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -272,6 +288,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadDouble(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -285,6 +302,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadString(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -298,6 +316,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteByteArray(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -312,6 +331,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteBool(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -326,6 +346,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteInt(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -340,6 +361,132 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
+	static public int Write(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(System.UInt16))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.UInt16 a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(System.Int16))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.Int16 a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(System.SByte))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.SByte a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(float))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.Single a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(System.Int64))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.Int64 a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(string))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.String a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(double))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.Double a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(int))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.Int32 a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(bool))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.Boolean a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(SLua.ByteArray))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				SLua.ByteArray a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(System.UInt32))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.UInt32 a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(System.Byte))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.Byte a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(System.Byte[]))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.Byte[] a1;
+				checkArray(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(System.Char))){
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.Char a1;
+				checkType(l,2,out a1);
+				self.Write(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function Write to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteUInt(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
@@ -362,7 +509,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 				return 1;
 			}
 			pushValue(l,false);
-			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			LuaDLL.lua_pushstring(l,"No matched override function WriteUInt to call");
 			return 2;
 		}
 		catch(Exception e) {
@@ -370,6 +517,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteChar(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -384,6 +532,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteByte(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -398,6 +547,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteUChar(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -412,6 +562,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteSByte(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -426,6 +577,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteUShort(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -440,6 +592,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteShort(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -454,6 +607,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteFloat(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -468,6 +622,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteNum(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -482,6 +637,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteString(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -496,6 +652,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteInt64(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -510,6 +667,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int ReadVarInt(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -523,6 +681,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int WriteVarInt(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -537,6 +696,50 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
+	static public int ReadInt48(IntPtr l) {
+		try {
+			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+			var ret=self.ReadInt48();
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
+	static public int ReadInt48L(IntPtr l) {
+		try {
+			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+			var ret=self.ReadInt48L();
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
+	static public int WriteInt48(IntPtr l) {
+		try {
+			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+			System.Int64 a1;
+			checkType(l,2,out a1);
+			self.WriteInt48(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int get_Length(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -549,6 +752,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int get_Position(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -561,6 +765,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int set_Position(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -574,9 +779,12 @@ public class Lua_SLua_ByteArray : LuaObject {
 			return error(l,e);
 		}
 	}
+	[UnityEngine.Scripting.Preserve]
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"Slua.ByteArray");
-		addMember (l, SetData);
+		addMember(l,SetData);
+		addMember(l,Clear);
+		addMember(l,GetData);
 		addMember(l,ReadBool);
 		addMember(l,ReadInt);
 		addMember(l,ReadUInt);
@@ -596,6 +804,7 @@ public class Lua_SLua_ByteArray : LuaObject {
 		addMember(l,WriteByteArray);
 		addMember(l,WriteBool);
 		addMember(l,WriteInt);
+		addMember(l,Write);
 		addMember(l,WriteUInt);
 		addMember(l,WriteChar);
 		addMember(l,WriteByte);
@@ -609,6 +818,9 @@ public class Lua_SLua_ByteArray : LuaObject {
 		addMember(l,WriteInt64);
 		addMember(l,ReadVarInt);
 		addMember(l,WriteVarInt);
+		addMember(l,ReadInt48);
+		addMember(l,ReadInt48L);
+		addMember(l,WriteInt48);
 		addMember(l,"Length",get_Length,null,true);
 		addMember(l,"Position",get_Position,set_Position,true);
 		createTypeMetatable(l,constructor, typeof(SLua.ByteArray));
