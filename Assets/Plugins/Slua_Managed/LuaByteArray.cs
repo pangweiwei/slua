@@ -740,6 +740,63 @@ public class Lua_SLua_ByteArray : LuaObject {
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	[UnityEngine.Scripting.Preserve]
+	static public int ReadByteArray(IntPtr l) {
+		try {
+			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+			var ret=self.ReadByteArray();
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
+	static public int ReadUInt64(IntPtr l) {
+		try {
+			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+			var ret=self.ReadUInt64();
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
+	static public int ReadBytes(IntPtr l) {
+		try {
+			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+			var ret=self.ReadBytes();
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
+	static public int WriteBytes(IntPtr l) {
+		try {
+			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+			System.Byte[] a1;
+			checkArray(l,2,out a1);
+			self.WriteBytes(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	[UnityEngine.Scripting.Preserve]
 	static public int get_Length(IntPtr l) {
 		try {
 			SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
@@ -821,6 +878,10 @@ public class Lua_SLua_ByteArray : LuaObject {
 		addMember(l,ReadInt48);
 		addMember(l,ReadInt48L);
 		addMember(l,WriteInt48);
+		addMember(l,ReadByteArray);
+		addMember(l,ReadUInt64);
+		addMember(l,ReadBytes);
+		addMember(l,WriteBytes);
 		addMember(l,"Length",get_Length,null,true);
 		addMember(l,"Position",get_Position,set_Position,true);
 		createTypeMetatable(l,constructor, typeof(SLua.ByteArray));
