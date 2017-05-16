@@ -466,6 +466,10 @@ namespace SLua
             }
             #endregion
 			
+            //generate AssemblyInfo
+            string AssemblyInfoFile = Application.dataPath + "/AssemblyInfo.cs";
+            File.WriteAllText(AssemblyInfoFile, string.Format("[assembly: UnityEngine.UnityAPICompatibilityVersionAttribute(\"{0}\")]", Application.unityVersion));
+
             #region mono compile            
             string editorData = EditorApplication.applicationContentsPath;
 #if UNITY_EDITOR_OSX && !UNITY_5_4_OR_NEWER
@@ -473,25 +477,20 @@ namespace SLua
 #endif
             List<string> arg = new List<string>();
             arg.Add("/target:library");
+            arg.Add("/sdk:2");
             arg.Add(string.Format("/out:\"{0}\"", WrapperName));
             arg.Add(string.Format("/r:\"{0}\"", string.Join(";", libraries.ToArray())));
             arg.AddRange(scripts);
+            arg.Add(AssemblyInfoFile);
 
             const string ArgumentFile = "LuaCodeGen.txt";
             File.WriteAllLines(ArgumentFile, arg.ToArray());
             
-			Environment.SetEnvironmentVariable ("MONO_PATH", editorData+"/Mono/lib/mono/unity");
-			Environment.SetEnvironmentVariable ("MONO_CFG_DIR", editorData+"/Mono/etc");
-			string mono = editorData+ "/Mono/bin/mono";
+            string mcs = editorData + "/MonoBleedingEdge/bin/mcs";
+            // wrapping since we may have space
 #if UNITY_EDITOR_WIN
-            mono += ".exe";
+            mcs += ".bat";
 #endif
-			string smcs = editorData + "/Mono/lib/mono/unity/smcs.exe";
-			// wrapping since we may have space
-#if UNITY_EDITOR_WIN
-            mono = "\"" + mono + "\"";
-#endif
-            smcs = "\"" + smcs + "\"";
             #endregion
 
             #region execute bash
@@ -501,8 +500,8 @@ namespace SLua
             try
             {
                 var process = new System.Diagnostics.Process();
-                process.StartInfo.FileName = mono;
-                process.StartInfo.Arguments = smcs + " @" + ArgumentFile;
+                process.StartInfo.FileName = mcs;
+                process.StartInfo.Arguments = "@" + ArgumentFile;
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.RedirectStandardError = true;
@@ -561,6 +560,7 @@ namespace SLua
 				File.Move (WrapperName, GenPath + WrapperName);
 				// AssetDatabase.Refresh();
                 File.Delete(ArgumentFile);
+                File.Delete(AssemblyInfoFile);
             }
             else
             {
