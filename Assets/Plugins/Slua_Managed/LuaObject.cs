@@ -102,9 +102,6 @@ namespace SLua
 		static protected LuaFunction newindex_func;
 		static protected LuaFunction index_func;
 
-		delegate void PushVarDelegate(IntPtr l, object o);
-		static Dictionary<Type, PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
-
 		internal const int VersionNumber = 0x1201;
 
 		public static void init(IntPtr l)
@@ -179,9 +176,6 @@ return index
 
 			LuaDLL.lua_newtable(l);
 			LuaDLL.lua_setglobal(l, DelgateTable);
-
-
-			setupPushVar();
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -247,115 +241,6 @@ return index
 			{
 				return error(l, e);
 			}
-		}
-
-		static void setupPushVar()
-		{
-			typePushMap[typeof(float)] = (IntPtr L, object o) =>
-			{
-				LuaDLL.lua_pushnumber(L, (float)o);
-			};
-			typePushMap[typeof(double)] = (IntPtr L, object o) =>
-			{
-				LuaDLL.lua_pushnumber(L, (double)o);
-			};
-
-			typePushMap[typeof(int)] =
-				(IntPtr L, object o) =>
-				{
-					LuaDLL.lua_pushinteger(L, (int)o);
-				};
-
-			typePushMap[typeof(uint)] =
-				(IntPtr L, object o) =>
-				{
-					LuaDLL.lua_pushnumber(L, Convert.ToUInt32(o));
-				};
-
-			typePushMap[typeof(short)] =
-				(IntPtr L, object o) =>
-				{
-					LuaDLL.lua_pushinteger(L, (short)o);
-				};
-
-			typePushMap[typeof(ushort)] =
-			   (IntPtr L, object o) =>
-			   {
-				   LuaDLL.lua_pushinteger(L, (ushort)o);
-			   };
-
-			typePushMap[typeof(sbyte)] =
-			   (IntPtr L, object o) =>
-			   {
-				   LuaDLL.lua_pushinteger(L, (sbyte)o);
-			   };
-
-			typePushMap[typeof(byte)] =
-			   (IntPtr L, object o) =>
-			   {
-				   LuaDLL.lua_pushinteger(L, (byte)o);
-			   };
-
-
-			typePushMap[typeof(Int64)] =
-				typePushMap[typeof(UInt64)] =
-				(IntPtr L, object o) =>
-				{
-#if LUA_5_3
-					LuaDLL.lua_pushinteger(L, (long)o);
-#else
-					LuaDLL.lua_pushnumber(L, System.Convert.ToDouble(o));
-#endif
-				};
-
-			typePushMap[typeof(string)] = (IntPtr L, object o) =>
-			{
-				LuaDLL.lua_pushstring(L, (string)o);
-			};
-
-			typePushMap[typeof(bool)] = (IntPtr L, object o) =>
-			{
-				LuaDLL.lua_pushboolean(L, (bool)o);
-			};
-
-			typePushMap[typeof(LuaTable)] =
-				typePushMap[typeof(LuaFunction)] =
-                typePushMap[typeof(LuaThread)] =
-                (IntPtr L, object o) =>
-				{
-					((LuaVar)o).push(L);
-				};
-#if !SLUA_STANDALONE
-			typePushMap[typeof(Vector3)] = (IntPtr L, object o) =>
-			{
-				pushValue(L, (Vector3)o);
-			};
-
-			typePushMap[typeof(Vector2)] = (IntPtr L, object o) =>
-			{
-				pushValue(L, (Vector2)o);
-			};
-
-			typePushMap[typeof(Vector4)] = (IntPtr L, object o) =>
-			{
-				pushValue(L, (Vector4)o);
-			};
-
-			typePushMap[typeof(Quaternion)] = (IntPtr L, object o) =>
-			{
-				pushValue(L, (Quaternion)o);
-			};
-
-			typePushMap[typeof(Color)] = (IntPtr L, object o) =>
-			{
-				pushValue(L, (Color)o);
-			};
-#endif
-
-			typePushMap[typeof(LuaCSFunction)] = (IntPtr L, object o) =>
-			{
-				pushValue(L, (LuaCSFunction)o);
-			};
 		}
 
 		static int getOpFunction(IntPtr l, string f, string tip)
@@ -1341,9 +1226,9 @@ return index
 
 			Type t = o.GetType();
 
-
-			PushVarDelegate push;
-			if (typePushMap.TryGetValue(t, out push))
+            LuaState.PushVarDelegate push;
+            LuaState ls = LuaState.get(l);
+			if (ls.tryGetTypePusher(t, out push))
 				push(l, o);
 			else if (t.IsEnum)
 			{

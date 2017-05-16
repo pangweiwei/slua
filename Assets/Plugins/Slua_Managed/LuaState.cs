@@ -385,7 +385,20 @@ namespace SLua
 			return l;
 		}
 
-		public class Enumerator : IEnumerator<TablePair>, IDisposable
+        public bool IsEmpty
+        {
+            get
+            {
+                int top = LuaDLL.lua_gettop(L);
+                LuaDLL.lua_getref(L, this.Ref);
+                LuaDLL.lua_pushnil(L);
+                bool ret = LuaDLL.lua_next(L, -2) > 0;
+                LuaDLL.lua_settop(L, top);
+                return !ret;
+            }
+        }
+
+        public class Enumerator : IEnumerator<TablePair>, IDisposable
 		{
 			LuaTable t;
 			int indext = -1;
@@ -411,6 +424,7 @@ namespace SLua
 				else
 					LuaDLL.lua_pop(t.L, 1);
 
+                var ty = LuaDLL.lua_type(t.L, -1);
 				bool ret = LuaDLL.lua_next(t.L, indext) > 0;
 				if (!ret) iterPhase = 2;
 
@@ -459,14 +473,13 @@ namespace SLua
 		{
 			return GetEnumerator();
 		}
-
-	}
-
+    }
 
 
 
 
-	public class LuaState : IDisposable
+
+    public class LuaState : IDisposable
 	{
 		IntPtr l_;
 		int mainThread = 0;
@@ -505,10 +518,13 @@ namespace SLua
 			}
 		}
 
-		public delegate byte[] LoaderDelegate(string fn);
-		public delegate void OutputDelegate(string msg);
+        public int Top{ get{ return LuaDLL.lua_gettop(L); } }
 
-		static public LoaderDelegate loaderDelegate;
+        public delegate byte[] LoaderDelegate(string fn);
+		public delegate void OutputDelegate(string msg);
+        public delegate void PushVarDelegate(IntPtr l, object o);
+
+        static public LoaderDelegate loaderDelegate;
 		static public OutputDelegate logDelegate;
 		static public OutputDelegate errorDelegate;
 
@@ -521,15 +537,14 @@ namespace SLua
 		}
 		Queue<UnrefPair> refQueue;
 		public int PCallCSFunctionRef = 0;
+        Dictionary<Type, PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
 
-
-		public static LuaState main;
+        public static LuaState main;
 		static Dictionary<IntPtr, LuaState> statemap = new Dictionary<IntPtr, LuaState>();
 		static IntPtr oldptr = IntPtr.Zero;
 		static LuaState oldstate = null;
 		static public LuaCSFunction errorFunc = new LuaCSFunction(errorReport);
-
-		public bool isMainThread()
+        public bool isMainThread()
 		{
 			return System.Threading.Thread.CurrentThread.ManagedThreadId == mainThread;
 		}
@@ -592,7 +607,9 @@ end
 			LuaDLL.lua_dostring(L, PCallCSFunction);
 			PCallCSFunctionRef = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
 
-			pcall(L, init);
+            setupPushVar();
+
+            pcall(L, init);
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -656,7 +673,7 @@ end
 			LuaDLL.lua_pushvalue(L, loaderFunc);
 			LuaDLL.lua_rawseti(L, loaderTable, 2);
 			LuaDLL.lua_settop(L, 0);
-			return 0;
+            return 0;
 		}
 
 		public void Close()
@@ -1040,19 +1057,20 @@ end
 
 		internal object getObject(int reference, int index)
 		{
-			if (index >= 1) {
-				LuaDLL.lua_getref (L, reference);
+            if (index >= 1)
+            {
+                LuaDLL.lua_getref (L, reference);
 				LuaDLL.lua_rawgeti (L, -1, index);
 				object returnValue = getObject (L, -1);
-				LuaDLL.lua_pop (L, 2);
-				return returnValue;
+                LuaDLL.lua_pop(L, 2);
+                return returnValue;
 			} else {
 				LuaDLL.lua_getref (L, reference);
 				LuaDLL.lua_pushinteger (L, index);
 				LuaDLL.lua_gettable (L, -2);
 				object returnValue = getObject (L, -1);
-				LuaDLL.lua_pop (L, 2);
-				return returnValue;
+                LuaDLL.lua_pop(L, 2);
+                return returnValue;
 			}
 		}
 
@@ -1201,5 +1219,91 @@ end
 				u.act(l, u.r);
 			}
 		}
-	}
+
+        public void regPushVar(Type t, PushVarDelegate d) { typePushMap[t] = d; }
+        public bool tryGetTypePusher(Type t, out PushVarDelegate d) { return typePushMap.TryGetValue(t, out d); }
+
+        void setupPushVar()
+        {
+            typePushMap[typeof(float)] = (IntPtr L, object o) =>
+            {
+                LuaDLL.lua_pushnumber(L, (float)o);
+            };
+            typePushMap[typeof(double)] = (IntPtr L, object o) =>
+            {
+                LuaDLL.lua_pushnumber(L, (double)o);
+            };
+
+            typePushMap[typeof(int)] =
+                (IntPtr L, object o) =>
+                {
+                    LuaDLL.lua_pushinteger(L, (int)o);
+                };
+
+            typePushMap[typeof(uint)] =
+                (IntPtr L, object o) =>
+                {
+                    LuaDLL.lua_pushnumber(L, Convert.ToUInt32(o));
+                };
+
+            typePushMap[typeof(short)] =
+                (IntPtr L, object o) =>
+                {
+                    LuaDLL.lua_pushinteger(L, (short)o);
+                };
+
+            typePushMap[typeof(ushort)] =
+               (IntPtr L, object o) =>
+               {
+                   LuaDLL.lua_pushinteger(L, (ushort)o);
+               };
+
+            typePushMap[typeof(sbyte)] =
+               (IntPtr L, object o) =>
+               {
+                   LuaDLL.lua_pushinteger(L, (sbyte)o);
+               };
+
+            typePushMap[typeof(byte)] =
+               (IntPtr L, object o) =>
+               {
+                   LuaDLL.lua_pushinteger(L, (byte)o);
+               };
+
+
+            typePushMap[typeof(Int64)] =
+                typePushMap[typeof(UInt64)] =
+                (IntPtr L, object o) =>
+                {
+#if LUA_5_3
+					LuaDLL.lua_pushinteger(L, (long)o);
+#else
+                    LuaDLL.lua_pushnumber(L, System.Convert.ToDouble(o));
+#endif
+                };
+
+            typePushMap[typeof(string)] = (IntPtr L, object o) =>
+            {
+                LuaDLL.lua_pushstring(L, (string)o);
+            };
+
+            typePushMap[typeof(bool)] = (IntPtr L, object o) =>
+            {
+                LuaDLL.lua_pushboolean(L, (bool)o);
+            };
+
+            typePushMap[typeof(LuaTable)] =
+                typePushMap[typeof(LuaFunction)] =
+                typePushMap[typeof(LuaThread)] =
+                (IntPtr L, object o) =>
+                {
+                    ((LuaVar)o).push(L);
+                };
+
+            typePushMap[typeof(LuaCSFunction)] = (IntPtr L, object o) =>
+            {
+                LuaObject.pushValue(L, (LuaCSFunction)o);
+            };
+        }
+    }
 }
