@@ -346,6 +346,11 @@ public class HelloWorld
         Assert.IsTrue(ba.ReadInt64() == 2L);
         Assert.IsTrue(ba.ReadInt64()==1024L);
     }
+
+    public static void transformArray(Transform[] arr)
+    {
+        Debug.Log("transformArray success.");
+    }
 }
 
 public static class ExtensionTest
