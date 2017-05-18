@@ -32,6 +32,9 @@ function testArray()
 	HelloWorld.int16Array(a)
 	HelloWorld.int16Array({1,2,3,4})
 	HelloWorld.byteArrayTest()
+
+	local rtarr = {c}
+	HelloWorld.transformArray(rtarr)
 end
 
 function testNullable()

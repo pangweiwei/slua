@@ -973,31 +973,39 @@ return index
 			return oc.get(l, p);
 		}
 
-		static public bool checkArray<T>(IntPtr l, int p, out T[] ta)
-		{
-			if (LuaDLL.lua_type(l, p) == LuaTypes.LUA_TTABLE)
-			{
-				int n = LuaDLL.lua_rawlen(l, p);
-				ta = new T[n];
-				for (int k = 0; k < n; k++)
-				{
-					LuaDLL.lua_rawgeti(l, p, k + 1);
-					ta[k]=(T)Convert.ChangeType(checkVar(l, -1),typeof(T));
-					LuaDLL.lua_pop(l, 1);
-				}
-				return true;
-			}
-			else
-			{
-				Array array = checkObj(l, p) as Array;
-				if (array == null)
-					throw new ArgumentException ("expect array");
-				ta = array as T[];
-				return ta!=null;
-			}
-		}
+        static public bool checkArray<T>(IntPtr l, int p, out T[] ta)
+        {
+            if (LuaDLL.lua_type(l, p) == LuaTypes.LUA_TTABLE)
+            {
+                int n = LuaDLL.lua_rawlen(l, p);
+                ta = new T[n];
+                for (int k = 0; k < n; k++)
+                {
+                    LuaDLL.lua_rawgeti(l, p, k + 1);
+                    object o = checkVar(l, -1);
+                    Type fromT = o.GetType();
+                    Type toT = typeof(T);
+                    if (toT.IsAssignableFrom(fromT))
+                    {
+                        ta[k] = (T)o;
+                    }
+                    else
+                    {
+                        ta[k] = (T)Convert.ChangeType(o, typeof(T));
+                    }
+                    LuaDLL.lua_pop(l, 1);
+                }
+                return true;
+            }
+            else
+            {
+                Array array = checkObj(l, p) as Array;
+                ta = array as T[];
+                return ta != null;
+            }
+        }
 
-		static public bool checkParams<T>(IntPtr l, int p, out T[] pars) where T:class
+        static public bool checkParams<T>(IntPtr l, int p, out T[] pars) where T:class
 		{
 			int top = LuaDLL.lua_gettop(l);
 			if (top - p >= 0)
