@@ -170,14 +170,14 @@ end
             }
         }
 
-        string outputText_ = "LuaConsole:\n";
+        string outputText = "LuaConsole:\n";
         StringBuilder outputBuffer = new StringBuilder();
         List<OutputRecord> recordList = new List<OutputRecord>();
 
-        List<string> history_ = new List<string>();
-        int historyIndex_ = 0;
+		List<string> history = new List<string>();
+		int historyIndex = 0;
 
-        Vector2 scrollPosition_ = Vector2.zero;
+        Vector2 scrollPosition = Vector2.zero;
         GUIStyle textAreaStyle = new GUIStyle();
         bool initedStyle = false;
         bool toggleLog = true;
@@ -227,8 +227,8 @@ end
                 }
             }
 
-            outputText_ = outputBuffer.ToString();
-            scrollPosition_.y = float.MaxValue;
+            outputText = outputBuffer.ToString();
+            scrollPosition.y = float.MaxValue;
             Repaint();
         }
 
@@ -260,25 +260,25 @@ end
                 initedStyle = true;
             }
 
-            //输出
-            scrollPosition_ = GUILayout.BeginScrollView(scrollPosition_, GUILayout.Width(Screen.width), GUILayout.ExpandHeight(true));
-            EditorGUILayout.TextArea(outputText_, textAreaStyle, GUILayout.ExpandHeight(true));
+            //Output Text Area
+			scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(Screen.width), GUILayout.ExpandHeight(true));
+			EditorGUILayout.TextArea(outputText, textAreaStyle, GUILayout.ExpandHeight(true));
             GUILayout.EndScrollView();
 
-            //选项
+            //Filter Option Toggles
             GUILayout.BeginHorizontal();
             bool oldToggleLog = toggleLog;
             bool oldToggleErr = toggleErr;
             toggleLog = GUILayout.Toggle(oldToggleLog, "log", GUILayout.ExpandWidth(false));
             toggleErr = GUILayout.Toggle(oldToggleErr, "error", GUILayout.ExpandWidth(false));
 
-            //过滤
+            //Filter Input Field
             GUILayout.Space(10f);
             GUILayout.Label("filter:", GUILayout.ExpandWidth(false));
             string oldFilterPattern = filterText;
             filterText = GUILayout.TextField(oldFilterPattern, GUILayout.Width(200f));
 
-            //按钮
+            //Menu Buttons
             if (GUILayout.Button("clear", GUILayout.ExpandWidth(false)))
             {
                 recordList.Clear();
@@ -296,10 +296,10 @@ end
                 inputAreaPosY = GUILayoutUtility.GetLastRect().yMax;
             }
 
-            //分割线
+            //Drag Spliter
             ResizeScrollView();
 
-            //输入
+            //Input Area
             GUI.SetNextControlName("Input");
             inputText = EditorGUILayout.TextField(inputText, GUILayout.Height(inputAreaHeight));
 
@@ -310,45 +310,45 @@ end
                 {
                     if (inputText != "")
                     {
-                        if (history_.Count == 0 || history_[history_.Count - 1] != inputText)
+                        if (history.Count == 0 || history[history.Count - 1] != inputText)
                         {
-                            history_.Add(inputText);
+                            history.Add(inputText);
                         }
                         AddLog(inputText);
                         DoCommand(inputText);
                         inputText = "";
                         refresh = true;
-                        historyIndex_ = history_.Count;
+                        historyIndex = history.Count;
                     }
                 }
                 else if (Event.current.keyCode == KeyCode.UpArrow)
                 {
-                    if (history_.Count > 0)
+                    if (history.Count > 0)
                     {
-                        historyIndex_ = historyIndex_ - 1;
-                        if (historyIndex_ < 0)
+                        historyIndex = historyIndex - 1;
+                        if (historyIndex < 0)
                         {
-                            historyIndex_ = 0;
+                            historyIndex = 0;
                         }
                         else
                         {
-                            inputText = history_[historyIndex_];
+                            inputText = history[historyIndex];
                             refresh = true;
                         }
                     }
                 }
                 else if (Event.current.keyCode == KeyCode.DownArrow)
                 {
-                    if (history_.Count > 0)
+                    if (history.Count > 0)
                     {
-                        historyIndex_ = historyIndex_ + 1;
-                        if (historyIndex_ > history_.Count - 1)
+                        historyIndex = historyIndex + 1;
+                        if (historyIndex > history.Count - 1)
                         {
-                            historyIndex_ = history_.Count - 1;
+                            historyIndex = history.Count - 1;
                         }
                         else
                         {
-                            inputText = history_[historyIndex_];
+                            inputText = history[historyIndex];
                             refresh = true;
                         }
                     }
@@ -410,20 +410,14 @@ end
             if (cmd == "p")
             {
                 if (tail == "")
-                {
                     return;
-                }
-
                 LuaFunction f = luaState.doString(COMMON_DEFINE + "\nreturn printExpr", "LuaConsole") as LuaFunction;
                 f.call(tail);
             }
             else if (cmd == "dir")
             {
                 if (tail == "")
-                {
                     return;
-                }
-
                 LuaFunction f = luaState.doString(COMMON_DEFINE + "\nreturn dirExpr", "LuaConsole") as LuaFunction;
                 f.call(tail);
             }
