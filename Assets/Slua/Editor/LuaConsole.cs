@@ -84,7 +84,7 @@ end
 local setfenv = setfenv or function(f,env) debug.setupvalue(f,1,env) end
 local env = setmetatable({}, {__index=_G, __newindex=function(t,k,v)
     print('set global', k, '=', v)
-    rawset(t, k, v)
+    _G[k] = v
 end})
 local printVar = function(val)
     if type(val) == 'table' then
@@ -100,6 +100,14 @@ local eval = function(code)
     end
     setfenv(func, env)
     return func()
+end
+local compile = function(code)
+    local func,err = loadstring('do ' .. code .. ' end')
+    if not func then
+        error(err)
+    end
+    setfenv(func, env)
+    func()
 end
 local printExpr = function(str)
     if str:match('^[_%a][_%w]*$') then
@@ -247,7 +255,7 @@ end
         void OnDestroy()
         {
             LuaState.logDelegate -= AddLog;
-            LuaState.errorDelegate -= AddLog;
+			LuaState.errorDelegate -= AddError;
         }
 
         void OnGUI()
@@ -411,19 +419,19 @@ end
             {
                 if (tail == "")
                     return;
-                LuaFunction f = luaState.doString(COMMON_DEFINE + "\nreturn printExpr", "LuaConsole") as LuaFunction;
+                LuaFunction f = luaState.doString(COMMON_DEFINE + "return printExpr", "LuaConsole") as LuaFunction;
                 f.call(tail);
             }
             else if (cmd == "dir")
             {
                 if (tail == "")
                     return;
-                LuaFunction f = luaState.doString(COMMON_DEFINE + "\nreturn dirExpr", "LuaConsole") as LuaFunction;
+                LuaFunction f = luaState.doString(COMMON_DEFINE + "return dirExpr", "LuaConsole") as LuaFunction;
                 f.call(tail);
             }
             else
             {
-                LuaFunction f = luaState.doString(COMMON_DEFINE + "\nreturn eval", "LuaConsole") as LuaFunction;
+                LuaFunction f = luaState.doString(COMMON_DEFINE + "return compile", "LuaConsole") as LuaFunction;
                 f.call(str);
             }
         }
