@@ -424,7 +424,7 @@ namespace SLua
 				else
 					LuaDLL.lua_pop(t.L, 1);
 
-                var ty = LuaDLL.lua_type(t.L, -1);
+                //var ty = LuaDLL.lua_type(t.L, -1);
 				bool ret = LuaDLL.lua_next(t.L, indext) > 0;
 				if (!ret) iterPhase = 2;
 
