@@ -1,7 +1,7 @@
 @echo off
 
 :: lua paths define
-set LUAJIT_PATH=luajit-2.0.4
+set LUAJIT_PATH=luajit-2.1.0-beta3
 set STANDARD_LUA_PATH=lua-5.1.5
 
 :: deciding whether to use luajit or not
@@ -55,6 +55,8 @@ echo Swtich to x86 build env(%VS_TOOL_VER%)
 cd %USE_LUA_PATH%\src
 call msvcbuild.bat
 copy /Y lua51.dll ..\..\..\Assets\Plugins\x86\slua.dll
+copy /Y lua51.dll ..\..\..\jit\win\x86\lua51.dll
+copy /Y luajit.exe ..\..\..\jit\win\x86\luajit.exe
 cd ..\..
 
 call "%ENV64%"
@@ -62,6 +64,16 @@ echo Swtich to x64 build env(%VS_TOOL_VER%)
 cd %USE_LUA_PATH%\src
 call msvcbuild.bat
 copy /Y lua51.dll ..\..\..\Assets\Plugins\x64\slua.dll
+copy /Y lua51.dll ..\..\..\jit\win\x64\lua51.dll
+copy /Y luajit.exe ..\..\..\jit\win\x64\luajit.exe
+cd ..\..
+
+call "%ENV64%"
+echo Swtich to x64 build env(%VS_TOOL_VER%)
+cd %USE_LUA_PATH%\src
+call msvcbuild.bat gc64
+copy /Y lua51.dll ..\..\..\jit\win\gc64\lua51.dll
+copy /Y luajit.exe ..\..\..\jit\win\gc64\luajit.exe
 cd ..\..
 
 goto :eof

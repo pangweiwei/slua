@@ -1,6 +1,6 @@
 import glob, os
 
-LUA_SRC = './luajit-2.1.0/src'
+LUA_SRC = './luajit-2.1.0-beta3/src'
 IOS_SDK = 'iPhoneOS8.4.sdk'
 
 def build_mac_dylib(name, src):
