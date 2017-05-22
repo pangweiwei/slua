@@ -10,7 +10,7 @@ namespace SLua
     {
         #region COMMON_DEFINE
         const string COMMON_DEFINE = @"
-local prettyTabToStr = function(tab, level, path, visited)
+local function prettyTabToStr(tab, level, path, visited)
     local result = ''
     if level == nil then
         visited = {}
@@ -84,16 +84,16 @@ end
 local setfenv = setfenv or function(f,env) debug.setupvalue(f,1,env) end
 local env = setmetatable({}, {__index=_G, __newindex=function(t,k,v)
     print('set global', k, '=', v)
-    rawset(t, k, v)
+    _G[k] = v
 end})
-local printVar = function(val)
+local function printVar(val)
     if type(val) == 'table' then
         print(prettyTabToStr(val))
     else
         print(val)
     end
 end
-local eval = function(code)
+local function eval(code)
     local func,err = loadstring('return ' .. code)
     if not func then
         error(err)
@@ -101,7 +101,15 @@ local eval = function(code)
     setfenv(func, env)
     return func()
 end
-local printExpr = function(str)
+local function compile(code)
+    local func,err = loadstring('do ' .. code .. ' end')
+    if not func then
+        error(err)
+    end
+    setfenv(func, env)
+    func()
+end
+local function printExpr(str)
     if str:match('^[_%a][_%w]*$') then
         printVar(env[str])
     else
@@ -113,7 +121,7 @@ local printExpr = function(str)
         end
     end
 end
-local dir = function(val)
+local function dir(val)
     if type(val) == 'table' then
         local t = {}
         for k,v in pairs(val)do
@@ -124,7 +132,7 @@ local dir = function(val)
         print(val)
     end
 end
-local dirExpr = function(str)
+local function dirExpr(str)
     if str:match('^[_%a][_%w]*$') then
         dir(env[str])
     else
@@ -247,7 +255,7 @@ end
         void OnDestroy()
         {
             LuaState.logDelegate -= AddLog;
-            LuaState.errorDelegate -= AddLog;
+			LuaState.errorDelegate -= AddError;
         }
 
         void OnGUI()
@@ -411,19 +419,19 @@ end
             {
                 if (tail == "")
                     return;
-                LuaFunction f = luaState.doString(COMMON_DEFINE + "\nreturn printExpr", "LuaConsole") as LuaFunction;
+                LuaFunction f = luaState.doString(COMMON_DEFINE + "return printExpr", "LuaConsole") as LuaFunction;
                 f.call(tail);
             }
             else if (cmd == "dir")
             {
                 if (tail == "")
                     return;
-                LuaFunction f = luaState.doString(COMMON_DEFINE + "\nreturn dirExpr", "LuaConsole") as LuaFunction;
+                LuaFunction f = luaState.doString(COMMON_DEFINE + "return dirExpr", "LuaConsole") as LuaFunction;
                 f.call(tail);
             }
             else
             {
-                LuaFunction f = luaState.doString(COMMON_DEFINE + "\nreturn eval", "LuaConsole") as LuaFunction;
+                LuaFunction f = luaState.doString(COMMON_DEFINE + "return compile", "LuaConsole") as LuaFunction;
                 f.call(str);
             }
         }
@@ -432,15 +440,15 @@ end
         [MenuItem("CONTEXT/Component/Push Component To Lua")]
         static void PushComponentObjectToLua(MenuCommand cmd)
         {
-            Component tf = cmd.context as Component;
-            if (tf == null)
+            Component com = cmd.context as Component;
+			if (com == null)
                 return;
 
             LuaState luaState = LuaState.main;
             if (luaState == null)
                 return;
 
-            LuaObject.pushObject(luaState.L, tf);
+			LuaObject.pushObject(luaState.L, com);
             LuaDLL.lua_setglobal(luaState.L, "_");
         }
 
