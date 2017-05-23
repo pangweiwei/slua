@@ -5,8 +5,6 @@ cd luajit-2.1.0-beta3
 SRCDIR=$(pwd)
 DIR=$(pwd)
 
-NDKPATH=/Users/chenj/Desktop/tuangame/code/client/xproject/env/android-ndk-r14b
-
 ${NDKPATH?"Need to set NDKPATH"}
 
 NDK=$NDKPATH

@@ -997,21 +997,21 @@ end
 					bytes = loaderDelegate(fn);
 				else
 				{
+					string luapath = "";
 #if !SLUA_STANDALONE
-					fn = fn.Replace(".", "/");
-					TextAsset asset = (TextAsset)Resources.Load(fn);
-					if (asset == null)
-						return null;
-					bytes = asset.bytes;
-#else
-				    bytes = File.ReadAllBytes(fn);
+					luapath = SLuaSetting.Instance.LuaScriptPath;
 #endif
+					fn = fn.Replace(".", "/");
+					string luafn = string.Format("{0}/{1}.lua",luapath,fn);
+					if(!File.Exists(luafn)) 
+						luafn = string.Format("{0}/{1}.luac",luapath,fn);
+					bytes = File.ReadAllBytes(luafn);
 				}
 				return bytes;
 			}
 			catch (Exception e)
 			{
-				throw new Exception(e.Message);
+				throw new Exception(String.Format("Can't find {0} or open failed",fn));
 			}
 		}
 
