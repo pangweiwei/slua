@@ -999,14 +999,39 @@ end
 				{
 #if !SLUA_STANDALONE
 					fn = fn.Replace(".", "/");
-					TextAsset asset = (TextAsset)Resources.Load(fn);
-					if (asset == null)
+
+                    TextAsset asset = null;
+
+#if UNITY_EDITOR
+
+                    if ( SLuaSetting.Instance.jitType == JITBUILDTYPE.none )
+                    {
+                        asset = (TextAsset)Resources.Load(fn);
+                    }
+                    // 测试用
+                    else if( SLuaSetting.Instance.jitType == JITBUILDTYPE.X86 )
+                    {
+                        asset = (TextAsset)UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Slua/jit/jitx86/" + fn + ".bytes");
+                    }
+                    else if (SLuaSetting.Instance.jitType == JITBUILDTYPE.X64)
+                    {
+                        asset = (TextAsset)UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Slua/jit/jitx64/" + fn + ".bytes");
+                    }
+                    else if (SLuaSetting.Instance.jitType == JITBUILDTYPE.GC64)
+                    {
+                        asset = (TextAsset)UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Slua/jit/jitgc64/" + fn + ".bytes");
+                    }
+#else
+                    asset = (TextAsset)Resources.Load(fn);
+#endif
+
+                    if (asset == null)
 						return null;
 					bytes = asset.bytes;
 #else
 				    bytes = File.ReadAllBytes(fn);
 #endif
-				}
+                }
 				return bytes;
 			}
 			catch (Exception e)

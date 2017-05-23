@@ -36,7 +36,15 @@ namespace SLua{
 		LF,
 	}
 
-	public class SLuaSetting 
+    public enum JITBUILDTYPE : int
+    {
+        none = 0,
+        X86 = 1,
+        X64 = 2,
+        GC64 = 3,
+    }
+
+    public class SLuaSetting 
 #if !SLUA_STANDALONE
         : ScriptableObject
 #endif
@@ -46,10 +54,13 @@ namespace SLua{
 		public bool exportExtensionMethod = true;
 		public string UnityEngineGeneratePath = "Assets/Slua/LuaObject/";
 
-		// public int debugPort=10240;
-		// public string debugIP="0.0.0.0"; // no longer debugger built-in
 
-		private static SLuaSetting _instance=null;
+        public JITBUILDTYPE jitType = JITBUILDTYPE.none;
+
+        // public int debugPort=10240;
+        // public string debugIP="0.0.0.0"; // no longer debugger built-in
+
+        private static SLuaSetting _instance=null;
 		public static SLuaSetting Instance{
 			get{
 #if !SLUA_STANDALONE
