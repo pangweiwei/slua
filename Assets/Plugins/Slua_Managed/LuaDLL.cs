@@ -113,7 +113,7 @@ namespace SLua
         public static string lua_typenamestr(IntPtr luaState, LuaTypes type)
         {
             IntPtr p = lua_typename(luaState, (int)type);
-            return Marshal.PtrToStringAnsi(p);
+			return Marshal.PtrToStringAuto(p);
         }
         public static string luaL_typename(IntPtr luaState, int stackPos)
         {
@@ -536,7 +536,7 @@ namespace SLua
 
             if (str != IntPtr.Zero)
             {
-                return Marshal.PtrToStringAnsi(str, strlen);
+				return Marshal.PtrToStringAuto (str);
             }
             return null;
         }
