@@ -988,30 +988,45 @@ end
 			throw new Exception(err);
 		}
 
-		internal static byte[] loadFile(string fn)
+		internal static byte[] loadFile (string fn)
 		{
-			try
-			{
+			try {
 				byte[] bytes;
 				if (loaderDelegate != null)
-					bytes = loaderDelegate(fn);
-				else
-				{
-					string luapath = "";
-#if !SLUA_STANDALONE
-					luapath = SLuaSetting.Instance.LuaScriptPath;
-#endif
-					fn = fn.Replace(".", "/");
-					string luafn = string.Format("{0}/{1}.lua",luapath,fn);
-					if(!File.Exists(luafn)) 
-						luafn = string.Format("{0}/{1}.luac",luapath,fn);
-					bytes = File.ReadAllBytes(luafn);
+					bytes = loaderDelegate (fn);
+				else {
+					#if !SLUA_STANDALONE
+					fn = fn.Replace (".", "/");
+
+					TextAsset asset = null;
+
+					#if UNITY_EDITOR
+
+					if (SLuaSetting.Instance.jitType == JITBUILDTYPE.none) {
+						asset = (TextAsset)Resources.Load (fn);
+					}
+					// 测试用
+					else if (SLuaSetting.Instance.jitType == JITBUILDTYPE.X86) {
+						asset = (TextAsset)UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset> ("Assets/Slua/jit/jitx86/" + fn + ".bytes");
+					} else if (SLuaSetting.Instance.jitType == JITBUILDTYPE.X64) {
+						asset = (TextAsset)UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset> ("Assets/Slua/jit/jitx64/" + fn + ".bytes");
+					} else if (SLuaSetting.Instance.jitType == JITBUILDTYPE.GC64) {
+						asset = (TextAsset)UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset> ("Assets/Slua/jit/jitgc64/" + fn + ".bytes");
+					}
+					#else
+					asset = (TextAsset)Resources.Load(fn);
+					#endif
+
+					if (asset == null)
+						return null;
+					bytes = asset.bytes;
+					#else
+					bytes = File.ReadAllBytes(fn);
+					#endif
 				}
 				return bytes;
-			}
-			catch (Exception e)
-			{
-				throw new Exception(String.Format("Can't find {0} or open failed",fn));
+			} catch (Exception e) {
+				throw new Exception (e.Message);
 			}
 		}
 

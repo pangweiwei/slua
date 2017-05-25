@@ -104,13 +104,7 @@ namespace SLua
 			}
 
 		}
-
-		[MenuItem("SLua/Compile lua to luac")]
-		static public void CompileAll() 
-		{
 			
-		}
-	
 		[MenuItem("SLua/All/Make")]
 		static public void GenerateAll()
 		{

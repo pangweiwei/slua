@@ -173,19 +173,19 @@ namespace SLua
         [MenuItem("SLua/luajit/export luajitx86")]
         static void exportLuajitx86()
         {
-			exportLuajit("Assets/Slua/Resources/", "*.txt", "Assets/Slua/Resources", JITBUILDTYPE.X86);
+            exportLuajit("Assets/Slua/Resources/", "*.txt", "Assets/Slua/jit/jitx86", JITBUILDTYPE.X86);
         }
 
         [MenuItem("SLua/luajit/export luajitx64")]
         static void exportLuajitx64()
         {
-			exportLuajit("Assets/Slua/Resources/", "*.txt", "Assets/Slua/Resources", JITBUILDTYPE.X64);
+            exportLuajit("Assets/Slua/Resources/", "*.txt", "Assets/Slua/jit/jitx64", JITBUILDTYPE.X64);
         }
 
         [MenuItem("SLua/luajit/export luajitgc64")]
         static void exportLuajitgc64()
         {
-			exportLuajit("Assets/Slua/Resources/", "*.txt", "Assets/Slua/Resources", JITBUILDTYPE.GC64);
+            exportLuajit("Assets/Slua/Resources/", "*.txt", "Assets/Slua/jit/jitgc64", JITBUILDTYPE.GC64);
         }
 
     }
