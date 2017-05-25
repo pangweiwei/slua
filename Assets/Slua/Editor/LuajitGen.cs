@@ -170,19 +170,19 @@ namespace SLua
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("SLua/luajit/export luajitx86")]
+        [MenuItem("SLua/Compile Bytecode/luajitx86 for WIN32&Android ARMV7")]
         static void exportLuajitx86()
         {
             exportLuajit("Assets/Slua/Resources/", "*.txt", "Assets/Slua/jit/jitx86", JITBUILDTYPE.X86);
         }
 
-        [MenuItem("SLua/luajit/export luajitx64")]
+		[MenuItem("SLua/Compile Bytecode/luajitx64 for WIN64")]
         static void exportLuajitx64()
         {
             exportLuajit("Assets/Slua/Resources/", "*.txt", "Assets/Slua/jit/jitx64", JITBUILDTYPE.X64);
         }
 
-        [MenuItem("SLua/luajit/export luajitgc64")]
+		[MenuItem("SLua/Compile Bytecode/luajitgc64 for MAC&ARM64")]
         static void exportLuajitgc64()
         {
             exportLuajit("Assets/Slua/Resources/", "*.txt", "Assets/Slua/jit/jitgc64", JITBUILDTYPE.GC64);
