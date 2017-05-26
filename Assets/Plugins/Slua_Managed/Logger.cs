@@ -29,6 +29,7 @@ namespace SLua
                 string filename = lines[i].Substring(0, idx);
                 idx = filename.LastIndexOf("/");
                 if (idx >= 0) filename = filename.Substring(idx + 1);
+                filename = filename.Trim();
                 string[] guids = UnityEditor.AssetDatabase.FindAssets(filename);
                 filename = filename + ".txt";
                 for (int j = 0; j < guids.Length; j++)
