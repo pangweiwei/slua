@@ -536,7 +536,7 @@ namespace SLua
             string s = null;
             if (strlen > 0 && str != IntPtr.Zero)
             {
-                s = Marshal.PtrToStringAnsi(str, strlen);
+                s = Marshal.PtrToStringAnsi(str);
                 // fallback method
                 if(s == null)
                 {
