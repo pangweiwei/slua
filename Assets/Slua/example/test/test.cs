@@ -262,6 +262,7 @@ public class test : MonoBehaviour {
 			lua.doString ("function calcVP(a,b) return a+b end");
 			LuaFunction lf = lua.getFunction ("calcVP");
 			lf.call (i, 20);
+			lf.Dispose ();
 		}
 		
 

@@ -368,10 +368,10 @@ namespace SLua
 
 		public object invoke(string func, params object[] args)
 		{
-			LuaFunction f = (LuaFunction)this[func];
-			if (f != null)
-			{
-				return f.call(args);
+			using (LuaFunction f = (LuaFunction)this [func]) {
+				if (f != null) {
+					return f.call (args);
+				}
 			}
 			throw new Exception(string.Format("Can't find {0} function", func));
 		}

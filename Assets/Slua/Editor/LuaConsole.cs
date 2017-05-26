@@ -443,6 +443,7 @@ end
                     return;
                 LuaFunction f = luaState.doString(COMMON_DEFINE + "return printExpr", "LuaConsole") as LuaFunction;
                 f.call(tail);
+				f.Dispose ();
             }
             else if (cmd == "dir")
             {
@@ -450,11 +451,13 @@ end
                     return;
                 LuaFunction f = luaState.doString(COMMON_DEFINE + "return dirExpr", "LuaConsole") as LuaFunction;
                 f.call(tail);
+				f.Dispose ();
             }
             else
             {
                 LuaFunction f = luaState.doString(COMMON_DEFINE + "return compile", "LuaConsole") as LuaFunction;
                 f.call(str);
+				f.Dispose ();
             }
         }
 
