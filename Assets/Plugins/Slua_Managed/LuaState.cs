@@ -648,6 +648,7 @@ end
             // https://github.com/pkulchenko/MobDebug/blob/master/src/mobdebug.lua#L290
             // Dump only 3 stacks, or it will return null (I don't know why)
             string dumpstackfunc = @"
+local printerror=printerror
 dumpstack=function()
   function vars(f)
     local dump = """"
