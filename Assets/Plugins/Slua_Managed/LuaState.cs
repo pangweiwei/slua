@@ -809,11 +809,12 @@ end
 			LuaDLL.lua_remove(l, err);
 		}
 
+        private static StringBuilder s = new StringBuilder();
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		internal static int print(IntPtr L)
 		{
 			int n = LuaDLL.lua_gettop(L);
-			string s = "";
+            s.Length = 0;
 
 			LuaDLL.lua_getglobal(L, "tostring");
 
@@ -821,25 +822,34 @@ end
 			{
 				if (i > 1)
 				{
-					s += "    ";
+					s.Append("    ");
 				}
 
 				LuaDLL.lua_pushvalue(L, -1);
 				LuaDLL.lua_pushvalue(L, i);
 
 				LuaDLL.lua_call(L, 1, 1);
-				s += LuaDLL.lua_tostring(L, -1);
+				s.Append(LuaDLL.lua_tostring(L, -1));
 				LuaDLL.lua_pop(L, 1);
 			}
 			LuaDLL.lua_settop(L, n);
-			Logger.Log(s);
-			if (logDelegate != null)
-			{
-				logDelegate(s);
-			}
+            
+            LuaDLL.lua_getglobal(L, "debug");
+            LuaDLL.lua_getfield(L, -1, "traceback");
+            LuaDLL.lua_call(L, 0, 1);
+            s.Append("\n");
+            s.Append(LuaDLL.lua_tostring(L, -1));
+            LuaDLL.lua_pop(L, 1);
+            Logger.Log(s.ToString(), true);
+
+            if (logDelegate != null)
+            {
+                logDelegate(s.ToString());
+            }
+
 			return 0;
 		}
-
+        
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		internal static int loadfile(IntPtr L)
 		{
