@@ -621,6 +621,9 @@ end
 			LuaDLL.lua_pushcfunction(L, print);
 			LuaDLL.lua_setglobal(L, "print");
 
+            LuaDLL.lua_pushcfunction(L, printerror);
+            LuaDLL.lua_setglobal(L, "printerror");
+
 			LuaDLL.lua_pushcfunction(L, pcall);
 			LuaDLL.lua_setglobal(L, "pcall");
 
@@ -641,6 +644,57 @@ end
 
 			// overload resume function for report error
 			LuaState.get(L).doString(resumefunc);
+
+            // https://github.com/pkulchenko/MobDebug/blob/master/src/mobdebug.lua#L290
+            // Dump only 3 stacks, or it will return null (I don't know why)
+            string dumpstackfunc = @"
+dumpstack=function()
+  function vars(f)
+    local dump = """"
+    local func = debug.getinfo(f, ""f"").func
+    local i = 1
+    local locals = {}
+    -- get locals
+    while true do
+      local name, value = debug.getlocal(f, i)
+      if not name then break end
+      if string.sub(name, 1, 1) ~= '(' then 
+        dump = dump ..  ""    "" .. name .. ""="" .. tostring(value) .. ""\n"" 
+      end
+      i = i + 1
+    end
+    -- get varargs (these use negative indices)
+    i = 1
+    while true do
+      local name, value = debug.getlocal(f, -i)
+      -- `not name` should be enough, but LuaJIT 2.0.0 incorrectly reports `(*temporary)` names here
+      if not name or name ~= ""(*vararg)"" then break end
+      dump = dump ..  ""    "" .. name .. ""="" .. tostring(value) .. ""\n""
+      i = i + 1
+    end
+    -- get upvalues
+    i = 1
+    while func do -- check for func as it may be nil for tail calls
+      local name, value = debug.getupvalue(func, i)
+      if not name then break end
+      dump = dump ..  ""    "" .. name .. ""="" .. tostring(value) .. ""\n""
+      i = i + 1
+    end
+    return dump
+  end
+  local dump = """"
+  for i = 3, 100 do
+    local source = debug.getinfo(i, ""S"")
+    if not source then break end
+    dump = dump .. ""- stack"" .. tostring(i-2) .. ""\n""
+    dump = dump .. vars(i+1)
+    if source.what == 'main' then break end
+  end
+  printerror(dump)
+end
+";
+
+            LuaState.get(L).doString(dumpstackfunc);
 
 #if UNITY_ANDROID
 			// fix android performance drop with JIT on according to luajit mailist post
@@ -732,6 +786,9 @@ end
             {
                 errorDelegate(error);
             }
+
+            LuaDLL.lua_getglobal(L, "dumpstack");
+            LuaDLL.lua_call(L, 0, 0);
 
             return 0;
 		}
@@ -850,7 +907,48 @@ end
 			return 0;
 		}
         
-		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        // copy from print()
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        internal static int printerror(IntPtr L)
+        {
+            int n = LuaDLL.lua_gettop(L);
+            s.Length = 0;
+
+            LuaDLL.lua_getglobal(L, "tostring");
+
+            for (int i = 1; i <= n; i++)
+            {
+                if (i > 1)
+                {
+                    s.Append("    ");
+                }
+
+                LuaDLL.lua_pushvalue(L, -1);
+                LuaDLL.lua_pushvalue(L, i);
+
+                LuaDLL.lua_call(L, 1, 1);
+                s.Append(LuaDLL.lua_tostring(L, -1));
+                LuaDLL.lua_pop(L, 1);
+            }
+            LuaDLL.lua_settop(L, n);
+            
+            LuaDLL.lua_getglobal(L, "debug");
+            LuaDLL.lua_getfield(L, -1, "traceback");
+            LuaDLL.lua_call(L, 0, 1);
+            s.Append("\n");
+            s.Append(LuaDLL.lua_tostring(L, -1));
+            LuaDLL.lua_pop(L, 1);
+            Logger.LogError(s.ToString(), true);
+
+            if (errorDelegate != null)
+            {
+                errorDelegate(s.ToString());
+            }
+
+            return 0;
+        }
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		internal static int loadfile(IntPtr L)
 		{
 			loader(L);
