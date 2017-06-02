@@ -869,6 +869,15 @@ namespace SLua
 			return false;
 		}
 
+		struct ArgMode {
+			public int index;
+			public int mode;
+
+			public ArgMode(int index,int mode) {
+				this.index=index;
+				this.mode=mode;
+			}
+		};
 
 		void WriteDelegate(Type t, StreamWriter file)
 		{
@@ -910,20 +919,26 @@ namespace SLua
 			temp = temp.Replace("$TN", t.Name);
 			temp = temp.Replace("$FN", SimpleType(t));
 			MethodInfo mi = t.GetMethod("Invoke");
-			List<int> outindex = new List<int>();
-			List<int> refindex = new List<int>();
-			temp = temp.Replace("$ARGS", ArgsList(mi, ref outindex, ref refindex));
+
+			temp = temp.Replace("$ARGS", ArgsList(mi));
 			Write(file, temp);
 			
 			this.indent = 4;
+
+
+			ParameterInfo[] pis = mi.GetParameters ();
 			
-			for (int n = 0; n < mi.GetParameters().Length; n++)
+			for (int n = 0; n < pis.Length; n++)
 			{
-				if (!outindex.Contains(n))
+				if (!pis[n].IsOut)
 					Write(file, "pushValue(l,a{0});", n + 1);
 			}
-			
-			Write(file, "ld.pcall({0}, error);", mi.GetParameters().Length - outindex.Count);
+
+			int outcount = pis.Count ((ParameterInfo p) => {
+				return p.ParameterType.IsByRef && p.IsOut;
+			});
+
+			Write(file, "ld.pcall({0}, error);", mi.GetParameters().Length - outcount);
 
 			int offset = 0;
 			if (mi.ReturnType != typeof(void))
@@ -931,17 +946,12 @@ namespace SLua
 				offset = 1;
 				WriteValueCheck(file, mi.ReturnType, offset, "ret", "error+");
 			}
-			
-			foreach (int i in outindex)
-			{
-				string a = string.Format("a{0}", i + 1);
-				WriteCheckType(file, mi.GetParameters()[i].ParameterType, i + offset, a, "error+");
-			}
-			
-			foreach (int i in refindex)
-			{
-				string a = string.Format("a{0}", i + 1);
-				WriteCheckType(file, mi.GetParameters()[i].ParameterType, i + offset, a, "error+");
+
+			for (int n = 0; n < pis.Length; n++) {
+				if (pis [n].ParameterType.IsByRef) {
+					string a = string.Format ("a{0}", n + 1);
+					WriteCheckType (file, pis[n].ParameterType, ++offset, a, "error+");
+				}
 			}
 			
 			
@@ -957,7 +967,7 @@ namespace SLua
 			Write(file, "}");
 		}
 		
-		string ArgsList(MethodInfo m, ref List<int> outindex, ref List<int> refindex)
+		string ArgsList(MethodInfo m)
 		{
 			string str = "";
 			ParameterInfo[] pars = m.GetParameters();
@@ -968,15 +978,9 @@ namespace SLua
 				
 				ParameterInfo p = pars[n];
 				if (p.ParameterType.IsByRef && p.IsOut)
-				{
 					str += string.Format("out {0} a{1}", t, n + 1);
-					outindex.Add(n);
-				}
 				else if (p.ParameterType.IsByRef)
-				{
 					str += string.Format("ref {0} a{1}", t, n + 1);
-					refindex.Add(n);
-				}
 				else
 					str += string.Format("{0} a{1}", t, n + 1);
 				if (n < pars.Length - 1)

@@ -9,7 +9,7 @@ public class Deleg : MonoBehaviour
 {
 
 
-	public delegate bool GetBundleInfoDelegate(string path, out string url, out int ver);
+	public delegate bool GetBundleInfoDelegate(string a1,int a2,int a3,ref System.Int32 a4,out System.String a5,out System.Int32 a6);
 	public delegate void SimpleDelegate(string path, GameObject g);
 
 	static public GetBundleInfoDelegate d;
@@ -41,10 +41,14 @@ public class Deleg : MonoBehaviour
 	{
 		string url;
 		int ver;
+		int c = 3;
 		if (d != null)
 		{
-			bool ret = d("/path", out url, out ver);
+			bool ret = d("/path", 1,2,ref c,out url, out ver);
 			Debug.Log(string.Format("{0},{1},{2}", ret, url, ver));
+			Debug.Assert (c == 4);
+			Debug.Assert (url == "http://www.sineysoft.com");
+			Debug.Assert (ver == 1);
 		}
 		if (s != null)
 			s("GameObject", new GameObject("SimpleDelegate"));
