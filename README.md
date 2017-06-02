@@ -32,6 +32,8 @@ You can use slua without Unity3D dependency, it call **slua-standalone**. Useful
 
 
 ## Demo with slua
+This repo https://github.com/lwkl/xproject universal loading framework using slua load lua byte code in all platform.
+
 This repo http://linkcloud.github.io/ poker game using slua.
 
 This repo https://github.com/mr-kelly/KSFramework based on slua for hot reloadable asset bundle framework.
