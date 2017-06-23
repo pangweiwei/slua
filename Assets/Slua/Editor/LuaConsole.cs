@@ -480,15 +480,15 @@ end
         [MenuItem("CONTEXT/Component/Push GameObject To Lua")]
         static void PushGameObjectToLua(MenuCommand cmd)
         {
-            Transform tf = cmd.context as Transform;
-            if (tf == null)
+            Component com = cmd.context as Component;
+            if (com == null)
                 return;
 
             LuaState luaState = LuaState.main;
             if (luaState == null)
                 return;
 
-            SLua.LuaObject.pushObject(luaState.L, tf.gameObject);
+            SLua.LuaObject.pushObject(luaState.L, com.gameObject);
             LuaDLL.lua_setglobal(luaState.L, "_");
         }
     }
