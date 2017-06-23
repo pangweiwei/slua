@@ -938,7 +938,7 @@ namespace SLua
 				return p.ParameterType.IsByRef && p.IsOut;
 			});
 
-			Write(file, "ld.pcall({0}, error);", mi.GetParameters().Length - outcount);
+			Write(file, "ld.pcall({0}, error);", pis.Length - outcount);
 
 			int offset = 0;
 			if (mi.ReturnType != typeof(void))
