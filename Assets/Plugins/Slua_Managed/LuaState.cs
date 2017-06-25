@@ -544,6 +544,8 @@ namespace SLua
 		static IntPtr oldptr = IntPtr.Zero;
 		static LuaState oldstate = null;
 		static public LuaCSFunction errorFunc = new LuaCSFunction(errorReport);
+        int errorRef = 0;
+
         public bool isMainThread()
 		{
 			return System.Threading.Thread.CurrentThread.ManagedThreadId == mainThread;
@@ -1428,6 +1430,21 @@ end
             {
                 LuaObject.pushValue(L, (LuaCSFunction)o);
             };
+        }
+
+		public int pushTry()
+        {
+            if (errorRef == 0)
+            {
+                LuaDLL.lua_pushcfunction(L, LuaState.errorFunc);
+                LuaDLL.lua_pushvalue(L, -1);
+                errorRef = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
+            }
+            else
+            {
+                LuaDLL.lua_getref(L, errorRef);
+            }
+            return LuaDLL.lua_gettop(L);
         }
     }
 }

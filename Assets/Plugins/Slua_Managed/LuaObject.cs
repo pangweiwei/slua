@@ -695,26 +695,17 @@ return index
 			oc.push(l, t, false);
 		}
 
-		static private int errorRef = 0;
-
 		public static int pushTry(IntPtr l)
 		{
-			if (!LuaState.get(l).isMainThread())
+            var state = LuaState.get(l);
+            if (!state.isMainThread())
 			{
 				Logger.LogError("Can't call lua function in bg thread");
 				return 0;
 			}
 
-			if (errorRef == 0) {
-				LuaDLL.lua_pushcfunction (l, LuaState.errorFunc);
-				LuaDLL.lua_pushvalue (l, -1);
-				errorRef = LuaDLL.luaL_ref (l, LuaIndexes.LUA_REGISTRYINDEX);
-			} else {
-				LuaDLL.lua_getref(l,errorRef);
-			}
-			return LuaDLL.lua_gettop(l);
+            return state.pushTry();
 		}
-
 
 		public static bool matchType(IntPtr l, int p, LuaTypes lt, Type t)
 		{
