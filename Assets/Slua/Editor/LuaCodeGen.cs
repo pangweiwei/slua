@@ -656,6 +656,7 @@ namespace SLua
 #endif
 
 			"Light.lightmappingMode",
+			"Light.lightmapBakeType",
 			"MonoBehaviour.runInEditMode",
 			"MonoBehaviour.useGUILayout",
 			"PlayableGraph.CreateScriptPlayable",
