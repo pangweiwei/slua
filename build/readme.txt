@@ -1,3 +1,5 @@
-编译各种环境的jit代码，采用luajit2.1-beta3
+缂栬瘧鍚勭鐜鐨刯it浠ｇ爜锛岄噰鐢╨uajit2.1-beta3
 
-实在没法在IOS的bundle里面使用luajit.在OSX64位模式下，只能用GC64
+瀹炲湪娌℃硶鍦↖OS鐨刡undle閲岄潰浣跨敤luajit.鍦∣SX64浣嶆ā寮忎笅锛屽彧鑳界敤GC64
+
+涓轰簡鏀寔杩滅▼璋冭瘯锛岄泦鎴愪簡luasocket锛屼粎鍖呭惈socket搴擄紝鎵╁睍鐨刦tp,smtp绛夊簱娌℃湁闆嗘垚
