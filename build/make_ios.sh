@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 cd "$( dirname "${BASH_SOURCE[0]}" )"
-cp slua.c luajit-2.1.0-beta3/src/
+cp slua.c luasocket-mini/* luajit-2.1.0-beta3/src/
 cd luajit-2.1.0-beta3
 
 

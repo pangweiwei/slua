@@ -148,6 +148,11 @@ public class HelloWorld
 
 	}
 
+	static public int getNegInt() 
+	{
+		return -1;
+	}
+
 	static public LuaTable getv()
 	{
 		LuaTable t = new LuaTable(LuaState.main);

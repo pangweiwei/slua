@@ -77,6 +77,9 @@ function main()
 	-- test override function
 	HelloWorld.AFuncByDouble(1);
 
+	-- test negetive value
+	assert(HelloWorld.getNegInt()==-1)
+
 	-- test custom component
 	local x=UnityEngine.GameObject("OoOo")
 	x:AddComponent(SLuaTest)

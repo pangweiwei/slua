@@ -34,6 +34,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "luasocket.h"
+
+#define luajit_c
+
 #ifdef _WIN32
 #include <float.h>
 #define isnan _isnan
@@ -43,9 +47,9 @@
 #endif
 
 static const luaL_Reg s_lib_preload[] = {
-	// { "lpeg", luaopen_lpeg },
+	{ "socket.core", luaopen_socket_core },
 	// { "pb",    luaopen_pb }, // any 3rd lualibs added here
-		{ NULL, NULL }
+	{ NULL, NULL }
 };
 
 #if LUA_VERSION_NUM >= 503
