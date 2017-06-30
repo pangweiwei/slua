@@ -5,9 +5,9 @@ set LUAJIT_PATH=luajit-2.1.0-beta3
 set STANDARD_LUA_PATH=lua-5.1.5
 
 :: deciding whether to use luajit or not
-set USE_STANDARD_LUA=%1%
+:: set USE_STANDARD_LUA=%1%
 set USE_LUA_PATH=%LUAJIT_PATH%
-if "%USE_STANDARD_LUA%"=="YES" (set USE_LUA_PATH=%STANDARD_LUA_PATH%)
+:: if "%USE_STANDARD_LUA%"=="YES" (set USE_LUA_PATH=%STANDARD_LUA_PATH%)
 
 :: get visual studio tools path
 :check2015
@@ -49,6 +49,7 @@ set ENV32="%VCVARS%vcvars32.bat"
 set ENV64="%VCVARS%amd64\vcvars64.bat"
 
 copy /Y slua.c "%USE_LUA_PATH%\src\"
+copy /Y luasocket-mini\*.* "%USE_LUA_PATH%\src\"
 
 call "%ENV32%"
 echo Swtich to x86 build env(%VS_TOOL_VER%)

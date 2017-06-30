@@ -77,9 +77,10 @@ buildvm -m folddef -o lj_folddef.h lj_opt_fold.c
 :NODEBUG
 @if "%1"=="amalg" goto :AMALGDLL
 @if "%1"=="static" goto :STATIC
-%LJCOMPILE% /MT /DLUA_BUILD_AS_DLL lj_*.c lib_*.c slua.c
+%LJCOMPILE% /MT /DLUA_BUILD_AS_DLL lj_*.c lib_*.c
+%LJCOMPILE% /MT /DLUA_BUILD_AS_DLL /DLUA_LIB slua.c tcp.c auxiliar.c options.c io.c timeout.c wsocket.c buffer.c inet.c luasocket.c except.c udp.c select.c
 @if errorlevel 1 goto :BAD
-%LJLINK% /DLL /out:%LJDLLNAME% lj_*.obj lib_*.obj slua.obj
+%LJLINK% /DLL /out:%LJDLLNAME% lj_*.obj lib_*.obj slua.obj tcp.obj auxiliar.obj options.obj io.obj timeout.obj wsocket.obj buffer.obj inet.obj luasocket.obj except.obj udp.obj select.obj ws2_32.lib
 @if errorlevel 1 goto :BAD
 @goto :MTDLL
 :STATIC
