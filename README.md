@@ -31,7 +31,10 @@ Standard slua release doesn't contains any 3rd Lua library(like protobuf, lpeg e
 You can use slua without Unity3D dependency, it call **slua-standalone**. Useful for C# server development. Find it on https://www.nuget.org/packages/slua-standalone , and it's maintained by https://github.com/mr-kelly/slua.
 
 
-## Demo with slua
+## Framework with slua
+
+You can use this framework to start your project.
+
 This repo https://github.com/lwkl/xproject universal loading framework using slua load lua byte code in all platform.
 
 This repo http://linkcloud.github.io/ poker game using slua.
