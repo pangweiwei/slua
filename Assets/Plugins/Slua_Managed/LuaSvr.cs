@@ -178,11 +178,12 @@ namespace SLua
 			Lua_SLua_ByteArray.reg (L);
 			Helper.reg(L);
 			LuaValueType.reg(L);
-			LuaDLL.luaS_openextlibs(L);
+			if ((flag & LuaSvrFlag.LSF_EXTLIB)!=0) {
+				LuaDLL.luaS_openextlibs (L);
+				LuaSocketMini.reg (L);
+			}
 
-			LuaSocketMini.reg (L);
-
-			if((flag&LuaSvrFlag.LSF_3RDDLL)!=0)
+			if((flag & LuaSvrFlag.LSF_3RDDLL)!=0)
 				Lua3rdDLL.open(L);
 
 			#if !SLUA_STANDALONE
@@ -211,7 +212,7 @@ namespace SLua
 			}
 		}
 
-		public void init(Action<int> tick,Action complete,LuaSvrFlag flag=LuaSvrFlag.LSF_BASIC)
+		public void init(Action<int> tick,Action complete,LuaSvrFlag flag=LuaSvrFlag.LSF_BASIC|LuaSvrFlag.LSF_EXTLIB)
 		{
 			#if !SLUA_STANDALONE
 			if (lgo == null
