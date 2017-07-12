@@ -146,10 +146,14 @@ function main()
 	ba:WriteByte(11)
 	ba:WriteByte(22)
 	ba:WriteVarInt(1024)
+	ba:WriteShort(5656)
+	ba:WriteNum(3.1415)
 	ba.Position=0
 	assert(ba:ReadByte()==11)
 	assert(ba:ReadByte()==22)
 	assert(ba:ReadVarInt()==1024)
+	assert(ba:ReadShort()==5656)
+	assert(ba:ReadDouble()==3.1415)
 
 
 	-- get out parameter
