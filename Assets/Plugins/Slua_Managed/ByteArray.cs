@@ -219,16 +219,16 @@ namespace SLua
 		
 		public void Write (int v)
 		{
-			ReAlloc (ref data_, pos_, 4);
+			ReAlloc (ref data_, pos_, sizeof(int));
 			BitConverter.GetBytes (v).CopyTo (data_, pos_);
-			pos_ += 4;
+			pos_ += sizeof(int);
 		}
 		
 		public void Write (uint v)
 		{
-			ReAlloc (ref data_, pos_, 4);
+			ReAlloc (ref data_, pos_, sizeof(uint));
 			BitConverter.GetBytes (v).CopyTo (data_, pos_);
-			pos_ += 4;
+			pos_ += sizeof(uint);
 		}
 
 		public void WriteUInt (uint v)
@@ -312,9 +312,9 @@ namespace SLua
 
 		public void Write (float v)
 		{
-			ReAlloc (ref data_, pos_, 4);
+			ReAlloc (ref data_, pos_, sizeof(float));
 			BitConverter.GetBytes (v).CopyTo (data_, pos_);
-			pos_ += 4;
+			pos_ += sizeof(float);
 		}
 
 		public void WriteFloat (float v)
@@ -324,9 +324,9 @@ namespace SLua
 
 		public void Write (double v)
 		{
-			ReAlloc (ref data_, pos_, 8);
+			ReAlloc (ref data_, pos_, sizeof(double));
 			BitConverter.GetBytes (v).CopyTo (data_, pos_);
-			pos_ += 8;
+			pos_ += sizeof(double);
 		}
 
 		public void WriteNum (double v)
@@ -352,6 +352,7 @@ namespace SLua
 		public void WriteUInt (uint v, int pos)
 		{
 			BitConverter.GetBytes (v).CopyTo (data_, pos);
+			pos_ += sizeof(uint);
 		}
 
 		public void Write (Int64 v)
