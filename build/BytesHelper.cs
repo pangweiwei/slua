@@ -42,7 +42,7 @@ namespace SLua
 
 		static public unsafe void MoveToBytes(byte[] bytes,int p,short v) {
 			fixed(byte* b = bytes) {
-				*((double*)(b + p)) = v;
+				*((short*)(b + p)) = v;
 			}
 		}
 

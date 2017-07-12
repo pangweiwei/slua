@@ -363,28 +363,12 @@ namespace SLua {
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int WriteUInt(IntPtr l) {
 			try {
-				int argc = LuaDLL.lua_gettop(l);
-				if(argc==2){
-					SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
-					System.UInt32 a1;
-					checkType(l,2,out a1);
-					self.WriteUInt(a1);
-					pushValue(l,true);
-					return 1;
-				}
-				else if(argc==3){
-					SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
-					System.UInt32 a1;
-					checkType(l,2,out a1);
-					System.Int32 a2;
-					checkType(l,3,out a2);
-					self.WriteUInt(a1,a2);
-					pushValue(l,true);
-					return 1;
-				}
-				pushValue(l,false);
-				LuaDLL.lua_pushstring(l,"No matched override function WriteUInt to call");
-				return 2;
+				SLua.ByteArray self=(SLua.ByteArray)checkSelf(l);
+				System.UInt32 a1;
+				checkType(l,2,out a1);
+				self.WriteUInt(a1);
+				pushValue(l,true);
+				return 1;
 			}
 			catch(Exception e) {
 				return error(l,e);

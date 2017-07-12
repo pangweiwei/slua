@@ -189,58 +189,62 @@ namespace SLua
 
 		public void WriteByteArray (ByteArray v)
 		{
-			Write (v);
+			if (v != null) {
+				ReAlloc (ref data_, pos_, v.Position);
+				byte[] arr = v.GetData ();
+				Array.Copy(arr, 0, data_, pos_, v.Position);
+				pos_ += v.Position;
+			}
 		}
 
 		public void WriteBool (bool v)
 		{
-			Write (v);
+			WriteByte (v?(byte)1:(byte)0);
 		}
 
 		public void WriteInt (int v)
 		{
-			Write (v);
+			ReAlloc (ref data_, pos_, sizeof(int));
+			BytesHelper.MoveToBytes (data_, pos_, v);
+			pos_ += 4;
 		}
 		
 		public void Write (ByteArray v)
 		{
-			if (v != null) {
-				ReAlloc (ref data_, pos_, v.Position);
-				byte[] arr = v.GetData ();
-                Array.Copy(arr, 0, data_, pos_, v.Position);
-                pos_ += v.Position;
-            }
+			WriteByteArray (v);
 		}
 		
 		public void Write (bool v)
 		{
-			Write (Convert.ToByte (v));
+			WriteBool (v);
 		}
-		
+
 		public void Write (int v)
 		{
-			ReAlloc (ref data_, pos_, sizeof(int));
-			BitConverter.GetBytes (v).CopyTo (data_, pos_);
-			pos_ += sizeof(int);
+			WriteInt (v);
 		}
 		
 		public void Write (uint v)
 		{
-			ReAlloc (ref data_, pos_, sizeof(uint));
-			BitConverter.GetBytes (v).CopyTo (data_, pos_);
-			pos_ += sizeof(uint);
+			WriteUInt (v);
 		}
 
 		public void WriteUInt (uint v)
 		{
-			Write (v);
+			ReAlloc (ref data_, pos_, sizeof(uint));
+			BytesHelper.MoveToBytes (data_, pos_, v);
+			pos_ += 4;
+		}
+
+		public void WriteByte(byte v) {
+			ReAlloc (ref data_, pos_, 1);
+			data_ [pos_] = v;
+			pos_++;
 		}
 		
-		public void Write (char v)
+		public void Write (byte v)
 		{
-			ReAlloc (ref data_, pos_, 1);
-			data_ [pos_] = (byte)v;
-			pos_++;
+			WriteByte (v);
 		}
 		
 		public void WriteChar (sbyte v)
@@ -256,18 +260,6 @@ namespace SLua
 			}
 		}
 		
-		public void Write (byte v)
-		{
-			ReAlloc (ref data_, pos_, 1);
-			data_ [pos_] = v;
-			pos_++;
-		}
-		
-		public void WriteByte (byte v)
-		{
-			Write (v);
-		}
-		
 		public void WriteUChar (byte v)
 		{
 			Write (v);
@@ -275,66 +267,71 @@ namespace SLua
 		
 		public void Write (sbyte v)
 		{
-			ReAlloc (ref data_, pos_, 1);
-			BitConverter.GetBytes (v).CopyTo (data_, pos_);
-			pos_++;
-		}
+			WriteSByte (v);
+		}	
 		
 		public void WriteSByte (sbyte v)
 		{
-			Write (v);
+			ReAlloc (ref data_, pos_, 1);
+			BytesHelper.MoveToBytes (data_, pos_, v);
+			pos_++;
 		}
 		
 		public void Write (short v)
 		{
-			ReAlloc (ref data_, pos_, 2);
-			data_ [pos_] = (byte)(v & 0xff);
-			pos_++;
-			data_ [pos_] = (byte)(v >> 8);
-			pos_++;
+			WriteShort (v);
 		}
 
 		
 		public void Write (ushort v)
 		{
-			Write ((short)v);
+			WriteUShort (v);
 		}
 
 		public void WriteUShort (ushort v)
 		{
-			Write (v);
+			ReAlloc (ref data_, pos_, 2);
+			BytesHelper.MoveToBytes (data_, pos_, v);
+			pos_+=2;
 		}
 
 		public void WriteShort (short v)
 		{
-			Write (v);
+			ReAlloc (ref data_, pos_, 2);
+			BytesHelper.MoveToBytes (data_, pos_, v);
+			pos_+=2;
 		}
 
 		public void Write (float v)
 		{
-			ReAlloc (ref data_, pos_, sizeof(float));
-			BitConverter.GetBytes (v).CopyTo (data_, pos_);
-			pos_ += sizeof(float);
+			WriteFloat (v);
 		}
 
 		public void WriteFloat (float v)
 		{
-			Write (v);
+			ReAlloc (ref data_, pos_, 4);
+			BytesHelper.MoveToBytes (data_, pos_, v);
+			pos_ += 4;
 		}
 
 		public void Write (double v)
 		{
-			ReAlloc (ref data_, pos_, sizeof(double));
-			BitConverter.GetBytes (v).CopyTo (data_, pos_);
-			pos_ += sizeof(double);
+			WriteNum (v);
 		}
 
 		public void WriteNum (double v)
 		{
-			Write (v);
+			ReAlloc (ref data_, pos_, 8);
+			BytesHelper.MoveToBytes (data_, pos_, v);
+			pos_ += 8;
 		}
 
 		public void Write (string v)
+		{
+			WriteString (v);
+		}
+
+		public void WriteString (string v)
 		{
 			byte[] bytes = System.Text.Encoding.UTF8.GetBytes (v);
 			int len = bytes.Length;
@@ -344,26 +341,15 @@ namespace SLua
 			pos_ += len;
 		}
 
-		public void WriteString (string v)
-		{
-			Write (v);
-		}
-
-		public void WriteUInt (uint v, int pos)
-		{
-			BitConverter.GetBytes (v).CopyTo (data_, pos);
-			pos_ += sizeof(uint);
-		}
-
 		public void Write (Int64 v)
 		{
-			BitConverter.GetBytes (v).CopyTo (data_, pos_);
-            pos_ += sizeof(Int64);
+			WriteInt64 (v);
 		}
 
 		public void WriteInt64 (Int64 v)
 		{
-			Write (v);
+			BytesHelper.MoveToBytes (data_, pos_, v);
+			pos_ += sizeof(Int64);
 		}
 
 		public Int64 ReadVarInt ()
