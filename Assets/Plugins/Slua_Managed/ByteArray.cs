@@ -204,7 +204,7 @@ namespace SLua
 
 		public void WriteInt (int v)
 		{
-			ReAlloc (ref data_, pos_, sizeof(int));
+			ReAlloc (ref data_, pos_, 4);
 			BytesHelper.MoveToBytes (data_, pos_, v);
 			pos_ += 4;
 		}
@@ -231,7 +231,7 @@ namespace SLua
 
 		public void WriteUInt (uint v)
 		{
-			ReAlloc (ref data_, pos_, sizeof(uint));
+			ReAlloc (ref data_, pos_, 4);
 			BytesHelper.MoveToBytes (data_, pos_, v);
 			pos_ += 4;
 		}
@@ -349,7 +349,7 @@ namespace SLua
 		public void WriteInt64 (Int64 v)
 		{
 			BytesHelper.MoveToBytes (data_, pos_, v);
-			pos_ += sizeof(Int64);
+			pos_ += 8;
 		}
 
 		public Int64 ReadVarInt ()
