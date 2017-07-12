@@ -174,7 +174,7 @@ public class HelloWorld   {
 
 ### Benchmark
 
-see http://www.sineysoft.com/post/164 for detail (in chinese), compared with ulua/raw mono.
+compared with ulua/raw mono.
 
 **with luajit**
 
