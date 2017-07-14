@@ -39,7 +39,7 @@ namespace SLua
 	public enum LuaSvrFlag {
 		LSF_BASIC = 0,
 		LSF_EXTLIB = 1,
-		LSF_3RDDLL = 2
+		LSF_3RDDLL = 2,
 	};
 
 	public class LuaSvr 

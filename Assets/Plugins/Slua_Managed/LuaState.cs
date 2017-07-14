@@ -1099,6 +1099,16 @@ end
 			throw new Exception(err);
 		}
 
+		static TextAsset loadAsset(string fn) {
+			TextAsset asset;
+			#if UNITY_5
+			asset = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset> (fn);
+			#else
+			asset = (TextAsset)UnityEditor.AssetDatabase.LoadAssetAtPath (fn, typeof(TextAsset));
+			#endif
+			return asset;
+		}
+
 		internal static byte[] loadFile (string fn)
 		{
 			try {
@@ -1113,17 +1123,18 @@ end
 
 					#if UNITY_EDITOR
 
+
 					if (SLuaSetting.Instance.jitType == JITBUILDTYPE.none) {
 						asset = (TextAsset)Resources.Load (fn);
 					}
-					// 测试用
 					else if (SLuaSetting.Instance.jitType == JITBUILDTYPE.X86) {
-						asset = (TextAsset)UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset> ("Assets/Slua/jit/jitx86/" + fn + ".bytes");
+						asset = loadAsset("Assets/Slua/jit/jitx86/" + fn + ".bytes");
 					} else if (SLuaSetting.Instance.jitType == JITBUILDTYPE.X64) {
-						asset = (TextAsset)UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset> ("Assets/Slua/jit/jitx64/" + fn + ".bytes");
+						asset = loadAsset("Assets/Slua/jit/jitx64/" + fn + ".bytes");
 					} else if (SLuaSetting.Instance.jitType == JITBUILDTYPE.GC64) {
-						asset = (TextAsset)UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset> ("Assets/Slua/jit/jitgc64/" + fn + ".bytes");
+						asset = loadAsset("Assets/Slua/jit/jitgc64/" + fn + ".bytes");
 					}
+
 					#else
 					asset = (TextAsset)Resources.Load(fn);
 					#endif

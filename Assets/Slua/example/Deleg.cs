@@ -46,9 +46,11 @@ public class Deleg : MonoBehaviour
 		{
 			bool ret = d("/path", 1,2,ref c,out url, out ver);
 			Debug.Log(string.Format("{0},{1},{2}", ret, url, ver));
+#if UNITY_5
 			Debug.Assert (c == 4);
 			Debug.Assert (url == "http://www.sineysoft.com");
 			Debug.Assert (ver == 1);
+#endif
 		}
 		if (s != null)
 			s("GameObject", new GameObject("SimpleDelegate"));

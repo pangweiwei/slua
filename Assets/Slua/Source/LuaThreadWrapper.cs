@@ -34,13 +34,13 @@ namespace SLua
         public LuaThreadWrapper(LuaFunction func)
          : base()
         {
-            Debug.LogFormat("LuaThreadWrapper.ctor/1: {0}", LuaDLL.lua_gettop(func.L));
+            Logger.Log(string.Format("LuaThreadWrapper.ctor/1: {0}", LuaDLL.lua_gettop(func.L)));
             state = LuaState.get(func.L);
             _thread = LuaDLL.lua_newthread(func.L);
             valueref = LuaDLL.luaL_ref(func.L, LuaIndexes.LUA_REGISTRYINDEX);
             func.push(func.L);
             LuaDLL.lua_xmove(func.L, _thread, 1);
-            Debug.LogFormat("LuaThreadWrapper.ctor/2: {0}", LuaDLL.lua_gettop(func.L));
+			Logger.Log(string.Format("LuaThreadWrapper.ctor/2: {0}", LuaDLL.lua_gettop(func.L)));
         }
 
         ~LuaThreadWrapper()

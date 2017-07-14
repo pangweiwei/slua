@@ -57,7 +57,11 @@ namespace SLua
                     string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[j]);
                     if (System.IO.Path.GetFileName(path).Equals(filename))
                     {
+#if UNITY_4_7
+						return UnityEditor.AssetDatabase.LoadAssetAtPath(path,typeof(UnityEngine.Object));
+#else
                         return UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
+#endif				
                     }
                 }
             }
@@ -65,6 +69,20 @@ namespace SLua
             return null;
         }
 #endif
+
+		#if !SLUA_STANDALONE
+		static void Traceback(string msg, bool hasStacktrace = false) 
+		{
+			#if UNITY_5
+			var Type = UnityEngine.Application.GetStackTraceLogType (UnityEngine.LogType.Log);
+			UnityEngine.Application.SetStackTraceLogType (UnityEngine.LogType.Log, UnityEngine.StackTraceLogType.None);
+			UnityEngine.Debug.Log (msg, hasStacktrace ? FindScriptByMsg (msg) : null);
+			UnityEngine.Application.SetStackTraceLogType (UnityEngine.LogType.Log, Type);
+			#else
+			UnityEngine.Debug.Log(msg);
+			#endif
+		}
+		#endif
 
         public static void Log(string msg, bool hasStacktrace = false)
         {
@@ -75,10 +93,7 @@ namespace SLua
             }
 
 #if !SLUA_STANDALONE
-            var Type = UnityEngine.Application.GetStackTraceLogType(UnityEngine.LogType.Log);
-            UnityEngine.Application.SetStackTraceLogType(UnityEngine.LogType.Log, UnityEngine.StackTraceLogType.None);
-            UnityEngine.Debug.Log(msg, hasStacktrace ? FindScriptByMsg(msg) : null);
-            UnityEngine.Application.SetStackTraceLogType(UnityEngine.LogType.Log, Type);
+			Traceback(msg,hasStacktrace);
 #else
             Console.WriteLine(msg);
 #endif 
@@ -92,10 +107,7 @@ namespace SLua
             }
 
 #if !SLUA_STANDALONE
-            var Type = UnityEngine.Application.GetStackTraceLogType(UnityEngine.LogType.Error);
-            UnityEngine.Application.SetStackTraceLogType(UnityEngine.LogType.Error, UnityEngine.StackTraceLogType.None);
-            UnityEngine.Debug.LogError(msg, hasStacktrace ? FindScriptByMsg(msg) : null);
-            UnityEngine.Application.SetStackTraceLogType(UnityEngine.LogType.Error, Type);
+			Traceback(msg,hasStacktrace);
 #else
             Console.WriteLine(msg);
 #endif
