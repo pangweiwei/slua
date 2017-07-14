@@ -51,10 +51,22 @@ namespace SLua
 		int errorReported = 0;
 		public bool inited = false;
 
+		internal static LuaSvr Instance;
+
 		public LuaSvr()
 		{
+			if (Instance != null)
+				throw new Exception ("LuaSvr had created");
+			
 			LuaState luaState = new LuaState();
 			this.luaState = luaState;
+			Instance = this;
+		}
+
+		static internal LuaSvrGameObject gameObject {
+			get {
+				return lgo;
+			}
 		}
 
 		List<Action<IntPtr>> collectBindInfo() {
@@ -116,7 +128,7 @@ namespace SLua
 		}
 
 
-		protected void doBind(IntPtr L)
+		internal void doBind(IntPtr L)
 		{
 			var list = collectBindInfo ();
 
@@ -130,7 +142,7 @@ namespace SLua
 
 
 
-		private IEnumerator doBind(IntPtr L,Action<int> _tick,Action complete)
+		internal IEnumerator doBind(IntPtr L,Action<int> _tick,Action complete)
 		{
 			Action<int> tick = (int p) => {
 				if (_tick != null)
@@ -166,25 +178,16 @@ namespace SLua
 			return new Action<IntPtr>[0];
 		}
 
-        protected void doinit(IntPtr L,LuaSvrFlag flag)
+        protected void doinit(LuaState L,LuaSvrFlag flag)
 		{
-			#if !SLUA_STANDALONE
-			LuaTimer.reg(L);
-			#if UNITY_EDITOR
-			if (UnityEditor.EditorApplication.isPlaying)
-			#endif
-				LuaCoroutine.reg(L, lgo);
-			#endif
-			Lua_SLua_ByteArray.reg (L);
-			Helper.reg(L);
-			LuaValueType.reg(L);
+			L.openSluaLib ();
+			LuaValueType.reg(L.L);
 			if ((flag & LuaSvrFlag.LSF_EXTLIB)!=0) {
-				LuaDLL.luaS_openextlibs (L);
-				LuaSocketMini.reg (L);
+				L.openExtLib ();
 			}
 
 			if((flag & LuaSvrFlag.LSF_3RDDLL)!=0)
-				Lua3rdDLL.open(L);
+				Lua3rdDLL.open(L.L);
 
 			#if !SLUA_STANDALONE
 			#if UNITY_EDITOR
@@ -242,7 +245,7 @@ namespace SLua
 			if (!UnityEditor.EditorApplication.isPlaying)
 			{
 				doBind(L);
-				doinit(L, flag);
+				doinit(luaState, flag);
 				complete();
 				checkTop(L);
 			}
@@ -251,7 +254,7 @@ namespace SLua
 			#endif
 				lgo.StartCoroutine(doBind(L,tick, () =>
 					{
-						doinit(L, flag);
+						doinit(luaState, flag);
 						complete();
 						checkTop(L);
 					}));

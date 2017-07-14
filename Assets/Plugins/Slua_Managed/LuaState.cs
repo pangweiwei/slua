@@ -578,13 +578,40 @@ namespace SLua
 			return null;
 		}
 
+		public void openSluaLib() {
+			#if !SLUA_STANDALONE
+			LuaTimer.reg(L);
+			LuaCoroutine.reg(L, LuaSvr.gameObject);
+			#endif
+			Lua_SLua_ByteArray.reg (L);
+			Helper.reg(L);
+		}
+
+		public void openExtLib() {
+			LuaDLL.luaS_openextlibs (L);
+			LuaSocketMini.reg (L);
+		}
+
+		public void bindUnity() {
+			LuaSvr.Instance.doBind (L);
+			LuaValueType.reg (L);
+		}
+
+		public IEnumerator bindUnity(Action<int> _tick,Action complete) {
+			yield return LuaSvr.Instance.doBind(L,_tick,complete);
+			LuaValueType.reg (L);
+		}
+
 		public LuaState()
 		{
-			mainThread = System.Threading.Thread.CurrentThread.ManagedThreadId;
+			if(mainThread==0)
+				mainThread = System.Threading.Thread.CurrentThread.ManagedThreadId;
 
 			L = LuaDLL.luaL_newstate();
 			statemap[L] = this;
-			if (main == null) main = this;
+
+			if (main == null) 
+				main = this;
 
 			refQueue = new Queue<UnrefPair>();
 			ObjectCache.make(L);
@@ -1099,6 +1126,7 @@ end
 			throw new Exception(err);
 		}
 
+		#if UNITY_EDITOR
 		static TextAsset loadAsset(string fn) {
 			TextAsset asset;
 			#if UNITY_5
@@ -1108,6 +1136,7 @@ end
 			#endif
 			return asset;
 		}
+		#endif
 
 		internal static byte[] loadFile (string fn)
 		{
