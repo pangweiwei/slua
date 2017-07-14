@@ -57,10 +57,10 @@ namespace SLua
                     string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[j]);
                     if (System.IO.Path.GetFileName(path).Equals(filename))
                     {
-#if UNITY_4_7
-						return UnityEditor.AssetDatabase.LoadAssetAtPath(path,typeof(UnityEngine.Object));
+#if UNITY_5
+						return UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);				
 #else
-                        return UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
+						return UnityEditor.AssetDatabase.LoadAssetAtPath(path,typeof(UnityEngine.Object));
 #endif				
                     }
                 }
