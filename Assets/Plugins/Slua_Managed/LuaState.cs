@@ -551,6 +551,8 @@ namespace SLua
 			return System.Threading.Thread.CurrentThread.ManagedThreadId == mainThread;
 		}
 
+		internal LuaSvrGameObject lgo;
+
 		static public LuaState get(IntPtr l)
 		{
 			if (l == oldptr)
@@ -578,10 +580,12 @@ namespace SLua
 			return null;
 		}
 
+
+
 		public void openSluaLib() {
 			#if !SLUA_STANDALONE
 			LuaTimer.reg(L);
-			LuaCoroutine.reg(L, LuaSvr.gameObject);
+			LuaCoroutine.reg(L, lgo);
 			#endif
 			Lua_SLua_ByteArray.reg (L);
 			Helper.reg(L);
@@ -593,12 +597,12 @@ namespace SLua
 		}
 
 		public void bindUnity() {
-			LuaSvr.Instance.doBind (L);
+			LuaSvr.doBind (L);
 			LuaValueType.reg (L);
 		}
 
 		public IEnumerator bindUnity(Action<int> _tick,Action complete) {
-			yield return LuaSvr.Instance.doBind(L,_tick,complete);
+			yield return LuaSvr.doBind(L,_tick,complete);
 			LuaValueType.reg (L);
 		}
 
@@ -639,6 +643,29 @@ end
             setupPushVar();
 
             pcall(L, init);
+
+			createGameObject ();
+		}
+
+		void createGameObject() {
+			#if !SLUA_STANDALONE
+			if (lgo == null
+			#if UNITY_EDITOR
+				&& UnityEditor.EditorApplication.isPlaying
+			#endif
+			)
+			{
+				GameObject go = new GameObject("LuaSvrProxy");
+				lgo = go.AddComponent<LuaSvrGameObject>();
+				GameObject.DontDestroyOnLoad(go);
+				lgo.onUpdate = this.tick;
+				lgo.state = this;
+			}
+			#endif
+		}
+
+		virtual protected void tick() {
+			checkRef ();
 		}
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

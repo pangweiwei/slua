@@ -123,6 +123,9 @@ namespace SLua
 		
 		internal static void tick(float deltaTime)
 		{
+			if (executeTimers == null)
+				return;
+			
 			nowTime += deltaTime;
 			pileSecs += deltaTime;
 			int cycle = 0;
