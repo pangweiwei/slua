@@ -82,7 +82,23 @@ namespace SLua
 			UnityEngine.Debug.Log(msg);
 			#endif
 		}
+
+		static void TracebackErr(string msg, bool hasStacktrace = false) 
+		{
+			#if UNITY_5
+			var Type = UnityEngine.Application.GetStackTraceLogType (UnityEngine.LogType.Error);
+			UnityEngine.Application.SetStackTraceLogType (UnityEngine.LogType.Error, UnityEngine.StackTraceLogType.None);
+			UnityEngine.Debug.LogError (msg, hasStacktrace ? FindScriptByMsg (msg) : null);
+			UnityEngine.Application.SetStackTraceLogType (UnityEngine.LogType.Error, Type);
+			#else
+			UnityEngine.Debug.LogError(msg);
+			#endif
+		}
+
+
 		#endif
+
+
 
         public static void Log(string msg, bool hasStacktrace = false)
         {
@@ -107,7 +123,7 @@ namespace SLua
             }
 
 #if !SLUA_STANDALONE
-			Traceback(msg,hasStacktrace);
+			TracebackErr(msg,hasStacktrace);
 #else
             Console.WriteLine(msg);
 #endif
