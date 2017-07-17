@@ -539,7 +539,6 @@ namespace SLua
 		public int PCallCSFunctionRef = 0;
         Dictionary<Type, PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
 
-        public static LuaState main;
 		static Dictionary<IntPtr, LuaState> statemap = new Dictionary<IntPtr, LuaState>();
 		static IntPtr oldptr = IntPtr.Zero;
 		static LuaState oldstate = null;
@@ -551,7 +550,9 @@ namespace SLua
 			return System.Threading.Thread.CurrentThread.ManagedThreadId == mainThread;
 		}
 
+		#if !SLUA_STANDALONE
 		internal LuaSvrGameObject lgo;
+		#endif
 
 		static public LuaState get(IntPtr l)
 		{
@@ -606,6 +607,12 @@ namespace SLua
 			LuaValueType.reg (L);
 		}
 
+		static public LuaState main {
+			get {
+				return LuaSvr.mainState;
+			}
+		}
+
 		public LuaState()
 		{
 			if(mainThread==0)
@@ -614,8 +621,7 @@ namespace SLua
 			L = LuaDLL.luaL_newstate();
 			statemap[L] = this;
 
-			if (main == null) 
-				main = this;
+
 
 			refQueue = new Queue<UnrefPair>();
 			ObjectCache.make(L);
@@ -660,6 +666,21 @@ end
 				GameObject.DontDestroyOnLoad(go);
 				lgo.onUpdate = this.tick;
 				lgo.state = this;
+			}
+			#endif
+		}
+
+		void destroyGameObject() {
+			#if !SLUA_STANDALONE
+			#if UNITY_EDITOR
+			if(UnityEditor.EditorApplication.isPlaying)
+			#endif
+			{
+				if(lgo!=null) {
+					GameObject go = lgo.gameObject;
+					GameObject.Destroy(lgo);
+					GameObject.Destroy(go);
+				}
 			}
 			#endif
 		}
@@ -787,27 +808,25 @@ end
             return 0;
 		}
 
-		public void Close()
+		void Close()
 		{
+			destroyGameObject ();
+
 			if (L != IntPtr.Zero)
 			{
-				if (LuaState.main == this)
-				{
-					Logger.Log("Finalizing Lua State.");
-					// be careful, if you close lua vm, make sure you don't use lua state again,
-					// comment this line as default for avoid unexpected crash.
-					LuaDLL.lua_close(L);
+				Logger.Log("Finalizing Lua State.");
+				// be careful, if you close lua vm, make sure you don't use lua state again,
+				// comment this line as default for avoid unexpected crash.
+				LuaDLL.lua_close(L);
 
-					ObjectCache.del(L);
-					ObjectCache.clear();
+				ObjectCache.del(L);
+				ObjectCache.clear();
 
-					statemap.Clear();
-					oldptr = IntPtr.Zero;
-					oldstate = null;
-					L = IntPtr.Zero;
+				statemap.Remove (L);
 
-					LuaState.main = null;
-				}
+				oldptr = IntPtr.Zero;
+				oldstate = null;
+				L = IntPtr.Zero;
 			}
 		}
 
