@@ -2448,7 +2448,7 @@ namespace SLua
 
 		bool IsValueType(Type t)
 		{
-			return t.BaseType == typeof(ValueType) && !IsBaseType(t);
+            return t.IsValueType || (t.BaseType == typeof(ValueType) && !IsBaseType(t));
 		}
 
 		bool IsBaseType(Type t)

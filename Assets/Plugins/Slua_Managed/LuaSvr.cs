@@ -112,9 +112,7 @@ namespace SLua
 			}));
 
 			for (int n = 0; n < bindlist.Count; n++)
-			{#if !SLUA_STANDALONE
-				LuaTimer.tick(Time.deltaTime);
-			#endif
+			{
 				Type t = bindlist[n];
 				var sublist = (Action<IntPtr>[])t.GetMethod("GetBindList").Invoke(null, null);
 				list.AddRange(sublist);
