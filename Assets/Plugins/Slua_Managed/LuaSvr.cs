@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+﻿﻿// The MIT License (MIT)
 
 // Copyright 2015 Siney/Pangweiwei siney@yeah.net
 // 
@@ -150,6 +150,7 @@ namespace SLua
 				action(L);
 				bindProgress = (int)(((float)n / list.Count) * 98.0) + 2;
 				if (_tick!=null && lastProgress != bindProgress && bindProgress % 5 == 0) {
+                    lastProgress = bindProgress;
 					tick (bindProgress);
 					yield return null;
 				}
