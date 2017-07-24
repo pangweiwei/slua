@@ -1089,7 +1089,11 @@ return index
 				for (int k = 0; k < n; k++)
 				{
 					LuaDLL.lua_rawgeti(l, p, k + 1);
-					ta[k]=(T)Convert.ChangeType(checkVar(l, -1),typeof(T));
+                    object obj = checkVar(l, -1);
+                    if (obj is IConvertible)
+                        ta[k] = (T)Convert.ChangeType(obj, typeof(T));
+                    else
+                        ta[k] = (T)obj;
 					LuaDLL.lua_pop(l, 1);
 				}
 				return true;
