@@ -539,7 +539,7 @@ namespace SLua
 		public int PCallCSFunctionRef = 0;
         Dictionary<Type, PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
 
-		static Dictionary<IntPtr, LuaState> statemap = new Dictionary<IntPtr, LuaState>();
+		public static Dictionary<IntPtr, LuaState> statemap = new Dictionary<IntPtr, LuaState>();
 		static IntPtr oldptr = IntPtr.Zero;
 		static LuaState oldstate = null;
 		static public LuaCSFunction errorFunc = new LuaCSFunction(errorReport);

@@ -262,22 +262,15 @@ end
             Repaint();
         }
 
-        void OnEnable()
-        {
-            LuaState.main.logDelegate += AddLog;
-            LuaState.main.errorDelegate += AddError;
-        }
-
-        void OnDisable()
-        {
-            LuaState.main.logDelegate -= AddLog;
-            LuaState.main.errorDelegate -= AddError;
-        }
+        LuaState current = null;
 
         void OnDestroy()
         {
-            LuaState.main.logDelegate -= AddLog;
-			LuaState.main.errorDelegate -= AddError;
+            foreach (var L in LuaState.statemap.Values)
+            {
+                L.logDelegate -= AddLog;
+                L.errorDelegate -= AddError;
+            }
         }
 
         void OnGUI()
@@ -289,6 +282,36 @@ end
                 textAreaStyle.normal.textColor = entryInfoTyle.normal.textColor;
                 initedStyle = true;
             }
+
+
+            string[] statehints = new string[LuaState.statemap.Count];
+            LuaState[] states = new LuaState[LuaState.statemap.Count];
+            int n = 0;
+            foreach(var k in LuaState.statemap.Values) {
+                states[n] = k;
+                statehints[n++] = string.Format("LuaState #{0}", n);
+            }
+
+            n = EditorGUILayout.Popup(0,statehints);
+
+            LuaState l = null;
+			if (states.Length > 0)
+				l = states[n];
+
+            if (current != null && current != l)
+            {
+                current.logDelegate -= AddLog;
+                current.errorDelegate -= AddError;
+            }
+
+            if(current!=l && l!=null) {
+				l.logDelegate += AddLog;
+				l.errorDelegate += AddError;
+				current = l;
+            }
+
+
+
 
             //Output Text Area
 			scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(Screen.width), GUILayout.ExpandHeight(true));
