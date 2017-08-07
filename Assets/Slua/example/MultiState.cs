@@ -17,6 +17,7 @@ public class MultiState : MonoBehaviour {
 		// create 10 lua state
 		for (int n = 0; n < 10; n++) {
 			ls[n] = new LuaState ();
+            ls[n].Name = (string.Format("LuaState {0}", n));
 			ls[n].doString (string.Format ("print('this is #{0} lua state')", n));
 		}
 	}

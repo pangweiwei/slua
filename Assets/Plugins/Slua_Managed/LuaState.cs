@@ -545,6 +545,7 @@ namespace SLua
 		static public LuaCSFunction errorFunc = new LuaCSFunction(errorReport);
         int errorRef = 0;
 
+
         public bool isMainThread()
 		{
 			return System.Threading.Thread.CurrentThread.ManagedThreadId == mainThread;
@@ -613,6 +614,11 @@ namespace SLua
 			}
 		}
 
+        public string Name {
+            get;
+            set;
+        }
+            
 		public LuaState()
 		{
 			if(mainThread==0)

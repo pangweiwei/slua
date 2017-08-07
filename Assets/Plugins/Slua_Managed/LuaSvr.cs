@@ -71,6 +71,7 @@ namespace SLua
 		public LuaSvr()
 		{
 			mainState = new MainState();
+            mainState.Name = "main";
 		}
 
 		static List<Action<IntPtr>> collectBindInfo() {

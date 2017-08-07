@@ -262,7 +262,7 @@ end
             Repaint();
         }
 
-        LuaState current = null;
+        static LuaState current = null;
 
         void OnDestroy()
         {
@@ -271,8 +271,10 @@ end
                 L.logDelegate -= AddLog;
                 L.errorDelegate -= AddError;
             }
+            current = null;
         }
 
+        int stateIndex = -1;
         void OnGUI()
         {
             if (!initedStyle)
@@ -289,14 +291,14 @@ end
             int n = 0;
             foreach(var k in LuaState.statemap.Values) {
                 states[n] = k;
-                statehints[n++] = string.Format("LuaState #{0}", n);
+                statehints[n++] = k.Name;
             }
 
-            n = EditorGUILayout.Popup(0,statehints);
+            stateIndex = EditorGUILayout.Popup(stateIndex,statehints);
 
             LuaState l = null;
-			if (states.Length > 0)
-				l = states[n];
+			if (stateIndex >= 0)
+				l = states[stateIndex];
 
             if (current != null && current != l)
             {
@@ -445,7 +447,7 @@ end
 
         void DoCommand(string str)
         {
-            LuaState luaState = LuaState.main;
+            LuaState luaState = current;
             if (luaState == null)
                 return;
 
@@ -492,7 +494,7 @@ end
 			if (com == null)
                 return;
 
-            LuaState luaState = LuaState.main;
+            LuaState luaState = current;
             if (luaState == null)
                 return;
 
@@ -507,7 +509,7 @@ end
             if (com == null)
                 return;
 
-            LuaState luaState = LuaState.main;
+            LuaState luaState = current;
             if (luaState == null)
                 return;
 
