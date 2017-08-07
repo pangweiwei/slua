@@ -1,4 +1,4 @@
-// The MIT License (MIT)
+﻿// The MIT License (MIT)
 
 // Copyright 2015 Siney/Pangweiwei siney@yeah.net
 //
@@ -973,16 +973,14 @@ return index
                 for (int k = 0; k < n; k++)
                 {
                     LuaDLL.lua_rawgeti(l, p, k + 1);
-                    object o = checkVar(l, -1);
-                    Type fromT = o.GetType();
-                    Type toT = typeof(T);
-                    if (toT.IsAssignableFrom(fromT))
+                    object obj = checkVar(l, -1);
+                    if (obj is IConvertible)
                     {
-                        ta[k] = (T)o;
+                        ta[k] = (T)Convert.ChangeType(obj, typeof(T));
                     }
                     else
                     {
-                        ta[k] = (T)Convert.ChangeType(o, typeof(T));
+                        ta[k] = (T)obj;
                     }
                     LuaDLL.lua_pop(l, 1);
                 }

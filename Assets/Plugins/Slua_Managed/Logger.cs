@@ -85,13 +85,13 @@ namespace SLua
 
 		static void TracebackErr(string msg, bool hasStacktrace = false) 
 		{
-			#if UNITY_5
+#if UNITY_5
 			var Type = UnityEngine.Application.GetStackTraceLogType (UnityEngine.LogType.Error);
 			UnityEngine.Application.SetStackTraceLogType (UnityEngine.LogType.Error, UnityEngine.StackTraceLogType.None);
 			UnityEngine.Debug.LogError (msg, hasStacktrace ? FindScriptByMsg (msg) : null);
 			UnityEngine.Application.SetStackTraceLogType (UnityEngine.LogType.Error, Type);
-			#else
-			UnityEngine.Debug.LogError(msg);
+#else
+            UnityEngine.Debug.LogError(msg);
 			#endif
 		}
 

@@ -264,20 +264,20 @@ end
 
         void OnEnable()
         {
-            LuaState.logDelegate += AddLog;
-            LuaState.errorDelegate += AddError;
+            LuaState.main.logDelegate += AddLog;
+            LuaState.main.errorDelegate += AddError;
         }
 
         void OnDisable()
         {
-            LuaState.logDelegate -= AddLog;
-            LuaState.errorDelegate -= AddError;
+            LuaState.main.logDelegate -= AddLog;
+            LuaState.main.errorDelegate -= AddError;
         }
 
         void OnDestroy()
         {
-            LuaState.logDelegate -= AddLog;
-			LuaState.errorDelegate -= AddError;
+            LuaState.main.logDelegate -= AddLog;
+			LuaState.main.errorDelegate -= AddError;
         }
 
         void OnGUI()

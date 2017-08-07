@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+﻿﻿// The MIT License (MIT)
 
 // Copyright 2015 Siney/Pangweiwei siney@yeah.net
 // 
@@ -524,9 +524,9 @@ namespace SLua
 		public delegate void OutputDelegate(string msg);
         public delegate void PushVarDelegate(IntPtr l, object o);
 
-        static public LoaderDelegate loaderDelegate;
-		static public OutputDelegate logDelegate;
-		static public OutputDelegate errorDelegate;
+        public LoaderDelegate loaderDelegate;
+		public OutputDelegate logDelegate;
+		public OutputDelegate errorDelegate;
 
 
 		public delegate void UnRefAction(IntPtr l, int r);
@@ -858,9 +858,10 @@ end
 			LuaDLL.lua_pop(L, 1);
 
             Logger.LogError(error, true);
-            if (errorDelegate != null)
+            LuaState state = LuaState.get(L);
+            if (state.errorDelegate != null)
             {
-                errorDelegate(error);
+                state.errorDelegate(error);
             }
 
             LuaDLL.lua_getglobal(L, "dumpstack");
@@ -966,18 +967,20 @@ end
 				LuaDLL.lua_pop(L, 1);
 			}
 			LuaDLL.lua_settop(L, n);
-            
+
             LuaDLL.lua_getglobal(L, "debug");
             LuaDLL.lua_getfield(L, -1, "traceback");
             LuaDLL.lua_call(L, 0, 1);
             s.Append("\n");
             s.Append(LuaDLL.lua_tostring(L, -1));
-            LuaDLL.lua_pop(L, 1);
+
+            LuaDLL.lua_pop(L, 2);
             Logger.Log(s.ToString(), true);
 
-            if (logDelegate != null)
+            LuaState state = LuaState.get(L);
+            if (state.logDelegate != null)
             {
-                logDelegate(s.ToString());
+                state.logDelegate(s.ToString());
             }
 
 			return 0;
@@ -1016,9 +1019,10 @@ end
             LuaDLL.lua_pop(L, 1);
             Logger.LogError(s.ToString(), true);
 
-            if (errorDelegate != null)
+            LuaState state = LuaState.get(L);
+            if (state.errorDelegate != null)
             {
-                errorDelegate(s.ToString());
+                state.errorDelegate(s.ToString());
             }
 
             return 0;
@@ -1098,8 +1102,9 @@ end
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		internal static int loader(IntPtr L)
 		{
+            LuaState state = LuaState.get(L);
 			string fileName = LuaDLL.lua_tostring(L, 1);
-			byte[] bytes = loadFile(fileName);
+			byte[] bytes = state.loadFile(fileName);
 			if (bytes != null)
 			{
 				if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, "@" + fileName) == 0)
@@ -1184,7 +1189,7 @@ end
 		}
 		#endif
 
-		internal static byte[] loadFile (string fn)
+		internal byte[] loadFile (string fn)
 		{
 			try {
 				byte[] bytes;

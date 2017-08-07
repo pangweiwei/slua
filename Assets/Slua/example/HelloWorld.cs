@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using SLua;
@@ -333,8 +333,6 @@ public class HelloWorld
 		}
 	}
 
-	internal int b;
-
     public void func8(List<int> result)
     {
         result.Add(1);
@@ -355,6 +353,10 @@ public class HelloWorld
     public static void transformArray(Transform[] arr)
     {
         Debug.Log("transformArray success.");
+    }
+
+    public static void setObjs(object[] objs) {
+        
     }
 }
 

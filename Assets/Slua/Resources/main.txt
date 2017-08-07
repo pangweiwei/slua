@@ -215,7 +215,7 @@ function main()
 		Yield(WaitForSeconds(2))
 		print "coroutine WaitForSeconds 2"
 
-		local www = WWW("http://www.sineysoft.com")
+		local www = WWW("http://www.baidu.com")
 		Yield(www)
 		print(#Slua.ToString(www.bytes))
 
@@ -251,6 +251,8 @@ function main()
 	h:func7(abc)
 	h.cc = Color32(255,0,0,255)
 	print("Hellor world color",h.cc)
+
+    HelloWorld.setObjs({{1,2},{3,4},{5,6}})
 end
 
 function abc()
