@@ -297,7 +297,7 @@ end
             stateIndex = EditorGUILayout.Popup(stateIndex,statehints);
 
             LuaState l = null;
-			if (stateIndex >= 0)
+            if (stateIndex >= 0 && states.Length>0)
 				l = states[stateIndex];
 
             if (current != null && current != l)

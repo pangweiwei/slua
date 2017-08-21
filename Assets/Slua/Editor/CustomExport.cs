@@ -171,6 +171,7 @@ namespace SLua
 				"NativeLeakDetection",
 				"NativeLeakDetectionMode",
 				"WWWAudioExtensions",
+                "UnityEngine.Experimental",
             };
         }
     }
