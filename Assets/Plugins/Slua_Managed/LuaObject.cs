@@ -99,70 +99,10 @@ namespace SLua
         static protected LuaCSFunction lua_tostring = new LuaCSFunction(ToString);
 		const string DelgateTable = "__LuaDelegate";
 
-		static protected LuaFunction newindex_func;
-		static protected LuaFunction index_func;
-
 		internal const int VersionNumber = 0x1201;
 
 		public static void init(IntPtr l)
 		{
-			string newindexfun = @"
-
-local getmetatable=getmetatable
-local rawget=rawget
-local error=error
-local type=type
-local function newindex(ud,k,v)
-    local t=getmetatable(ud)
-    repeat
-        local h=rawget(t,k)
-        if h then
-			if h[2] then
-				h[2](ud,v)
-	            return
-			else
-				error('property '..k..' is read only')
-			end
-        end
-        t=rawget(t,'__parent')
-    until t==nil
-    error('can not find '..k)
-end
-
-return newindex
-";
-
-			string indexfun = @"
-local type=type
-local error=error
-local rawget=rawget
-local getmetatable=getmetatable
-local function index(ud,k)
-    local t=getmetatable(ud)
-    repeat
-        local fun=rawget(t,k)
-        local tp=type(fun)
-        if tp=='function' then
-            return fun
-        elseif tp=='table' then
-			local f=fun[1]
-			if f then
-				return f(ud)
-			else
-				error('property '..k..' is write only')
-			end
-        end
-        t = rawget(t,'__parent')
-    until t==nil
-    error('Can not find '..k)
-end
-
-return index
-";
-			LuaState L = LuaState.get(l);
-			newindex_func = (LuaFunction)L.doString(newindexfun);
-			index_func = (LuaFunction)L.doString(indexfun);
-
 			// object method
 			LuaDLL.lua_createtable(l, 0, 4);
 			addMember(l, ToString);
@@ -171,12 +111,7 @@ return index
 			addMember (l, GetType);
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "__luabaseobject");
 
-			LuaArray.init(l);
-			LuaVarObject.init(l);
-
-			LuaDLL.lua_newtable(l);
-			LuaDLL.lua_setglobal(l, DelgateTable);
-		}
+        }
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		static public int ToString(IntPtr l)
@@ -498,14 +433,15 @@ return index
 
 		static void completeTypeMeta(IntPtr l, LuaCSFunction con, Type self)
 		{
+            LuaState L = LuaState.get(l);
 
 			LuaDLL.lua_pushstring(l, ObjectCache.getAQName(self));
 			LuaDLL.lua_setfield(l, -3, "__fullname");
 
-			index_func.push(l);
+			L.index_func.push(l);
 			LuaDLL.lua_setfield(l, -2, "__index");
 
-			newindex_func.push(l);
+			L.newindex_func.push(l);
 			LuaDLL.lua_setfield(l, -2, "__newindex");
 
 			if (con == null) con = noConstructor;
@@ -524,15 +460,17 @@ return index
 
 		private static void completeInstanceMeta(IntPtr l, Type self)
 		{
+            LuaState L = LuaState.get(l);
+
 			LuaDLL.lua_pushstring(l, "__typename");
 			LuaDLL.lua_pushstring(l, self.Name);
 			LuaDLL.lua_rawset(l, -3);
 
 			// for instance
-			index_func.push(l);
+			L.index_func.push(l);
 			LuaDLL.lua_setfield(l, -2, "__index");
 
-			newindex_func.push(l);
+			L.newindex_func.push(l);
 			LuaDLL.lua_setfield(l, -2, "__newindex");
 
 			pushValue(l, lua_add);

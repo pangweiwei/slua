@@ -297,7 +297,7 @@ end
             stateIndex = EditorGUILayout.Popup(stateIndex,statehints);
 
             LuaState l = null;
-            if (stateIndex >= 0 && states.Length>0)
+            if (stateIndex >= 0 && stateIndex <states.Length)
 				l = states[stateIndex];
 
             if (current != null && current != l)
@@ -447,8 +447,7 @@ end
 
         void DoCommand(string str)
         {
-            LuaState luaState = current;
-            if (luaState == null)
+            if (current == null)
                 return;
 
             if (string.IsNullOrEmpty(str))
@@ -466,25 +465,27 @@ end
             {
                 if (tail == "")
                     return;
-                LuaFunction f = luaState.doString(COMMON_DEFINE + "return printExpr", "LuaConsole") as LuaFunction;
-                f.call(tail);
-				f.Dispose ();
+                Do(tail, "return printExpr");
             }
             else if (cmd == "dir")
             {
                 if (tail == "")
                     return;
-                LuaFunction f = luaState.doString(COMMON_DEFINE + "return dirExpr", "LuaConsole") as LuaFunction;
-                f.call(tail);
-				f.Dispose ();
+                Do(tail, "return dirExpr");
             }
             else
             {
-                LuaFunction f = luaState.doString(COMMON_DEFINE + "return compile", "LuaConsole") as LuaFunction;
-                f.call(str);
-				f.Dispose ();
+                Do(str, "return compile");
             }
         }
+
+        void Do(string tail,string type) {
+            LuaState.printTrace = false;
+			LuaFunction f = current.doString(COMMON_DEFINE + type, "LuaConsole") as LuaFunction;
+			f.call(tail);
+			f.Dispose();
+            LuaState.printTrace = true;
+		}
 
 
         [MenuItem("CONTEXT/Component/Push Component To Lua")]

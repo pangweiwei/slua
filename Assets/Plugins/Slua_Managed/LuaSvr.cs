@@ -239,10 +239,7 @@ namespace SLua
 			if (main != null)
 			{
 				mainState.doFile(main);
-				using(LuaFunction func = (LuaFunction)mainState["main"]) {
-					if (func != null) 
-						return func.call ();
-				}
+                return mainState.run("main");
 			}
 			return null;
 		}

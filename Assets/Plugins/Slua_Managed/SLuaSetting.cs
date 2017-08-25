@@ -54,6 +54,8 @@ namespace SLua{
 		public bool exportExtensionMethod = true;
 		public string UnityEngineGeneratePath = "Assets/Slua/LuaObject/";
 
+        public bool PrintTrace = true;
+
 
 		public JITBUILDTYPE jitType = JITBUILDTYPE.none;
 
