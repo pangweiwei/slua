@@ -489,7 +489,7 @@ c#中使用foreach语句遍历IEnumertable,例如List,Array等, 在slua中,可�
 
 然后删除DLL,该DLL仅用于快捷生成wrap文件, 还需要ngui代码放在Assets目录内, 因为其有部分editor功能代码,需要在editor内运行.
 
-## 从c#调用lua函数
+## 从c#调用lua函数
 
 从c#调用lua函数，需要先从luastate内获得对应lua函数，一般是通过在luastate或者luatable内直接通过[]返回对应key的函数，例如：
 
