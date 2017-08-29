@@ -48,14 +48,14 @@ namespace SLua
 		}
 
 
-		ICollection<K> Keys
+		public ICollection<K> Keys
 		{
 			get
 			{
 				return _dict.Keys;
 			}
 		}
-		ICollection<V> Values
+		public ICollection<V> Values
 		{
 			get
 			{
@@ -68,7 +68,7 @@ namespace SLua
 			}
 		}
 
-		void Add(K key, V value)
+		public void Add(K key, V value)
 		{
 			if (_dict.ContainsKey(key))
 			{
@@ -84,15 +84,15 @@ namespace SLua
 			}
 		}
 
-		bool ContainsKey(K key)
+		public bool ContainsKey(K key)
 		{
 			return _dict.ContainsKey(key);
 		}
-		bool Remove(K key)
+		public bool Remove(K key)
 		{
 			return _dict.Remove(key);
 		}
-		bool TryGetValue(K key, out V value)
+		public bool TryGetValue(K key, out V value)
 		{
 			WeakReference w;
 			if (_dict.TryGetValue(key, out w))

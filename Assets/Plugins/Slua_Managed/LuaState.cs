@@ -172,7 +172,6 @@ namespace SLua
             }
 
         }
-
     }
 
     public class LuaFunction : LuaVar
@@ -248,70 +247,28 @@ namespace SLua
             return null;
         }
 
-        public object call(object a1)
-        {
-            int error = LuaObject.pushTry(state.L);
+		public object call(LuaTable self, params object[] args)
+		{
+			int error = LuaObject.pushTry(state.L);
 
-            LuaObject.pushVar(state.L, a1);
-            if (innerCall(1, error))
-            {
-                return state.topObjects(error - 1);
-            }
+			LuaObject.pushVar(L, self);
 
+			for (int n = 0; args != null && n < args.Length; n++)
+			{
+				LuaObject.pushVar(L, args[n]);
+			}
 
-            return null;
+			if (innerCall((args != null ? args.Length : 0) + 1, error))
+			{
+				return state.topObjects(error - 1);
+			}
+
+			return null;
+		}
+
+        public T cast<T>() where T:class {
+            return LuaObject.delegateCast(this, typeof(T)) as T;
         }
-
-        public object call(LuaTable self, params object[] args)
-        {
-            int error = LuaObject.pushTry(state.L);
-
-            LuaObject.pushVar(L, self);
-
-            for (int n = 0; args != null && n < args.Length; n++)
-            {
-                LuaObject.pushVar(L, args[n]);
-            }
-
-            if (innerCall((args != null ? args.Length : 0) + 1, error))
-            {
-                return state.topObjects(error - 1);
-            }
-
-            return null;
-        }
-
-        public object call(object a1, object a2)
-        {
-            int error = LuaObject.pushTry(state.L);
-
-            LuaObject.pushVar(state.L, a1);
-            LuaObject.pushVar(state.L, a2);
-            if (innerCall(2, error))
-            {
-                return state.topObjects(error - 1);
-            }
-            return null;
-        }
-
-        public object call(object a1, object a2, object a3)
-        {
-            int error = LuaObject.pushTry(state.L);
-
-            LuaObject.pushVar(state.L, a1);
-            LuaObject.pushVar(state.L, a2);
-            LuaObject.pushVar(state.L, a3);
-            if (innerCall(3, error))
-            {
-                return state.topObjects(error - 1);
-            }
-            return null;
-        }
-
-        // you can add call method with specific type rather than object type to avoid gc alloc, like
-        // public object call(int a1,float a2,string a3,object a4)
-
-        // using specific type to avoid type boxing/unboxing
     }
 
     public class LuaTable : LuaVar, IEnumerable<LuaTable.TablePair>

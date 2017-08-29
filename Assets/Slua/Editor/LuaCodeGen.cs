@@ -833,7 +833,7 @@ namespace SLua
 					file.NewLine = NewLine;
 					WriteDelegate(t, file);
 					file.Close();
-					return false;
+                    return false;
 				}
 				else
 				{
@@ -885,47 +885,29 @@ namespace SLua
 			string temp = @"
 using System;
 using System.Collections.Generic;
-
 namespace SLua
 {
     public partial class LuaDelegation : LuaObject
     {
 
-        static internal int checkDelegate(IntPtr l,int p,out $FN ua) {
-            int op = extractFunction(l,p);
-			if(LuaDLL.lua_isnil(l,p)) {
-				ua=null;
-				return op;
-			}
-            else if (LuaDLL.lua_isuserdata(l, p)==1)
-            {
-                ua = ($FN)checkObj(l, p);
-                return op;
-            }
-            LuaDelegate ld;
-            checkType(l, -1, out ld);
-			LuaDLL.lua_pop(l,1);
-            if(ld.d!=null)
-            {
-                ua = ($FN)ld.d;
-                return op;
-            }
-			
-			l = LuaState.get(l).L;
-            ua = ($ARGS) =>
-            {
-                int error = pushTry(l);
+        static internal $RET $FN(LuaFunction ld $ARGS) {
+            IntPtr l = ld.L;
+            int error = pushTry(l);
 ";
-			
-			temp = temp.Replace("$TN", t.Name);
-			temp = temp.Replace("$FN", SimpleType(t));
 			MethodInfo mi = t.GetMethod("Invoke");
 
-			temp = temp.Replace("$ARGS", ArgsList(mi));
+			temp = temp.Replace("$TN", t.Name);
+			temp = temp.Replace("$FN", ExportName(t));
+
+            temp = temp.Replace("$RET", 
+                mi.ReturnType != typeof(void)?SimpleType(mi.ReturnType):"void");
+
+            string args = ArgsList(mi);
+            if (args.Length > 0) args = "," + args;
+			temp = temp.Replace("$ARGS", args);
 			Write(file, temp);
 			
-			this.indent = 4;
-
+			this.indent = 3;
 
 			ParameterInfo[] pis = mi.GetParameters ();
 			
@@ -960,9 +942,6 @@ namespace SLua
 			if (mi.ReturnType != typeof(void))
 				Write(file, "return ret;");
 			
-			Write(file, "};");
-			Write(file, "ld.d=ua;");
-			Write(file, "return op;");
 			Write(file, "}");
 			Write(file, "}");
 			Write(file, "}");
@@ -1146,7 +1125,7 @@ namespace SLua
             }
             else if (t.BaseType == typeof(System.MulticastDelegate))
             {
-                return string.Format("int op=LuaDelegation.checkDelegate(l,{2}{0},out {1});", n, v, prefix);
+                return string.Format("int op=checkDelegate(l,{2}{0},out {1});", n, v, prefix);
             }
             else if (IsValueType(t))
             {
@@ -1744,7 +1723,7 @@ namespace SLua
 			if (t.IsEnum)
 				Write(file, "checkEnum(l,{2}{0},out {1});", n, v, nprefix);
 			else if (t.BaseType == typeof(System.MulticastDelegate))
-				Write(file, "int op=LuaDelegation.checkDelegate(l,{2}{0},out {1});", n, v, nprefix);
+				Write(file, "int op=checkDelegate(l,{2}{0},out {1});", n, v, nprefix);
 			else if (IsValueType(t))
                 if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
                     Write(file, "checkNullable(l,{2}{0},out {1});", n, v, nprefix);
@@ -2424,7 +2403,7 @@ namespace SLua
 				else if (t.BaseType == typeof(System.MulticastDelegate))
 				{
 					tryMake(t);
-					Write(file, "LuaDelegation.checkDelegate(l,{0},out a{1});", n + argstart, n + 1);
+					Write(file, "checkDelegate(l,{0},out a{1});", n + argstart, n + 1);
 				}
 				else if (isparams)
 				{

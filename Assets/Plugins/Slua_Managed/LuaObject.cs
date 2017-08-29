@@ -26,13 +26,10 @@ namespace SLua
 #if !SLUA_STANDALONE
 	using UnityEngine;
 #endif
-	using System.Collections;
-	using System.Collections.Generic;
 	using System;
 	using System.Reflection;
-	using System.Runtime.InteropServices;
 
-	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Delegate)]
 	public class CustomLuaClassAttribute : System.Attribute
 	{
 		public CustomLuaClassAttribute()
@@ -82,6 +79,7 @@ namespace SLua
 		public Type targetType;
 	}
 
+
     public class LuaOut { }
 
 	public partial class LuaObject
@@ -99,7 +97,7 @@ namespace SLua
         static protected LuaCSFunction lua_tostring = new LuaCSFunction(ToString);
 		const string DelgateTable = "__LuaDelegate";
 
-		internal const int VersionNumber = 0x1201;
+		internal const int VersionNumber = 0x1500;
 
 		public static void init(IntPtr l)
 		{
@@ -1260,6 +1258,45 @@ namespace SLua
 			}
 			return op;
 		}
+
+		static public int checkDelegate<T>(IntPtr l, int p, out T ua) where T : class
+		{
+			int op = extractFunction(l, p);
+			if (LuaDLL.lua_isnil(l, p))
+			{
+				ua = null;
+				return op;
+			}
+			else if (LuaDLL.lua_isuserdata(l, p) == 1)
+			{
+				ua = checkObj(l, p) as T;
+				return op;
+			}
+			LuaDelegate ld;
+			checkType(l, -1, out ld);
+			LuaDLL.lua_pop(l, 1);
+			if (ld.d != null)
+			{
+				ua = ld.d as T;
+				return op;
+			}
+
+			l = LuaState.get(l).L;
+
+			ua = delegateCast(ld,typeof(T)) as T;
+			ld.d = ua;
+			return op;
+		}
+
+        // cast luafunction to delegation with type of t
+        internal static Delegate delegateCast(LuaFunction f,Type t) {
+            ObjectCache oc = ObjectCache.get(f.L);
+            MethodInfo mi = oc.getDelegateMethod(t);
+            if (mi == null)
+                return null;
+
+            return Delegate.CreateDelegate(t, f, mi, true);
+        }
 
 
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
