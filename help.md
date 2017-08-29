@@ -491,7 +491,7 @@ c#中使用foreach语句遍历IEnumertable,例如List,Array等, 在slua中,可�
 
 ## 从c#调用lua函数
 
-从c#调用lua函数，需要先从luastate内获得对应lua函数，一般是通过在luastate或者luatable内直接通过[]返回对应key的函数，例如：
+从c#调用lua函数，需要先从luastate内获得对应lua函数，一般是通过在luastate或者luatable内直接通过[]返回对应key的函数，例如：
 
 ```csharp
 public class Circle : MonoBehaviour {
@@ -519,7 +519,7 @@ public class Circle : MonoBehaviour {
 		if(update!=null) update.call(self);
 	}
 ```
-但使用上述方法传递参数可能导致额外gc alloc的开销，例如参数是valuetype，或者primitive type（例如int，float）都会有box、unbox的gc alloc风险，这个时候，可以考虑导出对应delegate，并转换luafunction为对应的delegate，就可以避免gc alloc开销，提高调用速度，例如：
+但使用上述方法传递参数可能导致额外gc alloc的开销，例如参数是valuetype，或者primitive type（例如int，float）都会有box、unbox的gc alloc风险，这个时候，可以考虑导出对应delegate，并转换luafunction为对应的delegate，就可以避免gc alloc开销，提高调用速度，例如：
 
 ```csharp
 public class Circle : MonoBehaviour {
