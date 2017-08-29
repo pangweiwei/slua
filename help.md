@@ -386,7 +386,7 @@ args参数为类构造函数的传入参数
 如果不像构造类，只是想得到类，并调用他的static方法，可以使用GetClass返回类对象. 例如
 
 ```lua
-    -- get class used reflection
+    -- get class used reflection
 	local h=Slua.GetClass("HelloWorld")
 	print(h.getNegInt())
 ```
