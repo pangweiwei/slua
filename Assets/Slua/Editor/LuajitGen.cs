@@ -26,6 +26,7 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Diagnostics;
+using System;
 
 namespace SLua
 {
@@ -85,29 +86,25 @@ namespace SLua
         public static void compileLuaJit(string[] src, string[] dst, JITBUILDTYPE buildType)
         {
             UnityEngine.Debug.Log("compileLuajit");
-#if !UNITY_EDITOR_OSX
             string workDir = Application.dataPath + "/../jit/";
+#if !UNITY_EDITOR_OSX
             Dictionary<JITBUILDTYPE, string> build = new Dictionary<JITBUILDTYPE, string>
-        {
-            { JITBUILDTYPE.X86, Application.dataPath + "/../jit/win/x86/luajit.exe" },
-            { JITBUILDTYPE.X64, Application.dataPath + "/../jit/win/x64/luajit.exe" },
-            { JITBUILDTYPE.GC64, Application.dataPath + "/../jit/win/gc64/luajit.exe" },
-        };
-            string exePath = build[ buildType ];
-            Process[] psList = new Process[src.Length];
+            {
+                { JITBUILDTYPE.X86, Application.dataPath + "/../jit/win/x86/luajit.exe" },
+                { JITBUILDTYPE.X64, Application.dataPath + "/../jit/win/x64/luajit.exe" },
+                { JITBUILDTYPE.GC64, Application.dataPath + "/../jit/win/gc64/luajit.exe" },
+            };
 
 #else
-        string workDir = Application.dataPath + "/../jit/";
-        Dictionary<JITBUILDTYPE, string> build = new Dictionary<JITBUILDTYPE, string>
-        {
-            { JITBUILDTYPE.X86, Application.dataPath + "/../jit/mac/x86/luajit" },
-            { JITBUILDTYPE.X64, Application.dataPath + "/../jit/mac/x64/luajit" },
-            { JITBUILDTYPE.GC64, Application.dataPath + "/../jit/mac/gc64/luajit" },
-        };
-
-        string exePath = build[ buildType ];
-        // Process[] psList = new Process[ src.Length ];
+            Dictionary<JITBUILDTYPE, string> build = new Dictionary<JITBUILDTYPE, string>
+            {
+                { JITBUILDTYPE.X86, Application.dataPath + "/../jit/mac/x86/luajit" },
+                { JITBUILDTYPE.X64, Application.dataPath + "/../jit/mac/x64/luajit" },
+                { JITBUILDTYPE.GC64, Application.dataPath + "/../jit/mac/gc64/luajit" },
+            };
 #endif
+            string exePath = build[buildType];
+            Process[] psList = new Process[src.Length];
 
             for (int i = 0; i < src.Length; i++)
             {
@@ -115,31 +112,70 @@ namespace SLua
                 string dstLua = Application.dataPath + "/../" + dst[i];
                 string cmd = " -b " + srcLua + " " + dstLua;
 
-
-#if !UNITY_EDITOR_OSX
-                psList[i] = StartProcess(exePath, cmd, workDir);
-#else
-                var ps = StartProcess(exePath, cmd, workDir );
-                ps.WaitForExit();
-#endif
+                ProcessStartInfo StartInfo = new ProcessStartInfo();
+                StartInfo.FileName = exePath;
+                StartInfo.Arguments = cmd;
+                StartInfo.CreateNoWindow = true;
+                StartInfo.UseShellExecute = false;
+                StartInfo.WorkingDirectory = workDir;
+                Process ps = new Process();
+                ps.StartInfo = StartInfo;
+                psList[i] = ps;
             }
 
-
-#if !UNITY_EDITOR_OSX
-            foreach (var ps in psList)
+            try
             {
-                if (ps != null && !ps.HasExited)
+                int totalSize = src.Length;
+                int workThreadCount = Environment.ProcessorCount * 2 + 2;
+                int batchCount = (int)Math.Ceiling(totalSize / (float)workThreadCount);
+                for (int batchIndex = 0; batchIndex < batchCount; ++batchIndex)
                 {
-                    ps.WaitForExit();
+                    int processIndex;
+                    int offset = batchIndex * workThreadCount;
+                    for (processIndex = 0; processIndex < workThreadCount; ++processIndex)
+                    {
+                        int fileIndex = offset + processIndex;
+                        if (fileIndex >= totalSize)
+                            break;
+                        var ps = psList[fileIndex];
+                        ps.Start();
+                    }
+
+                    bool fail = false;
+                    string fileName = null;
+                    string arguments = null;
+                    for (int i = offset; i < offset + processIndex; ++i)
+                    {
+                        var ps = psList[i];
+                        ps.WaitForExit();
+                        if (ps.ExitCode != 0 && !fail)
+                        {
+                            fail = true;
+                            fileName = ps.StartInfo.FileName;
+                            arguments = ps.StartInfo.Arguments;
+                        }
+                        ps.Dispose();
+                    }
+
+                    if (fail)
+                    {
+                        throw new Exception(string.Format("Luajit Compile Fail.FileName={0},Arg={1}", fileName, arguments));
+                    }
                 }
             }
-#endif
+            finally
+            {
+                foreach (var ps in psList)
+                {
+                    ps.Dispose();
+                }
+            }
         }
 
-        static void exportLuajit( string res, string ext, string jitluadir, JITBUILDTYPE buildType )
+        static void exportLuajit(string res, string ext, string jitluadir, JITBUILDTYPE buildType)
         {
             // delete
-            AssetDatabase.DeleteAsset( jitluadir );
+            AssetDatabase.DeleteAsset(jitluadir);
 
             var files = Directory.GetFiles(res, ext, SearchOption.AllDirectories);
             var dests = new string[files.Length];
@@ -166,7 +202,7 @@ namespace SLua
             }
 
 
-           	compileLuaJit(files, dests, buildType );
+            compileLuaJit(files, dests, buildType);
             AssetDatabase.Refresh();
         }
 
@@ -176,13 +212,13 @@ namespace SLua
             exportLuajit("Assets/Slua/Resources/", "*.txt", "Assets/Slua/jit/jitx86", JITBUILDTYPE.X86);
         }
 
-		[MenuItem("SLua/Compile Bytecode/luajitx64 for WIN64")]
+        [MenuItem("SLua/Compile Bytecode/luajitx64 for WIN64")]
         static void exportLuajitx64()
         {
             exportLuajit("Assets/Slua/Resources/", "*.txt", "Assets/Slua/jit/jitx64", JITBUILDTYPE.X64);
         }
 
-		[MenuItem("SLua/Compile Bytecode/luajitgc64 for MAC&ARM64")]
+        [MenuItem("SLua/Compile Bytecode/luajitgc64 for MAC&ARM64")]
         static void exportLuajitgc64()
         {
             exportLuajit("Assets/Slua/Resources/", "*.txt", "Assets/Slua/jit/jitgc64", JITBUILDTYPE.GC64);
