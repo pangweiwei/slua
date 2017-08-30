@@ -561,6 +561,24 @@ public class Circle : MonoBehaviour {
 
 在build目录下，已经集成了win/macosx/android/ios的编译脚本，其中macosx/android/ios编译脚本推荐在macosx系统下编译，win平台需要vs2012/vs2013，通过运行这些编译脚本，可以直接生成slua library.
 
+
+
+## 使用Lua5.3
+
+slua默认使用luajit作为lua虚拟机，目前（1.5版）使用的是luajit-2.1-beta3，同时slua支持使用lua5.3，使用lua5.3有一些优势，比如支持int64，utf8支持的更好，但lua5.3并不如luajit运行速度快，所以是否切换为lua5.3需要用户自己权衡。
+
+如果你想采用lua5.3，需要在UnityEditor的PlayerSetting内加入LUA\_5\_3的宏，同时需要自己编译lua5.3的运行库，目前slua build没有默认提供lua5.3的运行库，这需要你自己修改编译脚本，编译对应的5.3的库，未来slua可能默认提供lua5.3的编译支持，将编译的slua运行库放入Unity Plugins目录内（包含win、mac、android、iOS、linux平台），然后重启Unity，就可以使用lua5.3作为lua虚拟机了。
+
+
+
+如果是设置了  LUA\_5\_3 的宏，但没有切换运行库，或者切换了运行库，没有 增加LUA\_5\_3宏，都会导致启动的时候crash，务必注意。
+
+
+
+最后你可以参考 https://github.com/yaukeywang/slua-503-build 这个lua5.3的repo，该repo完成了编译lua5.3的功能，可以直接使用，详细构建过程，可以参考 http://www.cnblogs.com/yaukey/p/slua-530-compile-project.html 。
+
+
+
 ## 常见问题
 
 
