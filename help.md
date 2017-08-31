@@ -455,6 +455,65 @@ c#中使用foreach语句遍历IEnumertable,例如List,Array等, 在slua中,可�
 
 返回的t是Canvas.transform的一级子对象.
 
+
+
+## C#的数组
+
+之前的slua会将T[]的数组转换为lua table在lua内使用，这样的好处是可以用lua原生语言特性来使用T[]，这在数组数据长度小的时候是一个不错的选择，但当数组长度变大的时候，则有很大的数据拷贝的消耗，在1.3之后，slua不在默认转换为lua table，而是使用LuaArray这样的userdata来出来数组，这样在push数组到lua的时候不再有额外开销，而当你使用的时候，LuaArray提供必要的方法帮助你访问对应的数据，例如：
+
+```lua
+local array = SomeFunctionReturnArray() --假设存在某个方法返回int[]
+print(array.Length,#array) --返回数组长度
+for i=0,array.Lenght-1 do
+  print(i,array[i]) --访问array数据，下表从0开始
+end
+local t = array.Table --转换为lua table
+for i,v in ipairs(t) do
+  print(i,v) --访问table数据，下表从1 开始
+end
+array[0]=1024 --设置
+```
+
+## C#的字节数组
+
+byte[]是T[]的特殊形式，一般用于内存字节流，比如网络字节流，之前的slua是把byte[]转换为string来处理，但自己推销这样的转换也有数据复制的开销，同时用string来读取字节流并不方面，为此slua提供ByteArray类支持byte[]，同时提供多样的read、write方法来存取字节流，例如：
+
+```lua
+	-- bytes return byte[]
+	local data = HelloWorld.bytes()
+	data[1]=11
+	print("data type ",type(data),#data,data.Table[1],data,data[1],data[2])
+
+	-- test bytearray object wity array
+	local ba = Slua.ByteArray(data)
+
+	data = Slua.ToString(data)
+	print("data type ",type(data),data)
+
+
+	print('Construct bytearray object',ba)
+	print(ba:ReadByte(),ba:ReadByte())
+	assert(ba.Length==4)
+	assert(ba.Position==2)
+	assert(ba:ReadByte()==53)
+
+	-- construct new byte array
+	local ba = Slua.ByteArray()
+	ba:WriteByte(11)
+	ba:WriteByte(22)
+	ba:WriteVarInt(1024)
+	ba:WriteShort(5656)
+	ba:WriteNum(3.1415)
+	ba.Position=0
+	assert(ba:ReadByte()==11)
+	assert(ba:ReadByte()==22)
+	assert(ba:ReadVarInt()==1024)
+	assert(ba:ReadShort()==5656)
+	assert(ba:ReadDouble()==3.1415)
+```
+
+新版本推荐使用ByteArray来处理byte[]，如果你仍然想当做string来处理可以使用Slua.ToString将byte[]转换为string。
+
 ## 判断GameObject是否为null
 
 因为Unity GameObject被destroy后，并不是真正的null，而是一个被标记了为destroyed的GameObject，而GameObject重载了==操作符，在c#中可以==判断是否为null（虽然它不是null），而这个gameobject被push到lua后，并不能判断==nil，所以slua提供IsNuall函数，用于判断是否GameObject被Destory，或者GetComponent的返回值其实不存在，也可以通过IsNull判断，例如：
@@ -551,6 +610,65 @@ public class Circle : MonoBehaviour {
 ```
 
 注意[CustomLuaClass]标记，通过这个标记可以导出UpdateDelegate，如果你忘记了这个标记，cast将失败并返回null。
+
+## 多LuaState实例
+
+一般情况下整个游戏只需要一个luastate，整个luastate与游戏app有着相同的生存周期，但有些情况下，为了隔离不同的业务逻辑，需要多个state，各自处理不同业务逻辑，各自有不同的生命周期，这个时候可以使用从slua1.5开始支持的多LuaState，可以参考MultiState的再带demo，例如：
+
+```csharp
+public class MultiState : MonoBehaviour {
+
+	LuaSvr svr;
+	LuaState[] ls=new LuaState[10];
+    LuaFunction update;
+    LuaTable self;
+	// Use this for initialization
+	void Start () {
+		svr = new LuaSvr (); // main state
+		svr.init (null, complete); 
+	}
+
+	void complete() {
+		// create 10 lua state
+		for (int n = 0; n < 10; n++) {
+			ls[n] = new LuaState (); // 额外创建更多的state
+
+            ls[n].Name = (string.Format("LuaState {0}", n));
+			ls[n].doString (string.Format ("print('this is #{0} lua state')", n));
+
+			ls[n].openSluaLib();
+			ls[n].doString(@"
+            local n=0 
+            LuaTimer.Add(0,1000,
+                function() print('timer print '..tostring(n)) 
+                n=n+1
+                return true 
+            end)");
+		}
+        ls[0].bindUnity();
+
+        ls[0].doFile("circle/circle");
+        self = (LuaTable)ls[0].run("main");
+		update = (LuaFunction)self["update"];
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if (update != null) update.call(self);
+	}
+
+	void OnDestroy() {
+		for (int n = 0; n < 10; n++) {
+            if(ls[n]!=null)
+			    ls [n].Dispose ();
+		}
+	}
+}
+```
+
+
+
+
 
 ## 远程调试
 
