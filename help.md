@@ -668,6 +668,34 @@ public class MultiState : MonoBehaviour {
 
 
 
+## 编译bytecode
+
+slua 1.5后所有平台统一使用luajit作为lua虚拟机，lua代码可以被luajit编译为bytecode发布，使用bytecode可以很好的保护你的lua代码，目前没有针对luajit有效反编译工具可以查看原始lua代码。如果你想发布bytecode，仅需要针对目标平台，点击slua->Compile Bytecode菜单即可。
+
+目前分为3个目标，分别为
+
+luajitx86，针对win32和android、iOS armv7平台
+
+luajitx64，针对x64
+
+luajitgc64，针对mac64, iOS，arm64平台
+
+
+
+默认slua会将Assets/Slua/Resources/*.txt当做lua脚本文件进行编译，并输出到jit/目录下，如果你有需要编译其他位置的lua文件，可以参考Editor/LuajitGen.cs文件，修改对应目标位置。
+
+
+
+## Lua控制台
+
+slua附带一个lua控制台，用于在编辑器内交互式调试，你可以控制台内输出任何合法的lua语句，回车后可以立刻运行对应语句，并查看结果，启动lua控制台的方法，是点击slua->LuaConsole 菜单，熟练使用控制台，可以帮助你快速定位、调试问题。
+
+
+
+## 编译lua接口文件
+
+slua会生成很多绑定接口文件，一般他们在Slua/LuaObject目录下，你每次修改cs代码，都会导致全部cs代码重新编译，当存在大量接口文件时，这个编译时间比较长，为此你可以将slua生成的接口文件编译为一个dll，这样接口文件就不需要每次重新编译，加速cs代码修改后的编译时间，为此你可以直接点击slua->compile luaobject to dll菜单，如果一切顺利，会在LuaObject下生成一个sluaWrapper.dll文件，以后你就不必每次都编译接口文件了，如果你修改了导出接口，需要重新make，也可以直接点make菜单，这时会删除sluaWrapper.dll，并重新生成全部接口文件。
+
 
 
 ## 远程调试
