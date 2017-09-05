@@ -678,11 +678,13 @@ luajitx86，针对win32和android、iOS armv7平台
 
 luajitx64，针对x64
 
-luajitgc64，针对mac64, iOS，arm64平台
+luajitgc64，针对mac64, iOS arm64，Android arm64平台
 
 
 
-默认slua会将Assets/Slua/Resources/*.txt当做lua脚本文件进行编译，并输出到jit/目录下，如果你有需要编译其他位置的lua文件，可以参考Editor/LuajitGen.cs文件，修改对应目标位置。
+默认slua会将Assets/Slua/Resources/*.txt当做lua脚本文件进行编译，并输出到Assets/jit/目录下，如果你有需要编译其他位置的lua文件，可以参考Editor/LuajitGen.cs文件，修改对应目标位置。
+
+Bytecode与目标设备的cpu有关，需要针对iOS和android各生成arm v7和arm 64两个版本才能在android和iOS的32、64位系统上跑起来，所以在最终发布版本中，需要同时包含2种bytecode，然后根据判断平台类型，针对性的读取，或者将代码部署在云端，根据平台针对性下载对应bytecode的压缩包。
 
 
 
