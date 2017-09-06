@@ -199,6 +199,11 @@ namespace SLua
 			return objIndex;
 		}
 
+        internal void destoryObject(IntPtr l, int p) {
+            int index = LuaDLL.luaS_rawnetobj(l, p);
+            gc(index);
+        }
+
 		internal object get(IntPtr l, int p)
 		{
 

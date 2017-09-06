@@ -106,7 +106,8 @@ namespace SLua
 			addMember(l, ToString);
 			addMember(l, GetHashCode);
 			addMember(l, Equals);
-			addMember (l, GetType);
+			addMember(l, GetType);
+            addMember(l, Unlink);
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "__luabaseobject");
 
         }
@@ -169,6 +170,22 @@ namespace SLua
 				pushValue(l, true);
 				pushObject(l, obj.GetType());
 				return 2;
+			}
+			catch (Exception e)
+			{
+				return error(l, e);
+			}
+		}
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		static public int Unlink(IntPtr l)
+		{
+			try
+			{
+                ObjectCache oc = ObjectCache.get(l);
+                oc.destoryObject(l,1);
+                pushValue(l, true);
+                return 1;
 			}
 			catch (Exception e)
 			{

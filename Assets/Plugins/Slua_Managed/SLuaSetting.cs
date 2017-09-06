@@ -72,7 +72,13 @@ namespace SLua{
 				#if UNITY_EDITOR
 					if(_instance == null){
 						_instance =  SLuaSetting.CreateInstance<SLuaSetting>();
-						AssetDatabase.CreateAsset(_instance,"Assets/Slua/Resources/setting.asset");
+                        try
+                        {
+                            AssetDatabase.CreateAsset(_instance, "Assets/Slua/Resources/setting.asset");
+                        }
+                        catch {
+                            
+                        }
 					}
 				#endif
 
