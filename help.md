@@ -686,6 +686,8 @@ luajitgc64，针对mac64, iOS arm64，Android arm64平台
 
 Bytecode与目标设备的cpu有关，需要针对iOS和android各生成arm v7和arm 64两个版本才能在android和iOS的32、64位系统上跑起来，所以在最终发布版本中，需要同时包含2种bytecode，然后根据判断平台类型，针对性的读取，或者将代码部署在云端，根据平台针对性下载对应bytecode的压缩包。
 
+在Unity编辑器下，可以通过打开setting面板，切换读取jit bytecode的格式，默认是None，读取lua源代码，你可以切换为x86则是在win unity 4.x上测试bytecode，x64则是win（64bit） unity5.x上测试bytecode，gc64则是Mac osx上测试。
+
 
 
 ## Lua控制台
