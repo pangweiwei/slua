@@ -1335,7 +1335,7 @@ namespace SLua
 			}
 		}
 
-		bool hasOverloadedVersion(Type t,ref string f) {
+		bool trygetOverloadedVersion(Type t,ref string f) {
 			Type ot;
 			if (overloadedClass.TryGetValue (t, out ot)) {
 				MethodInfo mi = ot.GetMethod (f, BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
@@ -1365,10 +1365,8 @@ namespace SLua
 			foreach (string i in funcname)
 			{
 				string f = i;
-				if (hasOverloadedVersion (t, ref f))
-					Write (file, "addMember(l,{0});", f);
-				else
-					Write(file, "addMember(l,{0});", f);
+                trygetOverloadedVersion (t, ref f);
+				Write (file, "addMember(l,{0});", f);
 			}
 			foreach (string f in directfunc.Keys)
 			{
@@ -1379,6 +1377,8 @@ namespace SLua
 			foreach (string f in propname.Keys)
 			{
 				PropPair pp = propname[f];
+                trygetOverloadedVersion(t, ref pp.get);
+                trygetOverloadedVersion(t, ref pp.set);
 				Write(file, "addMember(l,\"{0}\",{1},{2},{3});", f, pp.get, pp.set, pp.isInstance ? "true" : "false");
 			}
 			if (t.BaseType != null && !CutBase(t.BaseType))

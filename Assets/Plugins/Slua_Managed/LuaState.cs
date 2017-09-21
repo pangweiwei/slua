@@ -27,9 +27,7 @@ namespace SLua
     using System;
     using System.Collections.Generic;
     using System.Collections;
-    using System.IO;
     using System.Text;
-    using System.Runtime.InteropServices;
 #if !SLUA_STANDALONE
     using UnityEngine;
 #endif
@@ -994,55 +992,63 @@ end
             LuaDLL.lua_remove(l, err);
         }
 
-        static public bool printTrace = true;
 
+
+        static public bool printTrace = true;
         private static StringBuilder s = new StringBuilder();
+
+		static string stackString(IntPtr L,int n)
+		{
+			s.Length = 0;
+
+			LuaDLL.lua_getglobal(L, "tostring");
+
+			for (int i = 1; i <= n; i++)
+			{
+				if (i > 1)
+				{
+					s.Append("    ");
+				}
+
+				LuaDLL.lua_pushvalue(L, -1);
+				LuaDLL.lua_pushvalue(L, i);
+
+				LuaDLL.lua_call(L, 1, 1);
+				s.Append(LuaDLL.lua_tostring(L, -1));
+				LuaDLL.lua_pop(L, 1);
+			}
+
+			if (printTrace
+#if UNITY_EDITOR
+				 && SLuaSetting.Instance.PrintTrace
+#endif
+			   )
+			{
+				LuaDLL.lua_getglobal(L, "debug");
+				LuaDLL.lua_getfield(L, -1, "traceback");
+				LuaDLL.lua_call(L, 0, 1);
+				s.Append("\n");
+				s.Append(LuaDLL.lua_tostring(L, -1));
+			}
+
+            return s.ToString();
+		}
+
+
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         internal static int print(IntPtr L)
         {
             int n = LuaDLL.lua_gettop(L);
-            s.Length = 0;
-
-            LuaDLL.lua_getglobal(L, "tostring");
-
-            for (int i = 1; i <= n; i++)
-            {
-                if (i > 1)
-                {
-                    s.Append("    ");
-                }
-
-                LuaDLL.lua_pushvalue(L, -1);
-                LuaDLL.lua_pushvalue(L, i);
-
-                LuaDLL.lua_call(L, 1, 1);
-                s.Append(LuaDLL.lua_tostring(L, -1));
-                LuaDLL.lua_pop(L, 1);
-            }
-            LuaDLL.lua_settop(L, n);
-
-            if (printTrace
-#if UNITY_EDITOR
-                 && SLuaSetting.Instance.PrintTrace
-#endif
-               )
-            {
-                LuaDLL.lua_getglobal(L, "debug");
-                LuaDLL.lua_getfield(L, -1, "traceback");
-                LuaDLL.lua_call(L, 0, 1);
-                s.Append("\n");
-                s.Append(LuaDLL.lua_tostring(L, -1));
-
-                LuaDLL.lua_pop(L, 2);
-            }
-
-            Logger.Log(s.ToString(), true);
+            string str = stackString(L,n);
+            Logger.Log(str, true);
 
             LuaState state = LuaState.get(L);
             if (state.logDelegate != null)
             {
                 state.logDelegate(s.ToString());
             }
+
+            LuaDLL.lua_settop(L, n);
 
 			return 0;
 		}
@@ -1052,39 +1058,16 @@ end
         internal static int printerror(IntPtr L)
         {
             int n = LuaDLL.lua_gettop(L);
-            s.Length = 0;
-
-            LuaDLL.lua_getglobal(L, "tostring");
-
-            for (int i = 1; i <= n; i++)
-            {
-                if (i > 1)
-                {
-                    s.Append("    ");
-                }
-
-                LuaDLL.lua_pushvalue(L, -1);
-                LuaDLL.lua_pushvalue(L, i);
-
-                LuaDLL.lua_call(L, 1, 1);
-                s.Append(LuaDLL.lua_tostring(L, -1));
-                LuaDLL.lua_pop(L, 1);
-            }
-            LuaDLL.lua_settop(L, n);
-            
-            LuaDLL.lua_getglobal(L, "debug");
-            LuaDLL.lua_getfield(L, -1, "traceback");
-            LuaDLL.lua_call(L, 0, 1);
-            s.Append("\n");
-            s.Append(LuaDLL.lua_tostring(L, -1));
-            LuaDLL.lua_pop(L, 1);
-            Logger.LogError(s.ToString(), true);
+            string str = stackString(L,n);
+            Logger.LogError(str, true);
 
             LuaState state = LuaState.get(L);
             if (state.errorDelegate != null)
             {
                 state.errorDelegate(s.ToString());
             }
+
+            LuaDLL.lua_settop(L, n);
 
             return 0;
         }

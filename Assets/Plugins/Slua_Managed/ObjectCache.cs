@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Runtime.CompilerServices;
-
 namespace SLua
 {
 	using System;
@@ -61,17 +59,6 @@ namespace SLua
 			if (nl != l)
 				return get(nl);
 			return null;
-		}
-
-		class ObjSlot
-		{
-			public int freeslot;
-			public object v;
-			public ObjSlot(int slot, object o)
-			{
-				freeslot = slot;
-				v = o;
-			}
 		}
 
 		class FreeList : Dictionary<int, object>
@@ -175,7 +162,7 @@ namespace SLua
 					objMap.Remove(o);
 				}
 				cache.del(index);
-			}
+            }
 		}
 #if !SLUA_STANDALONE
         internal void gc(UnityEngine.Object o)

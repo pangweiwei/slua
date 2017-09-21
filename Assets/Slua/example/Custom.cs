@@ -94,4 +94,13 @@ namespace SLua {
 		}
 	}
 
+
+    [OverloadLuaClass(typeof(UnityEngine.RenderSettings))]
+    public class RenderSettingsEx : LuaObject {
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        public static int set_fogDensity(IntPtr l) {
+            return 0;
+        }
+    }
+
 }
