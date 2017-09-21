@@ -593,8 +593,8 @@ namespace SLua
 		
 		static bool Generate(Type t, string ns, string path)
 		{
-			if (t.IsInterface)
-				return false;
+			//if (t.IsInterface)
+			//	return false;
 			
 			CodeGenerator cg = new CodeGenerator();
 			cg.givenNamespace = ns;

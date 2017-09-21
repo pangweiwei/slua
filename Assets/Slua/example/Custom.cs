@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using SLua;
 using System;
 
-[CustomLuaClassAttribute]
+[CustomLuaClass]
 public class Custom : MonoBehaviour
 {
 
@@ -70,6 +70,23 @@ public class Custom : MonoBehaviour
 	{
 		return t.Name;
 	}
+
+    [CustomLuaClass]
+    public interface IFoo
+    {
+        int getInt();
+    }
+
+    class Foo : IFoo {
+        public int getInt() {
+            return 10;
+        }
+    }
+
+    public IFoo getInterface() {
+        return new Foo();
+    }
+
 }
 
 

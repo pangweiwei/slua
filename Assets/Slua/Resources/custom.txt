@@ -23,4 +23,7 @@ function main()
 	print("-->"..c:getItem("test"))
 	c:setItem("test",100)
 	print("-->"..c:getItem("test"))
+
+    assert(c:getInterface():getInt()==10)
+    print("assert interface ok")
 end

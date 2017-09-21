@@ -29,7 +29,7 @@ namespace SLua
 	using System;
 	using System.Reflection;
 
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Delegate)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Delegate | AttributeTargets.Interface)]
 	public class CustomLuaClassAttribute : System.Attribute
 	{
 		public CustomLuaClassAttribute()
