@@ -36,8 +36,10 @@ namespace SLua
 			get
 			{
 				WeakReference w = _dict[key];
-				if (w.IsAlive)
-					return (V)w.Target;
+                // IsAlive is not reliable in IL2CPP
+                V value = (V)w.Target;
+				if (value != null)
+					return value;
 				return default(V);
 			}
 
@@ -72,7 +74,7 @@ namespace SLua
 		{
 			if (_dict.ContainsKey(key))
 			{
-				if (_dict[key].IsAlive)
+				if (_dict[key].Target != null)
 					throw new ArgumentException("key exists");
 
 				_dict[key].Target = value;
