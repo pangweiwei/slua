@@ -32,6 +32,7 @@ targetdir "./bin"
 files
 {
     "../Assets/Plugins/Slua_Managed/**.cs",
+    "../build/BytesHelper.cs",
 }
 
 defines
@@ -45,7 +46,6 @@ links
 {
     "System",
     "System.Core",
-
 }
 
 project "slua-standalone-tests"

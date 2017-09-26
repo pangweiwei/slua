@@ -37,7 +37,7 @@ end
 
 return Func
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(typeof (LuaFunction), ret.GetType());
             var func = ret as LuaFunction;
             var ret2 = func.call(this);
@@ -57,7 +57,7 @@ end
 
 return Func
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(typeof (LuaFunction), ret.GetType());
             var func = ret as LuaFunction;
             var ret2 = func.call(this);

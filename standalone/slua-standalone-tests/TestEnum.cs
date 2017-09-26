@@ -35,7 +35,7 @@ end
 
 return Func
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(typeof(LuaFunction), ret.GetType());
 
             this.EnumValue = EnumType.AlphaEnum;
@@ -54,7 +54,7 @@ end
 
 return Func
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(typeof(LuaFunction), ret.GetType());
 
 
@@ -78,7 +78,7 @@ local EnumType = Slua.GetClass('SLua.Test.TestEnum+EnumType')
 
 return TestEnum.TestMethod(EnumType.BetaEnum)
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual((int)EnumType.BetaEnum, ret);
         }
 
@@ -94,7 +94,7 @@ end
 
 return Func
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(typeof(LuaFunction), ret.GetType());
 
             this.EnumValue = EnumType.AlphaEnum;

@@ -30,6 +30,8 @@ namespace SLua
     using System.Text;
 #if !SLUA_STANDALONE
     using UnityEngine;
+#else
+    using System.IO;
 #endif
     abstract public class LuaVar : IDisposable
     {
