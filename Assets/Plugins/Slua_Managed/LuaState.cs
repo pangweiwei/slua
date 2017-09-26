@@ -773,7 +773,6 @@ end
             // https://github.com/pkulchenko/MobDebug/blob/master/src/mobdebug.lua#L290
             // Dump only 3 stacks, or it will return null (I don't know why)
             string dumpstackfunc = @"
-local printerror=printerror
 dumpstack=function()
   function vars(f)
     local dump = """"
@@ -816,7 +815,7 @@ dumpstack=function()
     dump = dump .. vars(i+1)
     if source.what == 'main' then break end
   end
-  printerror(dump)
+  return dump
 end
 ";
 
@@ -897,24 +896,30 @@ end
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         public static int errorReport(IntPtr L)
         {
+            s.Length = 0;
+
             LuaDLL.lua_getglobal(L, "debug");
             LuaDLL.lua_getfield(L, -1, "traceback");
             LuaDLL.lua_pushvalue(L, 1);
             LuaDLL.lua_pushnumber(L, 2);
             LuaDLL.lua_call(L, 2, 1);
             LuaDLL.lua_remove(L, -2);
-            string error = LuaDLL.lua_tostring(L, -1);
+            s.Append(LuaDLL.lua_tostring(L, -1));
             LuaDLL.lua_pop(L, 1);
 
-            Logger.LogError(error, true);
+            LuaDLL.lua_getglobal(L, "dumpstack");
+            LuaDLL.lua_call(L, 0, 1);
+            s.Append("\n");
+            s.Append(LuaDLL.lua_tostring(L, -1));
+            LuaDLL.lua_pop(L, 1);
+
+            string str = s.ToString();
+            Logger.LogError(str, true);
             LuaState state = LuaState.get(L);
             if (state.errorDelegate != null)
             {
-                state.errorDelegate(error);
+                state.errorDelegate(str);
             }
-
-            LuaDLL.lua_getglobal(L, "dumpstack");
-            LuaDLL.lua_call(L, 0, 0);
 
             return 0;
         }
