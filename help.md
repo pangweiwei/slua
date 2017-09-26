@@ -91,14 +91,15 @@ slua支持手动导出任何自定义接口, 为此你仅需要将对应的类�
     [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
     static public int instanceCustom(IntPtr l) {
         Custom self = (Custom)LuaObject.checkSelf(l);
+        LuaObject.pushValue(l, true);
         LuaDLL.lua_pushstring(l,"xiaoming");
         LuaDLL.lua_pushstring(l,"hanmeimei");
         LuaDLL.lua_pushinteger(l,self.v);
-        return 3;
+        return 4;
     }
 ```
 
-仅仅自动注册到对应的lua接口里,不产生对应的包装方法再包装这个函数, 这使得你可以实现自己的任何lua函数, 用于自定义导出, 比如返回多个返回值.
+仅仅自动注册到对应的lua接口里,不产生对应的包装方法再包装这个函数, 这使得你可以实现自己的任何lua函数, 用于自定义导出, 比如返回多个返回值. 注意 LuaObject.pushValue(l, true) 这行，表示这个lua导出函数是否成功，如果返回true表示没有报错，false则表示有报错，但是这个返回值在lua里并拿不到，而是被内部函数用于检查函数成功与否而“吃掉”了，所以上述的函数只能拿到3个返回值。
 
 在默认情况下, 上面的函数产生的是成员方法, 即它需要接受一个self的ud, 在lua层面需要 self:instanceCustom 的方式调用, 如果你需要个静态方法, 需要多加一个[StaticExport], 例如:
 
@@ -106,9 +107,10 @@ slua支持手动导出任何自定义接口, 为此你仅需要将对应的类�
     [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
     [StaticExport]
     static public int staticCustom(IntPtr l) {
+    	LuaObject.pushValue(l, true);
         LuaDLL.lua_pushstring(l,vs);
         LuaObject.pushObject(l, c);
-        return 2;
+        return 3;
     }
 ```
 
