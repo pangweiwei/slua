@@ -75,20 +75,30 @@ public class Custom : MonoBehaviour
     public interface IFoo
     {
         int getInt();
+        void setInt(int i, bool ok);
     }
 
     class Foo : IFoo {
         public int getInt() {
             return 10;
         }
+        public void setInt(int i,bool ok) {
+            
+        }
     }
 
     public IFoo getInterface() {
         return new Foo();
     }
-
 }
 
+public static class IFooExt
+{
+	public static void setInt(this Custom.IFoo f, int i)
+	{
+
+	}
+}
 
 namespace SLua {
 	

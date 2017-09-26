@@ -897,6 +897,7 @@ end
         public static int errorReport(IntPtr L)
         {
             s.Length = 0;
+            s.Append(LuaDLL.lua_tostring(L,1));
 
             LuaDLL.lua_getglobal(L, "debug");
             LuaDLL.lua_getfield(L, -1, "traceback");

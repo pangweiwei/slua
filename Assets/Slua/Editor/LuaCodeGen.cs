@@ -2357,6 +2357,8 @@ namespace SLua
 		{
 			if (t.IsEnum)
 				Write(file, "pushEnum(l,(int)ret);");
+            else if (t.IsInterface && t.IsDefined(typeof(CustomLuaClassAttribute), false))
+                Write(file, "pushInterface(l,ret, typeof({0}));", TypeDecl(t));
 			else
 				Write(file, "pushValue(l,ret);");
 		}
@@ -2365,10 +2367,11 @@ namespace SLua
 		{
 			if (t.IsEnum)
 				Write(file, "pushEnum(l,(int){0});", ret);
+            else if (t.IsInterface && t.IsDefined(typeof(CustomLuaClassAttribute),false))
+                Write(file, "pushInterface(l,{0}, typeof({1}));", ret,TypeDecl(t));
 			else
 				Write(file, "pushValue(l,{0});", ret);
-		}
-		
+		}	
 		
 		void Write(StreamWriter file, string fmt, params object[] args)
 		{

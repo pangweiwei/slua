@@ -251,6 +251,17 @@ namespace SLua
 			return index;
 		}
 
+		internal void pushInterface(IntPtr l, object o, Type t)
+		{
+
+			int index = allocID(l, o);
+			if (index < 0)
+				return;
+
+			LuaDLL.luaS_pushobject(l, index, getAQName(t), true, udCacheRef);
+		}
+
+
 		internal void push(IntPtr l, object o, bool checkReflect)
 		{
 			

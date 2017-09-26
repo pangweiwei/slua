@@ -25,5 +25,6 @@ function main()
 	print("-->"..c:getItem("test"))
 
     assert(c:getInterface():getInt()==10)
+    c:getInterface():setInt(11)
     print("assert interface ok")
 end
