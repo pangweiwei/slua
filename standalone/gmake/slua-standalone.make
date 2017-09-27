@@ -16,7 +16,7 @@ ifeq ($(config),debug_any_cpu)
   TARGETDIR = ../bin
   TARGET = $(TARGETDIR)/slua-standalone.dll
   OBJDIR = obj/Any\ CPU/Debug/slua-standalone
-  FLAGS = /debug /noconfig /d:_DEBUG /d:DEBUG /d:TRACE /d:SLUA_STANDALONE /d:UNITY_STANDALONE_WIN /d:UNITY_STANDALONE
+  FLAGS = /unsafe /debug /noconfig /d:_DEBUG /d:DEBUG /d:TRACE /d:SLUA_STANDALONE /d:UNITY_STANDALONE_WIN /d:UNITY_STANDALONE
   DEPENDS =
   REFERENCES = 
   define PREBUILDCMDS
@@ -33,7 +33,7 @@ ifeq ($(config),release_any_cpu)
   TARGETDIR = ../bin
   TARGET = $(TARGETDIR)/slua-standalone.dll
   OBJDIR = obj/Any\ CPU/Release/slua-standalone
-  FLAGS = /optimize /noconfig /d:SLUA_STANDALONE /d:UNITY_STANDALONE_WIN /d:UNITY_STANDALONE
+  FLAGS = /unsafe /optimize /noconfig /d:SLUA_STANDALONE /d:UNITY_STANDALONE_WIN /d:UNITY_STANDALONE
   DEPENDS =
   REFERENCES = 
   define PREBUILDCMDS
@@ -44,7 +44,7 @@ ifeq ($(config),release_any_cpu)
   endef
 endif
 
-FLAGS += /t:library /unsafe
+FLAGS += /t:library 
 REFERENCES += /r:System /r:System.Core
 
 SOURCES += \
@@ -71,7 +71,7 @@ SOURCES += \
 	../../Assets/Plugins/Slua_Managed/SLuaSetting.cs \
 	../../Assets/Plugins/Slua_Managed/Timer.cs \
 	../../Assets/Plugins/Slua_Managed/WeakDictionary.cs \
-	/Users/siney/slua/build/BytesHelper.cs \
+	../../build/BytesHelper.cs \
 
 EMBEDFILES += \
 

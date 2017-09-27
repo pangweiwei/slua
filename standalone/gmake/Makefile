@@ -11,13 +11,15 @@ endif
 ifeq ($(config),debug_any_cpu)
   slua_standalone_config = debug_any_cpu
   slua_standalone_tests_config = debug_any_cpu
+  slua_standalone_demo_config = debug_any_cpu
 endif
 ifeq ($(config),release_any_cpu)
   slua_standalone_config = release_any_cpu
   slua_standalone_tests_config = release_any_cpu
+  slua_standalone_demo_config = release_any_cpu
 endif
 
-PROJECTS := slua-standalone slua-standalone-tests
+PROJECTS := slua-standalone slua-standalone-tests slua-standalone-demo
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -35,9 +37,16 @@ ifneq (,$(slua_standalone_tests_config))
 	@${MAKE} --no-print-directory -C . -f slua-standalone-tests.make config=$(slua_standalone_tests_config)
 endif
 
+slua-standalone-demo: slua-standalone
+ifneq (,$(slua_standalone_demo_config))
+	@echo "==== Building slua-standalone-demo ($(slua_standalone_demo_config)) ===="
+	@${MAKE} --no-print-directory -C . -f slua-standalone-demo.make config=$(slua_standalone_demo_config)
+endif
+
 clean:
 	@${MAKE} --no-print-directory -C . -f slua-standalone.make clean
 	@${MAKE} --no-print-directory -C . -f slua-standalone-tests.make clean
+	@${MAKE} --no-print-directory -C . -f slua-standalone-demo.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -51,5 +60,6 @@ help:
 	@echo "   clean"
 	@echo "   slua-standalone"
 	@echo "   slua-standalone-tests"
+	@echo "   slua-standalone-demo"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"
