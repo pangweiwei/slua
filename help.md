@@ -744,6 +744,69 @@ slua默认使用luajit作为lua虚拟机，目前（1.5版）使用的是luajit-
 
 
 
+## Standalone 运行
+
+一般情况下，slua是在Unity环境下使用，用于使用lua语言开发客户端逻辑，但slua同样支持基于mono（c#）环境开发服务器，我们把这种运行模式叫做Standalone模式，在Standalone模式下不依赖任何Unity的dll，仅依赖mono，这样就可以在mono下使用c#开发服务器，使用lua作为脚本语言实现服务器逻辑。
+
+下面我们介绍一下如何完成一个最简单的Standalone的demo，在slua目录下，进入Standalone目录，
+
+```shell
+$ sh premake.sh
+```
+
+这样将会生成对应平台的make文件，用于编译standalone的dll和对应demo，然后进入gmake目录
+
+```shell
+$ make
+```
+
+这样将会编译dll和demo，如果一切正常将会 ../bin目录下生成slue-standalone.dll, slua-standalone-tests.dll和slue-standalone-demo.exe 。demo的代码如下：
+
+```csharp
+using System;
+using SLua;
+
+
+public class Demo
+{
+    private LuaSvr luaSvr;
+
+    static public void Main() {
+        Demo demo = new Demo();
+        demo.Init();   
+    }
+        
+    public void Init()
+    {
+        luaSvr = new LuaSvr();
+        luaSvr.init(null,onComplete);
+    }
+    void onComplete() {
+        Console.WriteLine("complete");
+        string txt=@"
+        local a=1
+        local b=2
+        print('result',a+b)
+        ";
+        LuaSvr.mainState.doString(txt);
+    }
+}
+```
+
+
+
+然后回到Standalone目录，
+
+```shell
+$ mono --config slua-standalone.dll.config bin/slua-standalone-demo.exe
+complete
+result    3
+```
+
+ 这样就可以运行slua-standalone-demo.exe了，注意--config slua-standalone.dll.config用于配置mono加载dll的搜索方式，如果配置不正确，会报告找不到slua库的运行时错误，具体可以参考mono的文档。
+
+
+
 ## 常见问题
 
 
