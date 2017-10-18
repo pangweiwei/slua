@@ -22,133 +22,144 @@
 
 namespace SLua
 {
-	using UnityEngine;
-	using System.Collections;
-	using System.Collections.Generic;
+    using UnityEngine;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
-	using System.IO;
-	using System;
-	using System.Reflection;
-	using UnityEditor;
-	using System.Text;
-	using System.Text.RegularExpressions;
-	using System.Runtime.CompilerServices;
+    using System.IO;
+    using System;
+    using System.Reflection;
+    using UnityEditor;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Runtime.CompilerServices;
 
-	public interface ICustomExportPost { }
+    public interface ICustomExportPost { }
 
 
     public class LuaCodeGen : MonoBehaviour
-	{
-		static public string GenPath = SLuaSetting.Instance.UnityEngineGeneratePath;
+    {
+        static public string GenPath = SLuaSetting.Instance.UnityEngineGeneratePath;
         static public string WrapperName = "sluaWrapper.dll";
         public delegate void ExportGenericDelegate(Type t, string ns);
-		
+
         static bool autoRefresh = true;
 
-        static bool IsCompiling {
-			get {
-				if (EditorApplication.isCompiling) {
+        static bool IsCompiling
+        {
+            get
+            {
+                if (EditorApplication.isCompiling)
+                {
                     Debug.Log("Unity Editor is compiling, please wait.");
-				}
-				return EditorApplication.isCompiling;
-			}
-		}
-		 
-		[InitializeOnLoad]
-		public class Startup
-		{
-			static bool isPlaying=false;
-			static Startup()
-			{
-				EditorApplication.update += Update;
-				// use this delegation to ensure dispose luavm at last
-				EditorApplication.playmodeStateChanged+=()=>{
-					
-					if(isPlaying==true && EditorApplication.isPlaying==false) {
-						if(LuaState.main!=null) LuaState.main.Dispose();
-					}
+                }
+                return EditorApplication.isCompiling;
+            }
+        }
 
-					isPlaying=EditorApplication.isPlaying;
-				};
-			} 
+        [InitializeOnLoad]
+        public class Startup
+        {
+            static bool isPlaying = false;
+            static Startup()
+            {
+                EditorApplication.update += Update;
+                // use this delegation to ensure dispose luavm at last
+                EditorApplication.playmodeStateChanged += () =>
+                {
+
+                    if (isPlaying == true && EditorApplication.isPlaying == false)
+                    {
+                        if (LuaState.main != null) LuaState.main.Dispose();
+                    }
+
+                    isPlaying = EditorApplication.isPlaying;
+                };
+            }
 
 
-			static void Update(){
-				EditorApplication.update -= Update;
-				Lua3rdMeta.Instance.ReBuildTypes();
+            static void Update()
+            {
+                EditorApplication.update -= Update;
+                Lua3rdMeta.Instance.ReBuildTypes();
 
                 // Remind user to generate lua interface code
-			    var remindGenerate = !EditorPrefs.HasKey("SLUA_REMIND_GENERTE_LUA_INTERFACE") || EditorPrefs.GetBool("SLUA_REMIND_GENERTE_LUA_INTERFACE");
+                var remindGenerate = !EditorPrefs.HasKey("SLUA_REMIND_GENERTE_LUA_INTERFACE") || EditorPrefs.GetBool("SLUA_REMIND_GENERTE_LUA_INTERFACE");
                 bool ok = System.IO.Directory.Exists(GenPath + "Unity") || System.IO.File.Exists(GenPath + WrapperName);
-				if (!ok && remindGenerate)
-				{
-				    if (EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
-				    {
-				        GenerateAll();
-				    }
-				    else
-				    {
-				        if (!EditorUtility.DisplayDialog("Slua", "Remind you next time when no lua interface found for Unity?", "OK",
-				            "Don't remind me next time!"))
-				        {
+                if (!ok && remindGenerate)
+                {
+                    if (EditorUtility.DisplayDialog("Slua", "Not found lua interface for Unity, generate it now?", "Generate", "No"))
+                    {
+                        GenerateAll();
+                    }
+                    else
+                    {
+                        if (!EditorUtility.DisplayDialog("Slua", "Remind you next time when no lua interface found for Unity?", "OK",
+                            "Don't remind me next time!"))
+                        {
                             EditorPrefs.SetBool("SLUA_REMIND_GENERTE_LUA_INTERFACE", false);
-				        }
-				        else
-				        {
-				            
-                            EditorPrefs.SetBool("SLUA_REMIND_GENERTE_LUA_INTERFACE", true);
-				        }
-				        
-				    }
-				}
-			}
+                        }
+                        else
+                        {
 
-		}
-			
-		[MenuItem("SLua/All/Make")]
-		static public void GenerateAll()
-		{
+                            EditorPrefs.SetBool("SLUA_REMIND_GENERTE_LUA_INTERFACE", true);
+                        }
+
+                    }
+                }
+            }
+
+        }
+
+        [MenuItem("SLua/All/Make")]
+        static public void GenerateAll()
+        {
             autoRefresh = false;
             Generate();
-			GenerateUI();
+            GenerateUI();
             GenerateAds();
-			Custom();
-			Generate3rdDll();
+            Custom();
+            Generate3rdDll();
             autoRefresh = true;
             AssetDatabase.Refresh();
         }
 
-		static bool filterType(Type t, List<string> noUseList, List<string> uselist)
-		{
-			if (t.IsDefined (typeof(CompilerGeneratedAttribute),false)) {
-				Debug.Log (t.Name + " is filtered out");
-				return false;
-			}
-			
-			// check type in uselist
-			string fullName = t.FullName;
-			if (uselist != null && uselist.Count > 0)
-			{
-				return uselist.Contains(fullName);
-			}
-			else
-			{
-				// check type not in nouselist
-				foreach (string str in noUseList)
-				{
-					if (fullName.Contains(str))
-					{
-						return false;
-					}
-				}
-				return true;
-			}
-		}
+        static bool filterType(Type t, List<string> noUseList, List<string> uselist)
+        {
+            if (t.IsDefined(typeof(CompilerGeneratedAttribute), false))
+            {
+                Debug.Log(t.Name + " is filtered out");
+                return false;
+            }
+
+            // check type in uselist
+            string fullName = t.FullName;
+            if (uselist != null && uselist.Count > 0)
+            {
+                return uselist.Contains(fullName);
+            }
+            else
+            {
+                // check type not in nouselist
+                foreach (string str in noUseList)
+                {
+                    if (fullName.Contains(str))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
 
         [MenuItem("SLua/Unity/Make UnityEngine")]
         static public void Generate()
         {
+#if UNITY_2017_2_OR_NEWER
+            GenerateFor("UnityEngine.CoreModule", "Unity/", 0, "BindUnity");
+#else
             GenerateFor("UnityEngine", "Unity/", 0, "BindUnity");
+#endif
         }
 
         [MenuItem("SLua/Unity/Make UnityEngine.UI")]
@@ -428,7 +439,7 @@ namespace SLua
         [MenuItem("SLua/Compile LuaObject To DLL")]
         static public void CompileDLL()
         {
-            #region scripts
+#region scripts
             List<string> scripts = new List<string>();
             string[] guids = AssetDatabase.FindAssets("t:Script", new string[1] { Path.GetDirectoryName(GenPath) }).Distinct().ToArray();
             int guidCount = guids.Length;
@@ -445,9 +456,9 @@ namespace SLua
                 Debug.LogError("No Scripts");
                 return;
             }
-            #endregion
+#endregion
 
-            #region libraries
+#region libraries
             List<string> libraries = new List<string>();
             string[] referenced = new string[] { "UnityEngine", "UnityEngine.UI" };
             string projectPath = Path.GetFullPath(Application.dataPath+"/..").Replace("\\", "/");
@@ -464,13 +475,13 @@ namespace SLua
                     libraries.Add(path);
                 }
             }
-            #endregion
+#endregion
 			
             //generate AssemblyInfo
             string AssemblyInfoFile = Application.dataPath + "/AssemblyInfo.cs";
             File.WriteAllText(AssemblyInfoFile, string.Format("[assembly: UnityEngine.UnityAPICompatibilityVersionAttribute(\"{0}\")]", Application.unityVersion));
 
-            #region mono compile            
+#region mono compile            
             string editorData = EditorApplication.applicationContentsPath;
 #if UNITY_EDITOR_OSX && !UNITY_5_4_OR_NEWER
 			editorData += "/Frameworks";
@@ -491,9 +502,9 @@ namespace SLua
 #if UNITY_EDITOR_WIN
             mcs += ".bat";
 #endif
-            #endregion
+#endregion
 
-            #region execute bash
+#region execute bash
             StringBuilder output = new StringBuilder();
             StringBuilder error = new StringBuilder();
             bool success = false;
@@ -550,7 +561,7 @@ namespace SLua
             {
                 Debug.LogError(ex);
             }
-            #endregion
+#endregion
 
             Debug.Log(output.ToString());
             if (success)
@@ -604,8 +615,17 @@ namespace SLua
 		
 		static void GenerateBind(List<Type> list, string name, int order,string path)
 		{
-			// delete wrapper dll
-			System.IO.File.Delete(GenPath + WrapperName);
+            // delete wrapper dll
+            try
+            {
+                System.IO.File.Delete(GenPath + WrapperName);
+            }
+            catch {}
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
 
 			CodeGenerator cg = new CodeGenerator();
             cg.path = path;
