@@ -39,14 +39,15 @@
 
 LJLIB_CF(os_execute)
 {
+// fix for iOS11
 // #if LJ_NO_SYSTEM
-// #if LJ_52
-//   errno = ENOSYS;
-//   return luaL_fileresult(L, 0, NULL);
-// #else
-//   lua_pushinteger(L, -1);
-//   return 1;
-// #endif
+#if LJ_52
+  errno = ENOSYS;
+  return luaL_fileresult(L, 0, NULL);
+#else
+  lua_pushinteger(L, -1);
+  return 1;
+#endif
 // #else
 //   const char *cmd = luaL_optstring(L, 1, NULL);
 //   int stat = system(cmd);
@@ -59,8 +60,6 @@ LJLIB_CF(os_execute)
 // #endif
 //   return 1;
 // #endif
-  lua_pushinteger(L, -1);
-  return 1;
 }
 
 LJLIB_CF(os_remove)
