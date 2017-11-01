@@ -509,6 +509,8 @@ namespace SLua
         const string DelgateTable = "__LuaDelegate";
         bool openedSluaLib = false;
 
+        LuaFunction dumpstack;
+
         public bool isMainThread()
         {
             return System.Threading.Thread.CurrentThread.ManagedThreadId == mainThread;
@@ -770,12 +772,13 @@ end
 ";
 
             // overload resume function for report error
-            LuaState.get(L).doString(resumefunc);
+            var state = LuaState.get(L);
+            state.doString(resumefunc);
 
             // https://github.com/pkulchenko/MobDebug/blob/master/src/mobdebug.lua#L290
             // Dump only 3 stacks, or it will return null (I don't know why)
             string dumpstackfunc = @"
-dumpstack=function()
+local dumpstack=function()
   function vars(f)
     local dump = """"
     local func = debug.getinfo(f, ""f"").func
@@ -819,13 +822,14 @@ dumpstack=function()
   end
   return dump
 end
+return dumpstack
 ";
 
-            LuaState.get(L).doString(dumpstackfunc);
+            state.dumpstack = state.doString(dumpstackfunc) as LuaFunction;
 
 #if UNITY_ANDROID
             // fix android performance drop with JIT on according to luajit mailist post
-            LuaState.get(L).doString("if jit then require('jit.opt').start('sizemcode=256','maxmcode=256') for i=1,1000 do end end");
+            state.doString("if jit then require('jit.opt').start('sizemcode=256','maxmcode=256') for i=1,1000 do end end");
 #endif
 
             pushcsfunction(L, dofile);
@@ -908,7 +912,8 @@ end
             s.Append(LuaDLL.lua_tostring(L, -1));
             LuaDLL.lua_pop(L, 1);
 
-            LuaDLL.lua_getglobal(L, "dumpstack");
+            LuaState state = LuaState.get(L);
+            state.dumpstack.push(L);
             LuaDLL.lua_call(L, 0, 1);
             s.Append("\n");
             s.Append(LuaDLL.lua_tostring(L, -1));
@@ -916,7 +921,6 @@ end
 
             string str = s.ToString();
             Logger.LogError(str, true);
-            LuaState state = LuaState.get(L);
             if (state.errorDelegate != null)
             {
                 state.errorDelegate(str);
