@@ -211,6 +211,9 @@ namespace SLua
 				if (isGcObject(o) && objMap.TryGetValue(o,out oldindex) && oldindex==index)
 				{
 					objMap.Remove(o);
+					#if SLUA_DEBUG || UNITY_EDITOR 
+					objNameDebugs.Remove(o);
+					#endif
 				}
 				cache.del(index);
             }
@@ -223,6 +226,9 @@ namespace SLua
             {
                 objMap.Remove(o);
                 cache.del(index);
+		#if SLUA_DEBUG || UNITY_EDITOR 
+				objNameDebugs.Remove(o);
+		#endif
             }
         }
 #endif
@@ -233,6 +239,9 @@ namespace SLua
 			if (isGcObject(o))
 			{
 				objMap[o] = objIndex;
+				#if SLUA_DEBUG || UNITY_EDITOR
+				objNameDebugs[o] = getDebugName(o);
+				#endif
 			}
 			return objIndex;
 		}
