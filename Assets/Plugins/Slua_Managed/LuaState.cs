@@ -444,6 +444,12 @@ namespace SLua
         int mainThread = 0;
         internal WeakDictionary<int, LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
 
+		public int cachedDelegateCount{
+			get{
+				return this.delgateMap.AliveCount;
+			}
+		}
+
         public IntPtr L
         {
             get

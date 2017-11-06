@@ -35,6 +35,33 @@ namespace SLua
 		static IntPtr oldl = IntPtr.Zero;
 		static internal ObjectCache oldoc = null;
 
+
+		#if SLUA_DEBUG || UNITY_EDITOR
+
+		public static List<string> GetAllManagedObjectNames(){
+			List<string> names = new List<string>();
+			foreach(var cache in multiState.Values){
+				foreach(var o in cache.objMap.Keys){
+					names.Add(cache.objNameDebugs[o]);
+				}
+			}
+			return names;
+		}
+
+		public static List<string> GetAlreadyDestroyedObjectNames(){
+			List<string> names = new List<string>();
+			foreach(var cache in multiState.Values){
+				foreach(var o in cache.objMap.Keys){
+					if(o is Object &&(o as Object).Equals(null)){
+						names.Add(cache.objNameDebugs[o]);
+					}
+				}
+			}
+			return names;
+		}
+
+		#endif
+
 		public static ObjectCache get(IntPtr l)
 		{
 			if (oldl == l)
@@ -111,6 +138,30 @@ namespace SLua
 
 		Dictionary<object, int> objMap = new Dictionary<object, int>(new ObjEqualityComparer());
         public Dictionary<object, int>.KeyCollection Objs { get { return objMap.Keys; } }
+
+		#if SLUA_DEBUG || UNITY_EDITOR
+		Dictionary<object,string> objNameDebugs = new Dictionary<object, string>(new ObjEqualityComparer());
+
+		private static string getDebugFullName(UnityEngine.Transform transform){
+			if (transform.parent == null) {
+				return transform.gameObject.ToString();
+			}
+			return getDebugName (transform.parent) + "/" + transform.name;
+		}
+
+		private static string getDebugName(object o ){
+			if (o is UnityEngine.GameObject) {
+				var go = o as UnityEngine.GameObject;
+				return getDebugFullName (go.transform);
+			} else if (o is UnityEngine.Component) {
+				var comp = o as UnityEngine.Component;
+				return getDebugFullName (comp.transform);
+			}
+			return o.ToString ();
+
+		}
+
+		#endif
 
         int udCacheRef = 0;
 
