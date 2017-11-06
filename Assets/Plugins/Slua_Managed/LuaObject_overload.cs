@@ -21,15 +21,11 @@
 // THE SOFTWARE.
 
 
+#if !SLUA_STANDALONE
 namespace SLua
 {
 	using UnityEngine;
-	using System.Collections;
-	using System.Collections.Generic;
 	using System;
-	using LuaInterface;
-	using System.Reflection;
-	using System.Runtime.InteropServices;
 
 	public partial class LuaObject
 	{
@@ -50,20 +46,6 @@ namespace SLua
 			if(LuaDLL.luaS_checkVector3(l, p, out x, out y, out z)!=0)
 				throw new Exception(string.Format("Invalid vector3 argument at {0}", p));
 			v = new Vector3(x, y, z);
-			return true;
-		}
-
-		static public bool checkType(IntPtr l, int p, out Vector3[] t)
-		{
-			LuaDLL.luaL_checktype(l, p, LuaTypes.LUA_TTABLE);
-			int n = LuaDLL.lua_rawlen(l, p);
-			t = new Vector3[n];
-			for (int k = 0; k < n; k++)
-			{
-				LuaDLL.lua_rawgeti(l, p, k + 1);
-				checkType(l, -1, out t[k]);
-				LuaDLL.lua_pop(l, 1);
-			}
 			return true;
 		}
 
@@ -88,6 +70,14 @@ namespace SLua
 		static public bool checkType(IntPtr l, int p, out Color c)
 		{
 			float x, y, z, w;
+			if (LuaDLL.lua_type (l, p) == LuaTypes.LUA_TUSERDATA) {
+				object o = checkObj(l,p);
+				if(o is Color32) {
+					c = (Color32)o;
+					return true;
+				}
+				throw new Exception(string.Format("Invalid color argument at {0}", p));
+			}
 			if (LuaDLL.luaS_checkColor(l, p, out x, out y, out z, out w) != 0)
 				throw new Exception(string.Format("Invalid color argument at {0}", p));
 			c = new Color(x, y, z, w);
@@ -128,36 +118,6 @@ namespace SLua
 			pushObject(l, r);
 		}
 
-		public static void pushValue(IntPtr l, RaycastHit[] r)
-		{
-			if (r == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, r.Length, 0);
-			for (int n = 0; n < r.Length; n++)
-			{
-				pushValue(l, r[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
-
-		public static void pushValue(IntPtr l, RaycastHit2D[] r)
-		{
-			if (r == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, r.Length, 0);
-			for (int n = 0; n < r.Length; n++)
-			{
-				pushValue(l, r[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
-
         public static void pushValue(IntPtr l, UnityEngine.AnimationState o)
         {
             if (o == null)
@@ -173,37 +133,7 @@ namespace SLua
 			else
 				pushObject(l, o);
 		}
-
-		public static void pushValue(IntPtr l, UnityEngine.Object[] o)
-		{
-			if (o == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, o.Length, 0);
-			for (int n = 0; n < o.Length; n++)
-			{
-				pushValue(l, o[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
-		}
-		
-		public static void pushValue(IntPtr l, Vector3[] r)
-		{
-		    if (r == null)
-		    {
-		        LuaDLL.lua_pushnil(l);
-		        return;
-		    }
-		    LuaDLL.lua_createtable(l, r.Length, 0);
-		    for (int n = 0; n < r.Length; n++)
-		    {
-		        pushValue(l, r[n]);
-		        LuaDLL.lua_rawseti(l, -2, n + 1);
-		    }
-		}
-
+	
 		public static void pushValue(IntPtr l, Quaternion o)
 		{
 			LuaDLL.luaS_pushQuaternion(l, o.x, o.y, o.z, o.w);
@@ -232,5 +162,10 @@ namespace SLua
 		{
 			LuaDLL.luaS_pushColor(l, o.r, o.g, o.b, o.a);
 		}
+
+		public static void pushValue(IntPtr l, Color32 c32) {
+			pushObject(l, c32); 
+		}
 	}
 }
+#endif

@@ -22,11 +22,9 @@
 
 namespace SLua
 {
-	using LuaInterface;
 	using System;
 	using System.Collections.Generic;
-	using UnityEngine;
-
+	
 	public class LuaTimer : LuaObject
 	{
 		class Timer
@@ -36,6 +34,7 @@ namespace SLua
 			internal int deadline;
 			internal Func<int, bool> handler;
 			internal bool delete;
+            internal IntPtr L;
 			internal LinkedList<Timer> container;
 		}
 		class Wheel
@@ -76,7 +75,7 @@ namespace SLua
 		static float nowTime;
 		static Dictionary<int, Timer> mapSnTimer;
 		static LinkedList<Timer> executeTimers;
-
+		
 		static int intpow(int n, int m)
 		{
 			int ret = 1;
@@ -84,7 +83,7 @@ namespace SLua
 				ret *= n;
 			return ret;
 		}
-
+		
 		static void innerAdd(int deadline, Timer tm)
 		{
 			tm.deadline = deadline;
@@ -101,12 +100,12 @@ namespace SLua
 			}
 			suitableWheel.add(delay, tm);
 		}
-
+		
 		static void innerDel(Timer tm)
 		{
 			innerDel(tm, true);
 		}
-
+		
 		static void innerDel(Timer tm,bool removeFromMap)
 		{
 			tm.delete = true;
@@ -117,14 +116,17 @@ namespace SLua
 			}
 			if (removeFromMap) mapSnTimer.Remove(tm.sn);
 		}
-
+		
 		static int now()
 		{
 			return (int)(nowTime * 1000);
 		}
-
+		
 		internal static void tick(float deltaTime)
 		{
+			if (executeTimers == null)
+				return;
+			
 			nowTime += deltaTime;
 			pileSecs += deltaTime;
 			int cycle = 0;
@@ -144,7 +146,7 @@ namespace SLua
 					node = node.Next;
 				}
 				timers.Clear();
-
+				
 				for (int j = 0; j < wheels.Length; ++j)
 				{
 					var wheel = wheels[j];
@@ -177,7 +179,7 @@ namespace SLua
 					}
 				}
 			}
-
+			
 			while (executeTimers.Count > 0)
 			{
 				var tm = executeTimers.First.Value;
@@ -192,9 +194,12 @@ namespace SLua
 				}
 			}
 		}
-
+        static bool inited = false;
 		static void init()
 		{
+            if (inited) return;
+            inited = true;
+
 			wheels = new Wheel[4];
 			for (int i = 0; i < 4; ++i)
 			{
@@ -207,32 +212,33 @@ namespace SLua
 			mapSnTimer = new Dictionary<int, Timer>();
 			executeTimers = new LinkedList<Timer>();
 		}
-
+		
 		static int fetchSn()
 		{
 			return ++nextSn;
 		}
-
-		internal static int add(int delay, Action<int> handler)
+		
+		internal static int add(IntPtr L,int delay, Action<int> handler)
 		{
-			return add(delay, 0, (int sn) =>
-			{
+			return add(L,delay, 0, (int sn) =>
+            {
 				handler(sn);
 				return false;
 			});
 		}
-
-		internal static int add(int delay, int cycle, Func<int, bool> handler)
+		
+		internal static int add(IntPtr L,int delay, int cycle, Func<int, bool> handler)
 		{
 			Timer tm = new Timer();
 			tm.sn = fetchSn();
 			tm.cycle = cycle;
 			tm.handler = handler;
+            tm.L = L;
 			mapSnTimer[tm.sn] = tm;
 			innerAdd(now() + delay, tm);
 			return tm.sn;
 		}
-
+		
 		internal static void del(int sn)
 		{
 			Timer tm;
@@ -241,7 +247,7 @@ namespace SLua
 				innerDel(tm);
 			}
 		}
-
+		
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		public static int Delete(IntPtr l)
 		{
@@ -255,7 +261,7 @@ namespace SLua
 				return LuaObject.error(l, e);
 			}
 		}
-
+		
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		public static int Add(IntPtr l)
 		{
@@ -283,7 +289,7 @@ namespace SLua
 					}
 					ld.d = ua;
 					pushValue(l, true);
-					pushValue(l, add(delay, ua));
+					pushValue(l, add(l, delay, ua));
 					return 2;
 				}
 				else if (top == 3)
@@ -294,7 +300,7 @@ namespace SLua
 					LuaDelegate ld;
 					checkType(l, 3, out ld);
 					Func<int, bool> ua;
-	
+					
 					if (ld.d != null)
 						ua = (Func<int, bool>)ld.d;
 					else
@@ -312,7 +318,7 @@ namespace SLua
 					}
 					ld.d = ua;
 					pushValue(l, true);
-					pushValue(l, add(delay, cycle, ua));
+					pushValue(l, add(l, delay, cycle, ua));
 					return 2;
 				}
 				return LuaObject.error(l,"Argument error");
@@ -321,20 +327,26 @@ namespace SLua
 				return LuaObject.error(l, e);
 			}
 		}
-
-
+		
+		
 		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		public static int DeleteAll(IntPtr l)
 		{
 			if (mapSnTimer == null) return 0;
 			try
 			{
+                List<int> rts = new List<int>();
 				foreach (var t in mapSnTimer)
 				{
-					innerDel(t.Value, false);
+                    if (t.Value.L == l)
+                    {
+                        innerDel(t.Value, false);
+                        rts.Add(t.Key);
+                    }
 				}
-				mapSnTimer.Clear();
-
+                foreach (int k in rts)
+                    mapSnTimer.Remove(k);
+				
 				pushValue(l, true);
 				return 1;
 			}
@@ -343,8 +355,8 @@ namespace SLua
 				return LuaObject.error(l, e);
 			}
 		}
-
-
+		
+		
 		static public void reg(IntPtr l)
 		{
 			init();
@@ -355,5 +367,5 @@ namespace SLua
 			createTypeMetatable(l, typeof(LuaTimer));
 		}
 	}
-
+	
 }

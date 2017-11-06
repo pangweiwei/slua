@@ -15,17 +15,49 @@ MyGameObject=Slua.Class(GameObject,
 	}	
 )
 
+function testArray()
+	local x=GameObject("TestArray")
+	local c=x:AddComponent(UnityEngine.RectTransform)
+	local a=Slua.MakeArray("UnityEngine.Vector3",{Vector3(1,0,0),Vector3(1,0,0),Vector3(1,0,0),Vector3(1,0,0)})
+	c:GetLocalCorners(a)
+	for v in Slua.iter(a) do
+		print(v)
+	end
+	
+	local a=Slua.MakeArray("System.Int16",{1,2,3,4})
+	for v in Slua.iter(a) do
+		print(v)
+	end
+	
+	HelloWorld.int16Array(a)
+	HelloWorld.int16Array({1,2,3,4})
+	HelloWorld.byteArrayTest()
+
+	local rtarr = {c}
+	HelloWorld.transformArray(rtarr)
+end
+
+function testNullable()
+	HelloWorld.nullf(1)
+	HelloWorld.nullf()
+end
+
+local function click(...)
+	print("fuck")
+end
+
 function main()
 	-- Cache unpack function.
 	local unpack = (unpack and unpack) or table.unpack
 
 	-- test split of System.String
 	local x=String("a,b,c,d/e/f/g")
-	print(unpack(x:Split(",/",0)))
-	print(unpack(x:Split({",","/"},0)))
-
-	HelloWorld.nullf(1)
-	HelloWorld.nullf()
+	print(unpack(x:Split(",/",0).Table))
+	print(unpack(x:Split({",","/"},0).Table))
+	
+	testArray()
+	testNullable()
+	
 
 	local t=dofile('module/some')
 	assert(type(t)=='table')
@@ -41,6 +73,12 @@ function main()
 	else
 		print("using lua")
 	end
+
+	-- test override function
+	HelloWorld.AFuncByDouble(1);
+
+	-- test negetive value
+	assert(HelloWorld.getNegInt()==-1)
 
 	-- test custom component
 	local x=UnityEngine.GameObject("OoOo")
@@ -87,20 +125,51 @@ function main()
 	
 	-- bytes return byte[]
 	local data = HelloWorld.bytes()
-	print("data type ",type(data))
+	data[1]=11
+	print("data type ",type(data),#data,data.Table[1],data,data[1],data[2])
+
+	-- test bytearray object wity array
+	local ba = Slua.ByteArray(data)
+
 	data = Slua.ToString(data)
 	print("data type ",type(data),data)
+
+
+	print('Construct bytearray object',ba)
+	print(ba:ReadByte(),ba:ReadByte())
+	assert(ba.Length==4)
+	assert(ba.Position==2)
+	assert(ba:ReadByte()==53)
+
+	-- construct new byte array
+	local ba = Slua.ByteArray()
+	ba:WriteByte(11)
+	ba:WriteByte(22)
+	ba:WriteVarInt(1024)
+	ba:WriteShort(5656)
+	ba:WriteNum(3.1415)
+	ba.Position=0
+	assert(ba:ReadByte()==11)
+	assert(ba:ReadByte()==22)
+	assert(ba:ReadVarInt()==1024)
+	assert(ba:ReadShort()==5656)
+	assert(ba:ReadDouble()==3.1415)
+
 
 	-- get out parameter
 	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1),Slua.out)
 	print("Physics Hitinfo",ok,hitinfo)
 	
-
+	local clickCount=0
 	btn.onClick:AddListener(function()
 		local go = GameObject.Find("Canvas/Text")
 		local label = go:GetComponent("Text")
-		label.text="hello world"
+		clickCount=clickCount+1
+		label.text="hello world " ..tostring(clickCount)
+
 	end)
+
+	btn.onClick:AddListener(click)
 	
 
 	local go = GameObject.Find("Canvas/Panel2"):GetComponent("ScrollRect")
@@ -133,7 +202,7 @@ function main()
 		cube.transform.localRotation = Quaternion.Euler(0,0,math.sin(Time.time)*90)
 		return true
 	end)
-
+	
 	print(UnityEngine.PrimitiveType.Cube,type(UnityEngine.PrimitiveType.Cube))
 
 
@@ -146,7 +215,7 @@ function main()
 		Yield(WaitForSeconds(2))
 		print "coroutine WaitForSeconds 2"
 
-		local www = WWW("http://www.sineysoft.com")
+		local www = WWW("http://www.baidu.com")
 		Yield(www)
 		print(#Slua.ToString(www.bytes))
 
@@ -158,7 +227,7 @@ function main()
 	coroutine.resume(c)
 
 	-- test lua table
-	HelloWorld.setv({name="yes",value=12})
+	HelloWorld.setv({name="yes",value=12,[-2]="siney",[0]="no"})
 	local t=HelloWorld.getv()
 	for k,v in pairs(t) do
 		print("table value",k,v)
@@ -180,6 +249,10 @@ function main()
 	-- test luafunction
 	local h=HelloWorld()
 	h:func7(abc)
+	h.cc = Color32(255,0,0,255)
+	print("Hellor world color",h.cc)
+
+    HelloWorld.setObjs({{1,2},{3,4},{5,6}})
 end
 
 function abc()

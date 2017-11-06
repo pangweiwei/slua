@@ -1,4 +1,4 @@
-﻿// The MIT License (MIT)
+// The MIT License (MIT)
 
 // Copyright 2015 Siney/Pangweiwei siney@yeah.net
 // 
@@ -20,16 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
 namespace SLua
 {
 	using System;
-	using System.Runtime.InteropServices;
 	using System.Collections.Generic;
-	using LuaInterface;
-	using UnityEngine;
+	using System.Runtime.CompilerServices;
+    using System.Reflection;
+    using System.Linq;
 
-	public class ObjectCache
+    public class ObjectCache
 	{
 		static Dictionary<IntPtr, ObjectCache> multiState = new Dictionary<IntPtr, ObjectCache>();
 
@@ -62,80 +61,58 @@ namespace SLua
 			return null;
 		}
 
-		class ObjSlot
+		class FreeList : Dictionary<int, object>
 		{
-			public int freeslot;
-			public object v;
-			public ObjSlot(int slot, object o)
-			{
-				freeslot = slot;
-				v = o;
-			}
-		}
-
-		class FreeList : List<ObjSlot>
-		{
-			public FreeList()
-			{
-				this.Add(new ObjSlot(0, null));
-			}
-
+			private int id = 1;
 			public int add(object o)
 			{
-				ObjSlot free = this[0];
-				if (free.freeslot == 0)
-				{
-					Add(new ObjSlot(this.Count, o));
-					return this.Count - 1;
-				}
-				else
-				{
-					int slot = free.freeslot;
-					free.freeslot = this[slot].freeslot;
-					this[slot].v = o;
-					this[slot].freeslot = slot;
-					return slot;
-				}
+				Add(id, o);
+				return id++;
 			}
 
 			public void del(int i)
 			{
-				ObjSlot free = this[0];
-				this[i].freeslot = free.freeslot;
-				this[i].v = null;
-				free.freeslot = i;
+				this.Remove(i);
 			}
 
 			public bool get(int i, out object o)
 			{
-				if (i < 1 || i > this.Count)
-				{
-					throw new ArgumentOutOfRangeException();
-				}
-
-				ObjSlot slot = this[i];
-				o = slot.v;
-				return o != null;
+				return TryGetValue(i, out o);
 			}
 
 			public object get(int i)
 			{
 				object o;
-				if (get(i, out o))
+				if (TryGetValue(i, out o))
 					return o;
 				return null;
 			}
 
 			public void set(int i, object o)
 			{
-				this[i].v = o;
+				this[i] = o;
 			}
 		}
 
 		FreeList cache = new FreeList();
+        public class ObjEqualityComparer : IEqualityComparer<object>
+        {
+            public new bool Equals(object x, object y)
+            {
 
-		Dictionary<object, int> objMap = new Dictionary<object, int>();
-		int udCacheRef = 0;
+                return ReferenceEquals(x, y);
+            }
+
+            public int GetHashCode(object obj)
+            {
+                return RuntimeHelpers.GetHashCode(obj);
+            }
+        }
+
+		Dictionary<object, int> objMap = new Dictionary<object, int>(new ObjEqualityComparer());
+        public Dictionary<object, int>.KeyCollection Objs { get { return objMap.Keys; } }
+
+        int udCacheRef = 0;
 
 
 		public ObjectCache(IntPtr l)
@@ -169,6 +146,11 @@ namespace SLua
 			oldoc = oc;
 		}
 
+        public int size()
+        {
+            return objMap.Count;
+        }
+
 		internal void gc(int index)
 		{
 			object o;
@@ -180,9 +162,9 @@ namespace SLua
 					objMap.Remove(o);
 				}
 				cache.del(index);
-			}
+            }
 		}
-
+#if !SLUA_STANDALONE
         internal void gc(UnityEngine.Object o)
         {
             int index;
@@ -192,6 +174,7 @@ namespace SLua
                 cache.del(index);
             }
         }
+#endif
 
 		internal int add(object o)
 		{
@@ -202,6 +185,11 @@ namespace SLua
 			}
 			return objIndex;
 		}
+
+        internal void destoryObject(IntPtr l, int p) {
+            int index = LuaDLL.luaS_rawnetobj(l, p);
+            gc(index);
+        }
 
 		internal object get(IntPtr l, int p)
 		{
@@ -232,30 +220,62 @@ namespace SLua
 			push(l, o, true);
 		}
 
-		internal void push(IntPtr l, object o, bool checkReflect)
+		internal void push(IntPtr l, Array o)
 		{
+			int index = allocID (l, o);
+			if (index < 0)
+				return;
+
+			LuaDLL.luaS_pushobject(l, index, "LuaArray", true, udCacheRef);
+		}
+
+		internal int allocID(IntPtr l,object o) {
+
+			int index = -1;
+
 			if (o == null)
 			{
 				LuaDLL.lua_pushnil(l);
-				return;
+				return index;
 			}
-
-			int index = -1;
 
 			bool gco = isGcObject(o);
 			bool found = gco && objMap.TryGetValue(o, out index);
 			if (found)
 			{
 				if (LuaDLL.luaS_getcacheud(l, index, udCacheRef) == 1)
-					return;
+					return -1;
 			}
 
 			index = add(o);
+			return index;
+		}
+
+		internal void pushInterface(IntPtr l, object o, Type t)
+		{
+
+			int index = allocID(l, o);
+			if (index < 0)
+				return;
+
+			LuaDLL.luaS_pushobject(l, index, getAQName(t), true, udCacheRef);
+		}
+
+
+		internal void push(IntPtr l, object o, bool checkReflect)
+		{
+			
+			int index = allocID (l, o);
+			if (index < 0)
+				return;
+
+			bool gco = isGcObject(o);
+
 #if SLUA_CHECK_REFLECTION
 			int isReflect = LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
-			if (isReflect != 0 && checkReflect)
+			if (isReflect != 0 && checkReflect && !(o is LuaClassObject))
 			{
-				Debug.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
+				Logger.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
 			}
 #else
 			LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
@@ -286,6 +306,79 @@ namespace SLua
 		bool isGcObject(object obj)
 		{
 			return obj.GetType().IsValueType == false;
+		}
+
+        public bool isObjInLua(object obj)
+        {
+            return objMap.ContainsKey(obj);
+        }
+
+        // find type in current domain
+        static Type getTypeInGlobal(string name) {
+            Type t = Type.GetType(name);
+            if (t!=null) return t;
+
+			Assembly[] ams = AppDomain.CurrentDomain.GetAssemblies();
+
+			for (int n = 0; n < ams.Length; n++)
+			{
+				Assembly a = ams[n];
+				Type[] ts = null;
+				try
+				{
+					ts = a.GetExportedTypes();
+					for (int k = 0; k < ts.Length; k++)
+					{
+						t = ts[k];
+                        if (t.Name == name)
+                            return t;
+					}
+				}
+				catch
+				{
+					continue;
+				}
+			}
+            return null;
+        }
+
+        static Type typeofLD;
+        WeakDictionary<Type, MethodInfo> methodCache = new WeakDictionary<Type, MethodInfo>();
+
+        internal MethodInfo getDelegateMethod(Type t) {
+            MethodInfo mi;
+            if (methodCache.TryGetValue(t, out mi))
+                return mi;
+
+			if (typeofLD == null)
+				typeofLD = getTypeInGlobal("LuaDelegation");
+
+			if (typeofLD == null) return null;
+
+            MethodInfo[] mis = typeofLD.GetMethods(BindingFlags.Static|BindingFlags.NonPublic);
+            for (int n = 0; n < mis.Length;n++) {
+                mi = mis[n];
+                if (isMethodCompatibleWithDelegate(mi, t))
+                {
+                    methodCache.Add(t,mi);
+                    return mi;
+                }
+            }
+            return null;
+        }
+
+		static bool isMethodCompatibleWithDelegate(MethodInfo target,Type dt)
+		{
+			MethodInfo ds = dt.GetMethod("Invoke");
+
+			bool parametersEqual = ds
+				.GetParameters()
+				.Select(x => x.ParameterType)
+                .SequenceEqual(target.GetParameters().Skip(1)
+				.Select(x => x.ParameterType));
+
+			return ds.ReturnType == target.ReturnType &&
+				   parametersEqual;
 		}
 	}
 }

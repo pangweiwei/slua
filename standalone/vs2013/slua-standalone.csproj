@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{10D83B57-7C63-A91B-8574-2C10F17E051C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>slua-standalone</RootNamespace>
+    <AssemblyName>slua-standalone</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Any CPU\Debug\slua-standalone\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+    <DefineConstants>_DEBUG;DEBUG;TRACE;;SLUA_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Any CPU\Release\slua-standalone\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+    <DefineConstants>;SLUA_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\ByteArray.cs">
+      <Link>Assets\Plugins\Slua_Managed\ByteArray.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Coroutine.cs">
+      <Link>Assets\Plugins\Slua_Managed\Coroutine.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Helper.cs">
+      <Link>Assets\Plugins\Slua_Managed\Helper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Logger.cs">
+      <Link>Assets\Plugins\Slua_Managed\Logger.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Lua3rdDLL.cs">
+      <Link>Assets\Plugins\Slua_Managed\Lua3rdDLL.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Lua3rdMeta.cs">
+      <Link>Assets\Plugins\Slua_Managed\Lua3rdMeta.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaArray.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaArray.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaByteArray.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaByteArray.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaDLL.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaDLL.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaDLLWrapper.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaDLLWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaObject.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaObject_basetype.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaObject_basetype.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaObject_overload.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaObject_overload.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaState.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaState.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaSvr.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaSvr.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaSvrGameObject.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaSvrGameObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaValueType.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaValueType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\LuaVarObject.cs">
+      <Link>Assets\Plugins\Slua_Managed\LuaVarObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\ObjectCache.cs">
+      <Link>Assets\Plugins\Slua_Managed\ObjectCache.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\SLuaSetting.cs">
+      <Link>Assets\Plugins\Slua_Managed\SLuaSetting.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\Timer.cs">
+      <Link>Assets\Plugins\Slua_Managed\Timer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\Plugins\Slua_Managed\WeakDictionary.cs">
+      <Link>Assets\Plugins\Slua_Managed\WeakDictionary.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

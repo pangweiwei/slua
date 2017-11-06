@@ -20,9 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using UnityEngine;
 using System.Collections;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
+#if !SLUA_STANDALONE
+using UnityEngine;
+#endif
 
 namespace SLua{
 	public enum EOL{
@@ -32,40 +36,64 @@ namespace SLua{
 		LF,
 	}
 
-	public class SLuaSetting : ScriptableObject {
+	public enum JITBUILDTYPE : int
+	{
+		none = 0,
+		X86 = 1,
+		X64 = 2,
+		GC64 = 3,
+	}
+
+	public class SLuaSetting 
+	#if !SLUA_STANDALONE
+		: ScriptableObject
+	#endif
+	{
 
 		public EOL eol = EOL.Native;
 		public bool exportExtensionMethod = true;
 		public string UnityEngineGeneratePath = "Assets/Slua/LuaObject/";
 
-		public int debugPort=10240;
-		public string debugIP="0.0.0.0";
+        public bool PrintTrace = true;
 
-		private static SLuaSetting _instance;
+
+		public JITBUILDTYPE jitType = JITBUILDTYPE.none;
+
+		// public int debugPort=10240;
+		// public string debugIP="0.0.0.0"; // no longer debugger built-in
+
+		private static SLuaSetting _instance=null;
 		public static SLuaSetting Instance{
 			get{
+				#if !SLUA_STANDALONE
 				if(_instance == null){
-					string path = "Assets/Slua/setting.asset";
-#if UNITY_5
-					_instance = AssetDatabase.LoadAssetAtPath<SLuaSetting>(path);
-#else
-					_instance = (SLuaSetting)AssetDatabase.LoadAssetAtPath(path,typeof(SLuaSetting));
-#endif
+					_instance = Resources.Load<SLuaSetting>("setting");
+
+				#if UNITY_EDITOR
 					if(_instance == null){
 						_instance =  SLuaSetting.CreateInstance<SLuaSetting>();
-						AssetDatabase.CreateAsset(_instance,path);
+                        try
+                        {
+                            AssetDatabase.CreateAsset(_instance, "Assets/Slua/Resources/setting.asset");
+                        }
+                        catch {
+                            
+                        }
 					}
+				#endif
+
 				}
+				#endif
 				return _instance;
 			}
 		}
 
-#if UNITY_EDITOR
+		#if UNITY_EDITOR && !SLUA_STANDALONE
 		[MenuItem("SLua/Setting")]
 		public static void Open(){
 			Selection.activeObject = Instance;
 		}
-#endif
+		#endif
 
 	}
 

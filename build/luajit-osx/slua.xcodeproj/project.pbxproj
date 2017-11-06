@@ -236,7 +236,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
-				USER_HEADER_SEARCH_PATHS = "../luajit-2.1.0/src";
+				USER_HEADER_SEARCH_PATHS = "../luajit-2.1.0-beta3/src";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
@@ -259,7 +259,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
-				USER_HEADER_SEARCH_PATHS = "../luajit-2.1.0/src";
+				USER_HEADER_SEARCH_PATHS = "../luajit-2.1.0-beta3/src";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;

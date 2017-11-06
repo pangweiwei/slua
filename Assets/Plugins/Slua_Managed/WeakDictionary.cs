@@ -36,8 +36,10 @@ namespace SLua
 			get
 			{
 				WeakReference w = _dict[key];
-				if (w.IsAlive)
-					return (V)w.Target;
+                // IsAlive is not reliable in IL2CPP
+                V value = (V)w.Target;
+				if (value != null)
+					return value;
 				return default(V);
 			}
 
@@ -48,14 +50,14 @@ namespace SLua
 		}
 
 
-		ICollection<K> Keys
+		public ICollection<K> Keys
 		{
 			get
 			{
 				return _dict.Keys;
 			}
 		}
-		ICollection<V> Values
+		public ICollection<V> Values
 		{
 			get
 			{
@@ -68,11 +70,11 @@ namespace SLua
 			}
 		}
 
-		void Add(K key, V value)
+		public void Add(K key, V value)
 		{
 			if (_dict.ContainsKey(key))
 			{
-				if (_dict[key].IsAlive)
+				if (_dict[key].Target != null)
 					throw new ArgumentException("key exists");
 
 				_dict[key].Target = value;
@@ -84,15 +86,15 @@ namespace SLua
 			}
 		}
 
-		bool ContainsKey(K key)
+		public bool ContainsKey(K key)
 		{
 			return _dict.ContainsKey(key);
 		}
-		bool Remove(K key)
+		public bool Remove(K key)
 		{
 			return _dict.Remove(key);
 		}
-		bool TryGetValue(K key, out V value)
+		public bool TryGetValue(K key, out V value)
 		{
 			WeakReference w;
 			if (_dict.TryGetValue(key, out w))
