@@ -92,7 +92,7 @@ namespace SLua
 			UnityEngine.Application.SetStackTraceLogType (UnityEngine.LogType.Error, Type);
 #else
             UnityEngine.Debug.LogError(msg);
-			#endif
+        #endif
 		}
 
 

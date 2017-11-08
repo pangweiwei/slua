@@ -156,7 +156,9 @@ namespace SLua
         static public void Generate()
         {
 #if UNITY_2017_2_OR_NEWER
-            GenerateFor("UnityEngine.CoreModule", "Unity/", 0, "BindUnity");
+            GenerateFor(new string[] { "UnityEngine.CoreModule",
+                "UnityEngine.UnityWebRequestWWWModule",
+                "UnityEngine.PhysicsModule" }, "Unity/", 0, "BindUnity");
 #else
             GenerateFor("UnityEngine", "Unity/", 0, "BindUnity");
 #endif
@@ -174,6 +176,77 @@ namespace SLua
             GenerateFor("UnityEngine.Advertisements", "Unity/", 2, "BindUnityAds");
         }
 
+        static List<Type> GetExportsType(string[] asemblyNames, string genAtPath) {
+
+            List<Type> exports = new List<Type>();
+
+            foreach (string asemblyName in asemblyNames)
+            {
+                Assembly assembly;
+                try { assembly = Assembly.Load(asemblyName); }
+                catch (Exception) { continue; }
+
+                Type[] types = assembly.GetExportedTypes();
+
+                List<string> uselist;
+                List<string> noUseList;
+
+                CustomExport.OnGetNoUseList(out noUseList);
+                CustomExport.OnGetUseList(out uselist);
+
+                // Get use and nouse list from custom export.
+                object[] aCustomExport = new object[1];
+                InvokeEditorMethod<ICustomExportPost>("OnGetUseList", ref aCustomExport);
+                if (null != aCustomExport[0])
+                {
+                    if (null != uselist)
+                    {
+                        uselist.AddRange((List<string>)aCustomExport[0]);
+                    }
+                    else
+                    {
+                        uselist = (List<string>)aCustomExport[0];
+                    }
+                }
+
+                aCustomExport[0] = null;
+                InvokeEditorMethod<ICustomExportPost>("OnGetNoUseList", ref aCustomExport);
+                if (null != aCustomExport[0])
+                {
+                    if ((null != noUseList))
+                    {
+                        noUseList.AddRange((List<string>)aCustomExport[0]);
+                    }
+                    else
+                    {
+                        noUseList = (List<string>)aCustomExport[0];
+                    }
+                }
+
+                string path = GenPath + genAtPath;
+                foreach (Type t in types)
+                {
+                    if (filterType(t, noUseList, uselist) && Generate(t, path))
+                        exports.Add(t);
+                }
+                Debug.Log("Generate interface finished: " + asemblyName);
+            }
+            return exports;
+        }
+
+        static public void GenerateFor(string[] asemblyNames, string genAtPath, int genOrder, string bindMethod) {
+            if (IsCompiling)
+            {
+                return;
+            }
+
+            List<Type> exports = GetExportsType(asemblyNames, genAtPath);
+            string path = GenPath + genAtPath;
+            GenerateBind(exports, bindMethod, genOrder, path);
+            if (autoRefresh)
+                AssetDatabase.Refresh();
+        }
+
         static public void GenerateFor(string asemblyName, string genAtPath, int genOrder, string bindMethod)
         {
             if (IsCompiling)
@@ -181,59 +254,13 @@ namespace SLua
                 return;
             }
 
-            Assembly assembly;
-            try { assembly = Assembly.Load(asemblyName); }
-            catch (Exception) { return; }
 
-            Type[] types = assembly.GetExportedTypes();
-
-            List<string> uselist;
-            List<string> noUseList;
-
-            CustomExport.OnGetNoUseList(out noUseList);
-            CustomExport.OnGetUseList(out uselist);
-
-            // Get use and nouse list from custom export.
-            object[] aCustomExport = new object[1];
-            InvokeEditorMethod<ICustomExportPost>("OnGetUseList", ref aCustomExport);
-            if (null != aCustomExport[0])
-            {
-                if (null != uselist)
-                {
-                    uselist.AddRange((List<string>)aCustomExport[0]);
-                }
-                else
-                {
-                    uselist = (List<string>)aCustomExport[0];
-                }
-            }
-
-            aCustomExport[0] = null;
-            InvokeEditorMethod<ICustomExportPost>("OnGetNoUseList", ref aCustomExport);
-            if (null != aCustomExport[0])
-            {
-                if ((null != noUseList))
-                {
-                    noUseList.AddRange((List<string>)aCustomExport[0]);
-                }
-                else
-                {
-                    noUseList = (List<string>)aCustomExport[0];
-                }
-            }
-
-            List<Type> exports = new List<Type>();
+            List<Type> exports = GetExportsType(new string[] { asemblyName }, genAtPath);
             string path = GenPath + genAtPath;
-            foreach (Type t in types)
-            {
-                if (filterType(t, noUseList, uselist) && Generate(t, path))
-                    exports.Add(t);
-            }
-
             GenerateBind(exports, bindMethod, genOrder, path);
             if (autoRefresh)
                 AssetDatabase.Refresh();
-            Debug.Log("Generate interface finished: " + asemblyName);
+            
         }
 
 		static String FixPathName(string path) {
@@ -604,9 +631,6 @@ namespace SLua
 		
 		static bool Generate(Type t, string ns, string path)
 		{
-			//if (t.IsInterface)
-			//	return false;
-			
 			CodeGenerator cg = new CodeGenerator();
 			cg.givenNamespace = ns;
             cg.path = path;
