@@ -1606,7 +1606,7 @@ return dumpstack
             };
         }
 
-		public int pushTry()
+		public int pushTry(IntPtr L)
         {
             if (errorRef == 0)
             {

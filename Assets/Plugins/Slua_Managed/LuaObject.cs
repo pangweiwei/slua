@@ -224,8 +224,8 @@ namespace SLua
 			int err = getOpFunction(l, f, tip);
 			LuaDLL.lua_pushvalue(l, 1);
 			LuaDLL.lua_pushvalue(l, 2);
-			if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
-				LuaDLL.lua_pop(l, 1);
+            if (LuaDLL.lua_pcall(l, 2, 1, err) != 0)
+                LuaDLL.lua_pop(l, 1);
 			LuaDLL.lua_remove(l, err);
 			pushValue(l, true);
 			LuaDLL.lua_insert(l, -2);
@@ -657,7 +657,7 @@ namespace SLua
 				return 0;
 			}
 
-            return state.pushTry();
+            return state.pushTry(l);
 		}
 
 		public static bool matchType(IntPtr l, int p, LuaTypes lt, Type t)
