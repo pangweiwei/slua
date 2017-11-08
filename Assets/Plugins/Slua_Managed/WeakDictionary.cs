@@ -53,14 +53,13 @@ namespace SLua
 			get{
 				int cnt = 0;
 				foreach (var pair in _dict) {
-					if (pair.Value.IsAlive) {
+                    if (pair.Value.IsAlive && ((V)pair.Value.Target)!=null) {
 						cnt++;
 					}
 				}
 				return cnt;
 			}
 		}
-
 
 		public ICollection<K> Keys
 		{
@@ -112,7 +111,7 @@ namespace SLua
 			if (_dict.TryGetValue(key, out w))
 			{
 				value = (V)w.Target;
-				return true;
+				return value!=null;
 			}
 			value = default(V);
 			return false;
