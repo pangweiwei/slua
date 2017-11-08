@@ -49,6 +49,18 @@ namespace SLua
 			}
 		}
 
+		public int AliveCount{
+			get{
+				int cnt = 0;
+				foreach (var pair in _dict) {
+					if (pair.Value.IsAlive) {
+						cnt++;
+					}
+				}
+				return cnt;
+			}
+		}
+
 
 		public ICollection<K> Keys
 		{

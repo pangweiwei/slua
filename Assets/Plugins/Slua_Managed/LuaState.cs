@@ -444,6 +444,12 @@ namespace SLua
         int mainThread = 0;
         internal WeakDictionary<int, LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
 
+		public int cachedDelegateCount{
+			get{
+				return this.delgateMap.AliveCount;
+			}
+		}
+
         public IntPtr L
         {
             get
@@ -486,6 +492,7 @@ namespace SLua
         public LoaderDelegate loaderDelegate;
         public OutputDelegate logDelegate;
         public OutputDelegate errorDelegate;
+		public OutputDelegate warnDelegate;
 
 
         public delegate void UnRefAction(IntPtr l, int r);
@@ -741,6 +748,7 @@ return index
             checkRef();
         }
 
+
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int init(IntPtr L)
         {
@@ -752,6 +760,9 @@ return index
 
             LuaDLL.lua_pushcfunction(L, printerror);
             LuaDLL.lua_setglobal(L, "printerror");
+
+			LuaDLL.lua_pushcfunction(L, warn);
+			LuaDLL.lua_setglobal(L, "warn");
 
             LuaDLL.lua_pushcfunction(L, pcall);
             LuaDLL.lua_setglobal(L, "pcall");
@@ -1081,6 +1092,24 @@ return dumpstack
 
             return 0;
         }
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		internal static int warn(IntPtr L)
+		{
+			int n = LuaDLL.lua_gettop(L);
+			string str = stackString (L, n);
+			Logger.LogWarning(str);
+			LuaState state = LuaState.get(L);
+			if (state.warnDelegate != null)
+			{
+				state.warnDelegate(s.ToString());
+			}
+
+			LuaDLL.lua_settop(L, n);
+			return 0;
+		}
+
+
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		internal static int loadfile(IntPtr L)

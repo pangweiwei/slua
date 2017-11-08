@@ -1015,7 +1015,7 @@ namespace SLua
     public class LuaUnityEvent_$CLS : LuaObject
     {
 
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        [SLua.MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int AddListener(IntPtr l)
         {
             try
@@ -1032,7 +1032,7 @@ namespace SLua
 				return error(l,e);
             }
         }
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        [SLua.MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int RemoveListener(IntPtr l)
         {
             try
@@ -1049,7 +1049,7 @@ namespace SLua
                 return error(l,e);
             }
         }
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        [SLua.MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int Invoke(IntPtr l)
         {
             try
@@ -1311,7 +1311,7 @@ namespace SLua
 
 		bool isPInvoke(MethodInfo mi, out bool instanceFunc)
 		{
-			if (mi.IsDefined(typeof(MonoPInvokeCallbackAttribute), false))
+			if (mi.IsDefined(typeof(SLua.MonoPInvokeCallbackAttribute), false))
 			{
 				instanceFunc = !mi.IsDefined(typeof(StaticExportAttribute), false);
 				return true;
@@ -1359,7 +1359,7 @@ namespace SLua
 			Type ot;
 			if (overloadedClass.TryGetValue (t, out ot)) {
 				MethodInfo mi = ot.GetMethod (f, BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-				if (mi != null && mi.IsDefined(typeof(MonoPInvokeCallbackAttribute),false)) {
+				if (mi != null && mi.IsDefined(typeof(SLua.MonoPInvokeCallbackAttribute),false)) {
 					f = FullName (ot) + "." + f;
 					return true;
 				}
@@ -1763,7 +1763,7 @@ namespace SLua
 		
 		private void WriteFunctionAttr(StreamWriter file)
 		{
-			Write(file, "[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]");
+			Write(file, "[SLua.MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]");
 #if UNITY_5_3_OR_NEWER
 			Write (file, "[UnityEngine.Scripting.Preserve]");
 #endif
