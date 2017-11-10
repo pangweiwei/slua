@@ -111,6 +111,12 @@ namespace SLua
 
         }
 
+#if UNITY_2017_2_OR_NEWER
+        public static string[] unityModule = new string[] { "UnityEngine","UnityEngine.CoreModule","UnityEngine.UIModule","UnityEngine.TextRenderingModule","UnityEngine.TextRenderingModule",
+                "UnityEngine.UnityWebRequestWWWModule","UnityEngine.Physics2DModule","UnityEngine.AnimationModule","UnityEngine.TextRenderingModule","UnityEngine.IMGUIModule","UnityEngine.UnityWebRequestModule",
+            "UnityEngine.PhysicsModule", "UnityEngine.UI" };
+#endif
+
         [MenuItem("SLua/All/Make")]
         static public void GenerateAll()
         {
@@ -152,13 +158,19 @@ namespace SLua
             }
         }
 
+#if UNITY_2017_2_OR_NEWER
+        [MenuItem("SLua/Unity/Make UnityEngine ...")]
+#else
         [MenuItem("SLua/Unity/Make UnityEngine")]
+#endif
         static public void Generate()
         {
 #if UNITY_2017_2_OR_NEWER
-            GenerateFor(new string[] { "UnityEngine.CoreModule",
-                "UnityEngine.UnityWebRequestWWWModule",
-                "UnityEngine.PhysicsModule" }, "Unity/", 0, "BindUnity");
+            ModuleSelector wnd = EditorWindow.GetWindow<ModuleSelector>("ModuleSelector");
+            wnd.onExport = (string[] module) =>
+            {
+                GenerateFor(module, "Unity/", 0, "BindUnity");
+            };
 #else
             GenerateFor("UnityEngine", "Unity/", 0, "BindUnity");
 #endif
@@ -176,7 +188,8 @@ namespace SLua
             GenerateFor("UnityEngine.Advertisements", "Unity/", 2, "BindUnityAds");
         }
 
-        static List<Type> GetExportsType(string[] asemblyNames, string genAtPath) {
+        static List<Type> GetExportsType(string[] asemblyNames, string genAtPath)
+        {
 
             List<Type> exports = new List<Type>();
 
@@ -234,7 +247,8 @@ namespace SLua
             return exports;
         }
 
-        static public void GenerateFor(string[] asemblyNames, string genAtPath, int genOrder, string bindMethod) {
+        static public void GenerateFor(string[] asemblyNames, string genAtPath, int genOrder, string bindMethod)
+        {
             if (IsCompiling)
             {
                 return;
@@ -260,43 +274,46 @@ namespace SLua
             GenerateBind(exports, bindMethod, genOrder, path);
             if (autoRefresh)
                 AssetDatabase.Refresh();
-            
+
         }
 
-		static String FixPathName(string path) {
-			if(path.EndsWith("\\") || path.EndsWith("/")) {
-				return path.Substring(0,path.Length-1);
-			}
-			return path;
-		}
-		
-		[MenuItem("SLua/Unity/Clear Unity and UI")]
-		static public void ClearUnity()
-		{
-			clear(new string[] { GenPath+"Unity" });
-			Debug.Log("Clear Unity & UI complete.");
-		}
-		
-		[MenuItem("SLua/Custom/Make")]
-		static public void Custom()
-		{
-			if (IsCompiling) {
-				return;
-			}
+        static String FixPathName(string path)
+        {
+            if (path.EndsWith("\\") || path.EndsWith("/"))
+            {
+                return path.Substring(0, path.Length - 1);
+            }
+            return path;
+        }
 
-			List<Type> exports = new List<Type>();
+        [MenuItem("SLua/Unity/Clear Unity and UI")]
+        static public void ClearUnity()
+        {
+            clear(new string[] { GenPath + "Unity" });
+            Debug.Log("Clear Unity & UI complete.");
+        }
+
+        [MenuItem("SLua/Custom/Make")]
+        static public void Custom()
+        {
+            if (IsCompiling)
+            {
+                return;
+            }
+
+            List<Type> exports = new List<Type>();
             string path = GenPath + "Custom/";
-			
-			if (!Directory.Exists(path))
-			{
-				Directory.CreateDirectory(path);
-			}
-			
-			ExportGenericDelegate fun = (Type t, string ns) =>
-			{
-				if (Generate(t, ns, path))
-					exports.Add(t);
-			};
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            ExportGenericDelegate fun = (Type t, string ns) =>
+            {
+                if (Generate(t, ns, path))
+                    exports.Add(t);
+            };
 
             HashSet<string> namespaces = CustomExport.OnAddCustomNamespace();
 
@@ -314,7 +331,8 @@ namespace SLua
             Assembly assembly;
             Type[] types;
 
-            try {
+            try
+            {
                 // export plugin-dll
                 assembly = Assembly.Load("Assembly-CSharp-firstpass");
                 types = assembly.GetExportedTypes();
@@ -326,7 +344,7 @@ namespace SLua
                     }
                 }
             }
-            catch(Exception){}
+            catch (Exception) { }
 
             // export self-dll
             assembly = Assembly.Load("Assembly-CSharp");
@@ -343,25 +361,25 @@ namespace SLua
 
             //detect interface ICustomExportPost,and call OnAddCustomClass
             aCustomExport = new object[] { fun };
-			InvokeEditorMethod<ICustomExportPost>("OnAddCustomClass", ref aCustomExport);
+            InvokeEditorMethod<ICustomExportPost>("OnAddCustomClass", ref aCustomExport);
 
-			GenerateBind(exports, "BindCustom", 3, path);
-            if(autoRefresh)
-			    AssetDatabase.Refresh();
-			
-			Debug.Log("Generate custom interface finished");
-		}
+            GenerateBind(exports, "BindCustom", 3, path);
+            if (autoRefresh)
+                AssetDatabase.Refresh();
 
-		static public List<object> InvokeEditorMethod<T>(string methodName, ref object[] parameters)
+            Debug.Log("Generate custom interface finished");
+        }
+
+        static public List<object> InvokeEditorMethod<T>(string methodName, ref object[] parameters)
         {
             List<object> aReturn = new List<object>();
             System.Reflection.Assembly editorAssembly = System.Reflection.Assembly.Load("Assembly-CSharp-Editor");
-			Type[] editorTypes = editorAssembly.GetExportedTypes();
-			foreach (Type t in editorTypes)
-			{
-				if(typeof(T).IsAssignableFrom(t))
+            Type[] editorTypes = editorAssembly.GetExportedTypes();
+            foreach (Type t in editorTypes)
+            {
+                if (typeof(T).IsAssignableFrom(t))
                 {
-					System.Reflection.MethodInfo method =  t.GetMethod(methodName,System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+                    System.Reflection.MethodInfo method = t.GetMethod(methodName, System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
                     if (method != null)
                     {
                         object cRes = method.Invoke(null, parameters);
@@ -370,11 +388,11 @@ namespace SLua
                             aReturn.Add(cRes);
                         }
                     }
-				}
-			}
+                }
+            }
 
             return aReturn;
-		}
+        }
 
         static public List<object> GetEditorField<T>(string strFieldName)
         {
@@ -400,68 +418,69 @@ namespace SLua
             return aReturn;
         }
 
-		[MenuItem("SLua/3rdDll/Make")]
-		static public void Generate3rdDll()
-		{
-			if (IsCompiling) {
-				return;
-			}
+        [MenuItem("SLua/3rdDll/Make")]
+        static public void Generate3rdDll()
+        {
+            if (IsCompiling)
+            {
+                return;
+            }
 
-			List<Type> cust = new List<Type>();
-			List<string> assemblyList = new List<string>();
-			CustomExport.OnAddCustomAssembly(ref assemblyList);
+            List<Type> cust = new List<Type>();
+            List<string> assemblyList = new List<string>();
+            CustomExport.OnAddCustomAssembly(ref assemblyList);
 
             //detect interface ICustomExportPost,and call OnAddCustomAssembly
             object[] aCustomExport = new object[] { assemblyList };
             InvokeEditorMethod<ICustomExportPost>("OnAddCustomAssembly", ref aCustomExport);
 
-			foreach (string assemblyItem in assemblyList)
-			{
-				Assembly assembly = Assembly.Load(assemblyItem);
-				Type[] types = assembly.GetExportedTypes();
-				foreach (Type t in types)
-				{
-					cust.Add(t);
-				}
-			}
-			if (cust.Count > 0)
-			{
-				List<Type> exports = new List<Type>();
-				string path = GenPath + "Dll/";
-				if (!Directory.Exists(path))
-				{
-					Directory.CreateDirectory(path);
-				}
-				foreach (Type t in cust)
-				{
-					if (Generate(t,path))
-						exports.Add(t);
-				}
-				GenerateBind(exports, "BindDll", 2, path);
-                if(autoRefresh)
-				    AssetDatabase.Refresh();
-				Debug.Log("Generate 3rdDll interface finished");
-			}
-		}
-		[MenuItem("SLua/3rdDll/Clear")]
-		static public void Clear3rdDll()
-		{
-			clear(new string[] { GenPath + "Dll" });
-			Debug.Log("Clear AssemblyDll complete.");
-		}
-		[MenuItem("SLua/Custom/Clear")]
-		static public void ClearCustom()
-		{
-			clear(new string[] { GenPath + "Custom" });
-			Debug.Log("Clear custom complete.");
-		}
-		
-		[MenuItem("SLua/All/Clear")]
-		static public void ClearALL()
-		{
-			clear(new string[] { Path.GetDirectoryName(GenPath) });
-			Debug.Log("Clear all complete.");
-		}
+            foreach (string assemblyItem in assemblyList)
+            {
+                Assembly assembly = Assembly.Load(assemblyItem);
+                Type[] types = assembly.GetExportedTypes();
+                foreach (Type t in types)
+                {
+                    cust.Add(t);
+                }
+            }
+            if (cust.Count > 0)
+            {
+                List<Type> exports = new List<Type>();
+                string path = GenPath + "Dll/";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                foreach (Type t in cust)
+                {
+                    if (Generate(t, path))
+                        exports.Add(t);
+                }
+                GenerateBind(exports, "BindDll", 2, path);
+                if (autoRefresh)
+                    AssetDatabase.Refresh();
+                Debug.Log("Generate 3rdDll interface finished");
+            }
+        }
+        [MenuItem("SLua/3rdDll/Clear")]
+        static public void Clear3rdDll()
+        {
+            clear(new string[] { GenPath + "Dll" });
+            Debug.Log("Clear AssemblyDll complete.");
+        }
+        [MenuItem("SLua/Custom/Clear")]
+        static public void ClearCustom()
+        {
+            clear(new string[] { GenPath + "Custom" });
+            Debug.Log("Clear custom complete.");
+        }
+
+        [MenuItem("SLua/All/Clear")]
+        static public void ClearALL()
+        {
+            clear(new string[] { Path.GetDirectoryName(GenPath) });
+            Debug.Log("Clear all complete.");
+        }
 
         [MenuItem("SLua/Compile LuaObject To DLL")]
         static public void CompileDLL()
@@ -474,8 +493,8 @@ namespace SLua
             {
                 // path may contains space
                 string path = "\"" + AssetDatabase.GUIDToAssetPath(guids[i]) + "\"";
-                if(!scripts.Contains(path))
-                    scripts.Add(path); 
+                if (!scripts.Contains(path))
+                    scripts.Add(path);
             }
 
             if (scripts.Count == 0)
@@ -487,7 +506,11 @@ namespace SLua
 
 #region libraries
             List<string> libraries = new List<string>();
+#if UNITY_2017_2_OR_NEWER
+            string[] referenced = unityModule;
+#else
             string[] referenced = new string[] { "UnityEngine", "UnityEngine.UI" };
+#endif
             string projectPath = Path.GetFullPath(Application.dataPath+"/..").Replace("\\", "/");
             // http://stackoverflow.com/questions/52797/how-do-i-get-the-path-of-the-assembly-the-code-is-in
             foreach (var assem in AppDomain.CurrentDomain.GetAssemblies())
@@ -516,6 +539,7 @@ namespace SLua
             List<string> arg = new List<string>();
             arg.Add("/target:library");
             arg.Add("/sdk:2");
+            arg.Add("/w:0");
             arg.Add(string.Format("/out:\"{0}\"", WrapperName));
             arg.Add(string.Format("/r:\"{0}\"", string.Join(";", libraries.ToArray())));
             arg.AddRange(scripts);
