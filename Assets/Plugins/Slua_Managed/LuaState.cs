@@ -1604,6 +1604,12 @@ return dumpstack
             {
                 LuaObject.pushValue(L, (LuaCSFunction)o);
             };
+
+            regPushVar(typeof(UnityEngine.Vector2), (IntPtr L, object o) => { LuaObject.pushValue(L, (UnityEngine.Vector2)o); });
+            regPushVar(typeof(UnityEngine.Vector3), (IntPtr L, object o) => { LuaObject.pushValue(L, (UnityEngine.Vector3)o); });
+            regPushVar(typeof(UnityEngine.Vector4), (IntPtr L, object o) => { LuaObject.pushValue(L, (UnityEngine.Vector4)o); });
+            regPushVar(typeof(UnityEngine.Quaternion), (IntPtr L, object o) => { LuaObject.pushValue(L, (UnityEngine.Quaternion)o); });
+            regPushVar(typeof(UnityEngine.Color), (IntPtr L, object o) => { LuaObject.pushValue(L, (UnityEngine.Color)o); });
         }
 
 		public int pushTry(IntPtr L)
