@@ -121,7 +121,7 @@ namespace SLua
         static public void GenerateAll()
         {
             autoRefresh = false;
-            Generate();
+            GenerateModule(unityModule);
             GenerateUI();
             GenerateAds();
             Custom();
@@ -158,6 +158,25 @@ namespace SLua
             }
         }
 
+        static void GenerateModule(string[] target=null) {
+#if UNITY_2017_2_OR_NEWER
+            if (target != null)
+            {
+                GenerateFor(target, "Unity/", 0, "BindUnity");
+            }
+            else
+            {
+                ModuleSelector wnd = EditorWindow.GetWindow<ModuleSelector>("ModuleSelector");
+                wnd.onExport = (string[] module) =>
+                {
+                    GenerateFor(module, "Unity/", 0, "BindUnity");
+                };
+            }
+#else
+            GenerateFor("UnityEngine", "Unity/", 0, "BindUnity");
+#endif
+        }
+
 #if UNITY_2017_2_OR_NEWER
         [MenuItem("SLua/Unity/Make UnityEngine ...")]
 #else
@@ -165,15 +184,7 @@ namespace SLua
 #endif
         static public void Generate()
         {
-#if UNITY_2017_2_OR_NEWER
-            ModuleSelector wnd = EditorWindow.GetWindow<ModuleSelector>("ModuleSelector");
-            wnd.onExport = (string[] module) =>
-            {
-                GenerateFor(module, "Unity/", 0, "BindUnity");
-            };
-#else
-            GenerateFor("UnityEngine", "Unity/", 0, "BindUnity");
-#endif
+            GenerateModule();
         }
 
         [MenuItem("SLua/Unity/Make UnityEngine.UI")]
