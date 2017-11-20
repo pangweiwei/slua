@@ -115,6 +115,8 @@ namespace SLua
         public static string[] unityModule = new string[] { "UnityEngine","UnityEngine.CoreModule","UnityEngine.UIModule","UnityEngine.TextRenderingModule","UnityEngine.TextRenderingModule",
                 "UnityEngine.UnityWebRequestWWWModule","UnityEngine.Physics2DModule","UnityEngine.AnimationModule","UnityEngine.TextRenderingModule","UnityEngine.IMGUIModule","UnityEngine.UnityWebRequestModule",
             "UnityEngine.PhysicsModule", "UnityEngine.UI" };
+#else
+        public static string[] unityModule = null;
 #endif
 
         [MenuItem("SLua/All/Make")]
