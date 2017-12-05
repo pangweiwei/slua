@@ -54,7 +54,7 @@ copy /Y luasocket-mini\*.* "%USE_LUA_PATH%\src\"
 call "%ENV64%"
 echo Swtich to x64 build env(%VS_TOOL_VER%)
 cd %USE_LUA_PATH%\src
-call msvcbuild.bat
+call msvcbuild.bat gc64
 copy /Y lua51.dll ..\..\..\Assets\Plugins\x64\slua.dll
 copy /Y lua51.dll ..\..\..\jit\win\x64\lua51.dll
 copy /Y luajit.exe ..\..\..\jit\win\x64\luajit.exe
