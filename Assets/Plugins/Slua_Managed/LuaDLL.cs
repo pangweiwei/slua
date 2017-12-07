@@ -258,8 +258,8 @@ namespace SLua
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int lua_pcallk(IntPtr luaState, int nArgs, int nResults, int errfunc,int ctx,IntPtr k);
 
-		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int luaS_pcall(IntPtr luaState, int nArgs, int nResults, int errfunc);
+//		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+//		public static extern int luaS_pcall(IntPtr luaState, int nArgs, int nResults, int errfunc);
 		
 		public static int lua_call(IntPtr luaState, int nArgs, int nResults)
         {
@@ -268,7 +268,7 @@ namespace SLua
 
         public static int lua_pcall(IntPtr luaState, int nArgs, int nResults, int errfunc)
         {
-			return luaS_pcall(luaState, nArgs, nResults, errfunc);
+			return lua_pcallk(luaState, nArgs, nResults, errfunc, 0, IntPtr.Zero);
         }
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]

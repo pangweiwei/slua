@@ -995,7 +995,6 @@ return dumpstack
             {
                 return LuaObject.error(L, "arg 1 expect function");
             }
-            LuaDLL.luaL_checktype(L, 1, LuaTypes.LUA_TFUNCTION);
             status = LuaDLL.lua_pcall(L, LuaDLL.lua_gettop(L) - 1, LuaDLL.LUA_MULTRET, 0);
             LuaDLL.lua_pushboolean(L, (status == 0));
             LuaDLL.lua_insert(L, 1);
