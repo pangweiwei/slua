@@ -7,7 +7,7 @@ namespace SLua
 {
     public static class LoggerHelper
     {
-        static Regex rgx = new Regex(@"\s(?<File>\w+):(?<Line>\d+):", RegexOptions.IgnoreCase);
+        static Regex rgx = new Regex(@"(\s|/)(?<File>\w+):(?<Line>\d+):", RegexOptions.IgnoreCase);
         static char[] LineEndings = new char[2] { '\n', '\r' };
 
         [UnityEditor.Callbacks.OnOpenAsset(0)]
