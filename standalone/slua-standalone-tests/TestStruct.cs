@@ -62,7 +62,7 @@ local TestStruct = Slua.GetClass('SLua.Test.TestStruct')
 TestStruct.DoMethod(v1, v2)
 return 1
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(1, ret);
         }
 
@@ -73,14 +73,14 @@ return 1
     local v = Slua.CreateClass('SLua.Test.TestStruct+Vector3', 1.5, 2.5)
     return v
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(ret, new Vector3(1.5f, 2.5f, 0.0f));
 
             code = @"
     local v = Slua.CreateClass('SLua.Test.TestStruct+Vector3', 1.5, 2.5, 3.5)
     return v
 ";
-            ret = luaSvr.luaState.doString(code);
+            ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(ret.GetType(), typeof(Vector3));
             Assert.AreEqual(((Vector3)ret).Z, 3.5f);
         }
@@ -98,7 +98,7 @@ return 1
     local v = Slua.CreateClass('SLua.Test.TestStruct+Vector2', 1, 2)
     return v
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(ret, new Vector2(1, 2f));
         }
     }

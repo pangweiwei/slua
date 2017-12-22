@@ -1,4 +1,24 @@
+// The MIT License (MIT)
 
+// Copyright 2015 Siney/Pangweiwei siney@yeah.net
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
 using System;
 
@@ -21,19 +41,28 @@ namespace SLua
         private static UnityEngine.Object FindScriptByMsg(string msg)
         {
 #if UNITY_EDITOR
-            int idx = msg.IndexOf(":");
-            if (idx < 0) return null;
-            string filename = msg.Substring(0, idx);
-            idx = filename.LastIndexOf("/");
-            if (idx >= 0) filename = filename.Substring(idx + 1);
-            string[] guids = UnityEditor.AssetDatabase.FindAssets(filename);
-            filename = filename + ".txt";
-            for (int i = 0; i < guids.Length; i++)
+            string[] lines = msg.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            for (int i = 2; i < lines.Length; i++)
             {
-                string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[i]);
-                if(System.IO.Path.GetFileName(path).Equals(filename))
+                int idx = lines[i].IndexOf(":");
+                if (idx < 0) continue;
+                string filename = lines[i].Substring(0, idx);
+                idx = filename.LastIndexOf("/");
+                if (idx >= 0) filename = filename.Substring(idx + 1);
+                filename = filename.Trim();
+                string[] guids = UnityEditor.AssetDatabase.FindAssets(filename);
+                filename = filename + ".txt";
+                for (int j = 0; j < guids.Length; j++)
                 {
-                    return UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
+                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[j]);
+                    if (System.IO.Path.GetFileName(path).Equals(filename))
+                    {
+#if UNITY_5
+						return UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);				
+#else
+						return UnityEditor.AssetDatabase.LoadAssetAtPath(path,typeof(UnityEngine.Object));
+#endif				
+                    }
                 }
             }
 #endif
@@ -41,7 +70,37 @@ namespace SLua
         }
 #endif
 
-        public static void Log(string msg)
+		#if !SLUA_STANDALONE
+		static void Traceback(string msg, bool hasStacktrace = false) 
+		{
+			#if UNITY_5
+			var Type = UnityEngine.Application.GetStackTraceLogType (UnityEngine.LogType.Log);
+			UnityEngine.Application.SetStackTraceLogType (UnityEngine.LogType.Log, UnityEngine.StackTraceLogType.None);
+			UnityEngine.Debug.Log (msg, hasStacktrace ? FindScriptByMsg (msg) : null);
+			UnityEngine.Application.SetStackTraceLogType (UnityEngine.LogType.Log, Type);
+			#else
+			UnityEngine.Debug.Log(msg);
+			#endif
+		}
+
+		static void TracebackErr(string msg, bool hasStacktrace = false) 
+		{
+#if UNITY_5
+			var Type = UnityEngine.Application.GetStackTraceLogType (UnityEngine.LogType.Error);
+			UnityEngine.Application.SetStackTraceLogType (UnityEngine.LogType.Error, UnityEngine.StackTraceLogType.None);
+			UnityEngine.Debug.LogError (msg, hasStacktrace ? FindScriptByMsg (msg) : null);
+			UnityEngine.Application.SetStackTraceLogType (UnityEngine.LogType.Error, Type);
+#else
+            UnityEngine.Debug.LogError(msg);
+        #endif
+		}
+
+
+		#endif
+
+
+
+        public static void Log(string msg, bool hasStacktrace = false)
         {
             if (LogAction != null)
             {
@@ -50,7 +109,7 @@ namespace SLua
             }
 
 #if !SLUA_STANDALONE
-            UnityEngine.Debug.Log(msg);
+			Traceback(msg,hasStacktrace);
 #else
             Console.WriteLine(msg);
 #endif 
@@ -64,16 +123,7 @@ namespace SLua
             }
 
 #if !SLUA_STANDALONE
-            if(hasStacktrace)
-            {
-                // Disable Stacktrace so we can jump
-                var Type = UnityEngine.Application.GetStackTraceLogType(UnityEngine.LogType.Error);
-                UnityEngine.Application.SetStackTraceLogType(UnityEngine.LogType.Error, UnityEngine.StackTraceLogType.None);
-                UnityEngine.Debug.LogError(msg, FindScriptByMsg(msg));
-                UnityEngine.Application.SetStackTraceLogType(UnityEngine.LogType.Error, Type);
-            }
-            else
-            	UnityEngine.Debug.LogError(msg);
+			TracebackErr(msg,hasStacktrace);
 #else
             Console.WriteLine(msg);
 #endif

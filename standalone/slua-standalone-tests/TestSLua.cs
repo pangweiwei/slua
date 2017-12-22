@@ -30,7 +30,7 @@ namespace SLua.Test
         static readonly LuaSvr CacheLuaSvr = new LuaSvr();
 
         [Test]
-        public void LuaSvr()
+        public void LuaServer()
         {
             var luaSvr = CacheLuaSvr;
             luaSvr.init((x) => { }, () => { });
@@ -42,7 +42,7 @@ local testVar = 12345;
 return testVar;
 ";
             object ret;
-            luaSvr.luaState.doBuffer(Encoding.UTF8.GetBytes(code), "TestLua", out ret);
+            LuaSvr.mainState.doBuffer(Encoding.UTF8.GetBytes(code), "TestLua", out ret);
             Assert.AreEqual(ret, 12345);
         }
 
@@ -53,7 +53,7 @@ return testVar;
 local TestSLua = Slua.GetClass('SLua.Test.TestSLua')
 return TestSLua
 ";
-            var ret = _luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual("SLua.LuaClassObject", ret.GetType().ToString());
 
             var clsField = ret.GetType().GetField("cls", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -77,7 +77,7 @@ return TestSLua
     local TestSLua = Slua.GetClass('SLua.Test.TestSLua')
     return TestSLua.DoMethod(543210543)
 ";
-            var ret = _luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(543210543, (double)ret);
         }
 
@@ -95,7 +95,7 @@ return TestSLua
     local TestSLua = Slua.GetClass('SLua.Test.TestSLua')
     return TestSLua.DoMethodLong(987654321054321, 187654321054321)
 ";
-            var ret = _luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(187654321054321, ret);
         }
 
@@ -113,7 +113,7 @@ return TestSLua
     local TestSLua = Slua.GetClass('SLua.Test.TestSLua')
     return TestSLua.DoMethodDecimal(987654321054321, 187654321054321)
 ";
-            var ret = _luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(187654321054321, ret);
         }
 
@@ -133,7 +133,7 @@ return TestSLua
 
 
             object ret;
-            Assert.IsTrue(_luaSvr.luaState.doBuffer(bomBytes, "TestUtf8Bom", out ret));
+            Assert.IsTrue(LuaSvr.mainState.doBuffer(bomBytes, "TestUtf8Bom", out ret));
             Assert.AreEqual(1, ret);
 
             // Test BOM filter

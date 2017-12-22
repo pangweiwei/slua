@@ -3,8 +3,6 @@ Fastest lua binding via static code generating for Unity3D or mono
 
 Website: http://www.slua.net
 
-Mail List: [Subscribe](http://www.freelists.org/list/slua) (in English only)
-
 QQ group: 15647305 (in Chinese)
 
 Mail to : sineysan#163.com (both of Chinese/English)
@@ -31,7 +29,12 @@ Standard slua release doesn't contains any 3rd Lua library(like protobuf, lpeg e
 You can use slua without Unity3D dependency, it call **slua-standalone**. Useful for C# server development. Find it on https://www.nuget.org/packages/slua-standalone , and it's maintained by https://github.com/mr-kelly/slua.
 
 
-## Demo with slua
+## Framework with slua
+
+You can use this framework to start your project.
+
+This repo https://github.com/lwkl/xproject universal loading framework using slua load lua byte code in all platform.
+
 This repo http://linkcloud.github.io/ poker game using slua.
 
 This repo https://github.com/mr-kelly/KSFramework based on slua for hot reloadable asset bundle framework.
@@ -44,7 +47,7 @@ This repo https://github.com/tenvick/hugula demonstrate Tetris game using slua.
 
 ## Help
 
-See inner demo for help or [Document](../../wiki/中文帮助) (in chinese).
+See inner demo for help or [Document](https://github.com/pangweiwei/slua/wiki) (in chinese).
 
 ## Important
 
@@ -171,7 +174,7 @@ public class HelloWorld   {
 
 ### Benchmark
 
-see http://www.sineysoft.com/post/164 for detail (in chinese), compared with ulua/raw mono.
+compared with ulua/raw mono.
 
 **with luajit**
 

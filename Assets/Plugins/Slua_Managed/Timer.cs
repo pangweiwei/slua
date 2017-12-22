@@ -34,6 +34,7 @@ namespace SLua
 			internal int deadline;
 			internal Func<int, bool> handler;
 			internal bool delete;
+            internal IntPtr L;
 			internal LinkedList<Timer> container;
 		}
 		class Wheel
@@ -123,6 +124,9 @@ namespace SLua
 		
 		internal static void tick(float deltaTime)
 		{
+			if (executeTimers == null)
+				return;
+			
 			nowTime += deltaTime;
 			pileSecs += deltaTime;
 			int cycle = 0;
@@ -190,9 +194,12 @@ namespace SLua
 				}
 			}
 		}
-		
+        static bool inited = false;
 		static void init()
 		{
+            if (inited) return;
+            inited = true;
+
 			wheels = new Wheel[4];
 			for (int i = 0; i < 4; ++i)
 			{
@@ -211,21 +218,22 @@ namespace SLua
 			return ++nextSn;
 		}
 		
-		internal static int add(int delay, Action<int> handler)
+		internal static int add(IntPtr L,int delay, Action<int> handler)
 		{
-			return add(delay, 0, (int sn) =>
-			           {
+			return add(L,delay, 0, (int sn) =>
+            {
 				handler(sn);
 				return false;
 			});
 		}
 		
-		internal static int add(int delay, int cycle, Func<int, bool> handler)
+		internal static int add(IntPtr L,int delay, int cycle, Func<int, bool> handler)
 		{
 			Timer tm = new Timer();
 			tm.sn = fetchSn();
 			tm.cycle = cycle;
 			tm.handler = handler;
+            tm.L = L;
 			mapSnTimer[tm.sn] = tm;
 			innerAdd(now() + delay, tm);
 			return tm.sn;
@@ -281,7 +289,7 @@ namespace SLua
 					}
 					ld.d = ua;
 					pushValue(l, true);
-					pushValue(l, add(delay, ua));
+					pushValue(l, add(l, delay, ua));
 					return 2;
 				}
 				else if (top == 3)
@@ -310,7 +318,7 @@ namespace SLua
 					}
 					ld.d = ua;
 					pushValue(l, true);
-					pushValue(l, add(delay, cycle, ua));
+					pushValue(l, add(l, delay, cycle, ua));
 					return 2;
 				}
 				return LuaObject.error(l,"Argument error");
@@ -327,11 +335,17 @@ namespace SLua
 			if (mapSnTimer == null) return 0;
 			try
 			{
+                List<int> rts = new List<int>();
 				foreach (var t in mapSnTimer)
 				{
-					innerDel(t.Value, false);
+                    if (t.Value.L == l)
+                    {
+                        innerDel(t.Value, false);
+                        rts.Add(t.Key);
+                    }
 				}
-				mapSnTimer.Clear();
+                foreach (int k in rts)
+                    mapSnTimer.Remove(k);
 				
 				pushValue(l, true);
 				return 1;

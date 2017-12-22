@@ -1,3 +1,25 @@
+// The MIT License (MIT)
+
+// Copyright 2015 Siney/Pangweiwei siney@yeah.net
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 using System;
 using System.Collections;
 
@@ -12,13 +34,13 @@ namespace SLua
         public LuaThreadWrapper(LuaFunction func)
          : base()
         {
-            Debug.LogFormat("LuaThreadWrapper.ctor/1: {0}", LuaDLL.lua_gettop(func.L));
-            state = LuaState.get(func.L); // why do not give access of state?
+            Logger.Log(string.Format("LuaThreadWrapper.ctor/1: {0}", LuaDLL.lua_gettop(func.L)));
+            state = LuaState.get(func.L);
             _thread = LuaDLL.lua_newthread(func.L);
             valueref = LuaDLL.luaL_ref(func.L, LuaIndexes.LUA_REGISTRYINDEX);
             func.push(func.L);
             LuaDLL.lua_xmove(func.L, _thread, 1);
-            Debug.LogFormat("LuaThreadWrapper.ctor/2: {0}", LuaDLL.lua_gettop(func.L));
+			Logger.Log(string.Format("LuaThreadWrapper.ctor/2: {0}", LuaDLL.lua_gettop(func.L)));
         }
 
         ~LuaThreadWrapper()
@@ -58,37 +80,34 @@ namespace SLua
             }
         }
 
-        /// 返回true继续执行, false无法继续执行
         public bool Resume(out object retVal)
         {
             if (_thread == IntPtr.Zero)
             {
-                SLua.Logger.LogError("thread: already disposed?");
+                Logger.LogError("thread: already disposed?");
                 retVal = null;
                 return false;
             }
-            var status = LuaDLL.lua_status(_thread); // LUA_OK = 0
+            var status = LuaDLL.lua_status(_thread);
             if (status != 0 && status != (int)LuaThreadStatus.LUA_YIELD)
             {
-                SLua.Logger.LogError("thread: wrong status ?= " + status);
+                Logger.LogError("thread: wrong status ?= " + status);
                 retVal = null;
                 return false;
             }
-            //var debug_top = LuaDLL.lua_gettop(_thread);
             var result = LuaDLL.lua_resume(_thread, 0);
             if (result != (int)LuaThreadStatus.LUA_YIELD)
             {
                 if (result != 0)
                 {
                     string error = LuaDLL.lua_tostring(_thread, -1);
-                    SLua.Logger.LogError(string.Format("wrong result ?= {0} err: {1}", result, error));
+                    Logger.LogError(string.Format("wrong result ?= {0} err: {1}", result, error));
                 }
                 retVal = null;
                 return false;
             }
             var nArgsFromYield = LuaDLL.lua_gettop(_thread);
-            //Debug.LogFormat("thread debug {0} {1}", debug_top, nArgsFromYield);
-            retVal = TopObjects(nArgsFromYield); //?? top is thread self, but remove after yield??
+            retVal = TopObjects(nArgsFromYield);
             return true;
         }
     }

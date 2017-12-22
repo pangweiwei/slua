@@ -17,8 +17,8 @@ public class NewCoroutine : MonoBehaviour
 		svr.init(null, () =>
 		{
             var func = (LuaFunction)svr.start("new_coroutine");
-			
             func.call(this);
+				func.Dispose();
 		});
 	}
 	

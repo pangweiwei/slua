@@ -66,7 +66,7 @@ end
 
 local function inherite(cls,base)
 	for k,v in pairs(getmetatable(base)) do
-		if k:sub(1,2)~='__' and  k:sub(1,1)>='A' and k:sub(1,1)<='Z' then
+		if not cls[k] and k:sub(1,2)~='__' and  k:sub(1,1)>='A' and k:sub(1,1)<='Z' then
 			cls[k]=v
 		end
 	end
@@ -547,6 +547,7 @@ do
 	    return (normal * Vector3.Dot(vector, normal)) / num
 	end
 
+	inherite(Vector3,Raw)
 	setmetatable(Vector3,Vector3)
 end
 
@@ -671,6 +672,7 @@ do
 	end
 
 
+	inherite(Color,Raw)
 	setmetatable(Color,Color)
 
 end
@@ -1085,7 +1087,8 @@ end
         {
 #if !LUA_5_3 && !SLUA_STANDALONE
             // lua implemented valuetype isn't faster than raw under non-jit.
-			LuaState.get(l).doString(script,"ValueTypeScript");
+            LuaState ls = LuaState.get(l);
+            ls.doString(script, "ValueTypeScript");
 #endif
         }
     }

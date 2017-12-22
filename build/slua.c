@@ -27,12 +27,18 @@
 #define MT_Q	4
 #define MT_COLOR	5
 
+#ifndef LUA_LIB
 #define LUA_LIB
+#endif
 
 #include "lua.h"
 #include "lauxlib.h"
 #include <stdio.h>
 #include <string.h>
+
+#include "luasocket.h"
+
+#define luajit_c
 
 #ifdef _WIN32
 #include <float.h>
@@ -43,9 +49,9 @@
 #endif
 
 static const luaL_Reg s_lib_preload[] = {
-	// { "lpeg", luaopen_lpeg },
+	{ "socket.core", luaopen_socket_core },
 	// { "pb",    luaopen_pb }, // any 3rd lualibs added here
-		{ NULL, NULL }
+	{ NULL, NULL }
 };
 
 #if LUA_VERSION_NUM >= 503
@@ -151,19 +157,19 @@ LUA_API const char* luaS_tolstring32(lua_State *L, int index, int* len) {
 	return ret;
 }
 
-#if LUA_VERSION_NUM>=503
-static int k(lua_State *L, int status, lua_KContext ctx) {
-	return status;
-}
+// #if LUA_VERSION_NUM>=503
+// static int k(lua_State *L, int status, lua_KContext ctx) {
+// 	return status;
+// }
 
-LUA_API int luaS_yield(lua_State *L, int nrets) {
-	return k(L, lua_yieldk(L, nrets, 0, k), 0);
-}
+// LUA_API int luaS_yield(lua_State *L, int nrets) {
+// 	return k(L, lua_yieldk(L, nrets, 0, k), 0);
+// }
 
-LUA_API int luaS_pcall(lua_State *L, int nargs, int nresults, int err) {
-	return k(L, lua_pcallk(L, nargs, nresults, err, 0, k), 0);
-}
-#endif
+// LUA_API int luaS_pcall(lua_State *L, int nargs, int nresults, int err) {
+// 	return k(L, lua_pcallk(L, nargs, nresults, err, 0, k), 0);
+// }
+// #endif
 
 
 

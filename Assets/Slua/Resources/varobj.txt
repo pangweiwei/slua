@@ -72,6 +72,10 @@ function main()
 	local r=Slua.CreateClass("Ref")
 	r.depth=10
 	print(r,r.depth)
+
+
+	local h=Slua.GetClass("HelloWorld")
+	assert(h.getNegInt()==-1)
 end
 
 

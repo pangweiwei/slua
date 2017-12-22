@@ -25,11 +25,7 @@
 namespace SLua
 {
 	using UnityEngine;
-	using System.Collections;
-	using System.Collections.Generic;
 	using System;
-	using System.Reflection;
-	using System.Runtime.InteropServices;
 
 	public partial class LuaObject
 	{
