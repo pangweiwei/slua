@@ -1543,7 +1543,7 @@ namespace SLua
 			{
 				if (DontExport(fi) || IsObsolete(fi))
 					continue;
-				
+
 				PropPair pp = new PropPair();
 				pp.isInstance = !fi.IsStatic;
 				
@@ -1611,9 +1611,17 @@ namespace SLua
 			List<PropertyInfo> getter = new List<PropertyInfo>();
 			List<PropertyInfo> setter = new List<PropertyInfo>();
 			// Write property set/get
-			PropertyInfo[] props = t.GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+			PropertyInfo[] props = t.GetProperties(BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
 			foreach (PropertyInfo fi in props)
 			{
+				// For compatible Singleton template class.
+				MethodInfo fiGetMeth = fi.GetGetMethod();
+				if (fi.DeclaringType != t)
+				{
+					if (fiGetMeth == null || !fiGetMeth.IsStatic || fi.Name != "Instance")
+						continue;
+				}
+
 				//if (fi.Name == "Item" || IsObsolete(fi) || MemberInFilter(t,fi) || DontExport(fi))
 				if (IsObsolete(fi) || MemberInFilter(t, fi) || DontExport(fi))
 					continue;
@@ -1621,7 +1629,7 @@ namespace SLua
 				    || (t.Name == "String" && fi.Name == "Chars")) // for string[]
 				{
 					//for this[]
-					if (!fi.GetGetMethod().IsStatic && fi.GetIndexParameters().Length == 1)
+					if (fiGetMeth.IsStatic && fi.GetIndexParameters().Length == 1)
 					{
 						if (fi.CanRead && !IsNotSupport(fi.PropertyType))
 							getter.Add(fi);
@@ -1633,7 +1641,7 @@ namespace SLua
 				PropPair pp = new PropPair();
 				bool isInstance = true;
 				
-				if (fi.CanRead && fi.GetGetMethod() != null)
+				if (fi.CanRead && fiGetMeth != null)
 				{
 					if (!IsNotSupport(fi.PropertyType))
 					{
@@ -1641,7 +1649,7 @@ namespace SLua
 						Write(file, "static public int get_{0}(IntPtr l) {{", fi.Name);
 						WriteTry(file);
 						
-						if (fi.GetGetMethod().IsStatic)
+						if (fiGetMeth.IsStatic)
 						{
 							isInstance = false;
 							WriteOk(file);
