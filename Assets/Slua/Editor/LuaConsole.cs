@@ -426,7 +426,7 @@ end
             GUILayout.Space(4);
 
             Event e = Event.current;
-            if (e.type == EventType.mouseDown && dragSpliterRect.Contains(e.mousePosition))
+            if (e.type == EventType.MouseDown && dragSpliterRect.Contains(e.mousePosition))
             {
                 e.Use();
                 inputAreaResizing = true;
