@@ -42,7 +42,7 @@ make HOST_CC="gcc -std=c99" CROSS="$ISDKP" TARGET_FLAGS="$ISDKF" TARGET=arm64 TA
 # add simulator support
 ISDK=$IXCODE/Platforms/iPhoneSimulator.platform/Developer
 ISDKVER=iPhoneSimulator.sdk
-set development target to 8.0
+# set development target to 9.0
 DEVTAR=9.0
 ISDKP=/usr/bin/
 

@@ -583,7 +583,6 @@ namespace SLua
 
         public void bindUnity()
         {
-
             if (!openedSluaLib)
                 openSluaLib();
 
@@ -593,6 +592,9 @@ namespace SLua
 
         public IEnumerator bindUnity(Action<int> _tick, Action complete)
         {
+            if (!openedSluaLib)
+                openSluaLib();
+
             yield return LuaSvr.doBind(L, _tick, complete);
             LuaValueType.reg(L);
         }
@@ -764,8 +766,8 @@ return index
 			LuaDLL.lua_pushcfunction(L, warn);
 			LuaDLL.lua_setglobal(L, "warn");
 
-            LuaDLL.lua_pushcfunction(L, pcall);
-            LuaDLL.lua_setglobal(L, "pcall");
+//            LuaDLL.lua_pushcfunction(L, pcall);
+//            LuaDLL.lua_setglobal(L, "pcall");
 
             pushcsfunction(L, import);
             LuaDLL.lua_setglobal(L, "import");
@@ -987,20 +989,19 @@ return dumpstack
             }
         }
 
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        internal static int pcall(IntPtr L)
-        {
-            int status;
-            if (LuaDLL.lua_type(L, 1) != LuaTypes.LUA_TFUNCTION)
-            {
-                return LuaObject.error(L, "arg 1 expect function");
-            }
-            LuaDLL.luaL_checktype(L, 1, LuaTypes.LUA_TFUNCTION);
-            status = LuaDLL.lua_pcall(L, LuaDLL.lua_gettop(L) - 1, LuaDLL.LUA_MULTRET, 0);
-            LuaDLL.lua_pushboolean(L, (status == 0));
-            LuaDLL.lua_insert(L, 1);
-            return LuaDLL.lua_gettop(L);  /* return status + all results */
-        }
+//        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+//        internal static int pcall(IntPtr L)
+//        {
+//            int status;
+//            if (LuaDLL.lua_type(L, 1) != LuaTypes.LUA_TFUNCTION)
+//            {
+//                return LuaObject.error(L, "arg 1 expect function");
+//            }
+//            status = LuaDLL.lua_pcall(L, LuaDLL.lua_gettop(L) - 1, LuaDLL.LUA_MULTRET, 0);
+//            LuaDLL.lua_pushboolean(L, (status == 0));
+//            LuaDLL.lua_insert(L, 1);
+//            return LuaDLL.lua_gettop(L);  /* return status + all results */
+//        }
 
         internal static void pcall(IntPtr l, LuaCSFunction f)
         {
