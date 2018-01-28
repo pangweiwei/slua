@@ -892,8 +892,9 @@ namespace SLua
 			if (!t.IsGenericTypeDefinition && (!IsObsolete(t) && t != typeof(YieldInstruction) && t != typeof(Coroutine))
 			    || (t.BaseType != null && t.BaseType == typeof(System.MulticastDelegate)))
 			{
-
-				if (t.IsNested && t.DeclaringType.IsPublic == false)
+				if (t.IsNested
+					&& ((!t.DeclaringType.IsNested && t.DeclaringType.IsPublic == false)
+					|| (t.DeclaringType.IsNested && t.DeclaringType.IsNestedPublic == false)))
 					return false;
 
 				if (t.IsEnum)
