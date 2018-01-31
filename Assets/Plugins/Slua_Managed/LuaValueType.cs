@@ -546,6 +546,10 @@ do
 	    end
 	    return (normal * Vector3.Dot(vector, normal)) / num
 	end
+    
+    function Vector3.SignedAngle(a,b,c)
+        return Raw.SignedAngle(a,b,c)
+    end
 
 	inherite(Vector3,Raw)
 	setmetatable(Vector3,Vector3)
