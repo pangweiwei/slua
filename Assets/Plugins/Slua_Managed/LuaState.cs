@@ -583,7 +583,6 @@ namespace SLua
 
         public void bindUnity()
         {
-
             if (!openedSluaLib)
                 openSluaLib();
 
@@ -593,6 +592,9 @@ namespace SLua
 
         public IEnumerator bindUnity(Action<int> _tick, Action complete)
         {
+            if (!openedSluaLib)
+                openSluaLib();
+
             yield return LuaSvr.doBind(L, _tick, complete);
             LuaValueType.reg(L);
         }

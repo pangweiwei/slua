@@ -672,7 +672,7 @@ namespace SLua
 			}
 			else if (t == typeof(char[]) || t==typeof(byte[]))
 			{
-				return lt == LuaTypes.LUA_TSTRING;
+				return lt == LuaTypes.LUA_TSTRING || lt == LuaTypes.LUA_TUSERDATA;
 			}
 
 			switch (lt)
@@ -941,6 +941,7 @@ namespace SLua
             }
             else
             {
+				object obj = checkObj (l, p);
                 Array array = checkObj(l, p) as Array;
                 ta = array as T[];
                 return ta != null;
