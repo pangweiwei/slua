@@ -556,12 +556,13 @@ do
 
 	local Raw=UnityEngine.Color
 	local Color={__typename='Color',__raw=Raw}
-	_G['UnityEngine.Color.Instance']=Color
+	local I={__typename='Color'}
+	_G['UnityEngine.Color.Instance']=I
 	UnityEngine.Color=Color
 	local get={}
 	local set={}
 
-	Color.__index = function(t,k)
+	I.__index = function(t,k)
 		local f=rawget(Color,k)
 		if f then return f end
 		local f=rawget(get,k)
@@ -569,13 +570,13 @@ do
 		error('Not found '..k)
 	end
 
-	Color.__newindex = function(t,k,v)
+	I.__newindex = function(t,k,v)
 		local f=rawget(set,k)
 		if f then return f(t,v) end
 		error('Not found '..k)
 	end
 
-	Color.__tostring = function(self)
+	I.__tostring = function(self)
 		return string.format('Color(%f,%f,%f,%f)',self[1],self[2],self[3],self[4])
 	end
 
@@ -583,7 +584,7 @@ do
 	function Color.New(r,g,b,a)
 		a=a or 1
 		local c={r or 0,g or 0,b or 0,a or 0}
-		setmetatable(c,Color)
+		setmetatable(c,I)
 		return c
 	end
 
@@ -591,15 +592,15 @@ do
 		return Color.New(r,g,b,a)
 	end
 
-	function Color.__add(a,b)
+	function I.__add(a,b)
 		return Color.New(a[1]+b[1],a[2]+b[2],a[3]+b[3],a[4]+b[4])
 	end
 
-	function Color.__sub(a,b)
+	function I.__sub(a,b)
 		return Color.New(a[1]-b[1],a[2]-b[2],a[3]-b[3],a[4]-b[4])
 	end
 
-	function Color.__mul( a,b )
+	function I.__mul( a,b )
 		if type(a)=='number' then
 			return Color.New(a*b[1],a*b[2],a*b[3],a*b[4])
 		elseif type(b)=='number' then
@@ -609,11 +610,11 @@ do
 		end
 	end
 
-	function Color.__div( a,b )
+	function I.__div( a,b )
 		return Color.New(a[1]/b,a[2]/b,a[3]/b,a[4]/b)
 	end
 
-	function Color.__eq( a,b )
+	function I.__eq( a,b )
 		return a[1]==b[1] and a[2]==b[2] and a[3]==b[3] and a[4]==b[4]
 	end
 
@@ -680,12 +681,13 @@ end
 do
 	local Raw=UnityEngine.Vector2
 	local Vector2={__typename='Vector2',__raw=Raw}
-	_G['UnityEngine.Vector2.Instance']=Vector2
+	local I={__typename='Vector2'}
+	_G['UnityEngine.Vector2.Instance']=I
 	UnityEngine.Vector2=Vector2
 	local get={}
 	local set={}
 
-	Vector2.__index = function(t,k)
+	I.__index = function(t,k)
 		local f=rawget(Vector2,k)
 		if f then return f end
 		local f=rawget(get,k)
@@ -693,19 +695,19 @@ do
 		error('Not found '..k)
 	end
 
-	Vector2.__newindex = function(t,k,v)
+	I.__newindex = function(t,k,v)
 		local f=rawget(set,k)
 		if f then return f(t,v) end
 		error('Not found '..k)
 	end
 
-	Vector2.__tostring = function(self)
+	I.__tostring = function(self)
 		return string.format('Vector2(%f,%f)',self[1],self[2])
 	end
 
 	function Vector2.New(x,y)
 		local v={x or 0,y or 0}
-		setmetatable(v,Vector2)
+		setmetatable(v,I)
 		return v
 	end
 
@@ -713,28 +715,28 @@ do
 		return Vector2.New(x,y)
 	end
 
-	function Vector2.__add( a,b )
+	function I.__add( a,b )
 		return Vector2.New(a[1]+b[1],a[2]+b[2])
 	end
 
-	function Vector2.__sub( a,b )
+	function I.__sub( a,b )
 		return Vector2.New(a[1]-b[1],a[2]-b[2])
 	end
 
-	function Vector2.__eq( a,b )
+	function I.__eq( a,b )
 		return abs(a[1]-b[1])<Epsilon
 		 	and abs(a[2]-b[2])<Epsilon
 	end
 
-	function Vector2.__mul( a,b )
+	function I.__mul( a,b )
 		return Vector2.New(a[1]*b,a[2]*b)
 	end
 
-	function Vector2.__div( a,b )
+	function I.__div( a,b )
 		return Vector2.New(a[1]/b,a[2]/b)
 	end
 
-	function Vector2.__unm( a )
+	function I.__unm( a )
 		return Vector2.New(-a[1],-a[2])
 	end
 
@@ -780,12 +782,13 @@ end
 do
 	local Raw=UnityEngine.Vector4
 	local Vector4={__typename='Vector4',__raw=Raw}
-	_G['UnityEngine.Vector4.Instance']=Vector4
+	local I={__typename='Vector4'}
+	_G['UnityEngine.Vector4.Instance']=I
 	UnityEngine.Vector4=Vector4
 	local get={}
 	local set={}
 
-	Vector4.__index = function(t,k)
+	I.__index = function(t,k)
 		local f=rawget(Vector4,k)
 		if f then return f end
 		local f=rawget(get,k)
@@ -793,19 +796,19 @@ do
 		error('Not found '..k)
 	end
 
-	Vector4.__newindex = function(t,k,v)
+	I.__newindex = function(t,k,v)
 		local f=rawget(set,k)
 		if f then return f(t,v) end
 		error('Not found '..k)
 	end
 
-	Vector4.__tostring = function(self)
+	I.__tostring = function(self)
 		return string.format('Vector4(%f,%f,%f,%f)',self[1],self[2],self[3],self[4])
 	end
 
 	function Vector4.New(x,y,z,w)
 		local v={x or 0,y or 0,z or 0,w or 0}
-		setmetatable(v,Vector4)
+		setmetatable(v,I)
 		return v
 	end
 
@@ -813,30 +816,30 @@ do
 		return Vector4.New(x,y,z,w)
 	end
 
-	function Vector4.__add( a,b )
+	function I.__add( a,b )
 		return Vector4.New(a[1]+b[1],a[2]+b[2],a[3]+b[3],a[4]+b[4])
 	end
 
-	function Vector4.__sub( a,b )
+	function I.__sub( a,b )
 		return Vector4.New(a[1]-b[1],a[2]-b[2],a[3]-b[3],a[4]-b[4])
 	end
 
-	function Vector4.__eq( a,b )
+	function I.__eq( a,b )
 		return abs(a[1]-b[1])<Epsilon
 		 	and abs(a[2]-b[2])<Epsilon
 		 	and abs(a[3]-b[3])<Epsilon
 		 	and abs(a[4]-b[4])<Epsilon
 	end
 
-	function Vector4.__mul( a,b )
+	function I.__mul( a,b )
 		return Vector4.New(a[1]*b,a[2]*b,a[3]*b,a[4]*b)
 	end
 
-	function Vector4.__div( a,b )
+	function I.__div( a,b )
 		return Vector4.New(a[1]/b,a[2]/b,a[3]/b,a[4]/b)
 	end
 
-	function Vector4.__unm( a )
+	function I.__unm( a )
 		return Vector4.New(-a[1],-a[2],-a[3],-a[4])
 	end
 
@@ -874,12 +877,13 @@ do
 	local Raw=UnityEngine.Quaternion
 	local Inst=_G['UnityEngine.Quaternion.Instance']
 	local Quaternion={__typename='Quaternion',__raw=Raw}
-	_G['UnityEngine.Quaternion.Instance']=Quaternion
+	local I={__typename='Quaternion'}
+	_G['UnityEngine.Quaternion.Instance']=I
 	UnityEngine.Quaternion=Quaternion
 	local get={}
 	local set={}
 
-	Quaternion.__index = function(t,k)
+	I.__index = function(t,k)
 		local f=rawget(Quaternion,k)
 		if f then return f end
 		local f=rawget(get,k)
@@ -887,22 +891,22 @@ do
 		error('Not found '..k)
 	end
 
-	Quaternion.__newindex = function(t,k,v)
+	I.__newindex = function(t,k,v)
 		local f=rawget(set,k)
 		if f then return f(t,v) end
 		error('Not found '..k)
 	end
 
-	Quaternion.__tostring = function(self)
+	I.__tostring = function(self)
 		return string.format('Quaternion(%f,%f,%f,%f)',self[1],self[2],self[3],self[4])
 	end
 
-	Quaternion.__div = function(a,b)
+	I.__div = function(a,b)
 		return Quaternion.New(a[1]/b,a[2]/b,a[3]/b,a[4]/b)
 	end
 
 	-- reflector code
-	Quaternion.__mul = function(a,b,target)
+	I.__mul = function(a,b,target)
 		if getmetatable(b).__typename=='Vector3' then
 			    local vector=Vector3.New(0,0,0)
 			    local num = a[1] * 2
@@ -941,14 +945,14 @@ do
 	end
 
 	-- reflector code
-	Quaternion.__eq = function(a,b)
+	I.__eq = function(a,b)
 		return Quaternion.Dot(a,b)>0.999999
 	end
 
 
 	function Quaternion.New(x,y,z,w)
 		local q={x or 0,y or 0,z or 0,w or 0}
-		setmetatable(q,Quaternion)
+		setmetatable(q,I)
 		return q
 	end
 
