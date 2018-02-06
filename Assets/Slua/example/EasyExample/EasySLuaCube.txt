@@ -1,0 +1,7 @@
+import "UnityEngine"
+
+function main() -- C# 调用Lua的start的方法都会走main函数
+    print("Lua创建了一个Cube")
+    local cube = GameObject.CreatePrimitive(PrimitiveType.Cube)
+end
+
