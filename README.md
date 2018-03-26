@@ -158,7 +158,7 @@ end
 ~~~~~~~~~~
 
 
-##Export custom class
+## Export custom class
 
 add CustomLuaClass attribute to your custom class, waiting for compile completed, click "SLua->Custom->Make", you will get interface file for lua.
 
