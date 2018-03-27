@@ -47,7 +47,7 @@ This repo https://github.com/tenvick/hugula demonstrate Tetris game using slua.
 
 ## Help
 
-See inner demo for help or [Document](../../wiki/中文帮助) (in chinese).
+See inner demo for help or [Document](https://github.com/pangweiwei/slua/wiki) (in chinese).
 
 ## Important
 
@@ -158,7 +158,7 @@ end
 ~~~~~~~~~~
 
 
-##Export custom class
+## Export custom class
 
 add CustomLuaClass attribute to your custom class, waiting for compile completed, click "SLua->Custom->Make", you will get interface file for lua.
 

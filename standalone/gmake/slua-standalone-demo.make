@@ -14,8 +14,8 @@ ifeq ($(config),debug_any_cpu)
   CSC = mcs
   RESGEN = resgen
   TARGETDIR = ../bin
-  TARGET = $(TARGETDIR)/slua-standalone-tests.dll
-  OBJDIR = obj/Any\ CPU/Debug/slua-standalone-tests
+  TARGET = $(TARGETDIR)/slua-standalone-demo.exe
+  OBJDIR = obj/Any\ CPU/Debug/slua-standalone-demo
   FLAGS = /unsafe /debug /noconfig /d:_DEBUG /d:DEBUG /d:TRACE
   DEPENDS = ../bin/slua-standalone.dll
   REFERENCES = /r:../bin/slua-standalone.dll
@@ -31,8 +31,8 @@ ifeq ($(config),release_any_cpu)
   CSC = mcs
   RESGEN = resgen
   TARGETDIR = ../bin
-  TARGET = $(TARGETDIR)/slua-standalone-tests.dll
-  OBJDIR = obj/Any\ CPU/Release/slua-standalone-tests
+  TARGET = $(TARGETDIR)/slua-standalone-demo.exe
+  OBJDIR = obj/Any\ CPU/Release/slua-standalone-demo
   FLAGS = /unsafe /optimize /noconfig
   DEPENDS = ../bin/slua-standalone.dll
   REFERENCES = /r:../bin/slua-standalone.dll
@@ -44,7 +44,7 @@ ifeq ($(config),release_any_cpu)
   endef
 endif
 
-FLAGS += /t:library 
+FLAGS += /t:exe 
 REFERENCES += /r:System /r:../packages/NUnit.2.6.4/lib/nunit.framework.dll
 
 SOURCES += \
@@ -59,7 +59,7 @@ SOURCES += \
 
 EMBEDFILES += \
 
-RESPONSE += $(OBJDIR)/slua-standalone-tests.rsp
+RESPONSE += $(OBJDIR)/slua-standalone-demo.rsp
 SHELLTYPE := msdos
 ifeq (,$(ComSpec)$(COMSPEC))
   SHELLTYPE := posix
@@ -82,12 +82,12 @@ else
 	$(SILENT) mkdir $(subst /,\\,$(TARGETDIR))
 endif
 
-$(RESPONSE): slua-standalone-tests.make
+$(RESPONSE): slua-standalone-demo.make
 	@echo Generating response file
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f $(RESPONSE)
 else
-	$(SILENT) if exist $(RESPONSE) del $(OBJDIR)\slua-standalone-tests.rsp
+	$(SILENT) if exist $(RESPONSE) del $(OBJDIR)\slua-standalone-demo.rsp
 endif
 	@echo ../slua-standalone-tests/Demo.cs >> $(RESPONSE)
 	@echo ../slua-standalone-tests/TestArray.cs >> $(RESPONSE)

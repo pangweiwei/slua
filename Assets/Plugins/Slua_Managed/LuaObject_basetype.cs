@@ -20,11 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
-using System.Collections.Generic;
 using System;
 using System.Reflection;
-using System.Runtime.InteropServices;
 namespace SLua
 {
 
@@ -160,11 +157,19 @@ namespace SLua
 		{
 		    LuaDLL.lua_pushinteger(l, v);
 		}
-               
-		#endregion
 
-		#region int
-		static public bool checkType(IntPtr l, int p, out int v)
+        #endregion
+
+
+        #region interface
+        static public void pushInterface(IntPtr l,object i,Type t) {
+			ObjectCache oc = ObjectCache.get(l);
+            oc.pushInterface(l, i, t);
+        }
+        #endregion
+
+        #region int
+        static public bool checkType(IntPtr l, int p, out int v)
 		{
 			v = (int)LuaDLL.luaL_checkinteger(l, p);
 			return true;

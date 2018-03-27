@@ -27,11 +27,11 @@ namespace SLua
     using System;
     using System.Collections.Generic;
     using System.Collections;
-    using System.IO;
     using System.Text;
-    using System.Runtime.InteropServices;
 #if !SLUA_STANDALONE
     using UnityEngine;
+#else
+    using System.IO;
 #endif
     abstract public class LuaVar : IDisposable
     {
@@ -172,7 +172,6 @@ namespace SLua
             }
 
         }
-
     }
 
     public class LuaFunction : LuaVar
@@ -248,70 +247,28 @@ namespace SLua
             return null;
         }
 
-        public object call(object a1)
-        {
-            int error = LuaObject.pushTry(state.L);
+		public object call(LuaTable self, params object[] args)
+		{
+			int error = LuaObject.pushTry(state.L);
 
-            LuaObject.pushVar(state.L, a1);
-            if (innerCall(1, error))
-            {
-                return state.topObjects(error - 1);
-            }
+			LuaObject.pushVar(L, self);
 
+			for (int n = 0; args != null && n < args.Length; n++)
+			{
+				LuaObject.pushVar(L, args[n]);
+			}
 
-            return null;
+			if (innerCall((args != null ? args.Length : 0) + 1, error))
+			{
+				return state.topObjects(error - 1);
+			}
+
+			return null;
+		}
+
+        public T cast<T>() where T:class {
+            return LuaObject.delegateCast(this, typeof(T)) as T;
         }
-
-        public object call(LuaTable self, params object[] args)
-        {
-            int error = LuaObject.pushTry(state.L);
-
-            LuaObject.pushVar(L, self);
-
-            for (int n = 0; args != null && n < args.Length; n++)
-            {
-                LuaObject.pushVar(L, args[n]);
-            }
-
-            if (innerCall((args != null ? args.Length : 0) + 1, error))
-            {
-                return state.topObjects(error - 1);
-            }
-
-            return null;
-        }
-
-        public object call(object a1, object a2)
-        {
-            int error = LuaObject.pushTry(state.L);
-
-            LuaObject.pushVar(state.L, a1);
-            LuaObject.pushVar(state.L, a2);
-            if (innerCall(2, error))
-            {
-                return state.topObjects(error - 1);
-            }
-            return null;
-        }
-
-        public object call(object a1, object a2, object a3)
-        {
-            int error = LuaObject.pushTry(state.L);
-
-            LuaObject.pushVar(state.L, a1);
-            LuaObject.pushVar(state.L, a2);
-            LuaObject.pushVar(state.L, a3);
-            if (innerCall(3, error))
-            {
-                return state.topObjects(error - 1);
-            }
-            return null;
-        }
-
-        // you can add call method with specific type rather than object type to avoid gc alloc, like
-        // public object call(int a1,float a2,string a3,object a4)
-
-        // using specific type to avoid type boxing/unboxing
     }
 
     public class LuaTable : LuaVar, IEnumerable<LuaTable.TablePair>
@@ -487,6 +444,12 @@ namespace SLua
         int mainThread = 0;
         internal WeakDictionary<int, LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
 
+		public int cachedDelegateCount{
+			get{
+				return this.delgateMap.AliveCount;
+			}
+		}
+
         public IntPtr L
         {
             get
@@ -529,6 +492,7 @@ namespace SLua
         public LoaderDelegate loaderDelegate;
         public OutputDelegate logDelegate;
         public OutputDelegate errorDelegate;
+		public OutputDelegate warnDelegate;
 
 
         public delegate void UnRefAction(IntPtr l, int r);
@@ -551,6 +515,8 @@ namespace SLua
         internal LuaFunction index_func;
         const string DelgateTable = "__LuaDelegate";
         bool openedSluaLib = false;
+
+        LuaFunction dumpstack;
 
         public bool isMainThread()
         {
@@ -617,7 +583,6 @@ namespace SLua
 
         public void bindUnity()
         {
-
             if (!openedSluaLib)
                 openSluaLib();
 
@@ -627,6 +592,9 @@ namespace SLua
 
         public IEnumerator bindUnity(Action<int> _tick, Action complete)
         {
+            if (!openedSluaLib)
+                openSluaLib();
+
             yield return LuaSvr.doBind(L, _tick, complete);
             LuaValueType.reg(L);
         }
@@ -782,6 +750,7 @@ return index
             checkRef();
         }
 
+
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int init(IntPtr L)
         {
@@ -794,8 +763,11 @@ return index
             LuaDLL.lua_pushcfunction(L, printerror);
             LuaDLL.lua_setglobal(L, "printerror");
 
-            LuaDLL.lua_pushcfunction(L, pcall);
-            LuaDLL.lua_setglobal(L, "pcall");
+			LuaDLL.lua_pushcfunction(L, warn);
+			LuaDLL.lua_setglobal(L, "warn");
+
+//            LuaDLL.lua_pushcfunction(L, pcall);
+//            LuaDLL.lua_setglobal(L, "pcall");
 
             pushcsfunction(L, import);
             LuaDLL.lua_setglobal(L, "import");
@@ -813,13 +785,13 @@ end
 ";
 
             // overload resume function for report error
-            LuaState.get(L).doString(resumefunc);
+            var state = LuaState.get(L);
+            state.doString(resumefunc);
 
             // https://github.com/pkulchenko/MobDebug/blob/master/src/mobdebug.lua#L290
             // Dump only 3 stacks, or it will return null (I don't know why)
             string dumpstackfunc = @"
-local printerror=printerror
-dumpstack=function()
+local dumpstack=function()
   function vars(f)
     local dump = """"
     local func = debug.getinfo(f, ""f"").func
@@ -861,15 +833,16 @@ dumpstack=function()
     dump = dump .. vars(i+1)
     if source.what == 'main' then break end
   end
-  printerror(dump)
+  return dump
 end
+return dumpstack
 ";
 
-            LuaState.get(L).doString(dumpstackfunc);
+            state.dumpstack = state.doString(dumpstackfunc) as LuaFunction;
 
 #if UNITY_ANDROID
             // fix android performance drop with JIT on according to luajit mailist post
-            LuaState.get(L).doString("if jit then require('jit.opt').start('sizemcode=256','maxmcode=256') for i=1,1000 do end end");
+            state.doString("if jit then require('jit.opt').start('sizemcode=256','maxmcode=256') for i=1,1000 do end end");
 #endif
 
             pushcsfunction(L, dofile);
@@ -942,24 +915,29 @@ end
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         public static int errorReport(IntPtr L)
         {
+            s.Length = 0;
             LuaDLL.lua_getglobal(L, "debug");
             LuaDLL.lua_getfield(L, -1, "traceback");
             LuaDLL.lua_pushvalue(L, 1);
             LuaDLL.lua_pushnumber(L, 2);
             LuaDLL.lua_call(L, 2, 1);
             LuaDLL.lua_remove(L, -2);
-            string error = LuaDLL.lua_tostring(L, -1);
+            s.Append(LuaDLL.lua_tostring(L, -1));
             LuaDLL.lua_pop(L, 1);
 
-            Logger.LogError(error, true);
             LuaState state = LuaState.get(L);
+            state.dumpstack.push(L);
+            LuaDLL.lua_call(L, 0, 1);
+            s.Append("\n");
+            s.Append(LuaDLL.lua_tostring(L, -1));
+            LuaDLL.lua_pop(L, 1);
+
+            string str = s.ToString();
+            Logger.LogError(str, true);
             if (state.errorDelegate != null)
             {
-                state.errorDelegate(error);
+                state.errorDelegate(str);
             }
-
-            LuaDLL.lua_getglobal(L, "dumpstack");
-            LuaDLL.lua_call(L, 0, 0);
 
             return 0;
         }
@@ -1011,20 +989,19 @@ end
             }
         }
 
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        internal static int pcall(IntPtr L)
-        {
-            int status;
-            if (LuaDLL.lua_type(L, 1) != LuaTypes.LUA_TFUNCTION)
-            {
-                return LuaObject.error(L, "arg 1 expect function");
-            }
-            LuaDLL.luaL_checktype(L, 1, LuaTypes.LUA_TFUNCTION);
-            status = LuaDLL.lua_pcall(L, LuaDLL.lua_gettop(L) - 1, LuaDLL.LUA_MULTRET, 0);
-            LuaDLL.lua_pushboolean(L, (status == 0));
-            LuaDLL.lua_insert(L, 1);
-            return LuaDLL.lua_gettop(L);  /* return status + all results */
-        }
+//        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+//        internal static int pcall(IntPtr L)
+//        {
+//            int status;
+//            if (LuaDLL.lua_type(L, 1) != LuaTypes.LUA_TFUNCTION)
+//            {
+//                return LuaObject.error(L, "arg 1 expect function");
+//            }
+//            status = LuaDLL.lua_pcall(L, LuaDLL.lua_gettop(L) - 1, LuaDLL.LUA_MULTRET, 0);
+//            LuaDLL.lua_pushboolean(L, (status == 0));
+//            LuaDLL.lua_insert(L, 1);
+//            return LuaDLL.lua_gettop(L);  /* return status + all results */
+//        }
 
         internal static void pcall(IntPtr l, LuaCSFunction f)
         {
@@ -1037,55 +1014,63 @@ end
             LuaDLL.lua_remove(l, err);
         }
 
-        static public bool printTrace = true;
 
+
+        static public bool printTrace = true;
         private static StringBuilder s = new StringBuilder();
+
+		static string stackString(IntPtr L,int n)
+		{
+			s.Length = 0;
+
+			LuaDLL.lua_getglobal(L, "tostring");
+
+			for (int i = 1; i <= n; i++)
+			{
+				if (i > 1)
+				{
+					s.Append("    ");
+				}
+
+				LuaDLL.lua_pushvalue(L, -1);
+				LuaDLL.lua_pushvalue(L, i);
+
+				LuaDLL.lua_call(L, 1, 1);
+				s.Append(LuaDLL.lua_tostring(L, -1));
+				LuaDLL.lua_pop(L, 1);
+			}
+
+			if (printTrace
+#if UNITY_EDITOR
+				 && SLuaSetting.Instance.PrintTrace
+#endif
+			   )
+			{
+				LuaDLL.lua_getglobal(L, "debug");
+				LuaDLL.lua_getfield(L, -1, "traceback");
+				LuaDLL.lua_call(L, 0, 1);
+				s.Append("\n");
+				s.Append(LuaDLL.lua_tostring(L, -1));
+			}
+
+            return s.ToString();
+		}
+
+
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         internal static int print(IntPtr L)
         {
             int n = LuaDLL.lua_gettop(L);
-            s.Length = 0;
-
-            LuaDLL.lua_getglobal(L, "tostring");
-
-            for (int i = 1; i <= n; i++)
-            {
-                if (i > 1)
-                {
-                    s.Append("    ");
-                }
-
-                LuaDLL.lua_pushvalue(L, -1);
-                LuaDLL.lua_pushvalue(L, i);
-
-                LuaDLL.lua_call(L, 1, 1);
-                s.Append(LuaDLL.lua_tostring(L, -1));
-                LuaDLL.lua_pop(L, 1);
-            }
-            LuaDLL.lua_settop(L, n);
-
-            if (printTrace
-#if UNITY_EDITOR
-                 && SLuaSetting.Instance.PrintTrace
-#endif
-               )
-            {
-                LuaDLL.lua_getglobal(L, "debug");
-                LuaDLL.lua_getfield(L, -1, "traceback");
-                LuaDLL.lua_call(L, 0, 1);
-                s.Append("\n");
-                s.Append(LuaDLL.lua_tostring(L, -1));
-
-                LuaDLL.lua_pop(L, 2);
-            }
-
-            Logger.Log(s.ToString(), true);
+            string str = stackString(L,n);
+            Logger.Log(str, true);
 
             LuaState state = LuaState.get(L);
             if (state.logDelegate != null)
             {
                 state.logDelegate(s.ToString());
             }
+
+            LuaDLL.lua_settop(L, n);
 
 			return 0;
 		}
@@ -1095,33 +1080,8 @@ end
         internal static int printerror(IntPtr L)
         {
             int n = LuaDLL.lua_gettop(L);
-            s.Length = 0;
-
-            LuaDLL.lua_getglobal(L, "tostring");
-
-            for (int i = 1; i <= n; i++)
-            {
-                if (i > 1)
-                {
-                    s.Append("    ");
-                }
-
-                LuaDLL.lua_pushvalue(L, -1);
-                LuaDLL.lua_pushvalue(L, i);
-
-                LuaDLL.lua_call(L, 1, 1);
-                s.Append(LuaDLL.lua_tostring(L, -1));
-                LuaDLL.lua_pop(L, 1);
-            }
-            LuaDLL.lua_settop(L, n);
-            
-            LuaDLL.lua_getglobal(L, "debug");
-            LuaDLL.lua_getfield(L, -1, "traceback");
-            LuaDLL.lua_call(L, 0, 1);
-            s.Append("\n");
-            s.Append(LuaDLL.lua_tostring(L, -1));
-            LuaDLL.lua_pop(L, 1);
-            Logger.LogError(s.ToString(), true);
+            string str = stackString(L,n);
+            Logger.LogError(str, true);
 
             LuaState state = LuaState.get(L);
             if (state.errorDelegate != null)
@@ -1129,8 +1089,28 @@ end
                 state.errorDelegate(s.ToString());
             }
 
+            LuaDLL.lua_settop(L, n);
+
             return 0;
         }
+
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		internal static int warn(IntPtr L)
+		{
+			int n = LuaDLL.lua_gettop(L);
+			string str = stackString (L, n);
+			Logger.LogWarning(str);
+			LuaState state = LuaState.get(L);
+			if (state.warnDelegate != null)
+			{
+				state.warnDelegate(s.ToString());
+			}
+
+			LuaDLL.lua_settop(L, n);
+			return 0;
+		}
+
+
 
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 		internal static int loadfile(IntPtr L)
@@ -1625,9 +1605,15 @@ end
             {
                 LuaObject.pushValue(L, (LuaCSFunction)o);
             };
+
+            regPushVar(typeof(UnityEngine.Vector2), (IntPtr L, object o) => { LuaObject.pushValue(L, (UnityEngine.Vector2)o); });
+            regPushVar(typeof(UnityEngine.Vector3), (IntPtr L, object o) => { LuaObject.pushValue(L, (UnityEngine.Vector3)o); });
+            regPushVar(typeof(UnityEngine.Vector4), (IntPtr L, object o) => { LuaObject.pushValue(L, (UnityEngine.Vector4)o); });
+            regPushVar(typeof(UnityEngine.Quaternion), (IntPtr L, object o) => { LuaObject.pushValue(L, (UnityEngine.Quaternion)o); });
+            regPushVar(typeof(UnityEngine.Color), (IntPtr L, object o) => { LuaObject.pushValue(L, (UnityEngine.Color)o); });
         }
 
-		public int pushTry()
+		public int pushTry(IntPtr L)
         {
             if (errorRef == 0)
             {

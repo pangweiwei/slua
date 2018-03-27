@@ -22,8 +22,7 @@ namespace SLua.Test
     local arr = Slua.MakeArray('System.UInt64', {1,2,3})
     return arr
 ";
-            var ret = luaSvr.luaState.doString(code);
-            var t = ret.GetType();
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(typeof(ulong[]), ret.GetType());
         }
 
@@ -36,7 +35,7 @@ function Func(arr)
 end
 return Func
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(typeof (LuaFunction), ret.GetType());
             var func = ret as LuaFunction;
             var arr = new object[10];
@@ -55,7 +54,7 @@ return Func
     local arr = Slua.MakeArray('System.Object', {'a', 1, {1}})
     return arr
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(typeof (object[]), ret.GetType());
             var arr = (object[]) ret;
             Assert.AreEqual(3, arr.Length);

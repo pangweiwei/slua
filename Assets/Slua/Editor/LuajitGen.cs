@@ -172,7 +172,7 @@ namespace SLua
             }
         }
 
-        static void exportLuajit(string res, string ext, string jitluadir, JITBUILDTYPE buildType)
+        public static void exportLuajit(string res, string ext, string jitluadir, JITBUILDTYPE buildType)
         {
             // delete
             AssetDatabase.DeleteAsset(jitluadir);

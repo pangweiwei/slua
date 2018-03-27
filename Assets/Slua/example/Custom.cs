@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using SLua;
 using System;
 
-[CustomLuaClassAttribute]
+[CustomLuaClass]
 public class Custom : MonoBehaviour
 {
 
@@ -70,8 +70,35 @@ public class Custom : MonoBehaviour
 	{
 		return t.Name;
 	}
+
+    [CustomLuaClass]
+    public interface IFoo
+    {
+        int getInt();
+        void setInt(int i, bool ok);
+    }
+
+    class Foo : IFoo {
+        public int getInt() {
+            return 10;
+        }
+        public void setInt(int i,bool ok) {
+            
+        }
+    }
+
+    public IFoo getInterface() {
+        return new Foo();
+    }
 }
 
+public static class IFooExt
+{
+	public static void setInt(this Custom.IFoo f, int i)
+	{
+
+	}
+}
 
 namespace SLua {
 	
@@ -93,5 +120,14 @@ namespace SLua {
 			}
 		}
 	}
+
+
+    [OverloadLuaClass(typeof(UnityEngine.RenderSettings))]
+    public class RenderSettingsEx : LuaObject {
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        public static int set_fogDensity(IntPtr l) {
+            return 0;
+        }
+    }
 
 }

@@ -205,7 +205,7 @@ namespace SLua
 
 			#if SLUA_STANDALONE
 			doBind(L);
-			doinit(L, flag);
+			doinit(mainState, flag);
 			complete();
 			mainState.checkTop();
 			#else
