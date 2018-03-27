@@ -73,21 +73,21 @@ local function inherite(cls,base)
 end
 
 local Matrix3x3={}
+local I = {__typename='Matrix3x3'}
 local Vector3
 
 do
-
 	function Matrix3x3.SetAt(m,row,col,v)
 		m[row*3+col+1]=v
 	end
 
 	function Matrix3x3.New()
 		local r={1,0,0,0,1,0,0,0,1}
-		setmetatable(r,Matrix3x3)
+		setmetatable(r,I)
 		return r
 	end
 
-	function Matrix3x3.__tostring(m)
+	function I.__tostring(m)
 		return string.format('Matrix3x3(%f,%f,%f,%f,%f,%f,%f,%f,%f)'
 			,m[1],m[2],m[3]
 			,m[4],m[5],m[6]
@@ -137,13 +137,13 @@ do
 		return res
 	end
 
-	function Matrix3x3:SetIdentity()
+	function I:SetIdentity()
 		self[1],self[2],self[3]=1,0,0
 		self[4],self[5],self[6]=0,1,0
 		self[7],self[8],self[9]=0,0,1
 	end
 
-	function Matrix3x3:SetOrthoNormal( x,y,z )
+	function I:SetOrthoNormal( x,y,z )
 		self[1],self[2],self[3]=x[1],y[1],z[1]
 		self[4],self[5],self[6]=x[2],y[2],z[2]
 		self[7],self[8],self[9]=x[3],y[3],z[3]
@@ -277,8 +277,7 @@ do
 		return Vector3.Normalize(self)
 	end
 
-
-	function Vector3:Clone()
+	function Vector3.Clone(self)
 		return Vector3.New(self[1],self[2],self[3])
 	end
 		
@@ -546,28 +545,36 @@ do
 	    end
 	    return (normal * Vector3.Dot(vector, normal)) / num
 	end
-    
-    function Vector3.SignedAngle(a,b,c)
-        return Raw.SignedAngle(a,b,c)
-    end
 
 	inherite(Vector3,Raw)
 	setmetatable(Vector3,Vector3)
 end
 
 do
-
-
 	local Raw=UnityEngine.Color
 	local Color={__typename='Color',__raw=Raw}
-	local I={__typename='Color'}
+	local I = {__typename='Color'}
 	_G['UnityEngine.Color.Instance']=I
 	UnityEngine.Color=Color
 	local get={}
 	local set={}
 
-	I.__index = function(t,k)
+	Color.__index = function(t,k)
 		local f=rawget(Color,k)
+		if f then return f end
+		local f=rawget(get,k)
+		if f then return f(t) end
+		error('Not found '..k)
+	end
+
+	Color.__newindex = function(t,k,v)
+		local f=rawget(set,k)
+		if f then return f(t,v) end
+		error('Not found '..k)
+	end
+
+	I.__index = function(t,k)
+		local f=rawget(I,k)
 		if f then return f end
 		local f=rawget(get,k)
 		if f then return f(t) end
@@ -685,14 +692,28 @@ end
 do
 	local Raw=UnityEngine.Vector2
 	local Vector2={__typename='Vector2',__raw=Raw}
-	local I={__typename='Vector2'}
+	local I = {__typename='Vector2'}
 	_G['UnityEngine.Vector2.Instance']=I
 	UnityEngine.Vector2=Vector2
 	local get={}
 	local set={}
 
-	I.__index = function(t,k)
+	Vector2.__index = function(t,k)
 		local f=rawget(Vector2,k)
+		if f then return f end
+		local f=rawget(get,k)
+		if f then return f(t) end
+		error('Not found '..k)
+	end
+
+	Vector2.__newindex = function(t,k,v)
+		local f=rawget(set,k)
+		if f then return f(t,v) end
+		error('Not found '..k)
+	end
+
+	I.__index = function(t,k)
+		local f=rawget(I,k)
 		if f then return f end
 		local f=rawget(get,k)
 		if f then return f(t) end
@@ -772,12 +793,12 @@ do
 		return sqrt(v[1]^2+v[2]^2)
 	end
 
-	function Vector2:Set( x,y )
+	function I:Set( x,y )
 		self[1],self[2]=x,y
 	end
 
-	function Vector2:ToString( )
-		return Vector2.__tostring(self)
+	function I:ToString( )
+		return I.__tostring(self)
 	end
 
 	setmetatable(Vector2,Vector2)
@@ -786,14 +807,28 @@ end
 do
 	local Raw=UnityEngine.Vector4
 	local Vector4={__typename='Vector4',__raw=Raw}
-	local I={__typename='Vector4'}
+	local I = {__typename='Vector4'}
 	_G['UnityEngine.Vector4.Instance']=I
 	UnityEngine.Vector4=Vector4
 	local get={}
 	local set={}
 
-	I.__index = function(t,k)
+	Vector4.__index = function(t,k)
 		local f=rawget(Vector4,k)
+		if f then return f end
+		local f=rawget(get,k)
+		if f then return f(t) end
+		error('Not found '..k)
+	end
+
+	Vector4.__newindex = function(t,k,v)
+		local f=rawget(set,k)
+		if f then return f(t,v) end
+		error('Not found '..k)
+	end
+
+	I.__index = function(t,k)
+		local f=rawget(I,k)
 		if f then return f end
 		local f=rawget(get,k)
 		if f then return f(t) end
@@ -864,12 +899,12 @@ do
 	function set:z(v) self[3]=v	end
 	function set:w(v) self[4]=v	end
 
-	function Vector4:Set( x,y,z,w )
+	function I:Set( x,y,z,w )
 		self[1],self[2],self[3],self[4]=x,y,z,w
 	end
 
-	function Vector4:ToString( ... )
-		return Vector4.__tostring(self)
+	function I:ToString()
+		return I.__tostring(self)
 	end
 
 	inherite(Vector4,Raw)
@@ -881,14 +916,28 @@ do
 	local Raw=UnityEngine.Quaternion
 	local Inst=_G['UnityEngine.Quaternion.Instance']
 	local Quaternion={__typename='Quaternion',__raw=Raw}
-	local I={__typename='Quaternion'}
+	local I = {__typename='Quaternion'}
 	_G['UnityEngine.Quaternion.Instance']=I
 	UnityEngine.Quaternion=Quaternion
 	local get={}
 	local set={}
 
-	I.__index = function(t,k)
+	Quaternion.__index = function(t,k)
 		local f=rawget(Quaternion,k)
+		if f then return f end
+		local f=rawget(get,k)
+		if f then return f(t) end
+		error('Not found '..k)
+	end
+
+	Quaternion.__newindex = function(t,k,v)
+		local f=rawget(set,k)
+		if f then return f(t,v) end
+		error('Not found '..k)
+	end
+
+	I.__index = function(t,k)
+		local f=rawget(I,k)
 		if f then return f end
 		local f=rawget(get,k)
 		if f then return f(t) end
@@ -945,7 +994,7 @@ do
 	end
 
 	function Quaternion.Mul(a,b)
-		return Quaternion.__mul(a,b,a)
+		return I.__mul(a,b,a)
 	end
 
 	-- reflector code
@@ -977,15 +1026,15 @@ do
 	function get:eulerAngles() return Inst.eulerAngles[1](self) end
 	function set:eulerAngles(v) Inst.eulerAngles[2](self,v) end
 
-	function Quaternion:Set(x,y,z,w)
+	function I:Set(x,y,z,w)
 		self[1],self[2],self[3],self[4]=x,y,z,w
 	end
 
-	function Quaternion:Clone()
+	function Quaternion.Clone(self)
 		return Quaternion.New(self[1],self[2],self[3],self[4])
 	end
 
-	function Quaternion:ToAngleAxis()
+	function I:ToAngleAxis()
 		local angle = acos(self[4])*2
 		if abs(angle-0)<Epsilon then
 			return angle,Vector3.New(1,0,0)
@@ -995,12 +1044,12 @@ do
 	end
 
 	--TODO
-	function Quaternion:SetFromToRotation(from,to)
+	function I:SetFromToRotation(from,to)
 		Inst.SetFromToRotation(self,from,to)
 	end
 
 	--TODO
-	function Quaternion:SetLookRotation(view,up)
+	function I:SetLookRotation(view,up)
 		up = up or Vector3.up
 		Inst.SetLookRotation(self,view,up)
 	end
