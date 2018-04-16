@@ -16,10 +16,12 @@ solution "slua-standalone"
     --filter "platforms:x32"
       --architecture "x32"
 configuration "Debug"
-    flags { "Symbols" }
+    symbols "on"
+    clr "unsafe" 
     defines { "_DEBUG", "DEBUG", "TRACE" }
 configuration "Release"
-    flags { "Optimize" }
+    optimize "on"
+    clr "unsafe" 
 configuration "vs*"
     defines { "" }
 
@@ -32,6 +34,7 @@ targetdir "./bin"
 files
 {
     "../Assets/Plugins/Slua_Managed/**.cs",
+    "../build/BytesHelper.cs",
 }
 
 defines
@@ -45,12 +48,33 @@ links
 {
     "System",
     "System.Core",
-
 }
 
 project "slua-standalone-tests"
 language "C#"
 kind "SharedLib"
+framework "3.5"
+targetdir "./bin"
+
+files
+{
+    "./slua-standalone-tests/**.cs",
+}
+
+defines
+{
+}
+
+links
+{
+    "slua-standalone",
+    "System",
+     "./packages/NUnit.2.6.4/lib/nunit.framework.dll",
+}
+
+project "slua-standalone-demo"
+language "C#"
+kind "ConsoleApp"
 framework "3.5"
 targetdir "./bin"
 

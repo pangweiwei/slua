@@ -45,7 +45,7 @@ childClass.ParentField = 123
 childClass.ChildField = 321
 return childClass
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             Assert.AreEqual(ret.GetType(), typeof(ChildClass));
             var childObj = ret as ChildClass;
             Assert.AreEqual(childObj.GetParentField, 123);
@@ -67,7 +67,7 @@ function Func(dict)
 end
 return Func
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             var func = ret as LuaFunction;
             var result = func.call(dict);
 
@@ -86,7 +86,7 @@ function Func(dict)
 end
 return Func
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             var func = ret as LuaFunction;
             var result = func.call(dict);
 
@@ -105,7 +105,7 @@ function Func(dict)
 end
 return Func
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             var func = ret as LuaFunction;
             var result = func.call(dict);
 
@@ -125,7 +125,7 @@ function Func(dict, child)
 end
 return Func
 ";
-            var ret = luaSvr.luaState.doString(code);
+            var ret = LuaSvr.mainState.doString(code);
             var func = ret as LuaFunction;
             var result = func.call(dict, child);
 

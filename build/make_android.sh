@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 cd "$( dirname "${BASH_SOURCE[0]}" )"
-cp slua.c LuaJIT-2.1.0/src/
-cd LuaJIT-2.1.0
+
+# copy slua copy to luajit folder
+cp slua.c luasocket-mini/* luajit-2.1.0-beta3/src/
+cd luajit-2.1.0-beta3
 SRCDIR=$(pwd)
 DIR=$(pwd)
 
@@ -9,20 +11,10 @@ ${NDKPATH?"Need to set NDKPATH"}
 
 NDK=$NDKPATH
 NDKABI=8
-NDKVER=$NDK/toolchains/arm-linux-androideabi-4.8
+NDKVER=$NDK/toolchains/arm-linux-androideabi-4.9
 NDKP=$NDKVER/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-
 NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-arm"
 
-# # Android/ARM, armeabi (ARMv5TE soft-float), Android 2.2+ (Froyo)
-# DESTDIR=$DIR/android/armeabi
-# mkdir -p $DESTDIR
-# rm -rf "$DESTDIR"/*.a
-# make clean
-# make HOST_CC="gcc -m32" CROSS=$NDKP TARGET_SYS=Linux TARGET_FLAGS="$NDKF"
-
-# if [ -f $SRCDIR/src/libluajit.so ]; then
-#     mv $SRCDIR/src/libluajit.so $DESTDIR/libslua.so
-# fi;
 
 # Android/ARM, armeabi-v7a (ARMv7 VFP), Android 4.0+ (ICS)
 NDKARCH="-march=armv7-a -mfloat-abi=softfp -Wl,--fix-cortex-a8"
@@ -42,7 +34,7 @@ fi;
 NDKABI=14
 DESTDIR=$DIR/android/x86
 mkdir -p $DESTDIR
-NDKVER=$NDK/toolchains/x86-4.8
+NDKVER=$NDK/toolchains/x86-4.9
 NDKP=$NDKVER/prebuilt/darwin-x86_64/bin/i686-linux-android-
 NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-x86"
 rm -rf "$DESTDIR"/*.a

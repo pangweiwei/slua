@@ -22,12 +22,12 @@
 
 namespace SLua
 {
-	using LuaInterface;
 	using System;
 	using System.Collections.Generic;
 	
 	public class LuaTimer : LuaObject
 	{
+		const int TimerMaxInit = 16;
 		class Timer
 		{
 			internal int sn;
@@ -35,13 +35,14 @@ namespace SLua
 			internal int deadline;
 			internal Func<int, bool> handler;
 			internal bool delete;
-			internal LinkedList<Timer> container;
+            internal IntPtr L;
+			internal List<Timer> container;
 		}
 		class Wheel
 		{
 			internal static int dial_scale = 256;
 			internal int head;
-			internal LinkedList<Timer>[] vecDial;
+			internal List<Timer>[] vecDial;
 			internal int dialSize;
 			internal int timeRange;
 			internal Wheel nextWheel;
@@ -50,20 +51,20 @@ namespace SLua
 				this.dialSize = dialSize;
 				this.timeRange = dialSize * dial_scale;
 				this.head = 0;
-				this.vecDial = new LinkedList<Timer>[dial_scale];
+				this.vecDial = new List<Timer>[dial_scale];
 				for (int i = 0; i < dial_scale; ++i)
 				{
-					this.vecDial[i] = new LinkedList<Timer>();
+					this.vecDial[i] = new List<Timer>(TimerMaxInit);
 				}
 			}
-			internal LinkedList<Timer> nextDial()
+			internal List<Timer> nextDial()
 			{
 				return vecDial[head++];
 			}
 			internal void add(int delay, Timer tm)
 			{
 				var container = vecDial[(head + (delay - (dialSize - jiffies_msec)) / dialSize) % dial_scale];
-				container.AddLast(tm);
+				container.Add(tm);
 				tm.container = container;
 			}
 		}
@@ -74,8 +75,8 @@ namespace SLua
 		static float pileSecs;
 		static float nowTime;
 		static Dictionary<int, Timer> mapSnTimer;
-		static LinkedList<Timer> executeTimers;
-		
+		static List<Timer> executeTimers;
+
 		static int intpow(int n, int m)
 		{
 			int ret = 1;
@@ -124,6 +125,10 @@ namespace SLua
 		
 		internal static void tick(float deltaTime)
 		{
+			if (executeTimers == null)
+				return;
+
+			//UnityEngine.Profiling.Profiler.BeginSample ("timer tick");
 			nowTime += deltaTime;
 			pileSecs += deltaTime;
 			int cycle = 0;
@@ -135,12 +140,10 @@ namespace SLua
 			for (int i = 0; i < cycle; ++i)
 			{
 				var timers = wheels[0].nextDial();
-				LinkedListNode<Timer> node = timers.First;
 				for (int j = 0; j < timers.Count; ++j)
 				{
-					var tm = node.Value;
-					executeTimers.AddLast(tm);
-					node = node.Next;
+					var tm = timers[j];
+					executeTimers.Add(tm);
 				}
 				timers.Clear();
 				
@@ -153,10 +156,9 @@ namespace SLua
 						if (wheel.nextWheel != null)
 						{
 							var tms = wheel.nextWheel.nextDial();
-							LinkedListNode<Timer> tmsNode = tms.First;
 							for (int k = 0; k < tms.Count; ++k)
 							{
-								var tm = tmsNode.Value;
+								var tm = tms[k];
 								if (tm.delete)
 								{
 									mapSnTimer.Remove(tm.sn);
@@ -165,7 +167,6 @@ namespace SLua
 								{
 									innerAdd(tm.deadline, tm);
 								}
-								tmsNode = tmsNode.Next;
 							}
 							tms.Clear();
 						}
@@ -176,11 +177,12 @@ namespace SLua
 					}
 				}
 			}
-			
-			while (executeTimers.Count > 0)
+			// run timer callback
+			for (int n=0;n<executeTimers.Count;n++)
 			{
-				var tm = executeTimers.First.Value;
-				executeTimers.Remove(tm);
+				var tm = executeTimers[n];
+				// if callback return true or any value!=false, 
+				// re-add timer to new wheel
 				if (!tm.delete && tm.handler(tm.sn) && tm.cycle > 0)
 				{
 					innerAdd(now() + tm.cycle, tm);
@@ -190,10 +192,15 @@ namespace SLua
 					mapSnTimer.Remove(tm.sn);
 				}
 			}
+			executeTimers.Clear();
+			//UnityEngine.Profiling.Profiler.EndSample ();
 		}
-		
+        static bool inited = false;
 		static void init()
 		{
+            if (inited) return;
+            inited = true;
+
 			wheels = new Wheel[4];
 			for (int i = 0; i < 4; ++i)
 			{
@@ -204,7 +211,7 @@ namespace SLua
 				}
 			}
 			mapSnTimer = new Dictionary<int, Timer>();
-			executeTimers = new LinkedList<Timer>();
+			executeTimers = new List<Timer>(TimerMaxInit);
 		}
 		
 		static int fetchSn()
@@ -212,21 +219,22 @@ namespace SLua
 			return ++nextSn;
 		}
 		
-		internal static int add(int delay, Action<int> handler)
+		internal static int add(IntPtr L,int delay, Action<int> handler)
 		{
-			return add(delay, 0, (int sn) =>
-			           {
+			return add(L,delay, 0, (int sn) =>
+            {
 				handler(sn);
 				return false;
 			});
 		}
 		
-		internal static int add(int delay, int cycle, Func<int, bool> handler)
+		internal static int add(IntPtr L,int delay, int cycle, Func<int, bool> handler)
 		{
 			Timer tm = new Timer();
 			tm.sn = fetchSn();
 			tm.cycle = cycle;
 			tm.handler = handler;
+            tm.L = L;
 			mapSnTimer[tm.sn] = tm;
 			innerAdd(now() + delay, tm);
 			return tm.sn;
@@ -282,7 +290,7 @@ namespace SLua
 					}
 					ld.d = ua;
 					pushValue(l, true);
-					pushValue(l, add(delay, ua));
+					pushValue(l, add(l, delay, ua));
 					return 2;
 				}
 				else if (top == 3)
@@ -311,7 +319,7 @@ namespace SLua
 					}
 					ld.d = ua;
 					pushValue(l, true);
-					pushValue(l, add(delay, cycle, ua));
+					pushValue(l, add(l, delay, cycle, ua));
 					return 2;
 				}
 				return LuaObject.error(l,"Argument error");
@@ -328,11 +336,17 @@ namespace SLua
 			if (mapSnTimer == null) return 0;
 			try
 			{
+                List<int> rts = new List<int>();
 				foreach (var t in mapSnTimer)
 				{
-					innerDel(t.Value, false);
+                    if (t.Value.L == l)
+                    {
+                        innerDel(t.Value, false);
+                        rts.Add(t.Key);
+                    }
 				}
-				mapSnTimer.Clear();
+                foreach (int k in rts)
+                    mapSnTimer.Remove(k);
 				
 				pushValue(l, true);
 				return 1;

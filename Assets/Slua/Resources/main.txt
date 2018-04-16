@@ -31,11 +31,19 @@ function testArray()
 	
 	HelloWorld.int16Array(a)
 	HelloWorld.int16Array({1,2,3,4})
+	HelloWorld.byteArrayTest()
+
+	local rtarr = {c}
+	HelloWorld.transformArray(rtarr)
 end
 
 function testNullable()
 	HelloWorld.nullf(1)
 	HelloWorld.nullf()
+end
+
+local function click(...)
+	print("fuck")
 end
 
 function main()
@@ -65,6 +73,12 @@ function main()
 	else
 		print("using lua")
 	end
+
+	-- test override function
+	HelloWorld.AFuncByDouble(1);
+
+	-- test negetive value
+	assert(HelloWorld.getNegInt()==-1)
 
 	-- test custom component
 	local x=UnityEngine.GameObject("OoOo")
@@ -113,19 +127,49 @@ function main()
 	local data = HelloWorld.bytes()
 	data[1]=11
 	print("data type ",type(data),#data,data.Table[1],data,data[1],data[2])
+
+	-- test bytearray object wity array
+	local ba = Slua.ByteArray(data)
+
 	data = Slua.ToString(data)
 	print("data type ",type(data),data)
+
+
+	print('Construct bytearray object',ba)
+	print(ba:ReadByte(),ba:ReadByte())
+	assert(ba.Length==4)
+	assert(ba.Position==2)
+	assert(ba:ReadByte()==53)
+
+	-- construct new byte array
+	local ba = Slua.ByteArray()
+	ba:WriteByte(11)
+	ba:WriteByte(22)
+	ba:WriteVarInt(1024)
+	ba:WriteShort(5656)
+	ba:WriteNum(3.1415)
+	ba.Position=0
+	assert(ba:ReadByte()==11)
+	assert(ba:ReadByte()==22)
+	assert(ba:ReadVarInt()==1024)
+	assert(ba:ReadShort()==5656)
+	assert(ba:ReadDouble()==3.1415)
+
 
 	-- get out parameter
 	local ok,hitinfo = Physics.Raycast(Vector3(0,0,0),Vector3(0,0,1),Slua.out)
 	print("Physics Hitinfo",ok,hitinfo)
 	
-
+	local clickCount=0
 	btn.onClick:AddListener(function()
 		local go = GameObject.Find("Canvas/Text")
 		local label = go:GetComponent("Text")
-		label.text="hello world"
+		clickCount=clickCount+1
+		label.text="hello world " ..tostring(clickCount)
+
 	end)
+
+	btn.onClick:AddListener(click)
 	
 
 	local go = GameObject.Find("Canvas/Panel2"):GetComponent("ScrollRect")
@@ -158,29 +202,15 @@ function main()
 		cube.transform.localRotation = Quaternion.Euler(0,0,math.sin(Time.time)*90)
 		return true
 	end)
-	
-	LuaTimer.Add(0,2000,function(id)
-		print("xx")
-		return true
-	end)
-	
-	LuaTimer.Add(0,200,function(id)
-		print("xx")
-		return true
-	end)
-	
-	local xt=LuaTimer.Add(0,3000,function(id)
-		print("xx")
-		return true
-	end)
-	
-	LuaTimer.Add(0,70,function(id)
-		print("yy")
-	
-		LuaTimer.Delete(xt)
-		return true
-	end)
 
+	-- test timer
+	for i=1,20 do
+		LuaTimer.Add(0,i*1000,function()
+			print("timer callback",i*1000)
+			return true
+		end)
+	end
+	
 	print(UnityEngine.PrimitiveType.Cube,type(UnityEngine.PrimitiveType.Cube))
 
 
@@ -193,7 +223,7 @@ function main()
 		Yield(WaitForSeconds(2))
 		print "coroutine WaitForSeconds 2"
 
-		local www = WWW("http://www.sineysoft.com")
+		local www = WWW("http://www.baidu.com")
 		Yield(www)
 		print(#Slua.ToString(www.bytes))
 
@@ -205,7 +235,7 @@ function main()
 	coroutine.resume(c)
 
 	-- test lua table
-	HelloWorld.setv({name="yes",value=12})
+	HelloWorld.setv({name="yes",value=12,[-2]="siney",[0]="no"})
 	local t=HelloWorld.getv()
 	for k,v in pairs(t) do
 		print("table value",k,v)
@@ -227,6 +257,10 @@ function main()
 	-- test luafunction
 	local h=HelloWorld()
 	h:func7(abc)
+	h.cc = Color32(255,0,0,255)
+	print("Hellor world color",h.cc)
+
+    HelloWorld.setObjs({{1,2},{3,4},{5,6}})
 end
 
 function abc()

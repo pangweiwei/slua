@@ -23,10 +23,9 @@
 namespace SLua
 {
     using System;
-    using LuaInterface;
     class LuaValueType : LuaObject
     {
-#if !UNITY_IPHONE && !LUA_5_3 && !SLUA_STANDALONE
+#if !LUA_5_3 && !SLUA_STANDALONE
         static string script = @"
 if not UnityEngine or not UnityEngine.Vector2 then
     print('No static code gen yet, ignore `LuaValueType:reg` !!! ')
@@ -67,28 +66,28 @@ end
 
 local function inherite(cls,base)
 	for k,v in pairs(getmetatable(base)) do
-		if k:sub(1,2)~='__' and  k:sub(1,1)>='A' and k:sub(1,1)<='Z' then
+		if not cls[k] and k:sub(1,2)~='__' and  k:sub(1,1)>='A' and k:sub(1,1)<='Z' then
 			cls[k]=v
 		end
 	end
 end
 
 local Matrix3x3={}
+local I = {__typename='Matrix3x3'}
 local Vector3
 
 do
-
 	function Matrix3x3.SetAt(m,row,col,v)
 		m[row*3+col+1]=v
 	end
 
 	function Matrix3x3.New()
 		local r={1,0,0,0,1,0,0,0,1}
-		setmetatable(r,Matrix3x3)
+		setmetatable(r,I)
 		return r
 	end
 
-	function Matrix3x3.__tostring(m)
+	function I.__tostring(m)
 		return string.format('Matrix3x3(%f,%f,%f,%f,%f,%f,%f,%f,%f)'
 			,m[1],m[2],m[3]
 			,m[4],m[5],m[6]
@@ -138,13 +137,13 @@ do
 		return res
 	end
 
-	function Matrix3x3:SetIdentity()
+	function I:SetIdentity()
 		self[1],self[2],self[3]=1,0,0
 		self[4],self[5],self[6]=0,1,0
 		self[7],self[8],self[9]=0,0,1
 	end
 
-	function Matrix3x3:SetOrthoNormal( x,y,z )
+	function I:SetOrthoNormal( x,y,z )
 		self[1],self[2],self[3]=x[1],y[1],z[1]
 		self[4],self[5],self[6]=x[2],y[2],z[2]
 		self[7],self[8],self[9]=x[3],y[3],z[3]
@@ -278,8 +277,7 @@ do
 		return Vector3.Normalize(self)
 	end
 
-
-	function Vector3:Clone()
+	function Vector3.Clone(self)
 		return Vector3.New(self[1],self[2],self[3])
 	end
 		
@@ -548,15 +546,15 @@ do
 	    return (normal * Vector3.Dot(vector, normal)) / num
 	end
 
+	inherite(Vector3,Raw)
 	setmetatable(Vector3,Vector3)
 end
 
 do
-
-
 	local Raw=UnityEngine.Color
 	local Color={__typename='Color',__raw=Raw}
-	_G['UnityEngine.Color.Instance']=Color
+	local I = {__typename='Color'}
+	_G['UnityEngine.Color.Instance']=I
 	UnityEngine.Color=Color
 	local get={}
 	local set={}
@@ -575,7 +573,21 @@ do
 		error('Not found '..k)
 	end
 
-	Color.__tostring = function(self)
+	I.__index = function(t,k)
+		local f=rawget(I,k)
+		if f then return f end
+		local f=rawget(get,k)
+		if f then return f(t) end
+		error('Not found '..k)
+	end
+
+	I.__newindex = function(t,k,v)
+		local f=rawget(set,k)
+		if f then return f(t,v) end
+		error('Not found '..k)
+	end
+
+	I.__tostring = function(self)
 		return string.format('Color(%f,%f,%f,%f)',self[1],self[2],self[3],self[4])
 	end
 
@@ -583,7 +595,7 @@ do
 	function Color.New(r,g,b,a)
 		a=a or 1
 		local c={r or 0,g or 0,b or 0,a or 0}
-		setmetatable(c,Color)
+		setmetatable(c,I)
 		return c
 	end
 
@@ -591,15 +603,15 @@ do
 		return Color.New(r,g,b,a)
 	end
 
-	function Color.__add(a,b)
+	function I.__add(a,b)
 		return Color.New(a[1]+b[1],a[2]+b[2],a[3]+b[3],a[4]+b[4])
 	end
 
-	function Color.__sub(a,b)
+	function I.__sub(a,b)
 		return Color.New(a[1]-b[1],a[2]-b[2],a[3]-b[3],a[4]-b[4])
 	end
 
-	function Color.__mul( a,b )
+	function I.__mul( a,b )
 		if type(a)=='number' then
 			return Color.New(a*b[1],a*b[2],a*b[3],a*b[4])
 		elseif type(b)=='number' then
@@ -609,11 +621,11 @@ do
 		end
 	end
 
-	function Color.__div( a,b )
+	function I.__div( a,b )
 		return Color.New(a[1]/b,a[2]/b,a[3]/b,a[4]/b)
 	end
 
-	function Color.__eq( a,b )
+	function I.__eq( a,b )
 		return a[1]==b[1] and a[2]==b[2] and a[3]==b[3] and a[4]==b[4]
 	end
 
@@ -672,6 +684,7 @@ do
 	end
 
 
+	inherite(Color,Raw)
 	setmetatable(Color,Color)
 
 end
@@ -679,7 +692,8 @@ end
 do
 	local Raw=UnityEngine.Vector2
 	local Vector2={__typename='Vector2',__raw=Raw}
-	_G['UnityEngine.Vector2.Instance']=Vector2
+	local I = {__typename='Vector2'}
+	_G['UnityEngine.Vector2.Instance']=I
 	UnityEngine.Vector2=Vector2
 	local get={}
 	local set={}
@@ -698,13 +712,27 @@ do
 		error('Not found '..k)
 	end
 
-	Vector2.__tostring = function(self)
+	I.__index = function(t,k)
+		local f=rawget(I,k)
+		if f then return f end
+		local f=rawget(get,k)
+		if f then return f(t) end
+		error('Not found '..k)
+	end
+
+	I.__newindex = function(t,k,v)
+		local f=rawget(set,k)
+		if f then return f(t,v) end
+		error('Not found '..k)
+	end
+
+	I.__tostring = function(self)
 		return string.format('Vector2(%f,%f)',self[1],self[2])
 	end
 
 	function Vector2.New(x,y)
 		local v={x or 0,y or 0}
-		setmetatable(v,Vector2)
+		setmetatable(v,I)
 		return v
 	end
 
@@ -712,35 +740,37 @@ do
 		return Vector2.New(x,y)
 	end
 
-	function Vector2.__add( a,b )
+	function I.__add( a,b )
 		return Vector2.New(a[1]+b[1],a[2]+b[2])
 	end
 
-	function Vector2.__sub( a,b )
+	function I.__sub( a,b )
 		return Vector2.New(a[1]-b[1],a[2]-b[2])
 	end
 
-	function Vector2.__eq( a,b )
+	function I.__eq( a,b )
 		return abs(a[1]-b[1])<Epsilon
 		 	and abs(a[2]-b[2])<Epsilon
 	end
 
-	function Vector2.__mul( a,b )
+	function I.__mul( a,b )
 		return Vector2.New(a[1]*b,a[2]*b)
 	end
 
-	function Vector2.__div( a,b )
+	function I.__div( a,b )
 		return Vector2.New(a[1]/b,a[2]/b)
 	end
 
-	function Vector2.__unm( a )
+	function I.__unm( a )
 		return Vector2.New(-a[1],-a[2])
 	end
 
 	function get.one() return Vector2.New(1,1) end
 	function get.zero() return Vector2.New(0,0) end
 	function get.up() return Vector2.New(0,1) end
+	function get.down() return Vector2.New(0,-1) end
 	function get.right() return Vector2.New(1,0) end
+	function get.left() return Vector2.New(-1,0) end
 	function get:magnitude() return sqrt(self[1]^2+self[2]^2) end
 	function get:sqrMagnitude() return self[1]^2+self[2]^2 end
 	function get:normalized() 
@@ -763,12 +793,12 @@ do
 		return sqrt(v[1]^2+v[2]^2)
 	end
 
-	function Vector2:Set( x,y )
+	function I:Set( x,y )
 		self[1],self[2]=x,y
 	end
 
-	function Vector2:ToString( )
-		return Vector2.__tostring(self)
+	function I:ToString( )
+		return I.__tostring(self)
 	end
 
 	setmetatable(Vector2,Vector2)
@@ -777,7 +807,8 @@ end
 do
 	local Raw=UnityEngine.Vector4
 	local Vector4={__typename='Vector4',__raw=Raw}
-	_G['UnityEngine.Vector4.Instance']=Vector4
+	local I = {__typename='Vector4'}
+	_G['UnityEngine.Vector4.Instance']=I
 	UnityEngine.Vector4=Vector4
 	local get={}
 	local set={}
@@ -796,13 +827,27 @@ do
 		error('Not found '..k)
 	end
 
-	Vector4.__tostring = function(self)
+	I.__index = function(t,k)
+		local f=rawget(I,k)
+		if f then return f end
+		local f=rawget(get,k)
+		if f then return f(t) end
+		error('Not found '..k)
+	end
+
+	I.__newindex = function(t,k,v)
+		local f=rawget(set,k)
+		if f then return f(t,v) end
+		error('Not found '..k)
+	end
+
+	I.__tostring = function(self)
 		return string.format('Vector4(%f,%f,%f,%f)',self[1],self[2],self[3],self[4])
 	end
 
 	function Vector4.New(x,y,z,w)
 		local v={x or 0,y or 0,z or 0,w or 0}
-		setmetatable(v,Vector4)
+		setmetatable(v,I)
 		return v
 	end
 
@@ -810,30 +855,30 @@ do
 		return Vector4.New(x,y,z,w)
 	end
 
-	function Vector4.__add( a,b )
+	function I.__add( a,b )
 		return Vector4.New(a[1]+b[1],a[2]+b[2],a[3]+b[3],a[4]+b[4])
 	end
 
-	function Vector4.__sub( a,b )
+	function I.__sub( a,b )
 		return Vector4.New(a[1]-b[1],a[2]-b[2],a[3]-b[3],a[4]-b[4])
 	end
 
-	function Vector4.__eq( a,b )
+	function I.__eq( a,b )
 		return abs(a[1]-b[1])<Epsilon
 		 	and abs(a[2]-b[2])<Epsilon
 		 	and abs(a[3]-b[3])<Epsilon
 		 	and abs(a[4]-b[4])<Epsilon
 	end
 
-	function Vector4.__mul( a,b )
+	function I.__mul( a,b )
 		return Vector4.New(a[1]*b,a[2]*b,a[3]*b,a[4]*b)
 	end
 
-	function Vector4.__div( a,b )
+	function I.__div( a,b )
 		return Vector4.New(a[1]/b,a[2]/b,a[3]/b,a[4]/b)
 	end
 
-	function Vector4.__unm( a )
+	function I.__unm( a )
 		return Vector4.New(-a[1],-a[2],-a[3],-a[4])
 	end
 
@@ -854,12 +899,12 @@ do
 	function set:z(v) self[3]=v	end
 	function set:w(v) self[4]=v	end
 
-	function Vector4:Set( x,y,z,w )
+	function I:Set( x,y,z,w )
 		self[1],self[2],self[3],self[4]=x,y,z,w
 	end
 
-	function Vector4:ToString( ... )
-		return Vector4.__tostring(self)
+	function I:ToString()
+		return I.__tostring(self)
 	end
 
 	inherite(Vector4,Raw)
@@ -871,7 +916,8 @@ do
 	local Raw=UnityEngine.Quaternion
 	local Inst=_G['UnityEngine.Quaternion.Instance']
 	local Quaternion={__typename='Quaternion',__raw=Raw}
-	_G['UnityEngine.Quaternion.Instance']=Quaternion
+	local I = {__typename='Quaternion'}
+	_G['UnityEngine.Quaternion.Instance']=I
 	UnityEngine.Quaternion=Quaternion
 	local get={}
 	local set={}
@@ -890,16 +936,30 @@ do
 		error('Not found '..k)
 	end
 
-	Quaternion.__tostring = function(self)
+	I.__index = function(t,k)
+		local f=rawget(I,k)
+		if f then return f end
+		local f=rawget(get,k)
+		if f then return f(t) end
+		error('Not found '..k)
+	end
+
+	I.__newindex = function(t,k,v)
+		local f=rawget(set,k)
+		if f then return f(t,v) end
+		error('Not found '..k)
+	end
+
+	I.__tostring = function(self)
 		return string.format('Quaternion(%f,%f,%f,%f)',self[1],self[2],self[3],self[4])
 	end
 
-	Quaternion.__div = function(a,b)
+	I.__div = function(a,b)
 		return Quaternion.New(a[1]/b,a[2]/b,a[3]/b,a[4]/b)
 	end
 
 	-- reflector code
-	Quaternion.__mul = function(a,b,target)
+	I.__mul = function(a,b,target)
 		if getmetatable(b).__typename=='Vector3' then
 			    local vector=Vector3.New(0,0,0)
 			    local num = a[1] * 2
@@ -934,18 +994,18 @@ do
 	end
 
 	function Quaternion.Mul(a,b)
-		return Quaternion.__mul(a,b,a)
+		return I.__mul(a,b,a)
 	end
 
 	-- reflector code
-	Quaternion.__eq = function(a,b)
+	I.__eq = function(a,b)
 		return Quaternion.Dot(a,b)>0.999999
 	end
 
 
 	function Quaternion.New(x,y,z,w)
 		local q={x or 0,y or 0,z or 0,w or 0}
-		setmetatable(q,Quaternion)
+		setmetatable(q,I)
 		return q
 	end
 
@@ -966,15 +1026,15 @@ do
 	function get:eulerAngles() return Inst.eulerAngles[1](self) end
 	function set:eulerAngles(v) Inst.eulerAngles[2](self,v) end
 
-	function Quaternion:Set(x,y,z,w)
+	function I:Set(x,y,z,w)
 		self[1],self[2],self[3],self[4]=x,y,z,w
 	end
 
-	function Quaternion:Clone()
+	function Quaternion.Clone(self)
 		return Quaternion.New(self[1],self[2],self[3],self[4])
 	end
 
-	function Quaternion:ToAngleAxis()
+	function I:ToAngleAxis()
 		local angle = acos(self[4])*2
 		if abs(angle-0)<Epsilon then
 			return angle,Vector3.New(1,0,0)
@@ -984,12 +1044,12 @@ do
 	end
 
 	--TODO
-	function Quaternion:SetFromToRotation(from,to)
+	function I:SetFromToRotation(from,to)
 		Inst.SetFromToRotation(self,from,to)
 	end
 
 	--TODO
-	function Quaternion:SetLookRotation(view,up)
+	function I:SetLookRotation(view,up)
 		up = up or Vector3.up
 		Inst.SetLookRotation(self,view,up)
 	end
@@ -1082,9 +1142,10 @@ end
 #endif
         public static void reg(IntPtr l)
         {
-#if !UNITY_IPHONE && !LUA_5_3 && !SLUA_STANDALONE
+#if !LUA_5_3 && !SLUA_STANDALONE
             // lua implemented valuetype isn't faster than raw under non-jit.
-			LuaState.get(l).doString(script,"ValueTypeScript");
+            LuaState ls = LuaState.get(l);
+            ls.doString(script, "ValueTypeScript");
 #endif
         }
     }

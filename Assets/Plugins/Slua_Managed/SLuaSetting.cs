@@ -36,45 +36,64 @@ namespace SLua{
 		LF,
 	}
 
+	public enum JITBUILDTYPE : int
+	{
+		none = 0,
+		X86 = 1,
+		X64 = 2,
+		GC64 = 3,
+	}
+
 	public class SLuaSetting 
-#if !SLUA_STANDALONE
-        : ScriptableObject
-#endif
-    {
+	#if !SLUA_STANDALONE
+		: ScriptableObject
+	#endif
+	{
 
 		public EOL eol = EOL.Native;
 		public bool exportExtensionMethod = true;
 		public string UnityEngineGeneratePath = "Assets/Slua/LuaObject/";
 
-		public int debugPort=10240;
-		public string debugIP="0.0.0.0";
+        public bool PrintTrace = true;
+
+
+		public JITBUILDTYPE jitType = JITBUILDTYPE.none;
+
+		// public int debugPort=10240;
+		// public string debugIP="0.0.0.0"; // no longer debugger built-in
 
 		private static SLuaSetting _instance=null;
 		public static SLuaSetting Instance{
 			get{
-#if !SLUA_STANDALONE
+				#if !SLUA_STANDALONE
 				if(_instance == null){
 					_instance = Resources.Load<SLuaSetting>("setting");
 
-#if UNITY_EDITOR
+				#if UNITY_EDITOR
 					if(_instance == null){
 						_instance =  SLuaSetting.CreateInstance<SLuaSetting>();
-						AssetDatabase.CreateAsset(_instance,"Assets/Slua/Resources/setting.asset");
+                        try
+                        {
+                            AssetDatabase.CreateAsset(_instance, "Assets/Slua/Resources/setting.asset");
+                        }
+                        catch {
+                            
+                        }
 					}
-#endif
+				#endif
 
 				}
-#endif
+				#endif
 				return _instance;
 			}
 		}
 
-#if UNITY_EDITOR && !SLUA_STANDALONE
+		#if UNITY_EDITOR && !SLUA_STANDALONE
 		[MenuItem("SLua/Setting")]
 		public static void Open(){
 			Selection.activeObject = Instance;
 		}
-#endif
+		#endif
 
 	}
 

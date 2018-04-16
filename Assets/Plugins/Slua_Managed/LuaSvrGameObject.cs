@@ -29,37 +29,18 @@ namespace SLua
 	using System;
 	using System.Net;
 	using System.Net.Sockets;
-	using LuaInterface;
 	using System.IO;
 
 	public class LuaSvrGameObject : MonoBehaviour
 	{
-
 		public LuaState state;
 		public Action onUpdate;
-
-		void OnDestroy()
-		{
-			if (state != null)
-			{
-				
-				// state is disposed by editorapplication if in the Editor
-				// state isn't disposed in App because that all resources will be disposed by app on process exit.
-			}
-		}
-
-		public void init() {
-			
-		}
-
 
 		void Update()
 		{
 			if (onUpdate != null) onUpdate();
 
 		}
-
-		
 	}
 }
 #endif

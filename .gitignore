@@ -9,12 +9,14 @@ obj/*
 /Assets/AssetStoreTools.meta
 /Assets/UnityVS.meta
 /Assets/Plugins/Slua_Managed/Unity
+/Assets/Plugins/Slua_Managed/Unity.meta
 /Assets/Slua/LuaObject
 /Assets/Slua/LuaObject.meta
 /ProjectSettings
 /*.csproj
 /*.sln
 /build/luajit-osx/build*
+.localhistory
 
 /standalone/bin
 /standalone/**/obj

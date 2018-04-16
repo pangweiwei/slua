@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using SLua;
 using System;
-using LuaInterface;
+
+#if UNITY_5_5_OR_NEWER
+using UnityEngine.Profiling;
+#endif
 
 [CustomLuaClass]
 public struct foostruct
@@ -60,6 +63,8 @@ public class Ref
 [CustomLuaClass]
 public class HelloWorld
 {
+	public Color32 cc;
+
 	public UnityEngine.Events.UnityAction someAct;
 	static public void say()
 	{
@@ -124,6 +129,9 @@ public class HelloWorld
 
 	static public void setv(LuaTable t)
 	{
+		Debug.Log ("negative index test " + t [-2]);
+		Debug.Log ("zero index test " + t [0]);
+		
 		foreach (LuaTable.TablePair pair in t)
 		{
 			Debug.Log(string.Format("foreach LuaTable {0}-{1}", pair.key, pair.value));
@@ -140,6 +148,11 @@ public class HelloWorld
 
 	}
 
+	static public int getNegInt() 
+	{
+		return -1;
+	}
+
 	static public LuaTable getv()
 	{
 		LuaTable t = new LuaTable(LuaState.main);
@@ -152,6 +165,33 @@ public class HelloWorld
 		return t;
 	}
 
+	public object this[string path]
+	{
+		get
+		{
+			Debug.Log ("get by string key");
+			return "value";
+		}
+		set
+		{
+			Debug.Log ("set by string key");
+		}
+	}
+
+	public object this[int index]
+	{
+		get
+		{
+			Debug.Log ("get by int key");	
+			return "int value";
+		}
+		set
+		{
+			Debug.Log ("set by int key");	
+		}
+	}
+
+
 
 	static public void ofunc(Type t)
 	{
@@ -163,6 +203,22 @@ public class HelloWorld
 		Debug.Log(go.name);
 	}
 
+	static public void AFunc(int a) {
+		Debug.Log ("AFunc with int");
+	}
+
+	static public void AFunc(float a) {
+		Debug.Log ("AFunc with float");
+	}
+
+	static public void AFunc(string a) {
+		Debug.Log ("AFunc with string");
+	}
+
+	[LuaOverride("AFuncByDouble")]
+	static public void AFunc(double a) {
+		Debug.Log ("AFunc with double");
+	}
 
 
 
@@ -277,5 +333,39 @@ public class HelloWorld
 		}
 	}
 
-	internal int b;
+    public void func8(List<int> result)
+    {
+        result.Add(1);
+    }
+
+    public static void byteArrayTest()
+    {
+        var ba = new ByteArray();
+        ba.WriteInt64(1L);
+        ba.WriteInt64(2L);
+        ba.WriteInt64(1024L);
+        ba.Position = 0;
+        Assert.IsTrue(ba.ReadInt64() == 1L);
+        Assert.IsTrue(ba.ReadInt64() == 2L);
+        Assert.IsTrue(ba.ReadInt64()==1024L);
+    }
+
+    public static void transformArray(Transform[] arr)
+    {
+        Debug.Log("transformArray success.");
+    }
+
+    public static void setObjs(object[] objs) {
+        
+    }
+}
+
+public static class ExtensionTest
+{
+    static List<int> result = new List<int>();
+	public static List<int> func8(this HelloWorld helloWorld)
+    {
+        helloWorld.func8(result);
+        return result;
+    }
 }

@@ -1,6 +1,6 @@
 import glob, os
 
-LUA_SRC = './luajit-2.1.0/src'
+LUA_SRC = './luajit-2.1.0-beta3/src'
 IOS_SDK = 'iPhoneOS8.4.sdk'
 
 def build_mac_dylib(name, src):
@@ -20,9 +20,9 @@ def build_ios_lib(name, src):
 	env.Append(CPPPATH=[LUA_SRC])
 	env.StaticLibrary(name, src)
 
-luasocket_src = glob.glob('./luasocket-2.0.2/src/*.c')
+luasocket_src = glob.glob('./luasocket-mini/*.c')
 if os.name != "nt":
-	luasocket_src.remove('./luasocket-2.0.2/src/wsocket.c')
+	luasocket_src.remove('./luasocket-mini/wsocket.c')
 
 build_mac_dylib("luasocket", luasocket_src)
 build_ios_lib("luasocket", luasocket_src)

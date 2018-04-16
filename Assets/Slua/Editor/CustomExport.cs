@@ -167,6 +167,11 @@ namespace SLua
 			    "Apple",
 			    "ClusterInput",
 				"Motion",
+                "UnityEngine.UI.ReflectionMethodsCache",
+				"NativeLeakDetection",
+				"NativeLeakDetectionMode",
+				"WWWAudioExtensions",
+                "UnityEngine.Experimental",
             };
         }
     }

@@ -42,7 +42,6 @@ using System.Threading;
 using System;
 using SLua;
 using NLuaTest.Mock;
-using LuaInterface;
 
 class Assert{
 	public static void True(bool v)
@@ -78,7 +77,7 @@ public class test : MonoBehaviour {
 		l = new LuaSvr();
 		l.init(null, () =>{
 			LuaTests t = new LuaTests();
-			t.lua = l.luaState;
+			t.lua = LuaSvr.mainState;
 			t.lua.doString ("TestClass=NLuaTest.Mock.TestClass");
 
 			MethodInfo[] methods = t.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
@@ -263,6 +262,7 @@ public class test : MonoBehaviour {
 			lua.doString ("function calcVP(a,b) return a+b end");
 			LuaFunction lf = lua.getFunction ("calcVP");
 			lf.call (i, 20);
+			lf.Dispose ();
 		}
 		
 
