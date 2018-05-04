@@ -941,7 +941,6 @@ namespace SLua
             }
             else
             {
-				object obj = checkObj (l, p);
                 Array array = checkObj(l, p) as Array;
                 ta = array as T[];
                 return ta != null;
