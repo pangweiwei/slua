@@ -185,7 +185,7 @@ end
 		public static void reg(IntPtr l)
 		{
 			LuaState ls = LuaState.get(l);
-            LuaTable t = ls.doString(script, "LuaSocketMini") as LuaTable;
+            ls.doString(script, "LuaSocketMini");
 		}
 	}
 }
