@@ -10,6 +10,8 @@ public class NewCoroutine : MonoBehaviour
         Debug.Log(test);
         yield return new WaitForSeconds(time);
         func.call();
+        yield return new SLua.UnityExtension.YieldBreak(1, 2.0f, "hello");
+        Debug.Assert(false, "never reach here");
     }
 
 	void Start () {

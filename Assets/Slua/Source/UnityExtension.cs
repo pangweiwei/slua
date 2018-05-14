@@ -27,22 +27,59 @@ namespace SLua
 
     public static class UnityExtension
     {
-        public static void StartCoroutine(this MonoBehaviour mb, LuaFunction func)
+        public static Coroutine StartCoroutine(this MonoBehaviour mb, LuaFunction func)
         {
-            mb.StartCoroutine(LuaCoroutine(func));
+            return mb.StartCoroutine(LuaCoroutine(func));
+        }
+
+        // 该类型返回给 yield return 时 视为传值 效果等价于 yield break
+        internal class YieldBreak
+        {
+            public object[] values;
+            
+            public YieldBreak(params object[] values)
+            {
+                this.values = values;
+            }
         }
 
         internal static IEnumerator LuaCoroutine(LuaFunction func)
         {
             var thread = new LuaThreadWrapper(func);
+            object[] return_values = null;
             while (true)
             {
-                object obj;
-                if (!thread.Resume(out obj))
+                object yield_from_lua;
+                if (!thread.Resume(out yield_from_lua, return_values))
                 {
-                    yield break;
+                    return_values = null;
+                    break;
                 }
-                yield return obj;
+
+                var enumerator = yield_from_lua as IEnumerator;
+                if (enumerator != null) 
+                {
+                    // 如果是迭代器，则尝试自己迭代，并检测 YieldBreak 传值指令
+                    while (enumerator.MoveNext())
+                    {
+                        var current = enumerator.Current;
+                        var obj_t = current as YieldBreak;
+                        if (obj_t != null)
+                        {
+                            return_values = obj_t.values;
+                            break; // 丢弃当前迭代器
+                        }
+                        else
+                        {
+                            return_values = null;
+                            yield return current;
+                        }
+                    }
+                }
+                else
+                {
+                    yield return yield_from_lua;
+                }
             }
         }
     }
