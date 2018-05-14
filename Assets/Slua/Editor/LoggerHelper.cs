@@ -47,10 +47,10 @@ namespace SLua
         }
 
         static Type ConsoleWindowType = typeof(EditorWindow).Assembly.GetType("UnityEditor.ConsoleWindow");
-        static Type ListViewStateType = typeof(EditorWindow).Assembly.GetType("UnityEditor.ListViewState");
+        // static Type ListViewStateType = typeof(EditorWindow).Assembly.GetType("UnityEditor.ListViewState");
         static FieldInfo ConsoleWindowField = ConsoleWindowType.GetField("ms_ConsoleWindow", BindingFlags.Static | BindingFlags.NonPublic);
-        static FieldInfo ListViewField = ConsoleWindowType.GetField("m_ListView", BindingFlags.Instance | BindingFlags.NonPublic);
-        static FieldInfo RowField = ListViewStateType.GetField("row", BindingFlags.Instance | BindingFlags.Public);
+        // static FieldInfo ListViewField = ConsoleWindowType.GetField("m_ListView", BindingFlags.Instance | BindingFlags.NonPublic);
+        // static FieldInfo RowField = ListViewStateType.GetField("row", BindingFlags.Instance | BindingFlags.Public);
         static FieldInfo ActiveTextField = ConsoleWindowType.GetField("m_ActiveText", BindingFlags.Instance | BindingFlags.NonPublic);
         static string GetStackTrace()
         {
@@ -58,8 +58,8 @@ namespace SLua
             if (instance == null)
                 return null;
 
-            var listView = ListViewField.GetValue(instance);
-            int row = (int)RowField.GetValue(listView);
+            // var listView = ListViewField.GetValue(instance);
+            // int row = (int)RowField.GetValue(listView);
             return (string)ActiveTextField.GetValue(instance);
         }
     }

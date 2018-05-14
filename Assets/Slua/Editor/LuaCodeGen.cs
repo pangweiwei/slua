@@ -1392,7 +1392,7 @@ namespace SLua
 		
 		bool MemberInFilter(Type t, MemberInfo mi)
 		{
-			return memberFilter.Contains(t.Name + "." + mi.Name) || memberFilter.Contains("*." + mi.Name);
+            return memberFilter.Contains(t.Name + "." + mi.Name) || memberFilter.Contains("*." + mi.Name);
 		}
 		
 		bool IsObsolete(MemberInfo t)
@@ -1917,7 +1917,7 @@ namespace SLua
 					{
 						ParameterInfo p = pars[k];
 						bool hasParams = p.IsDefined(typeof(ParamArrayAttribute), false);
-						CheckArgument(file, p.ParameterType, k, 2, p.IsOut, hasParams);
+                        CheckArgument(file, p.ParameterType, k, 2, IsOutArg(p), hasParams);
 					}
 					Write(file, "o=new {0}({1});", TypeDecl(t), FuncCall(ci));
 					WriteOk(file);
@@ -2335,7 +2335,7 @@ namespace SLua
 				}
 				
 				bool hasParams = p.IsDefined(typeof(ParamArrayAttribute), false);
-				CheckArgument(file, p.ParameterType, n, argIndex, p.IsOut, hasParams);
+                CheckArgument(file, p.ParameterType, n, argIndex, IsOutArg(p), hasParams);
 			}
 			
 			string ret = "";
@@ -2476,6 +2476,10 @@ namespace SLua
 			
 			if (fmt.EndsWith("{")) indent++;
 		}
+
+        bool IsOutArg(ParameterInfo p) {
+            return p.IsOut && !p.IsDefined(typeof(System.Runtime.InteropServices.OutAttribute),false);
+        }
 		
 		private void CheckArgument(StreamWriter file, Type t, int n, int argstart, bool isout, bool isparams)
 		{

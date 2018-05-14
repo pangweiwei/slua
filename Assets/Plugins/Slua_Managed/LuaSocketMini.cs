@@ -177,13 +177,15 @@ sourcet[""default""] = sourcet[""until-closed""]
 
 _M.source = _M.choose(sourcet)
 
-return _M
+package.preload['socket'] = function()
+    return _M
+end
 
 ";
 		public static void reg(IntPtr l)
 		{
 			LuaState ls = LuaState.get(l);
-			ls.doString(script, "LuaSocketMini");
+            ls.doString(script, "LuaSocketMini");
 		}
 	}
 }
