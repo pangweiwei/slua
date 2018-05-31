@@ -1790,16 +1790,30 @@ namespace SLua
 		void WriteTry(StreamWriter file)
 		{
 			Write(file, "try {");
+			Write(file, "#if DEBUG");
+			Write(file, "var method = System.Reflection.MethodBase.GetCurrentMethod();");
+			Write(file, "string methodName = GetMethodName(method);");
+			Write(file, "UnityEngine.Profiling.Profiler.BeginSample(methodName);");
+			Write(file, "#endif");
 		}
-		
+
 		void WriteCatchExecption(StreamWriter file)
 		{
 			Write(file, "}");
 			Write(file, "catch(Exception e) {");
 			Write(file, "return error(l,e);");
 			Write(file, "}");
+			WriteFinaly(file);
 		}
-		
+		void WriteFinaly(StreamWriter file)
+		{
+			Write(file, "#if DEBUG");
+			Write(file, "finally {");
+			Write(file, "UnityEngine.Profiling.Profiler.EndSample();");
+			Write(file, "}");
+			Write(file, "#endif");
+		}
+
 		void WriteCheckType(StreamWriter file, Type t, int n, string v = "v", string nprefix = "")
 		{
 			if (t.IsEnum)
