@@ -28,8 +28,9 @@ namespace SLua
 #endif
 	using System;
 	using System.Reflection;
+	using System.Collections.Generic;
 
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Delegate | AttributeTargets.Interface)]
+	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Delegate | AttributeTargets.Interface)]
 	public class CustomLuaClassAttribute : System.Attribute
 	{
 		public CustomLuaClassAttribute()
@@ -95,7 +96,9 @@ namespace SLua
         static protected LuaCSFunction lua_lt = new LuaCSFunction(luaLt);
         static protected LuaCSFunction lua_le = new LuaCSFunction(luaLe);
         static protected LuaCSFunction lua_tostring = new LuaCSFunction(ToString);
+
 		const string DelgateTable = "__LuaDelegate";
+		static protected Dictionary<MethodBase, string> methodDict = new Dictionary<MethodBase, string>();
 
 		internal const int VersionNumber = 0x1500;
 
@@ -1328,6 +1331,19 @@ namespace SLua
 			LuaDLL.lua_pushstring (l, "__fullname");
 			LuaDLL.lua_rawget (l, -2);
 			return 1;
+		}
+
+		static protected string GetMethodName(MethodBase method)
+		{
+			string result = "";
+
+			if (!methodDict.TryGetValue(method, out result))
+			{
+				Type classType = method.ReflectedType;
+				result = string.Format("{0}.{1}", classType.Name, method.Name);
+				methodDict.Add(method, result);
+			}
+			return result;
 		}
 
 		static public int error(IntPtr l,Exception e)

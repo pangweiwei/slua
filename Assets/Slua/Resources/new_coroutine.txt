@@ -13,9 +13,10 @@ function main()
 					coroutine.yield(nil)
 					print("yield one frame. frameCount:", UnityEngine.Time.frameCount)
 
-					coroutine.yield(NewCoroutine.MyMethod("message from lua, run a c# coroutine and wait for 2 seconds", 2, function ()
+					local cs1, cs2, cs3 = coroutine.yield(NewCoroutine.MyMethod("message from lua, run a c# coroutine and wait for 2 seconds", 2, function ()
 						print("run after and invoked by c# coroutine")
 					end))
+					print("csharp coroutine returned values:", cs1, cs2, cs3)
 
 					print("wait for another 3 seconds by UnityEngine.WaitForSeconds")
 					coroutine.yield(UnityEngine.WaitForSeconds(3))
