@@ -114,7 +114,7 @@ namespace SLua
 #if UNITY_2017_2_OR_NEWER
         public static string[] unityModule = new string[] { "UnityEngine","UnityEngine.CoreModule","UnityEngine.UIModule","UnityEngine.TextRenderingModule","UnityEngine.TextRenderingModule",
                 "UnityEngine.UnityWebRequestWWWModule","UnityEngine.Physics2DModule","UnityEngine.AnimationModule","UnityEngine.TextRenderingModule","UnityEngine.IMGUIModule","UnityEngine.UnityWebRequestModule",
-            "UnityEngine.PhysicsModule", "UnityEngine.UI" };
+            "UnityEngine.PhysicsModule", "UnityEngine.UI", "UnityEngine.AudioModule" };
 #else
         public static string[] unityModule = null;
 #endif
