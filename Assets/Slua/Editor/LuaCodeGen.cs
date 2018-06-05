@@ -1362,7 +1362,8 @@ namespace SLua
 				    && !DontExport(mi)
 				    && !funcname.Contains(fn)
 				    && isUsefullMethod(mi)
-				    && !MemberInFilter(t, mi))
+				    && !MemberInFilter(t, mi)
+					&& !ContainUnsafe(mi))
 				{
 					WriteFunctionDec(file, fn);
 					WriteFunctionImpl(file, mi, t, bf);
@@ -2234,7 +2235,9 @@ namespace SLua
 					if (cons[n].MemberType == MemberTypes.Method)
 					{
 						MethodInfo mi = cons[n] as MethodInfo;
-
+						if (ContainUnsafe(mi)) {
+							continue;
+						}
 						if (mi.IsDefined (typeof(LuaOverrideAttribute), false)) {
 							if (overridedMethods == null)
 								overridedMethods = new Dictionary<string,MethodInfo> ();
