@@ -1203,7 +1203,7 @@ namespace SLua
         {
             if (t.IsEnum)
             {
-                return string.Format("checkEnum(l,{2}{0},out {1});", n, v, prefix);
+                return string.Format("{0} = ({1})LuaDLL.luaL_checkinteger(l, {2});", v, TypeDecl(t), n);
             }
             else if (t.BaseType == typeof(System.MulticastDelegate))
             {
@@ -1362,7 +1362,8 @@ namespace SLua
 				    && !DontExport(mi)
 				    && !funcname.Contains(fn)
 				    && isUsefullMethod(mi)
-				    && !MemberInFilter(t, mi))
+				    && !MemberInFilter(t, mi)
+					&& !ContainUnsafe(mi))
 				{
 					WriteFunctionDec(file, fn);
 					WriteFunctionImpl(file, mi, t, bf);
@@ -1793,7 +1794,11 @@ namespace SLua
 			Write(file, "#if DEBUG");
 			Write(file, "var method = System.Reflection.MethodBase.GetCurrentMethod();");
 			Write(file, "string methodName = GetMethodName(method);");
+			Write(file, "#if UNITY_5_5_OR_NEWER");
 			Write(file, "UnityEngine.Profiling.Profiler.BeginSample(methodName);");
+			Write(file, "#else");
+			Write(file, "Profiler.BeginSample(methodName);");
+			Write(file, "#endif");
 			Write(file, "#endif");
 		}
 
@@ -1809,7 +1814,11 @@ namespace SLua
 		{
 			Write(file, "#if DEBUG");
 			Write(file, "finally {");
+			Write(file, "#if UNITY_5_5_OR_NEWER");
 			Write(file, "UnityEngine.Profiling.Profiler.EndSample();");
+			Write(file, "#else");
+			Write(file, "Profiler.EndSample();");
+			Write(file, "#endif");
 			Write(file, "}");
 			Write(file, "#endif");
 		}
@@ -1817,7 +1826,7 @@ namespace SLua
 		void WriteCheckType(StreamWriter file, Type t, int n, string v = "v", string nprefix = "")
 		{
 			if (t.IsEnum)
-				Write(file, "checkEnum(l,{2}{0},out {1});", n, v, nprefix);
+				Write(file, "{0} = ({1})LuaDLL.luaL_checkinteger(l, {2});", v, TypeDecl(t), n);
 			else if (t.BaseType == typeof(System.MulticastDelegate))
 				Write(file, "int op=checkDelegate(l,{2}{0},out {1});", n, v, nprefix);
 			else if (IsValueType(t))
@@ -2226,7 +2235,9 @@ namespace SLua
 					if (cons[n].MemberType == MemberTypes.Method)
 					{
 						MethodInfo mi = cons[n] as MethodInfo;
-
+						if (ContainUnsafe(mi)) {
+							continue;
+						}
 						if (mi.IsDefined (typeof(LuaOverrideAttribute), false)) {
 							if (overridedMethods == null)
 								overridedMethods = new Dictionary<string,MethodInfo> ();
@@ -2502,7 +2513,7 @@ namespace SLua
 			if (!isout)
 			{
 				if (t.IsEnum)
-					Write(file, "checkEnum(l,{0},out a{1});", n + argstart, n + 1);
+					Write(file, "a{0} = ({1})LuaDLL.luaL_checkinteger(l, {2});", n + 1, TypeDecl(t), n + argstart);
 				else if (t.BaseType == typeof(System.MulticastDelegate))
 				{
 					tryMake(t);
