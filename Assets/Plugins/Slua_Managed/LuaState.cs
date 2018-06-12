@@ -84,15 +84,15 @@ namespace SLua
             GC.SuppressFinalize(this);
         }
 
+        static void unref(IntPtr l, int r) {
+            LuaDLL.lua_unref(l, r);
+        }
+
         public virtual void Dispose(bool disposeManagedResources)
         {
             if (valueref != 0)
             {
-                LuaState.UnRefAction act = (IntPtr l, int r) =>
-                {
-                    LuaDLL.lua_unref(l, r);
-                };
-                state.gcRef(act, valueref);
+                state.gcRef(unref, valueref);
                 valueref = 0;
             }
         }
@@ -158,16 +158,16 @@ namespace SLua
         {
         }
 
+        static void unref(IntPtr l, int r) {
+            LuaObject.removeDelgate(l, r);
+            LuaDLL.lua_unref(l, r);
+        }
+
         public override void Dispose(bool disposeManagedResources)
         {
             if (valueref != 0)
             {
-                LuaState.UnRefAction act = (IntPtr l, int r) =>
-                {
-                    LuaObject.removeDelgate(l, r);
-                    LuaDLL.lua_unref(l, r);
-                };
-                state.gcRef(act, valueref);
+                state.gcRef(unref, valueref);
                 valueref = 0;
             }
 
