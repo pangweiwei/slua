@@ -102,6 +102,7 @@ namespace SLua
     public delegate int LuaFunctionCallback(IntPtr luaState);
     public class LuaDLL
     {
+         public const int SHORT_STRING_MAX_LEN = 250;
         public static int LUA_MULTRET = -1;
 #if UNITY_IPHONE && !UNITY_EDITOR
 		const string LUADLL = "__Internal";
@@ -554,17 +555,36 @@ namespace SLua
         {
             int strlen;
 
+            /*
+             * LUA jit 思路 先把lua的字符串 ref起来，这样lua的GC就无法 释放这个字符串
+             * 然后c#这边写一个LuaString类以及一个lua字符串指针地址为key的weak字典
+             * 因为c#这边该字符串只有weak字典中有引用关系，所以c#会自动 清理这些LuaString
+             * 最后利用LuaString的析构函数来清理lua的ref,这样该字符串的luaGC就可以生效了
+             * 总之 只要保证，c#字符串 缓存字典中的索引lua那边没有GC掉这个字符串就好办
+             * TODO lua5.3 可能直接 把短字符串全部 缓存起来（因为5.3 短字符并不参与GC,所以指针地址并不会发生改变）
+            */
+
             IntPtr str = luaS_tolstring32(luaState, index, out strlen); // fix il2cpp 64 bit
+            LuaState state = LuaState.get(luaState);
             string s = null;
             if (strlen > 0 && str != IntPtr.Zero)
             {
+                //Lua 5.3 版本短字符串（长度40）会 缓存到intern里面，相应处理一下
+                if (strlen <= SHORT_STRING_MAX_LEN && state.TryGetLuaString(str, out s))
+                {
+                    return s;
+                }
                 s = Marshal.PtrToStringAnsi(str);
                 // fallback method
-                if(s == null)
+                if (s == null)
                 {
                     byte[] b = new byte[strlen];
                     Marshal.Copy(str, b, 0, strlen);
                     s = System.Text.Encoding.Default.GetString(b);
+                }
+                if (strlen <= SHORT_STRING_MAX_LEN)
+                {
+                    state.refString(str, index, s);
                 }
             }
             return (s == null) ? string.Empty : s;

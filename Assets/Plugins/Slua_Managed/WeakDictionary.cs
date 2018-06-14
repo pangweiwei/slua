@@ -29,9 +29,29 @@ namespace SLua
 
 	public class WeakDictionary<K, V>
 	{
-		Dictionary<K, WeakReference> _dict = new Dictionary<K, WeakReference>();
+		readonly Dictionary<K, WeakReference> _dict = new Dictionary<K, WeakReference>();
+        public WeakDictionary()
+        {
+            _dict = new Dictionary<K, WeakReference>();
+        }
 
-		public V this[K key]
+        public WeakDictionary(int capacity)
+        {
+            _dict = new Dictionary<K, WeakReference>(capacity);
+        }
+        public int Count
+        {
+            get
+            {
+                return _dict.Count;
+            }
+        }
+        public void Clear()
+        {
+            _dict.Clear();
+        }
+
+        public V this[K key]
 		{
 			get
 			{
