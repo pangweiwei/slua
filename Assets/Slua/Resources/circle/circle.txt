@@ -61,8 +61,8 @@ function class:init(count)
 	end
 end
 
+local value = 0
 function class:update() -- gc alloc is zero
-	
 	for i,v in ipairs(self.cubes) do
 		local offset = i%2==1 and 5 or -5
 		local r = self.r+math.sin(Time.time)*offset
@@ -72,6 +72,9 @@ function class:update() -- gc alloc is zero
 
 		v[1].transform.position = base
 		--v[2].color=self.colors[math.random(#self.colors)]
+		
+		--此处c#那边会不停 tostring
+		v[1].transform.name = tostring(value)
 	end
 
 	if not self.fogStart or self.t>1 then
@@ -87,6 +90,7 @@ function class:update() -- gc alloc is zero
 	self.f=self.f+1
 	self.framet=self.framet+Time.deltaTime
 	if self.framet>=1 then
+		value = value + 1
 		self.ftext.text=string.format("fps:%d",self.f)
 		self.f=0
 		self.framet=self.framet-1

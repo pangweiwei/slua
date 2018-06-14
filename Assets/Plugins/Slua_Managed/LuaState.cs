@@ -434,6 +434,33 @@ namespace SLua
         }
     }
 
+    public class LuaString : LuaVar
+    {
+        public string value { get; set; }
+        public IntPtr strPoint { get; set; }
+        public LuaString(IntPtr l, IntPtr sp, int valueRef, string s)
+        {
+            state = LuaState.get(l);
+            strPoint = sp;
+            valueref = valueRef;
+            value = s;
+        }
+
+        ~LuaString()
+        {
+            Dispose(false);
+        }
+
+        public override void Dispose(bool disposeManagedResources)
+        {
+            if (valueref != 0)
+            {
+                state.gcRefLuaString(strPoint, valueref);
+                strPoint = IntPtr.Zero;
+                valueref = 0;
+            }
+        }
+    }
 
 
 
@@ -442,9 +469,11 @@ namespace SLua
     {
         IntPtr l_;
         int mainThread = 0;
+        const int MAX_WEAK_STRING = 1000;
         internal WeakDictionary<int, LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
+        internal WeakDictionary<long, LuaString> weakStringTb = new WeakDictionary<long, LuaString>(MAX_WEAK_STRING);
 
-		public int cachedDelegateCount{
+        public int cachedDelegateCount{
 			get{
 				return this.delgateMap.AliveCount;
 			}
@@ -709,6 +738,59 @@ return index
 
             createGameObject();
         }
+
+        #region lua string cache
+        public bool TryGetLuaString(IntPtr p, out string result)
+        {
+            LuaString ls;
+
+            bool ret = weakStringTb.TryGetValue((long)p, out ls);
+            if (ret)
+            {
+                result = ls.value;
+            }
+            else
+            {
+                result = string.Empty;
+            }
+            return ret;
+        }
+
+        // ref掉c#的字符串
+        public void refString(IntPtr strPoint, int index, string s)
+        {
+            lock (this)
+            {
+                //超过缓存上限就等着 释放吧
+                if (weakStringTb.Count >= MAX_WEAK_STRING)
+                {
+                    return;
+                }
+                int oldTop = LuaDLL.lua_gettop(l_);
+                LuaDLL.lua_pushvalue(l_, index);
+                int refIndex = LuaDLL.luaL_ref(l_, LuaIndexes.LUA_REGISTRYINDEX);
+                LuaDLL.lua_settop(l_, oldTop);
+
+                LuaString ls = new LuaString(l_, strPoint, refIndex, s);
+
+                weakStringTb[(long)strPoint] = ls;
+            }
+        }
+        private static void gcStringAction(IntPtr l, int r)
+        {
+            LuaDLL.lua_unref(l, r);
+        }
+        //释放掉
+        public void gcRefLuaString(IntPtr strPoint, int refIndex)
+        {
+            //这玩意 析构 函数调用过来，容易非同一线程，lock住稳
+            lock (this)
+            {
+                weakStringTb.Remove((long)strPoint);
+                gcRef(gcStringAction, refIndex);
+            }
+        }
+        #endregion
 
         void createGameObject()
         {
