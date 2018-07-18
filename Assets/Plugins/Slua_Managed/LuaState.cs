@@ -1165,12 +1165,7 @@ return dumpstack
 
 		public object doString(string str)
 		{
-			byte[] bytes = Encoding.UTF8.GetBytes(str);
-
-			object obj;
-			if (doBuffer(bytes, "temp buffer", out obj))
-				return obj;
-			return null; ;
+            return doString(str,"temp buffer");
 		}
 
 		public object doString(string str, string chunkname)
