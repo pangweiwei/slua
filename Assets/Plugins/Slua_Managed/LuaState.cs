@@ -28,6 +28,7 @@ namespace SLua
     using System.Collections.Generic;
     using System.Collections;
     using System.Text;
+    using System.Security.Cryptography;
 #if !SLUA_STANDALONE
     using UnityEngine;
 #else
@@ -443,6 +444,7 @@ namespace SLua
         IntPtr l_;
         int mainThread = 0;
         internal WeakDictionary<int, LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
+        static Dictionary<string, string> debugStringMap = new Dictionary<string, string>();
 
 		public int cachedDelegateCount{
 			get{
@@ -768,6 +770,9 @@ return index
 
 //            LuaDLL.lua_pushcfunction(L, pcall);
 //            LuaDLL.lua_setglobal(L, "pcall");
+
+            LuaDLL.lua_pushcfunction(L, getStringFromMD5); 
+            LuaDLL.lua_setglobal(L, "getStringFromMD5");
 
             pushcsfunction(L, import);
             LuaDLL.lua_setglobal(L, "import");
@@ -1163,9 +1168,43 @@ return dumpstack
 			LuaDLL.lua_call(L, 1, 1);
 		}
 
-		public object doString(string str)
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static public int getStringFromMD5(IntPtr L) {
+            int n = LuaDLL.lua_gettop(L);
+			string str = LuaDLL.lua_tostring(L, -1);
+            string destString = "";
+
+            if (debugStringMap.ContainsKey(str))
+            {
+                destString = debugStringMap[str];
+            }
+            LuaObject.pushValue(L, destString);
+            return 1;
+        }
+
+        static public string getStringMD5(string str)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(str);
+            byte[] md5Data = md5.ComputeHash(bytes, 0, bytes.Length);
+            md5.Clear();
+
+            string destString = "";
+            for (int i = 0; i < md5Data.Length; i++)
+            {
+                destString += System.Convert.ToString(md5Data[i], 16).PadLeft(2, '0');
+            }
+            destString = destString.PadLeft(32, '0');
+            return destString;
+        }
+        
+        public object doString(string str)
 		{
-            return doString(str,"temp buffer");
+            //get str's md5 string
+            string stringMd5 = getStringMD5(str);
+            debugStringMap.Add(stringMd5, str);
+
+            return doString(str, stringMd5);
 		}
 
 		public object doString(string str, string chunkname)
