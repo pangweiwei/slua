@@ -19,6 +19,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+//#define LUA_DEBUG
 
 
 
@@ -28,7 +29,9 @@ namespace SLua
     using System.Collections.Generic;
     using System.Collections;
     using System.Text;
+#if LUA_DEBUG
     using System.Security.Cryptography;
+#endif
 #if !SLUA_STANDALONE
     using UnityEngine;
 #else
@@ -444,8 +447,9 @@ namespace SLua
         IntPtr l_;
         int mainThread = 0;
         internal WeakDictionary<int, LuaDelegate> delgateMap = new WeakDictionary<int, LuaDelegate>();
+#if LUA_DEBUG
         static Dictionary<string, string> debugStringMap = new Dictionary<string, string>();
-
+#endif
 		public int cachedDelegateCount{
 			get{
 				return this.delgateMap.AliveCount;
@@ -771,8 +775,10 @@ return index
 //            LuaDLL.lua_pushcfunction(L, pcall);
 //            LuaDLL.lua_setglobal(L, "pcall");
 
+#if LUA_DEBUG
             LuaDLL.lua_pushcfunction(L, getStringFromMD5); 
             LuaDLL.lua_setglobal(L, "getStringFromMD5");
+#endif
 
             pushcsfunction(L, import);
             LuaDLL.lua_setglobal(L, "import");
@@ -1167,7 +1173,7 @@ return dumpstack
 			LuaDLL.lua_pushcclosure(L, function, 0);
 			LuaDLL.lua_call(L, 1, 1);
 		}
-
+#if LUA_DEBUG
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int getStringFromMD5(IntPtr L) {
             int n = LuaDLL.lua_gettop(L);
@@ -1197,15 +1203,19 @@ return dumpstack
             destString = destString.PadLeft(32, '0');
             return destString;
         }
-        
+#endif
+
         public object doString(string str)
 		{
+#if LUA_DEBUG
             //get str's md5 string
             string stringMd5 = getStringMD5(str);
             debugStringMap.Add(stringMd5, str);
-
             return doString(str, stringMd5);
-		}
+#else
+            return doString(str, "temp buffer");
+#endif
+        }
 
 		public object doString(string str, string chunkname)
 		{
