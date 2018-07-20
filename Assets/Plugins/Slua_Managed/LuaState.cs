@@ -491,7 +491,7 @@ namespace SLua
 
         public int Top { get { return LuaDLL.lua_gettop(L); } }
 
-        public delegate byte[] LoaderDelegate(string fn);
+		public delegate byte[] LoaderDelegate(string fn, ref string absoluteFn);
         public delegate void OutputDelegate(string msg);
         public delegate void PushVarDelegate(IntPtr l, object o);
 
@@ -1176,7 +1176,6 @@ return dumpstack
 #if LUA_DEBUG
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static public int getStringFromMD5(IntPtr L) {
-            int n = LuaDLL.lua_gettop(L);
 			string str = LuaDLL.lua_tostring(L, -1);
             string destString = "";
 
@@ -1232,9 +1231,15 @@ return dumpstack
 		{
             LuaState state = LuaState.get(L);
 			string fileName = LuaDLL.lua_tostring(L, 1);
-			byte[] bytes = state.loadFile(fileName);
+			string absoluteFn = "";
+			byte[] bytes = state.loadFile(fileName, ref absoluteFn);
 			if (bytes != null)
 			{
+#if LUA_DEBUG	
+				if (absoluteFn != "") {
+					fileName = absoluteFn;
+				}
+#endif
 				if (LuaDLL.luaL_loadbuffer(L, bytes, bytes.Length, "@" + fileName) == 0)
 				{
 					LuaObject.pushValue(L, true);
@@ -1254,13 +1259,19 @@ return dumpstack
 
 		public object doFile(string fn)
 		{
-			byte[] bytes = loadFile(fn);
+			string absoluteFn = "";
+			byte[] bytes = loadFile(fn , ref absoluteFn);
 			if (bytes == null)
 			{
 				Logger.LogError(string.Format("Can't find {0}", fn));
 				return null;
 			}
 
+#if LUA_DEBUG	
+			if (absoluteFn != "") {
+				fn = absoluteFn;
+			}
+#endif
 			object obj;
 			if (doBuffer(bytes, "@" + fn, out obj))
 				return obj;
@@ -1317,12 +1328,12 @@ return dumpstack
 		}
 #endif
 
-		internal byte[] loadFile (string fn)
+		internal byte[] loadFile (string fn, ref string absoluteFn)
 		{
 			try {
 				byte[] bytes;
 				if (loaderDelegate != null)
-					bytes = loaderDelegate (fn);
+					bytes = loaderDelegate (fn, ref absoluteFn);
 				else {
 #if !SLUA_STANDALONE
 					fn = fn.Replace (".", "/");
@@ -1343,6 +1354,12 @@ return dumpstack
 						asset = loadAsset("Assets/Slua/jit/jitgc64/" + fn + ".bytes");
 					}
 
+#if LUA_DEBUG
+					//get asset's absolute path
+					string projectFn = UnityEditor.AssetDatabase.GetAssetPath(asset);
+					int idx = projectFn.IndexOf("/");
+					absoluteFn = Application.dataPath + projectFn.Substring(idx);
+#endif
 #else
 					asset = (TextAsset)Resources.Load(fn);
 #endif
