@@ -1356,9 +1356,14 @@ return dumpstack
 
 #if LUA_DEBUG
 					//get asset's absolute path
-					string projectFn = UnityEditor.AssetDatabase.GetAssetPath(asset);
-					int idx = projectFn.IndexOf("/");
-					absoluteFn = Application.dataPath + projectFn.Substring(idx);
+					string assetFn = UnityEditor.AssetDatabase.GetAssetPath(asset);
+					if (assetFn != ""){
+						//find out asset path, remove assetFn's first "Asset/"
+						int idx = assetFn.IndexOf("/");
+						if(idx > 0){
+							absoluteFn = Application.dataPath + assetFn.Substring(idx);
+						}
+					}
 #endif
 #else
 					asset = (TextAsset)Resources.Load(fn);
