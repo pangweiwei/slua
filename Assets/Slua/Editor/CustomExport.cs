@@ -41,7 +41,8 @@ namespace SLua
             add(typeof(System.Action<int, string>), null);
             add(typeof(System.Action<int, Dictionary<int, object>>), null);
             add(typeof(List<int>), "ListInt");
-            add(typeof(Dictionary<int, string>), "DictIntStr");
+            // .net 4.6 export class not match used class on runtime, so skip it
+            //add(typeof(Dictionary<int, string>), "DictIntStr");
             add(typeof(string), "String");
             
             // add your custom class here
@@ -72,7 +73,7 @@ namespace SLua
         {
             list = new List<string>
             {
-                //"UnityEngine.GameObject",
+                // "UnityEngine.Font",
             };
         }
 
