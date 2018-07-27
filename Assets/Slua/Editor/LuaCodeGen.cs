@@ -2541,14 +2541,12 @@ namespace SLua
 
 		bool IsValueType(Type t)
 		{
+            if (t.IsByRef) t = t.GetElementType();
             return t.BaseType == typeof(ValueType) && !IsBaseType(t);
 		}
 
 		bool IsBaseType(Type t)
 		{
-			if (t.IsByRef) {
-				t = t.GetElementType();
-			}
 			return t.IsPrimitive || LuaObject.isImplByLua(t);
 		}
 		
