@@ -559,6 +559,10 @@ push进入lua虚拟机的c#对象都是LuaObject，需要等待lua gc回收后�
 
 保存, 等待编译完成, 点击Make custom,将会生成NGUI的全部接口文件,将产生的wrap文件复制到游戏工程内的Slua/LuaObject/custom内,
 
+## 尝试返回基类
+
+在使用DOTween的时候，我们需要导出Tweener，但是DOTween返回的是Tweener的基类TweenerCore，而这个类是泛型的，slua不支持泛型类的导出使用，需要确定类型，但我们不能在使用DOTween的时候确定每个Tweener的类型，这个时候我们希望返回的对象按照基类Tweener提供访问方法，这时你可以尝试slua提供的SLUA_TRY_PUSHBASE模式，使用这个模式，你需要添加SLUA_TRY_PUSHBASE到宏定义中。 在这个模式下，slua在push对象的时候，会尝试获得基类，查看基类是否导出，如果基类导出了就用基类，否则继续向上查找基类，直到Object。使用SLUA_TRY_PUSHBASE模式，就可以方便的使用DOTween的tweener对象提供的方法了。
+
 **注意去掉对UnityEditor的引用，否则发布的时候可能失败, 因为手机环境下没有UnityEditor的运行环境**
 
 然后删除DLL,该DLL仅用于快捷生成wrap文件, 还需要ngui代码放在Assets目录内, 因为其有部分editor功能代码,需要在editor内运行.
