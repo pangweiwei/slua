@@ -337,8 +337,21 @@ namespace SLua
 			{
 				Logger.LogWarning(string.Format("{0} not exported, using reflection instead", o.ToString()));
 			}
+#elif SLUA_TRY_PUSHBASE
+            Type t = o.GetType();
+            while (t!=typeof(Object)) {
+                LuaDLL.luaL_getmetatable(l, getAQName(t));
+                if (!LuaDLL.lua_isnil(l, -1))
+                {
+                    LuaDLL.lua_pop(l, 1);
+                    LuaDLL.luaS_pushobject(l, index, getAQName(t), gco, udCacheRef);
+                    break;
+                }
+                LuaDLL.lua_pop(l, 1);
+                t = t.BaseType;
+            }
 #else
-			LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
+            LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
 #endif
 
 		}
