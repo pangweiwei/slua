@@ -81,6 +81,12 @@ namespace SLua
         {
             "UIWidget.showHandles",
             "UIWidget.showHandlesWithMoveTool",
+            "UnityEngine.QualitySettings.get_streamingMipmapsRenderersPerFrame",
+            "UnityEngine.QualitySettings.set_streamingMipmapsRenderersPerFrame",
+            "UnityEngine.QualitySettings.streamingMipmapsRenderersPerFrame",
+            "UnityEngine.Texture.get_imageContentsHash",
+            "UnityEngine.Texture.set_imageContentsHash",
+            "UnityEngine.Texture.imageContentsHash",
         };
         // black list if white list not given
         public static void OnGetNoUseList(out List<string> list)
