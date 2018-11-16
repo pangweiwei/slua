@@ -171,6 +171,10 @@ public class HelloWorld   {
 
 ~~~~~~~~~~
 
+### LuaProfiler
+if you want to profiler lua like C#,Tap "Window->Lua Profiler Window" to Open Profiler Window and click "Deep Profiler" Toggle
+<br/>
+![](profiler.png)
 
 ### Benchmark
 

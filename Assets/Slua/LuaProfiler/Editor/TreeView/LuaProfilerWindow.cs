@@ -25,6 +25,7 @@ namespace MikuLuaProfiler
             if (m_TreeViewState == null)
                 m_TreeViewState = new TreeViewState();
 
+            LuaProfilerTreeView.m_nodeDict.Clear();
             m_TreeView = new LuaProfilerTreeView(m_TreeViewState, position.width - 40);
             m_SearchField = new SearchField();
             m_SearchField.downOrUpArrowKeyPressed += m_TreeView.SetFocusAndEnsureSelectedItem;
