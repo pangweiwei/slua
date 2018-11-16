@@ -96,13 +96,18 @@ namespace MikuLuaProfiler
                         {
                             needLastSample = false;
                         }
-
+                        Token lastTokenType = null;
+                        int commentPos = insertPos;
                         while (tokenType != (int)TK.EOS)
                         {
+                            lastTokenType = l.Token;
                             l.Next();
 
                             tokenType = l.Token.TokenType;
-
+                            if (l.Token is CommentToken && !(lastTokenType is CommentToken) )
+                            {
+                                commentPos = nextPos - 1;
+                            }
                             lastPos = nextPos;
                             nextPos = l.pos;
 
@@ -110,17 +115,31 @@ namespace MikuLuaProfiler
                             {
                                 InsertSample(l, ref lastPos, ref nextPos, tokenType, true);
                                 tokenType = l.Token.TokenType;
+                                if (l.Token is CommentToken && !(lastTokenType is CommentToken))
+                                {
+                                    commentPos = lastPos - 1;
+                                }
+                                lastTokenType = l.Token;
                             }
 
                             if (tokenType == (int)TK.END
                                 || tokenType == (int)TK.ELSEIF
                                 || tokenType == (int)TK.ELSE
-                                || tokenType == (int)TK.EOS
-                                || (l.Token is CommentToken))
+                                || tokenType == (int)TK.EOS)
                             {
+                                if (lastTokenType is CommentToken)
+                                {
+                                    lastPos = commentPos;
+                                }
+
                                 string returnStr = l.ReadString(insertPos, lastPos - 1); ;
 
                                 returnStr = returnStr.Trim();
+
+                                if (returnStr.Length > 0 && returnStr[returnStr.Length - 1] == ';')
+                                {
+                                    returnStr = returnStr.Substring(0, returnStr.Length - 1);
+                                }
                                 returnStr = "\r\nreturn miku_unpack_return_value(" + returnStr.Substring(6, returnStr.Length - 6).Trim() + ")\r\n";
 
                                 l.Replace(insertPos, lastPos - 1, returnStr);
