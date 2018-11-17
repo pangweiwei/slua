@@ -9,6 +9,7 @@
 using UnityEngine;
 using UnityEditor.IMGUI.Controls;
 using UnityEditor;
+using System;
 
 namespace MikuLuaProfiler
 {
@@ -56,6 +57,7 @@ namespace MikuLuaProfiler
             if (flag != LuaDeepProfilerSetting.Instance.isDeepProfiler)
             {
                 LuaDeepProfilerSetting.Instance.isDeepProfiler = flag;
+                EditorApplication.isPlaying = false;
             }
             GUILayout.Space(5);
             #endregion
@@ -67,20 +69,12 @@ namespace MikuLuaProfiler
             {
                 if (isStop)
                 {
-                    var env = LuaProfiler.mainEnv;
-                    if (env != null)
-                    {
-                        SLua.LuaDLL.lua_gc(env.L, SLua.LuaGCOptions.LUA_GCSTOP, 0);
-                    }
+                    LuaLib.StopGC();
                     m_isStop = true;
                 }
                 else
                 {
-                    var env = LuaProfiler.mainEnv;
-                    if (env != null)
-                    {
-                        SLua.LuaDLL.lua_gc(env.L, SLua.LuaGCOptions.LUA_GCRESTART, 0);
-                    }
+                    LuaLib.ResumeGC();
                     m_isStop = false;
                 }
             }
@@ -91,11 +85,7 @@ namespace MikuLuaProfiler
             bool isRunGC = GUILayout.Button("Run GC", EditorStyles.toolbarButton, GUILayout.Height(30));
             if (isRunGC)
             {
-                var env = LuaProfiler.mainEnv;
-                if (env != null)
-                {
-                    SLua.LuaDLL.lua_gc(env.L, SLua.LuaGCOptions.LUA_GCCOLLECT, 0);
-                }
+                LuaLib.RunGC();
             }
             GUILayout.Space(20);
             GUILayout.FlexibleSpace();
