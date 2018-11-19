@@ -1,6 +1,6 @@
 /*
 * ==============================================================================
-* Filename: XLuaHooSetup
+* Filename: XLuaHookSetup
 * Created:  2018/7/2 11:36:16
 * Author:   エル・プサイ・コングルゥ
 * Purpose:  
@@ -92,6 +92,12 @@ namespace MikuLuaProfiler {
                 clickProxy = envReplace.GetMethod("ProxyNewstate", BindingFlags.Public | BindingFlags.Static);
                 hookNewLuaEnv = new MethodHooker(newstateFun, clickReplace, clickProxy);
                 hookNewLuaEnv.Install();
+
+                newstateFun = typeDll.GetMethod("lua_close");
+                clickReplace = envReplace.GetMethod("lua_close");
+                clickProxy = envReplace.GetMethod("ProxyClose", BindingFlags.Public | BindingFlags.Static);
+                hookNewLuaEnv = new MethodHooker(newstateFun, clickReplace, clickProxy);
+                hookNewLuaEnv.Install();
             }
         }
 
@@ -103,6 +109,19 @@ namespace MikuLuaProfiler {
                 MikuLuaProfiler.HookSetup.SetMainLuaEnv(env);
             }
             public static void Proxy(LuaState env)
+            {
+            }
+
+            public static void lua_close(IntPtr luaState)
+            {
+                if (LuaProfiler.mainL == luaState)
+                {
+                    LuaProfiler.mainL = IntPtr.Zero;
+                    HookSetup.Uninstall();
+                }
+            }
+
+            public static void ProxyClose(IntPtr luaState)
             {
             }
 

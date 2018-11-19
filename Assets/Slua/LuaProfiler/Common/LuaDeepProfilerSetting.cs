@@ -51,7 +51,7 @@ namespace MikuLuaProfiler
             }
         }
 
-        [MenuItem("Tools/LuaProfilerSetting", priority = 10)]
+        //[MenuItem("Tools/LuaProfilerSetting", priority = 10)]
         public static void EditSettings()
         {
             //string text = System.IO.File.ReadAllText("Lua/TemplateCommon.lua");

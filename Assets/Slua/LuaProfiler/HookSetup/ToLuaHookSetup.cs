@@ -1,16 +1,16 @@
 /*
 * ==============================================================================
-* Filename: ToLuaHooSetup
+* Filename: ToLuaHookSetup
 * Created:  2018/7/2 11:36:16
 * Author:   エル・プサイ・コングルゥ
 * Purpose:  
 * ==============================================================================
 */
 
-//#define TOLUA
-#if TOLUA
-#if UNITY_EDITOR
+//#define ToLua
 
+#if ToLua
+#if UNITY_EDITOR
 
 using System;
 using System.Collections.Generic;
@@ -20,10 +20,49 @@ using System.Text;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
-using XLua;
-using LuaDLL = XLua.LuaDLL.Lua;
+using LuaInterface;
+using LuaDLL = LuaInterface.LuaDLL;
 
-namespace MikuLuaProfiler {
+namespace MikuLuaProfiler
+{
+
+    public class LuaLib
+    {
+        public static void RunGC()
+        {
+            var env = LuaProfiler.mainL;
+            if (env != IntPtr.Zero)
+            {
+                LuaDLL.lua_gc(env, LuaGCOptions.LUA_GCCOLLECT, 0);
+            }
+        }
+        public static void StopGC()
+        {
+            var env = LuaProfiler.mainL;
+            if (env != IntPtr.Zero)
+            {
+                LuaDLL.lua_gc(env, LuaGCOptions.LUA_GCSTOP, 0);
+            }
+        }
+        public static void ResumeGC()
+        {
+            var env = LuaProfiler.mainL;
+            if (env != IntPtr.Zero)
+            {
+                LuaDLL.lua_gc(env, LuaGCOptions.LUA_GCRESTART, 0);
+            }
+        }
+
+        public static long GetLuaMemory(IntPtr luaState)
+        {
+            long result = 0;
+
+            result = LuaDLL.lua_gc(luaState, LuaGCOptions.LUA_GCCOUNT, 0);
+            result = result * 1024 + LuaDLL.lua_gc(luaState, LuaGCOptions.LUA_GCCOUNTB, 0);
+
+            return result;
+        }
+    }
 
     [InitializeOnLoad]
     public static class Startup
@@ -41,17 +80,23 @@ namespace MikuLuaProfiler {
             if (hookNewLuaEnv == null)
             {
                 Type envReplace = typeof(LuaEnvReplace);
-                Type typeEnv = typeof(XLua.LuaEnv);
-                var clickFun = typeEnv.GetConstructors()[0];
-                MethodInfo clickReplace = envReplace.GetMethod("Ctor");
+                Type typeEnv = typeof(LuaState);
+                var clickFun = typeEnv.GetMethod("Start");
+                MethodInfo clickReplace = envReplace.GetMethod("Start");
                 MethodInfo clickProxy = envReplace.GetMethod("Proxy", BindingFlags.Public | BindingFlags.Static);
                 hookNewLuaEnv = new MethodHooker(clickFun, clickReplace, clickProxy);
                 hookNewLuaEnv.Install();
 
-                Type typeDll = typeof(XLua.LuaDLL.Lua);
+                Type typeDll = typeof(LuaDLL);
                 var newstateFun = typeDll.GetMethod("luaL_newstate");
                 clickReplace = envReplace.GetMethod("luaL_newstate");
                 clickProxy = envReplace.GetMethod("ProxyNewstate", BindingFlags.Public | BindingFlags.Static);
+                hookNewLuaEnv = new MethodHooker(newstateFun, clickReplace, clickProxy);
+                hookNewLuaEnv.Install();
+
+                newstateFun = typeDll.GetMethod("lua_close");
+                clickReplace = envReplace.GetMethod("lua_close");
+                clickProxy = envReplace.GetMethod("ProxyClose", BindingFlags.Public | BindingFlags.Static);
                 hookNewLuaEnv = new MethodHooker(newstateFun, clickReplace, clickProxy);
                 hookNewLuaEnv.Install();
             }
@@ -59,12 +104,24 @@ namespace MikuLuaProfiler {
 
         public static class LuaEnvReplace
         {
-            public static void Ctor(LuaEnv env)
+            public static void Start(LuaState env)
             {
                 Proxy(env);
-                MikuLuaProfiler.HookSetup.SetMainLuaEnv(env);
+                HookSetup.SetMainLuaEnv(env);
             }
-            public static void Proxy(LuaEnv env)
+            public static void Proxy(LuaState env)
+            {
+            }
+
+            public static void lua_close(IntPtr luaState)
+            {
+                if (LuaProfiler.mainL == luaState)
+                {
+                    LuaProfiler.mainL = IntPtr.Zero;
+                    HookSetup.Uninstall();
+                }
+            }
+            public static void ProxyClose(IntPtr luaState)
             {
             }
 
@@ -107,15 +164,20 @@ namespace MikuLuaProfiler {
         }
 
 
-        public static void SetMainLuaEnv(LuaEnv env)
+        public static void SetMainLuaEnv(LuaState env)
         {
             if (LuaDeepProfilerSetting.Instance.isDeepProfiler)
             {
                 if (env != null)
                 {
+                    env.BeginModule(null);
+                    env.BeginModule("MikuLuaProfiler");
+                    MikuLuaProfiler_LuaProfilerWrap.Register(env);
+                    env.EndModule();
+                    env.EndModule();
                     env.DoString(@"
-BeginMikuSample = CS.MikuLuaProfiler.LuaProfiler.BeginSample
-EndMikuSample = CS.MikuLuaProfiler.LuaProfiler.EndSample
+BeginMikuSample = MikuLuaProfiler.LuaProfiler.BeginSample
+EndMikuSample = MikuLuaProfiler.LuaProfiler.EndSample
 
 function miku_unpack_return_value(...)
 	EndMikuSample()
@@ -167,7 +229,7 @@ end
             }
 #endregion
 
-            public static int xluaL_loadbuffer(IntPtr L, byte[] buff, int size, string name)
+            public static int luaL_loadbuffer(IntPtr L, byte[] buff, int size, string name)
             {
                 if (LuaDeepProfilerSetting.Instance.isDeepProfiler)//&& name != "chunk"
                 {
@@ -192,42 +254,20 @@ end
 
             public static string lua_tostring(IntPtr L, int index)
             {
-                IntPtr strlen;
+                int len = 0;
+                IntPtr str = LuaDLL.tolua_tolstring(L, index, out len);
 
-                IntPtr str = LuaDLL.lua_tolstring(L, index, out strlen);
                 if (str != IntPtr.Zero)
                 {
-#if XLUA_GENERAL || (UNITY_WSA && !UNITY_EDITOR)
-                int len = strlen.ToInt32();
-                byte[] buffer = new byte[len];
-                Marshal.Copy(str, buffer, 0, len);
-                return Encoding.UTF8.GetString(buffer);
-#else
-                    string ret;
-                    if (TryGetLuaString(str, out ret))
+                    string s;
+                    if (!TryGetLuaString(str, out s))
                     {
-                        return ret;
+                        s = LuaDLL.lua_ptrtostring(str, len);
                     }
+                    return s;
+                }
 
-                    ret = Marshal.PtrToStringAnsi(str, strlen.ToInt32());
-                    if (ret == null)
-                    {
-                        int len = strlen.ToInt32();
-                        byte[] buffer = new byte[len];
-                        Marshal.Copy(str, buffer, 0, len);
-                        ret = Encoding.UTF8.GetString(buffer);
-                    }
-                    if (ret != null)
-                    {
-                        RefString(str, index, ret, L);
-                    }
-                    return ret;
-#endif
-                }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
 
             public static string PoxyToString(IntPtr L, int index)
@@ -307,8 +347,8 @@ end
                 tostringHook = new MethodHooker(tostringFun, tostringReplace, tostringProxy);
                 tostringHook.Install();
 
-                tostringFun = typeLog.GetMethod("xluaL_loadbuffer");
-                tostringReplace = typeLogReplace.GetMethod("xluaL_loadbuffer");
+                tostringFun = typeLog.GetMethod("luaL_loadbuffer");
+                tostringReplace = typeLogReplace.GetMethod("luaL_loadbuffer");
                 tostringProxy = typeLogReplace.GetMethod("ProxyLoadbuffer");
 
                 tostringHook = new MethodHooker(tostringFun, tostringReplace, tostringProxy);
@@ -377,15 +417,86 @@ end
 #endregion
     }
 
-    public class LuaLib
+    #region bind
+    public class MikuLuaProfiler_LuaProfilerWrap
     {
-        public static int lua_gc(IntPtr L, LuaGCOptions what, int data)
+        public static void Register(LuaState L)
         {
-            return LuaDLL.lua_gc(L, what, data);
+            L.BeginClass(typeof(MikuLuaProfiler.LuaProfiler), typeof(System.Object));
+            L.RegFunction("BeginSample", BeginSample);
+            L.RegFunction("EndSample", EndSample);
+            L.EndClass();
         }
 
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int BeginSample(IntPtr L)
+        {
+            try
+            {
+                int count = LuaDLL.lua_gettop(L);
+
+                if (count == 1 && TypeChecker.CheckTypes<System.IntPtr>(L, 1))
+                {
+                    System.IntPtr arg0 = ToLua.CheckIntPtr(L, 1);
+                    MikuLuaProfiler.LuaProfiler.BeginSample(arg0);
+                    return 0;
+                }
+                else if (count == 1 && TypeChecker.CheckTypes<string>(L, 1))
+                {
+                    string arg0 = ToLua.ToString(L, 1);
+                    MikuLuaProfiler.LuaProfiler.BeginSample(arg0);
+                    return 0;
+                }
+                else if (count == 2)
+                {
+                    System.IntPtr arg0 = ToLua.CheckIntPtr(L, 1);
+                    string arg1 = ToLua.CheckString(L, 2);
+                    MikuLuaProfiler.LuaProfiler.BeginSample(arg0, arg1);
+                    return 0;
+                }
+                else
+                {
+                    return LuaDLL.luaL_throw(L, "invalid arguments to method: MikuLuaProfiler.LuaProfiler.BeginSample");
+                }
+            }
+            catch (Exception e)
+            {
+                return LuaDLL.toluaL_exception(L, e);
+            }
+        }
+
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int EndSample(IntPtr L)
+        {
+            try
+            {
+                int count = LuaDLL.lua_gettop(L);
+
+                if (count == 0)
+                {
+                    MikuLuaProfiler.LuaProfiler.EndSample();
+                    return 0;
+                }
+                else if (count == 1)
+                {
+                    System.IntPtr arg0 = ToLua.CheckIntPtr(L, 1);
+                    MikuLuaProfiler.LuaProfiler.EndSample(arg0);
+                    return 0;
+                }
+                else
+                {
+                    return LuaDLL.luaL_throw(L, "invalid arguments to method: MikuLuaProfiler.LuaProfiler.EndSample");
+                }
+            }
+            catch (Exception e)
+            {
+                return LuaDLL.toluaL_exception(L, e);
+            }
+        }
     }
+    #endregion
 }
 
 #endif
+
 #endif
