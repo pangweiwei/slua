@@ -303,10 +303,12 @@ namespace SLua
             valueref = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
         }
 
+        // if wholekey is true, don't split key by '.'
         public object get(string key,bool wholekey=false,bool rawget=false) {
             return state.getObject(valueref, key, wholekey,rawget);
         }
 
+        // if wholekey is true, don't split key by '.'
         public void set(string key,object v,bool wholekey=false,bool rawset=false) {
             state.setObject(valueref, key, v, wholekey,rawset);
         }
