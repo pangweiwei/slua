@@ -37,6 +37,7 @@ namespace SLua
 #else
     using System.IO;
 #endif
+
     abstract public class LuaVar : IDisposable
     {
         protected LuaState state = null;
@@ -302,12 +303,12 @@ namespace SLua
             valueref = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
         }
 
-        public object get(string key,bool wholekey=false) {
-            return state.getObject(valueref, key, wholekey);
+        public object get(string key,bool wholekey=false,bool rawget=false) {
+            return state.getObject(valueref, key, wholekey,rawget);
         }
 
-        public void set(string key,object v,bool wholekey=false) {
-            state.setObject(valueref, key, v, wholekey);
+        public void set(string key,object v,bool wholekey=false,bool rawset=false) {
+            state.setObject(valueref, key, v, wholekey,rawset);
         }
 
         public object this[string key]
@@ -1375,35 +1376,38 @@ return dumpstack
 		}
 
 
-		internal object getObject(string key, bool wholekey=false)
+		internal object getObject(string key, bool wholekey=false, bool rawget=false)
 		{
 			LuaDLL.lua_pushglobaltable(L);
             object o;
             if (wholekey)
-                o = getObject(new string[] { key });
+                o = getObject(new string[] { key },rawget);
             else
-			    o = getObject(key.Split(new char[] { '.' }));
+			    o = getObject(key.Split(new char[] { '.' }),rawget);
 			LuaDLL.lua_pop(L, 1);
 			return o;
 		}
 
-        internal void setObject(string key, object v, bool wholekey = false)
+        internal void setObject(string key, object v, bool wholekey = false, bool rawset = false)
 		{
 			LuaDLL.lua_pushglobaltable(L);
             if (wholekey)
-                setObject(new string[] { key }, v);
+                setObject(new string[] { key }, v, rawset);
             else
-			    setObject(key.Split(new char[] { '.' }), v);
+			    setObject(key.Split(new char[] { '.' }), v, rawset);
 			LuaDLL.lua_pop(L, 1);
 		}
 
-		internal object getObject(string[] remainingPath)
+		internal object getObject(string[] remainingPath,bool rawget=false)
 		{
 			object returnValue = null;
 			for (int i = 0; i < remainingPath.Length; i++)
 			{
 				LuaDLL.lua_pushstring(L, remainingPath[i]);
-				LuaDLL.lua_gettable(L, -2);
+                if (rawget)
+                    LuaDLL.lua_rawget(L, -2);
+                else
+				    LuaDLL.lua_gettable(L, -2);
 				returnValue = this.getObject(L, -1);
 				LuaDLL.lua_remove(L, -2);
 				if (returnValue == null) break;
@@ -1412,25 +1416,31 @@ return dumpstack
 		}
 
 
-        internal object getObject(int reference, string field, bool wholekey = false)
+        internal object getObject(int reference, string field, bool wholekey = false, bool rawget = false)
 		{
 			int oldTop = LuaDLL.lua_gettop(L);
 			LuaDLL.lua_getref(L, reference);
             object returnValue;
             if (wholekey)
-                returnValue = getObject(new string[]{field});
+                returnValue = getObject(new string[]{field}, rawget);
             else
-                returnValue = getObject(field.Split(new char[] { '.' }));
+                returnValue = getObject(field.Split(new char[] { '.' }), rawget);
 			LuaDLL.lua_settop(L, oldTop);
 			return returnValue;
 		}
 
-		internal object getObject(int reference, int index)
+		internal object getObject(int reference, int index,bool rawget=false)
 		{
             if (index >= 1)
             {
                 LuaDLL.lua_getref (L, reference);
-				LuaDLL.lua_rawgeti (L, -1, index);
+                if (rawget)
+                    LuaDLL.lua_rawgeti(L, -1, index);
+                else
+                {
+                    LuaDLL.lua_pushinteger(L, index);
+                    LuaDLL.lua_gettable(L, -2);
+                }
 				object returnValue = getObject (L, -1);
                 LuaDLL.lua_pop(L, 2);
                 return returnValue;
@@ -1444,60 +1454,82 @@ return dumpstack
 			}
 		}
 
-		internal object getObject(int reference, object field)
+        internal object getObject(int reference, object field,bool rawget=false)
 		{
 			int oldTop = LuaDLL.lua_gettop(L);
 			LuaDLL.lua_getref(L, reference);
 			LuaObject.pushObject(L, field);
-			LuaDLL.lua_gettable(L, -2);
+            if (rawget)
+                LuaDLL.lua_rawget(L, -2);
+            else
+			    LuaDLL.lua_gettable(L, -2);
 			object returnValue = getObject(L, -1);
 			LuaDLL.lua_settop(L, oldTop);
 			return returnValue;
 		}
 
-		internal void setObject(string[] remainingPath, object o)
+		internal void setObject(string[] remainingPath, object o, bool rawset=false)
 		{
 			int top = LuaDLL.lua_gettop(L);
 			for (int i = 0; i < remainingPath.Length - 1; i++)
 			{
 				LuaDLL.lua_pushstring(L, remainingPath[i]);
-				LuaDLL.lua_gettable(L, -2);
+                if (rawset)
+                    LuaDLL.lua_rawget(L, -2);
+                else
+				    LuaDLL.lua_gettable(L, -2);
 			}
 			LuaDLL.lua_pushstring(L, remainingPath[remainingPath.Length - 1]);
 			LuaObject.pushVar(L, o);
-			LuaDLL.lua_settable(L, -3);
+            if (rawset)
+                LuaDLL.lua_rawset(L, -3);
+            else
+			    LuaDLL.lua_settable(L, -3);
 			LuaDLL.lua_settop(L, top);
 		}
 
 
-        internal void setObject(int reference, string field, object o, bool wholekey = false)
+        internal void setObject(int reference, string field, object o, bool wholekey = false, bool rawset = false)
 		{
 			int oldTop = LuaDLL.lua_gettop(L);
 			LuaDLL.lua_getref(L, reference);
             if (wholekey)
-                setObject(new string[] { field }, o);
+                setObject(new string[] { field }, o, rawset);
             else
-			    setObject(field.Split(new char[] { '.' }), o);
+                setObject(field.Split(new char[] { '.' }), o, rawset);
 			LuaDLL.lua_settop(L, oldTop);
 		}
 
-		internal void setObject(int reference, int index, object o)
+        internal void setObject(int reference, int index, object o, bool rawset=false)
 		{
 			if (index >= 1) {
 				LuaDLL.lua_getref (L, reference);
-				LuaObject.pushVar (L, o);
-				LuaDLL.lua_rawseti (L, -2, index);
+
+                if (rawset)
+                {
+                    LuaObject.pushVar(L, o);
+                    LuaDLL.lua_rawseti(L, -2, index);
+                }
+                else
+                {
+                    LuaDLL.lua_pushinteger(L, index);
+                    LuaObject.pushVar(L, o);
+                    LuaDLL.lua_settable(L, -3);
+                }
 				LuaDLL.lua_pop (L, 1);
 			} else {
 				LuaDLL.lua_getref (L, reference);
 				LuaDLL.lua_pushinteger (L, index);
 				LuaObject.pushVar (L, o);
-				LuaDLL.lua_settable (L, -3);
+                if (rawset)
+                    LuaDLL.lua_rawset(L, -3);
+                else
+				    LuaDLL.lua_settable (L, -3);
 				LuaDLL.lua_pop (L, 1);
 			}
 		}
 
-		internal void setObject(int reference, object field, object o)
+		internal void setObject(int reference, object field, object o, bool rawset)
 		{
 			int oldTop = LuaDLL.lua_gettop(L);
 			LuaDLL.lua_getref(L, reference);

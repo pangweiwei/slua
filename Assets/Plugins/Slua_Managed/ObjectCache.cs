@@ -345,11 +345,12 @@ namespace SLua
                 {
                     LuaDLL.lua_pop(l, 1);
                     LuaDLL.luaS_pushobject(l, index, getAQName(t), gco, udCacheRef);
-                    break;
+                    return;
                 }
                 LuaDLL.lua_pop(l, 1);
                 t = t.BaseType;
             }
+            LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
 #else
             LuaDLL.luaS_pushobject(l, index, getAQName(o), gco, udCacheRef);
 #endif
