@@ -301,6 +301,15 @@ namespace SLua
             LuaDLL.lua_newtable(L);
             valueref = LuaDLL.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
         }
+
+        public object get(string key,bool wholekey=false) {
+            return state.getObject(valueref, key, wholekey);
+        }
+
+        public void set(string key,object v,bool wholekey=false) {
+            state.setObject(valueref, key, v, wholekey);
+        }
+
         public object this[string key]
         {
             get
@@ -1366,18 +1375,25 @@ return dumpstack
 		}
 
 
-		internal object getObject(string key)
+		internal object getObject(string key, bool wholekey=false)
 		{
 			LuaDLL.lua_pushglobaltable(L);
-			object o = getObject(key.Split(new char[] { '.' }));
+            object o;
+            if (wholekey)
+                o = getObject(new string[] { key });
+            else
+			    o = getObject(key.Split(new char[] { '.' }));
 			LuaDLL.lua_pop(L, 1);
 			return o;
 		}
 
-		internal void setObject(string key, object v)
+        internal void setObject(string key, object v, bool wholekey = false)
 		{
 			LuaDLL.lua_pushglobaltable(L);
-			setObject(key.Split(new char[] { '.' }), v);
+            if (wholekey)
+                setObject(new string[] { key }, v);
+            else
+			    setObject(key.Split(new char[] { '.' }), v);
 			LuaDLL.lua_pop(L, 1);
 		}
 
@@ -1396,11 +1412,15 @@ return dumpstack
 		}
 
 
-		internal object getObject(int reference, string field)
+        internal object getObject(int reference, string field, bool wholekey = false)
 		{
 			int oldTop = LuaDLL.lua_gettop(L);
 			LuaDLL.lua_getref(L, reference);
-			object returnValue = getObject(field.Split(new char[] { '.' }));
+            object returnValue;
+            if (wholekey)
+                returnValue = getObject(new string[]{field});
+            else
+                returnValue = getObject(field.Split(new char[] { '.' }));
 			LuaDLL.lua_settop(L, oldTop);
 			return returnValue;
 		}
@@ -1450,11 +1470,14 @@ return dumpstack
 		}
 
 
-		internal void setObject(int reference, string field, object o)
+        internal void setObject(int reference, string field, object o, bool wholekey = false)
 		{
 			int oldTop = LuaDLL.lua_gettop(L);
 			LuaDLL.lua_getref(L, reference);
-			setObject(field.Split(new char[] { '.' }), o);
+            if (wholekey)
+                setObject(new string[] { field }, o);
+            else
+			    setObject(field.Split(new char[] { '.' }), o);
 			LuaDLL.lua_settop(L, oldTop);
 		}
 
