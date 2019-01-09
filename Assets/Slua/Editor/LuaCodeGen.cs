@@ -132,7 +132,7 @@ namespace SLua
             AssetDatabase.Refresh();
         }
 
-        static bool filterType(Type t, List<string> noUseList, List<string> uselist)
+        static public bool filterType(Type t, List<string> noUseList, List<string> uselist)
         {
             if (t.IsDefined(typeof(CompilerGeneratedAttribute), false))
             {
