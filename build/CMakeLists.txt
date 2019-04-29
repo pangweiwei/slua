@@ -7,6 +7,7 @@ project(slua)
 set(EXT_SRC_ROOT ./)
 set(LUA_INC_PATH ${EXT_SRC_ROOT}/lua-5.1.5/src)
 set(LUA_SRC_PATH ${EXT_SRC_ROOT}/lua-5.1.5/src)
+set(SLUA_SRC_PATH ${EXT_SRC_ROOT}/slua.c)
 
 set(LUA_SRC_FILES 
     ${LUA_SRC_PATH}/lapi.c
@@ -38,6 +39,7 @@ set(LUA_SRC_FILES
     ${LUA_SRC_PATH}/lundump.c
     ${LUA_SRC_PATH}/lvm.c
     ${LUA_SRC_PATH}/lzio.c
+    ${SLUA_SRC_PATH}
 )
 
 set(THIRDPART_INC_PATH "")
@@ -99,8 +101,6 @@ include_directories(
     ${THIRDPART_INC_PATH}
 )
 
-# add_definitions("-DLUA_USE_C89")
-
 if(APPLE)
     if(IOS)
         set(CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
@@ -135,4 +135,5 @@ if(UNIX)
 target_link_libraries(slua m)
 elseif(WIN32)
 target_link_libraries(slua Ws2_32)
+add_compile_definitions(LUA_BUILD_AS_DLL)
 endif()
