@@ -38,7 +38,7 @@
 
 #include "luasocket.h"
 
-#define luajit_c
+// #define luajit_c
 
 #ifdef _WIN32
 #include <float.h>
