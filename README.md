@@ -3,10 +3,6 @@ Fastest lua binding via static code generating for Unity3D or mono
 
 Website: http://www.slua.net
 
-QQ group: 15647305 (in Chinese)
-
-Mail to : sineysan#163.com (both of Chinese/English)
-
 ## Continuous Integration Build
 
 | Build | Platform | Type    | Status  |
