@@ -3,6 +3,8 @@ Fastest lua binding via static code generating for Unity3D or mono
 
 Website: http://www.slua.net
 
+slua for Unreal https://github.com/Tencent/sluaunreal
+
 ## Continuous Integration Build
 
 | Build | Platform | Type    | Status  |
