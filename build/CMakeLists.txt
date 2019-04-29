@@ -133,4 +133,6 @@ endif()
 
 if(UNIX)
 target_link_libraries(slua m)
+elseif(WIN32)
+target_link_libraries(slua Ws2_32)
 endif()
