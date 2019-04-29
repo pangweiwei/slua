@@ -181,6 +181,13 @@ namespace SLua
                 "UnityEngine.Experimental",
                 "Unity.Jobs",
                 "Unity.Collections",
+                "Unity.IO.LowLevel",
+                "UnityEngine.AudioSettings",
+                "UnityEngine.DrivenRectTransformTracker",
+                "UnityEngine.tvOS",
+                "UnityEngine.Light",
+                "UnityEngine.LightProbeGroup",
+                "UnityEngine.Playables",
             };
         }
     }
