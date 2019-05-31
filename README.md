@@ -170,6 +170,11 @@ public class HelloWorld   {
 ~~~~~~~~~~
 
 
+## Debugger Support
+
+https://github.com/Tencent/luapanda
+
+
 ### Benchmark
 
 compared with ulua/raw mono.
