@@ -32,6 +32,9 @@ namespace SLua
     {
         #region COMMON_DEFINE
         const string COMMON_DEFINE = @"
+if _VERSION:find('5%.3') then
+    loadstring = load
+end
 local function prettyTabToStr(tab, level, path, visited)
     local result = ''
     if level == nil then
