@@ -193,6 +193,13 @@ namespace SLua
                         break;
                     args[k] = checkVar(l, n, ps[k].ParameterType);
                 }
+
+                // set default parameter
+                if (args.Length > k)
+                {
+                    for (; k < args.Length; k++)
+                        args[k] = ps[k].DefaultValue;
+                }
             }
         }
 
