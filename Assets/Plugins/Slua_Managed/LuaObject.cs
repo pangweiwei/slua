@@ -912,6 +912,8 @@ namespace SLua
 			LuaDLL.lua_pushnil(l); // push nil value
 			LuaDLL.lua_settable(l, -3); // remove function from __LuaDelegate table
 			LuaDLL.lua_pop(l, 1); // pop __LuaDelegate
+			LuaState state = LuaState.get(l);
+			state.delgateMap.Remove(r);
 		}
 
 		static public object checkObj(IntPtr l, int p)

@@ -188,6 +188,7 @@ namespace SLua
                 "UnityEngine.Light",
                 "UnityEngine.LightProbeGroup",
                 "UnityEngine.Playables",
+                "UnityEngine.Rendering",
             };
         }
     }
