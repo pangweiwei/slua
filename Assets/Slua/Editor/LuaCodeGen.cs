@@ -65,15 +65,22 @@ namespace SLua
             {
                 EditorApplication.update += Update;
                 // use this delegation to ensure dispose luavm at last
-                EditorApplication.playmodeStateChanged += () =>
+                EditorApplication.playModeStateChanged += (PlayModeStateChange state) =>
                 {
-
-                    if (isPlaying == true && EditorApplication.isPlaying == false)
+                    switch (state)
                     {
-                        if (LuaState.main != null) LuaState.main.Dispose();
+                        case PlayModeStateChange.ExitingEditMode:
+                            if (isPlaying == true && EditorApplication.isPlaying == false)
+                            {
+                                if (LuaState.main != null)
+                                    LuaState.main.Dispose();
+                                isPlaying = false;
+                            }
+                            break;
+                        case PlayModeStateChange.EnteredPlayMode:
+                            isPlaying = true;
+                            break;
                     }
-
-                    isPlaying = EditorApplication.isPlaying;
                 };
             }
 
