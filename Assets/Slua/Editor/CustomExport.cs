@@ -41,7 +41,8 @@ namespace SLua
             add(typeof(System.Action<int, string>), null);
             add(typeof(System.Action<int, Dictionary<int, object>>), null);
             add(typeof(List<int>), "ListInt");
-            add(typeof(Dictionary<int, string>), "DictIntStr");
+            // .net 4.6 export class not match used class on runtime, so skip it
+            //add(typeof(Dictionary<int, string>), "DictIntStr");
             add(typeof(string), "String");
             
             // add your custom class here
@@ -72,7 +73,7 @@ namespace SLua
         {
             list = new List<string>
             {
-                //"UnityEngine.GameObject",
+                // "UnityEngine.Font",
             };
         }
 
@@ -80,6 +81,12 @@ namespace SLua
         {
             "UIWidget.showHandles",
             "UIWidget.showHandlesWithMoveTool",
+            "UnityEngine.QualitySettings.get_streamingMipmapsRenderersPerFrame",
+            "UnityEngine.QualitySettings.set_streamingMipmapsRenderersPerFrame",
+            "UnityEngine.QualitySettings.streamingMipmapsRenderersPerFrame",
+            "UnityEngine.Texture.get_imageContentsHash",
+            "UnityEngine.Texture.set_imageContentsHash",
+            "UnityEngine.Texture.imageContentsHash",
         };
         // black list if white list not given
         public static void OnGetNoUseList(out List<string> list)
@@ -172,6 +179,16 @@ namespace SLua
 				"NativeLeakDetectionMode",
 				"WWWAudioExtensions",
                 "UnityEngine.Experimental",
+                "Unity.Jobs",
+                "Unity.Collections",
+                "Unity.IO.LowLevel",
+                "UnityEngine.AudioSettings",
+                "UnityEngine.DrivenRectTransformTracker",
+                "UnityEngine.tvOS",
+                "UnityEngine.Light",
+                "UnityEngine.LightProbeGroup",
+                "UnityEngine.Playables",
+                "UnityEngine.Rendering",
             };
         }
     }

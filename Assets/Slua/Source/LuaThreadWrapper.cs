@@ -34,18 +34,18 @@ namespace SLua
         public LuaThreadWrapper(LuaFunction func)
          : base()
         {
-            Logger.Log(string.Format("LuaThreadWrapper.ctor/1: {0}", LuaDLL.lua_gettop(func.L)));
+            // Logger.Log(string.Format("LuaThreadWrapper.ctor/1: {0}", LuaDLL.lua_gettop(func.L)));
             state = LuaState.get(func.L);
             _thread = LuaDLL.lua_newthread(func.L);
             valueref = LuaDLL.luaL_ref(func.L, LuaIndexes.LUA_REGISTRYINDEX);
             func.push(func.L);
             LuaDLL.lua_xmove(func.L, _thread, 1);
-			Logger.Log(string.Format("LuaThreadWrapper.ctor/2: {0}", LuaDLL.lua_gettop(func.L)));
+			// Logger.Log(string.Format("LuaThreadWrapper.ctor/2: {0}", LuaDLL.lua_gettop(func.L)));
         }
 
         ~LuaThreadWrapper()
         {
-            Debug.Log("~LuaThreadWrapper");
+            // Debug.Log("~LuaThreadWrapper");
             Dispose(false);
         }
 
@@ -80,11 +80,11 @@ namespace SLua
             }
         }
 
-        public bool Resume(out object retVal)
+        public bool Resume(out object retVal, object[] args)
         {
             if (_thread == IntPtr.Zero)
             {
-                Logger.LogError("thread: already disposed?");
+                // Logger.LogError("thread: already disposed?");
                 retVal = null;
                 return false;
             }
@@ -95,7 +95,12 @@ namespace SLua
                 retVal = null;
                 return false;
             }
-            var result = LuaDLL.lua_resume(_thread, 0);
+            var size = args != null ? args.Length : 0;
+            for (var i = 0; i < size; ++i) 
+            {
+                LuaObject.pushVar(_thread, args[i]);
+            }
+            var result = LuaDLL.lua_resume(_thread, size);
             if (result != (int)LuaThreadStatus.LUA_YIELD)
             {
                 if (result != 0)

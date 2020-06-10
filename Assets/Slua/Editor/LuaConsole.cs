@@ -32,6 +32,9 @@ namespace SLua
     {
         #region COMMON_DEFINE
         const string COMMON_DEFINE = @"
+if _VERSION:find('5%.3') then
+    loadstring = load
+end
 local function prettyTabToStr(tab, level, path, visited)
     local result = ''
     if level == nil then
@@ -426,7 +429,11 @@ end
             GUILayout.Space(4);
 
             Event e = Event.current;
+			#if UNITY_2017_3_OR_NEWER
+			if (e.type == EventType.MouseDown && dragSpliterRect.Contains(e.mousePosition))
+			#else
             if (e.type == EventType.mouseDown && dragSpliterRect.Contains(e.mousePosition))
+			#endif
             {
                 e.Use();
                 inputAreaResizing = true;

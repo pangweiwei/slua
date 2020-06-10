@@ -66,13 +66,14 @@ function main()
 	Deleg.testAction( self.action )
 
 	-- add
-	Deleg.daction = {"+=",self.actionD()}
+    local callback=self.actionD()
+	Deleg.daction = {"+=",callback}
 	Deleg.callDAction()
 
 	print("delegate removed")
 	
 	-- remove
-	Deleg.daction = {"-=",self.actionD()}
+	Deleg.daction = {"-=",callback}
 	Deleg.callDAction()
 
 	-- out modifier

@@ -25,8 +25,10 @@ public class Main : MonoBehaviour
 
 	void log(string cond, string trace, LogType lt)
 	{
-		logText.text += (cond + "\n");
-
+		string txt = logText.text + (cond + "\n");
+		if(txt.Length>1000)
+			txt = txt.Substring (txt.Length - 1000);
+		logText.text = txt;
 	}
 
 	void tick(int p)

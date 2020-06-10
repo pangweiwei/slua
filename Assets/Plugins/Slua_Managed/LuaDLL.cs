@@ -258,8 +258,8 @@ namespace SLua
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int lua_pcallk(IntPtr luaState, int nArgs, int nResults, int errfunc,int ctx,IntPtr k);
 
-		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int luaS_pcall(IntPtr luaState, int nArgs, int nResults, int errfunc);
+//		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+//		public static extern int luaS_pcall(IntPtr luaState, int nArgs, int nResults, int errfunc);
 		
 		public static int lua_call(IntPtr luaState, int nArgs, int nResults)
         {
@@ -268,7 +268,7 @@ namespace SLua
 
         public static int lua_pcall(IntPtr luaState, int nArgs, int nResults, int errfunc)
         {
-			return luaS_pcall(luaState, nArgs, nResults, errfunc);
+			return lua_pcallk(luaState, nArgs, nResults, errfunc, 0, IntPtr.Zero);
         }
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
@@ -311,14 +311,6 @@ namespace SLua
 		}
 
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-		public static extern int luaS_yield(IntPtr luaState,int nrets);
-
-		public static int lua_yield(IntPtr luaState,int nrets) {
-			return luaS_yield(luaState,nrets);
-		}
-
-
-		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern int lua_resume(IntPtr L, IntPtr from, int narg);
         public static int lua_resume(IntPtr L, int narg)
         {
@@ -353,9 +345,6 @@ namespace SLua
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void lua_getfenv(IntPtr luaState, int stackPos);
-
-        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int lua_yield(IntPtr L, int nresults);
 
         public static void lua_getglobal(IntPtr luaState, string name)
         {
@@ -530,7 +519,7 @@ namespace SLua
         public static void lua_pushcfunction(IntPtr luaState, LuaCSFunction function)
         {
 #if SLUA_STANDALONE
-            // Add all LuaCSFunction£¬ or they will be GC collected!  (problem at windows, .net framework 4.5, `CallbackOnCollectedDelegated` exception)
+            // Add all LuaCSFunctionï¿½ï¿½ or they will be GC collected!  (problem at windows, .net framework 4.5, `CallbackOnCollectedDelegated` exception)
             GCHandle.Alloc(function);
 #endif
             IntPtr fn = Marshal.GetFunctionPointerForDelegate(function);
@@ -681,7 +670,7 @@ namespace SLua
         public static void lua_pushcclosure(IntPtr l, LuaCSFunction f, int nup)
         {
 #if SLUA_STANDALONE
-            // Add all LuaCSFunction£¬ or they will be GC collected!  (problem at windows, .net framework 4.5, `CallbackOnCollectedDelegated` exception)
+            // Add all LuaCSFunctionï¿½ï¿½ or they will be GC collected!  (problem at windows, .net framework 4.5, `CallbackOnCollectedDelegated` exception)
             GCHandle.Alloc(f);
 #endif
             IntPtr fn = Marshal.GetFunctionPointerForDelegate(f);

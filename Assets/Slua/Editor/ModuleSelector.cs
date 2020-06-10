@@ -50,6 +50,7 @@ namespace SLua
             {
                 if (onExport != null)
                     onExport(modules.ToArray());
+                this.Close();
             }
         }
     }

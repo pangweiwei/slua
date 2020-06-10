@@ -3,9 +3,7 @@ Fastest lua binding via static code generating for Unity3D or mono
 
 Website: http://www.slua.net
 
-QQ group: 15647305 (in Chinese)
-
-Mail to : sineysan#163.com (both of Chinese/English)
+slua for Unreal https://github.com/Tencent/sluaunreal
 
 ## Continuous Integration Build
 
@@ -158,7 +156,7 @@ end
 ~~~~~~~~~~
 
 
-##Export custom class
+## Export custom class
 
 add CustomLuaClass attribute to your custom class, waiting for compile completed, click "SLua->Custom->Make", you will get interface file for lua.
 
@@ -170,6 +168,11 @@ public class HelloWorld   {
 }
 
 ~~~~~~~~~~
+
+
+## Debugger Support
+
+https://github.com/Tencent/luapanda
 
 
 ### Benchmark

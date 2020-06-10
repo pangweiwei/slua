@@ -518,7 +518,7 @@ byte[]是T[]的特殊形式，一般用于内存字节流，比如网络字节�
 
 ## 判断GameObject是否为null
 
-因为Unity GameObject被destroy后，并不是真正的null，而是一个被标记了为destroyed的GameObject，而GameObject重载了==操作符，在c#中可以==判断是否为null（虽然它不是null），而这个gameobject被push到lua后，并不能判断==nil，所以slua提供IsNuall函数，用于判断是否GameObject被Destory，或者GetComponent的返回值其实不存在，也可以通过IsNull判断，例如：
+因为Unity GameObject被destroy后，并不是真正的null，而是一个被标记了为destroyed的GameObject，而GameObject重载了==操作符，在c#中可以==判断是否为null（虽然它不是null），而这个gameobject被push到lua后，并不能判断==nil，所以slua提供IsNull函数，用于判断是否GameObject被Destory，或者GetComponent的返回值其实不存在，也可以通过IsNull判断，例如：
 
 ```lua
     local go = GameObject()
@@ -562,6 +562,10 @@ push进入lua虚拟机的c#对象都是LuaObject，需要等待lua gc回收后�
 **注意去掉对UnityEditor的引用，否则发布的时候可能失败, 因为手机环境下没有UnityEditor的运行环境**
 
 然后删除DLL,该DLL仅用于快捷生成wrap文件, 还需要ngui代码放在Assets目录内, 因为其有部分editor功能代码,需要在editor内运行.
+
+## 尝试返回基类
+
+在使用DOTween的时候，我们需要导出Tweener，但是DOTween返回的是Tweener的基类TweenerCore，而这个类是泛型的，slua不支持泛型类的导出使用，需要确定类型，但我们不能在使用DOTween的时候确定每个Tweener的类型，这个时候我们希望返回的对象按照基类Tweener提供访问方法，这时你可以尝试slua提供的SLUA_TRY_PUSHBASE模式，使用这个模式，你需要添加SLUA_TRY_PUSHBASE到宏定义中。 在这个模式下，slua在push对象的时候，会尝试获得基类，查看基类是否导出，如果基类导出了就用基类，否则继续向上查找基类，直到Object。使用SLUA_TRY_PUSHBASE模式，就可以方便的使用DOTween的tweener对象提供的方法了。
 
 ## 从c#调用lua函数
 

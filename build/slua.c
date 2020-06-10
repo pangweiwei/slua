@@ -38,7 +38,7 @@
 
 #include "luasocket.h"
 
-#define luajit_c
+// #define luajit_c
 
 #ifdef _WIN32
 #include <float.h>
@@ -157,19 +157,19 @@ LUA_API const char* luaS_tolstring32(lua_State *L, int index, int* len) {
 	return ret;
 }
 
-#if LUA_VERSION_NUM>=503
-static int k(lua_State *L, int status, lua_KContext ctx) {
-	return status;
-}
+// #if LUA_VERSION_NUM>=503
+// static int k(lua_State *L, int status, lua_KContext ctx) {
+// 	return status;
+// }
 
-LUA_API int luaS_yield(lua_State *L, int nrets) {
-	return k(L, lua_yieldk(L, nrets, 0, k), 0);
-}
+// LUA_API int luaS_yield(lua_State *L, int nrets) {
+// 	return k(L, lua_yieldk(L, nrets, 0, k), 0);
+// }
 
-LUA_API int luaS_pcall(lua_State *L, int nargs, int nresults, int err) {
-	return k(L, lua_pcallk(L, nargs, nresults, err, 0, k), 0);
-}
-#endif
+// LUA_API int luaS_pcall(lua_State *L, int nargs, int nresults, int err) {
+// 	return k(L, lua_pcallk(L, nargs, nresults, err, 0, k), 0);
+// }
+// #endif
 
 
 

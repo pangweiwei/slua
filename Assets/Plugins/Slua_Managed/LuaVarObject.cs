@@ -193,6 +193,13 @@ namespace SLua
                         break;
                     args[k] = checkVar(l, n, ps[k].ParameterType);
                 }
+
+                // set default parameter
+                if (args.Length > k)
+                {
+                    for (; k < args.Length; k++)
+                        args[k] = ps[k].DefaultValue;
+                }
             }
         }
 
@@ -528,6 +535,8 @@ namespace SLua
             LuaDLL.lua_createtable(l, 0, 1);
             pushValue(l, methodWrapper);
             LuaDLL.lua_setfield(l, -2, "__call");
+            LuaDLL.lua_pushcfunction(l, lua_gc);
+            LuaDLL.lua_setfield(l, -2, "__gc");
             LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, ObjectCache.getAQName(typeof(LuaCSFunction)));
         }
     }

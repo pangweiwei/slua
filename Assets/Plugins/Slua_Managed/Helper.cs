@@ -84,7 +84,7 @@ return Class
 		{
 			object obj = checkObj(l, LuaDLL.lua_upvalueindex(1));
 			IEnumerator it = (IEnumerator)obj;
-			if (it.MoveNext())
+            if ( it!=null && it.MoveNext())
 			{
 				pushVar(l, it.Current);
 				return 1;

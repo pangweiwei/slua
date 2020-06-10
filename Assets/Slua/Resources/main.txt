@@ -202,6 +202,14 @@ function main()
 		cube.transform.localRotation = Quaternion.Euler(0,0,math.sin(Time.time)*90)
 		return true
 	end)
+
+	-- test timer
+	for i=1,20 do
+		LuaTimer.Add(0,i*1000,function()
+			print("timer callback",i*1000)
+			return true
+		end)
+	end
 	
 	print(UnityEngine.PrimitiveType.Cube,type(UnityEngine.PrimitiveType.Cube))
 
