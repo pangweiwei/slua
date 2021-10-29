@@ -150,6 +150,8 @@ do
 	end
 end
 
+local Vector3Tmp1
+local Vector3Tmp2
 do
 	local Raw=UnityEngine.Vector3
 	Vector3={__typename='Vector3',__raw=Raw}
@@ -290,7 +292,12 @@ do
 	end
 
 	function Vector3.Angle(a,b)
-		local dot = Vector3.Dot(Vector3.Normalize(a), Vector3.Normalize(b))
+        Vector3Tmp1:Set(a[1], a[2], a[3])
+        Vector3.Normalized(Vector3Tmp1)
+        Vector3Tmp2:Set(b[1], b[2], b[3])
+        Vector3.Normalized(Vector3Tmp2)
+
+		local dot = Vector3.Dot(Vector3Tmp1, Vector3Tmp2)
 		return acos(dot)*ToAngle
 	end
 
@@ -548,6 +555,9 @@ do
 
 	inherite(Vector3,Raw)
 	setmetatable(Vector3,Vector3)
+
+    Vector3Tmp1 = Vector3.New(0,0,0)
+    Vector3Tmp2 = Vector3.New(0,0,0)
 end
 
 do

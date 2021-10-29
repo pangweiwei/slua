@@ -24,6 +24,8 @@
 // init will not use reflection to speed up the speed
 //#define USE_STATIC_BINDER  
 
+using System.Diagnostics;
+
 namespace SLua
 {
 	using System;
@@ -156,20 +158,30 @@ namespace SLua
 
 			tick (0);
 			var list = collectBindInfo ();
-
-			tick (2);
-
-			int bindProgress = 2;
+			const int bindProgressStart = 5;
+			tick (bindProgressStart);
+			
+			int bindProgress = bindProgressStart;
 			int lastProgress = bindProgress;
+			Stopwatch sw = Stopwatch.StartNew();
+			const int millisecondsPerFrame = 1000;
+			int nextframeMilliseconds = millisecondsPerFrame;
+			//Debug.Log("reg count=" + list.Count);
 			for (int n = 0; n < list.Count; n++)
 			{
 				Action<IntPtr> action = list[n];
 				action(L);
-				bindProgress = (int)(((float)n / list.Count) * 98.0) + 2;
-				if (_tick!=null && lastProgress != bindProgress && bindProgress % 5 == 0) {
-                    lastProgress = bindProgress;
-					tick (bindProgress);
-					yield return null;
+				bindProgress = (int)(((float)n / list.Count) * (100-bindProgressStart)) + bindProgressStart;
+			    
+				if (_tick!=null && lastProgress != bindProgress && bindProgress > lastProgress)
+				{
+					lastProgress = bindProgress;
+					if (sw.ElapsedMilliseconds > nextframeMilliseconds)
+					{
+						nextframeMilliseconds += millisecondsPerFrame;
+						tick(bindProgress);
+						yield return null;
+					}
 				}
 			}
 
