@@ -1049,7 +1049,7 @@ public class test : MonoBehaviour {
 			string[] arr = new string [] { "str1", "str2", "str3" };
 			lua ["netobj"] = arr;
 			lua.doString ("val=netobj[1]");
-			Assert.AreEqual ("str2", lua["val"]);
+			Assert.AreEqual (arr[0], lua["val"]);
 			//Debug.Log("new val(from array to Lua)="+val);
 		}
 
@@ -1061,7 +1061,7 @@ public class test : MonoBehaviour {
 			string[] arr = new string [] { "str1", "str2", "str3" };
 			lua ["netobj"] = arr;
 			lua.doString ("netobj[1]='test'");
-			Assert.AreEqual ("test", arr [1]);
+			Assert.AreEqual ("test", arr [0]);
 			//Debug.Log("new val(from Lua to array)="+arr[1]);
 		}
 		
