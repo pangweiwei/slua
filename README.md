@@ -49,7 +49,7 @@ See inner demo for help or [Document](https://github.com/pangweiwei/slua/wiki) (
 
 ## Important
 
-For running demo sucessful, you should generate lua wrap file by your self:
+For running demo successfully, you should generate lua wrap file by your self:
 
 Click menu, SLua->All->Make  generate all wrap file for your version of unity.
 
